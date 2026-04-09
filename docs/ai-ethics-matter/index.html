@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,51 +161,48 @@
 <p>Here are a few practical examples of how AI ethics can be applied in real-world scenarios:</p>
 <h3 id="example-1-fairness-in-hiring">Example 1: Fairness in Hiring</h3>
 <p>Suppose we are developing an AI system to screen job applicants. To ensure fairness, we can use a technique called <strong>debiasing</strong>, which involves removing biased features from the training data. For example, we can use the <code>fairlearn</code> library in Python to detect and remove biases in our data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">fairlearn.metrics</span> <span class="kn">import</span> <span class="n">demographic_parity_ratio</span>
+<pre><code class="language-python">import pandas as pd
+from fairlearn.metrics import demographic_parity_ratio
 
-<span class="c1"># Load the training data</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;train_data.csv&quot;</span><span class="p">)</span>
+# Load the training data
+train_data = pd.read_csv(&quot;train_data.csv&quot;)
 
-<span class="c1"># Calculate the demographic parity ratio</span>
-<span class="n">dp_ratio</span> <span class="o">=</span> <span class="n">demographic_parity_ratio</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s2">&quot;protected_feature&quot;</span><span class="p">])</span>
+# Calculate the demographic parity ratio
+dp_ratio = demographic_parity_ratio(train_data[&quot;label&quot;], train_data[&quot;protected_feature&quot;])
 
-<span class="c1"># Remove biased features from the training data</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;protected_feature&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
+# Remove biased features from the training data
+train_data = train_data.drop(&quot;protected_feature&quot;, axis=1)
+</code></pre>
 <p>In this example, we use the <code>demographic_parity_ratio</code> function to calculate the demographic parity ratio, which measures the difference in selection rates between different groups. We then remove the biased feature from the training data to ensure fairness.</p>
 <h3 id="example-2-transparency-in-decision-making">Example 2: Transparency in Decision-Making</h3>
 <p>Suppose we are developing an AI system to predict credit risk. To ensure transparency, we can use a technique called <strong>feature attribution</strong>, which involves assigning a score to each feature based on its contribution to the prediction. For example, we can use the <code>shap</code> library in Python to calculate feature attribution scores:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">shap</span>
+<pre><code class="language-python">import pandas as pd
+import shap
 
-<span class="c1"># Load the training data</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;train_data.csv&quot;</span><span class="p">)</span>
+# Load the training data
+train_data = pd.read_csv(&quot;train_data.csv&quot;)
 
-<span class="c1"># Train a machine learning model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+# Train a machine learning model
+model = pd.DataFrame(train_data).train()
 
-<span class="c1"># Calculate feature attribution scores</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+# Calculate feature attribution scores
+shap_values = shap.TreeExplainer(model).shap_values(train_data)
 
-<span class="c1"># Print the feature attribution scores</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">shap_values</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the feature attribution scores
+print(shap_values)
+</code></pre>
 <p>In this example, we use the <code>shap</code> library to calculate feature attribution scores, which provide a clear explanation of how each feature contributed to the prediction.</p>
 <h3 id="example-3-accountability-in-autonomous-vehicles">Example 3: Accountability in Autonomous Vehicles</h3>
 <p>Suppose we are developing an autonomous vehicle system. To ensure accountability, we can use a technique called <strong>logging</strong>, which involves recording all events and actions taken by the system. For example, we can use the <code>tensorflow</code> library in Python to log events and actions:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Create a logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+# Create a logger
+logger = tf.get_logger()
 
-<span class="c1"># Log events and actions</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Vehicle started&quot;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Vehicle stopped&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Log events and actions
+logger.info(&quot;Vehicle started&quot;)
+logger.info(&quot;Vehicle stopped&quot;)
+</code></pre>
 <p>In this example, we use the <code>tensorflow</code> library to create a logger and log events and actions taken by the autonomous vehicle system. This provides a clear record of all actions taken by the system, which can be used to investigate accidents or incidents.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in AI ethics:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -173,27 +174,26 @@
 * <strong>Azure Migrate</strong>: A service that provides a centralized platform for planning, executing, and tracking cloud migrations.
 * <strong>Google Cloud Migration Services</strong>: A range of services that provide support for migrating applications and data to Google Cloud Platform.</p>
 <p>For example, the following code snippet demonstrates how to use AWS CloudFormation to create a simple web server:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">cloudformation</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudformation&#39;</span><span class="p">)</span>
+cloudformation = boto3.client('cloudformation')
 
-<span class="n">template_body</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">AWSTemplateFormatVersion: &#39;2010-09-09&#39;</span>
-<span class="s1">Resources:</span>
-<span class="s1">  WebServer:</span>
-<span class="s1">    Type: &#39;AWS::EC2::Instance&#39;</span>
-<span class="s1">    Properties:</span>
-<span class="s1">      ImageId: &#39;ami-0c94855ba95c71c99&#39;</span>
-<span class="s1">      InstanceType: &#39;t2.micro&#39;</span>
-<span class="s1">&#39;&#39;&#39;</span>
+template_body = '''
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  WebServer:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'ami-0c94855ba95c71c99'
+      InstanceType: 't2.micro'
+'''
 
-<span class="n">stack_name</span> <span class="o">=</span> <span class="s1">&#39;web-server-stack&#39;</span>
-<span class="n">cloudformation</span><span class="o">.</span><span class="n">create_stack</span><span class="p">(</span>
-    <span class="n">StackName</span><span class="o">=</span><span class="n">stack_name</span><span class="p">,</span>
-    <span class="n">TemplateBody</span><span class="o">=</span><span class="n">template_body</span>
-<span class="p">)</span>
-</code></pre></div>
-
+stack_name = 'web-server-stack'
+cloudformation.create_stack(
+    StackName=stack_name,
+    TemplateBody=template_body
+)
+</code></pre>
 <p>This code snippet creates a simple web server using AWS CloudFormation, with a template body that defines the required resources and properties.</p>
 <h2 id="cloud-migration-challenges">Cloud Migration Challenges</h2>
 <p>Cloud migration can be a complex and challenging process, with many potential pitfalls and obstacles. Some common challenges include:
@@ -211,28 +211,27 @@
 * <strong>Using reserved instances</strong>: Businesses should consider using reserved instances, which can provide significant discounts on cloud usage.
 * <strong>Implementing cost governance</strong>: Businesses should implement cost governance policies and procedures, to ensure that cloud spending is properly managed and controlled.</p>
 <p>For example, the following code snippet demonstrates how to use the AWS Cost Explorer API to retrieve cloud usage and spending data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">ce</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ce&#39;</span><span class="p">)</span>
+ce = boto3.client('ce')
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">get_cost_and_usage</span><span class="p">(</span>
-    <span class="n">TimePeriod</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-31&#39;</span>
-    <span class="p">},</span>
-    <span class="n">Granularity</span><span class="o">=</span><span class="s1">&#39;DAILY&#39;</span><span class="p">,</span>
-    <span class="n">Metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;UnblendedCost&#39;</span><span class="p">],</span>
-    <span class="n">GroupBy</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;DIMENSION&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;SERVICE&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
+response = ce.get_cost_and_usage(
+    TimePeriod={
+        'Start': '2022-01-01',
+        'End': '2022-01-31'
+    },
+    Granularity='DAILY',
+    Metrics=['UnblendedCost'],
+    GroupBy=[
+        {
+            'Type': 'DIMENSION',
+            'Key': 'SERVICE'
+        }
+    ]
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+print(response)
+</code></pre>
 <p>This code snippet retrieves daily cloud usage and spending data for the month of January 2022, grouped by service.</p>
 <h2 id="cloud-migration-use-cases">Cloud Migration Use Cases</h2>
 <p>There are many use cases for cloud migration, including:
@@ -247,31 +246,30 @@
 3. <strong>Execution and deployment</strong>: Businesses should execute and deploy their cloud migration plan, including the migration of applications and data to the cloud.
 4. <strong>Testing and validation</strong>: Businesses should test and validate their cloud-based infrastructure, to ensure that it meets their requirements and expectations.</p>
 <p>For example, the following code snippet demonstrates how to use the Azure Migrate service to assess and plan a cloud migration:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">azure.migrate</span> <span class="kn">import</span> <span class="n">Migration</span>
+<pre><code class="language-python">import os
+import json
+from azure.migrate import Migration
 
-<span class="c1"># Set up Azure Migrate credentials</span>
-<span class="n">subscription_id</span> <span class="o">=</span> <span class="s1">&#39;your_subscription_id&#39;</span>
-<span class="n">resource_group_name</span> <span class="o">=</span> <span class="s1">&#39;your_resource_group_name&#39;</span>
-<span class="n">project_name</span> <span class="o">=</span> <span class="s1">&#39;your_project_name&#39;</span>
+# Set up Azure Migrate credentials
+subscription_id = 'your_subscription_id'
+resource_group_name = 'your_resource_group_name'
+project_name = 'your_project_name'
 
-<span class="c1"># Create an Azure Migrate client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Migration</span><span class="p">(</span>
-    <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">,</span>
-    <span class="n">resource_group_name</span><span class="o">=</span><span class="n">resource_group_name</span><span class="p">,</span>
-    <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span>
-<span class="p">)</span>
+# Create an Azure Migrate client
+client = Migration(
+    subscription_id=subscription_id,
+    resource_group_name=resource_group_name,
+    project_name=project_name
+)
 
-<span class="c1"># Assess and plan the cloud migration</span>
-<span class="n">assessment</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">assess</span><span class="p">(</span>
-    <span class="n">assessment_name</span><span class="o">=</span><span class="s1">&#39;your_assessment_name&#39;</span><span class="p">,</span>
-    <span class="n">assessment_type</span><span class="o">=</span><span class="s1">&#39;Azure_VM&#39;</span>
-<span class="p">)</span>
+# Assess and plan the cloud migration
+assessment = client.assess(
+    assessment_name='your_assessment_name',
+    assessment_type='Azure_VM'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">assessment</span><span class="p">)</span>
-</code></pre></div>
-
+print(assessment)
+</code></pre>
 <p>This code snippet assesses and plans a cloud migration using the Azure Migrate service, with a subscription ID, resource group name, and project name.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Cloud migration is a complex and challenging process, requiring careful planning, execution, and management. By following the strategies and best practices outlined in this article, businesses can successfully migrate their applications and data to the cloud, and take advantage of the many benefits that cloud computing has to offer.</p>

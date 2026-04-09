@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,20 +164,19 @@
 * Google BigQuery for data analysis</p>
 <h2 id="building-a-data-engineering-pipeline-with-apache-beam">Building a Data Engineering Pipeline with Apache Beam</h2>
 <p>Apache Beam is a popular open-source framework for building data engineering pipelines. It provides a unified programming model for both batch and streaming data processing, making it an ideal choice for building pipelines that handle large volumes of data. Here is an example of a simple pipeline built using Apache Beam:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
+<pre><code class="language-python">import apache_beam as beam
 
-<span class="c1"># Define the pipeline</span>
-<span class="k">with</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span> <span class="k">as</span> <span class="n">pipeline</span><span class="p">:</span>
-    <span class="c1"># Read data from a CSV file</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Define the pipeline
+with beam.Pipeline() as pipeline:
+    # Read data from a CSV file
+    data = pipeline | beam.io.ReadFromText('data.csv')
 
-    <span class="c1"># Transform the data by converting it to uppercase</span>
-    <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    # Transform the data by converting it to uppercase
+    transformed_data = data | beam.Map(lambda x: x.upper())
 
-    <span class="c1"># Write the transformed data to a new CSV file</span>
-    <span class="n">transformed_data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">WriteToText</span><span class="p">(</span><span class="s1">&#39;transformed_data.csv&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+    # Write the transformed data to a new CSV file
+    transformed_data | beam.io.WriteToText('transformed_data.csv')
+</code></pre>
 <p>This pipeline reads data from a CSV file, transforms it by converting it to uppercase, and writes the transformed data to a new CSV file.</p>
 <h3 id="pipeline-optimization">Pipeline Optimization</h3>
 <p>Optimizing a data engineering pipeline is critical to ensure it runs efficiently and effectively. Some common optimization techniques include:

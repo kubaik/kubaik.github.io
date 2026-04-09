@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,114 +168,110 @@
 <li><strong>Android Emulator</strong>: or a physical Android device for testing</li>
 </ul>
 <p>Here's an example of how to create a new Flutter project using the command line:</p>
-<div class="codehilite"><pre><span></span><code>flutter<span class="w"> </span>create<span class="w"> </span>my_app
-</code></pre></div>
-
+<pre><code class="language-bash">flutter create my_app
+</code></pre>
 <p>This will create a new Flutter project called <code>my_app</code> with the basic directory structure and configuration files.</p>
 <h2 id="building-a-simple-flutter-app">Building a Simple Flutter App</h2>
 <p>Let's build a simple Flutter app that displays a list of items. We'll use the <code>ListView</code> widget to display the list and the <code>Text</code> widget to display each item.</p>
 <p>Here's the code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
+void main() {
+  runApp(MyApp());
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;My App&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">MyHomePage</span><span class="p">(),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: MyHomePage(),
+    );
+  }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyHomePage</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">_MyHomePageState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_MyHomePageState</span><span class="p">();</span>
-<span class="p">}</span>
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() =&gt; _MyHomePageState();
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">_MyHomePageState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">MyHomePage</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Item 1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Item 2&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Item 3&#39;</span><span class="p">];</span>
+class _MyHomePageState extends State&lt;MyHomePage&gt; {
+  List&lt;String&gt; _items = ['Item 1', 'Item 2', 'Item 3'];
 
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;My App&#39;</span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">      </span><span class="nl">body:</span><span class="w"> </span><span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">itemCount:</span><span class="w"> </span><span class="n">_items</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-<span class="w">        </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">]);</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+      ),
+      body: ListView.builder(
+        itemCount: _items.length,
+        itemBuilder: (context, index) {
+          return Text(_items[index]);
+        },
+      ),
+    );
+  }
+}
+</code></pre>
 <p>This code creates a simple Flutter app with a <code>ListView</code> that displays a list of items.</p>
 <h2 id="using-firebase-with-flutter">Using Firebase with Flutter</h2>
 <p>Firebase is a popular backend platform for mobile and web applications. It provides a wide range of services, including authentication, real-time database, and cloud functions.</p>
 <p>To use Firebase with Flutter, you need to add the Firebase SDK to your project. You can do this by adding the following dependency to your <code>pubspec.yaml</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">dependencies</span><span class="o">:</span>
-<span class="w">  </span><span class="n">flutter</span><span class="o">:</span>
-<span class="w">    </span><span class="n">sdk</span><span class="o">:</span><span class="w"> </span><span class="n">flutter</span>
-<span class="w">  </span><span class="n">firebase_core</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;^1.0.3&quot;</span>
-<span class="w">  </span><span class="n">firebase_auth</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;^3.0.1&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-yml">dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: &quot;^1.0.3&quot;
+  firebase_auth: &quot;^3.0.1&quot;
+</code></pre>
 <p>Here's an example of how to use Firebase authentication with Flutter:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:firebase_auth/firebase_auth.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:firebase_auth/firebase_auth.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
+void main() {
+  runApp(MyApp());
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;My App&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">MyHomePage</span><span class="p">(),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: MyHomePage(),
+    );
+  }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyHomePage</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">_MyHomePageState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_MyHomePageState</span><span class="p">();</span>
-<span class="p">}</span>
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() =&gt; _MyHomePageState();
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">_MyHomePageState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">MyHomePage</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">FirebaseAuth</span><span class="w"> </span><span class="n">_auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FirebaseAuth</span><span class="p">.</span><span class="n">instance</span><span class="p">;</span>
+class _MyHomePageState extends State&lt;MyHomePage&gt; {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-<span class="w">  </span><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_signIn</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">UserCredential</span><span class="w"> </span><span class="n">userCredential</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">_auth</span><span class="p">.</span><span class="n">signInWithEmailAndPassword</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">email:</span><span class="w"> </span><span class="s1">&#39;user@example.com&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">password:</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+  Future&lt;void&gt; _signIn() async {
+    final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: 'user@example.com',
+      password: 'password',
+    );
+  }
 
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;My App&#39;</span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">      </span><span class="nl">body:</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">child:</span><span class="w"> </span><span class="n">ElevatedButton</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">onPressed:</span><span class="w"> </span><span class="n">_signIn</span><span class="p">,</span>
-<span class="w">          </span><span class="nl">child:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Sign In&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: _signIn,
+          child: Text('Sign In'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
 <p>This code uses Firebase authentication to sign in a user with an email and password.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Performance is a critical aspect of any mobile app. Flutter provides several tools and techniques to optimize the performance of your app.</p>

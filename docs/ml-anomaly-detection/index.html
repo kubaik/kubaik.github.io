@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,26 +162,25 @@
 * <strong>Local Outlier Factor (LOF)</strong>: This algorithm calculates the local density of each data point and identifies data points with a low density as anomalies.
 * <strong>Isolation Forest</strong>: This algorithm uses multiple decision trees to identify data points that are easiest to isolate, which are likely to be anomalies.</p>
 <h3 id="example-1-using-one-class-svm-with-scikit-learn">Example 1: Using One-class SVM with Scikit-learn</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn import svm
+from sklearn.datasets import make_blobs
+import numpy as np
 
-<span class="c1"># Generate a dataset of normal data points</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Generate a dataset of normal data points
+X, _ = make_blobs(n_samples=100, centers=1, cluster_std=0.5, random_state=0)
 
-<span class="c1"># Train a one-class SVM model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">OneClassSVM</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Train a one-class SVM model
+model = svm.OneClassSVM(kernel='rbf', gamma=0.1, nu=0.1)
+model.fit(X)
 
-<span class="c1"># Generate a dataset of anomalous data points</span>
-<span class="n">X_anomalous</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+# Generate a dataset of anomalous data points
+X_anomalous = np.random.uniform(low=-5, high=5, size=(10, 2))
 
-<span class="c1"># Use the model to predict anomalies</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_anomalous</span><span class="p">)</span>
+# Use the model to predict anomalies
+predictions = model.predict(X_anomalous)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+print(predictions)
+</code></pre>
 <p>In this example, we use the Scikit-learn library to train a one-class SVM model on a dataset of normal data points. We then use the model to predict anomalies on a dataset of anomalous data points.</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h2 id="tools-and-platforms-for-anomaly-detection">Tools and Platforms for Anomaly Detection</h2>
@@ -189,44 +189,43 @@
 * <strong>Amazon SageMaker</strong>: This is a fully managed service that provides a range of ML algorithms and tools for anomaly detection. The pricing for this service starts at $0.25 per hour, with a minimum of $0.10 per hour.
 * <strong>Azure Machine Learning</strong>: This is a cloud-based platform that provides a range of ML algorithms and tools for anomaly detection. The pricing for this service starts at $0.50 per hour, with a minimum of $0.10 per hour.</p>
 <h3 id="example-2-using-google-cloud-anomaly-detection">Example 2: Using Google Cloud Anomaly Detection</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">anomaly_detection</span>
+<pre><code class="language-python">from google.cloud import anomaly_detection
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">anomaly_detection</span><span class="o">.</span><span class="n">AnomalyDetectionClient</span><span class="p">()</span>
+# Create a client instance
+client = anomaly_detection.AnomalyDetectionClient()
 
-<span class="c1"># Create a dataset of time-series data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">anomaly_detection</span><span class="o">.</span><span class="n">TimeSeriesDataPoint</span><span class="p">(</span>
-        <span class="n">timestamp</span><span class="o">=</span><span class="s1">&#39;2022-01-01T00:00:00Z&#39;</span><span class="p">,</span>
-        <span class="n">value</span><span class="o">=</span><span class="mf">10.0</span>
-    <span class="p">),</span>
-    <span class="n">anomaly_detection</span><span class="o">.</span><span class="n">TimeSeriesDataPoint</span><span class="p">(</span>
-        <span class="n">timestamp</span><span class="o">=</span><span class="s1">&#39;2022-01-02T00:00:00Z&#39;</span><span class="p">,</span>
-        <span class="n">value</span><span class="o">=</span><span class="mf">20.0</span>
-    <span class="p">),</span>
-    <span class="n">anomaly_detection</span><span class="o">.</span><span class="n">TimeSeriesDataPoint</span><span class="p">(</span>
-        <span class="n">timestamp</span><span class="o">=</span><span class="s1">&#39;2022-01-03T00:00:00Z&#39;</span><span class="p">,</span>
-        <span class="n">value</span><span class="o">=</span><span class="mf">30.0</span>
-    <span class="p">)</span>
-<span class="p">]</span>
+# Create a dataset of time-series data
+data = [
+    anomaly_detection.TimeSeriesDataPoint(
+        timestamp='2022-01-01T00:00:00Z',
+        value=10.0
+    ),
+    anomaly_detection.TimeSeriesDataPoint(
+        timestamp='2022-01-02T00:00:00Z',
+        value=20.0
+    ),
+    anomaly_detection.TimeSeriesDataPoint(
+        timestamp='2022-01-03T00:00:00Z',
+        value=30.0
+    )
+]
 
-<span class="c1"># Create a detection config</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">anomaly_detection</span><span class="o">.</span><span class="n">DetectionConfig</span><span class="p">(</span>
-    <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;STATISTICALLY_SIGNIFICANT&#39;</span><span class="p">,</span>
-    <span class="n">sensitivity</span><span class="o">=</span><span class="s1">&#39;MEDIUM&#39;</span>
-<span class="p">)</span>
+# Create a detection config
+config = anomaly_detection.DetectionConfig(
+    algorithm='STATISTICALLY_SIGNIFICANT',
+    sensitivity='MEDIUM'
+)
 
-<span class="c1"># Detect anomalies</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">detect_anomalies</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">config</span>
-<span class="p">)</span>
+# Detect anomalies
+response = client.detect_anomalies(
+    data=data,
+    config=config
+)
 
-<span class="c1"># Print the anomalies</span>
-<span class="k">for</span> <span class="n">anomaly</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">anomalies</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">anomaly</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the anomalies
+for anomaly in response.anomalies:
+    print(anomaly)
+</code></pre>
 <p>In this example, we use the Google Cloud Anomaly Detection API to detect anomalies in a dataset of time-series data.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Several common problems can occur when implementing anomaly detection using ML, including:
@@ -234,30 +233,29 @@
 * <strong>Noise and outliers</strong>: This can affect the accuracy of the anomaly detection model. To solve this problem, you can use techniques such as data preprocessing or robust regression.
 * <strong>Concept drift</strong>: This occurs when the underlying distribution of the data changes over time. To solve this problem, you can use techniques such as online learning or incremental learning.</p>
 <h3 id="example-3-using-online-learning-with-scikit-learn">Example 3: Using Online Learning with Scikit-learn</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn import svm
+from sklearn.datasets import make_blobs
+import numpy as np
 
-<span class="c1"># Generate a dataset of normal data points</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Generate a dataset of normal data points
+X, _ = make_blobs(n_samples=100, centers=1, cluster_std=0.5, random_state=0)
 
-<span class="c1"># Train a one-class SVM model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">OneClassSVM</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Train a one-class SVM model
+model = svm.OneClassSVM(kernel='rbf', gamma=0.1, nu=0.1)
+model.fit(X)
 
-<span class="c1"># Generate a new dataset of normal data points</span>
-<span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+# Generate a new dataset of normal data points
+X_new = np.random.normal(loc=0, scale=0.5, size=(100, 2))
 
-<span class="c1"># Update the model using online learning</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X_new</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">([</span><span class="n">x</span><span class="p">])</span>
+# Update the model using online learning
+for x in X_new:
+    model.partial_fit([x])
 
-<span class="c1"># Use the updated model to predict anomalies</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+# Use the updated model to predict anomalies
+predictions = model.predict(X_new)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+print(predictions)
+</code></pre>
 <p>In this example, we use the Scikit-learn library to train a one-class SVM model on a dataset of normal data points. We then update the model using online learning on a new dataset of normal data points.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Anomaly detection using ML has several use cases, including:

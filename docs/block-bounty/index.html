@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,33 +164,33 @@
 <h3 id="example-use-case-bug-bounty-program">Example Use Case: Bug Bounty Program</h3>
 <p>A prominent cryptocurrency exchange, Binance, has implemented a bug bounty program using the Block Bounty platform. The program offers rewards ranging from $100 to $10,000 for identifying and reporting vulnerabilities in their system. To participate in the program, developers can create a profile on the Block Bounty platform, browse the available bounties, and claim the ones they are interested in.</p>
 <p>Here is an example of how a developer can claim a bounty using the Block Bounty API:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">requests</span>
+import requests
 
-<span class="c1"># Set API endpoint and credentials</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.blockbounty.io/v1/bounties&quot;</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_API_KEY&quot;</span>
+# Set API endpoint and credentials
+endpoint = &quot;https://api.blockbounty.io/v1/bounties&quot;
+api_key = &quot;YOUR_API_KEY&quot;
 
-<span class="c1"># Set bounty ID and developer ID</span>
-<span class="n">bounty_id</span> <span class="o">=</span> <span class="s2">&quot;BINANCE-BUG-001&quot;</span>
-<span class="n">developer_id</span> <span class="o">=</span> <span class="s2">&quot;DEV-001&quot;</span>
+# Set bounty ID and developer ID
+bounty_id = &quot;BINANCE-BUG-001&quot;
+developer_id = &quot;DEV-001&quot;
 
-<span class="c1"># Claim the bounty</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;bounty_id&quot;</span><span class="p">:</span> <span class="n">bounty_id</span><span class="p">,</span>
-    <span class="s2">&quot;developer_id&quot;</span><span class="p">:</span> <span class="n">developer_id</span>
-<span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">})</span>
+# Claim the bounty
+response = requests.post(endpoint, json={
+    &quot;bounty_id&quot;: bounty_id,
+    &quot;developer_id&quot;: developer_id
+}, headers={
+    &quot;Authorization&quot;: f&quot;Bearer {api_key}&quot;
+})
 
-<span class="c1"># Check if the bounty was claimed successfully</span>
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bounty claimed successfully&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to claim bounty&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Check if the bounty was claimed successfully
+if response.status_code == 200:
+    print(&quot;Bounty claimed successfully&quot;)
+else:
+    print(&quot;Failed to claim bounty&quot;)
+</code></pre>
 <h2 id="benefits-of-block-bounty">Benefits of Block Bounty</h2>
 <p>The Block Bounty platform offers several benefits to both project owners and developers, including:</p>
 <ul>
@@ -222,29 +223,28 @@
 </ul>
 <h3 id="example-code-smart-contract">Example Code: Smart Contract</h3>
 <p>Here is an example of a smart contract used by the Block Bounty platform to manage bounties:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Bounty</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">bountyId</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">reward</span><span class="p">;</span>
+contract Bounty {
+    address public owner;
+    uint public bountyId;
+    uint public reward;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_bountyId</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_reward</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">        </span>bountyId<span class="w"> </span><span class="o">=</span><span class="w"> </span>_bountyId<span class="p">;</span>
-<span class="w">        </span>reward<span class="w"> </span><span class="o">=</span><span class="w"> </span>_reward<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor(uint _bountyId, uint _reward) public {
+        owner = msg.sender;
+        bountyId = _bountyId;
+        reward = _reward;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">claimBounty</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_developer</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can claim the bounty&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>_developer<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;Developer address cannot be zero&quot;</span><span class="p">);</span>
+    function claimBounty(address _developer) public {
+        require(msg.sender == owner, &quot;Only the owner can claim the bounty&quot;);
+        require(_developer != address(0), &quot;Developer address cannot be zero&quot;);
 
-<span class="w">        </span><span class="c1">// Transfer the reward to the developer</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span>_developer<span class="p">).</span>transfer<span class="p">(</span>reward<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Transfer the reward to the developer
+        payable(_developer).transfer(reward);
+    }
+}
+</code></pre>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>The Block Bounty platform has several use cases, including:</p>
 <ul>
@@ -269,31 +269,30 @@
 </ul>
 <p>By following these steps, developers and project owners can take advantage of the Block Bounty platform, creating a more secure and transparent blockchain ecosystem.</p>
 <p>Here is an example of how to get started with the Block Bounty API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API endpoint and credentials</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.blockbounty.io/v1/register&quot;</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_API_KEY&quot;</span>
+# Set API endpoint and credentials
+endpoint = &quot;https://api.blockbounty.io/v1/register&quot;
+api_key = &quot;YOUR_API_KEY&quot;
 
-<span class="c1"># Set developer information</span>
-<span class="n">developer_name</span> <span class="o">=</span> <span class="s2">&quot;John Doe&quot;</span>
-<span class="n">developer_email</span> <span class="o">=</span> <span class="s2">&quot;john@example.com&quot;</span>
+# Set developer information
+developer_name = &quot;John Doe&quot;
+developer_email = &quot;john@example.com&quot;
 
-<span class="c1"># Register on the platform</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">developer_name</span><span class="p">,</span>
-    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">developer_email</span>
-<span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">})</span>
+# Register on the platform
+response = requests.post(endpoint, json={
+    &quot;name&quot;: developer_name,
+    &quot;email&quot;: developer_email
+}, headers={
+    &quot;Authorization&quot;: f&quot;Bearer {api_key}&quot;
+})
 
-<span class="c1"># Check if the registration was successful</span>
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Registration successful&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to register&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Check if the registration was successful
+if response.status_code == 200:
+    print(&quot;Registration successful&quot;)
+else:
+    print(&quot;Failed to register&quot;)
+</code></pre>
 <p>Note: The code examples provided in this article are for illustrative purposes only and should not be used in production without proper testing and validation.</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"

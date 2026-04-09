@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,17 +162,16 @@
 <li><strong>Lack of innovation</strong>: Big tech companies may prioritize established products and services over new, innovative ideas.</li>
 </ul>
 <p>To illustrate these challenges, let's consider an example. Suppose we're working on a project to develop a machine learning model using TensorFlow and scikit-learn. In a big tech company, we might need to navigate a complex web of approvals and reviews before we can even start coding.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example code: TensorFlow and scikit-learn</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python"># Example code: TensorFlow and scikit-learn
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+# Load the dataset
+dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 
-<span class="c1"># Split the dataset into training and testing sets</span>
-<span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-</code></pre></div>
-
+# Split the dataset into training and testing sets
+train_dataset, test_dataset = train_test_split(dataset, test_size=0.2)
+</code></pre>
 <p>In a smaller company, we might have more freedom to experiment and innovate, using tools like Jupyter Notebooks and Google Colab to rapidly prototype and test our ideas.</p>
 <h3 id="opportunities-in-smaller-companies">Opportunities in Smaller Companies</h3>
 <p>Smaller companies, on the other hand, offer a range of benefits that can be attractive to senior developers. These include:</p>
@@ -188,19 +188,18 @@
 <li><strong>Consulting firms</strong>: Companies like Accenture, Deloitte, and McKinsey offer opportunities for professional growth and development, as well as the chance to work on a wide range of projects.</li>
 </ul>
 <p>To illustrate the benefits of working in a smaller company, let's consider an example. Suppose we're working on a project to develop a web application using React and Node.js. In a smaller company, we might have more freedom to choose our own tools and technologies, using platforms like AWS and Heroku to deploy and manage our application.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example code: React and Node.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Example code: React and Node.js
+import React from 'react';
+import express from 'express';
 
-<span class="c1">// Create a new Express app</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+// Create a new Express app
+const app = express();
 
-<span class="c1">// Define a route for the home page</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Define a route for the home page
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!');
+});
+</code></pre>
 <p>In a smaller company, we might also have more opportunities to contribute to open-source projects, using platforms like GitHub and GitLab to collaborate with other developers.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>So, what are some common problems that senior developers face when leaving big tech companies, and how can they be solved? Some common issues include:</p>
@@ -223,29 +222,28 @@
 <li><strong>Stack Overflow</strong>: A Q&amp;A platform for developers that allows them to ask and answer questions, and showcase their expertise.</li>
 </ul>
 <p>To illustrate the benefits of using these tools and platforms, let's consider an example. Suppose we're working on a project to develop a mobile application using Flutter and Dart. We can use GitHub to collaborate with other developers, and Stack Overflow to ask and answer questions about the technology stack.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example code: Flutter and Dart</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">// Example code: Flutter and Dart
+import 'package:flutter/material.dart';
 
-<span class="c1">// Create a new Flutter app</span>
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
+// Create a new Flutter app
+void main() {
+  runApp(MyApp());
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">body:</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">child:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Hello World!',
+      home: Scaffold(
+        body: Center(
+          child: Text('Hello World!'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
 <p>In this example, we can use GitHub to manage the codebase, and Stack Overflow to ask and answer questions about the technology stack.</p>
 <h2 id="real-world-metrics-and-performance-benchmarks">Real-World Metrics and Performance Benchmarks</h2>
 <p>So, what are some real-world metrics and performance benchmarks that can help us understand the Big Tech Exodus? Some examples include:</p>

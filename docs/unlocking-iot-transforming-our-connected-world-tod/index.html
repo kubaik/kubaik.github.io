@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -169,34 +170,33 @@
 </li>
 </ol>
 <p>The following Python script uses the <code>RPi.GPIO</code> library to read data from the moisture sensor and sends it to a cloud platform (e.g., Adafruit IO) for monitoring.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">Adafruit_DHT</span>
-<span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="nn">GPIO</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+import requests
 
-<span class="c1"># Set GPIO mode</span>
-<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+# Set GPIO mode
+GPIO.setmode(GPIO.BCM)
 
-<span class="c1"># Moisture sensor pin</span>
-<span class="n">MOISTURE_SENSOR_PIN</span> <span class="o">=</span> <span class="mi">17</span>
+# Moisture sensor pin
+MOISTURE_SENSOR_PIN = 17
 
-<span class="c1"># Adafruit IO settings</span>
-<span class="n">ADAFRUIT_IO_URL</span> <span class="o">=</span> <span class="s1">&#39;https://io.adafruit.com/api/v2/YOUR_USERNAME/feeds/moisture/data&#39;</span>
-<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X-AIO-Key&#39;</span><span class="p">:</span> <span class="s1">&#39;YOUR_AIO_KEY&#39;</span><span class="p">}</span>
+# Adafruit IO settings
+ADAFRUIT_IO_URL = 'https://io.adafruit.com/api/v2/YOUR_USERNAME/feeds/moisture/data'
+HEADERS = {'X-AIO-Key': 'YOUR_AIO_KEY'}
 
-<span class="k">def</span> <span class="nf">read_moisture</span><span class="p">():</span>
-    <span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">MOISTURE_SENSOR_PIN</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>
-    <span class="n">moisture_level</span> <span class="o">=</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">MOISTURE_SENSOR_PIN</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">moisture_level</span>
+def read_moisture():
+    GPIO.setup(MOISTURE_SENSOR_PIN, GPIO.IN)
+    moisture_level = GPIO.input(MOISTURE_SENSOR_PIN)
+    return moisture_level
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">moisture</span> <span class="o">=</span> <span class="n">read_moisture</span><span class="p">()</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">moisture</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">ADAFRUIT_IO_URL</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Moisture Level: </span><span class="si">{</span><span class="n">moisture</span><span class="si">}</span><span class="s1"> - Sent to Adafruit IO, Response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-</code></pre></div>
-
+while True:
+    moisture = read_moisture()
+    payload = {'value': moisture}
+    response = requests.post(ADAFRUIT_IO_URL, json=payload, headers=HEADERS)
+    print(f'Moisture Level: {moisture} - Sent to Adafruit IO, Response: {response.status_code}')
+    time.sleep(60)
+</code></pre>
 <ul>
 <li><strong>Cost</strong>: The total cost of components is approximately $50-$75, depending on where you source them.</li>
 <li><strong>Outcome</strong>: This system can provide actionable insights about soil moisture levels, helping farmers optimize irrigation schedules and conserve water.</li>
@@ -217,33 +217,32 @@
 </li>
 </ol>
 <p>The following AWS Lambda function checks the temperature of a machine and sends an alert if it exceeds a set threshold.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import json
+import boto3
 
-<span class="c1"># Create SNS client</span>
-<span class="n">sns_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sns&#39;</span><span class="p">)</span>
+# Create SNS client
+sns_client = boto3.client('sns')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span>
-    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">75</span>  <span class="c1"># Threshold in degrees Fahrenheit</span>
+def lambda_handler(event, context):
+    temperature = event['temperature']
+    threshold = 75  # Threshold in degrees Fahrenheit
 
-    <span class="k">if</span> <span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Alert! Machine temperature is too high: </span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s1">°F&#39;</span>
-        <span class="n">sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-            <span class="n">TopicArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:sns:YOUR_REGION:YOUR_ACCOUNT_ID:YOUR_TOPIC&#39;</span><span class="p">,</span>
-            <span class="n">Message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
-            <span class="n">Subject</span><span class="o">=</span><span class="s1">&#39;Machine Temperature Alert&#39;</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s1">&#39;Alert sent!&#39;</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s1">&#39;Temperature is normal.&#39;</span><span class="p">)</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    if temperature &gt; threshold:
+        message = f'Alert! Machine temperature is too high: {temperature}°F'
+        sns_client.publish(
+            TopicArn='arn:aws:sns:YOUR_REGION:YOUR_ACCOUNT_ID:YOUR_TOPIC',
+            Message=message,
+            Subject='Machine Temperature Alert'
+        )
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Alert sent!')
+        }
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Temperature is normal.')
+    }
+</code></pre>
 <ul>
 <li><strong>Cost</strong>: AWS Lambda charges $0.20 per 1 million requests and $0.00001667 per GB-second of execution time. Depending on your usage, this could be a cost-effective solution.</li>
 <li><strong>Outcome</strong>: By implementing this solution, companies can reduce unexpected downtime significantly and optimize maintenance schedules.</li>

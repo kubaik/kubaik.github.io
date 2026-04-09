@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,20 +159,19 @@
 * <strong>Lightweight</strong>: .NET Core is a lightweight framework, which makes it easier to deploy and manage applications.</p>
 <h2 id="building-a-simple-net-core-application">Building a Simple .NET Core Application</h2>
 <p>To get started with .NET Core, let's build a simple "Hello World" application using C#. We'll use the <code>dotnet</code> command-line tool to create and run the application.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<pre><code class="language-csharp">using System;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">HelloWorld</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Hello World!&quot;);
+        }
+    }
+}
+</code></pre>
 <p>To create and run this application, follow these steps:
 1. Install the .NET Core SDK from the official Microsoft website.
 2. Open a terminal or command prompt and navigate to the directory where you want to create the application.
@@ -180,60 +180,59 @@
 5. Run the command <code>dotnet run</code> to run the application.</p>
 <h2 id="using-entity-framework-core-for-database-operations">Using Entity Framework Core for Database Operations</h2>
 <p>Entity Framework Core is a popular ORM (Object-Relational Mapping) framework for .NET Core applications. It provides a simple and efficient way to interact with databases using C# code. Let's consider an example of using Entity Framework Core to perform CRUD (Create, Read, Update, Delete) operations on a database.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.EntityFrameworkCore;
+using System;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">EntityFrameworkCoreExample</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Student</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Age</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+namespace EntityFrameworkCoreExample
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SchoolContext</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DbContext</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">DbSet</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Students</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+    public class SchoolContext : DbContext
+    {
+        public DbSet&lt;Student&gt; Students { get; set; }
 
-<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">DbContextOptionsBuilder</span><span class="w"> </span><span class="n">optionsBuilder</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">optionsBuilder</span><span class="p">.</span><span class="n">UseSqlServer</span><span class="p">(</span><span class="s">@&quot;Server=(localdb)\mssqllocaldb;Database=SchoolDB;Trusted_Connection=True;&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@&quot;Server=(localdb)\mssqllocaldb;Database=SchoolDB;Trusted_Connection=True;&quot;);
+        }
+    }
 
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SchoolContext</span><span class="p">())</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Create a new student</span>
-<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">};</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Students</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">student</span><span class="p">);</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var context = new SchoolContext())
+            {
+                // Create a new student
+                var student = new Student { Name = &quot;John Doe&quot;, Age = 20 };
+                context.Students.Add(student);
+                context.SaveChanges();
 
-<span class="w">                </span><span class="c1">// Read all students</span>
-<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Students</span><span class="p">.</span><span class="n">ToList</span><span class="p">();</span>
-<span class="w">                </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">students</span><span class="p">)</span>
-<span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
-<span class="w">                </span><span class="p">}</span>
+                // Read all students
+                var students = context.Students.ToList();
+                foreach (var s in students)
+                {
+                    Console.WriteLine(s.Name);
+                }
 
-<span class="w">                </span><span class="c1">// Update a student</span>
-<span class="w">                </span><span class="n">student</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Jane Doe&quot;</span><span class="p">;</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Students</span><span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="n">student</span><span class="p">);</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
+                // Update a student
+                student.Name = &quot;Jane Doe&quot;;
+                context.Students.Update(student);
+                context.SaveChanges();
 
-<span class="w">                </span><span class="c1">// Delete a student</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Students</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">student</span><span class="p">);</span>
-<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+                // Delete a student
+                context.Students.Remove(student);
+                context.SaveChanges();
+            }
+        }
+    }
+}
+</code></pre>
 <p>In this example, we define a <code>Student</code> class and a <code>SchoolContext</code> class that inherits from <code>DbContext</code>. We use the <code>UseSqlServer</code> method to specify the database connection string. We then perform CRUD operations using the <code>DbSet&lt;Student&gt;</code> property.</p>
 <h2 id="using-azure-services-for-scalability-and-reliability">Using Azure Services for Scalability and Reliability</h2>
 <p>Azure provides a range of services that can be used to build scalable and reliable .NET Core applications. Some of the popular services include:
@@ -241,19 +240,18 @@
 * <strong>Azure Functions</strong>: A serverless platform for building event-driven applications.
 * <strong>Azure Cosmos DB</strong>: A globally distributed, multi-model database service.</p>
 <p>Let's consider an example of using Azure App Service to deploy a .NET Core application. We'll use the Azure CLI to create and deploy the application.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new Azure resource group</span>
-az<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>myresourcegroup<span class="w"> </span>--location<span class="w"> </span>westus2
+<pre><code class="language-bash"># Create a new Azure resource group
+az group create --name myresourcegroup --location westus2
 
-<span class="c1"># Create a new Azure App Service plan</span>
-az<span class="w"> </span>appservice<span class="w"> </span>plan<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>myappserviceplan<span class="w"> </span>--resource-group<span class="w"> </span>myresourcegroup<span class="w"> </span>--sku<span class="w"> </span>FREE
+# Create a new Azure App Service plan
+az appservice plan create --name myappserviceplan --resource-group myresourcegroup --sku FREE
 
-<span class="c1"># Create a new Azure App Service</span>
-az<span class="w"> </span>webapp<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>mywebapp<span class="w"> </span>--resource-group<span class="w"> </span>myresourcegroup<span class="w"> </span>--plan<span class="w"> </span>myappserviceplan
+# Create a new Azure App Service
+az webapp create --name mywebapp --resource-group myresourcegroup --plan myappserviceplan
 
-<span class="c1"># Deploy the .NET Core application to Azure App Service</span>
-az<span class="w"> </span>webapp<span class="w"> </span>deployment<span class="w"> </span>slot<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>mywebapp<span class="w"> </span>--resource-group<span class="w"> </span>myresourcegroup<span class="w"> </span>--slot<span class="w"> </span>production
-</code></pre></div>
-
+# Deploy the .NET Core application to Azure App Service
+az webapp deployment slot create --name mywebapp --resource-group myresourcegroup --slot production
+</code></pre>
 <p>In this example, we create a new Azure resource group, App Service plan, and App Service. We then deploy the .NET Core application to the App Service using the Azure CLI.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when building .NET Core applications include:

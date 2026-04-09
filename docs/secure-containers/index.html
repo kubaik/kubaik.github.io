@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,9 +159,8 @@
 <li>Using secrets management tools to securely store sensitive data</li>
 </ul>
 <p>For example, you can use the <code>docker update</code> command to update a container image:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>update<span class="w"> </span>--image<span class="w"> </span>my-image:latest
-</code></pre></div>
-
+<pre><code class="language-bash">docker update --image my-image:latest
+</code></pre>
 <p>This command will update the <code>my-image</code> container image to the latest version, ensuring that any known vulnerabilities are patched.</p>
 <h2 id="container-security-best-practices">Container Security Best Practices</h2>
 <p>To ensure the security of your containers, follow these best practices:</p>
@@ -178,33 +178,31 @@
 <li>Twistlock: a platform that provides container security, including network policies and secrets management</li>
 </ul>
 <p>For example, you can use the <code>docker scan</code> command to scan a container image for vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>scan<span class="w"> </span>my-image:latest
-</code></pre></div>
-
+<pre><code class="language-bash">docker scan my-image:latest
+</code></pre>
 <p>This command will scan the <code>my-image</code> container image for vulnerabilities and provide a report on any potential security risks.</p>
 <h3 id="implementing-network-policies">Implementing Network Policies</h3>
 <p>Network policies are a critical component of container security, as they restrict communication between containers and limit access to sensitive data. You can use tools, such as Calico, to implement network policies in your containerized environment.</p>
 <p>For example, you can use the following YAML file to define a network policy that restricts communication between containers:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">networking</span><span class="o">.</span><span class="na">k8s</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">NetworkPolicy</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">restrict</span><span class="o">-</span><span class="n">communication</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">podSelector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">ingress</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">from</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">podSelector</span><span class="o">:</span>
-<span class="w">        </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">          </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">egress</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">to</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">podSelector</span><span class="o">:</span>
-<span class="w">        </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">          </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restrict-communication
+spec:
+  podSelector:
+    matchLabels:
+      app: my-app
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: my-app
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: my-app
+</code></pre>
 <p>This YAML file defines a network policy that restricts communication between containers with the label <code>app: my-app</code>. The policy allows ingress and egress traffic only between containers with the same label, ensuring that sensitive data is not exposed to unauthorized containers.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can arise in containerized environments include:</p>
@@ -220,9 +218,8 @@
 <li><strong>Use a secrets management tool</strong>, such as Hashicorp's Vault, to securely store sensitive data</li>
 </ul>
 <p>For example, you can use the following command to store a sensitive value, such as an API key, in Hashicorp's Vault:</p>
-<div class="codehilite"><pre><span></span><code>vault<span class="w"> </span>kv<span class="w"> </span>put<span class="w"> </span>secret/my-api-key<span class="w"> </span><span class="nv">value</span><span class="o">=</span>my-api-key
-</code></pre></div>
-
+<pre><code class="language-bash">vault kv put secret/my-api-key value=my-api-key
+</code></pre>
 <p>This command will store the sensitive value <code>my-api-key</code> in Hashicorp's Vault, ensuring that it is securely stored and not exposed to unauthorized containers.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Some common use cases for container security include:</p>

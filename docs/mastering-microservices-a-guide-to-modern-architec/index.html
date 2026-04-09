@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -194,13 +195,12 @@
 <li><strong>Payment Service</strong>: Handles payment transactions.</li>
 </ol>
 <p>Each service exposes a RESTful API and communicates with other services asynchronously. By breaking down the application into smaller services, we achieve better scalability, fault isolation, and flexibility in adding new features.</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Catalog Service API</span>
+<pre><code class="language-markdown"># Catalog Service API
 GET /products
 POST /products
 PUT /products/{id}
 DELETE /products/{id}
-</code></pre></div>
-
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering microservices architecture requires a deep understanding of its principles, benefits, challenges, and best practices. By adopting a microservices approach, organizations can build scalable, resilient, and agile applications that meet the demands of modern software development. Through careful planning, design, and implementation, organizations can leverage the power of microservices to drive innovation and business success.</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">

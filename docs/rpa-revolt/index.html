@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -177,89 +178,86 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples that demonstrate the use of RPA tools:</p>
 <h3 id="example-1-automating-data-entry-using-uipath">Example 1: Automating Data Entry using UiPath</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary namespaces</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Text</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Core</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Core.Activities</span><span class="p">;</span>
+<pre><code class="language-csharp">// Import the necessary namespaces
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UiPath.Core;
+using UiPath.Core.Activities;
 
-<span class="c1">// Define the automation workflow</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DataEntryWorkflow</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Launch the application</span>
-<span class="w">        </span><span class="n">LaunchApp</span><span class="p">(</span><span class="s">&quot;Notepad.exe&quot;</span><span class="p">);</span>
+// Define the automation workflow
+class DataEntryWorkflow
+{
+    public static void Main()
+    {
+        // Launch the application
+        LaunchApp(&quot;Notepad.exe&quot;);
 
-<span class="w">        </span><span class="c1">// Enter data into the application</span>
-<span class="w">        </span><span class="n">TypeText</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">PressKey</span><span class="p">(</span><span class="s">&quot;Enter&quot;</span><span class="p">);</span>
+        // Enter data into the application
+        TypeText(&quot;Hello World!&quot;);
+        PressKey(&quot;Enter&quot;);
 
-<span class="w">        </span><span class="c1">// Close the application</span>
-<span class="w">        </span><span class="n">CloseApp</span><span class="p">(</span><span class="s">&quot;Notepad.exe&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Close the application
+        CloseApp(&quot;Notepad.exe&quot;);
+    }
+}
+</code></pre>
 <p>This code example demonstrates how to automate data entry using UiPath. The code launches the Notepad application, enters the text "Hello World!", presses the Enter key, and then closes the application.</p>
 <h3 id="example-2-automating-document-processing-using-automation-anywhere">Example 2: Automating Document Processing using Automation Anywhere</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">automationanywhere</span>
+<pre><code class="language-python"># Import the necessary libraries
+import automationanywhere
 
-<span class="c1"># Define the automation workflow</span>
-<span class="k">def</span> <span class="nf">document_processing_workflow</span><span class="p">():</span>
-    <span class="c1"># Launch the application</span>
-    <span class="n">automationanywhere</span><span class="o">.</span><span class="n">launch_app</span><span class="p">(</span><span class="s2">&quot;Adobe Acrobat Reader DC.exe&quot;</span><span class="p">)</span>
+# Define the automation workflow
+def document_processing_workflow():
+    # Launch the application
+    automationanywhere.launch_app(&quot;Adobe Acrobat Reader DC.exe&quot;)
 
-    <span class="c1"># Open the document</span>
-    <span class="n">automationanywhere</span><span class="o">.</span><span class="n">open_document</span><span class="p">(</span><span class="s2">&quot;example.pdf&quot;</span><span class="p">)</span>
+    # Open the document
+    automationanywhere.open_document(&quot;example.pdf&quot;)
 
-    <span class="c1"># Extract data from the document</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">automationanywhere</span><span class="o">.</span><span class="n">extract_data</span><span class="p">(</span><span class="s2">&quot;example.pdf&quot;</span><span class="p">)</span>
+    # Extract data from the document
+    data = automationanywhere.extract_data(&quot;example.pdf&quot;)
 
-    <span class="c1"># Save the extracted data to a CSV file</span>
-    <span class="n">automationanywhere</span><span class="o">.</span><span class="n">save_data_to_csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;example.csv&quot;</span><span class="p">)</span>
+    # Save the extracted data to a CSV file
+    automationanywhere.save_data_to_csv(data, &quot;example.csv&quot;)
 
-    <span class="c1"># Close the application</span>
-    <span class="n">automationanywhere</span><span class="o">.</span><span class="n">close_app</span><span class="p">(</span><span class="s2">&quot;Adobe Acrobat Reader DC.exe&quot;</span><span class="p">)</span>
+    # Close the application
+    automationanywhere.close_app(&quot;Adobe Acrobat Reader DC.exe&quot;)
 
-<span class="c1"># Run the automation workflow</span>
-<span class="n">document_processing_workflow</span><span class="p">()</span>
-</code></pre></div>
-
+# Run the automation workflow
+document_processing_workflow()
+</code></pre>
 <p>This code example demonstrates how to automate document processing using Automation Anywhere. The code launches the Adobe Acrobat Reader DC application, opens a PDF document, extracts data from the document, saves the extracted data to a CSV file, and then closes the application.</p>
 <h3 id="example-3-automating-workflow-management-using-blue-prism">Example 3: Automating Workflow Management using Blue Prism</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">&#39; Define the automation workflow</span>
-<span class="kd">Sub</span><span class="w"> </span><span class="nf">workflow_management_workflow</span><span class="p">()</span>
-<span class="w">    </span><span class="c1">&#39; Launch the application</span>
-<span class="w">    </span><span class="nb">CreateObject</span><span class="p">(</span><span class="s2">&quot;WScript.Shell&quot;</span><span class="p">).</span><span class="n">Run</span><span class="w"> </span><span class="s2">&quot;Outlook.exe&quot;</span>
+<pre><code class="language-vbscript">' Define the automation workflow
+Sub workflow_management_workflow()
+    ' Launch the application
+    CreateObject(&quot;WScript.Shell&quot;).Run &quot;Outlook.exe&quot;
 
-<span class="w">    </span><span class="c1">&#39; Log in to the application</span>
-<span class="w">    </span><span class="n">Application</span><span class="p">.</span><span class="n">Visible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">True</span>
-<span class="w">    </span><span class="n">Application</span><span class="p">.</span><span class="n">Session</span><span class="p">.</span><span class="n">Logon</span><span class="w"> </span><span class="s2">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;password&quot;</span>
+    ' Log in to the application
+    Application.Visible = True
+    Application.Session.Logon &quot;username&quot;, &quot;password&quot;
 
-<span class="w">    </span><span class="c1">&#39; Create a new email</span>
-<span class="w">    </span><span class="kd">Dim</span><span class="w"> </span><span class="nv">olMail</span><span class="w"> </span><span class="n">As</span><span class="w"> </span><span class="n">Object</span>
-<span class="w">    </span><span class="k">Set</span><span class="w"> </span><span class="n">olMail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Application</span><span class="p">.</span><span class="n">CreateItem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    ' Create a new email
+    Dim olMail As Object
+    Set olMail = Application.CreateItem(0)
 
-<span class="w">    </span><span class="c1">&#39; Set the email subject and body</span>
-<span class="w">    </span><span class="n">olMail</span><span class="p">.</span><span class="n">Subject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Example Email&quot;</span>
-<span class="w">    </span><span class="n">olMail</span><span class="p">.</span><span class="n">Body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello World!&quot;</span>
+    ' Set the email subject and body
+    olMail.Subject = &quot;Example Email&quot;
+    olMail.Body = &quot;Hello World!&quot;
 
-<span class="w">    </span><span class="c1">&#39; Send the email</span>
-<span class="w">    </span><span class="n">olMail</span><span class="p">.</span><span class="n">Send</span>
+    ' Send the email
+    olMail.Send
 
-<span class="w">    </span><span class="c1">&#39; Close the application</span>
-<span class="w">    </span><span class="n">Application</span><span class="p">.</span><span class="n">Quit</span>
-<span class="k">End</span><span class="w"> </span><span class="k">Sub</span>
+    ' Close the application
+    Application.Quit
+End Sub
 
-<span class="c1">&#39; Run the automation workflow</span>
-<span class="n">workflow_management_workflow</span>
-</code></pre></div>
-
+' Run the automation workflow
+workflow_management_workflow
+</code></pre>
 <p>This code example demonstrates how to automate workflow management using Blue Prism. The code launches the Microsoft Outlook application, logs in to the application, creates a new email, sets the email subject and body, sends the email, and then closes the application.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>RPA can be applied to various industries and use cases, including:

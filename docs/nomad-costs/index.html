@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,41 +162,40 @@
 <h2 id="managing-finances-as-a-digital-nomad">Managing Finances as a Digital Nomad</h2>
 <p>To effectively manage finances as a digital nomad, it's crucial to track expenses and create a budget. One popular tool for this is <a href="https://www.mint.com/">Mint</a>, a personal finance app that allows users to link their bank accounts, credit cards, and investments, and provides a comprehensive overview of their financial situation.</p>
 <p>Here's an example of how to use Mint's API to track expenses:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API credentials</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Set API credentials
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Set API endpoint and parameters</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.mint.com/v1/budgets&quot;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;food&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-01-01&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;end_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-01-31&quot;</span>
-<span class="p">}</span>
+# Set API endpoint and parameters
+endpoint = &quot;https://api.mint.com/v1/budgets&quot;
+params = {
+    &quot;category&quot;: &quot;food&quot;,
+    &quot;start_date&quot;: &quot;2022-01-01&quot;,
+    &quot;end_date&quot;: &quot;2022-01-31&quot;
+}
 
-<span class="c1"># Authenticate and retrieve access token</span>
-<span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s2">&quot;https://api.mint.com/v1/oauth2/token&quot;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">},</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span> <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span> <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span><span class="p">}</span>
-<span class="p">)</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+# Authenticate and retrieve access token
+auth_response = requests.post(
+    &quot;https://api.mint.com/v1/oauth2/token&quot;,
+    headers={&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;},
+    data={&quot;grant_type&quot;: &quot;client_credentials&quot;, &quot;client_id&quot;: client_id, &quot;client_secret&quot;: client_secret}
+)
+access_token = auth_response.json()[&quot;access_token&quot;]
 
-<span class="c1"># Retrieve expense data</span>
-<span class="n">expense_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="n">endpoint</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
-    <span class="n">params</span><span class="o">=</span><span class="n">params</span>
-<span class="p">)</span>
-<span class="n">expenses</span> <span class="o">=</span> <span class="n">expense_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;budgets&quot;</span><span class="p">]</span>
+# Retrieve expense data
+expense_response = requests.get(
+    endpoint,
+    headers={&quot;Authorization&quot;: f&quot;Bearer {access_token}&quot;},
+    params=params
+)
+expenses = expense_response.json()[&quot;budgets&quot;]
 
-<span class="c1"># Print expense data</span>
-<span class="k">for</span> <span class="n">expense</span> <span class="ow">in</span> <span class="n">expenses</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">expense</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, Amount: </span><span class="si">{</span><span class="n">expense</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Print expense data
+for expense in expenses:
+    print(f&quot;Date: {expense['date']}, Amount: {expense['amount']}&quot;)
+</code></pre>
 <p>This code snippet demonstrates how to use the Mint API to retrieve expense data for a specific category and date range.</p>
 <h2 id="finding-affordable-accommodation">Finding Affordable Accommodation</h2>
 <p>One of the most significant expenses for digital nomads is accommodation. To find affordable options, it's essential to research and compare prices. Some popular platforms for finding accommodation include:
@@ -203,43 +203,42 @@
 * <a href="https://www.booking.com/">Booking.com</a>: Provides a vast selection of hotels, hostels, and guesthouses
 * <a href="https://nomadlist.com/">Nomad List</a>: A community-driven platform that offers a curated list of affordable accommodation options for digital nomads</p>
 <p>Here's an example of how to use the Airbnb API to search for affordable accommodation:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API credentials</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Set API credentials
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Set API endpoint and parameters</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.airbnb.com/v2/search&quot;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;Bali, Indonesia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;checkin&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-03-01&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;checkout&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-03-31&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;price_min&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="s2">&quot;price_max&quot;</span><span class="p">:</span> <span class="mi">50</span>
-<span class="p">}</span>
+# Set API endpoint and parameters
+endpoint = &quot;https://api.airbnb.com/v2/search&quot;
+params = {
+    &quot;location&quot;: &quot;Bali, Indonesia&quot;,
+    &quot;checkin&quot;: &quot;2024-03-01&quot;,
+    &quot;checkout&quot;: &quot;2024-03-31&quot;,
+    &quot;price_min&quot;: 10,
+    &quot;price_max&quot;: 50
+}
 
-<span class="c1"># Authenticate and retrieve access token</span>
-<span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s2">&quot;https://api.airbnb.com/v1/oauth2/token&quot;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">},</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span> <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span> <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span><span class="p">}</span>
-<span class="p">)</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+# Authenticate and retrieve access token
+auth_response = requests.post(
+    &quot;https://api.airbnb.com/v1/oauth2/token&quot;,
+    headers={&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;},
+    data={&quot;grant_type&quot;: &quot;client_credentials&quot;, &quot;client_id&quot;: client_id, &quot;client_secret&quot;: client_secret}
+)
+access_token = auth_response.json()[&quot;access_token&quot;]
 
-<span class="c1"># Retrieve search results</span>
-<span class="n">search_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="n">endpoint</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
-    <span class="n">params</span><span class="o">=</span><span class="n">params</span>
-<span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">search_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;search_results&quot;</span><span class="p">]</span>
+# Retrieve search results
+search_response = requests.get(
+    endpoint,
+    headers={&quot;Authorization&quot;: f&quot;Bearer {access_token}&quot;},
+    params=params
+)
+results = search_response.json()[&quot;search_results&quot;]
 
-<span class="c1"># Print search results</span>
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Price: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, Location: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Print search results
+for result in results:
+    print(f&quot;Price: {result['price']}, Location: {result['location']}&quot;)
+</code></pre>
 <p>This code snippet demonstrates how to use the Airbnb API to search for affordable accommodation in a specific location.</p>
 <h2 id="staying-healthy-on-the-road">Staying Healthy on the Road</h2>
 <p>As a digital nomad, it's essential to prioritize health and wellness. Some popular tools for tracking health and fitness include:
@@ -247,40 +246,39 @@
 * <a href="https://www.strava.com/">Strava</a>: A fitness tracking app that allows users to track their workouts and activities
 * <a href="https://www.headspace.com/">Headspace</a>: A meditation and mindfulness app that offers guided sessions and personalized tracking</p>
 <p>Here's an example of how to use the MyFitnessPal API to track daily calorie intake:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API credentials</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Set API credentials
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Set API endpoint and parameters</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.myfitnesspal.com/v2/diary&quot;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-03-01&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;your_username&quot;</span>
-<span class="p">}</span>
+# Set API endpoint and parameters
+endpoint = &quot;https://api.myfitnesspal.com/v2/diary&quot;
+params = {
+    &quot;date&quot;: &quot;2024-03-01&quot;,
+    &quot;username&quot;: &quot;your_username&quot;
+}
 
-<span class="c1"># Authenticate and retrieve access token</span>
-<span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s2">&quot;https://api.myfitnesspal.com/v1/oauth2/token&quot;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">},</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span> <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span> <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span><span class="p">}</span>
-<span class="p">)</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+# Authenticate and retrieve access token
+auth_response = requests.post(
+    &quot;https://api.myfitnesspal.com/v1/oauth2/token&quot;,
+    headers={&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;},
+    data={&quot;grant_type&quot;: &quot;client_credentials&quot;, &quot;client_id&quot;: client_id, &quot;client_secret&quot;: client_secret}
+)
+access_token = auth_response.json()[&quot;access_token&quot;]
 
-<span class="c1"># Retrieve diary data</span>
-<span class="n">diary_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="n">endpoint</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
-    <span class="n">params</span><span class="o">=</span><span class="n">params</span>
-<span class="p">)</span>
-<span class="n">diary</span> <span class="o">=</span> <span class="n">diary_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;diary&quot;</span><span class="p">]</span>
+# Retrieve diary data
+diary_response = requests.get(
+    endpoint,
+    headers={&quot;Authorization&quot;: f&quot;Bearer {access_token}&quot;},
+    params=params
+)
+diary = diary_response.json()[&quot;diary&quot;]
 
-<span class="c1"># Print diary data</span>
-<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">diary</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, Calories: </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">&#39;calories&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Print diary data
+for entry in diary:
+    print(f&quot;Date: {entry['date']}, Calories: {entry['calories']}&quot;)
+</code></pre>
 <p>This code snippet demonstrates how to use the MyFitnessPal API to track daily calorie intake.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that digital nomads face include:

@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -172,9 +173,8 @@
   - Each request contains all necessary information.
 - Use standard HTTP status codes to indicate operation results.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /api/v1/users/42</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /api/v1/users/42
+</code></pre>
 <h3 id="2-api-versioning-pattern">2. API Versioning Pattern</h3>
 <p>As APIs evolve, maintaining backward compatibility becomes critical. Versioning allows multiple API versions to coexist, avoiding breaking changes.</p>
 <p><strong>Common Strategies:</strong>
@@ -199,41 +199,38 @@ Use URI versioning for major changes, and header or query parameter versioning f
 - <strong>Cursor-based Pagination:</strong>
   Uses a cursor token to navigate pages, often more performant for real-time data.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/v1/products?cursor=abc123&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;next&quot;: &quot;/api/v1/products?cursor=abc123&quot;,
+  &quot;data&quot;: [ ... ]
+}
+</code></pre>
 <p><strong>Tip:</strong> Combine pagination with filtering to enhance performance.</p>
 <h3 id="4-hypermedia-as-the-engine-of-application-state-hateoas">4. Hypermedia as the Engine of Application State (HATEOAS)</h3>
 <p>HATEOAS is a REST principle that enables clients to discover actions dynamically through hypermedia links.</p>
 <p><strong>Example Response:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/v1/users/42&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/v1/users/42/orders&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;user&quot;: {
+    &quot;id&quot;: 42,
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;links&quot;: [
+      { &quot;rel&quot;: &quot;self&quot;, &quot;href&quot;: &quot;/api/v1/users/42&quot; },
+      { &quot;rel&quot;: &quot;orders&quot;, &quot;href&quot;: &quot;/api/v1/users/42/orders&quot; }
+    ]
+  }
+}
+</code></pre>
 <p><strong>Benefit:</strong> Reduces tight coupling between client and server, enabling more flexible API evolution.</p>
 <h3 id="5-error-handling-pattern">5. Error Handling Pattern</h3>
 <p>Consistent and informative error responses improve client debugging and user experience.</p>
 <p><strong>Best Practices:</strong>
 - Use appropriate HTTP status codes (<code>404</code>, <code>400</code>, <code>500</code>, etc.)
 - Provide a meaningful error message:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InvalidRequest&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The &#39;email&#39; field is required.&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;InvalidRequest&quot;,
+  &quot;message&quot;: &quot;The 'email' field is required.&quot;,
+  &quot;code&quot;: 400
+}
+</code></pre>
 <ul>
 <li>Include error codes for programmatic handling.</li>
 </ul>
@@ -252,10 +249,9 @@ Use URI versioning for major changes, and header or query parameter versioning f
 - Limit the number of requests per user/IP per time window.
 - Return <code>429 Too Many Requests</code> when limits are exceeded.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">429</span> <span class="ne">Too Many Requests</span>
-<span class="na">Retry-After</span><span class="o">:</span> <span class="l">60</span>
-</code></pre></div>
-
+<pre><code class="language-http">HTTP/1.1 429 Too Many Requests
+Retry-After: 60
+</code></pre>
 <p><strong>Tip:</strong> Use tools like Redis or API gateways to manage rate limiting efficiently.</p>
 <h3 id="3-caching-pattern">3. Caching Pattern</h3>
 <p>Reduces server load and improves response times.</p>
@@ -263,20 +259,18 @@ Use URI versioning for major changes, and header or query parameter versioning f
 - Use HTTP cache headers (<code>ETag</code>, <code>Cache-Control</code>)
 - Implement server-side caching for expensive queries</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">ETag: &quot;abc123&quot;</span>
-<span class="err">If-None-Match: &quot;abc123&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-http">ETag: &quot;abc123&quot;
+If-None-Match: &quot;abc123&quot;
+</code></pre>
 <p><strong>Result:</strong> Client receives <code>304 Not Modified</code> if data hasn’t changed.</p>
 <h3 id="4-idempotency-pattern">4. Idempotency Pattern</h3>
 <p>Ensures that multiple identical requests produce the same result, essential for reliable operations like payments.</p>
 <p><strong>Implementation:</strong>
 - Use unique idempotency keys for requests.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">POST /payments</span>
-<span class="err">Idempotency-Key: a1b2c3d4</span>
-</code></pre></div>
-
+<pre><code class="language-http">POST /payments
+Idempotency-Key: a1b2c3d4
+</code></pre>
 <p><strong>Tip:</strong> Store idempotency keys on the server to prevent duplicate processing.</p>
 <hr />
 <h2 id="practical-tips-for-implementing-api-design-patterns">Practical Tips for Implementing API Design Patterns</h2>
@@ -291,27 +285,26 @@ Use URI versioning for major changes, and header or query parameter versioning f
 <hr />
 <h2 id="example-building-a-restful-user-service">Example: Building a RESTful User Service</h2>
 <p>Let’s apply these patterns in a simplified example.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">GET</span><span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">users</span><span class="o">/</span>{<span class="nv">userId</span>}
-<span class="o">-</span><span class="w"> </span><span class="nv">Retrieves</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">details</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">hypermedia</span><span class="w"> </span><span class="nv">links</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">related</span><span class="w"> </span><span class="nv">resources</span>.
+<pre><code class="language-plaintext">GET /v1/users/{userId}
+- Retrieves user details with hypermedia links for related resources.
 
-<span class="nv">POST</span><span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">users</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Creates</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">user</span><span class="c1">; request body includes user data.</span>
+POST /v1/users
+- Creates a new user; request body includes user data.
 
-<span class="nv">PUT</span><span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">users</span><span class="o">/</span>{<span class="nv">userId</span>}
-<span class="o">-</span><span class="w"> </span><span class="nv">Updates</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">info</span><span class="c1">; supports idempotent updates.</span>
+PUT /v1/users/{userId}
+- Updates user info; supports idempotent updates.
 
-<span class="nv">GET</span><span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">users</span>?<span class="nv">limit</span><span class="o">=</span><span class="mi">10</span><span class="o">&amp;</span><span class="nv">offset</span><span class="o">=</span><span class="mi">20</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Retrieves</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">paginated</span><span class="w"> </span><span class="nv">list</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">users</span>.
+GET /v1/users?limit=10&amp;offset=20
+- Retrieves a paginated list of users.
 
-<span class="nv">Error</span><span class="w"> </span><span class="nv">Handling</span>:
-<span class="o">-</span><span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">found</span>:
-<span class="w">  </span><span class="nv">HTTP</span><span class="w"> </span><span class="mi">404</span>
-<span class="w">  </span><span class="nv">Response</span>:<span class="w"> </span>{<span class="w"> </span><span class="s2">&quot;error&quot;</span>:<span class="w"> </span><span class="s2">&quot;UserNotFound&quot;</span>,<span class="w"> </span><span class="s2">&quot;message&quot;</span>:<span class="w"> </span><span class="s2">&quot;User with ID 42 does not exist.&quot;</span><span class="w"> </span>}
+Error Handling:
+- If user not found:
+  HTTP 404
+  Response: { &quot;error&quot;: &quot;UserNotFound&quot;, &quot;message&quot;: &quot;User with ID 42 does not exist.&quot; }
 
-<span class="nv">Rate</span><span class="w"> </span><span class="nv">Limiting</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Max</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="nv">requests</span><span class="w"> </span><span class="nv">per</span><span class="w"> </span><span class="nv">minute</span><span class="w"> </span><span class="nv">per</span><span class="w"> </span><span class="nv">client</span>.
-</code></pre></div>
-
+Rate Limiting:
+- Max 100 requests per minute per client.
+</code></pre>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>Designing robust, scalable, and developer-friendly APIs is both an art and a science. By leveraging proven API design patterns—such as REST principles, versioning, pagination, HATEOAS, and error handling—you set a solid foundation for your application's growth and success. Advanced patterns like CQRS, throttling, caching, and idempotency further optimize your API for real-world demands.</p>

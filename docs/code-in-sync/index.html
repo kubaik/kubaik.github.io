@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -174,30 +175,29 @@
 <p>Version control is vital for managing code changes and collaboration among developers. Git is the most widely used version control system.</p>
 <h4 id="example-using-git-for-version-control">Example: Using Git for Version Control</h4>
 <p>To illustrate, here’s how to create a new Git repository and manage branches:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Initialize a new Git repository</span>
-git<span class="w"> </span>init<span class="w"> </span>my-project
+<pre><code class="language-bash"># Initialize a new Git repository
+git init my-project
 
-<span class="c1"># Navigate into the project directory</span>
-<span class="nb">cd</span><span class="w"> </span>my-project
+# Navigate into the project directory
+cd my-project
 
-<span class="c1"># Create a new file and add it to the repository</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello, World!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>index.js
-git<span class="w"> </span>add<span class="w"> </span>index.js
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
+# Create a new file and add it to the repository
+echo &quot;Hello, World!&quot; &gt; index.js
+git add index.js
+git commit -m &quot;Initial commit&quot;
 
-<span class="c1"># Create a new branch for a feature</span>
-git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/new-feature
+# Create a new branch for a feature
+git checkout -b feature/new-feature
 
-<span class="c1"># Make changes and commit</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;New feature implemented!&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>index.js
-git<span class="w"> </span>add<span class="w"> </span>index.js
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Implemented new feature&quot;</span>
+# Make changes and commit
+echo &quot;New feature implemented!&quot; &gt;&gt; index.js
+git add index.js
+git commit -m &quot;Implemented new feature&quot;
 
-<span class="c1"># Merge the feature branch back to main</span>
-git<span class="w"> </span>checkout<span class="w"> </span>main
-git<span class="w"> </span>merge<span class="w"> </span>feature/new-feature
-</code></pre></div>
-
+# Merge the feature branch back to main
+git checkout main
+git merge feature/new-feature
+</code></pre>
 <h4 id="benefits-of-using-git">Benefits of Using Git</h4>
 <ul>
 <li><strong>Collaboration</strong>: Multiple developers can work on the same codebase without conflicts.</li>
@@ -232,32 +232,31 @@ git<span class="w"> </span>merge<span class="w"> </span>feature/new-feature
 <ol>
 <li><strong>Create a Workflow File</strong>: In your repository, create a directory called <code>.github/workflows</code> and add a file named <code>ci.yml</code>.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<pre><code class="language-yaml">name: CI
 
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+      - name: Install dependencies
+        run: npm install
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+      - name: Run tests
+        run: npm test
+</code></pre>
 <ol>
 <li><strong>Test Automation</strong>: This workflow checks out the code, sets up Node.js, installs dependencies, and runs tests every time changes are pushed to the main branch.</li>
 </ol>

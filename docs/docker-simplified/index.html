@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,50 +167,43 @@
 * <strong>Docker Image</strong>: A Docker image is a template that contains the application code, dependencies, and configuration files.</p>
 <h3 id="dockerfile">Dockerfile</h3>
 <p>A Dockerfile is a text file that contains instructions for building a Docker image. The Dockerfile specifies the base image, copies files, installs dependencies, and sets environment variables. Here is an example of a simple Dockerfile:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
+<pre><code class="language-dockerfile">FROM python:3.9-slim
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Python<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>by<span class="w"> </span>Sebastian<span class="w"> </span>Raschka&lt;/a&gt;*
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <p>This Dockerfile uses the official Python 3.9 image, sets the working directory to /app, copies the requirements.txt file, installs dependencies using pip, copies the application code, and sets the command to run the application.</p>
 <h2 id="building-and-running-containers">Building and Running Containers</h2>
 <p>To build a Docker image, you can use the <code>docker build</code> command, specifying the Dockerfile and the build context. For example:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-app<span class="w"> </span>.
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-app .
+</code></pre>
 <p>This command builds a Docker image with the name <code>my-app</code> using the instructions in the Dockerfile.</p>
 <p>To run a container, you can use the <code>docker run</code> command, specifying the image name and any additional options. For example:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -p 8080:8080 my-app
+</code></pre>
 <p>This command runs a container from the <code>my-app</code> image, mapping port 8080 on the host system to port 8080 in the container.</p>
 <h2 id="docker-volumes-and-networking">Docker Volumes and Networking</h2>
 <p>Docker provides two key features for managing data and communication between containers: volumes and networking.</p>
 <h3 id="docker-volumes">Docker Volumes</h3>
 <p>Docker volumes are directories that are shared between the host system and containers. Volumes provide a way to persist data even after a container is deleted. To create a volume, you can use the <code>docker volume create</code> command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>my-volume
-</code></pre></div>
-
+<pre><code class="language-bash">docker volume create my-volume
+</code></pre>
 <p>You can then mount the volume to a container using the <code>--volume</code> option:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span>my-volume:/app/data<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -v my-volume:/app/data my-app
+</code></pre>
 <p>This command mounts the <code>my-volume</code> volume to the <code>/app/data</code> directory in the container.</p>
 <h3 id="docker-networking">Docker Networking</h3>
 <p>Docker provides a built-in networking system that allows containers to communicate with each other. To create a network, you can use the <code>docker network create</code> command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>my-network
-</code></pre></div>
-
+<pre><code class="language-bash">docker network create my-network
+</code></pre>
 <p>You can then connect a container to the network using the <code>--net</code> option:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--net<span class="w"> </span>my-network<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run --net my-network my-app
+</code></pre>
 <p>This command connects the container to the <code>my-network</code> network.</p>
 <h2 id="docker-orchestration">Docker Orchestration</h2>
 <p>Docker orchestration refers to the process of managing multiple containers and services. There are several tools available for Docker orchestration, including:
@@ -218,13 +212,11 @@
 * <strong>Apache Mesos</strong>: Apache Mesos is a distributed systems kernel that provides a way to manage and orchestrate containers and services.</p>
 <h3 id="docker-swarm">Docker Swarm</h3>
 <p>Docker Swarm is a built-in orchestration tool that provides a simple way to manage multiple containers and services. To create a swarm, you can use the <code>docker swarm init</code> command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>swarm<span class="w"> </span>init
-</code></pre></div>
-
+<pre><code class="language-bash">docker swarm init
+</code></pre>
 <p>You can then join a node to the swarm using the <code>docker swarm join</code> command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>swarm<span class="w"> </span>join<span class="w"> </span>&lt;manager-ip&gt;:2377
-</code></pre></div>
-
+<pre><code class="language-bash">docker swarm join &lt;manager-ip&gt;:2377
+</code></pre>
 <p>This command joins a node to the swarm, allowing it to participate in the orchestration of containers and services.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
@@ -245,9 +237,8 @@
 * <strong>Volume issues</strong>: If you are experiencing volume issues, you can use the <code>docker volume inspect</code> command to view the volume configuration and diagnose the issue.</p>
 <h3 id="example-problem-container-crashes">Example Problem: Container Crashes</h3>
 <p>If a container crashes, you can use the <code>docker logs</code> command to view the logs and diagnose the issue. For example:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>my-container
-</code></pre></div>
-
+<pre><code class="language-bash">docker logs -f my-container
+</code></pre>
 <p>This command views the logs for the <code>my-container</code> container, allowing you to diagnose the issue and take corrective action.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Docker containerization provides several performance benefits, including:

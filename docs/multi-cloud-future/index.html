@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,7 +167,7 @@
 </ol>
 <h3 id="example-deploying-a-multi-cloud-application-using-kubernetes">Example: Deploying a Multi-Cloud Application using Kubernetes</h3>
 <p>Kubernetes is a popular container orchestration platform that can be used to deploy and manage applications across multiple cloud providers. Here is an example of how to deploy a simple web application using Kubernetes on both Amazon Web Services (AWS) and Microsoft Azure:</p>
-<div class="codehilite"><pre><span></span><code># Define the deployment configuration
+<pre><code class="language-yml"># Define the deployment configuration
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -186,16 +187,14 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-</code></pre></div>
-
+</code></pre>
 <p>This configuration defines a simple web application deployment using the Nginx container image. To deploy this application on both AWS and Azure, we can use the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create the deployment on AWS</span>
-kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml<span class="w"> </span>--kubeconfig<span class="w"> </span>aws-kubeconfig
+<pre><code class="language-bash"># Create the deployment on AWS
+kubectl apply -f deployment.yaml --kubeconfig aws-kubeconfig
 
-<span class="c1"># Create the deployment on Azure</span>
-kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml<span class="w"> </span>--kubeconfig<span class="w"> </span>azure-kubeconfig
-</code></pre></div>
-
+# Create the deployment on Azure
+kubectl apply -f deployment.yaml --kubeconfig azure-kubeconfig
+</code></pre>
 <p>This example demonstrates how to deploy a simple web application using Kubernetes on multiple cloud providers.</p>
 <h2 id="managing-multi-cloud-architecture">Managing Multi-Cloud Architecture</h2>
 <p>Managing a multi-cloud architecture requires careful monitoring, logging, and security. Some of the key tools and platforms used for managing multi-cloud architecture include:
@@ -204,25 +203,23 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 * <strong>Cloud management platforms</strong>: Platforms such as RightScale, Scalr, and CloudBolt provide comprehensive management and automation capabilities for cloud-based applications.</p>
 <h3 id="example-monitoring-a-multi-cloud-application-using-prometheus">Example: Monitoring a Multi-Cloud Application using Prometheus</h3>
 <p>Prometheus is a popular monitoring platform that can be used to monitor and analyze cloud-based applications. Here is an example of how to configure Prometheus to monitor a web application deployed on both AWS and Azure:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Define the Prometheus configuration
+<pre><code class="language-yml"># Define the Prometheus configuration
 global:
   scrape_interval: 10s
 
 scrape_configs:
-  <span class="k">-</span> job_name: &#39;web-app&#39;
+  - job_name: 'web-app'
     static_configs:
-      <span class="k">-</span> targets: [&#39;aws-web-app:80&#39;]
-      <span class="k">-</span> targets: [&#39;azure-web-app:80&#39;]
-</code></pre></div>
-
+      - targets: ['aws-web-app:80']
+      - targets: ['azure-web-app:80']
+</code></pre>
 <p>This configuration defines a Prometheus scrape configuration that targets the web application deployed on both AWS and Azure. To deploy Prometheus on both cloud providers, we can use the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Deploy Prometheus on AWS</span>
-helm<span class="w"> </span>install<span class="w"> </span>prometheus<span class="w"> </span>--set<span class="w"> </span>service.type<span class="o">=</span>LoadBalancer<span class="w"> </span>--set<span class="w"> </span>service.port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--kubeconfig<span class="w"> </span>aws-kubeconfig
+<pre><code class="language-bash"># Deploy Prometheus on AWS
+helm install prometheus --set service.type=LoadBalancer --set service.port=80 --kubeconfig aws-kubeconfig
 
-<span class="c1"># Deploy Prometheus on Azure</span>
-helm<span class="w"> </span>install<span class="w"> </span>prometheus<span class="w"> </span>--set<span class="w"> </span>service.type<span class="o">=</span>LoadBalancer<span class="w"> </span>--set<span class="w"> </span>service.port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--kubeconfig<span class="w"> </span>azure-kubeconfig
-</code></pre></div>
-
+# Deploy Prometheus on Azure
+helm install prometheus --set service.type=LoadBalancer --set service.port=80 --kubeconfig azure-kubeconfig
+</code></pre>
 <p>This example demonstrates how to monitor a web application using Prometheus on multiple cloud providers.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered when implementing a multi-cloud architecture include:
@@ -231,19 +228,18 @@ helm<span class="w"> </span>install<span class="w"> </span>prometheus<span class
 * <strong>Cost optimization</strong>: Cost optimization can be challenging in multi-cloud architectures, particularly when dealing with different pricing models and cost structures. Solution: Use cloud cost management platforms and tools to optimize costs and ensure that resources are being used efficiently.</p>
 <h3 id="example-optimizing-costs-using-cloudability">Example: Optimizing Costs using Cloudability</h3>
 <p>Cloudability is a popular cloud cost management platform that can be used to optimize costs and ensure that resources are being used efficiently. Here is an example of how to use Cloudability to optimize costs for a web application deployed on both AWS and Azure:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Connect to Cloudability API</span>
-curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://api.cloudability.com/v3/accounts<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer YOUR_API_TOKEN&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span>
+<pre><code class="language-bash"># Connect to Cloudability API
+curl -X GET \
+  https://api.cloudability.com/v3/accounts \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json'
 
-<span class="c1"># Get cost data for AWS and Azure</span>
-curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://api.cloudability.com/v3/accounts/YOUR_ACCOUNT_ID/costs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer YOUR_API_TOKEN&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span>
-</code></pre></div>
-
+# Get cost data for AWS and Azure
+curl -X GET \
+  https://api.cloudability.com/v3/accounts/YOUR_ACCOUNT_ID/costs \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json'
+</code></pre>
 <p>This example demonstrates how to use Cloudability to optimize costs for a web application deployed on multiple cloud providers.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Some common use cases for multi-cloud architecture include:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,7 +163,7 @@
 </ul>
 <h3 id="implementing-load-balancing-with-haproxy">Implementing Load Balancing with HAProxy</h3>
 <p>HAProxy is a popular open-source software load balancer that can be used to distribute workload across multiple servers. Here is an example of how to configure HAProxy to use the Round-Robin technique:</p>
-<div class="codehilite"><pre><span></span><code>frontend http
+<pre><code class="language-haproxy">frontend http
     bind *:80
     mode http
     default_backend servers
@@ -173,62 +174,59 @@ backend servers
     server server1 192.168.1.1:80 check
     server server2 192.168.1.2:80 check
     server server3 192.168.1.3:80 check
-</code></pre></div>
-
+</code></pre>
 <p>In this example, HAProxy is configured to listen on port 80 and distribute incoming requests across three servers using the Round-Robin technique.</p>
 <h3 id="implementing-load-balancing-with-nginx">Implementing Load Balancing with NGINX</h3>
 <p>NGINX is another popular open-source software load balancer that can be used to distribute workload across multiple servers. Here is an example of how to configure NGINX to use the Least Connection technique:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">upstream</span><span class="w"> </span><span class="s">backend</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">least_conn</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">server1</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">server2</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">server3</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    upstream backend {
+        least_conn;
+        server server1;
+        server server2;
+        server server3;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>In this example, NGINX is configured to listen on port 80 and distribute incoming requests across three servers using the Least Connection technique.</p>
 <h3 id="cloud-based-load-balancing-with-amazon-elb">Cloud-Based Load Balancing with Amazon ELB</h3>
 <p>Amazon Elastic Load Balancer (ELB) is a cloud-based load balancing service that can be used to distribute workload across multiple servers. Here is an example of how to configure Amazon ELB to use the Round-Robin technique:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">elb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elb&#39;</span><span class="p">)</span>
+elb = boto3.client('elb')
 
-<span class="n">elb</span><span class="o">.</span><span class="n">create_load_balancer</span><span class="p">(</span>
-    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;my-elb&#39;</span><span class="p">,</span>
-    <span class="n">Listeners</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;LoadBalancerPort&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-            <span class="s1">&#39;InstanceProtocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;InstancePort&#39;</span><span class="p">:</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">AvailabilityZones</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;us-east-1a&#39;</span><span class="p">,</span> <span class="s1">&#39;us-east-1b&#39;</span><span class="p">,</span> <span class="s1">&#39;us-east-1c&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+elb.create_load_balancer(
+    LoadBalancerName='my-elb',
+    Listeners=[
+        {
+            'Protocol': 'HTTP',
+            'LoadBalancerPort': 80,
+            'InstanceProtocol': 'HTTP',
+            'InstancePort': 80
+        }
+    ],
+    AvailabilityZones=['us-east-1a', 'us-east-1b', 'us-east-1c']
+)
 
-<span class="n">elb</span><span class="o">.</span><span class="n">configure_health_check</span><span class="p">(</span>
-    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;my-elb&#39;</span><span class="p">,</span>
-    <span class="n">HealthCheck</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Target&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP:80/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Interval&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-        <span class="s1">&#39;Timeout&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="s1">&#39;UnhealthyThreshold&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="s1">&#39;HealthyThreshold&#39;</span><span class="p">:</span> <span class="mi">2</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+elb.configure_health_check(
+    LoadBalancerName='my-elb',
+    HealthCheck={
+        'Target': 'HTTP:80/',
+        'Interval': 30,
+        'Timeout': 5,
+        'UnhealthyThreshold': 2,
+        'HealthyThreshold': 2
+    }
+)
+</code></pre>
 <p>In this example, Amazon ELB is configured to listen on port 80 and distribute incoming requests across multiple availability zones using the Round-Robin technique.</p>
 <h2 id="benefits-of-load-balancing">Benefits of Load Balancing</h2>
 <p>Load balancing offers several benefits, including:</p>

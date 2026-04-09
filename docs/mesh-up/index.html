@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -188,74 +189,65 @@
 <li>Istio CLI installed.</li>
 </ul>
 <h4 id="step-1-install-istio">Step 1: Install Istio</h4>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>https://istio.io/downloadIstio<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-
-<span class="nb">cd</span><span class="w"> </span>istio-&lt;version&gt;
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PWD</span>/bin:<span class="nv">$PATH</span>
-istioctl<span class="w"> </span>install<span class="w"> </span>--set<span class="w"> </span><span class="nv">profile</span><span class="o">=</span>demo<span class="w"> </span>-y
-</code></pre></div>
-
+<pre><code class="language-bash">curl -L https://istio.io/downloadIstio | sh -
+cd istio-&lt;version&gt;
+export PATH=$PWD/bin:$PATH
+istioctl install --set profile=demo -y
+</code></pre>
 <p>The <code>demo</code> profile provides a full feature set with the default configurations suitable for testing.</p>
 <h4 id="step-2-enable-sidecar-injection">Step 2: Enable Sidecar Injection</h4>
 <p>Label your namespace to enable automatic sidecar injection:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class="w"> </span>default<span class="w"> </span>istio-injection<span class="o">=</span>enabled
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl label namespace default istio-injection=enabled
+</code></pre>
 <h4 id="step-3-deploy-a-sample-application">Step 3: Deploy a Sample Application</h4>
 <p>We'll use the Bookinfo sample application provided by Istio.</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/bookinfo/platform/kube/bookinfo.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+</code></pre>
 <h4 id="step-4-access-the-application">Step 4: Access the Application</h4>
 <p>Set up ingress to access the Bookinfo application:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/bookinfo/networking/bookinfo-gateway.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+</code></pre>
 <p>You can then access the application at <code>http://&lt;EXTERNAL-IP&gt;:&lt;PORT&gt;</code>.</p>
 <h3 id="example-2-traffic-management-with-istio">Example 2: Traffic Management with Istio</h3>
 <p>Let’s configure a canary deployment using Istio Virtual Services.</p>
 <h4 id="step-1-define-the-virtual-service">Step 1: Define the Virtual Service</h4>
 <p>Create a <code>virtual-service.yaml</code> file for traffic splitting.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews</span>
-<span class="w">  </span><span class="nt">http</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">route</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews</span>
-<span class="w">        </span><span class="nt">subset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews</span>
-<span class="w">        </span><span class="nt">subset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+  namespace: default
+spec:
+  hosts:
+  - reviews
+  http:
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+      weight: 90
+    - destination:
+        host: reviews
+        subset: v2
+      weight: 10
+</code></pre>
 <h4 id="step-2-apply-the-virtual-service">Step 2: Apply the Virtual Service</h4>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>virtual-service.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f virtual-service.yaml
+</code></pre>
 <p>This configuration sends 90% of the traffic to the v1 version of the reviews service and 10% to v2, allowing you to test the new version incrementally.</p>
 <h3 id="example-3-observability-with-linkerd">Example 3: Observability with Linkerd</h3>
 <p>In this example, we’ll demonstrate how to add observability to your services using Linkerd.</p>
 <h4 id="step-1-install-linkerd">Step 1: Install Linkerd</h4>
-<div class="codehilite"><pre><span></span><code>linkerd<span class="w"> </span>install<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
-</code></pre></div>
-
+<pre><code class="language-bash">linkerd install | kubectl apply -f -
+</code></pre>
 <h4 id="step-2-add-linkerd-to-your-application">Step 2: Add Linkerd to Your Application</h4>
 <p>Annotate your deployment to include Linkerd:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>annotate<span class="w"> </span>deployment<span class="w"> </span>&lt;your-deployment&gt;<span class="w"> </span>linkerd.io/inject<span class="o">=</span>enabled
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl annotate deployment &lt;your-deployment&gt; linkerd.io/inject=enabled
+</code></pre>
 <h4 id="step-3-access-the-dashboard">Step 3: Access the Dashboard</h4>
 <p>Run the Linkerd dashboard:</p>
-<div class="codehilite"><pre><span></span><code>linkerd<span class="w"> </span>dashboard
-</code></pre></div>
-
+<pre><code class="language-bash">linkerd dashboard
+</code></pre>
 <p>This will open a dashboard in your browser where you can visualize service interactions, latencies, and errors.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <h3 id="problem-1-increased-latency">Problem 1: Increased Latency</h3>

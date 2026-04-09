@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,9 +165,8 @@
 * Gray box testing: This approach involves testing the system with some knowledge of its internal workings and configuration.</p>
 <h3 id="example-black-box-testing-with-nmap">Example: Black Box Testing with Nmap</h3>
 <p>Nmap is a popular network scanning tool used for reconnaissance and enumeration. Here is an example of how to use Nmap to scan a target system:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sS<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>-65535<span class="w"> </span>-T4<span class="w"> </span>-A<span class="w"> </span>-v<span class="w"> </span><span class="m">192</span>.168.1.100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sS -p 1-65535 -T4 -A -v 192.168.1.100
+</code></pre>
 <p>This command scans the target system at IP address 192.168.1.100 for open ports, services, and operating systems. The <code>-sS</code> option specifies a TCP SYN scan, the <code>-p</code> option specifies the port range, the <code>-T4</code> option specifies the timing template, the <code>-A</code> option enables OS detection, and the <code>-v</code> option enables verbose mode.</p>
 <h2 id="penetration-testing-tools-and-platforms">Penetration Testing Tools and Platforms</h2>
 <p>There are several penetration testing tools and platforms available, including:
@@ -176,12 +176,11 @@
 * AWS Penetration Testing: A service provided by Amazon Web Services that allows customers to perform penetration testing on their AWS resources.</p>
 <h3 id="example-vulnerability-exploitation-with-metasploit">Example: Vulnerability Exploitation with Metasploit</h3>
 <p>Metasploit is a powerful penetration testing framework that provides a comprehensive set of tools for vulnerability exploitation and post-exploitation. Here is an example of how to use Metasploit to exploit a vulnerability:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">msf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">http</span><span class="o">/</span><span class="n">rejetto_hfs_exec</span>
-<span class="n">msf</span><span class="w"> </span><span class="n">exploit</span><span class="p">(</span><span class="n">rejetto_hfs_exec</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="no">RHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">100</span>
-<span class="n">msf</span><span class="w"> </span><span class="n">exploit</span><span class="p">(</span><span class="n">rejetto_hfs_exec</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="no">RPORT</span><span class="w"> </span><span class="mi">80</span>
-<span class="n">msf</span><span class="w"> </span><span class="n">exploit</span><span class="p">(</span><span class="n">rejetto_hfs_exec</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">msf &gt; use exploit/windows/http/rejetto_hfs_exec
+msf exploit(rejetto_hfs_exec) &gt; set RHOST 192.168.1.100
+msf exploit(rejetto_hfs_exec) &gt; set RPORT 80
+msf exploit(rejetto_hfs_exec) &gt; exploit
+</code></pre>
 <p>This example exploits a vulnerability in the Rejetto HTTP File Server (HFS) using the <code>rejetto_hfs_exec</code> exploit module in Metasploit. The <code>set RHOST</code> command sets the target IP address, the <code>set RPORT</code> command sets the target port, and the <code>exploit</code> command executes the exploit.</p>
 <h2 id="penetration-testing-metrics-and-performance-benchmarks">Penetration Testing Metrics and Performance Benchmarks</h2>
 <p>Penetration testing metrics and performance benchmarks are essential for measuring the effectiveness of penetration testing efforts. Some common metrics include:
@@ -204,36 +203,35 @@
 * Cloud security testing: This involves testing cloud-based systems for vulnerabilities such as misconfigured storage buckets, weak access controls, and insufficient logging and monitoring.</p>
 <h3 id="example-web-application-security-testing-with-burp-suite">Example: Web Application Security Testing with Burp Suite</h3>
 <p>Burp Suite is a comprehensive web application security testing tool that provides a range of features for vulnerability scanning, exploitation, and post-exploitation. Here is an example of how to use Burp Suite to test a web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">burp.*</span><span class="p">;</span>
+<pre><code class="language-java">import burp.*;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebAppTest</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">IBurpExtender</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerExtenderCallbacks</span><span class="p">(</span><span class="n">IBurpExtenderCallbacks</span><span class="w"> </span><span class="n">callbacks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Initialize Burp Suite</span>
-<span class="w">        </span><span class="n">callbacks</span><span class="p">.</span><span class="na">setExtensionName</span><span class="p">(</span><span class="s">&quot;WebAppTest&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">callbacks</span><span class="p">.</span><span class="na">registerScannerCheck</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">WebAppCheck</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class WebAppTest implements IBurpExtender {
+    @Override
+    public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
+        // Initialize Burp Suite
+        callbacks.setExtensionName(&quot;WebAppTest&quot;);
+        callbacks.registerScannerCheck(new WebAppCheck());
+    }
+}
 
-<span class="kd">class</span> <span class="nc">WebAppCheck</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ScannerCheck</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IScanIssue</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">doPassiveScan</span><span class="p">(</span><span class="n">IHttpRequestResponse</span><span class="w"> </span><span class="n">baseRequestResponse</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Perform passive scanning</span>
-<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IScanIssue</span><span class="o">&gt;</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">issues</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+class WebAppCheck extends ScannerCheck {
+    @Override
+    public List&lt;IScanIssue&gt; doPassiveScan(IHttpRequestResponse baseRequestResponse) {
+        // Perform passive scanning
+        List&lt;IScanIssue&gt; issues = new ArrayList&lt;&gt;();
+        // ...
+        return issues;
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IScanIssue</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">doActiveScan</span><span class="p">(</span><span class="n">IHttpRequestResponse</span><span class="w"> </span><span class="n">baseRequestResponse</span><span class="p">,</span><span class="w"> </span><span class="n">IScannerInsertionPoint</span><span class="w"> </span><span class="n">insertionPoint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Perform active scanning</span>
-<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IScanIssue</span><span class="o">&gt;</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">issues</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public List&lt;IScanIssue&gt; doActiveScan(IHttpRequestResponse baseRequestResponse, IScannerInsertionPoint insertionPoint) {
+        // Perform active scanning
+        List&lt;IScanIssue&gt; issues = new ArrayList&lt;&gt;();
+        // ...
+        return issues;
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use Burp Suite to perform web application security testing using a custom extension.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, penetration testing is a critical component of any comprehensive security program. By using a combination of penetration testing methodologies, tools, and techniques, security professionals can identify and remediate vulnerabilities, reducing the risk of cyber attacks and data breaches. To get started with penetration testing, follow these next steps:

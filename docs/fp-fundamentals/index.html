@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -169,29 +170,28 @@
 <li><strong>Apache Spark</strong>: A big data processing engine that uses FP to process large datasets.</li>
 </ul>
 <p>For example, consider a simple data processing pipeline that uses FP to extract, transform, and load (ETL) data from a CSV file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;lodash&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const fs = require('fs');
+const _ = require('lodash');
 
-<span class="c1">// Read the CSV file</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+// Read the CSV file
+const data = fs.readFileSync('data.csv', 'utf8');
 
-<span class="c1">// Split the data into rows</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+// Split the data into rows
+const rows = _.split(data, '\n');
 
-<span class="c1">// Transform the data by converting each row to an object</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">objects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">rows</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">row</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">row</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">columns</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span>
-<span class="w">    </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">columns</span><span class="p">[</span><span class="mf">1</span><span class="p">]),</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">});</span>
+// Transform the data by converting each row to an object
+const objects = _.map(rows, (row) =&gt; {
+  const columns = _.split(row, ',');
+  return {
+    name: columns[0],
+    age: parseInt(columns[1]),
+  };
+});
 
-<span class="c1">// Load the data into a database</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./db&#39;</span><span class="p">);</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">objects</span><span class="p">);</span>
-</code></pre></div>
-
+// Load the data into a database
+const db = require('./db');
+db.insert(objects);
+</code></pre>
 <p>In this example, we use the Lodash library to perform common data processing tasks like splitting and mapping. We also use the <code>fs</code> module to read the CSV file and the <code>db</code> module to load the data into a database.</p>
 <h2 id="performance-benefits-of-functional-programming">Performance Benefits of Functional Programming</h2>
 <p>FP can have significant performance benefits due to its ability to:</p>
@@ -201,40 +201,39 @@
 <li><strong>Optimize code</strong>: By using recursion and higher-order functions, FP can make it easier to optimize code and reduce the number of function calls.</li>
 </ul>
 <p>For example, consider a simple benchmark that compares the performance of a recursive function versus an iterative function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">benchmark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;benchmark&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const benchmark = require('benchmark');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
-<span class="p">};</span>
+const recursiveFunction = (n) =&gt; {
+  if (n &lt;= 1) return n;
+  return recursiveFunction(n - 1) + recursiveFunction(n - 2);
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">iterativeFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">a</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">temp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="p">;</span>
-<span class="p">};</span>
+const iterativeFunction = (n) =&gt; {
+  let a = 0;
+  let b = 1;
+  for (let i = 0; i &lt; n; i++) {
+    const temp = a;
+    a = b;
+    b = temp + b;
+  }
+  return a;
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">suite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">benchmark</span><span class="p">.</span><span class="nx">Suite</span><span class="p">();</span>
-<span class="nx">suite</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;recursiveFunction&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">recursiveFunction</span><span class="p">(</span><span class="mf">30</span><span class="p">);</span>
-<span class="p">});</span>
-<span class="nx">suite</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;iterativeFunction&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">iterativeFunction</span><span class="p">(</span><span class="mf">30</span><span class="p">);</span>
-<span class="p">});</span>
-<span class="nx">suite</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;cycle&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">String</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">));</span>
-<span class="p">});</span>
-<span class="nx">suite</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;complete&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Fastest is &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">suite</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;fastest&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">));</span>
-<span class="p">});</span>
-<span class="nx">suite</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
-</code></pre></div>
-
+const suite = new benchmark.Suite();
+suite.add('recursiveFunction', () =&gt; {
+  recursiveFunction(30);
+});
+suite.add('iterativeFunction', () =&gt; {
+  iterativeFunction(30);
+});
+suite.on('cycle', (event) =&gt; {
+  console.log(String(event.target));
+});
+suite.on('complete', () =&gt; {
+  console.log('Fastest is ' + suite.filter('fastest').map('name'));
+});
+suite.run();
+</code></pre>
 <p>This benchmark shows that the iterative function is significantly faster than the recursive function, with a performance improvement of over 10x.</p>
 <h2 id="common-problems-in-functional-programming">Common Problems in Functional Programming</h2>
 <p>While FP has many benefits, it can also have some common problems, including:</p>
@@ -250,15 +249,14 @@
 <li><strong>Optimize performance</strong>: Optimize performance by using techniques like memoization and caching.</li>
 </ul>
 <p>For example, consider a simple debugging technique that uses console logs to understand the flow of a recursive function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Calling recursiveFunction with n = </span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">recursiveFunction</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Returning from recursiveFunction with n = </span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb"> and result = </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const recursiveFunction = (n) =&gt; {
+  console.log(`Calling recursiveFunction with n = ${n}`);
+  if (n &lt;= 1) return n;
+  const result = recursiveFunction(n - 1) + recursiveFunction(n - 2);
+  console.log(`Returning from recursiveFunction with n = ${n} and result = ${result}`);
+  return result;
+};
+</code></pre>
 <p>This technique can help you understand the flow of your code and identify any performance bottlenecks.</p>
 <h2 id="real-world-use-cases-for-functional-programming">Real-World Use Cases for Functional Programming</h2>
 <p>FP has a wide range of real-world use cases, including:</p>
@@ -268,33 +266,32 @@
 <li><strong>Web development</strong>: FP is used in web development to implement client-side logic, server-side logic, and database queries.</li>
 </ul>
 <p>For example, consider a real-world use case that uses FP to implement a recommendation engine:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">RecommendationEngine</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">recommend</span><span class="p">(</span><span class="n">products</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Product</span><span class="p">],</span><span class="w"> </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="nc">User</span><span class="p">):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Product</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">userPreferences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getUserPreferences</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">productFeatures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getProductFeatures</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">computeSimilarities</span><span class="p">(</span><span class="n">userPreferences</span><span class="p">,</span><span class="w"> </span><span class="n">productFeatures</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">recommendations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getRecommendations</span><span class="p">(</span><span class="n">similarities</span><span class="p">)</span>
-<span class="w">    </span><span class="n">recommendations</span>
-<span class="w">  </span><span class="p">}</span>
+<pre><code class="language-scala">object RecommendationEngine {
+  def recommend(products: List[Product], user: User): List[Product] = {
+    val userPreferences = getUserPreferences(user)
+    val productFeatures = getProductFeatures(products)
+    val similarities = computeSimilarities(userPreferences, productFeatures)
+    val recommendations = getRecommendations(similarities)
+    recommendations
+  }
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">getUserPreferences</span><span class="p">(</span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="nc">User</span><span class="p">):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Preference</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Implement user preference retrieval logic</span>
-<span class="w">  </span><span class="p">}</span>
+  def getUserPreferences(user: User): List[Preference] = {
+    // Implement user preference retrieval logic
+  }
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">getProductFeatures</span><span class="p">(</span><span class="n">products</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Product</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Feature</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Implement product feature retrieval logic</span>
-<span class="w">  </span><span class="p">}</span>
+  def getProductFeatures(products: List[Product]): List[Feature] = {
+    // Implement product feature retrieval logic
+  }
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">computeSimilarities</span><span class="p">(</span><span class="n">userPreferences</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Preference</span><span class="p">],</span><span class="w"> </span><span class="n">productFeatures</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Feature</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Similarity</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Implement similarity computation logic</span>
-<span class="w">  </span><span class="p">}</span>
+  def computeSimilarities(userPreferences: List[Preference], productFeatures: List[Feature]): List[Similarity] = {
+    // Implement similarity computation logic
+  }
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">getRecommendations</span><span class="p">(</span><span class="n">similarities</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Similarity</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Product</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Implement recommendation retrieval logic</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  def getRecommendations(similarities: List[Similarity]): List[Product] = {
+    // Implement recommendation retrieval logic
+  }
+}
+</code></pre>
 <p>This example shows how FP can be used to implement a recommendation engine that takes into account user preferences, product features, and similarities between them.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, FP is a powerful programming paradigm that has a wide range of practical applications, from data processing and machine learning to web development and scientific computing. While it can have a steep learning curve and performance overhead, these challenges can be overcome with practice, debugging tools, and performance optimization techniques.</p>

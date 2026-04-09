@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,30 +169,27 @@
 4. <strong>Using reserved instances</strong>: Using reserved instances, which provide a discounted rate for a committed usage period</p>
 <h2 id="practical-example-deploying-a-web-application-on-gae">Practical Example: Deploying a Web Application on GAE</h2>
 <p>Here's an example of deploying a web application on GAE using Python and the Flask framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<pre><code class="language-python">from flask import Flask, request
+app = Flask(__name__)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s1">&#39;Hello, World!&#39;</span>
+@app.route('/')
+def hello():
+    return 'Hello, World!'
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
 <p>To deploy this application on GAE, we need to create a <code>app.yaml</code> file with the following configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">runtime</span><span class="o">:</span><span class="w"> </span><span class="n">python37</span>
-<span class="n">instance_class</span><span class="o">:</span><span class="w"> </span><span class="n">F1</span>
-<span class="n">Automatic_scaling</span><span class="o">:</span>
-<span class="w">  </span><span class="n">max_instances</span><span class="o">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="n">min_instances</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="n">max_idle_instances</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
-</code></pre></div>
-
+<pre><code class="language-yml">runtime: python37
+instance_class: F1
+Automatic_scaling:
+  max_instances: 5
+  min_instances: 1
+  max_idle_instances: 3
+</code></pre>
 <p>We can then deploy the application using the <code>gcloud</code> command-line tool:</p>
-<div class="codehilite"><pre><span></span><code>gcloud<span class="w"> </span>app<span class="w"> </span>deploy<span class="w"> </span>app.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">gcloud app deploy app.yaml
+</code></pre>
 <p>This will deploy the application to GAE, and we can access it at <code>https://&lt;project-id&gt;.appspot.com</code>.</p>
 <h3 id="monitoring-and-logging">Monitoring and Logging</h3>
 <p>GCP provides a range of monitoring and logging tools to help developers troubleshoot and optimize their applications. Some of the key tools include:
@@ -199,19 +197,18 @@
 * <strong>Stackdriver Monitoring</strong>: A monitoring service that provides real-time metrics and alerts
 * <strong>Cloud Debugger</strong>: A debugging tool that provides real-time debugging and profiling</p>
 <p>Here's an example of using Stackdriver Logging to monitor the application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">logging</span> <span class="k">as</span> <span class="n">cloudlogging</span>
+<pre><code class="language-python">import logging
+from google.cloud import logging as cloudlogging
 
-<span class="c1"># Create a logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+# Create a logger
+logger = logging.getLogger(__name__)
 
-<span class="c1"># Create a Stackdriver Logging client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">cloudlogging</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+# Create a Stackdriver Logging client
+client = cloudlogging.Client()
 
-<span class="c1"># Log a message</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Log a message
+logger.info('Hello, World!')
+</code></pre>
 <p>This will log a message to Stackdriver Logging, and we can view the log data in the GCP console.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some concrete use cases for GCP, along with implementation details:
@@ -223,15 +220,14 @@
 2. <strong>Create a BigQuery table</strong>: Create a new table in the dataset and define the schema
 3. <strong>Run a query</strong>: Run a query to analyze the data and create a data visualization</p>
 <p>Here's an example of running a query in BigQuery:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span>
-<span class="w">  </span><span class="o">*</span>
-<span class="k">FROM</span>
-<span class="w">  </span><span class="o">`</span><span class="n">mydataset</span><span class="p">.</span><span class="n">mytable</span><span class="o">`</span>
-<span class="k">WHERE</span>
-<span class="w">  </span><span class="o">`</span><span class="nb">date</span><span class="o">`</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-01&#39;</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="o">`</span><span class="nb">date</span><span class="o">`</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-31&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT
+  *
+FROM
+  `mydataset.mytable`
+WHERE
+  `date` &gt;= '2022-01-01'
+  AND `date` &lt;= '2022-01-31'
+</code></pre>
 <p>This will run a query to select all columns from the <code>mytable</code> table in the <code>mydataset</code> dataset, where the <code>date</code> column is between January 1, 2022 and January 31, 2022.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems that developers may encounter when using GCP, along with specific solutions:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,43 +165,42 @@
 <p>For example, let's consider a simple e-commerce system with three microservices: <code>product</code>, <code>cart</code>, and <code>order</code>. Without a service mesh, each microservice would need to implement its own traffic management, security, and observability features. With a service mesh, these features can be implemented at the infrastructure layer, simplifying the development and management of the system.</p>
 <h3 id="example-code-istio-service-mesh">Example Code: Istio Service Mesh</h3>
 <p>Here's an example of how to use Istio to manage traffic between microservices:</p>
-<div class="codehilite"><pre><span></span><code>#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">mesh</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="w"> </span><span class="nv">system</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">networking</span>.<span class="nv">istio</span>.<span class="nv">io</span><span class="o">/</span><span class="nv">v1beta1</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">Gateway</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="o">-</span><span class="nv">gateway</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">selector</span>:
-<span class="w">    </span><span class="nv">istio</span>:<span class="w"> </span><span class="nv">ingressgateway</span>
-<span class="w">  </span><span class="nv">servers</span>:
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nv">port</span>:
-<span class="w">      </span><span class="nv">number</span>:<span class="w"> </span><span class="mi">80</span>
-<span class="w">      </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">http</span>
-<span class="w">      </span><span class="nv">protocol</span>:<span class="w"> </span><span class="nv">HTTP</span>
-<span class="w">    </span><span class="nv">hosts</span>:
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span>.<span class="nv">com</span>
+<pre><code class="language-yml"># Define a service mesh for the e-commerce system
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: e-commerce-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - e-commerce.com
 
-#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">virtual</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">product</span><span class="w"> </span><span class="nv">microservice</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">networking</span>.<span class="nv">istio</span>.<span class="nv">io</span><span class="o">/</span><span class="nv">v1beta1</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">VirtualService</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">product</span><span class="o">-</span><span class="nv">virtual</span><span class="o">-</span><span class="nv">service</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">hosts</span>:
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nv">product</span>.<span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span>.<span class="nv">com</span>
-<span class="w">  </span><span class="nv">http</span>:
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nv">match</span>:
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="nv">uri</span>:
-<span class="w">        </span><span class="nv">prefix</span>:<span class="w"> </span><span class="o">/</span><span class="nv">products</span>
-<span class="w">    </span><span class="nv">rewrite</span>:
-<span class="w">      </span><span class="nv">uri</span>:<span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">products</span>
-<span class="w">    </span><span class="nv">route</span>:
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="nv">destination</span>:
-<span class="w">        </span><span class="nv">host</span>:<span class="w"> </span><span class="nv">product</span>
-<span class="w">        </span><span class="nv">port</span>:
-<span class="w">          </span><span class="nv">number</span>:<span class="w"> </span><span class="mi">8080</span>
-</code></pre></div>
-
+# Define a virtual service for the product microservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: product-virtual-service
+spec:
+  hosts:
+  - product.e-commerce.com
+  http:
+  - match:
+    - uri:
+        prefix: /products
+    rewrite:
+      uri: /v1/products
+    route:
+    - destination:
+        host: product
+        port:
+          number: 8080
+</code></pre>
 <p>This example defines a service mesh for the e-commerce system, with a gateway and a virtual service for the <code>product</code> microservice. The virtual service routes traffic from the gateway to the <code>product</code> microservice, and rewrites the URI to match the expected format.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Service mesh architecture is widely used in real-world systems, including:
@@ -209,38 +209,37 @@
 * <strong>Uber</strong>: Uber uses a service mesh to manage traffic between its microservices, with over 100 microservices in production.</p>
 <h3 id="example-code-linkerd-service-mesh">Example Code: Linkerd Service Mesh</h3>
 <p>Here's an example of how to use Linkerd to manage traffic between microservices:</p>
-<div class="codehilite"><pre><span></span><code>#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">mesh</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="w"> </span><span class="nv">system</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">linkerd</span>.<span class="nv">io</span><span class="o">/</span><span class="nv">v1alpha2</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">ServiceProfile</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="o">-</span><span class="nv">service</span><span class="o">-</span><span class="nv">profile</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">routes</span>:
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nv">condition</span>:
-<span class="w">      </span><span class="nv">prefix</span>:<span class="w"> </span><span class="o">/</span><span class="nv">products</span>
-<span class="w">    </span><span class="nv">weight</span>:<span class="w"> </span><span class="mi">100</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nv">condition</span>:
-<span class="w">      </span><span class="nv">prefix</span>:<span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">products</span>
-<span class="w">    </span><span class="nv">weight</span>:<span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="nv">destination</span>:
-<span class="w">    </span><span class="nv">host</span>:<span class="w"> </span><span class="nv">product</span>
-<span class="w">    </span><span class="nv">port</span>:<span class="w"> </span><span class="mi">8080</span>
+<pre><code class="language-yml"># Define a service mesh for the e-commerce system
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: e-commerce-service-profile
+spec:
+  routes:
+  - condition:
+      prefix: /products
+    weight: 100
+  - condition:
+      prefix: /v1/products
+    weight: 0
+  destination:
+    host: product
+    port: 8080
 
-#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">tap</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">product</span><span class="w"> </span><span class="nv">microservice</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">linkerd</span>.<span class="nv">io</span><span class="o">/</span><span class="nv">v1alpha2</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">Tap</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">product</span><span class="o">-</span><span class="nv">tap</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">target</span>:
-<span class="w">    </span><span class="nv">host</span>:<span class="w"> </span><span class="nv">product</span>
-<span class="w">    </span><span class="nv">port</span>:<span class="w"> </span><span class="mi">8080</span>
-<span class="w">  </span><span class="nv">tap</span>:
-<span class="w">    </span><span class="nv">http</span>:
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nv">path</span>:<span class="w"> </span><span class="o">/</span><span class="nv">products</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nv">path</span>:<span class="w"> </span><span class="o">/</span><span class="nv">v1</span><span class="o">/</span><span class="nv">products</span>
-</code></pre></div>
-
+# Define a tap for the product microservice
+apiVersion: linkerd.io/v1alpha2
+kind: Tap
+metadata:
+  name: product-tap
+spec:
+  target:
+    host: product
+    port: 8080
+  tap:
+    http:
+      - path: /products
+      - path: /v1/products
+</code></pre>
 <p>This example defines a service mesh for the e-commerce system, with a service profile and a tap for the <code>product</code> microservice. The service profile defines routes for the <code>product</code> microservice, and the tap defines a set of paths to tap into the <code>product</code> microservice.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Service mesh architecture can have a significant impact on system performance. Here are some performance benchmarks for popular service mesh tools:
@@ -249,35 +248,34 @@
 * <strong>AWS App Mesh</strong>: AWS App Mesh has been benchmarked to handle over 20,000 requests per second, with a latency of less than 15ms.</p>
 <h3 id="example-code-aws-app-mesh">Example Code: AWS App Mesh</h3>
 <p>Here's an example of how to use AWS App Mesh to manage traffic between microservices:</p>
-<div class="codehilite"><pre><span></span><code>#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">mesh</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="w"> </span><span class="nv">system</span>
-<span class="nv">AWSTemplateFormatVersion</span>:<span class="w"> </span><span class="s1">&#39;2010-09-09&#39;</span>
-<span class="nv">Resources</span>:
-<span class="w">  </span><span class="nv">ECommerceServiceMesh</span>:
-<span class="w">    </span><span class="nv">Type</span>:<span class="w"> </span><span class="nv">AWS</span>::<span class="nv">AppMesh</span>::<span class="nv">Mesh</span>
-<span class="w">    </span><span class="nv">Properties</span>:
-<span class="w">      </span><span class="nv">Name</span>:<span class="w"> </span><span class="nv">e</span><span class="o">-</span><span class="nv">commerce</span><span class="o">-</span><span class="nv">mesh</span>
+<pre><code class="language-yml"># Define a service mesh for the e-commerce system
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  ECommerceServiceMesh:
+    Type: AWS::AppMesh::Mesh
+    Properties:
+      Name: e-commerce-mesh
 
-#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">virtual</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">product</span><span class="w"> </span><span class="nv">microservice</span>
-<span class="nv">Resources</span>:
-<span class="w">  </span><span class="nv">ProductVirtualService</span>:
-<span class="w">    </span><span class="nv">Type</span>:<span class="w"> </span><span class="nv">AWS</span>::<span class="nv">AppMesh</span>::<span class="nv">VirtualService</span>
-<span class="w">    </span><span class="nv">Properties</span>:
-<span class="w">      </span><span class="nv">MeshName</span>:<span class="w"> </span><span class="o">!</span><span class="nv">Ref</span><span class="w"> </span><span class="nv">ECommerceServiceMesh</span>
-<span class="w">      </span><span class="nv">Name</span>:<span class="w"> </span><span class="nv">product</span>
-<span class="w">      </span><span class="nv">Spec</span>:
-<span class="w">        </span><span class="nv">Providers</span>:
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="nv">VirtualRouter</span>:
-<span class="w">            </span><span class="nv">VirtualRouterName</span>:<span class="w"> </span><span class="nv">product</span><span class="o">-</span><span class="nv">router</span>
-<span class="w">        </span><span class="nv">Routes</span>:
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="nv">Priority</span>:<span class="w"> </span><span class="mi">1</span>
-<span class="w">          </span><span class="nv">Match</span>:
-<span class="w">            </span><span class="nv">Prefix</span>:<span class="w"> </span><span class="o">/</span><span class="nv">products</span>
-<span class="w">          </span><span class="nv">Action</span>:
-<span class="w">            </span><span class="nv">WeightedTargets</span>:
-<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="nv">VirtualNode</span>:<span class="w"> </span><span class="nv">product</span><span class="o">-</span><span class="nv">node</span>
-<span class="w">              </span><span class="nv">Weight</span>:<span class="w"> </span><span class="mi">100</span>
-</code></pre></div>
-
+# Define a virtual service for the product microservice
+Resources:
+  ProductVirtualService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref ECommerceServiceMesh
+      Name: product
+      Spec:
+        Providers:
+        - VirtualRouter:
+            VirtualRouterName: product-router
+        Routes:
+        - Priority: 1
+          Match:
+            Prefix: /products
+          Action:
+            WeightedTargets:
+            - VirtualNode: product-node
+              Weight: 100
+</code></pre>
 <p>This example defines a service mesh for the e-commerce system, with a virtual service for the <code>product</code> microservice. The virtual service defines a set of routes for the <code>product</code> microservice, and a weighted target for the <code>product</code> node.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Service mesh architecture can introduce new challenges and complexities. Here are some common problems and solutions:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,63 +163,60 @@
 <ol>
 <li><strong>Create a professional website</strong>: Use a platform like WordPress or Ghost to create a website that showcases your skills, experience, and projects. For example, you can use the following HTML code to create a simple portfolio page:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- index.html --&gt;</span>
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Portfolio<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>My Projects<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Project 1<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>A brief description of Project 1<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Project 2<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>A brief description of Project 2<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Portfolio&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Projects&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;h2&gt;Project 1&lt;/h2&gt;
+      &lt;p&gt;A brief description of Project 1&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;h2&gt;Project 2&lt;/h2&gt;
+      &lt;p&gt;A brief description of Project 2&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <ol>
 <li><strong>Establish a presence on social media</strong>: Use platforms like LinkedIn, Twitter, or GitHub to connect with other developers and share your work. For example, you can use the following Python code to automate your Twitter posts using the Tweepy library:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># tweet_bot.py</span>
-<span class="kn">import</span> <span class="nn">tweepy</span>
+<pre><code class="language-python"># tweet_bot.py
+import tweepy
 
-<span class="c1"># Twitter API credentials</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_key&quot;</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_secret&quot;</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="s2">&quot;your_access_token&quot;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s2">&quot;your_access_token_secret&quot;</span>
+# Twitter API credentials
+consumer_key = &quot;your_consumer_key&quot;
+consumer_secret = &quot;your_consumer_secret&quot;
+access_token = &quot;your_access_token&quot;
+access_token_secret = &quot;your_access_token_secret&quot;
 
-<span class="c1"># Set up the Tweepy API object</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
-<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+# Set up the Tweepy API object
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
 
-<span class="c1"># Post a tweet</span>
-<span class="n">tweet</span> <span class="o">=</span> <span class="s2">&quot;Hello, world! #devlife&quot;</span>
-<span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">tweet</span><span class="p">)</span>
-</code></pre></div>
-
+# Post a tweet
+tweet = &quot;Hello, world! #devlife&quot;
+api.update_status(status=tweet)
+</code></pre>
 <ol>
 <li><strong>Write articles and blog posts</strong>: Share your knowledge and expertise by writing articles and blog posts on platforms like Medium or Dev.to. For example, you can use the following Markdown code to create a blog post on Dev.to:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>&lt;!-- blog_post.md --&gt;
-<span class="gh"># My First Blog Post</span>
-<span class="gu">## Introduction</span>
+<pre><code class="language-markdown">&lt;!-- blog_post.md --&gt;
+# My First Blog Post
+## Introduction
 This is my first blog post on Dev.to.
-<span class="gu">## Body</span>
+## Body
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-<span class="gu">## Conclusion</span>
+## Conclusion
 Thanks for reading!
-</code></pre></div>
-
+</code></pre>
 <p>Some popular tools and platforms for building your personal brand include:
 * WordPress: A popular content management system for creating websites and blogs ($4-15/month)
 * LinkedIn: A professional networking platform for connecting with other developers (free)
@@ -232,17 +230,16 @@ Thanks for reading!
 * <strong>Article views</strong>: Use tools like Medium or Dev.to to track the number of views on your articles and blog posts (free)
 * <strong>Email subscribers</strong>: Use tools like Mailchimp to track the number of subscribers to your email newsletter (free-$49/month)</p>
 <p>For example, let's say you have a website with 1,000 visitors per month, and you want to increase your website traffic by 20% in the next quarter. You can use the following formula to calculate your target website traffic:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># calculate_target_traffic.py</span>
-<span class="k">def</span> <span class="nf">calculate_target_traffic</span><span class="p">(</span><span class="n">current_traffic</span><span class="p">,</span> <span class="n">growth_rate</span><span class="p">):</span>
-  <span class="n">target_traffic</span> <span class="o">=</span> <span class="n">current_traffic</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">growth_rate</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">target_traffic</span>
+<pre><code class="language-python"># calculate_target_traffic.py
+def calculate_target_traffic(current_traffic, growth_rate):
+  target_traffic = current_traffic * (1 + growth_rate)
+  return target_traffic
 
-<span class="n">current_traffic</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">growth_rate</span> <span class="o">=</span> <span class="mf">0.20</span>
-<span class="n">target_traffic</span> <span class="o">=</span> <span class="n">calculate_target_traffic</span><span class="p">(</span><span class="n">current_traffic</span><span class="p">,</span> <span class="n">growth_rate</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">target_traffic</span><span class="p">)</span>  <span class="c1"># Output: 1200</span>
-</code></pre></div>
-
+current_traffic = 1000
+growth_rate = 0.20
+target_traffic = calculate_target_traffic(current_traffic, growth_rate)
+print(target_traffic)  # Output: 1200
+</code></pre>
 <p>Some popular tools and platforms for measuring the success of your personal brand include:
 * Google Analytics: A web analytics service for tracking website traffic and behavior (free)
 * Hootsuite: A social media management platform for tracking social media engagement metrics ($19-49/month)

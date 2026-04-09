@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,25 +172,24 @@
 <li><strong>Write and deploy your smart contract</strong>: Use a tool like Truffle's <code>truffle deploy</code> command to deploy your smart contract to the Ethereum network.</li>
 </ol>
 <p>Here's an example of a simple smart contract written in Solidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Greeter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">greeting</span><span class="p">;</span>
+contract Greeter {
+    string public greeting;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>greeting<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        greeting = &quot;Hello, World!&quot;;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">setGreeting</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_greeting<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>greeting<span class="w"> </span><span class="o">=</span><span class="w"> </span>_greeting<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function setGreeting(string memory _greeting) public {
+        greeting = _greeting;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getGreeting</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>greeting<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getGreeting() public view returns (string memory) {
+        return greeting;
+    }
+}
+</code></pre>
 <p>This contract has a <code>greeting</code> variable that can be set and retrieved using the <code>setGreeting</code> and <code>getGreeting</code> functions, respectively.</p>
 <h2 id="interacting-with-dapps-using-web3-libraries">Interacting with DApps using Web3 Libraries</h2>
 <p>To interact with DApps, you'll need to use a Web3 library that provides an interface to the Ethereum network. Some popular Web3 libraries include:</p>
@@ -199,36 +199,34 @@
 <li>Web3.py: A Python library for interacting with the Ethereum network.</li>
 </ul>
 <p>For example, you can use Web3.js to interact with the Greeter contract:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAbi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span>
+const contractAddress = '0x...';
+const contractAbi = [...];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">contractAbi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getGreeting</span><span class="p">().</span><span class="nx">call</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">greeting</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+contract.methods.getGreeting().call().then((greeting) =&gt; {
+    console.log(greeting);
+});
+</code></pre>
 <p>This code uses the Web3.js library to connect to the Ethereum mainnet, instantiate the Greeter contract, and call the <code>getGreeting</code> function to retrieve the current greeting.</p>
 <h2 id="decentralized-storage-solutions">Decentralized Storage Solutions</h2>
 <p>Decentralized storage solutions, such as InterPlanetary File System (IPFS) and Filecoin, provide a way to store and share files in a decentralized manner. These solutions are essential for building DApps that require large amounts of storage.</p>
 <p>IPFS, for example, is a peer-to-peer network that allows you to store and share files in a decentralized manner. You can use IPFS to store files, such as images or videos, and then use a content-addressed URL to share them with others.</p>
 <p>Here's an example of how you can use IPFS to store a file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">ipfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ipfs-http-client&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const ipfs = require('ipfs-http-client');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;path/to/file.txt&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span>
-<span class="p">};</span>
+const file = {
+    path: 'path/to/file.txt',
+    content: 'Hello, World!'
+};
 
-<span class="nx">ipfs</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">file</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+ipfs.add(file).then((result) =&gt; {
+    console.log(result.hash);
+});
+</code></pre>
 <p>This code uses the IPFS HTTP client library to add a file to the IPFS network and retrieve its content hash.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building DApps, you may encounter common problems, such as:</p>

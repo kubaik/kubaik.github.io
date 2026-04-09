@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,79 +164,76 @@
 * <strong>Content delivery networks (CDNs)</strong>: CDNs can help distribute traffic across multiple servers, making it more difficult for attackers to overwhelm a single server.</p>
 <h3 id="using-cloudflare-for-ddos-protection">Using Cloudflare for DDoS Protection</h3>
 <p>Cloudflare is a popular CDN and DDoS protection service that offers a range of features, including traffic filtering, rate limiting, and IP blocking. Cloudflare's pricing starts at $20 per month for the Pro plan, which includes DDoS protection, SSL encryption, and content optimization. For example, to configure Cloudflare to block traffic from a specific IP address, you can use the following code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cloudflare</span>
+<pre><code class="language-python">import cloudflare
 
-<span class="c1"># Set up Cloudflare API credentials</span>
-<span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;your_email@example.com&quot;</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>
+# Set up Cloudflare API credentials
+email = &quot;your_email@example.com&quot;
+api_key = &quot;your_api_key&quot;
 
-<span class="c1"># Create a Cloudflare API client</span>
-<span class="n">cf</span> <span class="o">=</span> <span class="n">cloudflare</span><span class="o">.</span><span class="n">CloudFlare</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span>
+# Create a Cloudflare API client
+cf = cloudflare.CloudFlare(email, api_key)
 
-<span class="c1"># Block traffic from a specific IP address</span>
-<span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">purge_cache</span><span class="p">(</span><span class="s2">&quot;your_zone_id&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;192.0.2.1&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Block traffic from a specific IP address
+cf.zones.purge_cache(&quot;your_zone_id&quot;, [&quot;192.0.2.1&quot;])
+</code></pre>
 <p>This code snippet uses the Cloudflare API to block traffic from the IP address <code>192.0.2.1</code>.</p>
 <h2 id="implementing-ddos-protection-with-aws">Implementing DDoS Protection with AWS</h2>
 <p>AWS offers a range of services for protecting against DDoS attacks, including Amazon CloudFront, Amazon Route 53, and AWS Shield. AWS Shield is a DDoS protection service that offers two tiers: Standard and Advanced. The Standard tier is free and includes basic DDoS protection, while the Advanced tier costs $3,000 per month and includes advanced features such as traffic filtering and rate limiting. For example, to configure AWS Shield to protect an Amazon CloudFront distribution, you can use the following code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Set up AWS credentials</span>
-<span class="n">aws_access_key_id</span> <span class="o">=</span> <span class="s2">&quot;YOUR_AWS_ACCESS_KEY_ID&quot;</span>
-<span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_AWS_SECRET_ACCESS_KEY&quot;</span>
+# Set up AWS credentials
+aws_access_key_id = &quot;YOUR_AWS_ACCESS_KEY_ID&quot;
+aws_secret_access_key = &quot;YOUR_AWS_SECRET_ACCESS_KEY&quot;
 
-<span class="c1"># Create an AWS Shield client</span>
-<span class="n">shield</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;shield&quot;</span><span class="p">,</span> <span class="n">aws_access_key_id</span><span class="o">=</span><span class="n">aws_access_key_id</span><span class="p">,</span> <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="n">aws_secret_access_key</span><span class="p">)</span>
+# Create an AWS Shield client
+shield = boto3.client(&quot;shield&quot;, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
-<span class="c1"># Create a CloudFront distribution</span>
-<span class="n">cloudfront</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;cloudfront&quot;</span><span class="p">,</span> <span class="n">aws_access_key_id</span><span class="o">=</span><span class="n">aws_access_key_id</span><span class="p">,</span> <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="n">aws_secret_access_key</span><span class="p">)</span>
-<span class="n">distribution_id</span> <span class="o">=</span> <span class="n">cloudfront</span><span class="o">.</span><span class="n">create_distribution</span><span class="p">(</span>
-    <span class="n">DistributionConfig</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;Origins&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;Quantity&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;Items&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;Id&quot;</span><span class="p">:</span> <span class="s2">&quot;origin-1&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;DomainName&quot;</span><span class="p">:</span> <span class="s2">&quot;example.com&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;CustomHeaders&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;Quantity&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                        <span class="s2">&quot;Items&quot;</span><span class="p">:</span> <span class="p">[</span>
-                            <span class="p">{</span>
-                                <span class="s2">&quot;HeaderName&quot;</span><span class="p">:</span> <span class="s2">&quot;X-Forwarded-For&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;HeaderValue&quot;</span><span class="p">:</span> <span class="s2">&quot;192.0.2.1&quot;</span>
-                            <span class="p">}</span>
-                        <span class="p">]</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;Enabled&quot;</span><span class="p">:</span> <span class="kc">True</span>
-    <span class="p">}</span>
-<span class="p">)[</span><span class="s2">&quot;Distribution&quot;</span><span class="p">][</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span>
+# Create a CloudFront distribution
+cloudfront = boto3.client(&quot;cloudfront&quot;, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+distribution_id = cloudfront.create_distribution(
+    DistributionConfig={
+        &quot;Origins&quot;: {
+            &quot;Quantity&quot;: 1,
+            &quot;Items&quot;: [
+                {
+                    &quot;Id&quot;: &quot;origin-1&quot;,
+                    &quot;DomainName&quot;: &quot;example.com&quot;,
+                    &quot;CustomHeaders&quot;: {
+                        &quot;Quantity&quot;: 1,
+                        &quot;Items&quot;: [
+                            {
+                                &quot;HeaderName&quot;: &quot;X-Forwarded-For&quot;,
+                                &quot;HeaderValue&quot;: &quot;192.0.2.1&quot;
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        &quot;Enabled&quot;: True
+    }
+)[&quot;Distribution&quot;][&quot;Id&quot;]
 
-<span class="c1"># Protect the CloudFront distribution with AWS Shield</span>
-<span class="n">shield</span><span class="o">.</span><span class="n">create_protection</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;example-protection&quot;</span><span class="p">,</span>
-    <span class="n">ResourceArn</span><span class="o">=</span><span class="s2">&quot;arn:aws:cloudfront::123456789012:distribution/&quot;</span> <span class="o">+</span> <span class="n">distribution_id</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Protect the CloudFront distribution with AWS Shield
+shield.create_protection(
+    Name=&quot;example-protection&quot;,
+    ResourceArn=&quot;arn:aws:cloudfront::123456789012:distribution/&quot; + distribution_id
+)
+</code></pre>
 <p>This code snippet uses the AWS SDK to create a CloudFront distribution and protect it with AWS Shield.</p>
 <h3 id="using-nginx-for-ddos-protection">Using NGINX for DDoS Protection</h3>
 <p>NGINX is a popular web server that can be used for DDoS protection. NGINX offers a range of features, including rate limiting, IP blocking, and traffic filtering. For example, to configure NGINX to limit traffic to 100 requests per second, you can use the following configuration snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=one:10m</span><span class="w"> </span><span class="s">rate=100r/s</span><span class="p">;</span>
+<pre><code class="language-nginx">http {
+    limit_req_zone $binary_remote_addr zone=one:10m rate=100r/s;
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=one</span><span class="w"> </span><span class="s">burst=200</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    server {
+        listen 80;
+        location / {
+            limit_req zone=one burst=200;
+        }
+    }
+}
+</code></pre>
 <p>This configuration snippet uses the <code>limit_req</code> directive to limit traffic to 100 requests per second.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when implementing DDoS protection, including:

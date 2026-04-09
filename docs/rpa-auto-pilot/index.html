@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,93 +168,90 @@
 <p>Here are a few practical examples of RPA in action:</p>
 <h3 id="example-1-automating-data-entry">Example 1: Automating Data Entry</h3>
 <p>Suppose we want to automate the process of entering customer data into a CRM system. We can use UiPath to create a software robot that can extract data from a spreadsheet, log into the CRM system, and enter the data into the relevant fields. Here is an example of how we might implement this using UiPath:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary namespaces</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Core</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Excel</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Web</span><span class="p">;</span>
+<pre><code class="language-csharp">// Import the necessary namespaces
+using UiPath.Core;
+using UiPath.Excel;
+using UiPath.Web;
 
-<span class="c1">// Define the variables</span>
-<span class="kt">string</span><span class="w"> </span><span class="n">inputFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;customer_data.xlsx&quot;</span><span class="p">;</span>
-<span class="kt">string</span><span class="w"> </span><span class="n">crmUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com/crm&quot;</span><span class="p">;</span>
+// Define the variables
+string inputFile = &quot;customer_data.xlsx&quot;;
+string crmUrl = &quot;https://example.com/crm&quot;;
 
-<span class="c1">// Extract the data from the spreadsheet</span>
-<span class="n">ExcelApplication</span><span class="w"> </span><span class="n">excelApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ExcelApplication</span><span class="p">();</span>
-<span class="n">excelApp</span><span class="p">.</span><span class="n">Open</span><span class="p">(</span><span class="n">inputFile</span><span class="p">);</span>
-<span class="n">DataTable</span><span class="w"> </span><span class="n">dataTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">excelApp</span><span class="p">.</span><span class="n">GetDataTable</span><span class="p">(</span><span class="s">&quot;Sheet1&quot;</span><span class="p">);</span>
+// Extract the data from the spreadsheet
+ExcelApplication excelApp = new ExcelApplication();
+excelApp.Open(inputFile);
+DataTable dataTable = excelApp.GetDataTable(&quot;Sheet1&quot;);
 
-<span class="c1">// Log into the CRM system</span>
-<span class="n">WebBrowser</span><span class="w"> </span><span class="n">browser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WebBrowser</span><span class="p">();</span>
-<span class="n">browser</span><span class="p">.</span><span class="n">NavigateTo</span><span class="p">(</span><span class="n">crmUrl</span><span class="p">);</span>
-<span class="n">browser</span><span class="p">.</span><span class="n">WaitForPageLoad</span><span class="p">();</span>
+// Log into the CRM system
+WebBrowser browser = new WebBrowser();
+browser.NavigateTo(crmUrl);
+browser.WaitForPageLoad();
 
-<span class="c1">// Enter the data into the CRM system</span>
-<span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">DataRow</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">dataTable</span><span class="p">.</span><span class="n">Rows</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">customerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="s">&quot;Customer Name&quot;</span><span class="p">].</span><span class="n">ToString</span><span class="p">();</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">customerEmail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="s">&quot;Customer Email&quot;</span><span class="p">].</span><span class="n">ToString</span><span class="p">();</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="n">TypeText</span><span class="p">(</span><span class="s">&quot;customer_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">customerName</span><span class="p">);</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="n">TypeText</span><span class="p">(</span><span class="s">&quot;customer_email&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">customerEmail</span><span class="p">);</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="n">Click</span><span class="p">(</span><span class="s">&quot;submit_button&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Enter the data into the CRM system
+foreach (DataRow row in dataTable.Rows)
+{
+    string customerName = row[&quot;Customer Name&quot;].ToString();
+    string customerEmail = row[&quot;Customer Email&quot;].ToString();
+    browser.TypeText(&quot;customer_name&quot;, customerName);
+    browser.TypeText(&quot;customer_email&quot;, customerEmail);
+    browser.Click(&quot;submit_button&quot;);
+}
+</code></pre>
 <p>This code snippet demonstrates how we can use UiPath to automate the process of entering customer data into a CRM system.</p>
 <h3 id="example-2-automating-document-processing">Example 2: Automating Document Processing</h3>
 <p>Suppose we want to automate the process of extracting data from invoices and entering it into an accounting system. We can use Automation Anywhere to create a software robot that can extract the data from the invoices, log into the accounting system, and enter the data into the relevant fields. Here is an example of how we might implement this using Automation Anywhere:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">automationanywhere</span>
-<span class="kn">import</span> <span class="nn">pyautogui</span>
+<pre><code class="language-python"># Import the necessary libraries
+import automationanywhere
+import pyautogui
 
-<span class="c1"># Define the variables</span>
-<span class="n">invoice_file</span> <span class="o">=</span> <span class="s2">&quot;invoice.pdf&quot;</span>
-<span class="n">accounting_url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/accounting&quot;</span>
+# Define the variables
+invoice_file = &quot;invoice.pdf&quot;
+accounting_url = &quot;https://example.com/accounting&quot;
 
-<span class="c1"># Extract the data from the invoice</span>
-<span class="n">invoice_data</span> <span class="o">=</span> <span class="n">automationanywhere</span><span class="o">.</span><span class="n">extract_data_from_pdf</span><span class="p">(</span><span class="n">invoice_file</span><span class="p">)</span>
+# Extract the data from the invoice
+invoice_data = automationanywhere.extract_data_from_pdf(invoice_file)
 
-<span class="c1"># Log into the accounting system</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">accounting_url</span><span class="p">)</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">wait_for_page_load</span><span class="p">()</span>
+# Log into the accounting system
+pyautogui.open(accounting_url)
+pyautogui.wait_for_page_load()
 
-<span class="c1"># Enter the data into the accounting system</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">type_text</span><span class="p">(</span><span class="s2">&quot;invoice_number&quot;</span><span class="p">,</span> <span class="n">invoice_data</span><span class="p">[</span><span class="s2">&quot;invoice_number&quot;</span><span class="p">])</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">type_text</span><span class="p">(</span><span class="s2">&quot;invoice_date&quot;</span><span class="p">,</span> <span class="n">invoice_data</span><span class="p">[</span><span class="s2">&quot;invoice_date&quot;</span><span class="p">])</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">type_text</span><span class="p">(</span><span class="s2">&quot;invoice_amount&quot;</span><span class="p">,</span> <span class="n">invoice_data</span><span class="p">[</span><span class="s2">&quot;invoice_amount&quot;</span><span class="p">])</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">click</span><span class="p">(</span><span class="s2">&quot;submit_button&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Enter the data into the accounting system
+pyautogui.type_text(&quot;invoice_number&quot;, invoice_data[&quot;invoice_number&quot;])
+pyautogui.type_text(&quot;invoice_date&quot;, invoice_data[&quot;invoice_date&quot;])
+pyautogui.type_text(&quot;invoice_amount&quot;, invoice_data[&quot;invoice_amount&quot;])
+pyautogui.click(&quot;submit_button&quot;)
+</code></pre>
 <p>This code snippet demonstrates how we can use Automation Anywhere to automate the process of extracting data from invoices and entering it into an accounting system.</p>
 <h3 id="example-3-automating-workflow-management">Example 3: Automating Workflow Management</h3>
 <p>Suppose we want to automate the process of managing workflows and approving requests. We can use Blue Prism to create a software robot that can extract the data from the workflow system, log into the approval system, and enter the data into the relevant fields. Here is an example of how we might implement this using Blue Prism:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.blueprism.core.*</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.blueprism.web.*</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import com.blueprism.core.*;
+import com.blueprism.web.*;
 
-<span class="c1">// Define the variables</span>
-<span class="n">workflow_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;workflow.xlsx&quot;</span><span class="p">;</span>
-<span class="n">approval_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com/approval&quot;</span><span class="p">;</span>
+// Define the variables
+workflow_file = &quot;workflow.xlsx&quot;;
+approval_url = &quot;https://example.com/approval&quot;;
 
-<span class="c1">// Extract the data from the workflow system</span>
-<span class="n">WorkflowApp</span><span class="w"> </span><span class="n">workflowApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WorkflowApp</span><span class="p">();</span>
-<span class="n">workflowApp</span><span class="p">.</span><span class="na">Open</span><span class="p">(</span><span class="n">workflow_file</span><span class="p">);</span>
-<span class="n">DataTable</span><span class="w"> </span><span class="n">dataTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">workflowApp</span><span class="p">.</span><span class="na">GetDataTable</span><span class="p">(</span><span class="s">&quot;Sheet1&quot;</span><span class="p">);</span>
+// Extract the data from the workflow system
+WorkflowApp workflowApp = new WorkflowApp();
+workflowApp.Open(workflow_file);
+DataTable dataTable = workflowApp.GetDataTable(&quot;Sheet1&quot;);
 
-<span class="c1">// Log into the approval system</span>
-<span class="n">WebBrowser</span><span class="w"> </span><span class="n">browser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WebBrowser</span><span class="p">();</span>
-<span class="n">browser</span><span class="p">.</span><span class="na">NavigateTo</span><span class="p">(</span><span class="n">approval_url</span><span class="p">);</span>
-<span class="n">browser</span><span class="p">.</span><span class="na">WaitForPageLoad</span><span class="p">();</span>
+// Log into the approval system
+WebBrowser browser = new WebBrowser();
+browser.NavigateTo(approval_url);
+browser.WaitForPageLoad();
 
-<span class="c1">// Enter the data into the approval system</span>
-<span class="n">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">DataRow</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">dataTable</span><span class="p">.</span><span class="na">Rows</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">request_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="o">[</span><span class="s">&quot;Request ID&quot;</span><span class="o">]</span><span class="p">.</span><span class="na">ToString</span><span class="p">();</span>
-<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">request_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="o">[</span><span class="s">&quot;Request Status&quot;</span><span class="o">]</span><span class="p">.</span><span class="na">ToString</span><span class="p">();</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="na">TypeText</span><span class="p">(</span><span class="s">&quot;request_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">request_id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="na">TypeText</span><span class="p">(</span><span class="s">&quot;request_status&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">request_status</span><span class="p">);</span>
-<span class="w">    </span><span class="n">browser</span><span class="p">.</span><span class="na">Click</span><span class="p">(</span><span class="s">&quot;submit_button&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Enter the data into the approval system
+foreach (DataRow row in dataTable.Rows)
+{
+    string request_id = row[&quot;Request ID&quot;].ToString();
+    string request_status = row[&quot;Request Status&quot;].ToString();
+    browser.TypeText(&quot;request_id&quot;, request_id);
+    browser.TypeText(&quot;request_status&quot;, request_status);
+    browser.Click(&quot;submit_button&quot;);
+}
+</code></pre>
 <p>This code snippet demonstrates how we can use Blue Prism to automate the process of managing workflows and approving requests.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>RPA has a wide range of applications in various industries. Here are a few real-world use cases:

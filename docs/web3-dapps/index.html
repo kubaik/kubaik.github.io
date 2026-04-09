@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,21 +162,20 @@
 * Network: This is the underlying network that the DApp is built on, such as Ethereum or Polkadot.</p>
 <h3 id="example-of-a-simple-dapp">Example of a Simple DApp</h3>
 <p>Let's take a look at a simple example of a DApp built on Ethereum using the Solidity programming language. This DApp will allow users to store and retrieve a simple message.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">message</span><span class="p">;</span>
+contract SimpleStorage {
+    string public message;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">setMessage</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_message<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>message<span class="w"> </span><span class="o">=</span><span class="w"> </span>_message<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function setMessage(string memory _message) public {
+        message = _message;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getMessage</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>message<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getMessage() public view returns (string memory) {
+        return message;
+    }
+}
+</code></pre>
 <p>In this example, we define a contract called <code>SimpleStorage</code> that has a <code>message</code> variable, which can be set and retrieved using the <code>setMessage</code> and <code>getMessage</code> functions, respectively.</p>
 <h2 id="benefits-of-web3-dapps">Benefits of Web3 DApps</h2>
 <p>Web3 DApps offer several benefits over traditional centralized applications, including:
@@ -185,23 +185,22 @@
 * <strong>Autonomy</strong>: DApps can run autonomously, without the need for a central authority or intermediary.</p>
 <h3 id="example-of-a-real-world-dapp">Example of a Real-World DApp</h3>
 <p>Let's take a look at a real-world example of a DApp, such as Uniswap, a decentralized exchange built on Ethereum. Uniswap allows users to trade ERC-20 tokens in a decentralized and trustless manner. The protocol uses a liquidity pool model, where users can provide liquidity to the protocol and earn a percentage of the trading fees.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">uniswapAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">uniswapAbi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span><span class="w"> </span><span class="c1">// Uniswap ABI</span>
+const uniswapAddress = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D';
+const uniswapAbi = [...]; // Uniswap ABI
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">uniswapContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">uniswapAbi</span><span class="p">,</span><span class="w"> </span><span class="nx">uniswapAddress</span><span class="p">);</span>
+const uniswapContract = new web3.eth.Contract(uniswapAbi, uniswapAddress);
 
-<span class="nx">uniswapContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getReserves</span><span class="p">().</span><span class="nx">call</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">reserves</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reserves</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+uniswapContract.methods.getReserves().call()
+  .then((reserves) =&gt; {
+    console.log(reserves);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>In this example, we use the Web3.js library to interact with the Uniswap contract on the Ethereum mainnet. We call the <code>getReserves</code> method to retrieve the current reserves of the protocol.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building Web3 DApps, developers often encounter several common problems, including:
@@ -214,23 +213,22 @@
 * <strong>Security audits</strong>: Developers can perform security audits, such as code reviews and penetration testing, to identify and fix security vulnerabilities.</p>
 <h3 id="example-of-a-layer-2-scaling-solution">Example of a Layer 2 Scaling Solution</h3>
 <p>Let's take a look at an example of a layer 2 scaling solution, such as Optimism. Optimism uses a technique called rollups to process transactions off-chain, which can lead to faster and cheaper transactions.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">OptimismExample</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Call the Optimism rollup contract to process the transaction off-chain</span>
-<span class="w">        </span>OptimismRollupContract<span class="p">.</span>rollupTransfer<span class="p">(</span>_to<span class="p">,</span><span class="w"> </span>_amount<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+contract OptimismExample {
+    function transfer(address _to, uint256 _amount) public {
+        // Call the Optimism rollup contract to process the transaction off-chain
+        OptimismRollupContract.rollupTransfer(_to, _amount);
+    }
+}
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">OptimismRollupContract</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">rollupTransfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Process the transaction off-chain using a rollup</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+contract OptimismRollupContract {
+    function rollupTransfer(address _to, uint256 _amount) public {
+        // Process the transaction off-chain using a rollup
+        // ...
+    }
+}
+</code></pre>
 <p>In this example, we define a contract called <code>OptimismExample</code> that uses the Optimism rollup contract to process transactions off-chain.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Web3 DApps have a wide range of use cases, including:
@@ -243,26 +241,25 @@
 * <strong>IPFS</strong>: IPFS is a decentralized storage solution that can be used to store and retrieve data in a DApp.</p>
 <h3 id="example-of-a-defi-dapp">Example of a DeFi DApp</h3>
 <p>Let's take a look at an example of a DeFi DApp, such as Aave, a decentralized lending protocol built on Ethereum. Aave allows users to lend and borrow various cryptocurrencies, such as ETH and DAI.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">aaveAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x7d2768dE32b0b80b7a3454c06CdAc34A5aA45e8e&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">aaveAbi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span><span class="w"> </span><span class="c1">// Aave ABI</span>
+const aaveAddress = '0x7d2768dE32b0b80b7a3454c06CdAc34A5aA45e8e';
+const aaveAbi = [...]; // Aave ABI
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">aaveContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">aaveAbi</span><span class="p">,</span><span class="w"> </span><span class="nx">aaveAddress</span><span class="p">);</span>
+const aaveContract = new web3.eth.Contract(aaveAbi, aaveAddress);
 
-<span class="nx">aaveContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">lend</span><span class="p">(</span><span class="s1">&#39;0x1234567890abcdef&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x1234567890abcdef&#39;</span><span class="w"> </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">receipt</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">receipt</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+aaveContract.methods.lend('0x1234567890abcdef', 100).send({ from: '0x1234567890abcdef' })
+  .then((receipt) =&gt; {
+    console.log(receipt);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>In this example, we use the Web3.js library to interact with the Aave contract on the Ethereum mainnet. We call the <code>lend</code> method to lend 100 units of a cryptocurrency to a borrower.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>When building Web3 DApps, developers often need to consider performance benchmarks and pricing data, such as:
@@ -275,13 +272,12 @@
 * <strong>IPFS</strong>: The cost of storing data on IPFS is around $0.01-0.10 per GB, depending on the storage solution and the amount of data being stored.</p>
 <h3 id="example-of-a-performance-benchmark">Example of a Performance Benchmark</h3>
 <p>Let's take a look at an example of a performance benchmark, such as the average transaction fee on Ethereum.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">transactionFee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">getGasPrice</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The current transaction fee on Ethereum is </span><span class="si">${</span><span class="nx">transactionFee</span><span class="si">}</span><span class="sb"> GWEI`</span><span class="p">);</span>
-</code></pre></div>
-
+const transactionFee = await web3.eth.getGasPrice();
+console.log(`The current transaction fee on Ethereum is ${transactionFee} GWEI`);
+</code></pre>
 <p>In this example, we use the Web3.js library to retrieve the current transaction fee on Ethereum.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Web3 DApps are a powerful tool for building decentralized applications, with a wide range of use cases and implementation details. By using tools and platforms such as Ethereum, Polkadot, and IPFS, developers can build secure, transparent, and censorship-resistant applications that can interact with multiple blockchain networks.</p>

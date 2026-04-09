@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,29 +169,28 @@
 4. <strong>Networking</strong>: Configuring networking services, such as Amazon VPC and AWS Direct Connect, to ensure secure and efficient data transfer.</p>
 <h3 id="example-deploying-a-scalable-web-application-on-aws">Example: Deploying a Scalable Web Application on AWS</h3>
 <p>To illustrate the design process, let's consider a real-world example of deploying a scalable web application on AWS. Suppose we want to build a web application that can handle 10,000 concurrent users, with an average response time of 200ms.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import required libraries</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># Import required libraries
+import boto3
 
-<span class="c1"># Create an Amazon EC2 instance</span>
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
-<span class="n">instance</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">run_instances</span><span class="p">(</span>
-    <span class="n">ImageId</span><span class="o">=</span><span class="s1">&#39;ami-0c94855ba95c71c99&#39;</span><span class="p">,</span>
-    <span class="n">InstanceType</span><span class="o">=</span><span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">MinCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxCount</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
+# Create an Amazon EC2 instance
+ec2 = boto3.client('ec2')
+instance = ec2.run_instances(
+    ImageId='ami-0c94855ba95c71c99',
+    InstanceType='t2.micro',
+    MinCount=1,
+    MaxCount=1
+)
 
-<span class="c1"># Create an Amazon RDS instance</span>
-<span class="n">rds</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;rds&#39;</span><span class="p">)</span>
-<span class="n">db_instance</span> <span class="o">=</span> <span class="n">rds</span><span class="o">.</span><span class="n">create_db_instance</span><span class="p">(</span>
-    <span class="n">DBInstanceClass</span><span class="o">=</span><span class="s1">&#39;db.t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">DBInstanceIdentifier</span><span class="o">=</span><span class="s1">&#39;mydb&#39;</span><span class="p">,</span>
-    <span class="n">Engine</span><span class="o">=</span><span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
-    <span class="n">MasterUsername</span><span class="o">=</span><span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-    <span class="n">MasterUserPassword</span><span class="o">=</span><span class="s1">&#39;mypassword&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create an Amazon RDS instance
+rds = boto3.client('rds')
+db_instance = rds.create_db_instance(
+    DBInstanceClass='db.t2.micro',
+    DBInstanceIdentifier='mydb',
+    Engine='mysql',
+    MasterUsername='myuser',
+    MasterUserPassword='mypassword'
+)
+</code></pre>
 <p>In this example, we create an Amazon EC2 instance and an Amazon RDS instance using the AWS SDK for Python (Boto3). We can then configure the instances to work together to handle incoming traffic.</p>
 <h2 id="best-practices-for-aws-cloud-architecture">Best Practices for AWS Cloud Architecture</h2>
 <p>To ensure a well-designed and efficient AWS Cloud Architecture, follow these best practices:
@@ -200,33 +200,32 @@
 * <strong>Secure Your Data</strong>: Use AWS IAM and AWS KMS to protect sensitive data and ensure compliance with regulatory requirements.</p>
 <h3 id="example-implementing-auto-scaling-and-load-balancing">Example: Implementing Auto Scaling and Load Balancing</h3>
 <p>To demonstrate the implementation of Auto Scaling and Load Balancing, let's consider an example of a web application that experiences varying traffic patterns.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import required libraries</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># Import required libraries
+import boto3
 
-<span class="c1"># Create an Amazon EC2 Auto Scaling group</span>
-<span class="n">asg</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;autoscaling&#39;</span><span class="p">)</span>
-<span class="n">asg</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
-    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;myasg&#39;</span><span class="p">,</span>
-    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;mylc&#39;</span><span class="p">,</span>
-    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
+# Create an Amazon EC2 Auto Scaling group
+asg = boto3.client('autoscaling')
+asg.create_auto_scaling_group(
+    AutoScalingGroupName='myasg',
+    LaunchConfigurationName='mylc',
+    MinSize=1,
+    MaxSize=10
+)
 
-<span class="c1"># Create an Amazon Elastic Load Balancer</span>
-<span class="n">elb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elb&#39;</span><span class="p">)</span>
-<span class="n">elb</span><span class="o">.</span><span class="n">create_load_balancer</span><span class="p">(</span>
-    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;myelb&#39;</span><span class="p">,</span>
-    <span class="n">Listeners</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;LoadBalancerPort&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-            <span class="s1">&#39;InstanceProtocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;InstancePort&#39;</span><span class="p">:</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create an Amazon Elastic Load Balancer
+elb = boto3.client('elb')
+elb.create_load_balancer(
+    LoadBalancerName='myelb',
+    Listeners=[
+        {
+            'Protocol': 'HTTP',
+            'LoadBalancerPort': 80,
+            'InstanceProtocol': 'HTTP',
+            'InstancePort': 80
+        }
+    ]
+)
+</code></pre>
 <p>In this example, we create an Amazon EC2 Auto Scaling group and an Amazon Elastic Load Balancer using the AWS SDK for Python (Boto3). We can then configure the Auto Scaling group to dynamically adjust the number of instances based on workload demands, and the Load Balancer to distribute traffic across the instances.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When designing and deploying an AWS Cloud Architecture, you may encounter common problems such as:
@@ -235,36 +234,35 @@
 * <strong>Performance and Scalability</strong>: Optimizing performance and scalability for varying workloads.</p>
 <h3 id="solution-using-aws-cost-explorer-and-aws-cloudwatch">Solution: Using AWS Cost Explorer and AWS CloudWatch</h3>
 <p>To address cost optimization and performance issues, you can use AWS Cost Explorer and AWS CloudWatch. AWS Cost Explorer provides a detailed breakdown of costs, while AWS CloudWatch offers performance monitoring and optimization tools.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import required libraries</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># Import required libraries
+import boto3
 
-<span class="c1"># Get cost estimates using AWS Cost Explorer</span>
-<span class="n">ce</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ce&#39;</span><span class="p">)</span>
-<span class="n">cost_estimate</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">get_cost_estimate</span><span class="p">(</span>
-    <span class="n">TimePeriod</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-31&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Get cost estimates using AWS Cost Explorer
+ce = boto3.client('ce')
+cost_estimate = ce.get_cost_estimate(
+    TimePeriod={
+        'Start': '2022-01-01',
+        'End': '2022-01-31'
+    }
+)
 
-<span class="c1"># Get performance metrics using AWS CloudWatch</span>
-<span class="n">cw</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">cw</span><span class="o">.</span><span class="n">get_metric_statistics</span><span class="p">(</span>
-    <span class="n">Namespace</span><span class="o">=</span><span class="s1">&#39;AWS/EC2&#39;</span><span class="p">,</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;CPUUtilization&#39;</span><span class="p">,</span>
-    <span class="n">Dimensions</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;InstanceId&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;i-0123456789abcdef0&#39;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">StartTime</span><span class="o">=</span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
-    <span class="n">EndTime</span><span class="o">=</span><span class="s1">&#39;2022-01-31&#39;</span><span class="p">,</span>
-    <span class="n">Period</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">Statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Get performance metrics using AWS CloudWatch
+cw = boto3.client('cloudwatch')
+metrics = cw.get_metric_statistics(
+    Namespace='AWS/EC2',
+    MetricName='CPUUtilization',
+    Dimensions=[
+        {
+            'Name': 'InstanceId',
+            'Value': 'i-0123456789abcdef0'
+        }
+    ],
+    StartTime='2022-01-01',
+    EndTime='2022-01-31',
+    Period=300,
+    Statistics=['Average']
+)
+</code></pre>
 <p>In this example, we use AWS Cost Explorer and AWS CloudWatch to get cost estimates and performance metrics for an Amazon EC2 instance.</p>
 <h2 id="real-world-use-cases-and-implementation-details">Real-World Use Cases and Implementation Details</h2>
 <p>Here are some real-world use cases for AWS Cloud Architecture, along with implementation details:
@@ -273,50 +271,49 @@
 * <strong>Machine Learning and AI</strong>: Deploying machine learning and AI models on AWS, using services such as Amazon SageMaker, Amazon Rekognition, and Amazon Comprehend.</p>
 <h3 id="example-deploying-a-big-data-and-analytics-platform-on-aws">Example: Deploying a Big Data and Analytics Platform on AWS</h3>
 <p>To illustrate the deployment of a big data and analytics platform on AWS, let's consider an example of a company that wants to analyze customer behavior and preferences.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import required libraries</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># Import required libraries
+import boto3
 
-<span class="c1"># Create an Amazon EMR cluster</span>
-<span class="n">emr</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;emr&#39;</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">emr</span><span class="o">.</span><span class="n">run_job_flow</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;mycluster&#39;</span><span class="p">,</span>
-    <span class="n">ReleaseLabel</span><span class="o">=</span><span class="s1">&#39;emr-6.3.0&#39;</span><span class="p">,</span>
-    <span class="n">Instances</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;InstanceGroups&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;MasterNode&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Market&#39;</span><span class="p">:</span> <span class="s1">&#39;ON_DEMAND&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;InstanceType&#39;</span><span class="p">:</span> <span class="s1">&#39;m5.xlarge&#39;</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;CoreNode&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Market&#39;</span><span class="p">:</span> <span class="s1">&#39;ON_DEMAND&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;InstanceType&#39;</span><span class="p">:</span> <span class="s1">&#39;m5.xlarge&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">},</span>
-    <span class="n">Applications</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;Hadoop&#39;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;Spark&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
+# Create an Amazon EMR cluster
+emr = boto3.client('emr')
+cluster = emr.run_job_flow(
+    Name='mycluster',
+    ReleaseLabel='emr-6.3.0',
+    Instances={
+        'InstanceGroups': [
+            {
+                'Name': 'MasterNode',
+                'Market': 'ON_DEMAND',
+                'InstanceType': 'm5.xlarge'
+            },
+            {
+                'Name': 'CoreNode',
+                'Market': 'ON_DEMAND',
+                'InstanceType': 'm5.xlarge'
+            }
+        ]
+    },
+    Applications=[
+        {
+            'Name': 'Hadoop'
+        },
+        {
+            'Name': 'Spark'
+        }
+    ]
+)
 
-<span class="c1"># Create an Amazon Redshift cluster</span>
-<span class="n">rs</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;redshift&#39;</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">create_cluster</span><span class="p">(</span>
-    <span class="n">DBName</span><span class="o">=</span><span class="s1">&#39;mydb&#39;</span><span class="p">,</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="s1">&#39;mycluster&#39;</span><span class="p">,</span>
-    <span class="n">MasterUsername</span><span class="o">=</span><span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-    <span class="n">MasterUserPassword</span><span class="o">=</span><span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
-    <span class="n">NodeType</span><span class="o">=</span><span class="s1">&#39;dc2.large&#39;</span><span class="p">,</span>
-    <span class="n">ClusterType</span><span class="o">=</span><span class="s1">&#39;single-node&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create an Amazon Redshift cluster
+rs = boto3.client('redshift')
+cluster = rs.create_cluster(
+    DBName='mydb',
+    ClusterIdentifier='mycluster',
+    MasterUsername='myuser',
+    MasterUserPassword='mypassword',
+    NodeType='dc2.large',
+    ClusterType='single-node'
+)
+</code></pre>
 <p>In this example, we create an Amazon EMR cluster and an Amazon Redshift cluster using the AWS SDK for Python (Boto3). We can then configure the clusters to work together to analyze customer behavior and preferences.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, designing and deploying an efficient AWS Cloud Architecture requires careful consideration of several factors, including compute resources, storage and database, security and compliance, and networking. By following best practices, using the right tools and services, and implementing real-world use cases, you can build a scalable and secure cloud architecture that meets your business needs.</p>

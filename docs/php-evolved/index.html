@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,19 +154,18 @@
 <p>One of the key factors contributing to PHP's modernization is the shift towards object-oriented programming (OOP) and the use of frameworks such as Laravel, Symfony, and CodeIgniter. These frameworks provide a structured approach to development, making it easier to build complex applications with maintainable codebases. For instance, Laravel, with its expressive syntax and robust ecosystem, has become a favorite among developers, boasting over 1.5 million downloads on Packagist, the PHP package repository, as of January 2023.</p>
 <h3 id="php-8-and-beyond">PHP 8 and Beyond</h3>
 <p>The release of PHP 8 in November 2020 marked a significant milestone in PHP's evolution. This version introduced several groundbreaking features, including the Just-In-Time (JIT) compiler, which can improve performance by up to 30% on certain workloads, according to benchmarks by Zend Technologies. Additionally, PHP 8 brought improvements to type declarations, making the language more strict and less prone to type-related errors.</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// Example of using PHP 8&#39;s union types for function parameters</span>
-<span class="x">function parseValue(string|int $value): void {</span>
-<span class="x">    if (is_string($value)) {</span>
-<span class="x">        echo &quot;The value is a string\n&quot;;</span>
-<span class="x">    } elseif (is_int($value)) {</span>
-<span class="x">        echo &quot;The value is an integer\n&quot;;</span>
-<span class="x">    }</span>
-<span class="x">}</span>
+<pre><code class="language-php">// Example of using PHP 8's union types for function parameters
+function parseValue(string|int $value): void {
+    if (is_string($value)) {
+        echo &quot;The value is a string\n&quot;;
+    } elseif (is_int($value)) {
+        echo &quot;The value is an integer\n&quot;;
+    }
+}
 
-<span class="x">parseValue(&quot;Hello&quot;); // Outputs: The value is a string</span>
-<span class="x">parseValue(123);     // Outputs: The value is an integer</span>
-</code></pre></div>
-
+parseValue(&quot;Hello&quot;); // Outputs: The value is a string
+parseValue(123);     // Outputs: The value is an integer
+</code></pre>
 <h2 id="modern-development-tools-and-practices">Modern Development Tools and Practices</h2>
 <p>The PHP ecosystem is rich with tools and platforms designed to streamline the development process. One such tool is Composer, the dependency manager for PHP, which allows developers to easily manage project dependencies. With over 3.5 billion downloads on Packagist, Composer has become an indispensable tool in modern PHP development.</p>
 <p>Another critical aspect of modern PHP development is the use of continuous integration/continuous deployment (CI/CD) pipelines. Platforms like GitHub Actions, CircleCI, and Jenkins provide automated testing, building, and deployment capabilities, ensuring that applications are thoroughly tested and updated regularly. For example, GitHub Actions offers a free plan with 2,000 minutes of automation per month for public repositories, making it an accessible choice for open-source projects and small applications.</p>
@@ -175,38 +175,37 @@
 <li><strong>Create a GitHub Actions Workflow File</strong>: In your repository, navigate to <code>.github/workflows</code> and create a new file named <code>deploy.yml</code>.</li>
 <li><strong>Define the Workflow</strong>: Specify the events that trigger the workflow, the environment, and the steps involved in the deployment process.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Laravel App</span>
+<pre><code class="language-yaml">name: Deploy Laravel App
 
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">deploy</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v3</span>
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">composer install --no-dev --prefer-dist</span>
+      - name: Install dependencies
+        run: |
+          composer install --no-dev --prefer-dist
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run migrations</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">php artisan migrate --force</span>
+      - name: Run migrations
+        run: |
+          php artisan migrate --force
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to production</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appleboy/scp-action@master</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.PRODUCTION_SERVER }}</span>
-<span class="w">          </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.SERVER_USERNAME }}</span>
-<span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.SERVER_SSH_KEY }}</span>
-<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.&quot;</span>
-<span class="w">          </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/www/myapp&quot;</span>
-</code></pre></div>
-
+      - name: Deploy to production
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PRODUCTION_SERVER }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: &quot;.&quot;
+          target: &quot;/var/www/myapp&quot;
+</code></pre>
 <ol>
 <li><strong>Store Secrets</strong>: In your GitHub repository settings, add the production server details, username, and SSH key as secrets to be used in the workflow.</li>
 </ol>
@@ -215,17 +214,16 @@
 <p>Performance and security are paramount in modern web development. PHP offers several built-in features and extensions to enhance these aspects, such as OPcache for caching and improving performance, and the Sodium extension for secure password hashing.</p>
 <h3 id="real-world-example-optimizing-database-queries-with-eloquent">Real-World Example: Optimizing Database Queries with Eloquent</h3>
 <p>Laravel's Eloquent ORM provides a simple and expressive way to interact with databases. However, poorly optimized queries can lead to performance bottlenecks. Consider the following example of optimizing a query to fetch users with their respective roles:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// Before optimization</span>
-<span class="x">$users = User::all();</span>
-<span class="x">foreach ($users as $user) {</span>
-<span class="x">    $roles = $user-&gt;roles; // This executes a separate query for each user</span>
-<span class="x">}</span>
+<pre><code class="language-php">// Before optimization
+$users = User::all();
+foreach ($users as $user) {
+    $roles = $user-&gt;roles; // This executes a separate query for each user
+}
 
-<span class="x">// After optimization using Eager Loading</span>
-<span class="x">$users = User::with(&#39;roles&#39;)-&gt;get();</span>
-<span class="x">// This fetches all users and their roles in a single query</span>
-</code></pre></div>
-
+// After optimization using Eager Loading
+$users = User::with('roles')-&gt;get();
+// This fetches all users and their roles in a single query
+</code></pre>
 <p>By using Eloquent's eager loading feature, we can significantly reduce the number of database queries, leading to improved performance. According to Laravel's documentation, eager loading can decrease the number of queries from O(n) to O(1), where n is the number of related models.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <h3 id="handling-cors-in-api-development">Handling CORS in API Development</h3>
@@ -235,15 +233,14 @@
 <li><strong>Publish the Config</strong>: Execute <code>php artisan vendor:publish --tag="cors"</code> to publish the CORS configuration file.</li>
 <li><strong>Configure CORS</strong>: In the <code>config/cors.php</code> file, specify the allowed origins, methods, and headers.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="x">&#39;supportsCredentials&#39; =&gt; false,</span>
-<span class="x">&#39;allowedOrigins&#39; =&gt; [&#39;*&#39;],</span>
-<span class="x">&#39;allowedOriginsPatterns&#39; =&gt; [],</span>
-<span class="x">&#39;allowedMethods&#39; =&gt; [&#39;*&#39;],</span>
-<span class="x">&#39;allowedHeaders&#39; =&gt; [&#39;Content-Type&#39;, &#39;X-Auth-Token&#39;],</span>
-<span class="x">&#39;exposedHeaders&#39; =&gt; [],</span>
-<span class="x">&#39;maxAge&#39; =&gt; 0,</span>
-</code></pre></div>
-
+<pre><code class="language-php">'supportsCredentials' =&gt; false,
+'allowedOrigins' =&gt; ['*'],
+'allowedOriginsPatterns' =&gt; [],
+'allowedMethods' =&gt; ['*'],
+'allowedHeaders' =&gt; ['Content-Type', 'X-Auth-Token'],
+'exposedHeaders' =&gt; [],
+'maxAge' =&gt; 0,
+</code></pre>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>PHP's evolution into a modern, robust language has been remarkable, with significant advancements in performance, security, and development practices. By embracing modern frameworks, tools, and best practices, developers can build high-quality applications efficiently.</p>
 <p>To leverage the full potential of modern PHP development:

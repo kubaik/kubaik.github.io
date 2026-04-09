@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,117 +165,114 @@
 * View: Represents the user interface of the app
 * Controller: Acts as an intermediary between the model and view</p>
 <p>Here is an example of how to implement the MVC pattern in a simple iOS app using Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">var</span> <span class="nv">email</span><span class="p">:</span> <span class="nb">String</span>
+<pre><code class="language-swift">// Model
+class User {
+    var name: String
+    var email: String
 
-    <span class="kd">init</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kc">self</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span>
-        <span class="kc">self</span><span class="p">.</span><span class="n">email</span> <span class="p">=</span> <span class="n">email</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    init(name: String, email: String) {
+        self.name = name
+        self.email = email
+    }
+}
 
-<span class="c1">// View</span>
-<span class="kd">class</span> <span class="nc">UserView</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">nameLabel</span><span class="p">:</span> <span class="bp">UILabel</span>
-    <span class="kd">var</span> <span class="nv">emailLabel</span><span class="p">:</span> <span class="bp">UILabel</span>
+// View
+class UserView: UIView {
+    var nameLabel: UILabel
+    var emailLabel: UILabel
 
-    <span class="kr">override</span> <span class="kd">init</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">CGRect</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="kd">init</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">frame</span><span class="p">)</span>
-        <span class="n">nameLabel</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-        <span class="n">emailLabel</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        nameLabel = UILabel()
+        emailLabel = UILabel()
+        // ...
+    }
+}
 
-<span class="c1">// Controller</span>
-<span class="kd">class</span> <span class="nc">UserController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">user</span><span class="p">:</span> <span class="n">User</span>
-    <span class="kd">var</span> <span class="nv">userView</span><span class="p">:</span> <span class="n">UserView</span>
+// Controller
+class UserController: UIViewController {
+    var user: User
+    var userView: UserView
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="n">user</span> <span class="p">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s">&quot;John Doe&quot;</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="s">&quot;johndoe@example.com&quot;</span><span class="p">)</span>
-        <span class="n">userView</span> <span class="p">=</span> <span class="n">UserView</span><span class="p">()</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        user = User(name: &quot;John Doe&quot;, email: &quot;johndoe@example.com&quot;)
+        userView = UserView()
+        // ...
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserView</code> class represents the view, and the <code>UserController</code> class represents the controller.</p>
 <h2 id="model-view-presenter-mvp-pattern">Model-View-Presenter (MVP) Pattern</h2>
 <p>The MVP pattern is similar to the MVC pattern, but it uses a presenter instead of a controller. The presenter acts as an intermediary between the model and view, and it is responsible for handling the business logic of the app.</p>
 <p>Here is an example of how to implement the MVP pattern in a simple Android app using Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+<pre><code class="language-java">// Model
+class User {
+    private String name;
+    private String email;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+}
 
-<span class="c1">// View</span>
-<span class="kd">interface</span> <span class="nc">UserView</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">showUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">);</span>
-<span class="p">}</span>
+// View
+interface UserView {
+    void showUser(User user);
+}
 
-<span class="c1">// Presenter</span>
-<span class="kd">class</span> <span class="nc">UserPresenter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserView</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+// Presenter
+class UserPresenter {
+    private User user;
+    private UserView view;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">UserPresenter</span><span class="p">(</span><span class="n">UserView</span><span class="w"> </span><span class="n">view</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public UserPresenter(UserView view) {
+        this.view = view;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loadUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;johndoe@example.com&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">view</span><span class="p">.</span><span class="na">showUser</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public void loadUser() {
+        user = new User(&quot;John Doe&quot;, &quot;johndoe@example.com&quot;);
+        view.showUser(user);
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserView</code> interface represents the view, and the <code>UserPresenter</code> class represents the presenter.</p>
 <h2 id="model-view-viewmodel-mvvm-pattern">Model-View-ViewModel (MVVM) Pattern</h2>
 <p>The MVVM pattern is similar to the MVP pattern, but it uses a view model instead of a presenter. The view model acts as an intermediary between the model and view, and it is responsible for exposing the data and commands of the model in a form that is easily consumable by the view.</p>
 <p>Here is an example of how to implement the MVVM pattern in a simple Windows app using C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">// Model
+class User {
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
 
-<span class="c1">// View Model</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">UserViewModel</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">;</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+// View Model
+class UserViewModel {
+    private User user;
+    public string Name { get; set; }
+    public string Email { get; set; }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">UserViewModel</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">;</span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span>
-<span class="w">        </span><span class="n">Email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public UserViewModel(User user) {
+        this.user = user;
+        Name = user.Name;
+        Email = user.Email;
+    }
+}
 
-<span class="c1">// View</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">UserView</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">UserViewModel</span><span class="w"> </span><span class="n">viewModel</span><span class="p">;</span>
+// View
+class UserView {
+    private UserViewModel viewModel;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">UserView</span><span class="p">(</span><span class="n">UserViewModel</span><span class="w"> </span><span class="n">viewModel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">viewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">viewModel</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public UserView(UserViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ShowUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public void ShowUser() {
+        // ...
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserViewModel</code> class represents the view model, and the <code>UserView</code> class represents the view.</p>
 <h2 id="clean-architecture-pattern">Clean Architecture Pattern</h2>
 <p>The Clean Architecture pattern is a software architecture pattern that separates the application's business logic from its infrastructure and presentation layers. It consists of four main layers:

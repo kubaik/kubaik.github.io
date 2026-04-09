@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,106 +154,102 @@
 <h3 id="monolithic-architecture">Monolithic Architecture</h3>
 <p>A monolithic architecture is a traditional approach where all components of an application are built into a single, self-contained unit. This approach is simple to develop, test, and deploy, but it can become cumbersome as the application grows.</p>
 <p>For example, consider a simple e-commerce application built using Node.js and Express.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// app.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">// app.js
+const express = require('express');
+const app = express();
+const port = 3000;
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!');
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// retrieve products from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 2&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">products</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/products', (req, res) =&gt; {
+  // retrieve products from database
+  const products = [
+    { id: 1, name: 'Product 1' },
+    { id: 2, name: 'Product 2' },
+  ];
+  res.json(products);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server started on port </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(port, () =&gt; {
+  console.log(`Server started on port ${port}`);
+});
+</code></pre>
 <p>In this example, the entire application is contained within a single file, <code>app.js</code>. While this approach is simple, it can become difficult to maintain and scale as the application grows.</p>
 <h3 id="microservices-architecture">Microservices Architecture</h3>
 <p>A microservices architecture is a modern approach where an application is broken down into smaller, independent services that communicate with each other using APIs. This approach provides greater flexibility, scalability, and fault tolerance.</p>
 <p>For example, consider a microservices-based e-commerce application built using Docker, Kubernetes, and Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// products-service.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3001</span><span class="p">;</span>
+<pre><code class="language-javascript">// products-service.js
+const express = require('express');
+const app = express();
+const port = 3001;
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// retrieve products from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 2&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">products</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/products', (req, res) =&gt; {
+  // retrieve products from database
+  const products = [
+    { id: 1, name: 'Product 1' },
+    { id: 2, name: 'Product 2' },
+  ];
+  res.json(products);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Products service started on port </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
+app.listen(port, () =&gt; {
+  console.log(`Products service started on port ${port}`);
+});
+</code></pre>
+<pre><code class="language-javascript">// orders-service.js
+const express = require('express');
+const app = express();
+const port = 3002;
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// orders-service.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3002</span><span class="p">;</span>
+app.get('/orders', (req, res) =&gt; {
+  // retrieve orders from database
+  const orders = [
+    { id: 1, customer: 'John Doe' },
+    { id: 2, customer: 'Jane Doe' },
+  ];
+  res.json(orders);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/orders&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// retrieve orders from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">orders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">customer</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">customer</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">orders</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Orders service started on port </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(port, () =&gt; {
+  console.log(`Orders service started on port ${port}`);
+});
+</code></pre>
 <p>In this example, the e-commerce application is broken down into two independent services: <code>products-service</code> and <code>orders-service</code>. Each service is responsible for its own domain logic and communicates with other services using APIs.</p>
 <h3 id="event-driven-architecture">Event-Driven Architecture</h3>
 <p>An event-driven architecture is a design pattern where an application is built around producing, processing, and reacting to events. This approach provides greater flexibility, scalability, and fault tolerance.</p>
 <p>For example, consider an event-driven e-commerce application built using Apache Kafka, Node.js, and Express.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// producer.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">kafka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;kafka-node&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">Producer</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">KafkaClient</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Producer</span><span class="p">(</span><span class="nx">client</span><span class="p">);</span>
+<pre><code class="language-javascript">// producer.js
+const kafka = require('kafka-node');
+const Producer = kafka.Producer;
+const client = new kafka.KafkaClient();
+const producer = new Producer(client);
 
-<span class="nx">producer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;ready&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Producer ready&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+producer.on('ready', () =&gt; {
+  console.log('Producer ready');
+});
 
-<span class="nx">producer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Producer error:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
-<span class="p">});</span>
+producer.on('error', (err) =&gt; {
+  console.log('Producer error:', err);
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">productCreatedEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;product-created&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const productCreatedEvent = {
+  type: 'product-created',
+  data: {
+    id: 1,
+    name: 'Product 1',
+  },
+};
 
-<span class="nx">producer</span><span class="p">.</span><span class="nx">send</span><span class="p">([{</span><span class="w"> </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;products&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">productCreatedEvent</span><span class="p">)</span><span class="w"> </span><span class="p">}],</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Error sending message:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Message sent:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+producer.send([{ topic: 'products', messages: JSON.stringify(productCreatedEvent) }], (err, data) =&gt; {
+  if (err) {
+    console.log('Error sending message:', err);
+  } else {
+    console.log('Message sent:', data);
+  }
+});
+</code></pre>
 <p>In this example, the e-commerce application produces events when a new product is created. The event is sent to a Kafka topic, where it can be consumed by other services.</p>
 <h3 id="advantages-and-disadvantages-of-backend-architecture-patterns">Advantages and Disadvantages of Backend Architecture Patterns</h3>
 <p>Each backend architecture pattern has its advantages and disadvantages. Here are some key points to consider:</p>
@@ -266,12 +263,11 @@
 </li>
 </ul>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
-<div class="codehilite"><pre><span></span><code>    - Low overhead in terms of infrastructure and maintenance
+<pre><code>    - Low overhead in terms of infrastructure and maintenance
 + Disadvantages:
     - Can become cumbersome as the application grows
     - Limited scalability and fault tolerance
-</code></pre></div>
-
+</code></pre>
 <ul>
 <li>Microservices architecture:<ul>
 <li>Advantages:<ul>

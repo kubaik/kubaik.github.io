@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,17 +162,16 @@
 <h2 id="customizing-your-cli-environment">Customizing Your CLI Environment</h2>
 <p>Customizing your CLI environment can greatly improve your productivity. This includes setting up your shell, configuring plugins, and defining aliases. For example, you can use the <code>~/.bashrc</code> file to configure your Bash shell, adding custom commands and settings.</p>
 <p>Here's an example of how to configure your Bash shell to display the current Git branch:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># ~/.bashrc</span>
-<span class="k">function</span><span class="w"> </span>git-branch<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">branch</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>rev-parse<span class="w"> </span>--abbrev-ref<span class="w"> </span>HEAD<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; (</span><span class="nv">$branch</span><span class="s2">)&quot;</span>
-<span class="w">  </span><span class="k">fi</span>
-<span class="o">}</span>
+<pre><code class="language-bash"># ~/.bashrc
+function git-branch() {
+  local branch=$(git rev-parse --abbrev-ref HEAD 2&gt;/dev/null)
+  if [ $? -eq 0 ]; then
+    echo &quot; ($branch)&quot;
+  fi
+}
 
-<span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;[\u@\h \W]$(git-branch) $ &#39;</span>
-</code></pre></div>
-
+PS1='[\u@\h \W]$(git-branch) $ '
+</code></pre>
 <p>This code defines a <code>git-branch</code> function that retrieves the current Git branch and appends it to the command prompt.</p>
 <h3 id="using-cli-tools-and-plugins">Using CLI Tools and Plugins</h3>
 <p>CLI tools and plugins can automate tasks, provide additional functionality, and enhance your overall productivity. For example, <code>git</code> plugins like <code>git-flow</code> and <code>git-extras</code> offer advanced features for managing Git repositories.</p>
@@ -183,52 +183,48 @@
 <h2 id="managing-multiple-terminals-with-tmux">Managing Multiple Terminals with Tmux</h2>
 <p>Tmux is a powerful terminal multiplexer that allows you to manage multiple terminals from a single window. It provides features like window splitting, session management, and command scripting.</p>
 <p>Here's an example of how to use Tmux to split a window into two panes:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Split the window into two panes</span>
-tmux<span class="w"> </span>split-window<span class="w"> </span>-h
+<pre><code class="language-bash"># Split the window into two panes
+tmux split-window -h
 
-<span class="c1"># Split the window into two panes vertically</span>
-tmux<span class="w"> </span>split-window<span class="w"> </span>-v
-</code></pre></div>
-
+# Split the window into two panes vertically
+tmux split-window -v
+</code></pre>
 <p>This code splits the current window into two panes, either horizontally or vertically.</p>
 <h3 id="configuring-tmux">Configuring Tmux</h3>
 <p>Tmux can be configured using the <code>~/.tmux.conf</code> file, which allows you to customize settings like keyboard shortcuts, window layouts, and status bar displays.</p>
 <p>For example, you can add the following code to your <code>~/.tmux.conf</code> file to configure the status bar:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Set the status bar format</span>
-<span class="nb">set</span><span class="w"> </span>-g<span class="w"> </span>status-format<span class="w"> </span><span class="s2">&quot; #{?client_width,#[fg=colour235,bg=colour252] #(whoami) @ #(hostname) #[fg=colour255,bg=colour236,delay=1000] %H:%M %d-%b-%y #[fg=colour236,bg=colour252],}&quot;</span>
+<pre><code class="language-bash"># Set the status bar format
+set -g status-format &quot; #{?client_width,#[fg=colour235,bg=colour252] #(whoami) @ #(hostname) #[fg=colour255,bg=colour236,delay=1000] %H:%M %d-%b-%y #[fg=colour236,bg=colour252],}&quot;
 
-<span class="c1"># Set the status bar position</span>
-<span class="nb">set</span><span class="w"> </span>-g<span class="w"> </span>status-position<span class="w"> </span>bottom
-</code></pre></div>
-
+# Set the status bar position
+set -g status-position bottom
+</code></pre>
 <p>This code configures the status bar to display the current user, hostname, time, and date.</p>
 <h2 id="automating-tasks-with-scripting">Automating Tasks with Scripting</h2>
 <p>Scripting is a powerful way to automate tasks and workflows in the CLI. It allows you to write custom scripts that perform specific tasks, like data processing, file management, and system administration.</p>
 <p>For example, you can use Bash scripting to automate a backup process:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># backup.sh</span>
-<span class="c1">#!/bin/bash</span>
+<pre><code class="language-bash"># backup.sh
+#!/bin/bash
 
-<span class="c1"># Set the backup directory</span>
-<span class="nv">BACKUP_DIR</span><span class="o">=</span>/path/to/backup
+# Set the backup directory
+BACKUP_DIR=/path/to/backup
 
-<span class="c1"># Set the source directory</span>
-<span class="nv">SOURCE_DIR</span><span class="o">=</span>/path/to/source
+# Set the source directory
+SOURCE_DIR=/path/to/source
 
-<span class="c1"># Create the backup directory if it doesn&#39;t exist</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BACKUP_DIR</span>
+# Create the backup directory if it doesn't exist
+mkdir -p $BACKUP_DIR
 
-<span class="c1"># Copy the files to the backup directory</span>
-cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$SOURCE_DIR</span><span class="w"> </span><span class="nv">$BACKUP_DIR</span>
-</code></pre></div>
-
+# Copy the files to the backup directory
+cp -r $SOURCE_DIR $BACKUP_DIR
+</code></pre>
 <p>This script creates a backup directory if it doesn't exist, and copies the files from the source directory to the backup directory.</p>
 <h3 id="using-cron-jobs-for-scheduling">Using Cron Jobs for Scheduling</h3>
 <p>Cron jobs are a powerful way to schedule tasks and scripts in the CLI. They allow you to run scripts at specific times or intervals, like daily, weekly, or monthly.</p>
 <p>For example, you can add the following cron job to run the <code>backup.sh</code> script daily at 2am:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># crontab -e</span>
-<span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>/path/to/backup.sh
-</code></pre></div>
-
+<pre><code class="language-bash"># crontab -e
+0 2 * * * /path/to/backup.sh
+</code></pre>
 <p>This cron job runs the <code>backup.sh</code> script daily at 2am, automating the backup process.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Common problems in the CLI include:

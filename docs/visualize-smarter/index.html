@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,63 +164,61 @@
 * D3.js: A JavaScript library for producing dynamic, interactive data visualizations in web browsers. D3.js is free and open-source.</p>
 <h3 id="example-1-visualizing-website-traffic-with-d3js">Example 1: Visualizing Website Traffic with D3.js</h3>
 <p>To demonstrate the power of data visualization, let's consider an example using D3.js. Suppose we have a website with the following traffic data:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-01&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;visits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-02&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;visits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-03&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;visits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="err">...</span>
-<span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-json">[
+  {
+    &quot;date&quot;: &quot;2022-01-01&quot;,
+    &quot;visits&quot;: 100
+  },
+  {
+    &quot;date&quot;: &quot;2022-01-02&quot;,
+    &quot;visits&quot;: 120
+  },
+  {
+    &quot;date&quot;: &quot;2022-01-03&quot;,
+    &quot;visits&quot;: 150
+  },
+  ...
+]
+</code></pre>
 <p>We can use D3.js to create a line chart showing the daily website traffic:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import D3.js library</span>
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">d3</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;d3&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import D3.js library
+import * as d3 from 'd3';
 
-<span class="c1">// Set up SVG element</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">top</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="nx">right</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="nx">bottom</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="p">,</span><span class="w"> </span><span class="nx">left</span><span class="o">:</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="p">};</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">500</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">right</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">top</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">bottom</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">svg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">right</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">margin</span><span class="p">.</span><span class="nx">bottom</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`translate(</span><span class="si">${</span><span class="nx">margin</span><span class="p">.</span><span class="nx">left</span><span class="si">}</span><span class="sb">, </span><span class="si">${</span><span class="nx">margin</span><span class="p">.</span><span class="nx">top</span><span class="si">}</span><span class="sb">)`</span><span class="p">);</span>
+// Set up SVG element
+const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+const width = 500 - margin.left - margin.right;
+const height = 300 - margin.top - margin.bottom;
+const svg = d3.select('body')
+  .append('svg')
+  .attr('width', width + margin.left + margin.right)
+  .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+  .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-<span class="c1">// Load data</span>
-<span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;traffic.json&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Create x and y scales</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">xScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d3</span><span class="p">.</span><span class="nx">scaleTime</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">extent</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">date</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">width</span><span class="p">]);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">yScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d3</span><span class="p">.</span><span class="nx">scaleLinear</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">visits</span><span class="p">)])</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">height</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]);</span>
+// Load data
+d3.json('traffic.json').then(data =&gt; {
+  // Create x and y scales
+  const xScale = d3.scaleTime()
+    .domain(d3.extent(data, d =&gt; d.date))
+    .range([0, width]);
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d =&gt; d.visits)])
+    .range([height, 0]);
 
-<span class="w">  </span><span class="c1">// Create line chart</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d3</span><span class="p">.</span><span class="nx">line</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">xScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">date</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">y</span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">visits</span><span class="p">));</span>
-<span class="w">  </span><span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">datum</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke-linejoin&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;round&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke-linecap&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;round&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke-width&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">line</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+  // Create line chart
+  const line = d3.line()
+    .x(d =&gt; xScale(d.date))
+    .y(d =&gt; yScale(d.visits));
+  svg.append('path')
+    .datum(data)
+    .attr('fill', 'none')
+    .attr('stroke', 'steelblue')
+    .attr('stroke-linejoin', 'round')
+    .attr('stroke-linecap', 'round')
+    .attr('stroke-width', 1.5)
+    .attr('d', line);
+});
+</code></pre>
 <p>This code creates a simple line chart showing the daily website traffic. We can customize the appearance of the chart by modifying the SVG elements and attributes.</p>
 <h2 id="data-visualization-best-practices">Data Visualization Best Practices</h2>
 <p>To create effective data visualizations, follow these best practices:
@@ -230,34 +229,32 @@
 5. <strong>Use interactive visualizations</strong>: Interactive visualizations can help viewers explore the data in more detail.</p>
 <h3 id="example-2-visualizing-customer-segments-with-tableau">Example 2: Visualizing Customer Segments with Tableau</h3>
 <p>Suppose we have a dataset of customer information, including demographics and purchase history. We can use Tableau to create a visualization showing the customer segments:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a sample dataset</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">age</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">income</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">purchases</span><span class="w"> </span><span class="nb">INT</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Create a sample dataset
+CREATE TABLE customers (
+  id INT,
+  age INT,
+  income INT,
+  purchases INT
+);
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">income</span><span class="p">,</span><span class="w"> </span><span class="n">purchases</span><span class="p">)</span>
-<span class="k">VALUES</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">50000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">75000</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span>
-<span class="w">  </span><span class="p">...</span>
-</code></pre></div>
-
+INSERT INTO customers (id, age, income, purchases)
+VALUES
+  (1, 25, 50000, 10),
+  (2, 35, 75000, 20),
+  (3, 45, 100000, 30),
+  ...
+</code></pre>
 <p>We can connect to this dataset in Tableau and create a visualization showing the customer segments:</p>
-<div class="codehilite"><pre><span></span><code><span class="gu">### Step 1: Connect to the dataset</span>
-<span class="k">*</span><span class="w"> </span>Open Tableau and connect to the dataset using the &quot;Connect to Data&quot; button.
-<span class="k">*</span><span class="w"> </span>Select the &quot;customers&quot; table and click &quot;Update Now&quot;.
+<pre><code class="language-markdown">### Step 1: Connect to the dataset
+* Open Tableau and connect to the dataset using the &quot;Connect to Data&quot; button.
+* Select the &quot;customers&quot; table and click &quot;Update Now&quot;.
 
-<span class="gu">### Step 2: Create a visualization</span>
-<span class="k">*</span><span class="w"> </span>Drag the &quot;age&quot; field to the &quot;Columns&quot; shelf.
-<span class="k">*</span><span class="w"> </span>Drag the &quot;income&quot; field to the &quot;Rows&quot; shelf.
-<span class="k">*</span><span class="w"> </span>Drag the &quot;purchases&quot; field to the &quot;Color&quot; shelf.
-<span class="k">*</span><span class="w"> </span>Click the &quot;Show Me&quot; button and select the &quot;Scatter Plot&quot; option.
-</code></pre></div>
-
+### Step 2: Create a visualization
+* Drag the &quot;age&quot; field to the &quot;Columns&quot; shelf.
+* Drag the &quot;income&quot; field to the &quot;Rows&quot; shelf.
+* Drag the &quot;purchases&quot; field to the &quot;Color&quot; shelf.
+* Click the &quot;Show Me&quot; button and select the &quot;Scatter Plot&quot; option.
+</code></pre>
 <p>This creates a scatter plot showing the customer segments based on age, income, and purchases. We can customize the visualization by modifying the fields and shelves.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered in data visualization include:
@@ -270,33 +267,31 @@
 * <strong>Color blindness</strong>: Use colors that are accessible to viewers with color vision deficiency.</p>
 <h3 id="example-3-visualizing-website-performance-with-power-bi">Example 3: Visualizing Website Performance with Power BI</h3>
 <p>Suppose we have a dataset of website performance metrics, including page load times and error rates. We can use Power BI to create a visualization showing the website performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a sample dataset</span>
-<span class="nb">CREATE</span><span class="w"> </span><span class="nb">TABLE</span><span class="w"> </span>website_performance (
-<span class="w">  </span><span class="nf">date</span><span class="w"> </span><span class="nf">DATE</span><span class="p">,</span>
-<span class="w">  </span>page_load_time DECIMAL(10, 2),
-<span class="w">  </span>error_rate DECIMAL(10, 2)
-<span class="p">)</span>;
+<pre><code class="language-dax">-- Create a sample dataset
+CREATE TABLE website_performance (
+  date DATE,
+  page_load_time DECIMAL(10, 2),
+  error_rate DECIMAL(10, 2)
+);
 
 INSERT INTO website_performance (date, page_load_time, error_rate)
-<span class="nf">VALUES</span>
-<span class="w">  </span><span class="p">(</span><span class="na">&#39;2022-01-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">2.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.05</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="na">&#39;2022-01-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.03</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="na">&#39;2022-01-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">2.8</span><span class="p">,</span><span class="w"> </span><span class="m">0.07</span><span class="p">),</span>
-<span class="w">  </span><span class="p">...</span>
-</code></pre></div>
-
+VALUES
+  ('2022-01-01', 2.5, 0.05),
+  ('2022-01-02', 2.2, 0.03),
+  ('2022-01-03', 2.8, 0.07),
+  ...
+</code></pre>
 <p>We can connect to this dataset in Power BI and create a visualization showing the website performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="gu">### Step 1: Connect to the dataset</span>
-<span class="k">*</span><span class="w"> </span>Open Power BI and connect to the dataset using the &quot;Get Data&quot; button.
-<span class="k">*</span><span class="w"> </span>Select the &quot;website_performance&quot; table and click &quot;Load&quot;.
+<pre><code class="language-markdown">### Step 1: Connect to the dataset
+* Open Power BI and connect to the dataset using the &quot;Get Data&quot; button.
+* Select the &quot;website_performance&quot; table and click &quot;Load&quot;.
 
-<span class="gu">### Step 2: Create a visualization</span>
-<span class="k">*</span><span class="w"> </span>Drag the &quot;date&quot; field to the &quot;Axis&quot; area.
-<span class="k">*</span><span class="w"> </span>Drag the &quot;page_load_time&quot; field to the &quot;Values&quot; area.
-<span class="k">*</span><span class="w"> </span>Drag the &quot;error_rate&quot; field to the &quot;Values&quot; area.
-<span class="k">*</span><span class="w"> </span>Click the &quot;Line Chart&quot; button to create a line chart.
-</code></pre></div>
-
+### Step 2: Create a visualization
+* Drag the &quot;date&quot; field to the &quot;Axis&quot; area.
+* Drag the &quot;page_load_time&quot; field to the &quot;Values&quot; area.
+* Drag the &quot;error_rate&quot; field to the &quot;Values&quot; area.
+* Click the &quot;Line Chart&quot; button to create a line chart.
+</code></pre>
 <p>This creates a line chart showing the website performance over time. We can customize the visualization by modifying the fields and areas.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, data visualization is a powerful tool for gaining insights and communicating complex information. By following best practices, using the right tools and platforms, and addressing common problems, we can create effective data visualizations that drive business decisions.</p>

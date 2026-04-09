@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -152,10 +153,9 @@
 <li>Implement a password policy that mandates a minimum of 12 characters, including uppercase letters, lowercase letters, numbers, and symbols.</li>
 </ul>
 <h3 id="example">Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Generate a strong password using OpenSSL</span>
-openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">12</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Generate a strong password using OpenSSL
+openssl rand -base64 12
+</code></pre>
 <p>This command generates a random string of 12 characters using base64 encoding.</p>
 <h2 id="2-enable-two-factor-authentication-2fa">2. Enable Two-Factor Authentication (2FA)</h2>
 <h3 id="why-it-matters_1">Why It Matters</h3>
@@ -177,9 +177,8 @@ openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w
 </ul>
 <h3 id="example_1">Example</h3>
 <p>To automate updates on Ubuntu, you can use:</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
-</code></pre></div>
-
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
 <h2 id="4-implement-network-security-measures">4. Implement Network Security Measures</h2>
 <h3 id="why-it-matters_3">Why It Matters</h3>
 <p>Unsecured networks can lead to unauthorized access to sensitive data. A significant portion of attacks originates from insecure Wi-Fi networks.</p>
@@ -228,10 +227,9 @@ openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w
 </ul>
 <h3 id="example-of-a-backup-script">Example of a Backup Script</h3>
 <p>You can automate backups using a simple shell script:</p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-tar<span class="w"> </span>-czf<span class="w"> </span>/backup/mydata_<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.tar.gz<span class="w"> </span>/path/to/data
-</code></pre></div>
-
+<pre><code class="language-bash">#!/bin/bash
+tar -czf /backup/mydata_$(date +%F).tar.gz /path/to/data
+</code></pre>
 <p>This script compresses your data and saves it with a timestamp.</p>
 <h2 id="8-implement-endpoint-security">8. Implement Endpoint Security</h2>
 <h3 id="why-it-matters_7">Why It Matters</h3>
@@ -256,9 +254,8 @@ tar<span class="w"> </span>-czf<span class="w"> </span>/backup/mydata_<span clas
 </ul>
 <h3 id="example_2">Example</h3>
 <p>To encrypt a file using OpenSSL, you can use:</p>
-<div class="codehilite"><pre><span></span><code>openssl<span class="w"> </span>aes-256-cbc<span class="w"> </span>-salt<span class="w"> </span>-in<span class="w"> </span>myfile.txt<span class="w"> </span>-out<span class="w"> </span>myfile.enc
-</code></pre></div>
-
+<pre><code class="language-bash">openssl aes-256-cbc -salt -in myfile.txt -out myfile.enc
+</code></pre>
 <p>This command encrypts <code>myfile.txt</code> using AES-256 encryption.</p>
 <h2 id="10-establish-an-incident-response-plan">10. Establish an Incident Response Plan</h2>
 <h3 id="why-it-matters_9">Why It Matters</h3>

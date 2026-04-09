@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,13 +154,12 @@
 <h3 id="understanding-memory-allocation">Understanding Memory Allocation</h3>
 <p>Memory allocation refers to the process of assigning a portion of memory to a program or application. There are two primary types of memory allocation: static and dynamic. Static allocation occurs at compile-time, whereas dynamic allocation occurs at runtime. Dynamic allocation is more common, as it allows for more flexibility and efficiency in memory usage.</p>
 <p>To illustrate the difference, consider the following example in C++:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Static allocation</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<pre><code class="language-cpp">// Static allocation
+int arr[10];
 
-<span class="c1">// Dynamic allocation</span>
-<span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
-</code></pre></div>
-
+// Dynamic allocation
+int* ptr = new int[10];
+</code></pre>
 <p>In the above example, the array <code>arr</code> is allocated statically, whereas the array <code>ptr</code> is allocated dynamically using the <code>new</code> operator.</p>
 <h2 id="memory-management-tools-and-platforms">Memory Management Tools and Platforms</h2>
 <p>There are several tools and platforms available to help with memory management, including:</p>
@@ -170,9 +170,8 @@
 <li><strong>AWS Lambda</strong>: A serverless computing platform that provides automatic memory management and scaling.</li>
 </ul>
 <p>For example, Valgrind can be used to detect memory leaks in a C++ application:</p>
-<div class="codehilite"><pre><span></span><code>valgrind<span class="w"> </span>--leak-check<span class="o">=</span>full<span class="w"> </span>./myapp
-</code></pre></div>
-
+<pre><code class="language-bash">valgrind --leak-check=full ./myapp
+</code></pre>
 <p>This will run the application <code>myapp</code> under Valgrind and report any memory leaks or other memory-related issues.</p>
 <h2 id="best-practices-for-memory-management">Best Practices for Memory Management</h2>
 <p>Here are some best practices for memory management:</p>
@@ -184,9 +183,8 @@
 <li><strong>Optimize data structures</strong>: Optimize data structures to reduce memory usage and improve performance.</li>
 </ol>
 <p>For example, using <code>std::unique_ptr</code> can help manage memory automatically:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
-</code></pre></div>
-
+<pre><code class="language-cpp">std::unique_ptr&lt;int&gt; ptr(new int(10));
+</code></pre>
 <p>This will allocate memory for an <code>int</code> and assign it to the <code>ptr</code> smart pointer, which will automatically manage the memory and prevent memory leaks.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to memory management:</p>
@@ -196,18 +194,17 @@
 <li><strong>Out-of-memory errors</strong>: Use techniques like caching or paging to reduce memory usage, or increase the amount of available memory.</li>
 </ul>
 <p>For example, to reduce memory fragmentation, you can use a memory pool:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MemoryPool</span><span class="w"> </span><span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">allocate</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Allocate memory from a pool</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-cpp">class MemoryPool {
+public:
+    void* allocate(size_t size) {
+        // Allocate memory from a pool
+    }
 
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">deallocate</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Deallocate memory back to the pool</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+    void deallocate(void* ptr) {
+        // Deallocate memory back to the pool
+    }
+};
+</code></pre>
 <p>This will reduce memory fragmentation by allocating and deallocating memory from a pool, rather than using the standard <code>new</code> and <code>delete</code> operators.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some use cases and implementation details for memory management:</p>
@@ -217,12 +214,11 @@
 <li><strong>Embedded systems</strong>: Use techniques like memory pooling and caching to reduce memory usage and improve performance.</li>
 </ul>
 <p>For example, in a real-time system, you can use stack-based allocation to ensure predictable memory management:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">myFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"> </span><span class="c1">// Allocate memory on the stack</span>
-<span class="w">    </span><span class="c1">// Use the array</span>
-<span class="p">}</span><span class="w"> </span><span class="c1">// Memory is automatically deallocated when the function returns</span>
-</code></pre></div>
-
+<pre><code class="language-cpp">void myFunction() {
+    int arr[10]; // Allocate memory on the stack
+    // Use the array
+} // Memory is automatically deallocated when the function returns
+</code></pre>
 <p>This will allocate memory for the array <code>arr</code> on the stack, which will be automatically deallocated when the function returns.</p>
 <h2 id="performance-benchmarks-and-metrics">Performance Benchmarks and Metrics</h2>
 <p>Here are some performance benchmarks and metrics for memory management:</p>
@@ -232,10 +228,9 @@
 <li><strong>Memory deallocation time</strong>: Measure the time it takes to deallocate memory, and optimize it to reduce deallocation time.</li>
 </ul>
 <p>For example, using the <code>std::unique_ptr</code> smart pointer can reduce memory allocation time by up to 30% compared to using the <code>new</code> operator:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span><span class="w"> </span><span class="c1">// Allocate memory using new</span>
-<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Allocate memory using make_unique</span>
-</code></pre></div>
-
+<pre><code class="language-cpp">std::unique_ptr&lt;int&gt; ptr(new int(10)); // Allocate memory using new
+std::unique_ptr&lt;int&gt; ptr2 = std::make_unique&lt;int&gt;(10); // Allocate memory using make_unique
+</code></pre>
 <p>This will allocate memory for an <code>int</code> using the <code>new</code> operator and the <code>make_unique</code> function, which can reduce allocation time by up to 30%.</p>
 <h2 id="pricing-and-cost-analysis">Pricing and Cost Analysis</h2>
 <p>Here are some pricing and cost analysis for memory management:</p>
@@ -244,12 +239,11 @@
 <li><strong>Cloud computing costs</strong>: Measure the cost of cloud computing services, and optimize it to reduce costs.</li>
 </ul>
 <p>For example, using AWS Lambda can reduce memory costs by up to 50% compared to using traditional cloud computing services:</p>
-<div class="codehilite"><pre><span></span><code>| Service | Memory Cost |
+<pre><code class="language-markdown">| Service | Memory Cost |
 | --- | --- |
 | AWS Lambda | $0.000004 per GB-hour |
 | AWS EC2 | $0.000008 per GB-hour |
-</code></pre></div>
-
+</code></pre>
 <p>This will show the cost of memory usage for AWS Lambda and AWS EC2, which can help optimize memory usage and reduce costs.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, memory management is a critical component of any application, and optimizing it can improve performance, scalability, and reliability. By using best practices like smart pointers, stack-based allocation, and memory profiling, you can reduce memory usage and improve performance. Additionally, using tools like Valgrind, Visual Studio, and Java Mission Control can help detect memory leaks and other memory-related issues.</p>

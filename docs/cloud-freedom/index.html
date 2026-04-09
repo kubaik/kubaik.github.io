@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,56 +167,54 @@
 <h2 id="practical-implementation-of-multi-cloud-architecture">Practical Implementation of Multi-Cloud Architecture</h2>
 <p>To demonstrate the implementation of a multi-cloud architecture, let's consider a simple example using Terraform, a popular infrastructure-as-code tool. Suppose we want to deploy a web application across AWS and Azure, using a load balancer to distribute traffic.</p>
 <h3 id="example-1-terraform-configuration-for-aws-and-azure">Example 1: Terraform Configuration for AWS and Azure</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-east-1&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
 
-<span class="c1"># Configure the Azure provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;azurerm&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">subscription_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;your_subscription_id&quot;</span>
-<span class="w">  </span><span class="na">client_id</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;your_client_id&quot;</span>
-<span class="w">  </span><span class="na">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;your_client_secret&quot;</span>
-<span class="w">  </span><span class="na">tenant_id</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;your_tenant_id&quot;</span>
-<span class="p">}</span>
+# Configure the Azure provider
+provider &quot;azurerm&quot; {
+  subscription_id = &quot;your_subscription_id&quot;
+  client_id      = &quot;your_client_id&quot;
+  client_secret = &quot;your_client_secret&quot;
+  tenant_id      = &quot;your_tenant_id&quot;
+}
 
-<span class="c1"># Create an AWS EC2 instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;web_server&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-abc123&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="p">}</span>
+# Create an AWS EC2 instance
+resource &quot;aws_instance&quot; &quot;web_server&quot; {
+  ami           = &quot;ami-abc123&quot;
+  instance_type = &quot;t2.micro&quot;
+}
 
-<span class="c1"># Create an Azure Virtual Machine</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_virtual_machine&quot;</span><span class="w"> </span><span class="nv">&quot;web_server&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web-server&quot;</span>
-<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;your_resource_group&quot;</span>
-<span class="w">  </span><span class="na">location</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;West US&quot;</span>
-<span class="w">  </span><span class="na">vm_size</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Standard_DS2_v2&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Create an Azure Virtual Machine
+resource &quot;azurerm_virtual_machine&quot; &quot;web_server&quot; {
+  name                  = &quot;web-server&quot;
+  resource_group_name = &quot;your_resource_group&quot;
+  location              = &quot;West US&quot;
+  vm_size               = &quot;Standard_DS2_v2&quot;
+}
+</code></pre>
 <p>In this example, we define two separate providers for AWS and Azure, and create a simple web server instance on each platform.</p>
 <h3 id="example-2-load-balancer-configuration-using-haproxy">Example 2: Load Balancer Configuration using HAProxy</h3>
 <p>To distribute traffic across our web servers, we can use HAProxy, a popular load balancing solution. Here's an example configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define the load balancer frontend</span>
-frontend<span class="w"> </span>http
-<span class="w">  </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">  </span>mode<span class="w"> </span>http
-<span class="w">  </span>default_backend<span class="w"> </span>web_servers
+<pre><code class="language-bash"># Define the load balancer frontend
+frontend http
+  bind *:80
+  mode http
+  default_backend web_servers
 
-<span class="c1"># Define the load balancer backend</span>
-backend<span class="w"> </span>web_servers
-<span class="w">  </span>mode<span class="w"> </span>http
-<span class="w">  </span>balance<span class="w"> </span>roundrobin
-<span class="w">  </span>server<span class="w"> </span>aws-web-server<span class="w"> </span><span class="m">10</span>.0.0.1:80<span class="w"> </span>check
-<span class="w">  </span>server<span class="w"> </span>azure-web-server<span class="w"> </span><span class="m">10</span>.0.0.2:80<span class="w"> </span>check
-</code></pre></div>
-
+# Define the load balancer backend
+backend web_servers
+  mode http
+  balance roundrobin
+  server aws-web-server 10.0.0.1:80 check
+  server azure-web-server 10.0.0.2:80 check
+</code></pre>
 <p>In this example, we define a simple load balancer configuration that distributes traffic across our AWS and Azure web servers using a round-robin algorithm.</p>
 <h3 id="example-3-kubernetes-deployment-across-multiple-clouds">Example 3: Kubernetes Deployment across Multiple Clouds</h3>
 <p>To deploy a containerized application across multiple clouds, we can use Kubernetes, a popular container orchestration platform. Here's an example configuration:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
-<div class="codehilite"><pre><span></span><code># Define the Kubernetes deployment
+<pre><code class="language-yml"># Define the Kubernetes deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -235,8 +234,7 @@ spec:
         image: your-docker-image
         ports:
         - containerPort: 80
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we define a simple Kubernetes deployment that runs three replicas of our web application container across multiple clouds.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing a multi-cloud architecture, several common problems can arise:</p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,14 +159,13 @@
 * <strong>Interoperability with Java</strong>: Kotlin is fully interoperable with Java, allowing you to easily integrate existing Java libraries and frameworks into your Kotlin projects.</p>
 <h2 id="setting-up-a-kotlin-backend-project">Setting Up a Kotlin Backend Project</h2>
 <p>To get started with Kotlin backend development, you will need to set up a project using a framework like Spring Boot or Javalin. Here is an example of how to create a simple "Hello, World!" API using Javalin:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">io.javalin.Javalin</span>
+<pre><code class="language-kotlin">import io.javalin.Javalin
 
-<span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Javalin</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">start</span><span class="p">(</span><span class="m">7000</span><span class="p">)</span>
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">result</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+fun main() {
+    val app = Javalin.create().start(7000)
+    app.get(&quot;/&quot;) { ctx -&gt; ctx.result(&quot;Hello, World!&quot;) }
+}
+</code></pre>
 <p>This code creates a Javalin app that listens on port 7000 and responds with "Hello, World!" to GET requests to the root URL.</p>
 <h3 id="choosing-a-framework">Choosing a Framework</h3>
 <p>When it comes to choosing a framework for your Kotlin backend project, there are several options to consider. Some popular choices include:
@@ -178,28 +178,27 @@
 * <strong>PostgreSQL</strong>: A powerful, open-source relational database management system, known for its advanced features and scalability.
 * <strong>MongoDB</strong>: A NoSQL database management system, designed for big data and real-time web applications.</p>
 <p>Here is an example of how to integrate a MySQL database into a Kotlin backend application using the Exposed framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.Database</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.Schema</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.Table</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
+<pre><code class="language-kotlin">import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.Schema
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.transactions.transaction
 
-<span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Database</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost:3306/mydb&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">transaction</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Users</span><span class="p">.</span><span class="na">selectAll</span><span class="p">().</span><span class="na">toList</span><span class="p">()</span>
-<span class="w">        </span><span class="n">users</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">user</span><span class="p">.</span><span class="na">name</span><span class="si">}</span><span class="s"> - </span><span class="si">${</span><span class="n">user</span><span class="p">.</span><span class="na">email</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+fun main() {
+    Database.connect(&quot;jdbc:mysql://localhost:3306/mydb&quot;, &quot;user&quot;, &quot;password&quot;)
+    transaction {
+        val users = Users.selectAll().toList()
+        users.forEach { user -&gt;
+            println(&quot;${user.name} - ${user.email}&quot;)
+        }
+    }
+}
 
-<span class="kd">object</span><span class="w"> </span><span class="nc">Users</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Table</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integer</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">).</span><span class="na">autoIncrement</span><span class="p">()</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+object Users : Table() {
+    val id = integer(&quot;id&quot;).autoIncrement()
+    val name = varchar(&quot;name&quot;, 50)
+    val email = varchar(&quot;email&quot;, 100)
+}
+</code></pre>
 <p>This code connects to a MySQL database, retrieves a list of users, and prints their names and email addresses to the console.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>To ensure that your Kotlin backend application performs well under heavy loads, you will need to optimize its performance. Some strategies for optimizing performance include:
@@ -210,22 +209,21 @@
 <li><strong>Load balancing</strong>: Distributing incoming requests across multiple servers to prevent any one server from becoming overwhelmed.</li>
 </ul>
 <p>Here is an example of how to use the Redis caching library to cache data in a Kotlin backend application:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.Jedis</span>
+<pre><code class="language-kotlin">import redis.clients.jedis.Jedis
 
-<span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Jedis</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">6379</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;user:1&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">userData</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Retrieve user data from database and cache it</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retrieveUserFromDatabase</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
-<span class="w">        </span><span class="n">jedis</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;user:1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">toJson</span><span class="p">())</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Retrieve user data from cache</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">User</span><span class="p">.</span><span class="na">fromJson</span><span class="p">(</span><span class="n">userData</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+fun main() {
+    val jedis = Jedis(&quot;localhost&quot;, 6379)
+    val userData = jedis.get(&quot;user:1&quot;)
+    if (userData == null) {
+        // Retrieve user data from database and cache it
+        val user = retrieveUserFromDatabase(1)
+        jedis.set(&quot;user:1&quot;, user.toJson())
+    } else {
+        // Retrieve user data from cache
+        val user = User.fromJson(userData)
+    }
+}
+</code></pre>
 <p>This code checks if user data is cached in Redis, and if not, retrieves it from the database and caches it.</p>
 <h2 id="security-considerations">Security Considerations</h2>
 <p>To ensure that your Kotlin backend application is secure, you will need to implement several security measures. Some strategies for securing your application include:

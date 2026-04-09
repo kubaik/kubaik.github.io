@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,16 +161,15 @@
 </ul>
 <h4 id="use-case-web-application-hosting">Use Case: Web Application Hosting</h4>
 <p>To deploy a web application using AWS, you can follow this example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install AWS CLI</span>
-pip<span class="w"> </span>install<span class="w"> </span>awscli
+<pre><code class="language-bash"># Install AWS CLI
+pip install awscli
 
-<span class="c1"># Configure your AWS CLI</span>
-aws<span class="w"> </span>configure
+# Configure your AWS CLI
+aws configure
 
-<span class="c1"># Create an EC2 instance</span>
-aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="w"> </span>--image-id<span class="w"> </span>ami-0c55b159cbfafe1f0<span class="w"> </span>--count<span class="w"> </span><span class="m">1</span><span class="w"> </span>--instance-type<span class="w"> </span>t2.micro<span class="w"> </span>--key-name<span class="w"> </span>MyKeyPair<span class="w"> </span>--security-group-ids<span class="w"> </span>sg-12345678<span class="w"> </span>--subnet-id<span class="w"> </span>subnet-12345678
-</code></pre></div>
-
+# Create an EC2 instance
+aws ec2 run-instances --image-id ami-0c55b159cbfafe1f0 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-12345678 --subnet-id subnet-12345678
+</code></pre>
 <h3 id="2-microsoft-azure">2. Microsoft Azure</h3>
 <p>Azure integrates seamlessly with Microsoft products and offers a variety of services like Azure Functions, Azure Kubernetes Service (AKS), and Azure DevOps.</p>
 <h4 id="pricing-model_1">Pricing Model</h4>
@@ -179,23 +179,22 @@ aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="
 </ul>
 <h4 id="use-case-data-analytics-with-azure">Use Case: Data Analytics with Azure</h4>
 <p>Using Azure for analytics can be implemented as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.storage.blob</span> <span class="kn">import</span> <span class="n">BlobServiceClient</span>
+<pre><code class="language-python">from azure.storage.blob import BlobServiceClient
 
-<span class="c1"># Create a BlobServiceClient</span>
-<span class="n">blob_service_client</span> <span class="o">=</span> <span class="n">BlobServiceClient</span><span class="o">.</span><span class="n">from_connection_string</span><span class="p">(</span><span class="s2">&quot;YourConnectionString&quot;</span><span class="p">)</span>
+# Create a BlobServiceClient
+blob_service_client = BlobServiceClient.from_connection_string(&quot;YourConnectionString&quot;)
 
-<span class="c1"># Create a container</span>
+# Create a container
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Docker</span> <span class="n">Deep</span> <span class="n">Dive</span> <span class="n">by</span> <span class="n">Nigel</span> <span class="n">Poulton</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*
 
-<span class="n">container_name</span> <span class="o">=</span> <span class="s2">&quot;mycontainer&quot;</span>
-<span class="n">blob_service_client</span><span class="o">.</span><span class="n">create_container</span><span class="p">(</span><span class="n">container_name</span><span class="p">)</span>
+container_name = &quot;mycontainer&quot;
+blob_service_client.create_container(container_name)
 
-<span class="c1"># Upload a file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-    <span class="n">blob_service_client</span><span class="o">.</span><span class="n">get_blob_client</span><span class="p">(</span><span class="n">container</span><span class="o">=</span><span class="n">container_name</span><span class="p">,</span> <span class="n">blob</span><span class="o">=</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upload_blob</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+# Upload a file
+with open(&quot;data.csv&quot;, &quot;rb&quot;) as data:
+    blob_service_client.get_blob_client(container=container_name, blob=&quot;data.csv&quot;).upload_blob(data)
+</code></pre>
 <h3 id="3-google-cloud-platform-gcp">3. Google Cloud Platform (GCP)</h3>
 <p>GCP excels in data analytics and machine learning services, with tools like BigQuery and TensorFlow on Google Cloud.</p>
 <h4 id="pricing-model_2">Pricing Model</h4>
@@ -205,26 +204,25 @@ aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="
 </ul>
 <h4 id="use-case-machine-learning-with-gcp">Use Case: Machine Learning with GCP</h4>
 <p>Here's how to set up a simple machine learning model using Google Cloud:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">bigquery</span>
+<pre><code class="language-python">from google.cloud import bigquery
 
-<span class="c1"># Create a BigQuery client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">bigquery</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+# Create a BigQuery client
+client = bigquery.Client()
 
-<span class="c1"># Define the SQL query</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    SELECT *</span>
-<span class="s2">    FROM `my_project.my_dataset.my_table`</span>
-<span class="s2">    WHERE value &gt; 1000</span>
-<span class="s2">&quot;&quot;&quot;</span>
+# Define the SQL query
+query = &quot;&quot;&quot;
+    SELECT *
+    FROM `my_project.my_dataset.my_table`
+    WHERE value &gt; 1000
+&quot;&quot;&quot;
 
-<span class="c1"># Run the query</span>
-<span class="n">query_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+# Run the query
+query_job = client.query(query)
 
-<span class="c1"># Display the results</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">query_job</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, Date: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Display the results
+for row in query_job:
+    print(f&quot;Value: {row.value}, Date: {row.date}&quot;)
+</code></pre>
 <h3 id="4-ibm-cloud">4. IBM Cloud</h3>
 <p>IBM Cloud provides a strong focus on enterprise solutions, particularly in AI and blockchain technologies. It offers services like Watson and Kubernetes.</p>
 <h4 id="pricing-model_3">Pricing Model</h4>
@@ -234,18 +232,17 @@ aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="
 </ul>
 <h4 id="use-case-ai-development-with-watson">Use Case: AI Development with Watson</h4>
 <p>To use IBM Watson for natural language processing, you can use the following Python code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">ibm_watson</span> <span class="kn">import</span> <span class="n">NaturalLanguageUnderstandingV1</span>
-<span class="kn">from</span> <span class="nn">ibm_cloud_sdk_core.authenticators</span> <span class="kn">import</span> <span class="n">IAMAuthenticator</span>
+<pre><code class="language-python">from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
-<span class="c1"># Set up Watson NLU</span>
-<span class="n">authenticator</span> <span class="o">=</span> <span class="n">IAMAuthenticator</span><span class="p">(</span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">)</span>
-<span class="n">nlu</span> <span class="o">=</span> <span class="n">NaturalLanguageUnderstandingV1</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2021-08-01&#39;</span><span class="p">,</span> <span class="n">authenticator</span><span class="o">=</span><span class="n">authenticator</span><span class="p">)</span>
+# Set up Watson NLU
+authenticator = IAMAuthenticator('YOUR_API_KEY')
+nlu = NaturalLanguageUnderstandingV1(version='2021-08-01', authenticator=authenticator)
 
-<span class="c1"># Analyze text</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">nlu</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Your text here&#39;</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;keywords&#39;</span><span class="p">:</span> <span class="p">{}})</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+# Analyze text
+response = nlu.analyze(text='Your text here', features={'keywords': {}}).get_result()
+print(response)
+</code></pre>
 <h3 id="5-oracle-cloud">5. Oracle Cloud</h3>
 <p>Oracle Cloud provides robust database services and is particularly strong for enterprises that need high-performance computing.</p>
 <h4 id="pricing-model_4">Pricing Model</h4>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,59 +162,56 @@
 <h3 id="example-1-building-a-custom-crm-with-microsoft-power-apps">Example 1: Building a Custom CRM with Microsoft Power Apps</h3>
 <p>Microsoft Power Apps is a low-code/no-code platform that provides a wide range of features and tools for building custom applications. For example, let's say we want to build a custom CRM application for a sales team. We can use Microsoft Power Apps to design and build the application without writing a single line of code.</p>
 <p>Here is an example of how we can use Microsoft Power Apps to build a custom CRM:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python"># Import the necessary libraries
+import pandas as pd
 
-<span class="c1"># Connect to the data source</span>
-<span class="n">data_source</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/data&quot;</span>
+# Connect to the data source
+data_source = &quot;https://example.com/data&quot;
 
-<span class="c1"># Create a new screen</span>
-<span class="n">screen</span> <span class="o">=</span> <span class="s2">&quot;Sales Dashboard&quot;</span>
+# Create a new screen
+screen = &quot;Sales Dashboard&quot;
 
-<span class="c1"># Add a gallery control to the screen</span>
-<span class="n">gallery</span> <span class="o">=</span> <span class="s2">&quot;Sales Gallery&quot;</span>
+# Add a gallery control to the screen
+gallery = &quot;Sales Gallery&quot;
 
-<span class="c1"># Configure the gallery control to display the data</span>
-<span class="n">gallery</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_source</span><span class="p">)</span>
-</code></pre></div>
-
+# Configure the gallery control to display the data
+gallery.items = pd.read_csv(data_source)
+</code></pre>
 <p>In this example, we are using Microsoft Power Apps to connect to a data source, create a new screen, and add a gallery control to the screen. We are then configuring the gallery control to display the data from the data source.</p>
 <h3 id="example-2-building-a-chatbot-with-google-dialogflow">Example 2: Building a Chatbot with Google Dialogflow</h3>
 <p>Google Dialogflow is a low-code/no-code platform that provides a wide range of features and tools for building custom chatbots. For example, let's say we want to build a chatbot that can answer customer support queries. We can use Google Dialogflow to design and build the chatbot without writing a single line of code.</p>
 <p>Here is an example of how we can use Google Dialogflow to build a chatbot:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dialogflow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dialogflow&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the necessary libraries
+const dialogflow = require('dialogflow');
 
-<span class="c1">// Create a new intent</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">intent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Customer Support&quot;</span><span class="p">;</span>
+// Create a new intent
+const intent = &quot;Customer Support&quot;;
 
-<span class="c1">// Add a new entity to the intent</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Customer Name&quot;</span><span class="p">;</span>
+// Add a new entity to the intent
+const entity = &quot;Customer Name&quot;;
 
-<span class="c1">// Configure the entity to extract the customer name</span>
-<span class="nx">entity</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sys.person&quot;</span><span class="p">;</span>
-</code></pre></div>
-
+// Configure the entity to extract the customer name
+entity.type = &quot;sys.person&quot;;
+</code></pre>
 <p>In this example, we are using Google Dialogflow to create a new intent, add a new entity to the intent, and configure the entity to extract the customer name.</p>
 <h3 id="example-3-building-a-custom-workflow-with-zapier">Example 3: Building a Custom Workflow with Zapier</h3>
 <p>Zapier is a low-code/no-code platform that provides a wide range of features and tools for automating custom workflows. For example, let's say we want to automate a workflow that sends a notification to a sales team when a new lead is generated. We can use Zapier to design and build the workflow without writing a single line of code.</p>
 <p>Here is an example of how we can use Zapier to build a custom workflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python"># Import the necessary libraries
+import requests
 
-<span class="c1"># Connect to the trigger app</span>
-<span class="n">trigger_app</span> <span class="o">=</span> <span class="s2">&quot;Facebook Lead Ads&quot;</span>
+# Connect to the trigger app
+trigger_app = &quot;Facebook Lead Ads&quot;
 
-<span class="c1"># Connect to the action app</span>
-<span class="n">action_app</span> <span class="o">=</span> <span class="s2">&quot;Slack&quot;</span>
+# Connect to the action app
+action_app = &quot;Slack&quot;
 
-<span class="c1"># Configure the trigger to send a notification to the sales team</span>
-<span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;New Lead Generated&quot;</span>
+# Configure the trigger to send a notification to the sales team
+trigger = &quot;New Lead Generated&quot;
 
-<span class="c1"># Configure the action to send a notification to the sales team</span>
-<span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;Send Notification to Sales Team&quot;</span>
-</code></pre></div>
-
+# Configure the action to send a notification to the sales team
+action = &quot;Send Notification to Sales Team&quot;
+</code></pre>
 <p>In this example, we are using Zapier to connect to the trigger app, connect to the action app, configure the trigger to send a notification to the sales team, and configure the action to send a notification to the sales team.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when using low-code/no-code platforms, along with some specific solutions:</p>

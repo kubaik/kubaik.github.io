@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -188,12 +189,11 @@
    - Accessing sensitive data outside of normal business hours.
    - Copying large amounts of data to external drives or cloud storage.</p>
 <p><strong>Example Rule in Splunk</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">index</span><span class="p">=</span><span class="nx">main</span><span class="w"> </span><span class="nx">sourcetype</span><span class="p">=</span><span class="nx">audit_logs</span>
-<span class="o">|</span><span class="w"> </span><span class="nx">stats</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">user</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span>
-<span class="o">|</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nx">AND</span><span class="w"> </span><span class="nx">action</span><span class="p">=</span><span class="s">&quot;data_access&quot;</span>
-<span class="o">|</span><span class="w"> </span><span class="nx">sort</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">count</span>
-</code></pre></div>
-
+<pre><code class="language-spl">index=main sourcetype=audit_logs
+| stats count by user, action
+| where count &gt; 10 AND action=&quot;data_access&quot;
+| sort - count
+</code></pre>
 <p>This rule identifies users who accessed data more than ten times, allowing for further investigation.</p>
 <ol>
 <li>
@@ -209,18 +209,17 @@
 1. <strong>Log Collection</strong>: Integrate with Electronic Health Record (EHR) systems to collect logs related to patient data access.
 2. <strong>Compliance Dashboard</strong>: Create a dashboard that highlights compliance-related metrics, such as who accessed patient records and when.</p>
 <p><strong>Example Elastic Security Query</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;bool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;must&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;event.type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;access&quot;</span><span class="w"> </span><span class="p">}},</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;event.timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;gte&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now-30d/d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;lt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now/d&quot;</span><span class="w"> </span><span class="p">}}}</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;must&quot;: [
+        { &quot;match&quot;: { &quot;event.type&quot;: &quot;access&quot; }},
+        { &quot;range&quot;: { &quot;event.timestamp&quot;: { &quot;gte&quot;: &quot;now-30d/d&quot;, &quot;lt&quot;: &quot;now/d&quot; }}}
+      ]
+    }
+  }
+}
+</code></pre>
 <p>This query retrieves access logs within the last 30 days to provide insights into patient data access.</p>
 <ol>
 <li>
@@ -254,30 +253,29 @@
 <p>Let’s delve into two practical code examples that can help streamline SIEM usage.</p>
 <h4 id="example-1-automated-threat-hunting-script">Example 1: Automated Threat Hunting Script</h4>
 <p>In Python, you can create a simple script to automate the process of querying your SIEM for suspicious logins.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import requests
+import json
 
-<span class="c1"># Configuration</span>
-<span class="n">SIEM_URL</span> <span class="o">=</span> <span class="s1">&#39;https://your-siem-api.com/v1/query&#39;</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s1">&#39;your_api_key&#39;</span>
+# Configuration
+SIEM_URL = 'https://your-siem-api.com/v1/query'
+API_KEY = 'your_api_key'
 
-<span class="c1"># Query for suspicious login attempts</span>
-<span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT * FROM logs WHERE event_type=&#39;login&#39; AND status=&#39;failed&#39;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;time_range&quot;</span><span class="p">:</span> <span class="s2">&quot;last_24_hours&quot;</span>
-<span class="p">}</span>
+# Query for suspicious login attempts
+query = {
+    &quot;query&quot;: &quot;SELECT * FROM logs WHERE event_type='login' AND status='failed'&quot;,
+    &quot;time_range&quot;: &quot;last_24_hours&quot;
+}
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">SIEM_URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">API_KEY</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+response = requests.post(SIEM_URL, headers={&quot;Authorization&quot;: f&quot;Bearer {API_KEY}&quot;}, json=query)
 
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suspicious Login Attempts:&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User: </span><span class="si">{</span><span class="n">log</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, Time: </span><span class="si">{</span><span class="n">log</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error querying SIEM:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</code></pre></div>
-
+if response.status_code == 200:
+    results = response.json()
+    print(&quot;Suspicious Login Attempts:&quot;)
+    for log in results['data']:
+        print(f&quot;User: {log['user']}, Time: {log['timestamp']}&quot;)
+else:
+    print(&quot;Error querying SIEM:&quot;, response.status_code, response.text)
+</code></pre>
 <p><strong>Explanation</strong>: This script queries the SIEM for failed login attempts in the last 24 hours. It helps security teams quickly identify potential brute-force attacks.</p>
 <h4 id="example-2-splunk-dashboard-for-monitoring-malware-alerts">Example 2: Splunk Dashboard for Monitoring Malware Alerts</h4>
 <p>You can create a dashboard in Splunk to visualize malware alerts effectively.</p>
@@ -289,11 +287,10 @@
 <p><strong>Add a Panel</strong>: Use the following search query to visualize malware alerts.</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>index=malware_logs
+<pre><code class="language-spl">index=malware_logs
 | stats count by malware_name
 | sort - count
-</code></pre></div>
-
+</code></pre>
 <ol>
 <li><strong>Configure Visualization</strong>: Choose a bar chart to represent the data, allowing security analysts to quickly identify the most common malware threats.</li>
 </ol>

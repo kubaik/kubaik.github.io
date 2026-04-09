@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,53 +159,49 @@
 * Disk I/O: The number of disk reads and writes performed by the query
 * Network latency: The time it takes for data to travel between the application and the database</p>
 <p>For example, consider a simple query that retrieves a list of users from a database:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE country='USA';
+</code></pre>
 <p>This query may take 500ms to execute, utilizing 10% CPU, 50MB of memory, and performing 100 disk reads. By optimizing this query, we can reduce the execution time, CPU usage, and memory allocation, resulting in improved performance and reduced costs.</p>
 <h2 id="practical-optimization-techniques">Practical Optimization Techniques</h2>
 <p>There are several practical techniques for optimizing database queries, including:</p>
 <ol>
 <li><strong>Indexing</strong>: Creating indexes on frequently accessed columns can significantly improve query performance. For example, creating an index on the <code>country</code> column in the <code>users</code> table can speed up the query:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_country</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">country</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_country ON users (country);
+</code></pre>
 <p>This index can reduce the execution time of the query from 500ms to 50ms, resulting in a 90% improvement in performance.</p>
 <ol>
 <li><strong>Caching</strong>: Implementing caching mechanisms can reduce the number of queries executed against the database. For example, using Redis to cache query results can minimize the number of database queries:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Connect to Redis</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Connect to Redis
+r = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Cache query results</span>
-<span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="n">country</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;users:</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Execute query and cache results</span>
-        <span class="n">users</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM users WHERE country=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>
-        <span class="n">r</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">users</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">users</span>
-</code></pre></div>
-
+# Cache query results
+def get_users(country):
+    cache_key = f&quot;users:{country}&quot;
+    if r.exists(cache_key):
+        return r.get(cache_key)
+    else:
+        # Execute query and cache results
+        users = db.query(&quot;SELECT * FROM users WHERE country=%s&quot;, country)
+        r.set(cache_key, users)
+        return users
+</code></pre>
 <p>This caching mechanism can reduce the number of database queries by 50%, resulting in improved performance and reduced resource utilization.</p>
 <ol>
 <li><strong>Query Rewriting</strong>: Rewriting queries to minimize joins, subqueries, and other performance-intensive operations can significantly improve query performance. For example, rewriting a query to use a single join instead of multiple subqueries:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Original query</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
+<pre><code class="language-sql">-- Original query
+SELECT * FROM orders
+WHERE customer_id IN (SELECT id FROM customers WHERE country='USA');
 
-<span class="c1">-- Rewritten query</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">customers</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">customers</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Rewritten query
+SELECT * FROM orders
+JOIN customers ON orders.customer_id = customers.id
+WHERE customers.country = 'USA';
+</code></pre>
 <p>This rewritten query can reduce the execution time from 2 seconds to 500ms, resulting in a 75% improvement in performance.</p>
 <h2 id="tools-and-platforms-for-query-optimization">Tools and Platforms for Query Optimization</h2>
 <p>Several tools and platforms are available for optimizing database queries, including:</p>
@@ -215,9 +212,8 @@
 <li><strong>AWS Database Migration Service</strong>: A cloud-based service for migrating databases and optimizing query performance</li>
 </ul>
 <p>For example, using EXPLAIN to analyze the query execution plan:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM users WHERE country='USA';
+</code></pre>
 <p>This command can provide detailed information about the query execution plan, including the index used, the number of rows scanned, and the estimated cost of the query.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Query optimization is essential in various real-world use cases, including:</p>

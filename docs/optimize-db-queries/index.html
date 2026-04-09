@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -173,21 +174,19 @@
 </ul>
 <h3 id="example-1-analyzing-query-performance-with-explain">Example 1: Analyzing Query Performance with EXPLAIN</h3>
 <p>Let’s consider a scenario where we have a <code>users</code> table and an <code>orders</code> table. We want to analyze the performance of the following query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
-<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">order_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT u.id, u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id
+ORDER BY order_count DESC;
+</code></pre>
 <p>To analyze this query, we can use the EXPLAIN command:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
-<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">order_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT u.id, u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id
+ORDER BY order_count DESC;
+</code></pre>
 <p>The output will provide information like:</p>
 <ul>
 <li><strong>id</strong>: The ID of the query.</li>
@@ -201,9 +200,8 @@
 <p>Assuming the output shows a type of <code>ALL</code>, this indicates a full table scan on either the <code>users</code> or <code>orders</code> table. This is a sign that indexing might be needed. </p>
 <h3 id="adding-indexes-for-optimization">Adding Indexes for Optimization</h3>
 <p>To improve performance, we can add indexes on the <code>user_id</code> column in the <code>orders</code> table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_user_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">user_id</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_user_id ON orders(user_id);
+</code></pre>
 <h3 id="performance-benchmarking">Performance Benchmarking</h3>
 <p>After adding the index, we can re-run the EXPLAIN command and observe the changes. Here are some hypothetical before-and-after metrics:</p>
 <ul>
@@ -221,13 +219,11 @@
 <p>This demonstrates a significant improvement in performance due to the added index.</p>
 <h2 id="example-2-reducing-data-retrieval">Example 2: Reducing Data Retrieval</h2>
 <p>Another common issue arises from retrieving more data than necessary. Consider a scenario where you retrieve user data with many unnecessary fields:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE active = 1;
+</code></pre>
 <p>While this query fetches all columns for active users, it can be optimized by only selecting the columns needed:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT id, name, email FROM users WHERE active = 1;
+</code></pre>
 <h3 id="impact-of-using-select">Impact of Using SELECT *</h3>
 <ul>
 <li><strong>Resource Consumption</strong>: Using <code>SELECT *</code> can lead to higher memory usage, especially if the table has many columns.</li>
@@ -235,22 +231,20 @@
 </ul>
 <h2 id="example-3-efficient-joins">Example 3: Efficient Joins</h2>
 <p>Joins can dramatically affect performance. Here’s an example of a potentially inefficient join:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">total</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">total</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT u.id, u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE o.total &gt; 100;
+</code></pre>
 <p>If <code>orders</code> is a large table, this query can be slow. To optimize, we can do the following:</p>
 <ol>
 <li>Ensure that <code>user_id</code> in <code>orders</code> is indexed.</li>
 <li>If possible, filter records in the <code>orders</code> table first:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">total</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT u.id, u.name, o.total
+FROM users u
+JOIN (SELECT user_id, total FROM orders WHERE total &gt; 100) o ON u.id = o.user_id;
+</code></pre>
 <p>This query limits the number of records being joined, which can lead to improved execution times.</p>
 <h2 id="optimizing-with-caching">Optimizing with Caching</h2>
 <p>Caching is another effective strategy for optimizing database queries. By storing frequently accessed data in a cache, you can reduce the load on your database and improve response times.</p>
@@ -261,26 +255,25 @@
 </ol>
 <h4 id="example-of-redis-caching">Example of Redis Caching</h4>
 <p>In a Node.js application, you can implement Redis caching as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">getUserOrders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`user_orders:</span><span class="si">${</span><span class="nx">userId</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+const getUserOrders = (userId) =&gt; {
+    const cacheKey = `user_orders:${userId}`;
 
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span><span class="w"> </span><span class="c1">// Return cached result</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Perform database query</span>
-<span class="w">            </span><span class="nx">db</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM orders WHERE user_id = ?&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">userId</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">rows</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">client</span><span class="p">.</span><span class="nx">setex</span><span class="p">(</span><span class="nx">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="mf">3600</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">rows</span><span class="p">));</span><span class="w"> </span><span class="c1">// Cache result for 1 hour</span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">rows</span><span class="p">;</span>
-<span class="w">            </span><span class="p">});</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">};</span>
-</code></pre></div>
-
+    client.get(cacheKey, (err, result) =&gt; {
+        if (result) {
+            return JSON.parse(result); // Return cached result
+        } else {
+            // Perform database query
+            db.query('SELECT * FROM orders WHERE user_id = ?', [userId], (err, rows) =&gt; {
+                client.setex(cacheKey, 3600, JSON.stringify(rows)); // Cache result for 1 hour
+                return rows;
+            });
+        }
+    });
+};
+</code></pre>
 <h3 id="performance-impact-of-caching">Performance Impact of Caching</h3>
 <ul>
 <li><strong>Reduced Database Load</strong>: Caching reduces the number of queries hitting the database, which can improve overall application performance.</li>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,47 +157,44 @@
 * OpenVAS: An open-source vulnerability scanner that's free to use and supports over 50,000 plugins.
 * Qualys: A cloud-based vulnerability scanner that costs around $2,000 per year for a small business license.</p>
 <p>These tools work by sending traffic to your systems and networks, analyzing the responses, and identifying potential vulnerabilities. For example, the following code snippet shows how to use the <code>nmap</code> command-line tool to scan for open ports on a target system:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sV<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>-65535<span class="w"> </span><span class="m">192</span>.168.1.100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sV -p 1-65535 192.168.1.100
+</code></pre>
 <p>This command scans the target system with IP address <code>192.168.1.100</code> for open ports, using the <code>-sV</code> flag to enable version detection and the <code>-p</code> flag to specify the port range.</p>
 <h3 id="prioritization-and-risk-assessment">Prioritization and Risk Assessment</h3>
 <p>Once you've identified potential vulnerabilities, the next step is to prioritize and assess the risk associated with each one. This is typically done using a risk scoring system, such as the Common Vulnerability Scoring System (CVSS). CVSS assigns a score to each vulnerability based on its severity, exploitability, and potential impact.</p>
 <p>For example, the following code snippet shows how to use the <code>cvss</code> command-line tool to calculate the CVSS score for a vulnerability:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cvss</span>
+<pre><code class="language-python">import cvss
 
-<span class="c1"># Define the vulnerability</span>
-<span class="n">vuln</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;vector&#39;</span><span class="p">:</span> <span class="s1">&#39;AV:N&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;complexity&#39;</span><span class="p">:</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;authentication&#39;</span><span class="p">:</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;confidentiality&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;integrity&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;availability&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span>
-<span class="p">}</span>
+# Define the vulnerability
+vuln = {
+    'vector': 'AV:N',
+    'complexity': 'L',
+    'authentication': 'N',
+    'confidentiality': 'C',
+    'integrity': 'C',
+    'availability': 'C'
+}
 
-<span class="c1"># Calculate the CVSS score</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">cvss</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">vuln</span><span class="p">)</span>
+# Calculate the CVSS score
+score = cvss.calculate(vuln)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CVSS Score: </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;CVSS Score: {score}&quot;)
+</code></pre>
 <p>This code defines a vulnerability with a vector of <code>AV:N</code> (attack vector: network), complexity of <code>L</code> (low), and authentication of <code>N</code> (none). It then calculates the CVSS score using the <code>cvss.calculate()</code> function and prints the result.</p>
 <h3 id="remediation-and-mitigation">Remediation and Mitigation</h3>
 <p>Once you've prioritized and assessed the risk associated with each vulnerability, the next step is to remediate or mitigate the issue. This can involve applying patches, updating software, or implementing workarounds.</p>
 <p>For example, the following code snippet shows how to use the <code>ansible</code> automation tool to apply a patch to a target system:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Apply</span><span class="w"> </span><span class="nx">patch</span>
-<span class="w">  </span><span class="nx">hosts</span><span class="p">:</span><span class="w"> </span><span class="nx">targets</span>
-<span class="w">  </span><span class="nx">become</span><span class="p">:</span><span class="w"> </span><span class="nx">yes</span>
+<pre><code class="language-yml">---
+- name: Apply patch
+  hosts: targets
+  become: yes
 
-<span class="w">  </span><span class="nx">tasks</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Apply</span><span class="w"> </span><span class="nx">patch</span>
-<span class="w">    </span><span class="nx">apt</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">patch</span><span class="o">-</span><span class="kn">package</span>
-<span class="w">      </span><span class="nx">state</span><span class="p">:</span><span class="w"> </span><span class="nx">present</span>
-</code></pre></div>
-
+  tasks:
+  - name: Apply patch
+    apt:
+      name: patch-package
+      state: present
+</code></pre>
 <p>This code defines an Ansible playbook that applies a patch to a target system using the <code>apt</code> module. The <code>become</code> directive is used to escalate privileges, and the <code>tasks</code> section defines the patch application task.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Some common problems that organizations face when implementing vulnerability management include:

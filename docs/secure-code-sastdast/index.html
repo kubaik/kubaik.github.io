@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,29 +154,27 @@
 <h3 id="what-is-sast">What is SAST?</h3>
 <p>SAST involves analyzing the source code of an application to identify potential security vulnerabilities. This type of testing is typically performed during the development phase, allowing developers to address security issues before the application is deployed. SAST tools examine the code for common vulnerabilities such as SQL injection, cross-site scripting (XSS), and buffer overflows.</p>
 <p>For example, let's consider a simple Python function that is vulnerable to SQL injection:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<pre><code class="language-python">import sqlite3
 
-<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;users.db&quot;</span><span class="p">)</span>
-    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM users WHERE username = &#39;&quot;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span>
-    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+def get_user(username):
+    conn = sqlite3.connect(&quot;users.db&quot;)
+    cursor = conn.cursor()
+    query = &quot;SELECT * FROM users WHERE username = '&quot; + username + &quot;'&quot;
+    cursor.execute(query)
+    user = cursor.fetchone()
+    return user
+</code></pre>
 <p>A SAST tool like Veracode or Fortify would flag this code as vulnerable to SQL injection, recommending that the developer use parameterized queries instead:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<pre><code class="language-python">import sqlite3
 
-<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;users.db&quot;</span><span class="p">)</span>
-    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM users WHERE username = ?&quot;</span>
-    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">username</span><span class="p">,))</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+def get_user(username):
+    conn = sqlite3.connect(&quot;users.db&quot;)
+    cursor = conn.cursor()
+    query = &quot;SELECT * FROM users WHERE username = ?&quot;
+    cursor.execute(query, (username,))
+    user = cursor.fetchone()
+    return user
+</code></pre>
 <p>By addressing this vulnerability, the developer can prevent a potential SQL injection attack.</p>
 <h3 id="what-is-dast">What is DAST?</h3>
 <p>DAST, on the other hand, involves testing an application while it's running, simulating real-world attacks to identify security vulnerabilities. This type of testing is typically performed during the deployment phase, allowing security teams to identify vulnerabilities that may have been missed during development.</p>

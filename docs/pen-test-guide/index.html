@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -174,9 +175,8 @@
 <li><strong>Burp Suite</strong>: a web application scanner that can identify vulnerabilities in web applications.</li>
 </ul>
 <p>For example, to use Nmap to scan a network, you can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sS<span class="w"> </span>-O<span class="w"> </span><span class="m">192</span>.168.1.1-100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sS -O 192.168.1.1-100
+</code></pre>
 <p>This command scans the network range 192.168.1.1-100 using the TCP SYN scan (-sS) and attempts to identify the operating system (-O) of each host.</p>
 <h2 id="reconnaissance-and-exploitation">Reconnaissance and Exploitation</h2>
 <p>The next step in a pen test is reconnaissance, which involves gathering information about the target systems. This can include:</p>
@@ -192,12 +192,11 @@
 <li><strong>Data exfiltration</strong>: using tools like FTP or SFTP to transfer sensitive data from the target systems.</li>
 </ul>
 <p>For example, to use Metasploit to exploit a vulnerability, you can use the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">msf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">smb</span><span class="o">/</span><span class="n">ms08_067_netapi</span>
-<span class="n">msf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="no">RHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">100</span>
-<span class="n">msf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="no">RPORT</span><span class="w"> </span><span class="mi">445</span>
-<span class="n">msf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">msf &gt; use exploit/windows/smb/ms08_067_netapi
+msf &gt; set RHOST 192.168.1.100
+msf &gt; set RPORT 445
+msf &gt; exploit
+</code></pre>
 <p>This command uses the Metasploit framework to exploit the MS08-067 vulnerability in a Windows system, which allows an attacker to execute arbitrary code on the vulnerable system.</p>
 <h2 id="reporting-and-remediation">Reporting and Remediation</h2>
 <p>The final step in a pen test is reporting and remediation, which involves documenting the findings and providing recommendations for remediation. This includes:</p>
@@ -212,14 +211,13 @@
 <li><strong>MagicTree</strong>: a reporting tool that allows pen testers to create customized reports and prioritize remediation efforts.</li>
 </ul>
 <p>For example, to use Dradis to document a vulnerability, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">dradis</span><span class="o">.</span><span class="n">add_issue</span><span class="p">(</span>
-<span class="w">  </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;MS08-067 Vulnerability&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;The MS08-067 vulnerability is a remote code execution vulnerability in the Windows SMB protocol.&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ss">severity</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Critical&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ss">recommendation</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Apply the MS08-067 patch to the vulnerable system.&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">dradis.add_issue(
+  title: 'MS08-067 Vulnerability',
+  description: 'The MS08-067 vulnerability is a remote code execution vulnerability in the Windows SMB protocol.',
+  severity: 'Critical',
+  recommendation: 'Apply the MS08-067 patch to the vulnerable system.'
+)
+</code></pre>
 <p>This code adds a new issue to the Dradis framework, which includes the title, description, severity, and recommendation for remediation.</p>
 <h2 id="real-world-examples-and-case-studies">Real-World Examples and Case Studies</h2>
 <p>Pen testing has been used in a variety of real-world scenarios, including:</p>

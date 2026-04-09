@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,89 +161,86 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to illustrate real-time data processing in action:</p>
 <h3 id="example-1-apache-kafka-producer">Example 1: Apache Kafka Producer</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">from kafka import KafkaProducer
+import json
 
-<span class="c1"># create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># define a sample data point</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;humidity&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">}</span>
+# define a sample data point
+data = {'temperature': 25, 'humidity': 60}
 
-<span class="c1"># send the data point to Kafka</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;weather_data&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></div>
-
+# send the data point to Kafka
+producer.send('weather_data', value=json.dumps(data).encode('utf-8'))
+</code></pre>
 <p>This example shows how to use the Apache Kafka Python client to produce a data point to a Kafka topic. The data point is a simple JSON object containing temperature and humidity readings.</p>
 <h3 id="example-2-apache-storm-bolt">Example 2: Apache Storm Bolt</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">backtype.storm.topology.BasicOutputCollector</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">backtype.storm.topology.OutputCollector</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">backtype.storm.topology.base.BaseBasicBolt</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">backtype.storm.tuple.Tuple</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">backtype.storm.tuple.Values</span><span class="p">;</span>
+<pre><code class="language-java">import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputCollector;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WeatherBolt</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">BaseBasicBolt</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="n">Tuple</span><span class="w"> </span><span class="n">tuple</span><span class="p">,</span><span class="w"> </span><span class="n">BasicOutputCollector</span><span class="w"> </span><span class="n">collector</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// extract the data point from the tuple</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tuple</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+public class WeatherBolt extends BaseBasicBolt {
+    @Override
+    public void execute(Tuple tuple, BasicOutputCollector collector) {
+        // extract the data point from the tuple
+        String data = tuple.getString(0);
 
-<span class="w">        </span><span class="c1">// parse the data point</span>
-<span class="w">        </span><span class="n">JSONObject</span><span class="w"> </span><span class="n">jsonObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JSONObject</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonObject</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;temperature&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">humidity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonObject</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;humidity&quot;</span><span class="p">);</span>
+        // parse the data point
+        JSONObject jsonObject = new JSONObject(data);
+        int temperature = jsonObject.getInt(&quot;temperature&quot;);
+        int humidity = jsonObject.getInt(&quot;humidity&quot;);
 
-<span class="w">        </span><span class="c1">// perform some processing on the data point</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">heatIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateHeatIndex</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">humidity</span><span class="p">);</span>
+        // perform some processing on the data point
+        int heatIndex = calculateHeatIndex(temperature, humidity);
 
-<span class="w">        </span><span class="c1">// emit the processed data point</span>
-<span class="w">        </span><span class="n">collector</span><span class="p">.</span><span class="na">emit</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Values</span><span class="p">(</span><span class="n">heatIndex</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
+        // emit the processed data point
+        collector.emit(new Values(heatIndex));
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">declareOutputFields</span><span class="p">(</span><span class="n">OutputFieldsDeclarer</span><span class="w"> </span><span class="n">declarer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">declarer</span><span class="p">.</span><span class="na">declare</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Fields</span><span class="p">(</span><span class="s">&quot;heat_index&quot;</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+        declarer.declare(new Fields(&quot;heat_index&quot;));
+    }
+}
+</code></pre>
 <p>This example shows how to use Apache Storm to process a stream of data points. The <code>WeatherBolt</code> class extends the <code>BaseBasicBolt</code> class and overrides the <code>execute</code> method to perform some processing on each data point. The processed data point is then emitted to the next stage of the topology.</p>
 <h3 id="example-3-amazon-kinesis-consumer">Example 3: Amazon Kinesis Consumer</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import boto3
+import json
 
-<span class="c1"># create a Kinesis client</span>
-<span class="n">kinesis</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kinesis&#39;</span><span class="p">)</span>
+# create a Kinesis client
+kinesis = boto3.client('kinesis')
 
-<span class="c1"># define the name of the stream</span>
-<span class="n">stream_name</span> <span class="o">=</span> <span class="s1">&#39;weather_data&#39;</span>
+# define the name of the stream
+stream_name = 'weather_data'
 
-<span class="c1"># get a shard iterator for the stream</span>
-<span class="n">shard_iterator</span> <span class="o">=</span> <span class="n">kinesis</span><span class="o">.</span><span class="n">get_shard_iterator</span><span class="p">(</span>
-    <span class="n">StreamName</span><span class="o">=</span><span class="n">stream_name</span><span class="p">,</span>
-    <span class="n">ShardId</span><span class="o">=</span><span class="s1">&#39;shardId-000000000000&#39;</span><span class="p">,</span>
-    <span class="n">ShardIteratorType</span><span class="o">=</span><span class="s1">&#39;LATEST&#39;</span>
-<span class="p">)[</span><span class="s1">&#39;ShardIterator&#39;</span><span class="p">]</span>
+# get a shard iterator for the stream
+shard_iterator = kinesis.get_shard_iterator(
+    StreamName=stream_name,
+    ShardId='shardId-000000000000',
+    ShardIteratorType='LATEST'
+)['ShardIterator']
 
-<span class="c1"># read data points from the stream</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">records</span> <span class="o">=</span> <span class="n">kinesis</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span>
-        <span class="n">ShardIterator</span><span class="o">=</span><span class="n">shard_iterator</span><span class="p">,</span>
-        <span class="n">Limit</span><span class="o">=</span><span class="mi">10</span>
-    <span class="p">)</span>
+# read data points from the stream
+while True:
+    records = kinesis.get_records(
+        ShardIterator=shard_iterator,
+        Limit=10
+    )
 
-    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
-        <span class="c1"># parse the data point</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">])</span>
+    for record in records['Records']:
+        # parse the data point
+        data = json.loads(record['Data'])
 
-        <span class="c1"># perform some processing on the data point</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        # perform some processing on the data point
+        print(data)
 
-    <span class="c1"># check if we&#39;ve reached the end of the stream</span>
-    <span class="k">if</span> <span class="n">records</span><span class="p">[</span><span class="s1">&#39;MillisBehindLatest&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">break</span>
-</code></pre></div>
-
+    # check if we've reached the end of the stream
+    if records['MillisBehindLatest'] == 0:
+        break
+</code></pre>
 <p>This example shows how to use the Amazon Kinesis Python client to consume a stream of data points. The <code>get_shard_iterator</code> method is used to get a shard iterator for the stream, and the <code>get_records</code> method is used to read data points from the stream.</p>
 <h2 id="use-cases-for-real-time-data-processing">Use Cases for Real-Time Data Processing</h2>
 <p>Here are some concrete use cases for real-time data processing:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -185,101 +186,97 @@
 </ul>
 <h2 id="implementing-redis">Implementing Redis</h2>
 <p>Implementing Redis is relatively straightforward. Here is an example of how to use the Redis Python client to store and retrieve data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Create a Redis client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Create a Redis client
+client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Store a value</span>
-<span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Store a value
+client.set('key', 'value')
 
-<span class="c1"># Retrieve a value</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>  <span class="c1"># Output: value</span>
-</code></pre></div>
-
+# Retrieve a value
+value = client.get('key')
+print(value.decode('utf-8'))  # Output: value
+</code></pre>
 <p>In this example, we create a Redis client and store a value with the key <code>'key'</code>. We then retrieve the value using the <code>get</code> method and print it to the console.</p>
 <h3 id="using-redis-with-python">Using Redis with Python</h3>
 <p>Redis has a wide range of clients available for different programming languages, including Python. The Redis Python client is a popular choice and provides a simple and intuitive API for interacting with Redis.</p>
 <p>Here is an example of how to use the Redis Python client to implement a simple cache:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="k">class</span> <span class="nc">Cache</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">)</span>
+class Cache:
+    def __init__(self, host, port, db):
+        self.client = redis.Redis(host=host, port=port, db=db)
 
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    def get(self, key):
+        return self.client.get(key)
 
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    def set(self, key, value):
+        self.client.set(key, value)
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    def delete(self, key):
+        self.client.delete(key)
 
-<span class="c1"># Create a cache</span>
-<span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+# Create a cache
+cache = Cache('localhost', 6379, 0)
 
-<span class="c1"># Store a value</span>
-<span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Store a value
+cache.set('key', 'value')
 
-<span class="c1"># Retrieve a value</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>  <span class="c1"># Output: value</span>
+# Retrieve a value
+value = cache.get('key')
+print(value.decode('utf-8'))  # Output: value
 
-<span class="c1"># Delete a value</span>
-<span class="n">cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Delete a value
+cache.delete('key')
+</code></pre>
 <p>In this example, we define a <code>Cache</code> class that provides a simple API for interacting with Redis. We create a cache instance and store a value with the key <code>'key'</code>. We then retrieve the value using the <code>get</code> method and print it to the console. Finally, we delete the value using the <code>delete</code> method.</p>
 <h2 id="implementing-memcached">Implementing Memcached</h2>
 <p>Implementing Memcached is also relatively straightforward. Here is an example of how to use the Memcached Python client to store and retrieve data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pylibmc</span>
+<pre><code class="language-python">import pylibmc
 
-<span class="c1"># Create a Memcached client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">Client</span><span class="p">([</span><span class="s1">&#39;localhost:11211&#39;</span><span class="p">])</span>
+# Create a Memcached client
+client = pylibmc.Client(['localhost:11211'])
 
-<span class="c1"># Store a value</span>
-<span class="n">client</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+# Store a value
+client['key'] = 'value'
 
-<span class="c1"># Retrieve a value</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># Output: value</span>
-</code></pre></div>
-
+# Retrieve a value
+value = client['key']
+print(value)  # Output: value
+</code></pre>
 <p>In this example, we create a Memcached client and store a value with the key <code>'key'</code>. We then retrieve the value using the <code>get</code> method and print it to the console.</p>
 <h3 id="using-memcached-with-python">Using Memcached with Python</h3>
 <p>Memcached has a wide range of clients available for different programming languages, including Python. The Pylibmc client is a popular choice and provides a simple and intuitive API for interacting with Memcached.</p>
 <p>Here is an example of how to use the Pylibmc client to implement a simple cache:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pylibmc</span>
+<pre><code class="language-python">import pylibmc
 
-<span class="k">class</span> <span class="nc">Cache</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">Client</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+class Cache:
+    def __init__(self, host, port):
+        self.client = pylibmc.Client([f'{host}:{port}'])
 
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    def get(self, key):
+        return self.client[key]
 
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    def set(self, key, value):
+        self.client[key] = value
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    def delete(self, key):
+        del self.client[key]
 
-<span class="c1"># Create a cache</span>
-<span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">11211</span><span class="p">)</span>
+# Create a cache
+cache = Cache('localhost', 11211)
 
-<span class="c1"># Store a value</span>
-<span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Store a value
+cache.set('key', 'value')
 
-<span class="c1"># Retrieve a value</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># Output: value</span>
+# Retrieve a value
+value = cache.get('key')
+print(value)  # Output: value
 
-<span class="c1"># Delete a value</span>
-<span class="n">cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Delete a value
+cache.delete('key')
+</code></pre>
 <p>In this example, we define a <code>Cache</code> class that provides a simple API for interacting with Memcached. We create a cache instance and store a value with the key <code>'key'</code>. We then retrieve the value using the <code>get</code> method and print it to the console. Finally, we delete the value using the <code>delete</code> method.</p>
 <h2 id="performance-comparison">Performance Comparison</h2>
 <p>In terms of performance, Redis and Memcached are both highly optimized and can handle a large number of requests. However, Redis has some additional features that can impact performance, such as persistence and clustering.</p>

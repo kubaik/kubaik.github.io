@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,15 +159,14 @@
 <li><strong>Communication protocols</strong>: The mechanisms by which nodes in a distributed system communicate with each other.</li>
 </ul>
 <p>To illustrate these concepts, let's consider a simple example using Apache Kafka, a popular distributed streaming platform. Kafka provides a scalable and fault-tolerant messaging system that enables efficient communication between nodes.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python">from kafka import KafkaProducer
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Send a message to a Kafka topic</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send a message to a Kafka topic
+producer.send('my_topic', value='Hello, world!')
+</code></pre>
 <p>In this example, we create a Kafka producer and send a message to a topic named "my_topic". This demonstrates the basic principles of distributed communication, where nodes can send and receive messages in a scalable and fault-tolerant manner.</p>
 <h2 id="distributed-system-architectures">Distributed System Architectures</h2>
 <p>Distributed system architectures can be broadly categorized into several types, including:</p>
@@ -193,24 +193,23 @@
 <li><strong>Message Queue (e.g., RabbitMQ, Apache Kafka)</strong>: A messaging system that enables nodes to send and receive messages in a scalable and fault-tolerant manner.</li>
 </ul>
 <p>To illustrate the use of communication protocols and APIs, let's consider an example using gRPC. In this example, we define a simple gRPC service that provides a greeting message:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">grpc</span> <span class="kn">import</span> <span class="n">Server</span>
-<span class="kn">from</span> <span class="nn">concurrent</span> <span class="kn">import</span> <span class="n">futures</span>
+<pre><code class="language-python">from grpc import Server
+from concurrent import futures
 
-<span class="c1"># Define a gRPC service</span>
-<span class="k">class</span> <span class="nc">Greeter</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">SayHello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, &#39;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">}</span>
+# Define a gRPC service
+class Greeter:
+    def SayHello(self, request, context):
+        return {'message': 'Hello, ' + request.name}
 
-<span class="c1"># Create a gRPC server</span>
-<span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+# Create a gRPC server
+server = Server(futures.ThreadPoolExecutor(max_workers=10))
 
-<span class="c1"># Add the gRPC service to the server</span>
-<span class="n">server</span><span class="o">.</span><span class="n">add_insecure_port</span><span class="p">(</span><span class="s1">&#39;[::]:50051&#39;</span><span class="p">)</span>
+# Add the gRPC service to the server
+server.add_insecure_port('[::]:50051')
 
-<span class="c1"># Start the gRPC server</span>
-<span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</code></pre></div>
-
+# Start the gRPC server
+server.start()
+</code></pre>
 <p>In this example, we define a gRPC service that provides a greeting message and create a gRPC server that listens on port 50051. This demonstrates the basic principles of communication protocols and APIs in distributed systems design.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Distributed systems design is not without its challenges. Some common problems include:</p>

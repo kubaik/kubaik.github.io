@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -192,74 +193,71 @@
 <ol>
 <li><strong>Create a Deployment for the New Version</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-canary</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.1</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.1</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app:v1.1</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+      version: v1.1
+  template:
+    metadata:
+      labels:
+        app: my-app
+        version: v1.1
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:v1.1
+        ports:
+        - containerPort: 80
+</code></pre>
 <ol>
 <li><strong>Apply the Deployment</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-app-canary.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f my-app-canary.yaml
+</code></pre>
 <ol>
 <li><strong>Update the Service to Route Traffic</strong></li>
 </ol>
 <p>Next, you need to update the service to route 10% of the traffic to the canary version. You can use <strong>Istio</strong> for more advanced traffic splitting, but for simplicity, we will use Kubernetes services.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
-<span class="nn">---</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app:v1.0</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: my-app
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: my-app
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 9
+  selector:
+    matchLabels:
+      app: my-app
+      version: v1.0
+  template:
+    metadata:
+      labels:
+        app: my-app
+        version: v1.0
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:v1.0
+        ports:
+        - containerPort: 80
+</code></pre>
 <ol>
 <li><strong>Monitor Performance</strong></li>
 </ol>
@@ -277,18 +275,16 @@
 <p>If the canary version performs well, gradually increase its traffic share. You can adjust the service or use Istio to manage this traffic split dynamically.</p>
 <h3 id="step-4-rollback-strategy">Step 4: Rollback Strategy</h3>
 <p>In case of any issues, having a rollback strategy is crucial. With Kubernetes, you can easily scale down the canary deployment and scale up the stable version.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Scale down the canary deployment</span>
-kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>my-app-canary<span class="w"> </span>--replicas<span class="o">=</span><span class="m">0</span>
+<pre><code class="language-bash"># Scale down the canary deployment
+kubectl scale deployment my-app-canary --replicas=0
 
-<span class="c1"># Scale up the stable version</span>
-kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>my-app<span class="w"> </span>--replicas<span class="o">=</span><span class="m">10</span>
-</code></pre></div>
-
+# Scale up the stable version
+kubectl scale deployment my-app --replicas=10
+</code></pre>
 <h3 id="step-5-full-rollout">Step 5: Full Rollout</h3>
 <p>Once you’ve monitored the canary version and confirmed its stability, you can proceed with the full rollout.</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>my-app<span class="w"> </span>--replicas<span class="o">=</span><span class="m">10</span>
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl scale deployment my-app --replicas=10
+</code></pre>
 <h2 id="real-world-metrics-and-performance-benchmarks">Real-World Metrics and Performance Benchmarks</h2>
 <h3 id="case-study-netflix">Case Study: Netflix</h3>
 <p>Netflix employs canary deployments extensively. In a report, they shared that canary deployments helped them reduce the risk of application failures during releases by 30%. They also noted that their average deployment time reduced from 3 hours to just 10 minutes due to automated processes and canary strategies.</p>

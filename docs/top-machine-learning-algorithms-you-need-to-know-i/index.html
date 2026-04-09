@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,13 +157,12 @@ Linear regression predicts continuous outcomes based on linear relationships bet
 - Sales forecasting<br />
 - Risk assessment</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = LinearRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Check for multicollinearity among features.<br />
 - Use feature scaling if features have vastly different ranges.<br />
@@ -176,15 +176,15 @@ Despite its name, logistic regression is primarily used for binary classificatio
 - Customer churn prediction<br />
 - Medical diagnosis</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+from sklearn.linear_model import LogisticRegression
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = LogisticRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Use probability outputs (<code>predict_proba</code>) for threshold tuning.<br />
 - Regularize to prevent overfitting.<br />
@@ -205,13 +205,12 @@ Despite its name, logistic regression is primarily used for binary classificatio
 - Medical diagnosis<br />
 - Customer segmentation</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = RandomForestClassifier(n_estimators=100, max_depth=5)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Use feature importance scores to interpret model decisions.<br />
 - Tune the number of estimators and tree depth via cross-validation.<br />
@@ -224,13 +223,12 @@ SVMs find the hyperplane that maximizes the margin between classes, effective in
 - Image classification<br />
 - Text categorization</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<pre><code class="language-python">from sklearn.svm import SVC
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = SVC(kernel='rbf', C=1.0)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Standardize features before training.<br />
 - Kernel choice (linear, rbf, polynomial) impacts performance.<br />
@@ -246,13 +244,12 @@ Partitions data into <code>k</code> clusters by minimizing intra-cluster varianc
 - Image compression<br />
 - Document clustering</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<pre><code class="language-python">from sklearn.cluster import KMeans
 
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-</code></pre></div>
-
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(X)
+labels = kmeans.labels_
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Use the Elbow Method to determine optimal <code>k</code>.<br />
 - Standardize data to improve clustering quality.<br />
@@ -265,12 +262,11 @@ Builds nested clusters using either agglomerative (bottom-up) or divisive (top-d
 - Phylogenetic tree construction<br />
 - Customer behavior analysis</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">dendrogram</span>
+<pre><code class="language-python">from scipy.cluster.hierarchy import linkage, dendrogram
 
-<span class="n">linked</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ward&#39;</span><span class="p">)</span>
-<span class="n">dendrogram</span><span class="p">(</span><span class="n">linked</span><span class="p">)</span>
-</code></pre></div>
-
+linked = linkage(X, method='ward')
+dendrogram(linked)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Visualize with dendrograms to interpret cluster relationships.<br />
 - Suitable for small to medium datasets due to computational complexity.</p>
@@ -283,12 +279,11 @@ Reduces dimensionality by projecting data onto principal components that capture
 - Noise reduction<br />
 - Feature extraction</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<pre><code class="language-python">from sklearn.decomposition import PCA
 
-<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">X_reduced</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</code></pre></div>
-
+pca = PCA(n_components=2)
+X_reduced = pca.fit_transform(X)
+</code></pre>
 <p><strong>Tips for Practical Use:</strong><br />
 - Standardize features before applying PCA.<br />
 - Use explained variance ratios to choose the number of components.</p>

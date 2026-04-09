@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,129 +164,126 @@
 <p>Let's take a look at some practical code examples to illustrate how AR development works.</p>
 <h3 id="example-1-arkit-plane-detection">Example 1: ARKit Plane Detection</h3>
 <p>The following Swift code snippet demonstrates how to use ARKit to detect planes in the real world:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">ARKit</span>
+<pre><code class="language-swift">import ARKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
-    <span class="kr">@IBOutlet</span> <span class="kd">var</span> <span class="nv">sceneView</span><span class="p">:</span> <span class="bp">ARSCNView</span><span class="p">!</span>
+class ViewController: UIViewController, ARSCNViewDelegate {
+    @IBOutlet var sceneView: ARSCNView!
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        <span class="c1">// Create an AR configuration</span>
-        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
-        <span class="n">configuration</span><span class="p">.</span><span class="n">planeDetection</span> <span class="p">=</span> <span class="p">.</span><span class="n">horizontal</span>
+        // Create an AR configuration
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
 
-        <span class="c1">// Run the AR session</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-    <span class="p">}</span>
+        // Run the AR session
+        sceneView.session.run(configuration)
+    }
 
-    <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="kc">_</span> <span class="n">renderer</span><span class="p">:</span> <span class="bp">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="n">node</span><span class="p">:</span> <span class="bp">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="n">anchor</span><span class="p">:</span> <span class="bp">ARAnchor</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Check if the anchor is a plane anchor</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">planeAnchor</span> <span class="p">=</span> <span class="n">anchor</span> <span class="k">as</span><span class="p">?</span> <span class="bp">ARPlaneAnchor</span> <span class="p">{</span>
-            <span class="c1">// Create a plane geometry</span>
-            <span class="kd">let</span> <span class="nv">planeGeometry</span> <span class="p">=</span> <span class="bp">SCNPlane</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">height</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">z</span><span class="p">))</span>
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        // Check if the anchor is a plane anchor
+        if let planeAnchor = anchor as? ARPlaneAnchor {
+            // Create a plane geometry
+            let planeGeometry = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
 
-            <span class="c1">// Add the plane geometry to the scene</span>
-            <span class="kd">let</span> <span class="nv">planeNode</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="n">planeGeometry</span><span class="p">)</span>
-            <span class="n">node</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">planeNode</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            // Add the plane geometry to the scene
+            let planeNode = SCNNode(geometry: planeGeometry)
+            node.addChildNode(planeNode)
+        }
+    }
+}
+</code></pre>
 <p>This code creates an AR configuration with plane detection enabled, runs the AR session, and adds a plane geometry to the scene when a plane anchor is detected.</p>
 <h3 id="example-2-arcore-object-recognition">Example 2: ARCore Object Recognition</h3>
 <p>The following Java code snippet demonstrates how to use ARCore to recognize objects in the real world:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.ArCore</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Config</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Session</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.exceptions.UnavailableException</span><span class="p">;</span>
+<pre><code class="language-java">import com.google.ar.core.ArCore;
+import com.google.ar.core.Config;
+import com.google.ar.core.Session;
+import com.google.ar.core.exceptions.UnavailableException;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainActivity</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Session</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
+public class MainActivity extends AppCompatActivity {
+    private Session session;
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">Bundle</span><span class="w"> </span><span class="n">savedInstanceState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-<span class="w">        </span><span class="c1">// Create an ARCore session</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Session</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnavailableException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Handle the exception</span>
-<span class="w">        </span><span class="p">}</span>
+        // Create an ARCore session
+        try {
+            session = new Session(this);
+        } catch (UnavailableException e) {
+            // Handle the exception
+        }
 
-<span class="w">        </span><span class="c1">// Create an AR configuration</span>
-<span class="w">        </span><span class="n">Config</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Config</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
-<span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setObjectRecognitionEnabled</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        // Create an AR configuration
+        Config config = new Config(session);
+        config.setObjectRecognitionEnabled(true);
 
-<span class="w">        </span><span class="c1">// Run the AR session</span>
-<span class="w">        </span><span class="n">session</span><span class="p">.</span><span class="na">configure</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Run the AR session
+        session.configure(config);
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onFrame</span><span class="p">(</span><span class="n">Frame</span><span class="w"> </span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get the frame&#39;s object recognition results</span>
-<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectRecognitionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="na">getObjectRecognitionResults</span><span class="p">();</span>
+    @Override
+    public void onFrame(Frame frame) {
+        // Get the frame's object recognition results
+        List&lt;ObjectRecognitionResult&gt; results = frame.getObjectRecognitionResults();
 
-<span class="w">        </span><span class="c1">// Iterate over the results</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">ObjectRecognitionResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">results</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Get the recognized object&#39;s name and confidence</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">objectName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getObjectName</span><span class="p">();</span>
-<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">confidence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getConfidence</span><span class="p">();</span>
+        // Iterate over the results
+        for (ObjectRecognitionResult result : results) {
+            // Get the recognized object's name and confidence
+            String objectName = result.getObjectName();
+            float confidence = result.getConfidence();
 
-<span class="w">            </span><span class="c1">// Handle the recognized object</span>
-<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="s">&quot;Object Recognition&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Object name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">objectName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, Confidence: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">confidence</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            // Handle the recognized object
+            Log.d(&quot;Object Recognition&quot;, &quot;Object name: &quot; + objectName + &quot;, Confidence: &quot; + confidence);
+        }
+    }
+}
+</code></pre>
 <p>This code creates an ARCore session, enables object recognition, and logs the recognized object's name and confidence.</p>
 <h3 id="example-3-unity-ar-experience">Example 3: Unity AR Experience</h3>
 <p>The following C# code snippet demonstrates how to use Unity to build an AR experience:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARFoundation</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ARExperience</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ARSession</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
+public class ARExperience : MonoBehaviour
+{
+    private ARSession session;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create an AR session</span>
-<span class="w">        </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ARSession</span><span class="p">();</span>
+    void Start()
+    {
+        // Create an AR session
+        session = new ARSession();
 
-<span class="w">        </span><span class="c1">// Create an AR configuration</span>
-<span class="w">        </span><span class="n">ARConfiguration</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ARConfiguration</span><span class="p">();</span>
-<span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="n">enablePlaneDetection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+        // Create an AR configuration
+        ARConfiguration config = new ARConfiguration();
+        config.enablePlaneDetection = true;
 
-<span class="w">        </span><span class="c1">// Run the AR session</span>
-<span class="w">        </span><span class="n">session</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Run the AR session
+        session.Run(config);
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get the AR session&#39;s frame</span>
-<span class="w">        </span><span class="n">ARFrame</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="n">GetFrame</span><span class="p">();</span>
+    void Update()
+    {
+        // Get the AR session's frame
+        ARFrame frame = session.GetFrame();
 
-<span class="w">        </span><span class="c1">// Get the frame&#39;s plane detection results</span>
-<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ARPlane</span><span class="o">&gt;</span><span class="w"> </span><span class="n">planes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">GetPlanes</span><span class="p">();</span>
+        // Get the frame's plane detection results
+        List&lt;ARPlane&gt; planes = frame.GetPlanes();
 
-<span class="w">        </span><span class="c1">// Iterate over the planes</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">ARPlane</span><span class="w"> </span><span class="n">plane</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">planes</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Get the plane&#39;s extent and orientation</span>
-<span class="w">            </span><span class="n">Vector3</span><span class="w"> </span><span class="n">extent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plane</span><span class="p">.</span><span class="n">extent</span><span class="p">;</span>
-<span class="w">            </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plane</span><span class="p">.</span><span class="n">orientation</span><span class="p">;</span>
+        // Iterate over the planes
+        foreach (ARPlane plane in planes)
+        {
+            // Get the plane's extent and orientation
+            Vector3 extent = plane.extent;
+            Quaternion orientation = plane.orientation;
 
-<span class="w">            </span><span class="c1">// Handle the plane</span>
-<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&quot;Plane Detection&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Plane extent: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, Orientation: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">orientation</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            // Handle the plane
+            Log.d(&quot;Plane Detection&quot;, &quot;Plane extent: &quot; + extent + &quot;, Orientation: &quot; + orientation);
+        }
+    }
+}
+</code></pre>
 <p>This code creates a Unity AR session, enables plane detection, and logs the detected plane's extent and orientation.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>AR development can be challenging, and there are several common problems that developers may encounter. Here are some specific solutions to these problems:</p>

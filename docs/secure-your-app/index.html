@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,36 +171,35 @@
 </ol>
 <h3 id="code-example-implementing-ssl-pinning">Code Example: Implementing SSL Pinning</h3>
 <p>SSL pinning is a technique that ensures your app only trusts a specific set of expected SSL certificates or public keys, rather than trusting any certificate issued by a trusted certificate authority. Here's an example implementation in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
-<span class="kd">import</span> <span class="nc">Security</span>
+<pre><code class="language-swift">import UIKit
+import Security
 
-<span class="kd">class</span> <span class="nc">SSLPinning</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">validateCertificate</span><span class="p">(</span><span class="n">chain</span><span class="p">:</span> <span class="p">[</span><span class="n">SSLCertificate</span><span class="p">])</span> <span class="p">-&gt;</span> <span class="nb">Bool</span> <span class="p">{</span>
-        <span class="c1">// Load the expected certificate or public key</span>
-        <span class="kd">let</span> <span class="nv">expectedCertificate</span> <span class="p">=</span> <span class="n">loadCertificate</span><span class="p">(</span><span class="n">from</span><span class="p">:</span> <span class="s">&quot;expected_cert.pem&quot;</span><span class="p">)</span>
+class SSLPinning {
+    func validateCertificate(chain: [SSLCertificate]) -&gt; Bool {
+        // Load the expected certificate or public key
+        let expectedCertificate = loadCertificate(from: &quot;expected_cert.pem&quot;)
 
-        <span class="c1">// Iterate through the certificate chain</span>
-        <span class="k">for</span> <span class="n">certificate</span> <span class="k">in</span> <span class="n">chain</span> <span class="p">{</span>
-            <span class="c1">// Check if the certificate matches the expected certificate</span>
-            <span class="k">if</span> <span class="n">certificate</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expectedCertificate</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="kc">true</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+        // Iterate through the certificate chain
+        for certificate in chain {
+            // Check if the certificate matches the expected certificate
+            if certificate.equals(expectedCertificate) {
+                return true
+            }
+        }
 
-        <span class="k">return</span> <span class="kc">false</span>
-    <span class="p">}</span>
+        return false
+    }
 
-    <span class="kd">func</span> <span class="nf">loadCertificate</span><span class="p">(</span><span class="n">from</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">SSCertificate</span> <span class="p">{</span>
-        <span class="c1">// Load the certificate from a file</span>
-        <span class="kd">let</span> <span class="nv">filePath</span> <span class="p">=</span> <span class="n">Bundle</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">path</span><span class="p">(</span><span class="n">forResource</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ofType</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-        <span class="kd">let</span> <span class="nv">fileData</span> <span class="p">=</span> <span class="k">try</span><span class="p">!</span> <span class="n">Data</span><span class="p">(</span><span class="n">contentsOf</span><span class="p">:</span> <span class="n">URL</span><span class="p">(</span><span class="n">fileURLWithPath</span><span class="p">:</span> <span class="n">filePath</span><span class="p">!))</span>
-        <span class="kd">let</span> <span class="nv">certificate</span> <span class="p">=</span> <span class="n">SSCertificate</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">fileData</span><span class="p">)</span><span class="o">!</span>
+    func loadCertificate(from filename: String) -&gt; SSCertificate {
+        // Load the certificate from a file
+        let filePath = Bundle.main.path(forResource: filename, ofType: nil)
+        let fileData = try! Data(contentsOf: URL(fileURLWithPath: filePath!))
+        let certificate = SSCertificate(data: fileData)!
 
-        <span class="k">return</span> <span class="n">certificate</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        return certificate
+    }
+}
+</code></pre>
 <p>This implementation loads an expected certificate from a file and checks if the certificate chain contains the expected certificate. If it does, the method returns <code>true</code>; otherwise, it returns <code>false</code>.</p>
 <h2 id="tools-and-services-for-mobile-app-security">Tools and Services for Mobile App Security</h2>
 <p>Several tools and services can help you secure your mobile app, including:</p>
@@ -233,38 +233,37 @@
 </ol>
 <h3 id="code-example-implementing-secure-data-storage">Code Example: Implementing Secure Data Storage</h3>
 <p>Secure data storage is critical to protecting sensitive user data. Here's an example implementation in Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">android.content.Context</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">android.security.keystore.KeyGenParameterSpec</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">android.security.keystore.KeyProperties</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.Key</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.KeyStore</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.crypto.Cipher</span><span class="p">;</span>
+<pre><code class="language-java">import android.content.Context;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
+import java.security.Key;
+import java.security.KeyStore;
+import javax.crypto.Cipher;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SecureDataStorage</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">KEYSTORE_ALIAS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my_alias&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">ENCRYPTION_ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AES/GCM/NoPadding&quot;</span><span class="p">;</span>
+public class SecureDataStorage {
+    private static final String KEYSTORE_ALIAS = &quot;my_alias&quot;;
+    private static final String ENCRYPTION_ALGORITHM = &quot;AES/GCM/NoPadding&quot;;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">storeData</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a key store and generate a key</span>
-<span class="w">        </span><span class="n">KeyStore</span><span class="w"> </span><span class="n">keyStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyStore</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;AndroidKeyStore&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">keyStore</span><span class="p">.</span><span class="na">load</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-<span class="w">        </span><span class="n">KeyGenParameterSpec</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KeyGenParameterSpec</span><span class="p">.</span><span class="na">Builder</span><span class="p">(</span><span class="n">KEYSTORE_ALIAS</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">setEncryptionPaddings</span><span class="p">(</span><span class="n">KeyProperties</span><span class="p">.</span><span class="na">ENCRYPTION_PADDING_NONE</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">setBlockModes</span><span class="p">(</span><span class="n">KeyProperties</span><span class="p">.</span><span class="na">BLOCK_MODE_GCM</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="w">        </span><span class="n">Key</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyStore</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;AndroidKeyStore&quot;</span><span class="p">).</span><span class="na">generateKey</span><span class="p">(</span><span class="n">spec</span><span class="p">);</span>
+    public void storeData(Context context, String data) {
+        // Create a key store and generate a key
+        KeyStore keyStore = KeyStore.getInstance(&quot;AndroidKeyStore&quot;);
+        keyStore.load(null);
+        KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(KEYSTORE_ALIAS)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .build();
+        Key key = KeyStore.getInstance(&quot;AndroidKeyStore&quot;).generateKey(spec);
 
-<span class="w">        </span><span class="c1">// Encrypt the data using the generated key</span>
-<span class="w">        </span><span class="n">Cipher</span><span class="w"> </span><span class="n">cipher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cipher</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">ENCRYPTION_ALGORITHM</span><span class="p">);</span>
-<span class="w">        </span><span class="n">cipher</span><span class="p">.</span><span class="na">init</span><span class="p">(</span><span class="n">Cipher</span><span class="p">.</span><span class="na">ENCRYPT_MODE</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">encryptedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cipher</span><span class="p">.</span><span class="na">doFinal</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+        // Encrypt the data using the generated key
+        Cipher cipher = Cipher.getInstance(ENCRYPTION_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encryptedData = cipher.doFinal(data.getBytes());
 
-<span class="w">        </span><span class="c1">// Store the encrypted data in a secure location</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Store the encrypted data in a secure location
+        // ...
+    }
+}
+</code></pre>
 <p>This implementation generates a key using the Android KeyStore and uses it to encrypt sensitive data using the AES/GCM/NoPadding algorithm.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Securing your mobile app is a critical step in protecting your users' data and preventing security breaches. By following the best practices outlined in this article, using tools and services like OWASP ZAP and Veracode, and implementing secure coding practices, you can significantly reduce the risk of security vulnerabilities and data theft.</p>

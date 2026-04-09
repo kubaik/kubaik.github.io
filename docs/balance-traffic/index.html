@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,21 +163,20 @@
 </ul>
 <h3 id="example-configuring-haproxy-for-round-robin-load-balancing">Example: Configuring HAProxy for Round-Robin Load Balancing</h3>
 <p>Here is an example of how to configure HAProxy for round-robin load balancing:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define the backend servers</span>
-backend<span class="w"> </span>servers
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">127</span>.0.0.1:8080<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">127</span>.0.0.1:8081<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">127</span>.0.0.1:8082<span class="w"> </span>check
+<pre><code class="language-bash"># Define the backend servers
+backend servers
+    mode http
+    balance roundrobin
+    server server1 127.0.0.1:8080 check
+    server server2 127.0.0.1:8081 check
+    server server3 127.0.0.1:8082 check
 
-<span class="c1"># Define the frontend</span>
-frontend<span class="w"> </span>http
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">    </span>default_backend<span class="w"> </span>servers
-</code></pre></div>
-
+# Define the frontend
+frontend http
+    mode http
+    bind *:80
+    default_backend servers
+</code></pre>
 <p>In this example, HAProxy is configured to distribute incoming requests across three backend servers using the round-robin technique.</p>
 <h2 id="load-balancing-tools-and-platforms">Load Balancing Tools and Platforms</h2>
 <p>There are many load balancing tools and platforms available, both open-source and commercial. Some popular options include:</p>
@@ -188,39 +188,38 @@ frontend<span class="w"> </span>http
 </ul>
 <h3 id="example-using-amazon-elb-to-load-balance-a-web-application">Example: Using Amazon ELB to Load Balance a Web Application</h3>
 <p>Here is an example of how to use Amazon ELB to load balance a web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an ELB client</span>
-<span class="n">elb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elb&#39;</span><span class="p">)</span>
+# Create an ELB client
+elb = boto3.client('elb')
 
-<span class="c1"># Create a new ELB</span>
-<span class="n">elb</span><span class="o">.</span><span class="n">create_load_balancer</span><span class="p">(</span>
-    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;my-elb&#39;</span><span class="p">,</span>
-    <span class="n">Listeners</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;LoadBalancerPort&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-            <span class="s1">&#39;InstanceProtocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;InstancePort&#39;</span><span class="p">:</span> <span class="mi">8080</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">AvailabilityZones</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;us-east-1a&#39;</span><span class="p">,</span> <span class="s1">&#39;us-east-1b&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+# Create a new ELB
+elb.create_load_balancer(
+    LoadBalancerName='my-elb',
+    Listeners=[
+        {
+            'Protocol': 'HTTP',
+            'LoadBalancerPort': 80,
+            'InstanceProtocol': 'HTTP',
+            'InstancePort': 8080
+        }
+    ],
+    AvailabilityZones=['us-east-1a', 'us-east-1b']
+)
 
-<span class="c1"># Add instances to the ELB</span>
-<span class="n">elb</span><span class="o">.</span><span class="n">register_instances_with_load_balancer</span><span class="p">(</span>
-    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;my-elb&#39;</span><span class="p">,</span>
-    <span class="n">Instances</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;InstanceId&#39;</span><span class="p">:</span> <span class="s1">&#39;i-12345678&#39;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;InstanceId&#39;</span><span class="p">:</span> <span class="s1">&#39;i-87654321&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Add instances to the ELB
+elb.register_instances_with_load_balancer(
+    LoadBalancerName='my-elb',
+    Instances=[
+        {
+            'InstanceId': 'i-12345678'
+        },
+        {
+            'InstanceId': 'i-87654321'
+        }
+    ]
+)
+</code></pre>
 <p>In this example, the AWS SDK for Python is used to create a new ELB and add instances to it.</p>
 <h2 id="load-balancing-metrics-and-performance-benchmarks">Load Balancing Metrics and Performance Benchmarks</h2>
 <p>When evaluating load balancing solutions, it's essential to consider metrics such as:</p>
@@ -237,29 +236,28 @@ frontend<span class="w"> </span>http
 </ul>
 <h3 id="example-monitoring-load-balancer-performance-with-prometheus-and-grafana">Example: Monitoring Load Balancer Performance with Prometheus and Grafana</h3>
 <p>Here is an example of how to monitor load balancer performance using Prometheus and Grafana:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a Prometheus scrape configuration</span>
-<span class="n">scrape_configs</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;loadbalancer&#39;</span>
-<span class="w">    </span><span class="n">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="n">s</span>
-<span class="w">    </span><span class="n">static_configs</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">targets</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;localhost:9090&#39;</span><span class="p">]</span>
+<pre><code class="language-yml"># Define a Prometheus scrape configuration
+scrape_configs:
+  - job_name: 'loadbalancer'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
 
-<span class="c1"># Define a Grafana dashboard</span>
-<span class="n">dashboard</span><span class="p">:</span>
-<span class="w">  </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">Balancer</span><span class="w"> </span><span class="n">Performance</span>
-<span class="w">  </span><span class="n">rows</span><span class="p">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="n">Request</span><span class="w"> </span><span class="n">Latency</span>
-<span class="w">      </span><span class="n">panels</span><span class="p">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">          </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="n">Average</span><span class="w"> </span><span class="n">Request</span><span class="w"> </span><span class="n">Latency</span>
-<span class="w">          </span><span class="n">query</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;avg(loadbalancer_request_latency)&#39;</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="n">Throughput</span>
-<span class="w">      </span><span class="n">panels</span><span class="p">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">          </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="n">Requests</span><span class="w"> </span><span class="n">Per</span><span class="w"> </span><span class="n">Second</span>
-<span class="w">          </span><span class="n">query</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;sum(loadbalancer_requests_per_second)&#39;</span>
-</code></pre></div>
-
+# Define a Grafana dashboard
+dashboard:
+  title: Load Balancer Performance
+  rows:
+    - title: Request Latency
+      panels:
+        - id: 1
+          title: Average Request Latency
+          query: 'avg(loadbalancer_request_latency)'
+    - title: Throughput
+      panels:
+        - id: 2
+          title: Requests Per Second
+          query: 'sum(loadbalancer_requests_per_second)'
+</code></pre>
 <p>In this example, Prometheus is used to scrape load balancer metrics, and Grafana is used to visualize the data in a dashboard.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur with load balancing include:</p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -194,18 +195,17 @@ If you run a small warehouse for 10 hours a month and store 5 TB of data:
 - <strong>Total Monthly Cost</strong>: $135</p>
 <h3 id="creating-your-first-database-and-table">Creating Your First Database and Table</h3>
 <p>After setting up your Snowflake account and warehouse, you can create your first database and table using the following SQL commands:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">my_database</span><span class="p">;</span>
+<pre><code class="language-sql">CREATE DATABASE my_database;
 
-<span class="n">USE</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="n">my_database</span><span class="p">.</span><span class="k">public</span><span class="p">;</span>
+USE SCHEMA my_database.public;
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span>
-<span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE customers (
+    id INT,
+    name STRING,
+    email STRING,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</code></pre>
 <h3 id="ingesting-data-into-snowflake">Ingesting Data into Snowflake</h3>
 <p>Snowflake supports various methods for ingesting data, including bulk loading and continuous data ingestion. One of the most common methods is using the <code>COPY INTO</code> command.</p>
 <h4 id="example-bulk-loading-data-from-amazon-s3">Example: Bulk Loading Data from Amazon S3</h4>
@@ -229,17 +229,16 @@ FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY='"');</code></p>
 <h3 id="querying-data-in-snowflake">Querying Data in Snowflake</h3>
 <p>Once your data is loaded, you can perform various types of queries. Snowflake supports standard SQL with extensions for analytics.</p>
 <h4 id="example-query">Example Query</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span>
-<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_customers</span><span class="p">,</span>
-<span class="w">    </span><span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">month</span>
-<span class="k">FROM</span>
-<span class="w">    </span><span class="n">customers</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">    </span><span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">)</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">    </span><span class="k">month</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT
+    COUNT(*) AS total_customers,
+    DATE_TRUNC('month', created_at) AS month
+FROM
+    customers
+GROUP BY
+    DATE_TRUNC('month', created_at)
+ORDER BY
+    month;
+</code></pre>
 <h2 id="use-cases-for-snowflake">Use Cases for Snowflake</h2>
 <h3 id="1-real-time-analytics">1. Real-Time Analytics</h3>
 <p><strong>Scenario</strong>: A retail company wants to analyze customer behavior in real time to optimize marketing strategies.</p>
@@ -304,31 +303,30 @@ GROUP BY
 </ul>
 <h4 id="example-using-python-with-snowflake">Example: Using Python with Snowflake</h4>
 <p>You can use the following code snippet to connect Python to Snowflake and execute a query:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">snowflake.connector</span>
+<pre><code class="language-python">import snowflake.connector
 
-<span class="c1"># Establish connection</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">user</span><span class="o">=</span><span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&lt;password&gt;&#39;</span><span class="p">,</span>
-    <span class="n">account</span><span class="o">=</span><span class="s1">&#39;&lt;account&gt;&#39;</span><span class="p">,</span>
-    <span class="n">warehouse</span><span class="o">=</span><span class="s1">&#39;&lt;warehouse&gt;&#39;</span><span class="p">,</span>
-    <span class="n">database</span><span class="o">=</span><span class="s1">&#39;&lt;database&gt;&#39;</span><span class="p">,</span>
-    <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;&lt;schema&gt;&#39;</span>
-<span class="p">)</span>
+# Establish connection
+conn = snowflake.connector.connect(
+    user='&lt;username&gt;',
+    password='&lt;password&gt;',
+    account='&lt;account&gt;',
+    warehouse='&lt;warehouse&gt;',
+    database='&lt;database&gt;',
+    schema='&lt;schema&gt;'
+)
 
-<span class="c1"># Execute a query</span>
-<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM customers LIMIT 10&quot;</span><span class="p">)</span>
+# Execute a query
+cursor = conn.cursor()
+cursor.execute(&quot;SELECT * FROM customers LIMIT 10&quot;)
 
-<span class="c1"># Fetch results</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+# Fetch results
+for row in cursor.fetchall():
+    print(row)
 
-<span class="c1"># Close connection</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div>
-
+# Close connection
+cursor.close()
+conn.close()
+</code></pre>
 <h3 id="integrating-with-etl-tools">Integrating with ETL Tools</h3>
 <p>Snowflake supports integration with various ETL tools like:</p>
 <ul>

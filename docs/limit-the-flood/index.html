@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,59 +154,57 @@
 <h3 id="understanding-rate-limiting">Understanding Rate Limiting</h3>
 <p>Rate limiting is a technique used to limit the number of requests an API or application receives within a specified time frame. This is typically done to prevent brute-force attacks, denial-of-service (DoS) attacks, or to enforce fair usage policies. For example, a social media platform may limit the number of posts a user can make per hour to prevent spamming.</p>
 <p>To illustrate this concept, let's consider a simple rate limiting algorithm implemented in Python using the <code>time</code> and <code>collections</code> modules:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<pre><code class="language-python">import time
+from collections import defaultdict
 
-<span class="k">class</span> <span class="nc">RateLimiter</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_requests</span><span class="p">,</span> <span class="n">time_window</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_requests</span> <span class="o">=</span> <span class="n">max_requests</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time_window</span> <span class="o">=</span> <span class="n">time_window</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+class RateLimiter:
+    def __init__(self, max_requests, time_window):
+        self.max_requests = max_requests
+        self.time_window = time_window
+        self.request_counts = defaultdict(int)
 
-    <span class="k">def</span> <span class="nf">is_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="n">current_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    def is_allowed(self, user_id):
+        current_time = int(time.time())
+        self.request_counts[user_id] = self.request_counts.get(user_id, 0) + 1
 
-        <span class="c1"># Remove old request counts</span>
-        <span class="k">for</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">timestamp</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window</span><span class="p">:</span>
-                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span><span class="p">[</span><span class="n">timestamp</span><span class="p">]</span>
+        # Remove old request counts
+        for timestamp in list(self.request_counts):
+            if current_time - timestamp &gt; self.time_window:
+                del self.request_counts[timestamp]
 
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_requests</span>
+        return sum(self.request_counts.values()) &lt;= self.max_requests
 
-<span class="c1"># Example usage:</span>
-<span class="n">limiter</span> <span class="o">=</span> <span class="n">RateLimiter</span><span class="p">(</span><span class="n">max_requests</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">time_window</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>  <span class="c1"># 10 requests per minute</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">limiter</span><span class="o">.</span><span class="n">is_allowed</span><span class="p">(</span><span class="s2">&quot;user1&quot;</span><span class="p">))</span>  <span class="c1"># Returns: True</span>
-</code></pre></div>
-
+# Example usage:
+limiter = RateLimiter(max_requests=10, time_window=60)  # 10 requests per minute
+print(limiter.is_allowed(&quot;user1&quot;))  # Returns: True
+</code></pre>
 <p>In this example, the <code>RateLimiter</code> class limits the number of requests to 10 per minute. The <code>is_allowed</code> method checks if a request is allowed based on the current time and the number of previous requests.</p>
 <h3 id="understanding-throttling">Understanding Throttling</h3>
 <p>Throttling is a technique used to limit the rate at which requests are processed by an application or API. This is typically done to prevent overloading the system, ensuring that it can handle the incoming requests without degradation. Throttling can be implemented at various levels, including network, application, or database.</p>
 <p>For instance, Amazon Web Services (AWS) provides a throttling mechanism for its API Gateway, which allows developers to set a limit on the number of requests per second. This helps prevent overloading the backend services and ensures a smooth user experience.</p>
 <p>To demonstrate throttling in action, let's consider an example using the <code>asyncio</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import asyncio
+import time
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">process_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">):</span>
-    <span class="c1"># Simulate processing time</span>
-    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed request </span><span class="si">{</span><span class="n">request_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+async def process_request(request_id):
+    # Simulate processing time
+    await asyncio.sleep(0.1)
+    print(f&quot;Processed request {request_id}&quot;)
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">throttle_requests</span><span class="p">(</span><span class="n">requests</span><span class="p">):</span>
-    <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Allow 5 concurrent requests</span>
+async def throttle_requests(requests):
+    semaphore = asyncio.Semaphore(5)  # Allow 5 concurrent requests
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">request_id</span><span class="p">):</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">process_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+    async def worker(request_id):
+        async with semaphore:
+            await process_request(request_id)
 
-    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">worker</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">request_id</span> <span class="ow">in</span> <span class="n">requests</span><span class="p">]</span>
-    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+    tasks = [worker(request_id) for request_id in requests]
+    await asyncio.gather(*tasks)
 
-<span class="c1"># Example usage:</span>
-<span class="n">requests</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;request_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">throttle_requests</span><span class="p">(</span><span class="n">requests</span><span class="p">))</span>
-</code></pre></div>
-
+# Example usage:
+requests = [f&quot;request_{i}&quot; for i in range(10)]
+asyncio.run(throttle_requests(requests))
+</code></pre>
 <p>In this example, the <code>throttle_requests</code> function uses an <code>asyncio.Semaphore</code> to limit the number of concurrent requests to 5. The <code>worker</code> function processes each request, and the <code>asyncio.gather</code> function waits for all tasks to complete.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Rate limiting and throttling have numerous applications in real-world scenarios:</p>
@@ -235,23 +234,21 @@
 </ol>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>To demonstrate the performance impact of rate limiting and throttling, let's consider a benchmark using the <code>ab</code> tool to test the performance of a simple web server with and without rate limiting:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Without rate limiting</span>
-ab<span class="w"> </span>-n<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-c<span class="w"> </span><span class="m">100</span><span class="w"> </span>http://example.com/
+<pre><code class="language-bash"># Without rate limiting
+ab -n 1000 -c 100 http://example.com/
 
-<span class="c1"># With rate limiting (10 requests per second)</span>
-ab<span class="w"> </span>-n<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-c<span class="w"> </span><span class="m">100</span><span class="w"> </span>-R<span class="w"> </span><span class="m">10</span><span class="w"> </span>http://example.com/
-</code></pre></div>
-
+# With rate limiting (10 requests per second)
+ab -n 1000 -c 100 -R 10 http://example.com/
+</code></pre>
 <p>The results show that the server with rate limiting has a significantly lower request rate and response time:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="k">Without</span><span class="w"> </span><span class="n">rate</span><span class="w"> </span><span class="n">limiting</span>
-<span class="n">Requests</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="k">second</span><span class="err">:</span><span class="w"> </span><span class="mf">500.00</span><span class="w"> </span><span class="o">[</span><span class="n">#/sec</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
-<span class="nc">Time</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="nl">request</span><span class="p">:</span><span class="w"> </span><span class="mf">200.00</span><span class="w"> </span><span class="o">[</span><span class="n">ms</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
+<pre><code># Without rate limiting
+Requests per second: 500.00 [#/sec] (mean)
+Time per request: 200.00 [ms] (mean)
 
-<span class="err">#</span><span class="w"> </span><span class="k">With</span><span class="w"> </span><span class="n">rate</span><span class="w"> </span><span class="n">limiting</span>
-<span class="n">Requests</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="k">second</span><span class="err">:</span><span class="w"> </span><span class="mf">10.00</span><span class="w"> </span><span class="o">[</span><span class="n">#/sec</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
-<span class="nc">Time</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="nl">request</span><span class="p">:</span><span class="w"> </span><span class="mf">100.00</span><span class="w"> </span><span class="o">[</span><span class="n">ms</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
-</code></pre></div>
-
+# With rate limiting
+Requests per second: 10.00 [#/sec] (mean)
+Time per request: 100.00 [ms] (mean)
+</code></pre>
 <h3 id="pricing-and-cost">Pricing and Cost</h3>
 <p>The cost of implementing rate limiting and throttling can vary depending on the chosen solution. Some popular cloud services provide rate limiting and throttling features at a cost:</p>
 <ul>

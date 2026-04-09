@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,9 +160,8 @@
 * <strong>Scaffolding</strong>: Rails provides a scaffolding feature that generates basic CRUD (Create, Read, Update, Delete) operations for a given model, making it easier to get started with building an application.</p>
 <h2 id="building-a-rails-application">Building a Rails Application</h2>
 <p>To demonstrate the power and simplicity of Rails, let's build a simple blog application. We'll start by creating a new Rails project using the following command:</p>
-<div class="codehilite"><pre><span></span><code>rails<span class="w"> </span>new<span class="w"> </span>blog
-</code></pre></div>
-
+<pre><code class="language-bash">rails new blog
+</code></pre>
 <p>This will create a new directory called <code>blog</code> with the basic structure for a Rails application.</p>
 <h3 id="defining-the-database-schema">Defining the Database Schema</h3>
 <p>Next, we need to define the database schema for our blog application. We'll create a <code>Post</code> model with the following attributes:
@@ -170,17 +170,16 @@
 * <code>created_at</code>: a timestamp representing the date and time the post was created
 * <code>updated_at</code>: a timestamp representing the date and time the post was last updated</p>
 <p>We can define the database schema using the following migration:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CreatePosts</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="o">[</span><span class="mi">7</span><span class="o">.</span><span class="mi">0</span><span class="o">]</span>
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">change</span>
-<span class="w">    </span><span class="n">create_table</span><span class="w"> </span><span class="ss">:posts</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">t</span><span class="o">|</span>
-<span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">string</span><span class="w"> </span><span class="ss">:title</span>
-<span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="ss">:content</span>
-<span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">class CreatePosts &lt; ActiveRecord::Migration[7.0]
+  def change
+    create_table :posts do |t|
+      t.string :title
+      t.text :content
+      t.timestamps
+    end
+  end
+end
+</code></pre>
 <p>This migration will create a <code>posts</code> table with the specified columns.</p>
 <h3 id="implementing-crud-operations">Implementing CRUD Operations</h3>
 <p>Once we have the database schema defined, we can implement the CRUD operations for our <code>Post</code> model. We'll start by creating a <code>PostsController</code> with the following actions:
@@ -192,55 +191,54 @@
 * <code>update</code>: updates an existing post
 * <code>destroy</code>: deletes a post</p>
 <p>Here's an example implementation of the <code>PostsController</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PostsController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationController</span>
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">index</span>
-<span class="w">    </span><span class="vi">@posts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">all</span>
-<span class="w">  </span><span class="k">end</span>
+<pre><code class="language-ruby">class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.all
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">show</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-<span class="w">  </span><span class="k">end</span>
+  def show
+    @post = Post.find(params[:id])
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">new</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">new</span>
-<span class="w">  </span><span class="k">end</span>
+  def new
+    @post = Post.new
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">create</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="vi">@post</span><span class="o">.</span><span class="n">save</span>
-<span class="w">      </span><span class="n">redirect_to</span><span class="w"> </span><span class="vi">@post</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">      </span><span class="n">render</span><span class="w"> </span><span class="ss">:new</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
+  def create
+    @post = Post.new(post_params)
+    if @post.save
+      redirect_to @post
+    else
+      render :new
+    end
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">edit</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-<span class="w">  </span><span class="k">end</span>
+  def edit
+    @post = Post.find(params[:id])
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">update</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="vi">@post</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-<span class="w">      </span><span class="n">redirect_to</span><span class="w"> </span><span class="vi">@post</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">      </span><span class="n">render</span><span class="w"> </span><span class="ss">:edit</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
+  def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to @post
+    else
+      render :edit
+    end
+  end
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">destroy</span>
-<span class="w">    </span><span class="vi">@post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-<span class="w">    </span><span class="vi">@post</span><span class="o">.</span><span class="n">destroy</span>
-<span class="w">    </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">posts_path</span>
-<span class="w">  </span><span class="k">end</span>
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    redirect_to posts_path
+  end
 
-<span class="w">  </span><span class="kp">private</span>
+  private
 
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">post_params</span>
-<span class="w">    </span><span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:post</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span><span class="w"> </span><span class="ss">:content</span><span class="p">)</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-
+  def post_params
+    params.require(:post).permit(:title, :content)
+  end
+end
+</code></pre>
 <p>This implementation provides basic CRUD operations for our <code>Post</code> model.</p>
 <h2 id="deploying-a-rails-application">Deploying a Rails Application</h2>
 <p>Once we have built and tested our Rails application, we need to deploy it to a production environment. There are several options available for deploying a Rails application, including:
@@ -248,13 +246,11 @@
 * <strong>AWS</strong>: a comprehensive cloud platform that provides a wide range of services for deploying and managing web applications
 * <strong>DigitalOcean</strong>: a cloud platform that provides a simple and affordable way to deploy web applications</p>
 <p>For this example, we'll use Heroku. To deploy our application to Heroku, we need to create a Heroku account and install the Heroku CLI tool. Once we have the Heroku CLI tool installed, we can create a new Heroku app using the following command:</p>
-<div class="codehilite"><pre><span></span><code>heroku<span class="w"> </span>create
-</code></pre></div>
-
+<pre><code class="language-bash">heroku create
+</code></pre>
 <p>This will create a new Heroku app with a random name. We can then deploy our application to Heroku using the following command:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>heroku<span class="w"> </span>main
-</code></pre></div>
-
+<pre><code class="language-bash">git push heroku main
+</code></pre>
 <p>This will deploy our application to Heroku and make it available at a public URL.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building and deploying a Rails application, there are several common problems that can arise. Here are some solutions to common problems:

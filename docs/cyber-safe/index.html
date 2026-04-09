@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,13 +168,12 @@
 <li><strong>Monitor network traffic</strong>: Network traffic should be monitored regularly for signs of unauthorized access or malicious activity.</li>
 </ol>
 <p>Here is an example of how to configure a basic firewall rule using the <code>iptables</code> command in Linux:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Block all incoming traffic on port 80 (HTTP)</span>
-iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-j<span class="w"> </span>DROP
+<pre><code class="language-bash"># Block all incoming traffic on port 80 (HTTP)
+iptables -A INPUT -p tcp --dport 80 -j DROP
 
-<span class="c1"># Allow incoming traffic on port 22 (SSH) from a specific IP address</span>
-iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">22</span><span class="w"> </span>-s<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span>-j<span class="w"> </span>ACCEPT
-</code></pre></div>
-
+# Allow incoming traffic on port 22 (SSH) from a specific IP address
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.100 -j ACCEPT
+</code></pre>
 <h2 id="cryptography-fundamentals">Cryptography Fundamentals</h2>
 <p>Cryptography is the practice of secure communication by transforming plaintext into unreadable ciphertext. Some key concepts in cryptography include:</p>
 <ul>
@@ -189,10 +189,9 @@ iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> 
 <li><strong>Use hash functions</strong>: Hash functions should be used to generate a fixed-size string of characters that represents the contents of a message.</li>
 </ol>
 <p>Here is an example of how to use the <code>openssl</code> command to encrypt a file using AES-256-CBC:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Encrypt a file using AES-256-CBC</span>
-openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-in<span class="w"> </span>plaintext.txt<span class="w"> </span>-out<span class="w"> </span>ciphertext.txt<span class="w"> </span>-pass<span class="w"> </span>pass:mysecretpassword
-</code></pre></div>
-
+<pre><code class="language-bash"># Encrypt a file using AES-256-CBC
+openssl enc -aes-256-cbc -in plaintext.txt -out ciphertext.txt -pass pass:mysecretpassword
+</code></pre>
 <h2 id="incident-response-fundamentals">Incident Response Fundamentals</h2>
 <p>Incident response is the process of responding to and managing the aftermath of a cyber attack or data breach. Some key concepts in incident response include:</p>
 <ul>
@@ -208,25 +207,24 @@ openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span clas
 <li><strong>Implement incident detection tools</strong>: Incident detection tools, such as intrusion detection systems (IDS) and security information and event management (SIEM) systems, should be implemented to detect and respond to potential security incidents.</li>
 </ol>
 <p>Here is an example of how to use the <code>python</code> programming language to develop a basic incident response plan:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a function to detect incidents</span>
-<span class="k">def</span> <span class="nf">detect_incident</span><span class="p">(</span><span class="n">log_data</span><span class="p">):</span>
-    <span class="c1"># Analyze log data for signs of unauthorized access or malicious activity</span>
-    <span class="k">if</span> <span class="s2">&quot;unauthorized access&quot;</span> <span class="ow">in</span> <span class="n">log_data</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
+<pre><code class="language-python"># Define a function to detect incidents
+def detect_incident(log_data):
+    # Analyze log data for signs of unauthorized access or malicious activity
+    if &quot;unauthorized access&quot; in log_data:
+        return True
+    else:
+        return False
 
-<span class="c1"># Define a function to contain incidents</span>
-<span class="k">def</span> <span class="nf">contain_incident</span><span class="p">(</span><span class="n">incident_data</span><span class="p">):</span>
-    <span class="c1"># Isolate and contain the incident to prevent further damage</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incident contained&quot;</span><span class="p">)</span>
+# Define a function to contain incidents
+def contain_incident(incident_data):
+    # Isolate and contain the incident to prevent further damage
+    print(&quot;Incident contained&quot;)
 
-<span class="c1"># Define a function to eradicate incidents</span>
-<span class="k">def</span> <span class="nf">eradicate_incident</span><span class="p">(</span><span class="n">incident_data</span><span class="p">):</span>
-    <span class="c1"># Remove the root cause of the incident and restore systems to a known good state</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incident eradicated&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Define a function to eradicate incidents
+def eradicate_incident(incident_data):
+    # Remove the root cause of the incident and restore systems to a known good state
+    print(&quot;Incident eradicated&quot;)
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems in cybersecurity include:</p>
 <ul>

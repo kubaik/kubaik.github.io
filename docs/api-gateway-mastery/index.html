@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,100 +169,97 @@
 <h3 id="1-api-gateway-as-a-reverse-proxy">1. API Gateway as a Reverse Proxy</h3>
 <p>In this pattern, the API gateway acts as a reverse proxy, sitting between clients and backend services. It routes requests to the appropriate service, caches responses, and enforces security policies.</p>
 <p>For example, using NGINX as an API gateway, you can configure it to route requests to different backend services based on the URL path:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">upstream</span><span class="w"> </span><span class="s">backend_service1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">8080</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    upstream backend_service1 {
+        server localhost:8080;
+    }
 
-<span class="w">    </span><span class="kn">upstream</span><span class="w"> </span><span class="s">backend_service2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">8081</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    upstream backend_service2 {
+        server localhost:8081;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/service1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend_service1</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+    server {
+        listen 80;
+        location /service1 {
+            proxy_pass http://backend_service1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/service2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend_service2</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        location /service2 {
+            proxy_pass http://backend_service2;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>This configuration routes requests to <code>/service1</code> to <code>backend_service1</code> and requests to <code>/service2</code> to <code>backend_service2</code>.</p>
 <h3 id="2-api-gateway-as-a-service-proxy">2. API Gateway as a Service Proxy</h3>
 <p>In this pattern, the API gateway acts as a service proxy, providing a single interface for multiple backend services. It handles requests, routes them to the appropriate service, and returns responses to clients.</p>
 <p>For example, using AWS API Gateway, you can create a REST API with multiple resources, each routing to a different backend service:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">apigateway</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;apigateway&#39;</span><span class="p">)</span>
+apigateway = boto3.client('apigateway')
 
-<span class="c1"># Create a REST API</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">apigateway</span><span class="o">.</span><span class="n">create_rest_api</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;My API&#39;</span><span class="p">,</span>
-    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;My API&#39;</span>
-<span class="p">)</span>
+# Create a REST API
+api = apigateway.create_rest_api(
+    name='My API',
+    description='My API'
+)
 
-<span class="c1"># Create a resource and method</span>
-<span class="n">resource</span> <span class="o">=</span> <span class="n">apigateway</span><span class="o">.</span><span class="n">create_resource</span><span class="p">(</span>
-    <span class="n">restApiId</span><span class="o">=</span><span class="n">api</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-    <span class="n">parentId</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-    <span class="n">pathPart</span><span class="o">=</span><span class="s1">&#39;service1&#39;</span>
-<span class="p">)</span>
+# Create a resource and method
+resource = apigateway.create_resource(
+    restApiId=api['id'],
+    parentId='/',
+    pathPart='service1'
+)
 
-<span class="n">method</span> <span class="o">=</span> <span class="n">apigateway</span><span class="o">.</span><span class="n">put_method</span><span class="p">(</span>
-    <span class="n">restApiId</span><span class="o">=</span><span class="n">api</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-    <span class="n">resourceId</span><span class="o">=</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-    <span class="n">httpMethod</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-    <span class="n">authorization</span><span class="o">=</span><span class="s1">&#39;NONE&#39;</span>
-<span class="p">)</span>
+method = apigateway.put_method(
+    restApiId=api['id'],
+    resourceId=resource['id'],
+    httpMethod='GET',
+    authorization='NONE'
+)
 
-<span class="c1"># Integrate the method with a backend service</span>
-<span class="n">integration</span> <span class="o">=</span> <span class="n">apigateway</span><span class="o">.</span><span class="n">put_integration</span><span class="p">(</span>
-    <span class="n">restApiId</span><span class="o">=</span><span class="n">api</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-    <span class="n">resourceId</span><span class="o">=</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-    <span class="n">httpMethod</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-    <span class="n">integrationHttpMethod</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
-    <span class="n">uri</span><span class="o">=</span><span class="s1">&#39;https://backend-service1.example.com&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Integrate the method with a backend service
+integration = apigateway.put_integration(
+    restApiId=api['id'],
+    resourceId=resource['id'],
+    httpMethod='GET',
+    integrationHttpMethod='GET',
+    type='HTTP',
+    uri='https://backend-service1.example.com'
+)
+</code></pre>
 <p>This configuration creates a REST API with a single resource, <code>service1</code>, that routes GET requests to a backend service.</p>
 <h3 id="3-api-gateway-as-a-microgateway">3. API Gateway as a Microgateway</h3>
 <p>In this pattern, the API gateway acts as a microgateway, providing a dedicated entry point for each microservice. It handles requests, routes them to the appropriate service, and returns responses to clients.</p>
 <p>For example, using Kong, you can create a microgateway for each microservice:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a microgateway for service1</span>
-<span class="kd">local</span> <span class="n">service1</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;backend-service1.example.com&quot;</span><span class="p">,</span>
-    <span class="n">port</span> <span class="o">=</span> <span class="mi">8080</span>
-<span class="p">}</span>
+<pre><code class="language-lua">-- Create a microgateway for service1
+local service1 = {
+    host = &quot;backend-service1.example.com&quot;,
+    port = 8080
+}
 
-<span class="c1">-- Create a route for service1</span>
-<span class="kd">local</span> <span class="n">route</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">hosts</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;service1.example.com&quot;</span> <span class="p">},</span>
-    <span class="n">service</span> <span class="o">=</span> <span class="n">service1</span>
-<span class="p">}</span>
+-- Create a route for service1
+local route = {
+    hosts = { &quot;service1.example.com&quot; },
+    service = service1
+}
 
-<span class="c1">-- Create a microgateway for service2</span>
-<span class="kd">local</span> <span class="n">service2</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;backend-service2.example.com&quot;</span><span class="p">,</span>
-    <span class="n">port</span> <span class="o">=</span> <span class="mi">8081</span>
-<span class="p">}</span>
+-- Create a microgateway for service2
+local service2 = {
+    host = &quot;backend-service2.example.com&quot;,
+    port = 8081
+}
 
-<span class="c1">-- Create a route for service2</span>
-<span class="kd">local</span> <span class="n">route</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">hosts</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;service2.example.com&quot;</span> <span class="p">},</span>
-    <span class="n">service</span> <span class="o">=</span> <span class="n">service2</span>
-<span class="p">}</span>
-</code></pre></div>
-
+-- Create a route for service2
+local route = {
+    hosts = { &quot;service2.example.com&quot; },
+    service = service2
+}
+</code></pre>
 <p>This configuration creates a microgateway for each microservice, with a dedicated entry point for each service.</p>
 <h2 id="performance-and-scalability">Performance and Scalability</h2>
 <p>API gateways can have a significant impact on performance and scalability. Here are some metrics to consider:</p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,62 +161,60 @@
 * Simplified data management: GraphQL provides a single endpoint for all data requests, making it easier to manage and maintain data.</p>
 <h2 id="implementing-graphql">Implementing GraphQL</h2>
 <p>Implementing GraphQL involves several steps, including defining the schema, creating resolvers, and setting up the server. Here is an example of how to implement a simple GraphQL schema using the Apollo Server library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">gql</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
+const { gql } = require('apollo-server');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gql</span><span class="sb">`</span>
-<span class="sb">  type Book {</span>
-<span class="sb">    id: ID!</span>
-<span class="sb">    title: String!</span>
-<span class="sb">    author: String!</span>
-<span class="sb">  }</span>
+const typeDefs = gql`
+  type Book {
+    id: ID!
+    title: String!
+    author: String!
+  }
 
-<span class="sb">  type Query {</span>
-<span class="sb">    books: [Book!]!</span>
-<span class="sb">  }</span>
-<span class="sb">`</span><span class="p">;</span>
+  type Query {
+    books: [Book!]!
+  }
+`;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">books</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Book 1&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Author 1&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Book 2&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Author 2&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const resolvers = {
+  Query: {
+    books: () =&gt; [
+      { id: 1, title: 'Book 1', author: 'Author 1' },
+      { id: 2, title: 'Book 2', author: 'Author 2' },
+    ],
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span><span class="w"> </span><span class="nx">typeDefs</span><span class="p">,</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">});</span>
+const server = new ApolloServer({ typeDefs, resolvers });
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>This example defines a simple GraphQL schema with a single type, <code>Book</code>, and a single query, <code>books</code>. The <code>resolvers</code> object defines the data that will be returned for each query.</p>
 <h3 id="using-graphql-with-client-side-libraries">Using GraphQL with Client-Side Libraries</h3>
 <p>GraphQL can be used with client-side libraries such as Apollo Client and Relay. These libraries provide a simple and convenient way to interact with GraphQL APIs from the client-side. Here is an example of how to use Apollo Client to fetch data from a GraphQL API:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloClient</span><span class="p">,</span><span class="w"> </span><span class="nx">InMemoryCache</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@apollo/client&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloClient</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/graphql&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">cache</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">InMemoryCache</span><span class="p">(),</span>
-<span class="p">});</span>
+const client = new ApolloClient({
+  uri: 'https://example.com/graphql',
+  cache: new InMemoryCache(),
+});
 
-<span class="nx">client</span><span class="p">.</span><span class="nx">query</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="nx">gql</span><span class="sb">`</span>
-<span class="sb">    query {</span>
-<span class="sb">      books {</span>
-<span class="sb">        id</span>
-<span class="sb">        title</span>
-<span class="sb">        author</span>
-<span class="sb">      }</span>
-<span class="sb">    }</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+client.query({
+  query: gql`
+    query {
+      books {
+        id
+        title
+        author
+      }
+    }
+  `,
+}).then((result) =&gt; {
+  console.log(result.data);
+});
+</code></pre>
 <p>This example uses Apollo Client to fetch a list of books from a GraphQL API. The <code>query</code> method is used to define the query that will be sent to the server, and the <code>then</code> method is used to handle the response.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem when using GraphQL is dealing with null or missing data. Here are a few strategies for handling null or missing data:
@@ -224,15 +223,14 @@
 * Use a default value for fields that are null or missing.
 * Use a custom resolver to handle null or missing data.</p>
 <p>For example, you can use the <code>@skip</code> directive to skip fields that are null or missing:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">books</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span>
-<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="nd">@skip</span><span class="p">(</span><span class="n">if</span><span class="p">:</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
-<span class="w">    </span><span class="n">author</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+  books {
+    id
+    title @skip(if: true)
+    author
+  }
+}
+</code></pre>
 <p>This query will skip the <code>title</code> field if it is null or missing.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>GraphQL can improve the performance of mobile and web applications by reducing the amount of data that needs to be transferred over the network. Here are some performance benchmarks for GraphQL:

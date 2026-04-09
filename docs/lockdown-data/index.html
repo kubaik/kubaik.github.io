@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -177,68 +178,65 @@
 <p>In this section, we'll explore some practical examples of encryption and key management in action.</p>
 <h3 id="example-1-encrypting-data-with-aes">Example 1: Encrypting Data with AES</h3>
 <p>Here's an example of encrypting data using AES in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">padding</span>
-<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.ciphers</span> <span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
-<span class="kn">from</span> <span class="nn">cryptography.hazmat.backends</span> <span class="kn">import</span> <span class="n">default_backend</span>
+<pre><code class="language-python">from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
 
-<span class="c1"># Generate a random AES key</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+# Generate a random AES key
+key = os.urandom(32)
 
-<span class="c1"># Create an AES cipher object</span>
-<span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">16</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">())</span>
+# Create an AES cipher object
+cipher = Cipher(algorithms.AES(key), modes.CBC(b'\0' * 16), backend=default_backend())
 
-<span class="c1"># Encrypt some data</span>
-<span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
-<span class="n">padder</span> <span class="o">=</span> <span class="n">padding</span><span class="o">.</span><span class="n">PKCS7</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">padder</span><span class="p">()</span>
-<span class="n">padded_data</span> <span class="o">=</span> <span class="n">padder</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">padder</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
-<span class="n">ct</span> <span class="o">=</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">padded_data</span><span class="p">)</span> <span class="o">+</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+# Encrypt some data
+encryptor = cipher.encryptor()
+padder = padding.PKCS7(128).padder()
+padded_data = padder.update(b'Hello, World!') + padder.finalize()
+ct = encryptor.update(padded_data) + encryptor.finalize()
 
-<span class="nb">print</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
-</code></pre></div>
-
+print(ct.hex())
+</code></pre>
 <p>This code generates a random AES key, creates an AES cipher object, and encrypts the string "Hello, World!" using the <code>encrypt</code> method.</p>
 <h3 id="example-2-using-hashicorps-vault-for-key-management">Example 2: Using HashiCorp's Vault for Key Management</h3>
 <p>Here's an example of using HashiCorp's Vault to store and manage cryptographic keys:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install and start Vault</span>
-brew<span class="w"> </span>install<span class="w"> </span>vault
-vault<span class="w"> </span>server<span class="w"> </span>-dev
+<pre><code class="language-bash"># Install and start Vault
+brew install vault
+vault server -dev
 
-<span class="c1"># Generate a new key</span>
-vault<span class="w"> </span>kv<span class="w"> </span>put<span class="w"> </span>secret/mykey<span class="w"> </span><span class="nv">value</span><span class="o">=</span>mysecretkey
+# Generate a new key
+vault kv put secret/mykey value=mysecretkey
 
-<span class="c1"># Read the key</span>
-vault<span class="w"> </span>kv<span class="w"> </span>get<span class="w"> </span>secret/mykey
-</code></pre></div>
-
+# Read the key
+vault kv get secret/mykey
+</code></pre>
 <p>This code installs and starts Vault, generates a new key, and stores it in the <code>secret/mykey</code> path. The <code>vault kv get</code> command can then be used to retrieve the key.</p>
 <h3 id="example-3-using-aws-kms-for-key-management">Example 3: Using AWS KMS for Key Management</h3>
 <p>Here's an example of using AWS KMS to create and manage cryptographic keys:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS KMS client</span>
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
+# Create an AWS KMS client
+kms = boto3.client('kms')
 
-<span class="c1"># Create a new key</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My test key&#39;</span><span class="p">,</span>
-    <span class="n">KeyUsage</span><span class="o">=</span><span class="s1">&#39;ENCRYPT_DECRYPT&#39;</span>
-<span class="p">)</span>
+# Create a new key
+response = kms.create_key(
+    Description='My test key',
+    KeyUsage='ENCRYPT_DECRYPT'
+)
 
-<span class="c1"># Get the key ID</span>
-<span class="n">key_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;KeyMetadata&#39;</span><span class="p">][</span><span class="s1">&#39;KeyId&#39;</span><span class="p">]</span>
+# Get the key ID
+key_id = response['KeyMetadata']['KeyId']
 
-<span class="c1"># Encrypt some data using the key</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">KeyId</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
-    <span class="n">Plaintext</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;Hello, World!&#39;</span>
-<span class="p">)</span>
+# Encrypt some data using the key
+response = kms.encrypt(
+    KeyId=key_id,
+    Plaintext=b'Hello, World!'
+)
 
-<span class="c1"># Get the encrypted data</span>
-<span class="n">ct</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;CiphertextBlob&#39;</span><span class="p">]</span>
+# Get the encrypted data
+ct = response['CiphertextBlob']
 
-<span class="nb">print</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
-</code></pre></div>
-
+print(ct.hex())
+</code></pre>
 <p>This code creates an AWS KMS client, creates a new key, and encrypts the string "Hello, World!" using the <code>encrypt</code> method.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>In this section, we'll address some common problems and solutions related to encryption and key management.</p>

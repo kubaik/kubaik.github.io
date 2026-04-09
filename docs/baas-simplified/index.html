@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,69 +162,68 @@
 <h2 id="practical-examples-of-baas-in-action">Practical Examples of BaaS in Action</h2>
 <p>Let's take a look at some practical examples of BaaS in action. For example, let's say we want to build a simple chat application using the Firebase BaaS platform. We can use the Firebase Realtime Database to store and manage chat messages, and the Firebase Authentication service to manage user identities.</p>
 <p>Here is an example of how we might use the Firebase Realtime Database to store and manage chat messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase Realtime Database library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/database&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Firebase Realtime Database library
+import firebase from 'firebase/app';
+import 'firebase/database';
 
-<span class="c1">// Initialize the Firebase Realtime Database</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;API_KEY&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;AUTH_DOMAIN&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">databaseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;DATABASE_URL&gt;&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase Realtime Database
+firebase.initializeApp({
+  apiKey: '&lt;API_KEY&gt;',
+  authDomain: '&lt;AUTH_DOMAIN&gt;',
+  databaseURL: '&lt;DATABASE_URL&gt;',
+});
 
-<span class="c1">// Create a reference to the chat messages node</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">chatMessagesRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">database</span><span class="p">().</span><span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;chatMessages&#39;</span><span class="p">);</span>
+// Create a reference to the chat messages node
+const chatMessagesRef = firebase.database().ref('chatMessages');
 
-<span class="c1">// Add a new chat message to the database</span>
-<span class="nx">chatMessagesRef</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Add a new chat message to the database
+chatMessagesRef.push({
+  message: 'Hello, world!',
+  timestamp: Date.now(),
+});
+</code></pre>
 <p>This code initializes the Firebase Realtime Database and creates a reference to the chat messages node. It then adds a new chat message to the database using the <code>push()</code> method.</p>
 <p>Another example of BaaS in action is the use of the AWS Amplify platform to build a mobile application. AWS Amplify provides a range of features, including data storage, user authentication, and push notifications. Here is an example of how we might use the AWS Amplify platform to send a push notification:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="c1">// Import the AWS Amplify library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Amplify</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;aws-amplify&#39;</span><span class="p">;</span>
+// Import the AWS Amplify library
+import Amplify from 'aws-amplify';
 
-<span class="c1">// Initialize the AWS Amplify platform</span>
-<span class="nx">Amplify</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">Auth</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">mandatorySignIn</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-region&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">userPoolId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-user-pool-id&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">userPoolWebClientId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-user-pool-web-client-id&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">Analytics</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">disabled</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">API</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">endpoints</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-api-name&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">endpoint</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your-api-endpoint.execute-api.your-region.amazonaws.com&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">});</span>
+// Initialize the AWS Amplify platform
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: 'your-region',
+    userPoolId: 'your-user-pool-id',
+    userPoolWebClientId: 'your-user-pool-web-client-id',
+  },
+  Analytics: {
+    disabled: true,
+  },
+  API: {
+    endpoints: [
+      {
+        name: 'your-api-name',
+        endpoint: 'https://your-api-endpoint.execute-api.your-region.amazonaws.com',
+      },
+    ],
+  },
+});
 
-<span class="c1">// Send a push notification using the AWS Amplify platform</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">sendPushNotification</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a test push notification.&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">Amplify</span><span class="p">.</span><span class="nx">Notifications</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">notification</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Send a push notification using the AWS Amplify platform
+async function sendPushNotification() {
+  try {
+    const notification = {
+      title: 'Hello, world!',
+      body: 'This is a test push notification.',
+    };
+    await Amplify.Notifications.send(notification);
+  } catch (error) {
+    console.error(error);
+  }
+}
+</code></pre>
 <p>This code initializes the AWS Amplify platform and sends a push notification using the <code>send()</code> method.</p>
 <h2 id="real-world-use-cases-for-baas">Real-World Use Cases for BaaS</h2>
 <p>BaaS platforms have a wide range of real-world use cases. For example, BaaS can be used to build:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,22 +159,21 @@
 <li>Decision Trees: used for predicting categorical outcomes, such as product recommendations</li>
 </ul>
 <p>For example, let's consider a simple linear regression model implemented using scikit-learn in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+import numpy as np
 
-<span class="c1"># Generate some sample data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+# Generate some sample data
+X = np.array([1, 2, 3, 4, 5]).reshape((-1, 1))
+y = np.array([2, 3, 5, 7, 11])
 
-<span class="c1"># Create and train a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Create and train a linear regression model
+model = LinearRegression()
+model.fit(X, y)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Make predictions
+predictions = model.predict(X)
+print(predictions)
+</code></pre>
 <p>This code trains a linear regression model on a small dataset and makes predictions using the trained model.</p>
 <h3 id="unsupervised-learning-algorithms">Unsupervised Learning Algorithms</h3>
 <p>Unsupervised learning algorithms learn from unlabeled data, where the goal is to discover patterns or relationships in the data. Some common unsupervised learning algorithms include:</p>
@@ -183,20 +183,19 @@
 <li>t-SNE (t-Distributed Stochastic Neighbor Embedding): used for visualizing high-dimensional data in a lower-dimensional space</li>
 </ul>
 <p>For example, let's consider a simple K-Means clustering model implemented using scikit-learn in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+import numpy as np
 
-<span class="c1"># Generate some sample data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+# Generate some sample data
+X = np.array([[1, 2], [1, 4], [1, 0], [10, 2], [10, 4], [10, 0]])
 
-<span class="c1"># Create and train a K-Means model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Create and train a K-Means model
+model = KMeans(n_clusters=2)
+model.fit(X)
 
-<span class="c1"># Print the cluster labels</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the cluster labels
+print(model.labels_)
+</code></pre>
 <p>This code trains a K-Means model on a small dataset and prints the cluster labels for each data point.</p>
 <h3 id="reinforcement-learning-algorithms">Reinforcement Learning Algorithms</h3>
 <p>Reinforcement learning algorithms learn from interactions with an environment, where the goal is to maximize a reward signal. Some common reinforcement learning algorithms include:</p>
@@ -206,55 +205,54 @@
 <li>Deep Q-Networks (DQN): used for learning to play games like Atari or Go</li>
 </ul>
 <p>For example, let's consider a simple Q-Learning model implemented using Gym and PyTorch in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">gym</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<pre><code class="language-python">import gym
+import torch
+import torch.nn as nn
+import torch.optim as optim
 
-<span class="c1"># Create a Gym environment</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v0&#39;</span><span class="p">)</span>
+# Create a Gym environment
+env = gym.make('CartPole-v0')
 
-<span class="c1"># Define a Q-Network</span>
-<span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">QNetwork</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+# Define a Q-Network
+class QNetwork(nn.Module):
+    def __init__(self):
+        super(QNetwork, self).__init__()
+        self.fc1 = nn.Linear(4, 128)
+        self.fc2 = nn.Linear(128, 2)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x</span>
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
 
-<span class="c1"># Initialize the Q-Network and optimizer</span>
-<span class="n">q_network</span> <span class="o">=</span> <span class="n">QNetwork</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">q_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+# Initialize the Q-Network and optimizer
+q_network = QNetwork()
+optimizer = optim.Adam(q_network.parameters(), lr=0.001)
 
-<span class="c1"># Train the Q-Network</span>
-<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
+# Train the Q-Network
+for episode in range(1000):
+    state = env.reset()
+    done = False
+    rewards = 0.0
 
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)))</span>
-        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
-        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
+    while not done:
+        action = torch.argmax(q_network(torch.tensor(state, dtype=torch.float32)))
+        next_state, reward, done, _ = env.step(action.item())
+        rewards += reward
 
-        <span class="c1"># Update the Q-Network</span>
-        <span class="n">q_value</span> <span class="o">=</span> <span class="n">q_network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))[</span><span class="n">action</span><span class="p">]</span>
-        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-            <span class="n">next_q_value</span> <span class="o">=</span> <span class="n">q_network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">q_value</span> <span class="o">-</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="mf">0.99</span> <span class="o">*</span> <span class="n">next_q_value</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        # Update the Q-Network
+        q_value = q_network(torch.tensor(state, dtype=torch.float32))[action]
+        with torch.no_grad():
+            next_q_value = q_network(torch.tensor(next_state, dtype=torch.float32)).max()
+        loss = (q_value - (reward + 0.99 * next_q_value)) ** 2
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
-        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+        state = next_state
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, rewards: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+    print(f'Episode {episode+1}, rewards: {rewards}')
+</code></pre>
 <p>This code trains a Q-Learning model on the CartPole environment using a PyTorch Q-Network and Adam optimizer.</p>
 <h2 id="machine-learning-platforms-and-tools">Machine Learning Platforms and Tools</h2>
 <p>There are many machine learning platforms and tools available, both open-source and commercial. Some popular ones include:</p>

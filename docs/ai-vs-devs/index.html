@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,17 +157,16 @@
 * Bug detection and fixing: Platforms like GitHub and GitLab use AI-powered tools to detect and fix bugs in the code.
 * Code review and optimization: Services like CodeFactor and Codacy use AI to analyze and optimize code for performance, security, and readability.</p>
 <p>For example, GitHub's Copilot is an AI-powered code completion tool that can suggest entire functions and classes based on the context. Here is an example of how it works:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of GitHub Copilot suggesting a function</span>
-<span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># Type &#39;gre&#39; and Copilot suggests the following</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+<pre><code class="language-python"># Example of GitHub Copilot suggesting a function
+def greet(name: str) -&gt; None:
+    # Type 'gre' and Copilot suggests the following
+    print(f&quot;Hello, {name}!&quot;)
 
-<span class="c1"># Copilot suggestion:</span>
-<span class="c1"># def greet(name: str) -&gt; None:</span>
-<span class="c1">#     &quot;&quot;&quot;Print a greeting message&quot;&quot;&quot;</span>
-<span class="c1">#     print(f&quot;Hello, {name}!&quot;)</span>
-</code></pre></div>
-
+# Copilot suggestion:
+# def greet(name: str) -&gt; None:
+#     &quot;&quot;&quot;Print a greeting message&quot;&quot;&quot;
+#     print(f&quot;Hello, {name}!&quot;)
+</code></pre>
 <p>In this example, GitHub Copilot suggests the entire function based on the context, including the docstring and the print statement.</p>
 <h2 id="capabilities-and-limitations-of-ai-in-software-development">Capabilities and Limitations of AI in Software Development</h2>
 <p>While AI has made significant progress in software development, it still has several limitations. Some of the key limitations include:
@@ -180,23 +180,22 @@
 * Code generation: Platforms like AWS and Azure use AI-powered code generation tools to generate boilerplate code for common use cases, such as authentication and authorization.
 * DevOps automation: Services like Jenkins and Travis CI use AI to automate the DevOps process, including build, test, and deployment.</p>
 <p>For example, Google's AutoML is an AI-powered machine learning platform that allows developers to build and deploy machine learning models without extensive expertise. Here is an example of how it works:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of Google AutoML</span>
-<span class="kn">from</span> <span class="nn">automl</span> <span class="kn">import</span> <span class="n">AutoML</span>
+<pre><code class="language-python"># Example of Google AutoML
+from automl import AutoML
 
-<span class="c1"># Define the dataset and the problem</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot; dataset.csv&quot;</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="s2">&quot;classification&quot;</span>
+# Define the dataset and the problem
+dataset = &quot; dataset.csv&quot;
+problem = &quot;classification&quot;
 
-<span class="c1"># Create an AutoML instance</span>
-<span class="n">automl</span> <span class="o">=</span> <span class="n">AutoML</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">problem</span><span class="p">)</span>
+# Create an AutoML instance
+automl = AutoML(dataset, problem)
 
-<span class="c1"># Train the model</span>
-<span class="n">automl</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+# Train the model
+automl.train()
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">automl</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
-</code></pre></div>
-
+# Evaluate the model
+automl.evaluate()
+</code></pre>
 <p>In this example, Google AutoML allows developers to build and deploy a machine learning model without writing a single line of code.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems with AI in software development is the lack of transparency and explainability. AI models can be complex and difficult to understand, making it challenging to identify and fix errors. To address this problem, developers can use techniques such as:
@@ -231,22 +230,21 @@
 3. <strong>DevOps automation</strong>: Use AI-powered DevOps automation tools like Jenkins and Travis CI to automate the build, test, and deployment process.</p>
 <p>For instance, a company like Airbnb can use AI-powered automated testing to reduce the time spent on testing by up to 80%. The company can use tools like Applitools and Testim to automate the testing process, and use AI-powered monitoring tools to detect and fix errors in real-time.</p>
 <p>Here is an example of how to implement AI-powered automated testing using Applitools:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of Applitools</span>
-<span class="kn">from</span> <span class="nn">applitools</span> <span class="kn">import</span> <span class="n">Eyes</span>
+<pre><code class="language-python"># Example of Applitools
+from applitools import Eyes
 
-<span class="c1"># Create an instance of Eyes</span>
-<span class="n">eyes</span> <span class="o">=</span> <span class="n">Eyes</span><span class="p">()</span>
+# Create an instance of Eyes
+eyes = Eyes()
 
-<span class="c1"># Open the application</span>
-<span class="n">eyes</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;https://www.airbnb.com&quot;</span><span class="p">)</span>
+# Open the application
+eyes.open(&quot;https://www.airbnb.com&quot;)
 
-<span class="c1"># Check the login page</span>
-<span class="n">eyes</span><span class="o">.</span><span class="n">check_element</span><span class="p">(</span><span class="s2">&quot;login_button&quot;</span><span class="p">)</span>
+# Check the login page
+eyes.check_element(&quot;login_button&quot;)
 
-<span class="c1"># Close the application</span>
-<span class="n">eyes</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div>
-
+# Close the application
+eyes.close()
+</code></pre>
 <p>In this example, Applitools is used to automate the testing of the Airbnb login page. The Eyes instance is used to open the application, check the login button, and close the application.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, AI is not a replacement for human developers, but rather a tool that can augment and improve the software development process. While AI has made significant progress in recent years, it still has several limitations and challenges that need to be addressed.</p>

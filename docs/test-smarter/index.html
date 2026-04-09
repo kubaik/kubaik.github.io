@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,70 +162,67 @@
 <p>Let's take a look at some practical examples of A/B testing in action.</p>
 <h3 id="example-1-testing-different-button-colors">Example 1: Testing Different Button Colors</h3>
 <p>Suppose we want to test the effect of different button colors on a website's conversion rate. We can use the following code snippet to create an A/B test:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
+<pre><code class="language-python">import random
 
-<span class="c1"># Define the different button colors</span>
-<span class="n">button_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
+# Define the different button colors
+button_colors = ['red', 'green', 'blue']
 
-<span class="c1"># Randomly assign users to one of the button colors</span>
-<span class="n">button_color</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">button_colors</span><span class="p">)</span>
+# Randomly assign users to one of the button colors
+button_color = random.choice(button_colors)
 
-<span class="c1"># Render the button with the assigned color</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;button style=&quot;background-color: </span><span class="si">{</span><span class="n">button_color</span><span class="si">}</span><span class="s1">&quot;&gt;Click me!&lt;/button&gt;&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Render the button with the assigned color
+print(f'&lt;button style=&quot;background-color: {button_color}&quot;&gt;Click me!&lt;/button&gt;')
+</code></pre>
 <p>In this example, we're using Python to randomly assign users to one of three different button colors. We can then measure the conversion rate for each color and determine which one performs best.</p>
 <h3 id="example-2-testing-different-email-subject-lines">Example 2: Testing Different Email Subject Lines</h3>
 <p>Suppose we want to test the effect of different email subject lines on open rates. We can use the following code snippet to create an A/B test:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
+<pre><code class="language-python">import random
 
-<span class="c1"># Define the different email subject lines</span>
-<span class="n">subject_lines</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Limited time offer: 20</span><span class="si">% o</span><span class="s1">ff all products&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Exclusive deal: 20</span><span class="si">% o</span><span class="s1">ff all products&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Flash sale: 20</span><span class="si">% o</span><span class="s1">ff all products&#39;</span>
-<span class="p">]</span>
+# Define the different email subject lines
+subject_lines = [
+    'Limited time offer: 20% off all products',
+    'Exclusive deal: 20% off all products',
+    'Flash sale: 20% off all products'
+]
 
-<span class="c1"># Randomly assign users to one of the subject lines</span>
-<span class="n">subject_line</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">subject_lines</span><span class="p">)</span>
+# Randomly assign users to one of the subject lines
+subject_line = random.choice(subject_lines)
 
-<span class="c1"># Send the email with the assigned subject line</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Subject: </span><span class="si">{</span><span class="n">subject_line</span><span class="si">}</span><span class="se">\n</span><span class="s1">Body: Check out our latest sale!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send the email with the assigned subject line
+print(f'Subject: {subject_line}\nBody: Check out our latest sale!')
+</code></pre>
 <p>In this example, we're using Python to randomly assign users to one of three different email subject lines. We can then measure the open rate for each subject line and determine which one performs best.</p>
 <h3 id="example-3-testing-different-product-recommendations">Example 3: Testing Different Product Recommendations</h3>
 <p>Suppose we want to test the effect of different product recommendations on sales. We can use the following code snippet to create an A/B test:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Load the product data</span>
-<span class="n">products</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;products.csv&#39;</span><span class="p">)</span>
+# Load the product data
+products = pd.read_csv('products.csv')
 
-<span class="c1"># Define the different recommendation algorithms</span>
-<span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;collaborative filtering&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;content-based filtering&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;hybrid&#39;</span>
-<span class="p">]</span>
+# Define the different recommendation algorithms
+algorithms = [
+    'collaborative filtering',
+    'content-based filtering',
+    'hybrid'
+]
 
-<span class="c1"># Randomly assign users to one of the algorithms</span>
-<span class="n">algorithm</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">algorithms</span><span class="p">)</span>
+# Randomly assign users to one of the algorithms
+algorithm = random.choice(algorithms)
 
-<span class="c1"># Generate recommendations using the assigned algorithm</span>
-<span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;collaborative filtering&#39;</span><span class="p">:</span>
-    <span class="c1"># Use collaborative filtering to generate recommendations</span>
-    <span class="n">recommendations</span> <span class="o">=</span> <span class="n">products</span><span class="p">[</span><span class="n">products</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;electronics&#39;</span><span class="p">]</span>
-<span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;content-based filtering&#39;</span><span class="p">:</span>
-    <span class="c1"># Use content-based filtering to generate recommendations</span>
-    <span class="n">recommendations</span> <span class="o">=</span> <span class="n">products</span><span class="p">[</span><span class="n">products</span><span class="p">[</span><span class="s1">&#39;brand&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Apple&#39;</span><span class="p">]</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Use a hybrid approach to generate recommendations</span>
-    <span class="n">recommendations</span> <span class="o">=</span> <span class="n">products</span><span class="p">[(</span><span class="n">products</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;electronics&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">products</span><span class="p">[</span><span class="s1">&#39;brand&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Apple&#39;</span><span class="p">)]</span>
+# Generate recommendations using the assigned algorithm
+if algorithm == 'collaborative filtering':
+    # Use collaborative filtering to generate recommendations
+    recommendations = products[products['category'] == 'electronics']
+elif algorithm == 'content-based filtering':
+    # Use content-based filtering to generate recommendations
+    recommendations = products[products['brand'] == 'Apple']
+else:
+    # Use a hybrid approach to generate recommendations
+    recommendations = products[(products['category'] == 'electronics') | (products['brand'] == 'Apple')]
 
-<span class="c1"># Render the recommendations to the user</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">recommendations</span><span class="p">)</span>
-</code></pre></div>
-
+# Render the recommendations to the user
+print(recommendations)
+</code></pre>
 <p>In this example, we're using Python and the Pandas library to load product data and define different recommendation algorithms. We can then randomly assign users to one of the algorithms and measure the sales generated by each one.</p>
 <h2 id="common-problems-with-ab-testing">Common Problems with A/B Testing</h2>
 <p>Despite the many benefits of A/B testing, there are also some common problems to watch out for. Here are a few:

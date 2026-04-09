@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,61 +168,59 @@
 4. <strong>Token request</strong>: The client requests an access token from the API, providing the authorization code.
 5. <strong>Token response</strong>: The API responds with an access token, which the client can use to access the API.</p>
 <p>Here is an example of how to implement OAuth 2.0 using the <code>requests</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client ID and secret</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Client ID and secret
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Authorization request</span>
-<span class="n">auth_url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/oauth/authorize&quot;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span>
-    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/callback&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;response_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span>
-<span class="p">}</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+# Authorization request
+auth_url = &quot;https://example.com/oauth/authorize&quot;
+params = {
+    &quot;client_id&quot;: client_id,
+    &quot;redirect_uri&quot;: &quot;https://example.com/callback&quot;,
+    &quot;response_type&quot;: &quot;code&quot;
+}
+response = requests.get(auth_url, params=params)
 
-<span class="c1"># Token request</span>
-<span class="n">token_url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/oauth/token&quot;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;your_authorization_code&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/callback&quot;</span>
-<span class="p">}</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Basic </span><span class="si">{</span><span class="n">client_secret</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">}</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">token_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre></div>
-
+# Token request
+token_url = &quot;https://example.com/oauth/token&quot;
+params = {
+    &quot;grant_type&quot;: &quot;authorization_code&quot;,
+    &quot;code&quot;: &quot;your_authorization_code&quot;,
+    &quot;redirect_uri&quot;: &quot;https://example.com/callback&quot;
+}
+headers = {
+    &quot;Authorization&quot;: f&quot;Basic {client_secret}&quot;
+}
+response = requests.post(token_url, params=params, headers=headers)
+</code></pre>
 <h3 id="jwt-json-web-tokens">JWT (JSON Web Tokens)</h3>
 <p>JWT is a compact, URL-safe means of representing claims to be transferred between two parties. It consists of three parts: header, payload, and signature.</p>
 <p>Here is an example of how to implement JWT using the <code>pyjwt</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">jwt</span>
+<pre><code class="language-python">import jwt
 
-<span class="c1"># Secret key</span>
-<span class="n">secret_key</span> <span class="o">=</span> <span class="s2">&quot;your_secret_key&quot;</span>
+# Secret key
+secret_key = &quot;your_secret_key&quot;
 
-<span class="c1"># Payload</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;admin&quot;</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
+# Payload
+payload = {
+    &quot;sub&quot;: &quot;1234567890&quot;,
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;admin&quot;: True
+}
 
-<span class="c1"># Generate token</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+# Generate token
+token = jwt.encode(payload, secret_key, algorithm=&quot;HS256&quot;)
+print(token)
 
-<span class="c1"># Verify token</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">ExpiredSignatureError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Signature has expired&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Verify token
+try:
+    payload = jwt.decode(token, secret_key, algorithms=[&quot;HS256&quot;])
+    print(payload)
+except jwt.ExpiredSignatureError:
+    print(&quot;Signature has expired&quot;)
+</code></pre>
 <h2 id="encryption">Encryption</h2>
 <p>Encryption is the process of converting plaintext data into unreadable ciphertext to protect it from unauthorized access.</p>
 <h3 id="ssltls">SSL/TLS</h3>
@@ -231,77 +230,74 @@
 3. <strong>Encryption</strong>: The client and server encrypt the data using the shared secret.</p>
 <p>To implement SSL/TLS, you can use a tool like Let's Encrypt, which provides free SSL/TLS certificates. The cost of a certificate can range from $0 (Let's Encrypt) to $1,500 (GlobalSign) per year, depending on the provider and the level of validation required.</p>
 <p>Here is an example of how to implement SSL/TLS using the <code>requests</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># URL</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com&quot;</span>
+# URL
+url = &quot;https://example.com&quot;
 
-<span class="c1"># Verify SSL/TLS certificate</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-</code></pre></div>
-
+# Verify SSL/TLS certificate
+response = requests.get(url, verify=True)
+print(response.status_code)
+</code></pre>
 <h2 id="rate-limiting">Rate Limiting</h2>
 <p>Rate limiting is the process of limiting the number of requests that can be made to an API within a certain time frame.</p>
 <h3 id="ip-blocking">IP Blocking</h3>
 <p>IP blocking involves blocking requests from specific IP addresses that exceed the rate limit.</p>
 <p>Here is an example of how to implement IP blocking using the <code>flask</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">flask_limiter</span> <span class="kn">import</span> <span class="n">Limiter</span>
-<span class="kn">from</span> <span class="nn">flask_limiter.util</span> <span class="kn">import</span> <span class="n">get_remote_address</span>
+<pre><code class="language-python">from flask import Flask, request
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">limiter</span> <span class="o">=</span> <span class="n">Limiter</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">key_func</span><span class="o">=</span><span class="n">get_remote_address</span><span class="p">)</span>
+app = Flask(__name__)
+limiter = Limiter(app, key_func=get_remote_address)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/endpoint&quot;</span><span class="p">)</span>
-<span class="nd">@limiter</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="s2">&quot;10/minute&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">endpoint</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</code></pre></div>
-
+@app.route(&quot;/api/endpoint&quot;)
+@limiter.limit(&quot;10/minute&quot;)
+def endpoint():
+    return &quot;Hello, World!&quot;
+</code></pre>
 <h3 id="token-bucket-algorithm">Token Bucket Algorithm</h3>
 <p>The token bucket algorithm involves assigning a token to each request and incrementing a counter for each token. If the counter exceeds the rate limit, the request is blocked.</p>
 <p>Here is an example of how to implement the token bucket algorithm using the <code>redis</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Redis connection</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Redis connection
+redis_client = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0)
 
-<span class="c1"># Token bucket parameters</span>
-<span class="n">rate_limit</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># requests per minute</span>
-<span class="n">capacity</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># tokens</span>
-<span class="n">refill_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># tokens per second</span>
+# Token bucket parameters
+rate_limit = 10  # requests per minute
+capacity = 10  # tokens
+refill_rate = 1  # tokens per second
 
-<span class="c1"># Get token</span>
-<span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;token:</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">token</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="n">capacity</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">token</span>
+# Get token
+def get_token(ip_address):
+    key = f&quot;token:{ip_address}&quot;
+    token = redis_client.get(key)
+    if token is None:
+        redis_client.set(key, capacity)
+        token = capacity
+    else:
+        token = int(token)
+    return token
 
-<span class="c1"># Increment token counter</span>
-<span class="k">def</span> <span class="nf">increment_token_counter</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;token:</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">token</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">redis_client</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Increment token counter
+def increment_token_counter(ip_address):
+    key = f&quot;token:{ip_address}&quot;
+    token = redis_client.get(key)
+    if token is not None:
+        redis_client.incr(key)
+    else:
+        redis_client.set(key, 1)
 
-<span class="c1"># Check rate limit</span>
-<span class="k">def</span> <span class="nf">check_rate_limit</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;token:</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">token</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-</code></pre></div>
-
+# Check rate limit
+def check_rate_limit(ip_address):
+    key = f&quot;token:{ip_address}&quot;
+    token = redis_client.get(key)
+    if token is not None and int(token) &gt; capacity:
+        return False
+    else:
+        return True
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to API security:</p>
 <ul>

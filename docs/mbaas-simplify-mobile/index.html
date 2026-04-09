@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,33 +172,32 @@
 <h2 id="practical-example-building-a-mobile-app-with-firebase">Practical Example: Building a Mobile App with Firebase</h2>
 <p>Let's take a look at a practical example of building a mobile app using Firebase, a popular BaaS platform. We'll build a simple todo list app that allows users to create, read, update, and delete (CRUD) todo items.</p>
 <p>Here's an example of how to use Firebase's Realtime Database to store and retrieve todo items:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase JavaScript SDK</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/database&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Firebase JavaScript SDK
+import firebase from 'firebase/app';
+import 'firebase/database';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;API_KEY&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;AUTH_DOMAIN&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">databaseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;DATABASE_URL&gt;&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: '&lt;API_KEY&gt;',
+  authDomain: '&lt;AUTH_DOMAIN&gt;',
+  databaseURL: '&lt;DATABASE_URL&gt;',
+});
 
-<span class="c1">// Get a reference to the todo items database</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">todoRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">database</span><span class="p">().</span><span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;todo&#39;</span><span class="p">);</span>
+// Get a reference to the todo items database
+const todoRef = firebase.database().ref('todo');
 
-<span class="c1">// Create a new todo item</span>
-<span class="nx">todoRef</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="p">});</span>
+// Create a new todo item
+todoRef.push({
+  title: 'Buy milk',
+  completed: false,
+});
 
-<span class="c1">// Retrieve all todo items</span>
-<span class="nx">todoRef</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">snapshot</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">todoItems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">todoItems</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Retrieve all todo items
+todoRef.on('value', (snapshot) =&gt; {
+  const todoItems = snapshot.val();
+  console.log(todoItems);
+});
+</code></pre>
 <p>In this example, we initialize the Firebase app, get a reference to the todo items database, and create a new todo item using the <code>push()</code> method. We also retrieve all todo items using the <code>on()</code> method and log the result to the console.</p>
 <h2 id="performance-benchmarks-firebase-vs-aws-amplify">Performance Benchmarks: Firebase vs. AWS Amplify</h2>
 <p>When it comes to performance, BaaS platforms can vary significantly. Let's take a look at a benchmark comparison between Firebase and AWS Amplify, two popular BaaS platforms.</p>
@@ -215,17 +215,16 @@
 <li><strong>Log errors</strong>: Log errors to a logging service, such as Firebase's Crashlytics or AWS Amplify's Analytics.</li>
 </ol>
 <p>For example, here's how to handle errors when using Firebase's Realtime Database:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Create a new todo item</span>
-<span class="w">  </span><span class="nx">todoRef</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">try {
+  // Create a new todo item
+  todoRef.push({
+    title: 'Buy milk',
+    completed: false,
+  });
+} catch (error) {
+  console.error(error);
+}
+</code></pre>
 <p>In this example, we wrap the code in a try-catch block and log the error to the console if an exception occurs.</p>
 <h2 id="security-and-authentication">Security and Authentication</h2>
 <p>Security and authentication are critical components of any mobile app. BaaS platforms provide a range of security features, including:</p>
@@ -235,27 +234,27 @@
 <li><strong>Access control</strong>: Control access to data and resources using role-based access control (RBAC) and attribute-based access control (ABAC).</li>
 </ul>
 <p>Here's an example of how to use Firebase's Authentication API to authenticate users:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="c1">// Import the Firebase Authentication SDK</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/auth&#39;</span><span class="p">;</span>
+// Import the Firebase Authentication SDK
+import firebase from 'firebase/auth';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;API_KEY&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;AUTH_DOMAIN&gt;&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: '&lt;API_KEY&gt;',
+  authDomain: '&lt;AUTH_DOMAIN&gt;',
+});
 
-<span class="c1">// Authenticate the user</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">().</span><span class="nx">signInWithEmailAndPassword</span><span class="p">(</span><span class="s1">&#39;user@example.com&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Authenticate the user
+firebase.auth().signInWithEmailAndPassword('user@example.com', 'password')
+  .then((user) =&gt; {
+    console.log(user);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>In this example, we initialize the Firebase app, authenticate the user using the <code>signInWithEmailAndPassword()</code> method, and log the result to the console.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>BaaS platforms can vary significantly in terms of pricing and cost. Here's a summary of the pricing plans for Firebase and AWS Amplify:</p>

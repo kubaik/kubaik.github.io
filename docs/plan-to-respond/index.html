@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,28 +166,27 @@
 * Intrusion Detection Systems (IDS) like Snort or Suricata
 * Endpoint Detection and Response (EDR) tools like CrowdStrike or Carbon Black</p>
 <p>Here's an example of how to use Splunk to detect and report incidents:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">splunklib.binding</span> <span class="k">as</span> <span class="nn">binding</span>
+<pre><code class="language-python">import splunklib.binding as binding
 
-<span class="c1"># Create a Splunk connection</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">binding</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://splunk-instance:8089&quot;</span><span class="p">,</span>
-    <span class="n">username</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;password&quot;</span>
-<span class="p">)</span>
+# Create a Splunk connection
+connection = binding.connect(
+    host=&quot;https://splunk-instance:8089&quot;,
+    username=&quot;admin&quot;,
+    password=&quot;password&quot;
+)
 
-<span class="c1"># Define a search query to detect potential incidents</span>
-<span class="n">search_query</span> <span class="o">=</span> <span class="s2">&quot;index=main sourcetype=linux_secure | stats count by src_ip&quot;</span>
+# Define a search query to detect potential incidents
+search_query = &quot;index=main sourcetype=linux_secure | stats count by src_ip&quot;
 
-<span class="c1"># Execute the search query and retrieve results</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_query</span><span class="p">)</span>
+# Execute the search query and retrieve results
+results = connection.services.search(search_query)
 
-<span class="c1"># Iterate over the results and trigger the incident response process</span>
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="c1"># Trigger the incident response process</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incident detected: potential brute-force attack from </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;src_ip&quot;</span><span class="p">]))</span>
-</code></pre></div>
-
+# Iterate over the results and trigger the incident response process
+for result in results:
+    if result[&quot;count&quot;] &gt; 10:
+        # Trigger the incident response process
+        print(&quot;Incident detected: potential brute-force attack from {}&quot;.format(result[&quot;src_ip&quot;]))
+</code></pre>
 <p>This code snippet demonstrates how to use Splunk's Python SDK to connect to a Splunk instance, define a search query to detect potential incidents, and trigger the incident response process based on the search results.</p>
 <h2 id="containment-and-eradication">Containment and Eradication</h2>
 <p>Once an incident has been detected and reported, the next step is to contain and eradicate the threat. This involves isolating affected systems, removing malware or backdoors, and restoring systems to a known good state. There are various tools and platforms that can aid in containment and eradication, including:
@@ -195,13 +195,12 @@
 * Endpoint security tools like Microsoft Defender or Kaspersky</p>
 <p>For example, let's consider a scenario where a company experiences a malware outbreak. The incident response team would use a VPN solution to isolate affected systems, remove malware using an endpoint security tool, and restore systems to a known good state using a backup and recovery solution.</p>
 <p>Here's an example of how to use iptables to block traffic from a suspicious IP address:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Block traffic from a suspicious IP address</span>
-iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-s<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span>-j<span class="w"> </span>DROP
+<pre><code class="language-bash"># Block traffic from a suspicious IP address
+iptables -A INPUT -s 192.168.1.100 -j DROP
 
-<span class="c1"># Save the iptables rules to a file</span>
-iptables-save<span class="w"> </span>&gt;<span class="w"> </span>/etc/iptables/rules.v4
-</code></pre></div>
-
+# Save the iptables rules to a file
+iptables-save &gt; /etc/iptables/rules.v4
+</code></pre>
 <p>This code snippet demonstrates how to use iptables to block traffic from a suspicious IP address and save the rules to a file.</p>
 <h2 id="recovery-and-post-incident-activities">Recovery and Post-Incident Activities</h2>
 <p>After an incident has been contained and eradicated, the next step is to recover affected systems and perform post-incident activities. This involves restoring systems to a known good state, verifying that all systems are functioning correctly, and documenting lessons learned. There are various tools and platforms that can aid in recovery and post-incident activities, including:
@@ -210,7 +209,7 @@ iptables-save<span class="w"> </span>&gt;<span class="w"> </span>/etc/iptables/r
 * Incident response platforms like Demisto or Resilient</p>
 <p>For example, let's consider a scenario where a company experiences a data loss incident. The incident response team would use a backup and recovery solution to restore affected data, verify that all systems are functioning correctly, and document lessons learned using an incident response platform.</p>
 <p>Here's an example of how to use Ansible to verify that all systems are functioning correctly:</p>
-<div class="codehilite"><pre><span></span><code># Define a playbook to verify system functionality
+<pre><code class="language-yml"># Define a playbook to verify system functionality
 ---
 - name: Verify system functionality
   hosts: all
@@ -220,8 +219,7 @@ iptables-save<span class="w"> </span>&gt;<span class="w"> </span>/etc/iptables/r
   - name: Verify HTTP connectivity
     uri:
       url: http://example.com
-</code></pre></div>
-
+</code></pre>
 <p>This code snippet demonstrates how to use Ansible to define a playbook that verifies system functionality, including SSH and HTTP connectivity.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Incident response planning is not without its challenges. Some common problems and solutions include:

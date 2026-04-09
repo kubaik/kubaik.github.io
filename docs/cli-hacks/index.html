@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -185,9 +186,8 @@
 </ul>
 <h4 id="usage"><strong>Usage:</strong></h4>
 <p>Once installed, you can invoke it by running:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">history</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>fzf
-</code></pre></div>
-
+<pre><code class="language-bash">history | fzf
+</code></pre>
 <p>This command will open an interactive interface to search through your command history. You can type a few letters to filter results, making it much faster to find and execute previous commands.</p>
 <h2 id="2-command-chaining">2. Command Chaining</h2>
 <h3 id="use-case-efficient-multi-command-execution">Use Case: Efficient Multi-Command Execution</h3>
@@ -209,41 +209,36 @@
 <p>For commands that require input from the output of another command, <code>xargs</code> can be particularly powerful. </p>
 <h4 id="example-deleting-files"><strong>Example: Deleting Files</strong></h4>
 <p>Suppose you want to delete all <code>.tmp</code> files in a directory:</p>
-<div class="codehilite"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.tmp&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>rm
-</code></pre></div>
-
+<pre><code class="language-bash">find . -name &quot;*.tmp&quot; | xargs rm
+</code></pre>
 <p>In this example, <code>find</code> locates all <code>.tmp</code> files and pipes the results to <code>xargs</code>, which executes <code>rm</code> on each file found.</p>
 <h3 id="practical-application-automating-backups"><strong>Practical Application: Automating Backups</strong></h3>
 <p>You can create a backup script that combines several commands, checks for errors, and sends a notification.</p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-tar<span class="w"> </span>-czf<span class="w"> </span>backup.tar.gz<span class="w"> </span>/path/to/important/files<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Backup Successful&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Backup Failed&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">#!/bin/bash
+tar -czf backup.tar.gz /path/to/important/files &amp;&amp; echo &quot;Backup Successful&quot; || echo &quot;Backup Failed&quot;
+</code></pre>
 <p>In this script, a compressed tarball is created, and based on the success of the command, a message is displayed.</p>
 <h2 id="3-custom-aliases-for-repetitive-tasks">3. Custom Aliases for Repetitive Tasks</h2>
 <h3 id="use-case-speeding-up-common-commands">Use Case: Speeding Up Common Commands</h3>
 <p>Creating aliases for frequently used commands can drastically reduce typing time.</p>
 <h4 id="creating-aliases"><strong>Creating Aliases</strong></h4>
 <p>You can define your aliases in the shell configuration file (e.g., <code>~/.bashrc</code> or <code>~/.zshrc</code>).</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example aliases</span>
-<span class="nb">alias</span><span class="w"> </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -la&#39;</span>
-<span class="nb">alias</span><span class="w"> </span><span class="nv">gs</span><span class="o">=</span><span class="s1">&#39;git status&#39;</span>
-<span class="nb">alias</span><span class="w"> </span><span class="nv">gp</span><span class="o">=</span><span class="s1">&#39;git pull&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Example aliases
+alias ll='ls -la'
+alias gs='git status'
+alias gp='git pull'
+</code></pre>
 <h4 id="reloading-configuration"><strong>Reloading Configuration</strong></h4>
 <p>After adding your aliases, reload the configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc<span class="w">  </span><span class="c1"># For Bash</span>
-<span class="nb">source</span><span class="w"> </span>~/.zshrc<span class="w">   </span><span class="c1"># For Zsh</span>
-</code></pre></div>
-
+<pre><code class="language-bash">source ~/.bashrc  # For Bash
+source ~/.zshrc   # For Zsh
+</code></pre>
 <h3 id="practical-application-git-workflow-shortcuts"><strong>Practical Application: Git Workflow Shortcuts</strong></h3>
 <p>If you frequently use Git, create aliases for common Git commands to speed up your workflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">alias</span><span class="w"> </span><span class="nv">ga</span><span class="o">=</span><span class="s1">&#39;git add&#39;</span>
-<span class="nb">alias</span><span class="w"> </span><span class="nv">gc</span><span class="o">=</span><span class="s1">&#39;git commit -m&#39;</span>
-<span class="nb">alias</span><span class="w"> </span><span class="nv">gco</span><span class="o">=</span><span class="s1">&#39;git checkout&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">alias ga='git add'
+alias gc='git commit -m'
+alias gco='git checkout'
+</code></pre>
 <p>Now, instead of typing <code>git add .</code>, you can simply use <code>ga .</code>.</p>
 <h2 id="4-process-management-with-tmux">4. Process Management with <code>tmux</code></h2>
 <h3 id="use-case-managing-multiple-sessions">Use Case: Managing Multiple Sessions</h3>
@@ -286,58 +281,49 @@ tar<span class="w"> </span>-czf<span class="w"> </span>backup.tar.gz<span class=
 </li>
 </ul>
 <p>You can reattach to a session using:</p>
-<div class="codehilite"><pre><span></span><code>tmux<span class="w"> </span>attach-session<span class="w"> </span>-t<span class="w"> </span><span class="o">[</span>session_name<span class="o">]</span>
-</code></pre></div>
-
+<pre><code class="language-bash">tmux attach-session -t [session_name]
+</code></pre>
 <h3 id="real-world-scenario-running-long-processes"><strong>Real-World Scenario: Running Long Processes</strong></h3>
 <p>If you're running a long-running process (like a build or a server), you can start it in <code>tmux</code> and detach from it. This allows you to close your terminal without stopping the process.</p>
-<div class="codehilite"><pre><span></span><code>tmux<span class="w"> </span>new<span class="w"> </span>-s<span class="w"> </span>mysession
-<span class="c1"># Start a long-running task, like a server</span>
-python<span class="w"> </span>manage.py<span class="w"> </span>runserver
-</code></pre></div>
-
+<pre><code class="language-bash">tmux new -s mysession
+# Start a long-running task, like a server
+python manage.py runserver
+</code></pre>
 <p>Detach from the session and close your terminal. You can later reattach:</p>
-<div class="codehilite"><pre><span></span><code>tmux<span class="w"> </span>attach-session<span class="w"> </span>-t<span class="w"> </span>mysession
-</code></pre></div>
-
+<pre><code class="language-bash">tmux attach-session -t mysession
+</code></pre>
 <h2 id="5-file-management-with-find-grep-and-sed">5. File Management with <code>find</code>, <code>grep</code>, and <code>sed</code></h2>
 <h3 id="use-case-advanced-file-searching-and-manipulation">Use Case: Advanced File Searching and Manipulation</h3>
 <p>When dealing with large directories, finding files can be cumbersome. The <code>find</code>, <code>grep</code>, and <code>sed</code> commands can help streamline these tasks.</p>
 <h4 id="using-find-to-locate-files"><strong>Using <code>find</code> to Locate Files</strong></h4>
 <p>To find all <code>.log</code> files modified in the last 7 days:</p>
-<div class="codehilite"><pre><span></span><code>find<span class="w"> </span>/path/to/search<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="w"> </span>-mtime<span class="w"> </span>-7
-</code></pre></div>
-
+<pre><code class="language-bash">find /path/to/search -name &quot;*.log&quot; -mtime -7
+</code></pre>
 <h4 id="combining-find-with-grep"><strong>Combining <code>find</code> with <code>grep</code></strong></h4>
 <p>If you want to find lines containing "ERROR" in those log files:</p>
-<div class="codehilite"><pre><span></span><code>find<span class="w"> </span>/path/to/search<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="w"> </span>-mtime<span class="w"> </span>-7<span class="w"> </span>-exec<span class="w"> </span>grep<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;ERROR&quot;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">find /path/to/search -name &quot;*.log&quot; -mtime -7 -exec grep -H &quot;ERROR&quot; {} \;
+</code></pre>
 <p>Here, <code>-exec</code> allows you to execute <code>grep</code> on each file found.</p>
 <h4 id="using-sed-for-replacement"><strong>Using <code>sed</code> for Replacement</strong></h4>
 <p>To replace "ERROR" with "WARNING" in a specific file:</p>
-<div class="codehilite"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/ERROR/WARNING/g&#39;</span><span class="w"> </span>/path/to/file.log
-</code></pre></div>
-
+<pre><code class="language-bash">sed -i 's/ERROR/WARNING/g' /path/to/file.log
+</code></pre>
 <h3 id="practical-application-log-file-management"><strong>Practical Application: Log File Management</strong></h3>
 <p>You can create a script to archive log files older than 30 days and compress them.</p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-find<span class="w"> </span>/var/log<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="w"> </span>-mtime<span class="w"> </span>+30<span class="w"> </span>-exec<span class="w"> </span>tar<span class="w"> </span>-rvf<span class="w"> </span>old_logs.tar<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Archived old logs&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">#!/bin/bash
+find /var/log -name &quot;*.log&quot; -mtime +30 -exec tar -rvf old_logs.tar {} \; &amp;&amp; echo &quot;Archived old logs&quot;
+</code></pre>
 <h2 id="6-automating-tasks-with-cron">6. Automating Tasks with <code>cron</code></h2>
 <h3 id="use-case-scheduled-automation">Use Case: Scheduled Automation</h3>
 <p><code>cron</code> allows you to schedule commands to run at specific intervals. This is useful for automating system maintenance tasks.</p>
 <h4 id="editing-the-crontab"><strong>Editing the Crontab</strong></h4>
 <p>To edit the cron jobs for your user:</p>
-<div class="codehilite"><pre><span></span><code>crontab<span class="w"> </span>-e
-</code></pre></div>
-
+<pre><code class="language-bash">crontab -e
+</code></pre>
 <h4 id="example-of-a-cron-job"><strong>Example of a Cron Job</strong></h4>
 <p>To run a backup script every day at 2 AM:</p>
-<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>/path/to/backup-script.sh
-</code></pre></div>
-
+<pre><code class="language-bash">0 2 * * * /path/to/backup-script.sh
+</code></pre>
 <h3 id="cron-syntax-breakdown"><strong>Cron Syntax Breakdown:</strong></h3>
 <ul>
 <li><code>0</code>: Minute (0-59)</li>
@@ -353,35 +339,30 @@ find<span class="w"> </span>/var/log<span class="w"> </span>-name<span class="w"
 <p><code>curl</code> and <code>wget</code> are powerful tools for downloading files and testing web APIs.</p>
 <h4 id="using-curl"><strong>Using <code>curl</code></strong></h4>
 <p>To fetch the contents of a webpage:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>https://www.example.com
-</code></pre></div>
-
+<pre><code class="language-bash">curl https://www.example.com
+</code></pre>
 <p>To test a REST API endpoint:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;https://api.example.com/data&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_TOKEN&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">curl -X GET &quot;https://api.example.com/data&quot; -H &quot;Authorization: Bearer YOUR_TOKEN&quot;
+</code></pre>
 <h4 id="using-wget"><strong>Using <code>wget</code></strong></h4>
 <p>To download a file:</p>
-<div class="codehilite"><pre><span></span><code>wget<span class="w"> </span>https://example.com/file.zip
-</code></pre></div>
-
+<pre><code class="language-bash">wget https://example.com/file.zip
+</code></pre>
 <p>To download an entire website for offline viewing:</p>
-<div class="codehilite"><pre><span></span><code>wget<span class="w"> </span>--mirror<span class="w"> </span>--convert-links<span class="w"> </span>--adjust-extension<span class="w"> </span>--page-requisites<span class="w"> </span>--no-parent<span class="w"> </span>https://example.com
-</code></pre></div>
-
+<pre><code class="language-bash">wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://example.com
+</code></pre>
 <h3 id="practical-application-api-monitoring-script"><strong>Practical Application: API Monitoring Script</strong></h3>
 <p>You can create a simple script to check the availability of an API endpoint and log the response time.</p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">START</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%s%3N<span class="k">)</span>
-<span class="w">    </span>curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}&quot;</span><span class="w"> </span>https://api.example.com/health
-<span class="w">    </span><span class="nv">END</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%s%3N<span class="k">)</span>
-<span class="w">    </span><span class="nv">DIFF</span><span class="o">=</span><span class="k">$((</span><span class="nv">END</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">START</span><span class="k">))</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Response Time: </span><span class="si">${</span><span class="nv">DIFF</span><span class="si">}</span><span class="s2"> ms&quot;</span>
-<span class="w">    </span>sleep<span class="w"> </span><span class="m">10</span>
-<span class="k">done</span>
-</code></pre></div>
-
+<pre><code class="language-bash">#!/bin/bash
+for i in {1..5}; do
+    START=$(date +%s%3N)
+    curl -s -o /dev/null -w &quot;%{http_code}&quot; https://api.example.com/health
+    END=$(date +%s%3N)
+    DIFF=$((END - START))
+    echo &quot;Response Time: ${DIFF} ms&quot;
+    sleep 10
+done
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering the command line can drastically improve your productivity and efficiency. The hacks discussed in this post—from managing command history to creating automated tasks—are just the tip of the iceberg. Here’s a quick recap of actionable steps you can take:</p>
 <ol>

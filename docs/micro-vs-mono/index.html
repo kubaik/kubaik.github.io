@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,31 +164,30 @@
 <p>Each service can be developed using a different programming language, framework, and database. For example, the product catalog service can be built using Node.js, Express.js, and MongoDB, while the order management service can be built using Java, Spring Boot, and MySQL.</p>
 <h3 id="code-example-nodejs-microservice">Code Example: Node.js Microservice</h3>
 <p>Here is an example of a simple Node.js microservice that exposes a REST API for retrieving product information:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">mongoose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
 
-<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNewUrlParser</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">useUnifiedTopology</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+mongoose.connect('mongodb://localhost/products', { useNewUrlParser: true, useUnifiedTopology: true });
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">productSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span>
-<span class="p">});</span>
+const productSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  description: String
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">productSchema</span><span class="p">);</span>
+const Product = mongoose.model('Product', productSchema);
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Product</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">products</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">products</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
+app.get('/products', (req, res) =&gt; {
+  Product.find().then((products) =&gt; {
+    res.json(products);
+  });
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Product catalog service listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Product catalog service listening on port 3000');
+});
+</code></pre>
 <p>This code snippet demonstrates how to create a simple microservice using Node.js, Express.js, and MongoDB. The service exposes a single endpoint (<code>/products</code>) that returns a list of products.</p>
 <h2 id="monolithic-architecture">Monolithic Architecture</h2>
 <p>Monolithic architecture is a traditional approach where all components are part of a single, unified unit. This approach is often used in small to medium-sized applications, where the complexity is manageable.</p>
@@ -195,15 +195,14 @@
 <p>Consider a blogging platform that uses monolithic architecture. The platform can be built using a single programming language, framework, and database. For example, the platform can be built using PHP, Laravel, and MySQL.</p>
 <h3 id="code-example-php-monolith">Code Example: PHP Monolith</h3>
 <p>Here is an example of a simple PHP monolith that exposes a REST API for retrieving blog posts:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">use Illuminate\Http\Request;</span>
-<span class="x">use Illuminate\Support\Facades\DB;</span>
+<pre><code class="language-php">use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-<span class="x">Route::get(&#39;/posts&#39;, function (Request $request) {</span>
-<span class="x">  $posts = DB::table(&#39;posts&#39;)-&gt;get();</span>
-<span class="x">  return response()-&gt;json($posts);</span>
-<span class="x">});</span>
-</code></pre></div>
-
+Route::get('/posts', function (Request $request) {
+  $posts = DB::table('posts')-&gt;get();
+  return response()-&gt;json($posts);
+});
+</code></pre>
 <p>This code snippet demonstrates how to create a simple monolith using PHP, Laravel, and MySQL. The monolith exposes a single endpoint (<code>/posts</code>) that returns a list of blog posts.</p>
 <h2 id="comparison-of-microservices-and-monolithic-architecture">Comparison of Microservices and Monolithic Architecture</h2>
 <p>Both microservices and monolithic architecture have their strengths and weaknesses. Here are some key differences:</p>

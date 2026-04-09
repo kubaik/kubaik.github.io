@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,19 +164,18 @@
 </ul>
 <h3 id="example-1-using-apache-kafka-for-real-time-data-processing">Example 1: Using Apache Kafka for Real-Time Data Processing</h3>
 <p>Here is an example of using Apache Kafka to process real-time data streams:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+<pre><code class="language-python">from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">])</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('my_topic', bootstrap_servers=['localhost:9092'])
 
-<span class="c1"># Subscribe to the topic</span>
-<span class="n">consumer</span><span class="o">.</span><span class="n">subscribe</span><span class="p">([</span><span class="s1">&#39;my_topic&#39;</span><span class="p">])</span>
+# Subscribe to the topic
+consumer.subscribe(['my_topic'])
 
-<span class="c1"># Process messages</span>
-<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></div>
-
+# Process messages
+for message in consumer:
+    print(message.value.decode('utf-8'))
+</code></pre>
 <p>In this example, we create a Kafka consumer that subscribes to a topic called <code>my_topic</code> and processes messages as they are received.</p>
 <h2 id="use-cases-for-real-time-data-processing">Use Cases for Real-Time Data Processing</h2>
 <p>Real-time data processing has a wide range of applications across various industries, including:</p>
@@ -187,29 +187,28 @@
 </ol>
 <h3 id="example-2-using-apache-flink-for-real-time-analytics">Example 2: Using Apache Flink for Real-Time Analytics</h3>
 <p>Here is an example of using Apache Flink to perform real-time analytics on a stream of data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
-<span class="c1">// Create a stream execution environment</span>
-<span class="n">StreamExecutionEnvironment</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StreamExecutionEnvironment</span><span class="p">.</span><span class="na">getExecutionEnvironment</span><span class="p">();</span>
+// Create a stream execution environment
+StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-<span class="c1">// Create a data stream</span>
-<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">addSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SocketTextStreamFunction</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">8080</span><span class="p">));</span>
+// Create a data stream
+DataStream&lt;String&gt; stream = env.addSource(new SocketTextStreamFunction(&quot;localhost&quot;, 8080));
 
-<span class="c1">// Map the stream to a tuple</span>
-<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mappedStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
+// Map the stream to a tuple
+DataStream&lt;Tuple2&lt;String, Integer&gt;&gt; mappedStream = stream.map(new MapFunction&lt;String, Tuple2&lt;String, Integer&gt;&gt;() {
+    @Override
+    public Tuple2&lt;String, Integer&gt; map(String value) throws Exception {
+        return new Tuple2&lt;&gt;(value, 1);
+    }
+});
 
-<span class="c1">// Print the mapped stream</span>
-<span class="n">mappedStream</span><span class="p">.</span><span class="na">print</span><span class="p">();</span>
-</code></pre></div>
-
+// Print the mapped stream
+mappedStream.print();
+</code></pre>
 <p>In this example, we create a stream execution environment and a data stream that reads text data from a socket. We then map the stream to a tuple and print the resulting stream.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Real-time data processing can be challenging, and several common problems can arise, including:</p>
@@ -220,18 +219,17 @@
 </ul>
 <h3 id="example-3-using-aws-kinesis-for-real-time-data-processing">Example 3: Using AWS Kinesis for Real-Time Data Processing</h3>
 <p>Here is an example of using AWS Kinesis to process real-time data streams:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a Kinesis client</span>
-<span class="n">kinesis</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kinesis&#39;</span><span class="p">)</span>
+# Create a Kinesis client
+kinesis = boto3.client('kinesis')
 
-<span class="c1"># Create a Kinesis stream</span>
-<span class="n">kinesis</span><span class="o">.</span><span class="n">create_stream</span><span class="p">(</span><span class="n">StreamName</span><span class="o">=</span><span class="s1">&#39;my_stream&#39;</span><span class="p">,</span> <span class="n">ShardCount</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+# Create a Kinesis stream
+kinesis.create_stream(StreamName='my_stream', ShardCount=1)
 
-<span class="c1"># Put data into the stream</span>
-<span class="n">kinesis</span><span class="o">.</span><span class="n">put_record</span><span class="p">(</span><span class="n">StreamName</span><span class="o">=</span><span class="s1">&#39;my_stream&#39;</span><span class="p">,</span> <span class="n">Data</span><span class="o">=</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="n">PartitionKey</span><span class="o">=</span><span class="s1">&#39;my_partition&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Put data into the stream
+kinesis.put_record(StreamName='my_stream', Data='Hello World', PartitionKey='my_partition')
+</code></pre>
 <p>In this example, we create a Kinesis client and a Kinesis stream, and then put data into the stream using the <code>put_record</code> method.</p>
 <h2 id="performance-metrics-and-pricing">Performance Metrics and Pricing</h2>
 <p>The performance of real-time data processing systems can be measured using various metrics, including:</p>
