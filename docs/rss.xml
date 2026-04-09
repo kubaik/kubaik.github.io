@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 07:52:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 08:16:29 +0000</lastBuildDate>
+    <item>
+      <title>Fix Issues First</title>
+      <link>https://kubaik.github.io/fix-issues-first/</link>
+      <description>Identify issues before users do. Learn proactive app monitoring strategies.</description>
+      <pubDate>Thu, 09 Apr 2026 08:16:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-issues-first/</guid>
+    </item>
     <item>
       <title>Refactor Safe</title>
       <link>https://kubaik.github.io/refactor-safe/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Event-Driven Architecture (EDA) enhances system responsiveness and scalability. Unlock the potential of event-driven design for your projects!</description>
       <pubDate>Wed, 08 Apr 2026 19:43:24 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-event-smarts/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified...</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
-      <pubDate>Wed, 08 Apr 2026 18:27:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
