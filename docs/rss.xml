@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:41:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 17:44:22 +0000</lastBuildDate>
+    <item>
+      <title>Stripe: Internet&apos;s Pay Hub</title>
+      <link>https://kubaik.github.io/stripe-internets-pay-hub/</link>
+      <description>Discover how Stripe became the internet&apos;s go-to payment system</description>
+      <pubDate>Thu, 09 Apr 2026 17:44:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/stripe-internets-pay-hub/</guid>
+    </item>
     <item>
       <title>Dev Burnout: Causes &amp; Cures</title>
       <link>https://kubaik.github.io/dev-burnout-causes-cures/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading &amp; code splitting techniques.</description>
       <pubDate>Thu, 09 Apr 2026 09:28:41 +0000</pubDate>
       <guid>https://kubaik.github.io/load-less/</guid>
-    </item>
-    <item>
-      <title>Nomad Costs</title>
-      <link>https://kubaik.github.io/nomad-costs/</link>
-      <description>Explore the unseen costs of digital nomad life and plan your adventure with accuracy.</description>
-      <pubDate>Thu, 09 Apr 2026 08:52:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/nomad-costs/</guid>
     </item>
   </channel>
 </rss>
