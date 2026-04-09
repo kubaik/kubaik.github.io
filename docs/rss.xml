@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 08:16:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 08:52:51 +0000</lastBuildDate>
+    <item>
+      <title>Nomad Costs</title>
+      <link>https://kubaik.github.io/nomad-costs/</link>
+      <description>Explore the unseen costs of digital nomad life and plan your adventure with accuracy.</description>
+      <pubDate>Thu, 09 Apr 2026 08:52:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/nomad-costs/</guid>
+    </item>
     <item>
       <title>Fix Issues First</title>
       <link>https://kubaik.github.io/fix-issues-first/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets to effective documentation! Discover essential best practices for clarity and precision that enhance communication and streamline processes.</description>
       <pubDate>Wed, 08 Apr 2026 19:49:58 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</guid>
-    </item>
-    <item>
-      <title>EDA: Event Smarts</title>
-      <link>https://kubaik.github.io/eda-event-smarts/</link>
-      <description>Discover how Event-Driven Architecture (EDA) enhances system responsiveness and scalability. Unlock the potential of event-driven design for your projects!</description>
-      <pubDate>Wed, 08 Apr 2026 19:43:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-event-smarts/</guid>
     </item>
   </channel>
 </rss>
