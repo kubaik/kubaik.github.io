@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:58:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 21:27:54 +0000</lastBuildDate>
+    <item>
+      <title>Netflix: 200M Streams</title>
+      <link>https://kubaik.github.io/netflix-200m-streams/</link>
+      <description>Discover how Netflix handles 200M concurrent streams seamlessly</description>
+      <pubDate>Thu, 09 Apr 2026 21:27:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/netflix-200m-streams/</guid>
+    </item>
     <item>
       <title>Ransomware 101</title>
       <link>https://kubaik.github.io/ransomware-101/</link>
@@ -138,13 +145,6 @@
       <description>Streamline your life with AI and Python. Discover automation hacks and boost productivity.</description>
       <pubDate>Thu, 09 Apr 2026 15:10:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-life-hacks/</guid>
-    </item>
-    <item>
-      <title>Blockchain: Beyond Hype</title>
-      <link>https://kubaik.github.io/blockchain-beyond-hype/</link>
-      <description>Discover real-world blockchain use cases beyond the hype</description>
-      <pubDate>Thu, 09 Apr 2026 14:17:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-beyond-hype/</guid>
     </item>
   </channel>
 </rss>
