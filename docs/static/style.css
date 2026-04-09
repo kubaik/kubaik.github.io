@@ -28,12 +28,12 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s ease;
 }
 
 header.scrolled {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 header .container {
@@ -145,7 +145,7 @@ main {
     background: #fff;
     padding: 2rem 1rem;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
 }
 
 /* ============================================
@@ -174,7 +174,7 @@ main {
     opacity: 0.3;
 }
 
-.hero > * {
+.hero>* {
     position: relative;
     z-index: 1;
 }
@@ -199,19 +199,38 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    /* stretch makes every cell in a row the same height */
+    align-items: stretch;
 }
 
+/*
+ * .post-card is now the ONLY element per card — it IS the clickable surface.
+ * We use <a class="post-card"> in the HTML so the whole card is a link.
+ * display:flex + flex-direction:column lets the card stretch to row height.
+ */
 .post-card {
+    /* layout */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* fill the grid cell */
+    padding: 2rem;
+    /* visuals */
     border: 1px solid #e9ecef;
     border-radius: 12px;
-    padding: 2rem;
     background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* link reset */
+    text-decoration: none;
+    color: inherit;
+    /* interaction */
+    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
 }
 
+/* gradient top-bar that slides in on hover */
 .post-card::before {
     content: '';
     position: absolute;
@@ -230,16 +249,19 @@ main {
 
 .post-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    color: inherit;
+    text-decoration: none;
 }
 
 .post-card h3 {
     margin-bottom: 1rem;
     font-size: 1.4rem;
+    color: #2c3e50;
+    transition: color 0.3s ease;
 }
 
-.post-card h3 a:hover,
-.post-card .post-excerpt a:hover {
+.post-card:hover h3 {
     color: #667eea;
 }
 
@@ -247,6 +269,13 @@ main {
     color: #6c757d;
     margin-bottom: 1.5rem;
     line-height: 1.6;
+    /* grow to push tags to the bottom */
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+.post-card:hover .post-excerpt {
+    color: #555;
 }
 
 .post-meta {
@@ -257,45 +286,8 @@ main {
     font-size: 0.9rem;
 }
 
-.post-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.post-content a:hover {
-    border-bottom-color: #764ba2;
-}
-
-.post-card a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.post-card .post-excerpt a,
-.post-card .post-excerpt a:hover,
-.post-card .post-excerpt a:focus,
-.post-card .post-excerpt a:active {
-    text-decoration: none !important;
-    color: inherit;
-}
-
-.post-card-link:hover .post-excerpt {
-    color: #667eea;
-}
-
-.post-card-link:hover h3 {
-    color: #667eea;
-}
-
-.post-card h3,
-.post-card .post-excerpt {
-    transition: color 0.3s ease;
-}
-
 /* Tags on post cards */
-.post-card .tags,
-.post-grid .tags {
+.post-card .tags {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -310,6 +302,11 @@ main {
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 500;
+}
+
+/* Post content link hover (inside blog post body) */
+.post-content a:hover {
+    border-bottom-color: #764ba2;
 }
 
 /* ============================================
@@ -346,7 +343,7 @@ main {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
 }
 
@@ -397,8 +394,13 @@ main {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Infinite Scroll Toggle — hidden */
@@ -444,15 +446,25 @@ main {
    ADSENSE
    ============================================ */
 
-.ad-header, .ad-middle, .ad-footer {
+.ad-header,
+.ad-middle,
+.ad-footer {
     text-align: center;
     margin: 20px 0;
     min-height: 100px;
 }
 
-.ad-header { margin-bottom: 20px; }
-.ad-middle { margin: 30px 0; }
-.ad-footer { margin-top: 20px; }
+.ad-header {
+    margin-bottom: 20px;
+}
+
+.ad-middle {
+    margin: 30px 0;
+}
+
+.ad-footer {
+    margin-top: 20px;
+}
 
 .adsbygoogle {
     display: block;
@@ -625,10 +637,6 @@ footer {
     font-weight: 500;
 }
 
-.post-card.hidden-by-search {
-    display: none !important;
-}
-
 .search-highlight {
     background: #fff3cd;
     padding: 0.1rem 0.2rem;
@@ -793,7 +801,9 @@ footer {
         gap: 0.5rem;
     }
 
-    .ad-header, .ad-middle, .ad-footer {
+    .ad-header,
+    .ad-middle,
+    .ad-footer {
         min-height: 80px;
         margin: 15px 0;
     }
@@ -846,6 +856,7 @@ footer {
    ============================================ */
 
 @media print {
+
     .back-to-top,
     .load-more-button,
     .loading-spinner,
@@ -884,6 +895,7 @@ footer {
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
