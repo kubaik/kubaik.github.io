@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 08:52:51 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 09:28:46 +0000</lastBuildDate>
+    <item>
+      <title>Load Less...</title>
+      <link>https://kubaik.github.io/load-less/</link>
+      <description>Boost site speed with lazy loading &amp; code splitting techniques.</description>
+      <pubDate>Thu, 09 Apr 2026 09:28:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-less/</guid>
+    </item>
     <item>
       <title>Nomad Costs</title>
       <link>https://kubaik.github.io/nomad-costs/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your creativity with low-code/no-code platforms! Discover how these tools empower innovation and streamline development for everyone.</description>
       <pubDate>Wed, 08 Apr 2026 19:56:28 +0000</pubDate>
       <guid>https://kubaik.github.io/empower-your-ideas-the-rise-of-low-codeno-code-pla/</guid>
-    </item>
-    <item>
-      <title>Mastering Documentation: Essential Best Practices for Clarity</title>
-      <link>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</link>
-      <description>Unlock the secrets to effective documentation! Discover essential best practices for clarity and precision that enhance communication and streamline processes.</description>
-      <pubDate>Wed, 08 Apr 2026 19:49:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</guid>
     </item>
   </channel>
 </rss>

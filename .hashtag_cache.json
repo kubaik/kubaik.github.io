@@ -2904,5 +2904,19 @@
       "GlobalCitizen"
     ],
     "topic": "Digital Nomad Life: The Real Costs Nobody Mentions"
+  },
+  "lazy_loading_and_code_splitting_in_practice": {
+    "timestamp": "2026-04-09T09:28:42.197796",
+    "hashtags": [
+      "OptimizeCode",
+      "LazyLoading",
+      "CodeSplitting",
+      "WebDevTips",
+      "PerformanceMatters",
+      "JavaScript",
+      "DevOpsTools",
+      "EfficientCode"
+    ],
+    "topic": "Lazy Loading and Code Splitting in Practice"
   }
 }
