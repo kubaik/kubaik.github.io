@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 19:44:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 19:49:34 +0000</lastBuildDate>
+    <item>
+      <title>Startup Mistakes</title>
+      <link>https://kubaik.github.io/startup-mistakes/</link>
+      <description>Learn from common startup mistakes to avoid costly errors and boost success.</description>
+      <pubDate>Thu, 09 Apr 2026 19:49:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/startup-mistakes/</guid>
+    </item>
     <item>
       <title>Blue vs Canary</title>
       <link>https://kubaik.github.io/blue-vs-canary/</link>
@@ -138,13 +145,6 @@
       <description>Compare React, Next.js &amp; Remix. Choose the best tool for your project.</description>
       <pubDate>Thu, 09 Apr 2026 12:44:33 +0000</pubDate>
       <guid>https://kubaik.github.io/react-showdown/</guid>
-    </item>
-    <item>
-      <title>Multi-Cloud: Smart?</title>
-      <link>https://kubaik.github.io/multi-cloud-smart/</link>
-      <description>Is multi-cloud a smart move or overkill? Explore the pros and cons in our latest blog post.</description>
-      <pubDate>Thu, 09 Apr 2026 12:28:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-cloud-smart/</guid>
     </item>
   </channel>
 </rss>
