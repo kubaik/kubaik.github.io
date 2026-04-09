@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 19:57:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 20:01:31 +0000</lastBuildDate>
+    <item>
+      <title>Debug Fast</title>
+      <link>https://kubaik.github.io/debug-fast/</link>
+      <description>Master quick debugging techniques with &apos;Debug Fast&apos;! Discover strategies to uncover and fix bugs in minutes, boosting your coding efficiency. Read more!</description>
+      <pubDate>Thu, 09 Apr 2026 20:01:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-fast/</guid>
+    </item>
     <item>
       <title>30-Day MVP</title>
       <link>https://kubaik.github.io/30-day-mvp/</link>
@@ -138,13 +145,6 @@
       <description>Discover AI agents: what they are, how they work, and their impact on industries.</description>
       <pubDate>Thu, 09 Apr 2026 13:22:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-101/</guid>
-    </item>
-    <item>
-      <title>2026 Layoffs: The Truth</title>
-      <link>https://kubaik.github.io/2026-layoffs-the-truth/</link>
-      <description>Uncover the truth behind 2026 tech layoffs: causes, impacts, and what&apos;s next.</description>
-      <pubDate>Thu, 09 Apr 2026 13:07:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-layoffs-the-truth/</guid>
     </item>
   </channel>
 </rss>
