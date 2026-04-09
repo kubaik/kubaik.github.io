@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -186,39 +185,40 @@
 </ul>
 <h4 id="example-code">Example Code</h4>
 <p>Here's a simple example of an MVC pattern in Swift using UIKit:</p>
-<pre><code class="language-swift">class User {
-    var name: String
-    var age: Int
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
+    <span class="kd">var</span> <span class="nv">age</span><span class="p">:</span> <span class="nb">Int</span>
 
-    init(name: String, age: Int) {
-        self.name = name
-        self.age = age
-    }
-}
+    <span class="kd">init</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="n">age</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-class UserController {
-    var user: User
+<span class="kd">class</span> <span class="nc">UserController</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nv">user</span><span class="p">:</span> <span class="n">User</span>
 
-    init(user: User) {
-        self.user = user
-    }
+    <span class="kd">init</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">user</span> <span class="p">=</span> <span class="n">user</span>
+    <span class="p">}</span>
 
-    func updateUserName(to newName: String) {
-        user.name = newName
-    }
-}
+    <span class="kd">func</span> <span class="nf">updateUserName</span><span class="p">(</span><span class="n">to</span> <span class="n">newName</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">newName</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-class UserViewController: UIViewController {
-    var controller: UserController!
+<span class="kd">class</span> <span class="nc">UserViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nv">controller</span><span class="p">:</span> <span class="n">UserController</span><span class="p">!</span>
 
-    @IBOutlet weak var nameLabel: UILabel!
+    <span class="kr">@IBOutlet</span> <span class="kr">weak</span> <span class="kd">var</span> <span class="nv">nameLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="p">!</span>
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        nameLabel.text = controller.user.name
-    }
-}
-</code></pre>
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+        <span class="n">nameLabel</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">name</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="use-cases">Use Cases</h4>
 <ul>
 <li>Suitable for small applications or prototypes.</li>
@@ -244,32 +244,33 @@ class UserViewController: UIViewController {
 </ul>
 <h4 id="example-code_1">Example Code</h4>
 <p>Here's how you can implement MVP in Kotlin for Android:</p>
-<pre><code class="language-kotlin">interface UserView {
-    fun displayUserName(name: String)
-}
+<div class="codehilite"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nc">UserView</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">displayUserName</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="p">}</span>
 
-class UserModel(val name: String)
+<span class="kd">class</span><span class="w"> </span><span class="nc">UserModel</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 
-class UserPresenter(private val view: UserView, private val model: UserModel) {
-    fun loadUser() {
-        view.displayUserName(model.name)
-    }
-}
+<span class="kd">class</span><span class="w"> </span><span class="nc">UserPresenter</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">view</span><span class="p">:</span><span class="w"> </span><span class="n">UserView</span><span class="p">,</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">model</span><span class="p">:</span><span class="w"> </span><span class="n">UserModel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">loadUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">view</span><span class="p">.</span><span class="na">displayUserName</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="na">name</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 
-class UserActivity : AppCompatActivity(), UserView {
-    private lateinit var presenter: UserPresenter
+<span class="kd">class</span><span class="w"> </span><span class="nc">UserActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">(),</span><span class="w"> </span><span class="n">UserView</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">presenter</span><span class="p">:</span><span class="w"> </span><span class="n">UserPresenter</span>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = UserPresenter(this, UserModel(&quot;John Doe&quot;))
-        presenter.loadUser()
-    }
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+<span class="w">        </span><span class="n">presenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserPresenter</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">UserModel</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="n">presenter</span><span class="p">.</span><span class="na">loadUser</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
 
-    override fun displayUserName(name: String) {
-        // Update UI
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">displayUserName</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Update UI</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="use-cases_1">Use Cases</h4>
 <ul>
 <li>Suitable for applications with complex UI logic that requires extensive testing.</li>
@@ -295,38 +296,39 @@ class UserActivity : AppCompatActivity(), UserView {
 </ul>
 <h4 id="example-code_2">Example Code</h4>
 <p>Here’s an example of MVVM using SwiftUI:</p>
-<pre><code class="language-swift">import SwiftUI
-import Combine
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">SwiftUI</span>
+<span class="kd">import</span> <span class="nc">Combine</span>
 
-class UserViewModel: ObservableObject {
-    @Published var userName: String = &quot;&quot;
+<span class="kd">class</span> <span class="nc">UserViewModel</span><span class="p">:</span> <span class="n">ObservableObject</span> <span class="p">{</span>
+    <span class="p">@</span><span class="n">Published</span> <span class="kd">var</span> <span class="nv">userName</span><span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;&quot;</span>
 
-    private var cancellables = Set&lt;AnyCancellable&gt;()
+    <span class="kd">private</span> <span class="kd">var</span> <span class="nv">cancellables</span> <span class="p">=</span> <span class="n">Set</span><span class="p">&lt;</span><span class="n">AnyCancellable</span><span class="p">&gt;()</span>
 
-    func fetchUser() {
-        // Simulate network fetch
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.userName = &quot;Jane Doe&quot;
-        }
-    }
-}
+    <span class="kd">func</span> <span class="nf">fetchUser</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Simulate network fetch</span>
+        <span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">asyncAfter</span><span class="p">(</span><span class="n">deadline</span><span class="p">:</span> <span class="p">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kc">self</span><span class="p">.</span><span class="n">userName</span> <span class="p">=</span> <span class="s">&quot;Jane Doe&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-struct ContentView: View {
-    @StateObject var viewModel = UserViewModel()
+<span class="kd">struct</span> <span class="nc">ContentView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
+    <span class="p">@</span><span class="n">StateObject</span> <span class="kd">var</span> <span class="nv">viewModel</span> <span class="p">=</span> <span class="n">UserViewModel</span><span class="p">()</span>
 
-    var body: some View {
-        VStack {
-            Text(viewModel.userName)
-            Button(&quot;Load User&quot;) {
-                viewModel.fetchUser()
-            }
-        }
-        .onAppear {
-            viewModel.fetchUser()
-        }
-    }
-}
-</code></pre>
+    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
+        <span class="n">VStack</span> <span class="p">{</span>
+            <span class="n">Text</span><span class="p">(</span><span class="n">viewModel</span><span class="p">.</span><span class="n">userName</span><span class="p">)</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s">&quot;Load User&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">viewModel</span><span class="p">.</span><span class="n">fetchUser</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="p">.</span><span class="n">onAppear</span> <span class="p">{</span>
+            <span class="n">viewModel</span><span class="p">.</span><span class="n">fetchUser</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="use-cases_2">Use Cases</h4>
 <ul>
 <li>Ideal for applications with complex UI interactions and where data binding can simplify code.</li>
@@ -353,30 +355,31 @@ struct ContentView: View {
 </ul>
 <h4 id="example-code_3">Example Code</h4>
 <p>Here’s a simplified example of Clean Architecture in Android:</p>
-<pre><code class="language-kotlin">// Entity
-data class User(val id: Int, val name: String)
+<div class="codehilite"><pre><span></span><code><span class="c1">// Entity</span>
+<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 
-// Use Case
-class GetUserUseCase(private val userRepository: UserRepository) {
-    operator fun invoke(id: Int): User {
-        return userRepository.getUserById(id)
-    }
-}
+<span class="c1">// Use Case</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">GetUserUseCase</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">userRepository</span><span class="p">:</span><span class="w"> </span><span class="n">UserRepository</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">operator</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 
-// Interface Adapter
-interface UserRepository {
-    fun getUserById(id: Int): User
-}
+<span class="c1">// Interface Adapter</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nc">UserRepository</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="n">User</span>
+<span class="p">}</span>
 
-class UserViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
-    private val _user = MutableLiveData&lt;User&gt;()
-    val user: LiveData&lt;User&gt; get() = _user
+<span class="kd">class</span><span class="w"> </span><span class="nc">UserViewModel</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">getUserUseCase</span><span class="p">:</span><span class="w"> </span><span class="n">GetUserUseCase</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModel</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MutableLiveData</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="p">:</span><span class="w"> </span><span class="n">LiveData</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="k">get</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_user</span>
 
-    fun fetchUser(id: Int) {
-        _user.value = getUserUseCase(id)
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">fetchUser</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_user</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getUserUseCase</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="use-cases_3">Use Cases</h4>
 <ul>
 <li>Best suited for large-scale applications that require high maintainability and scalability.</li>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,11 +163,12 @@
 <p>Interactive rebase is a powerful Git feature that allows you to rewrite commit history. This can be particularly useful for cleaning up a messy commit log before merging a feature branch into the main branch.</p>
 <h3 id="use-case-cleaning-up-commit-history">Use Case: Cleaning Up Commit History</h3>
 <p>Imagine you're working on a feature branch with several commits:</p>
-<pre><code class="language-bash">$ git log --oneline
-a1b2c3d (HEAD -&gt; feature-branch) Fix typo
-d4e5f6g Add new endpoint
-h7i8j9k Initial commit
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--oneline
+a1b2c3d<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>feature-branch<span class="o">)</span><span class="w"> </span>Fix<span class="w"> </span>typo
+d4e5f6g<span class="w"> </span>Add<span class="w"> </span>new<span class="w"> </span>endpoint
+h7i8j9k<span class="w"> </span>Initial<span class="w"> </span>commit
+</code></pre></div>
+
 <p>You might want to combine these commits into a single, clean commit that describes the entire feature.</p>
 <h3 id="steps-for-interactive-rebase">Steps for Interactive Rebase</h3>
 <ol>

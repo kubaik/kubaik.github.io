@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,78 +152,84 @@
 <p>Database normalization is the process of organizing data in a database to minimize data redundancy and dependency. Normalization involves dividing large tables into smaller tables and defining relationships between them. This process helps to eliminate data anomalies and improve data integrity. In this article, we will delve into the world of database normalization, exploring its benefits, techniques, and best practices.</p>
 <h3 id="first-normal-form-1nf">First Normal Form (1NF)</h3>
 <p>The first normal form (1NF) is the most basic level of normalization. A table is in 1NF if each cell in the table contains a single value, and there are no repeating groups or arrays. For example, consider a table that stores customer information, including their name, address, and phone numbers.</p>
-<pre><code class="language-sql">CREATE TABLE customers (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255),
-    phone1 VARCHAR(20),
-    phone2 VARCHAR(20)
-);
-</code></pre>
-<p>In this example, the <code>phone1</code> and <code>phone2</code> columns are repeating groups, as a customer can have more than two phone numbers. To normalize this table to 1NF, we can create a separate table for phone numbers.</p>
-<pre><code class="language-sql">CREATE TABLE customers (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255)
-);
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">phone1</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+<span class="w">    </span><span class="n">phone2</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
 
-CREATE TABLE phone_numbers (
-    id INT PRIMARY KEY,
-    customer_id INT,
-    phone_number VARCHAR(20),
-    FOREIGN KEY (customer_id) REFERENCES customers(id)
-);
-</code></pre>
+<p>In this example, the <code>phone1</code> and <code>phone2</code> columns are repeating groups, as a customer can have more than two phone numbers. To normalize this table to 1NF, we can create a separate table for phone numbers.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">phone_numbers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">phone_number</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">customers</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <h3 id="second-normal-form-2nf">Second Normal Form (2NF)</h3>
 <p>A table is in second normal form (2NF) if it is in 1NF and all non-key attributes are fully functional dependent on the primary key. In other words, if a table has a composite primary key, then each non-key attribute must depend on the entire primary key. Consider a table that stores order information, including the order date, customer ID, and product ID.</p>
-<pre><code class="language-sql">CREATE TABLE orders (
-    order_date DATE,
-    customer_id INT,
-    product_id INT,
-    quantity INT,
-    PRIMARY KEY (order_date, customer_id, product_id)
-);
-</code></pre>
-<p>In this example, the <code>quantity</code> attribute depends on the <code>order_date</code>, <code>customer_id</code>, and <code>product_id</code>. However, the <code>order_date</code> attribute depends only on the <code>order_date</code> and <code>customer_id</code>. To normalize this table to 2NF, we can create separate tables for orders and order items.</p>
-<pre><code class="language-sql">CREATE TABLE orders (
-    order_date DATE,
-    customer_id INT,
-    PRIMARY KEY (order_date, customer_id)
-);
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">product_id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
 
-CREATE TABLE order_items (
-    order_date DATE,
-    customer_id INT,
-    product_id INT,
-    quantity INT,
-    PRIMARY KEY (order_date, customer_id, product_id),
-    FOREIGN KEY (order_date, customer_id) REFERENCES orders(order_date, customer_id)
-);
-</code></pre>
+<p>In this example, the <code>quantity</code> attribute depends on the <code>order_date</code>, <code>customer_id</code>, and <code>product_id</code>. However, the <code>order_date</code> attribute depends only on the <code>order_date</code> and <code>customer_id</code>. To normalize this table to 2NF, we can create separate tables for orders and order items.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">order_items</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">product_id</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <h3 id="third-normal-form-3nf">Third Normal Form (3NF)</h3>
 <p>A table is in third normal form (3NF) if it is in 2NF and there are no transitive dependencies. In other words, if a non-key attribute depends on another non-key attribute, then it should be moved to a separate table. Consider a table that stores employee information, including their name, department, and department manager.</p>
-<pre><code class="language-sql">CREATE TABLE employees (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    department VARCHAR(255),
-    department_manager VARCHAR(255)
-);
-</code></pre>
-<p>In this example, the <code>department_manager</code> attribute depends on the <code>department</code> attribute, which in turn depends on the <code>id</code> attribute. To normalize this table to 3NF, we can create separate tables for employees, departments, and department managers.</p>
-<pre><code class="language-sql">CREATE TABLE employees (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    department_id INT,
-    FOREIGN KEY (department_id) REFERENCES departments(id)
-);
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">department</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">department_manager</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
 
-CREATE TABLE departments (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    manager_id INT,
-    FOREIGN KEY (manager_id) REFERENCES employees(id)
-);
-</code></pre>
+<p>In this example, the <code>department_manager</code> attribute depends on the <code>department</code> attribute, which in turn depends on the <code>id</code> attribute. To normalize this table to 3NF, we can create separate tables for employees, departments, and department managers.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">department_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">department_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">departments</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">departments</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">manager_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">manager_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">employees</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <h2 id="benefits-of-normalization">Benefits of Normalization</h2>
 <p>Normalization provides several benefits, including:</p>
 <ul>
@@ -251,34 +256,35 @@ CREATE TABLE departments (
 </ul>
 <h2 id="real-world-example">Real-World Example</h2>
 <p>Consider a e-commerce website that sells products online. The website has a database that stores customer information, order information, and product information. The database is not normalized, and data is repeated in multiple places. To normalize the database, we can create separate tables for customers, orders, and products.</p>
-<pre><code class="language-sql">CREATE TABLE customers (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255)
-);
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
 
-CREATE TABLE orders (
-    id INT PRIMARY KEY,
-    customer_id INT,
-    order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES customers(id)
-);
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">customers</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
 
-CREATE TABLE products (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
-);
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">price</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="p">);</span>
 
-CREATE TABLE order_items (
-    order_id INT,
-    product_id INT,
-    quantity INT,
-    PRIMARY KEY (order_id, product_id),
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-</code></pre>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">order_items</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">product_id</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">product_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">products</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <p>In this example, we have normalized the database by creating separate tables for customers, orders, and products. We have also eliminated data redundancy by minimizing the number of times data is repeated.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Normalizing a database can improve query performance by reducing the amount of data that needs to be scanned. Here are some performance benchmarks that demonstrate the benefits of normalization:</p>

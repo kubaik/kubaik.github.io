@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,15 +165,17 @@
 </ul>
 <h3 id="practical-example-using-the-auto-rename-tag-extension">Practical Example: Using the Auto Rename Tag Extension</h3>
 <p>To demonstrate the usefulness of the Auto Rename Tag extension, let's consider a simple HTML example:</p>
-<pre><code class="language-html">&lt;div id=&quot;header&quot;&gt;
-  &lt;!-- content --&gt;
-&lt;/div&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;header&quot;</span><span class="p">&gt;</span>
+  <span class="cm">&lt;!-- content --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>Suppose we want to rename the <code>div</code> element to <code>header</code>. Without the Auto Rename Tag extension, we would have to manually rename both the opening and closing tags. With the extension installed, we can simply rename the opening tag, and the closing tag will be automatically renamed:</p>
-<pre><code class="language-html">&lt;header id=&quot;header&quot;&gt;
-  &lt;!-- content --&gt;
-&lt;/header&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">header</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;header&quot;</span><span class="p">&gt;</span>
+  <span class="cm">&lt;!-- content --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>This extension saves time and reduces the likelihood of errors, especially when working with complex HTML structures.</p>
 <h3 id="using-the-debugger-for-chrome-extension">Using the Debugger for Chrome Extension</h3>
 <p>The Debugger for Chrome extension allows you to debug JavaScript applications running in Google Chrome. To use this extension, follow these steps:</p>
@@ -188,24 +189,26 @@
 <li>Set breakpoints in your JavaScript code and start the debugging session by clicking on the "Start Debugging" button.</li>
 </ol>
 <p>Here's an example launch configuration for the Debugger for Chrome extension:</p>
-<pre><code class="language-json">{
-  &quot;version&quot;: &quot;0.2.0&quot;,
-  &quot;configurations&quot;: [
-    {
-      &quot;type&quot;: &quot;chrome&quot;,
-      &quot;request&quot;: &quot;launch&quot;,
-      &quot;name&quot;: &quot;Launch Chrome&quot;,
-      &quot;url&quot;: &quot;http://localhost:3000&quot;,
-      &quot;webRoot&quot;: &quot;${workspaceFolder}&quot;
-    }
-  ]
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chrome&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Launch Chrome&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;webRoot&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This configuration launches the Chrome browser and navigates to the specified URL, allowing you to debug your JavaScript application.</p>
 <h3 id="performance-benchmarks-prettier-vs-built-in-formatter">Performance Benchmarks: Prettier vs. Built-in Formatter</h3>
 <p>Prettier is a popular code formatting extension that provides a set of predefined rules for formatting code. To evaluate the performance of Prettier, we compared it with the built-in formatter in VS Code. We used a sample JavaScript file with 1000 lines of code and measured the formatting time using the following command:</p>
-<pre><code class="language-bash">time prettier --write sample.js
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>prettier<span class="w"> </span>--write<span class="w"> </span>sample.js
+</code></pre></div>
+
 <p>The results showed that Prettier formatted the code in approximately 120ms, while the built-in formatter took around 500ms. This represents a significant performance improvement of 75%.</p>
 <table>
 <thead>

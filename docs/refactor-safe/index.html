@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,25 +165,27 @@
 4. <strong>Establish a continuous integration and continuous deployment (CI/CD) pipeline</strong>: Tools like Jenkins, Travis CI, or CircleCI can help automate testing, building, and deployment of the codebase.</p>
 <h3 id="example-using-jest-for-unit-testing">Example: Using Jest for Unit Testing</h3>
 <p>For example, let's say we have a simple JavaScript function that calculates the area of a rectangle:</p>
-<pre><code class="language-javascript">function calculateArea(width, height) {
-  return width * height;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateArea</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">height</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>We can write a unit test for this function using Jest:</p>
-<pre><code class="language-javascript">describe('calculateArea', () =&gt; {
-  it('returns the correct area', () =&gt; {
-    expect(calculateArea(4, 5)).toBe(20);
-  });
+<div class="codehilite"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;calculateArea&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;returns the correct area&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">calculateArea</span><span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">20</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
 
-  it('handles zero values', () =&gt; {
-    expect(calculateArea(0, 5)).toBe(0);
-  });
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;handles zero values&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">calculateArea</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
 
-  it('handles negative values', () =&gt; {
-    expect(calculateArea(-4, 5)).toBe(-20);
-  });
-});
-</code></pre>
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;handles negative values&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">calculateArea</span><span class="p">(</span><span class="o">-</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mf">20</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This test suite ensures that the <code>calculateArea</code> function works correctly for different input values.</p>
 <h2 id="refactoring-techniques">Refactoring Techniques</h2>
 <p>Once the codebase is prepared, it's time to start refactoring. Here are some techniques to use:
@@ -194,40 +195,42 @@
 * <strong>Simplify conditional statements</strong>: Use early returns, switch statements, or polymorphism to simplify complex conditional logic.</p>
 <h3 id="example-extracting-methods">Example: Extracting Methods</h3>
 <p>For example, let's say we have a long method that calculates the total cost of an order:</p>
-<pre><code class="language-java">public double calculateTotalCost(Order order) {
-  double subtotal = 0;
-  for (OrderItem item : order.getItems()) {
-    subtotal += item.getPrice() * item.getQuantity();
-  }
-  double tax = subtotal * 0.08;
-  double shipping = order.getShippingAddress().getDistance() * 0.05;
-  return subtotal + tax + shipping;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateTotalCost</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderItem</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">subtotal</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getPrice</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.08</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">shipping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getShippingAddress</span><span class="p">().</span><span class="na">getDistance</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">shipping</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>We can extract separate methods for calculating the subtotal, tax, and shipping:</p>
-<pre><code class="language-java">public double calculateSubtotal(Order order) {
-  double subtotal = 0;
-  for (OrderItem item : order.getItems()) {
-    subtotal += item.getPrice() * item.getQuantity();
-  }
-  return subtotal;
-}
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateSubtotal</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">OrderItem</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">subtotal</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getPrice</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">subtotal</span><span class="p">;</span>
+<span class="p">}</span>
 
-public double calculateTax(double subtotal) {
-  return subtotal * 0.08;
-}
+<span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateTax</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.08</span><span class="p">;</span>
+<span class="p">}</span>
 
-public double calculateShipping(Order order) {
-  return order.getShippingAddress().getDistance() * 0.05;
-}
+<span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateShipping</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getShippingAddress</span><span class="p">().</span><span class="na">getDistance</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
+<span class="p">}</span>
 
-public double calculateTotalCost(Order order) {
-  double subtotal = calculateSubtotal(order);
-  double tax = calculateTax(subtotal);
-  double shipping = calculateShipping(order);
-  return subtotal + tax + shipping;
-}
-</code></pre>
+<span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateTotalCost</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateSubtotal</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateTax</span><span class="p">(</span><span class="n">subtotal</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">shipping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateShipping</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">shipping</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This refactored code is more readable and maintainable.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When refactoring legacy code, several common problems can arise. Here are some solutions:
@@ -236,19 +239,21 @@ public double calculateTotalCost(Order order) {
 * <strong>Integration issues</strong>: Use integration testing to ensure that changes don't break existing integrations.</p>
 <h3 id="example-using-yourkit-for-profiling">Example: Using YourKit for Profiling</h3>
 <p>For example, let's say we have a Java application that's experiencing performance issues. We can use YourKit to profile the application and identify bottlenecks:</p>
-<pre><code class="language-java">public class MyClass {
-  public void myMethod() {
-    // Code that's causing performance issues
-  }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Code that&#39;s causing performance issues</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>We can use YourKit to profile the <code>myMethod</code> method and identify areas for optimization:</p>
-<pre><code class="language-java">YourKitProfiler profiler = new YourKitProfiler();
-profiler.start();
-myClass.myMethod();
-profiler.stop();
-profiler.analyze();
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">YourKitProfiler</span><span class="w"> </span><span class="n">profiler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">YourKitProfiler</span><span class="p">();</span>
+<span class="n">profiler</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+<span class="n">myClass</span><span class="p">.</span><span class="na">myMethod</span><span class="p">();</span>
+<span class="n">profiler</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
+<span class="n">profiler</span><span class="p">.</span><span class="na">analyze</span><span class="p">();</span>
+</code></pre></div>
+
 <p>This will provide detailed information about the performance of the <code>myMethod</code> method, including CPU usage, memory allocation, and garbage collection.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms can aid in the refactoring process, including:
@@ -257,11 +262,13 @@ profiler.analyze();
 * <strong>CI/CD platforms</strong>: Platforms like Jenkins, Travis CI, or CircleCI can automate testing, building, and deployment of the codebase.</p>
 <h3 id="example-using-gerrit-for-code-review">Example: Using Gerrit for Code Review</h3>
 <p>For example, let's say we have a team of developers working on a project, and we want to ensure that all changes are reviewed before they're merged into the main branch. We can use Gerrit to facilitate code reviews:</p>
-<pre><code class="language-bash">git push origin HEAD:refs/for/master
-</code></pre>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>HEAD:refs/for/master
+</code></pre></div>
+
 <p>This will create a new code review in Gerrit, where team members can review and comment on the changes:</p>
-<pre><code class="language-bash">git review -s
-</code></pre>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>review<span class="w"> </span>-s
+</code></pre></div>
+
 <p>This will display the code review in Gerrit, where we can see comments, suggestions, and approvals from team members.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Refactoring legacy code can have a significant impact on performance. Here are some benchmarks:

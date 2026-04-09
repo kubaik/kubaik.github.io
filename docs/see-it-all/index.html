@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,31 +165,33 @@
 </ul>
 <h3 id="example-using-prometheus-and-grafana-to-monitor-a-web-application">Example: Using Prometheus and Grafana to Monitor a Web Application</h3>
 <p>Let's consider an example of using Prometheus and Grafana to monitor a web application. First, we need to install the Prometheus server and configure it to scrape metrics from our application:</p>
-<pre><code class="language-yml"># prometheus.yml
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> prometheus.yml
 scrape_configs:
-  - job_name: 'web-app'
+  <span class="k">-</span> job_name: &#39;web-app&#39;
     scrape_interval: 10s
     metrics_path: /metrics
     static_configs:
-      - targets: ['localhost:8080']
-</code></pre>
+      <span class="k">-</span> targets: [&#39;localhost:8080&#39;]
+</code></pre></div>
+
 <p>Next, we need to instrument our application to expose metrics to Prometheus. We can use a library like <code>prometheus-client</code> to create metrics and register them with the Prometheus registry:</p>
-<pre><code class="language-python"># metrics.py
-from prometheus_client import Counter, Gauge
+<div class="codehilite"><pre><span></span><code><span class="c1"># metrics.py</span>
+<span class="kn">from</span> <span class="nn">prometheus_client</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">Gauge</span>
 
-# Create metrics
-requests_total = Counter('requests_total', 'Total number of requests')
-response_time = Gauge('response_time', 'Response time in seconds')
+<span class="c1"># Create metrics</span>
+<span class="n">requests_total</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;requests_total&#39;</span><span class="p">,</span> <span class="s1">&#39;Total number of requests&#39;</span><span class="p">)</span>
+<span class="n">response_time</span> <span class="o">=</span> <span class="n">Gauge</span><span class="p">(</span><span class="s1">&#39;response_time&#39;</span><span class="p">,</span> <span class="s1">&#39;Response time in seconds&#39;</span><span class="p">)</span>
 
-# Register metrics with Prometheus registry
-def handle_request():
-    requests_total.inc()
-    start_time = time.time()
-    # Handle request logic
-    response_time.set(time.time() - start_time)
-</code></pre>
+<span class="c1"># Register metrics with Prometheus registry</span>
+<span class="k">def</span> <span class="nf">handle_request</span><span class="p">():</span>
+    <span class="n">requests_total</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="c1"># Handle request logic</span>
+    <span class="n">response_time</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+</code></pre></div>
+
 <p>Finally, we can create a dashboard in Grafana to visualize our metrics data:</p>
-<pre><code class="language-markdown"># dashboard.json
+<div class="codehilite"><pre><span></span><code><span class="gh"># dashboard.json</span>
 {
   &quot;rows&quot;: [
     {
@@ -217,7 +218,8 @@ def handle_request():
     }
   ]
 }
-</code></pre>
+</code></pre></div>
+
 <p>This example demonstrates how to use Prometheus and Grafana to collect and visualize metrics data from a web application.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Monitoring and observability can help you identify and solve common problems in your application. Some common issues include:</p>
@@ -228,25 +230,27 @@ def handle_request():
 </ul>
 <h3 id="example-using-new-relic-to-identify-performance-bottlenecks">Example: Using New Relic to Identify Performance Bottlenecks</h3>
 <p>Let's consider an example of using New Relic to identify performance bottlenecks in a web application. New Relic provides a detailed breakdown of transaction times, allowing you to identify slow components in your application:</p>
-<pre><code class="language-markdown"># newrelic.yml
+<div class="codehilite"><pre><span></span><code><span class="gh"># newrelic.yml</span>
 app_name: My Web App
 license_key: YOUR_LICENSE_KEY
-</code></pre>
+</code></pre></div>
+
 <p>We can use the New Relic API to collect transaction data and identify performance bottlenecks:</p>
-<pre><code class="language-python"># newrelic.py
-import newrelic.agent
+<div class="codehilite"><pre><span></span><code><span class="c1"># newrelic.py</span>
+<span class="kn">import</span> <span class="nn">newrelic.agent</span>
 
-# Create New Relic agent
-agent = newrelic.agent()
+<span class="c1"># Create New Relic agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">newrelic</span><span class="o">.</span><span class="n">agent</span><span class="p">()</span>
 
-# Collect transaction data
-transactions = agent.transaction_data()
+<span class="c1"># Collect transaction data</span>
+<span class="n">transactions</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">transaction_data</span><span class="p">()</span>
 
-# Identify performance bottlenecks
-for transaction in transactions:
-    if transaction.duration &gt; 500:
-        print(f&quot;Slow transaction: {transaction.name} ({transaction.duration}ms)&quot;)
-</code></pre>
+<span class="c1"># Identify performance bottlenecks</span>
+<span class="k">for</span> <span class="n">transaction</span> <span class="ow">in</span> <span class="n">transactions</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">duration</span> <span class="o">&gt;</span> <span class="mi">500</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Slow transaction: </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">duration</span><span class="si">}</span><span class="s2">ms)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example demonstrates how to use New Relic to identify performance bottlenecks in a web application.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Monitoring and observability have numerous use cases in software development, including:</p>
@@ -257,25 +261,27 @@ for transaction in transactions:
 </ul>
 <h3 id="example-using-datadog-to-monitor-resource-utilization">Example: Using Datadog to Monitor Resource Utilization</h3>
 <p>Let's consider an example of using Datadog to monitor resource utilization in a cloud-based application. Datadog provides real-time metrics and alerting capabilities, allowing you to monitor resource utilization and optimize resource allocation:</p>
-<pre><code class="language-yml"># datadog.yml
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> datadog.yml
 api_key: YOUR_API_KEY
 app_key: YOUR_APP_KEY
-</code></pre>
+</code></pre></div>
+
 <p>We can use the Datadog API to collect metrics data and monitor resource utilization:</p>
-<pre><code class="language-python"># datadog.py
-import datadog
+<div class="codehilite"><pre><span></span><code><span class="c1"># datadog.py</span>
+<span class="kn">import</span> <span class="nn">datadog</span>
 
-# Create Datadog client
-client = datadog.Client(api_key='YOUR_API_KEY', app_key='YOUR_APP_KEY')
+<span class="c1"># Create Datadog client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">datadog</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span> <span class="n">app_key</span><span class="o">=</span><span class="s1">&#39;YOUR_APP_KEY&#39;</span><span class="p">)</span>
 
-# Collect metrics data
-metrics = client.get_metrics(query='cpu_usage')
+<span class="c1"># Collect metrics data</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s1">&#39;cpu_usage&#39;</span><span class="p">)</span>
 
-# Monitor resource utilization
-for metric in metrics:
-    if metric.value &gt; 80:
-        print(f&quot;High CPU usage: {metric.name} ({metric.value}%)&quot;)
-</code></pre>
+<span class="c1"># Monitor resource utilization</span>
+<span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">metric</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;High CPU usage: </span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example demonstrates how to use Datadog to monitor resource utilization in a cloud-based application.</p>
 <h2 id="pricing-and-performance-benchmarks">Pricing and Performance Benchmarks</h2>
 <p>Monitoring and observability tools and platforms have varying pricing models and performance benchmarks. Some popular options include:</p>

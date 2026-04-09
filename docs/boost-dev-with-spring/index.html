@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,53 +157,54 @@
 * Production-ready: Spring Boot provides a range of features that make it suitable for production environments, including logging, metrics, and health checks.</p>
 <h2 id="practical-example-building-a-restful-api-with-spring-boot">Practical Example: Building a RESTful API with Spring Boot</h2>
 <p>Let's build a simple RESTful API using Spring Boot to demonstrate its capabilities. We'll create a API that allows users to create, read, update, and delete (CRUD) books.</p>
-<pre><code class="language-java">// Book.java
-@Entity
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
-    private String author;
-    // Getters and setters
-}
+<div class="codehilite"><pre><span></span><code><span class="c1">// Book.java</span>
+<span class="nd">@Entity</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Id</span>
+<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">author</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Getters and setters</span>
+<span class="p">}</span>
 
-// BookController.java
-@RestController
-@RequestMapping(&quot;/api/books&quot;)
-public class BookController {
-    @Autowired
-    private BookRepository bookRepository;
+<span class="c1">// BookController.java</span>
+<span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/api/books&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BookController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">BookRepository</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">;</span>
 
-    @GetMapping
-    public List&lt;Book&gt; getAllBooks() {
-        return bookRepository.findAll();
-    }
+<span class="w">    </span><span class="nd">@GetMapping</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllBooks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @GetMapping(&quot;/{id}&quot;)
-    public Book getBookById(@PathVariable Long id) {
-        return bookRepository.findById(id).orElseThrow();
-    }
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="nf">getBookById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return bookRepository.save(book);
-    }
+<span class="w">    </span><span class="nd">@PostMapping</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="nf">createBook</span><span class="p">(</span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @PutMapping(&quot;/{id}&quot;)
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
-        Book existingBook = bookRepository.findById(id).orElseThrow();
-        existingBook.setTitle(book.getTitle());
-        existingBook.setAuthor(book.getAuthor());
-        return bookRepository.save(existingBook);
-    }
+<span class="w">    </span><span class="nd">@PutMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="nf">updateBook</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="n">existingBook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">();</span>
+<span class="w">        </span><span class="n">existingBook</span><span class="p">.</span><span class="na">setTitle</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getTitle</span><span class="p">());</span>
+<span class="w">        </span><span class="n">existingBook</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getAuthor</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">existingBook</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @DeleteMapping(&quot;/{id}&quot;)
-    public void deleteBook(@PathVariable Long id) {
-        bookRepository.deleteById(id);
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="nd">@DeleteMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteBook</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>Book</code> entity with an ID, title, and author. We then create a <code>BookController</code> that handles CRUD operations for books. The <code>@Autowired</code> annotation is used to inject the <code>BookRepository</code> instance, which provides access to the database.</p>
 <h2 id="using-spring-boot-with-popular-tools-and-platforms">Using Spring Boot with Popular Tools and Platforms</h2>
 <p>Spring Boot can be used with a range of popular tools and platforms, including:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,84 +161,87 @@
 * Git: The version control system used for managing code repositories</p>
 <h3 id="building-a-simple-ios-application">Building a Simple iOS Application</h3>
 <p>Let's build a simple iOS application to demonstrate the basics of native iOS development with Swift. We will create a single-view application that displays a label and a button. When the button is tapped, the label will update with a new message.</p>
-<pre><code class="language-swift">import UIKit
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
 
-class ViewController: UIViewController {
-    let label = UILabel()
-    let button = UIButton()
+<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
+    <span class="kd">let</span> <span class="nv">button</span> <span class="p">=</span> <span class="bp">UIButton</span><span class="p">()</span>
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Setup the label
-        label.text = &quot;Hello, World!&quot;
-        label.font = .systemFont(ofSize: 24)
-        label.textAlignment = .center
-        view.addSubview(label)
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+        <span class="c1">// Setup the label</span>
+        <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Hello, World!&quot;</span>
+        <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="p">=</span> <span class="p">.</span><span class="n">systemFont</span><span class="p">(</span><span class="n">ofSize</span><span class="p">:</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="p">=</span> <span class="p">.</span><span class="n">center</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 
-        // Setup the button
-        button.setTitle(&quot;Tap me!&quot;, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        view.addSubview(button)
+        <span class="c1">// Setup the button</span>
+        <span class="n">button</span><span class="p">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s">&quot;Tap me!&quot;</span><span class="p">,</span> <span class="k">for</span><span class="p">:</span> <span class="p">.</span><span class="n">normal</span><span class="p">)</span>
+        <span class="n">button</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="p">=</span> <span class="p">.</span><span class="n">systemBlue</span>
+        <span class="n">button</span><span class="p">.</span><span class="n">addTarget</span><span class="p">(</span><span class="kc">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="k">#selector</span><span class="p">(</span><span class="n">buttonTapped</span><span class="p">),</span> <span class="k">for</span><span class="p">:</span> <span class="p">.</span><span class="n">touchUpInside</span><span class="p">)</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
 
-        // Layout the views
-        label.translatesAutoresizingMaskIntoConstraints = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20),
-            button.widthAnchor.constraint(equalToConstant: 100),
-            button.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
+        <span class="c1">// Layout the views</span>
+        <span class="n">label</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="n">button</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="bp">NSLayoutConstraint</span><span class="p">.</span><span class="n">activate</span><span class="p">([</span>
+            <span class="n">label</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">),</span>
+            <span class="n">label</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">),</span>
+            <span class="n">button</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">),</span>
+            <span class="n">button</span><span class="p">.</span><span class="n">topAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">label</span><span class="p">.</span><span class="n">bottomAnchor</span><span class="p">,</span> <span class="n">constant</span><span class="p">:</span> <span class="mi">20</span><span class="p">),</span>
+            <span class="n">button</span><span class="p">.</span><span class="n">widthAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalToConstant</span><span class="p">:</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="n">button</span><span class="p">.</span><span class="n">heightAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalToConstant</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="p">])</span>
+    <span class="p">}</span>
 
-    @objc func buttonTapped() {
-        label.text = &quot;Button tapped!&quot;
-    }
-}
-</code></pre>
+    <span class="kr">@objc</span> <span class="kd">func</span> <span class="nf">buttonTapped</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Button tapped!&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example demonstrates the basics of building an iOS application with Swift, including setting up the user interface, handling user interactions, and updating the application state.</p>
 <h3 id="using-core-data-for-data-management">Using Core Data for Data Management</h3>
 <p>Core Data is a powerful framework for managing model data in iOS applications. It provides a simple and efficient way to store, retrieve, and update data, and is particularly useful for building complex, data-driven applications.</p>
 <p>Let's create a simple Core Data model to demonstrate its usage. We will create a <code>Person</code> entity with two attributes: <code>name</code> and <code>age</code>.</p>
-<pre><code class="language-swift">import CoreData
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">CoreData</span>
 
-@objc(Person)
-public class Person: NSManagedObject {
-    @NSManaged public var name: String
-    @NSManaged public var age: Int
-}
-</code></pre>
+<span class="kr">@objc</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span><span class="p">:</span> <span class="bp">NSManagedObject</span> <span class="p">{</span>
+    <span class="kr">@NSManaged</span> <span class="kd">public</span> <span class="kd">var</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
+    <span class="kr">@NSManaged</span> <span class="kd">public</span> <span class="kd">var</span> <span class="nv">age</span><span class="p">:</span> <span class="nb">Int</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>To use Core Data in our application, we need to set up a Core Data stack, which includes a <code>NSPersistentContainer</code>, a <code>NSManagedObjectContext</code>, and a <code>NSPersistentStoreCoordinator</code>.</p>
-<pre><code class="language-swift">import CoreData
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">CoreData</span>
 
-class CoreDataStack {
-    let persistentContainer: NSPersistentContainer
+<span class="kd">class</span> <span class="nc">CoreDataStack</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">persistentContainer</span><span class="p">:</span> <span class="bp">NSPersistentContainer</span>
 
-    init() {
-        persistentContainer = NSPersistentContainer(name: &quot;MyApp&quot;)
-        persistentContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError(&quot;Unresolved error \(error), \(error.userInfo)&quot;)
-            }
-        })
-    }
+    <span class="kd">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">persistentContainer</span> <span class="p">=</span> <span class="bp">NSPersistentContainer</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s">&quot;MyApp&quot;</span><span class="p">)</span>
+        <span class="n">persistentContainer</span><span class="p">.</span><span class="n">loadPersistentStores</span><span class="p">(</span><span class="n">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">storeDescription</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+            <span class="k">if</span> <span class="kd">let</span> <span class="nv">error</span> <span class="p">=</span> <span class="n">error</span> <span class="k">as</span> <span class="bp">NSError</span><span class="p">?</span> <span class="p">{</span>
+                <span class="bp">fatalError</span><span class="p">(</span><span class="s">&quot;Unresolved error </span><span class="si">\(</span><span class="n">error</span><span class="si">)</span><span class="s">, </span><span class="si">\(</span><span class="n">error</span><span class="p">.</span><span class="n">userInfo</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
 
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError(&quot;Unresolved error \(nserror), \(nserror.userInfo)&quot;)
-            }
-        }
-    }
-}
-</code></pre>
+    <span class="kd">func</span> <span class="nf">saveContext</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">context</span> <span class="p">=</span> <span class="n">persistentContainer</span><span class="p">.</span><span class="n">viewContext</span>
+        <span class="k">if</span> <span class="n">context</span><span class="p">.</span><span class="n">hasChanges</span> <span class="p">{</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="n">context</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nv">nserror</span> <span class="p">=</span> <span class="n">error</span> <span class="k">as</span> <span class="bp">NSError</span>
+                <span class="bp">fatalError</span><span class="p">(</span><span class="s">&quot;Unresolved error </span><span class="si">\(</span><span class="n">nserror</span><span class="si">)</span><span class="s">, </span><span class="si">\(</span><span class="n">nserror</span><span class="p">.</span><span class="n">userInfo</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example demonstrates the basics of using Core Data for data management in iOS applications, including setting up the Core Data stack, creating entities, and saving data.</p>
 <h3 id="performance-optimization">Performance Optimization</h3>
 <p>Performance optimization is critical in iOS development to ensure that applications run smoothly and efficiently. There are several techniques that can be used to optimize performance, including:</p>

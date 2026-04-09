@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,35 +161,38 @@
 <p>Implementing WCAG guidelines requires a thorough understanding of the guidelines and their application in real-world scenarios. Here are a few examples of how to implement WCAG guidelines in practice:</p>
 <h3 id="example-1-providing-alternative-text-for-images">Example 1: Providing Alternative Text for Images</h3>
 <p>Providing alternative text for images is a fundamental requirement of the WCAG guidelines. The alternative text should be descriptive and provide the same information as the image. Here is an example of how to provide alternative text for an image using HTML:</p>
-<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A photograph of a sunset over the ocean&quot;&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photograph of a sunset over the ocean&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example, the <code>alt</code> attribute provides a descriptive text for the image, which can be read by screen readers and other assistive technologies.</p>
 <h3 id="example-2-creating-accessible-forms">Example 2: Creating Accessible Forms</h3>
 <p>Forms are a critical component of many websites, and creating accessible forms is essential for ensuring that users with disabilities can interact with the website. Here is an example of how to create an accessible form using HTML and CSS:</p>
-<pre><code class="language-html">&lt;form&gt;
-  &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
-  &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot;&gt;
-  &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
-  &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot;&gt;
-  &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>Name:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;email&quot;</span><span class="p">&gt;</span>Email:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example, the <code>label</code> element is used to provide a descriptive text for each form field, which can be read by screen readers and other assistive technologies. The <code>id</code> attribute is used to associate the <code>label</code> element with the corresponding form field.</p>
 <h3 id="example-3-implementing-accessible-navigation">Example 3: Implementing Accessible Navigation</h3>
 <p>Implementing accessible navigation is critical for ensuring that users with disabilities can navigate the website. Here is an example of how to implement accessible navigation using HTML, CSS, and JavaScript:</p>
-<pre><code class="language-javascript">// Create a navigation menu with accessible links
-const navigationMenu = document.getElementById('navigation-menu');
-const links = navigationMenu.querySelectorAll('a');
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a navigation menu with accessible links</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">navigationMenu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;navigation-menu&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">links</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">navigationMenu</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
 
-links.forEach((link) =&gt; {
-  link.addEventListener('click', (event) =&gt; {
-    event.preventDefault();
-    const href = link.getAttribute('href');
-    const target = document.querySelector(href);
-    target.focus();
-  });
-});
-</code></pre>
+<span class="nx">links</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">link</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">link</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="nx">href</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">target</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, the navigation menu is created using HTML and CSS, and the <code>addEventListener</code> method is used to attach an event listener to each link. When a link is clicked, the event listener prevents the default behavior and focuses the target element using the <code>focus</code> method.</p>
 <h2 id="tools-and-resources-for-web-accessibility">Tools and Resources for Web Accessibility</h2>
 <p>There are many tools and resources available for web accessibility, including:

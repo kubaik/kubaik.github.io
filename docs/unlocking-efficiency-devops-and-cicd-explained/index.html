@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,34 +164,35 @@
 - Reduced integration problems.</p>
 <p><strong>Example CI Pipeline with GitHub Actions</strong></p>
 <p>Here’s a simple CI pipeline using GitHub Actions to build a Node.js application:</p>
-<pre><code class="language-yaml">name: Node.js CI
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Node.js CI</span>
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
 
-jobs:
-  build:
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
 
-    runs-on: ubuntu-latest
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
+<span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
+<span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
+<span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
 
-    - name: Install dependencies
-      run: npm install
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+<span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
 
-    - name: Run tests
-      run: npm test
-</code></pre>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+</code></pre></div>
+
 <p><strong>Explanation:</strong>
 - This YAML configuration triggers a CI process for every push or pull request to the <code>main</code> branch.
 - It sets up a Node.js environment, installs dependencies, and runs tests, providing immediate feedback on the build status.</p>
@@ -204,36 +204,37 @@ jobs:
 - Reliable and consistent releases.</p>
 <p><strong>Example CD Pipeline with Jenkins</strong></p>
 <p>Here's how to set up a basic Jenkins pipeline to deploy a Dockerized application:</p>
-<pre><code class="language-groovy">pipeline {
-    agent any
+<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
 
-    stages {
-        stage('Build') {
-            steps {
-                script {
-                    docker.build(&quot;myapp:${env.BUILD_ID}&quot;)
-                }
-            }
-        }
-        stage('Test') {
-            steps {
-                script {
-                    docker.image(&quot;myapp:${env.BUILD_ID}&quot;).inside {
-                        sh 'npm test'
-                    }
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    sh 'kubectl apply -f k8s/deployment.yaml'
-                }
-            }
-        }
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">script</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                    </span><span class="n">docker</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="s2">&quot;myapp:${env.BUILD_ID}&quot;</span><span class="o">)</span>
+<span class="w">                </span><span class="o">}</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">script</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                    </span><span class="n">docker</span><span class="o">.</span><span class="na">image</span><span class="o">(</span><span class="s2">&quot;myapp:${env.BUILD_ID}&quot;</span><span class="o">).</span><span class="na">inside</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                        </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm test&#39;</span>
+<span class="w">                    </span><span class="o">}</span>
+<span class="w">                </span><span class="o">}</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">script</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                    </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;kubectl apply -f k8s/deployment.yaml&#39;</span>
+<span class="w">                </span><span class="o">}</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
 <p><strong>Explanation:</strong>
 - This Jenkins pipeline consists of three stages: Build, Test, and Deploy.
 - It builds a Docker image, runs tests inside that image, and deploys the application to a Kubernetes cluster.</p>

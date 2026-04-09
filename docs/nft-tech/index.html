@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,31 +161,32 @@
 </ul>
 <h3 id="creating-nfts-with-solidity">Creating NFTs with Solidity</h3>
 <p>To create an NFT, you need to write a smart contract using a programming language like Solidity. Here is an example of a simple NFT contract:</p>
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;;
+<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;</span><span class="p">;</span>
 
-contract MyNFT {
-    // Mapping of NFT owners
-    mapping (address =&gt; uint256) public owners;
+<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Mapping of NFT owners</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>owners<span class="p">;</span>
 
-    // Mapping of NFT metadata
-    mapping (uint256 =&gt; string) public metadata;
+<span class="w">    </span><span class="c1">// Mapping of NFT metadata</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>metadata<span class="p">;</span>
 
-    // Function to mint a new NFT
-    function mintNFT(address owner, string memory meta) public {
-        // Generate a unique NFT ID
-        uint256 id = uint256(keccak256(abi.encodePacked(owner, meta)));
+<span class="w">    </span><span class="c1">// Function to mint a new NFT</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">mintNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>meta<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Generate a unique NFT ID</span>
+<span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span>owner<span class="p">,</span><span class="w"> </span>meta<span class="p">)));</span>
 
-        // Set the NFT owner and metadata
-        owners[id] = owner;
-        metadata[id] = meta;
+<span class="w">        </span><span class="c1">// Set the NFT owner and metadata</span>
+<span class="w">        </span>owners<span class="p">[</span>id<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>owner<span class="p">;</span>
+<span class="w">        </span>metadata<span class="p">[</span>id<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>meta<span class="p">;</span>
 
-        // Emit an event to notify the blockchain
-        emit Transfer(address(0), owner, id);
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="c1">// Emit an event to notify the blockchain</span>
+<span class="w">        </span>emit<span class="w"> </span>Transfer<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">),</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span>id<span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This contract uses the OpenZeppelin library to create a safe and secure NFT contract. It includes functions for minting new NFTs and storing their metadata.</p>
 <h2 id="use-cases-for-nfts">Use Cases for NFTs</h2>
 <p>NFTs have a wide range of use cases, from digital art and collectibles to in-game items and virtual real estate. Some of the most popular use cases include:</p>
@@ -207,35 +207,36 @@ contract MyNFT {
 <li>Integrate a payment gateway to facilitate transactions</li>
 </ul>
 <p>Here is an example of how you could implement an NFT marketplace using the OpenSea API:</p>
-<pre><code class="language-javascript">const opensea = require('opensea-js');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">opensea</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;opensea-js&#39;</span><span class="p">);</span>
 
-// Set up the OpenSea API
-const api = new opensea.OpenSeaAPI({
-  apiKey: 'YOUR_API_KEY',
-  apiSecret: 'YOUR_API_SECRET',
-});
+<span class="c1">// Set up the OpenSea API</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">opensea</span><span class="p">.</span><span class="nx">OpenSeaAPI</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">apiSecret</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_SECRET&#39;</span><span class="p">,</span>
+<span class="p">});</span>
 
-// Create a new NFT
-const nft = {
-  name: 'My Digital Art Piece',
-  description: 'A unique digital art piece',
-  image: 'https://example.com/art-piece.jpg',
-};
+<span class="c1">// Create a new NFT</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">nft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My Digital Art Piece&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;A unique digital art piece&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">image</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/art-piece.jpg&#39;</span><span class="p">,</span>
+<span class="p">};</span>
 
-// Mint the NFT
-api.createAsset({
-  asset: nft,
-  from: '0x1234567890abcdef',
-  to: '0x1234567890abcdef',
-  price: '1.0',
-})
-.then((asset) =&gt; {
-  console.log(`NFT created: ${asset.id}`);
-})
-.catch((error) =&gt; {
-  console.error(`Error creating NFT: ${error}`);
-});
-</code></pre>
+<span class="c1">// Mint the NFT</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">createAsset</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">asset</span><span class="o">:</span><span class="w"> </span><span class="nx">nft</span><span class="p">,</span>
+<span class="w">  </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x1234567890abcdef&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x1234567890abcdef&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">asset</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`NFT created: </span><span class="si">${</span><span class="nx">asset</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="sb">`Error creating NFT: </span><span class="si">${</span><span class="nx">error</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code uses the OpenSea API to create a new NFT and mint it on the Ethereum blockchain.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the most common problems with NFTs is the high gas fees associated with minting and transferring them. To solve this problem, you can use a layer 2 scaling solution like Polygon (formerly Matic Network) or Optimism. These solutions allow you to mint and transfer NFTs at a much lower cost, while still maintaining the security and decentralization of the Ethereum blockchain.</p>

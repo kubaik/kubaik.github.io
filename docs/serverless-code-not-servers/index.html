@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,61 +160,64 @@
 <p>Let's take a look at some practical examples of serverless computing using popular tools and platforms.</p>
 <h3 id="example-1-aws-lambda-with-python">Example 1: AWS Lambda with Python</h3>
 <p>AWS Lambda is a popular serverless computing platform provided by Amazon Web Services. Here's an example of a simple AWS Lambda function written in Python:</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-def lambda_handler(event, context):
-    # Create an S3 client
-    s3 = boto3.client('s3')
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Create an S3 client</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
 
-    # Get the bucket name from the event
-    bucket_name = event['Records'][0]['s3']['bucket']['name']
+    <span class="c1"># Get the bucket name from the event</span>
+    <span class="n">bucket_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 
-    # Get the object key from the event
-    object_key = event['Records'][0]['s3']['object']['key']
+    <span class="c1"># Get the object key from the event</span>
+    <span class="n">object_key</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
 
-    # Print a message to the console
-    print(f&quot;Received event for bucket {bucket_name} and object {object_key}&quot;)
+    <span class="c1"># Print a message to the console</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received event for bucket </span><span class="si">{</span><span class="n">bucket_name</span><span class="si">}</span><span class="s2"> and object </span><span class="si">{</span><span class="n">object_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    # Return a success response
-    return {
-        'statusCode': 200,
-        'body': 'Event processed successfully'
-    }
-</code></pre>
+    <span class="c1"># Return a success response</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Event processed successfully&#39;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
 <p>This function is triggered by an event from an Amazon S3 bucket and prints a message to the console indicating that the event has been received.</p>
 <h3 id="example-2-google-cloud-functions-with-nodejs">Example 2: Google Cloud Functions with Node.js</h3>
 <p>Google Cloud Functions is another popular serverless computing platform provided by Google Cloud. Here's an example of a simple Google Cloud Function written in Node.js:</p>
-<pre><code class="language-javascript">exports.helloWorld = async (req, res) =&gt; {
-  // Get the name from the request query string
-  const name = req.query.name;
+<div class="codehilite"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">helloWorld</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Get the name from the request query string</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
 
-  // Return a greeting message
-  res.send(`Hello, ${name}!`);
-};
-</code></pre>
+<span class="w">  </span><span class="c1">// Return a greeting message</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>This function is triggered by an HTTP request and returns a greeting message based on the name provided in the request query string.</p>
 <h3 id="example-3-azure-functions-with-c">Example 3: Azure Functions with C</h3>
 <p>Azure Functions is a serverless computing platform provided by Microsoft Azure. Here's an example of a simple Azure Function written in C#:</p>
-<pre><code class="language-csharp">using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.WebJobs</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.WebJobs.Extensions.Http</span><span class="p">;</span>
 
-public static void Run(
-    [HttpTrigger(AuthorizationLevel.Function, &quot;get&quot;, Route = null)] HttpRequestData req,
-    ILogger logger)
-{
-    logger.LogInformation(&quot;C# HTTP trigger function processed a request.&quot;);
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Run</span><span class="p">(</span>
+<span class="w">    </span><span class="na">[HttpTrigger(AuthorizationLevel.Function, &quot;get&quot;, Route = null)]</span><span class="w"> </span><span class="n">HttpRequestData</span><span class="w"> </span><span class="n">req</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ILogger</span><span class="w"> </span><span class="n">logger</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="n">LogInformation</span><span class="p">(</span><span class="s">&quot;C# HTTP trigger function processed a request.&quot;</span><span class="p">);</span>
 
-    // Get the name from the request query string
-    string name = req.ReadFromJsonAsync&lt;NameRequest&gt;().Result.Name;
+<span class="w">    </span><span class="c1">// Get the name from the request query string</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="n">ReadFromJsonAsync</span><span class="o">&lt;</span><span class="n">NameRequest</span><span class="o">&gt;</span><span class="p">().</span><span class="n">Result</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span>
 
-    // Return a greeting message
-    var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
-    response.Headers.Add(&quot;Content-Type&quot;, &quot;text/plain; charset=utf-8&quot;);
-    response.WriteString($&quot;Hello, {name}!&quot;);
-}
-</code></pre>
+<span class="w">    </span><span class="c1">// Return a greeting message</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="n">CreateResponse</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span><span class="p">);</span>
+<span class="w">    </span><span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;text/plain; charset=utf-8&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">response</span><span class="p">.</span><span class="n">WriteString</span><span class="p">(</span><span class="s">$&quot;Hello, {name}!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This function is triggered by an HTTP request and returns a greeting message based on the name provided in the request query string.</p>
 <h2 id="benefits-of-serverless-computing">Benefits of Serverless Computing</h2>
 <p>Serverless computing has several benefits, including:

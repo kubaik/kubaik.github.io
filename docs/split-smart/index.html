@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,50 +163,53 @@
 3. <strong>Feature-based splitting</strong>: This approach involves splitting code based on features or modules. For example, a user enabling a specific feature would only load the code necessary for that feature.</p>
 <h3 id="implementing-code-splitting-with-webpack">Implementing Code Splitting with Webpack</h3>
 <p>Webpack is a popular bundler that supports code splitting out of the box. To implement code splitting with Webpack, you can use the <code>splitChunks</code> option in your <code>webpack.config.js</code> file. For example:</p>
-<pre><code class="language-javascript">module.exports = {
-  // ... other config options ...
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 10000,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      enforceSizeThreshold: 50000,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
-    },
-  },
-};
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ... other config options ...</span>
+<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">splitChunks</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">minSize</span><span class="o">:</span><span class="w"> </span><span class="mf">10000</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">minChunks</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">maxAsyncRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">maxInitialRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">enforceSizeThreshold</span><span class="o">:</span><span class="w"> </span><span class="mf">50000</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">cacheGroups</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">vendor</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/[\\/]node_modules[\\/]/</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;vendor&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, Webpack will split code into chunks based on the <code>splitChunks</code> option. The <code>minSize</code> option specifies the minimum size of a chunk, while the <code>minChunks</code> option specifies the minimum number of chunks required for a module to be split.</p>
 <h2 id="using-react-loadable-for-code-splitting">Using React Loadable for Code Splitting</h2>
 <p>React Loadable is a popular library for code splitting in React applications. To use React Loadable, you can install it via npm or yarn:</p>
-<pre><code class="language-bash">npm install react-loadable
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>react-loadable
+</code></pre></div>
+
 <p>Once installed, you can use React Loadable to load components dynamically. For example:</p>
-<pre><code class="language-javascript">import Loadable from 'react-loadable';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Loadable</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-loadable&#39;</span><span class="p">;</span>
 
-const Loading = () =&gt; &lt;div&gt;Loading...&lt;/div&gt;;
+<span class="kd">const</span><span class="w"> </span><span class="nx">Loading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
 
-const AboutPage = Loadable({
-  loader: () =&gt; import('./AboutPage'),
-  loading: Loading,
-});
+<span class="kd">const</span><span class="w"> </span><span class="nx">AboutPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Loadable</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">loader</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./AboutPage&#39;</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">loading</span><span class="o">:</span><span class="w"> </span><span class="nx">Loading</span><span class="p">,</span>
+<span class="p">});</span>
 
-const App = () =&gt; {
-  return (
-    &lt;div&gt;
-      &lt;AboutPage /&gt;
-    &lt;/div&gt;
-  );
-};
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">AboutPage</span><span class="w"> </span><span class="o">/&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, the <code>AboutPage</code> component is loaded dynamically using React Loadable. The <code>loader</code> option specifies the component to load, while the <code>loading</code> option specifies the loading indicator to display while the component is loading.</p>
 <h2 id="measuring-performance-with-webpagetest">Measuring Performance with WebPageTest</h2>
 <p>WebPageTest is a popular tool for measuring web page performance. To measure the performance of a code-splitting strategy, you can use WebPageTest to run tests on your application. For example, you can use the following metrics to evaluate performance:

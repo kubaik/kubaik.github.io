@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,22 +161,23 @@
 <li>Agreement: Reaching a mutually acceptable agreement on the terms of employment.</li>
 </ul>
 <p>To illustrate the importance of research in the negotiation process, consider the following example:</p>
-<pre><code class="language-python">import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# Define a dataframe with salary data
-salary_data = pd.DataFrame({
-    'City': ['San Francisco', 'New York', 'Chicago'],
-    'Average Salary': [170000, 150000, 120000]
-})
+<span class="c1"># Define a dataframe with salary data</span>
+<span class="n">salary_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;City&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;San Francisco&#39;</span><span class="p">,</span> <span class="s1">&#39;New York&#39;</span><span class="p">,</span> <span class="s1">&#39;Chicago&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Average Salary&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">170000</span><span class="p">,</span> <span class="mi">150000</span><span class="p">,</span> <span class="mi">120000</span><span class="p">]</span>
+<span class="p">})</span>
 
-# Calculate the average salary across all cities
-average_salary = salary_data['Average Salary'].mean()
-print(f'Average salary: {average_salary}')
+<span class="c1"># Calculate the average salary across all cities</span>
+<span class="n">average_salary</span> <span class="o">=</span> <span class="n">salary_data</span><span class="p">[</span><span class="s1">&#39;Average Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average salary: </span><span class="si">{</span><span class="n">average_salary</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-# Filter the data to get the average salary for a specific city
-san_francisco_salary = salary_data[salary_data['City'] == 'San Francisco']['Average Salary'].mean()
-print(f'San Francisco average salary: {san_francisco_salary}')
-</code></pre>
+<span class="c1"># Filter the data to get the average salary for a specific city</span>
+<span class="n">san_francisco_salary</span> <span class="o">=</span> <span class="n">salary_data</span><span class="p">[</span><span class="n">salary_data</span><span class="p">[</span><span class="s1">&#39;City&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">][</span><span class="s1">&#39;Average Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;San Francisco average salary: </span><span class="si">{</span><span class="n">san_francisco_salary</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to use data analysis to inform your negotiation strategy. By researching the average salary for a specific role and location, you can make a stronger case for your desired salary.</p>
 <h2 id="preparing-for-negotiation">Preparing for Negotiation</h2>
 <p>Preparation is key to successful salary negotiation. This involves developing a clear understanding of your own strengths, weaknesses, and goals, as well as researching the company and the role to determine a fair salary range.</p>
@@ -189,23 +189,24 @@ print(f'San Francisco average salary: {san_francisco_salary}')
 <li>Gathering evidence of your accomplishments and contributions to previous roles, such as metrics or testimonials.</li>
 </ul>
 <p>For example, consider the following code snippet that demonstrates how to use metrics to showcase your accomplishments:</p>
-<pre><code class="language-java">public class Metrics {
-    public static void main(String[] args) {
-        // Define metrics for a software engineering role
-        int linesOfCode = 10000;
-        int bugsFixed = 50;
-        int featuresImplemented = 10;
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Metrics</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Define metrics for a software engineering role</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">linesOfCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">bugsFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">featuresImplemented</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 
-        // Calculate metrics such as code quality and productivity
-        double codeQuality = (double) bugsFixed / linesOfCode;
-        double productivity = (double) featuresImplemented / linesOfCode;
+<span class="w">        </span><span class="c1">// Calculate metrics such as code quality and productivity</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">codeQuality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">bugsFixed</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">linesOfCode</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">productivity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">featuresImplemented</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">linesOfCode</span><span class="p">;</span>
 
-        // Print the metrics to the console
-        System.out.println(f'Code quality: {codeQuality}');
-        System.out.println(f'Productivity: {productivity}');
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="c1">// Print the metrics to the console</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="n">Code</span><span class="w"> </span><span class="n">quality</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">codeQuality</span><span class="p">}</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="n">Productivity</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">productivity</span><span class="p">}</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to use metrics to showcase your accomplishments and contributions to previous roles. By tracking and analyzing metrics such as code quality and productivity, you can demonstrate your value to potential employers and make a stronger case for your desired salary.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Despite the importance of salary negotiation, many tech professionals struggle with common problems such as:</p>
@@ -220,18 +221,19 @@ print(f'San Francisco average salary: {san_francisco_salary}')
 <li>Research the company's salary range and benefits package using tools like Glassdoor or Payscale.</li>
 <li>Develop a clear and concise script to articulate your strengths and weaknesses, such as:</li>
 </ul>
-<pre><code class="language-python">def negotiation_script():
-    # Introduce yourself and your role
-    print('Hello, my name is John and I am a software engineer.')
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">negotiation_script</span><span class="p">():</span>
+    <span class="c1"># Introduce yourself and your role</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello, my name is John and I am a software engineer.&#39;</span><span class="p">)</span>
 
-    # Discuss your strengths and weaknesses
-    print('I have 5 years of experience with Java and a strong track record of delivering high-quality code.')
-    print('However, I am still learning about cloud computing and would appreciate the opportunity to develop my skills in this area.')
+    <span class="c1"># Discuss your strengths and weaknesses</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I have 5 years of experience with Java and a strong track record of delivering high-quality code.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;However, I am still learning about cloud computing and would appreciate the opportunity to develop my skills in this area.&#39;</span><span class="p">)</span>
 
-    # Discuss your desired salary and benefits
-    print('Based on my research, I believe a fair salary range for this role is between $120,000 and $150,000 per year.')
-    print('I would also appreciate benefits such as health insurance, retirement savings, and paid time off.')
-</code></pre>
+    <span class="c1"># Discuss your desired salary and benefits</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Based on my research, I believe a fair salary range for this role is between $120,000 and $150,000 per year.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I would also appreciate benefits such as health insurance, retirement savings, and paid time off.&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to develop a clear and concise script to articulate your strengths and weaknesses. By practicing your negotiation script and addressing common problems, you can build confidence and achieve a better outcome in your salary negotiation.</p>
 <h2 id="implementation-details-and-use-cases">Implementation Details and Use Cases</h2>
 <p>To illustrate the implementation details and use cases for salary negotiation, consider the following example:</p>
@@ -241,19 +243,20 @@ print(f'San Francisco average salary: {san_francisco_salary}')
 <li>The engineer has a strong track record of delivering high-quality code and has researched the company's salary range and benefits package.</li>
 </ul>
 <p>To negotiate the salary, the engineer could use the following script:</p>
-<pre><code class="language-python">def negotiate_salary():
-    # Discuss the company's salary range and benefits package
-    print('I understand that the company's salary range for this role is between $120,000 and $150,000 per year.')
-    print('I would appreciate benefits such as health insurance, retirement savings, and paid time off.')
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">negotiate_salary</span><span class="p">():</span>
+    <span class="c1"># Discuss the company&#39;s salary range and benefits package</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I understand that the company&#39;</span><span class="n">s</span> <span class="n">salary</span> <span class="nb">range</span> <span class="k">for</span> <span class="n">this</span> <span class="n">role</span> <span class="ow">is</span> <span class="n">between</span> <span class="err">$</span><span class="mi">120</span><span class="p">,</span><span class="mi">000</span> <span class="ow">and</span> <span class="err">$</span><span class="mi">150</span><span class="p">,</span><span class="mi">000</span> <span class="n">per</span> <span class="n">year</span><span class="o">.</span><span class="s1">&#39;)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I would appreciate benefits such as health insurance, retirement savings, and paid time off.&#39;</span><span class="p">)</span>
 
-    # Discuss the engineer's strengths and weaknesses
-    print('I have 5 years of experience with Java and a strong track record of delivering high-quality code.')
-    print('However, I am still learning about cloud computing and would appreciate the opportunity to develop my skills in this area.')
+    <span class="c1"># Discuss the engineer&#39;s strengths and weaknesses</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I have 5 years of experience with Java and a strong track record of delivering high-quality code.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;However, I am still learning about cloud computing and would appreciate the opportunity to develop my skills in this area.&#39;</span><span class="p">)</span>
 
-    # Discuss the desired salary and benefits
-    print('Based on my research, I believe a fair salary for this role is $140,000 per year.')
-    print('I would also appreciate benefits such as health insurance, retirement savings, and paid time off.')
-</code></pre>
+    <span class="c1"># Discuss the desired salary and benefits</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Based on my research, I believe a fair salary for this role is $140,000 per year.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I would also appreciate benefits such as health insurance, retirement savings, and paid time off.&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to negotiate the salary and benefits package for a software engineering role. By researching the company's salary range and benefits package, articulating your strengths and weaknesses, and discussing your desired salary and benefits, you can achieve a better outcome in your salary negotiation.</p>
 <h2 id="tools-and-platforms-for-salary-negotiation">Tools and Platforms for Salary Negotiation</h2>
 <p>There are several tools and platforms available to support salary negotiation, including:</p>
@@ -272,39 +275,40 @@ print(f'San Francisco average salary: {san_francisco_salary}')
 <li>Job satisfaction: The level of satisfaction with the job and the company, including factors such as work-life balance, career development, and company culture.</li>
 </ul>
 <p>For example, consider the following metrics:</p>
-<pre><code class="language-python">def calculate_salary_increase():
-    # Define the initial and final salary offers
-    initial_salary = 120000
-    final_salary = 140000
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_salary_increase</span><span class="p">():</span>
+    <span class="c1"># Define the initial and final salary offers</span>
+    <span class="n">initial_salary</span> <span class="o">=</span> <span class="mi">120000</span>
+    <span class="n">final_salary</span> <span class="o">=</span> <span class="mi">140000</span>
 
-    # Calculate the salary increase
-    salary_increase = (final_salary - initial_salary) / initial_salary
-    print(f'Salary increase: {salary_increase:.2%}')
+    <span class="c1"># Calculate the salary increase</span>
+    <span class="n">salary_increase</span> <span class="o">=</span> <span class="p">(</span><span class="n">final_salary</span> <span class="o">-</span> <span class="n">initial_salary</span><span class="p">)</span> <span class="o">/</span> <span class="n">initial_salary</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Salary increase: </span><span class="si">{</span><span class="n">salary_increase</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-def calculate_benefits_package():
-    # Define the benefits package
-    benefits_package = {
-        'health_insurance': True,
-        'retirement_savings': True,
-        'paid_time_off': True
-    }
+<span class="k">def</span> <span class="nf">calculate_benefits_package</span><span class="p">():</span>
+    <span class="c1"># Define the benefits package</span>
+    <span class="n">benefits_package</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;health_insurance&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;retirement_savings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;paid_time_off&#39;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="p">}</span>
 
-    # Calculate the quality and comprehensiveness of the benefits package
-    benefits_score = sum(1 for benefit in benefits_package.values() if benefit)
-    print(f'Benefits score: {benefits_score}/3')
+    <span class="c1"># Calculate the quality and comprehensiveness of the benefits package</span>
+    <span class="n">benefits_score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">benefit</span> <span class="ow">in</span> <span class="n">benefits_package</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">benefit</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Benefits score: </span><span class="si">{</span><span class="n">benefits_score</span><span class="si">}</span><span class="s1">/3&#39;</span><span class="p">)</span>
 
-def calculate_job_satisfaction():
-    # Define the job satisfaction metrics
-    job_satisfaction_metrics = {
-        'work_life_balance': 4,
-        'career_development': 4,
-        'company_culture': 4
-    }
+<span class="k">def</span> <span class="nf">calculate_job_satisfaction</span><span class="p">():</span>
+    <span class="c1"># Define the job satisfaction metrics</span>
+    <span class="n">job_satisfaction_metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;work_life_balance&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;career_development&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;company_culture&#39;</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">}</span>
 
-    # Calculate the overall job satisfaction score
-    job_satisfaction_score = sum(metric for metric in job_satisfaction_metrics.values()) / len(job_satisfaction_metrics)
-    print(f'Job satisfaction score: {job_satisfaction_score}/5')
-</code></pre>
+    <span class="c1"># Calculate the overall job satisfaction score</span>
+    <span class="n">job_satisfaction_score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">metric</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">job_satisfaction_metrics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">job_satisfaction_metrics</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Job satisfaction score: </span><span class="si">{</span><span class="n">job_satisfaction_score</span><span class="si">}</span><span class="s1">/5&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to calculate performance benchmarks and metrics for salary negotiation, including salary increase, benefits package, and job satisfaction. By tracking and analyzing these metrics, you can evaluate the effectiveness of your salary negotiation strategy and make adjustments to achieve better outcomes.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, salary negotiation is a critical step in the job search process for tech professionals. By researching the company's salary range and benefits package, articulating your strengths and weaknesses, and discussing your desired salary and benefits, you can achieve a better outcome in your salary negotiation.</p>

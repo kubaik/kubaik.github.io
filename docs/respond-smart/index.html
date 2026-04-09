@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,28 +165,29 @@
 4. <strong>Implementing an incident response platform</strong>: This can include tools such as Splunk, IBM Resilient, or ServiceNow, which provide a centralized platform for incident response.</p>
 <h3 id="example-implementing-an-incident-response-platform-with-splunk">Example: Implementing an Incident Response Platform with Splunk</h3>
 <p>Splunk is a popular platform for incident response, providing a centralized platform for monitoring, reporting, and analyzing security incidents. Here is an example of how to implement Splunk for incident response:</p>
-<pre><code class="language-python"># Import the Splunk SDK
-import splunklib.binding as binding
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the Splunk SDK</span>
+<span class="kn">import</span> <span class="nn">splunklib.binding</span> <span class="k">as</span> <span class="nn">binding</span>
 
-# Define the Splunk connection parameters
-host = 'localhost'
-port = 8089
-username = 'admin'
-password = 'password'
+<span class="c1"># Define the Splunk connection parameters</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8089</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;password&#39;</span>
 
-# Create a Splunk connection
-connection = binding.connect(host, port, username, password)
+<span class="c1"># Create a Splunk connection</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">binding</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 
-# Define a search query to detect potential security incidents
-search_query = 'index=security (src_ip=&quot;10.0.0.1&quot; OR dest_ip=&quot;10.0.0.1&quot;)'
+<span class="c1"># Define a search query to detect potential security incidents</span>
+<span class="n">search_query</span> <span class="o">=</span> <span class="s1">&#39;index=security (src_ip=&quot;10.0.0.1&quot; OR dest_ip=&quot;10.0.0.1&quot;)&#39;</span>
 
-# Execute the search query
-results = connection.search(search_query)
+<span class="c1"># Execute the search query</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_query</span><span class="p">)</span>
 
-# Print the search results
-for result in results:
-    print(result)
-</code></pre>
+<span class="c1"># Print the search results</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to connect to a Splunk instance, execute a search query to detect potential security incidents, and print the search results.</p>
 <h2 id="incident-response-best-practices">Incident Response Best Practices</h2>
 <p>Incident response best practices include:
@@ -196,35 +196,36 @@ for result in results:
 * <strong>Continuously monitoring and reviewing the incident response plan</strong>: This helps to identify areas for improvement and ensure that the plan remains effective.</p>
 <h3 id="example-implementing-an-incident-response-framework-with-nist">Example: Implementing an Incident Response Framework with NIST</h3>
 <p>The National Institute of Standards and Technology (NIST) provides a popular incident response framework, which outlines the key steps to be taken in response to a security incident. Here is an example of how to implement the NIST framework:</p>
-<pre><code class="language-python"># Define the NIST incident response framework
-class NISTFramework:
-    def __init__(self):
-        self.steps = [
-            'Detection',
-            'Response',
-            'Mitigation',
-            'Eradication',
-            'Recovery',
-            'Lessons Learned'
-        ]
+<div class="codehilite"><pre><span></span><code><span class="c1"># Define the NIST incident response framework</span>
+<span class="k">class</span> <span class="nc">NISTFramework</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;Detection&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Response&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Mitigation&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Eradication&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Recovery&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Lessons Learned&#39;</span>
+        <span class="p">]</span>
 
-    def execute_step(self, step):
-        # Execute the specified step
-        if step == 'Detection':
-            # Detect the incident
-            print('Detecting the incident...')
-        elif step == 'Response':
-            # Respond to the incident
-            print('Responding to the incident...')
-        # ...
+    <span class="k">def</span> <span class="nf">execute_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="c1"># Execute the specified step</span>
+        <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="s1">&#39;Detection&#39;</span><span class="p">:</span>
+            <span class="c1"># Detect the incident</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detecting the incident...&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">step</span> <span class="o">==</span> <span class="s1">&#39;Response&#39;</span><span class="p">:</span>
+            <span class="c1"># Respond to the incident</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Responding to the incident...&#39;</span><span class="p">)</span>
+        <span class="c1"># ...</span>
 
-# Create an instance of the NIST framework
-framework = NISTFramework()
+<span class="c1"># Create an instance of the NIST framework</span>
+<span class="n">framework</span> <span class="o">=</span> <span class="n">NISTFramework</span><span class="p">()</span>
 
-# Execute the framework
-for step in framework.steps:
-    framework.execute_step(step)
-</code></pre>
+<span class="c1"># Execute the framework</span>
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">framework</span><span class="o">.</span><span class="n">steps</span><span class="p">:</span>
+    <span class="n">framework</span><span class="o">.</span><span class="n">execute_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to implement the NIST incident response framework, outlining the key steps to be taken in response to a security incident.</p>
 <h2 id="common-incident-response-challenges">Common Incident Response Challenges</h2>
 <p>Common incident response challenges include:
@@ -233,27 +234,28 @@ for step in framework.steps:
 * <strong>Inadequate communication</strong>: Incident response teams may not have effective communication plans, which can impact their ability to coordinate a response.</p>
 <h3 id="example-addressing-incident-response-challenges-with-automation">Example: Addressing Incident Response Challenges with Automation</h3>
 <p>Automation can help address incident response challenges by providing a scalable and efficient way to respond to incidents. Here is an example of how to use automation to address incident response challenges:</p>
-<pre><code class="language-python"># Import the automation library
-import automationlib
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the automation library</span>
+<span class="kn">import</span> <span class="nn">automationlib</span>
 
-# Define the automation workflow
-workflow = [
-    {'step': 'detect', 'action': 'alert'},
-    {'step': 'respond', 'action': 'contain'},
-    {'step': 'mitigate', 'action': 'eradicate'}
-]
+<span class="c1"># Define the automation workflow</span>
+<span class="n">workflow</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="s1">&#39;detect&#39;</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;alert&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="s1">&#39;respond&#39;</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;contain&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="s1">&#39;mitigate&#39;</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;eradicate&#39;</span><span class="p">}</span>
+<span class="p">]</span>
 
-# Execute the automation workflow
-for step in workflow:
-    # Execute the specified action
-    if step['action'] == 'alert':
-        # Send an alert to the incident response team
-        print('Sending an alert to the incident response team...')
-    elif step['action'] == 'contain':
-        # Contain the incident
-        print('Containing the incident...')
-    # ...
-</code></pre>
+<span class="c1"># Execute the automation workflow</span>
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">workflow</span><span class="p">:</span>
+    <span class="c1"># Execute the specified action</span>
+    <span class="k">if</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;alert&#39;</span><span class="p">:</span>
+        <span class="c1"># Send an alert to the incident response team</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sending an alert to the incident response team...&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">step</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;contain&#39;</span><span class="p">:</span>
+        <span class="c1"># Contain the incident</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Containing the incident...&#39;</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to use automation to address incident response challenges, providing a scalable and efficient way to respond to incidents.</p>
 <h2 id="real-world-incident-response-use-cases">Real-World Incident Response Use Cases</h2>
 <p>Real-world incident response use cases include:
@@ -262,29 +264,30 @@ for step in workflow:
 * <strong>DDoS attack response</strong>: Responding to a DDoS attack requires a rapid and effective response to prevent downtime and minimize the impact on the organization.</p>
 <h3 id="example-responding-to-a-data-breach-with-servicenow">Example: Responding to a Data Breach with ServiceNow</h3>
 <p>ServiceNow is a popular platform for incident response, providing a centralized platform for managing and responding to incidents. Here is an example of how to use ServiceNow to respond to a data breach:</p>
-<pre><code class="language-python"># Import the ServiceNow library
-import servicenowlib
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the ServiceNow library</span>
+<span class="kn">import</span> <span class="nn">servicenowlib</span>
 
-# Define the ServiceNow connection parameters
-host = 'https://your-instance.service-now.com'
-username = 'admin'
-password = 'password'
+<span class="c1"># Define the ServiceNow connection parameters</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;https://your-instance.service-now.com&#39;</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;password&#39;</span>
 
-# Create a ServiceNow connection
-connection = servicenowlib.connect(host, username, password)
+<span class="c1"># Create a ServiceNow connection</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">servicenowlib</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 
-# Define a data breach incident
-incident = {
-    'short_description': 'Data Breach',
-    'description': 'A data breach has occurred, resulting in the unauthorized access to sensitive data.'
-}
+<span class="c1"># Define a data breach incident</span>
+<span class="n">incident</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;short_description&#39;</span><span class="p">:</span> <span class="s1">&#39;Data Breach&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A data breach has occurred, resulting in the unauthorized access to sensitive data.&#39;</span>
+<span class="p">}</span>
 
-# Create a new incident in ServiceNow
-incident_id = connection.create_incident(incident)
+<span class="c1"># Create a new incident in ServiceNow</span>
+<span class="n">incident_id</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">create_incident</span><span class="p">(</span><span class="n">incident</span><span class="p">)</span>
 
-# Print the incident ID
-print('Incident ID:', incident_id)
-</code></pre>
+<span class="c1"># Print the incident ID</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Incident ID:&#39;</span><span class="p">,</span> <span class="n">incident_id</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to use ServiceNow to respond to a data breach, providing a centralized platform for managing and responding to incidents.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, incident response planning is a critical component of an organization's overall security strategy. By creating a comprehensive incident response plan, implementing incident response best practices, and addressing common incident response challenges, organizations can reduce the impact of security incidents and minimize downtime. To get started with incident response planning, follow these next steps:

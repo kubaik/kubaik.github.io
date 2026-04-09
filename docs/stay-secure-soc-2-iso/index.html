@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -186,71 +185,74 @@
 <h3 id="use-case-1-access-control">Use Case 1: Access Control</h3>
 <p>Access control is a critical component of both SOC 2 and ISO 27001 compliance. To implement access control, organizations can use tools like <strong>Okta</strong> or <strong>Auth0</strong> to manage user identities and access to systems and data.</p>
 <p>For example, the following code snippet demonstrates how to implement role-based access control using <strong>Okta</strong>:</p>
-<pre><code class="language-python">import okta
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">okta</span>
 
-# Define roles and permissions
-roles = {
-    'admin': ['read', 'write', 'delete'],
-    'user': ['read']
-}
+<span class="c1"># Define roles and permissions</span>
+<span class="n">roles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="s1">&#39;write&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;read&#39;</span><span class="p">]</span>
+<span class="p">}</span>
 
-# Authenticate user
-user = okta.authenticate(username, password)
+<span class="c1"># Authenticate user</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">okta</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 
-# Check user role and permissions
-if user.role == 'admin':
-    # Grant admin access
-    permissions = roles['admin']
-else:
-    # Grant user access
-    permissions = roles['user']
+<span class="c1"># Check user role and permissions</span>
+<span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
+    <span class="c1"># Grant admin access</span>
+    <span class="n">permissions</span> <span class="o">=</span> <span class="n">roles</span><span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Grant user access</span>
+    <span class="n">permissions</span> <span class="o">=</span> <span class="n">roles</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
 
-# Restrict access based on permissions
-if 'read' in permissions:
-    # Allow read access
-    print(&quot;Access granted&quot;)
-else:
-    # Deny access
-    print(&quot;Access denied&quot;)
-</code></pre>
+<span class="c1"># Restrict access based on permissions</span>
+<span class="k">if</span> <span class="s1">&#39;read&#39;</span> <span class="ow">in</span> <span class="n">permissions</span><span class="p">:</span>
+    <span class="c1"># Allow read access</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Access granted&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Deny access</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Access denied&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <h3 id="use-case-2-data-encryption">Use Case 2: Data Encryption</h3>
 <p>Data encryption is another critical component of both SOC 2 and ISO 27001 compliance. To implement data encryption, organizations can use tools like <strong>AWS Key Management Service (KMS)</strong> or <strong>Google Cloud Key Management Service (KMS)</strong> to manage encryption keys.</p>
 <p>For example, the following code snippet demonstrates how to encrypt data using <strong>AWS KMS</strong>:</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-# Create an AWS KMS client
-kms = boto3.client('kms')
+<span class="c1"># Create an AWS KMS client</span>
+<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
 
-# Encrypt data
-encrypted_data = kms.encrypt(
-    KeyId='arn:aws:kms:region:account-id:key/key-id',
-    Plaintext='Hello, World!'
-)
+<span class="c1"># Encrypt data</span>
+<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+    <span class="n">KeyId</span><span class="o">=</span><span class="s1">&#39;arn:aws:kms:region:account-id:key/key-id&#39;</span><span class="p">,</span>
+    <span class="n">Plaintext</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span>
+<span class="p">)</span>
 
-# Print encrypted data
-print(encrypted_data['CiphertextBlob'])
-</code></pre>
+<span class="c1"># Print encrypted data</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">[</span><span class="s1">&#39;CiphertextBlob&#39;</span><span class="p">])</span>
+</code></pre></div>
+
 <h3 id="use-case-3-incident-response">Use Case 3: Incident Response</h3>
 <p>Incident response is a critical component of both SOC 2 and ISO 27001 compliance. To implement incident response, organizations can use tools like <strong>Splunk</strong> or <strong>ELK Stack</strong> to monitor and respond to security incidents.</p>
 <p>For example, the following code snippet demonstrates how to implement incident response using <strong>Splunk</strong>:</p>
-<pre><code class="language-python">import splunk
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">splunk</span>
 
-# Create a Splunk client
-splunk_client = splunk.connect(
-    host='https://splunk-instance:8089',
-    username='username',
-    password='password'
-)
+<span class="c1"># Create a Splunk client</span>
+<span class="n">splunk_client</span> <span class="o">=</span> <span class="n">splunk</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;https://splunk-instance:8089&#39;</span><span class="p">,</span>
+    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
+<span class="p">)</span>
 
-# Search for security incidents
-results = splunk_client.search(
-    'search index=security source=firewall'
-)
+<span class="c1"># Search for security incidents</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">splunk_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s1">&#39;search index=security source=firewall&#39;</span>
+<span class="p">)</span>
 
-# Print incident results
-for result in results:
-    print(result)
-</code></pre>
+<span class="c1"># Print incident results</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Implementing SOC 2 and ISO 27001 compliance can be challenging, and organizations may encounter common problems like:</p>
 <ul>

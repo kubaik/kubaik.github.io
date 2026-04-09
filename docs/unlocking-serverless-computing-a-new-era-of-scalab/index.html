@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -177,38 +176,39 @@
 </ol>
 <h4 id="step-3-add-the-lambda-function-code">Step 3: Add the Lambda Function Code</h4>
 <p>Here’s a Python snippet that processes an image whenever it is uploaded to S3:</p>
-<pre><code class="language-python">import json
-import boto3
-from PIL import Image
-import io
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">io</span>
 
-s3_client = boto3.client('s3')
+<span class="n">s3_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
 
-def lambda_handler(event, context):
-    for record in event['Records']:
-        bucket = record['s3']['bucket']['name']
-        key = record['s3']['object']['key']
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
 
-        # Fetch the image from S3
-        response = s3_client.get_object(Bucket=bucket, Key=key)
-        image = Image.open(response['Body'])
+        <span class="c1"># Fetch the image from S3</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s3_client</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Body&#39;</span><span class="p">])</span>
 
-        # Perform image processing (e.g., resize)
-        image = image.resize((128, 128))
+        <span class="c1"># Perform image processing (e.g., resize)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
 
-        # Save the processed image back to S3
-        buffer = io.BytesIO()
-        image.save(buffer, 'JPEG')
-        buffer.seek(0)
+        <span class="c1"># Save the processed image back to S3</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s1">&#39;JPEG&#39;</span><span class="p">)</span>
+        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-        output_key = f'processed/{key}'
-        s3_client.put_object(Bucket=bucket, Key=output_key, Body=buffer)
+        <span class="n">output_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;processed/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">s3_client</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">output_key</span><span class="p">,</span> <span class="n">Body</span><span class="o">=</span><span class="n">buffer</span><span class="p">)</span>
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Image processed successfully!')
-    }
-</code></pre>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s1">&#39;Image processed successfully!&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+
 <h4 id="explanation-of-the-code">Explanation of the Code</h4>
 <ul>
 <li><strong>boto3</strong>: AWS SDK for Python to interact with S3.</li>
@@ -224,13 +224,14 @@ def lambda_handler(event, context):
 </ol>
 <h4 id="step-2-add-the-lambda-function-code">Step 2: Add the Lambda Function Code</h4>
 <p>Here’s a basic function that returns a greeting:</p>
-<pre><code class="language-python">def lambda_handler(event, context):
-    name = event.get('queryStringParameters', {}).get('name', 'World')
-    return {
-        'statusCode': 200,
-        'body': json.dumps(f'Hello, {name}!')
-    }
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;queryStringParameters&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;World&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+
 <h4 id="step-3-set-up-api-gateway">Step 3: Set Up API Gateway</h4>
 <ol>
 <li>Go to the API Gateway console and create a new API.</li>
@@ -245,14 +246,16 @@ def lambda_handler(event, context):
 </ol>
 <h4 id="testing-the-api">Testing the API</h4>
 <p>You can test the API using curl:</p>
-<pre><code class="language-bash">curl &quot;https://your-api-id.execute-api.region.amazonaws.com/dev/greet?name=John&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;https://your-api-id.execute-api.region.amazonaws.com/dev/greet?name=John&quot;</span>
+</code></pre></div>
+
 <p>You should receive a response:</p>
-<pre><code class="language-json">{
-  &quot;statusCode&quot;: 200,
-  &quot;body&quot;: &quot;\&quot;Hello, John!\&quot;&quot;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;\&quot;Hello, John!\&quot;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="performance-considerations-and-metrics">Performance Considerations and Metrics</h3>
 <p>When adopting serverless computing, it's essential to monitor performance and understand costs:</p>
 <ul>

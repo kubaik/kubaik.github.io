@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -178,19 +177,20 @@
 <li>Use UiPath’s Studio to create a bot that reads invoices, extracts relevant data, and inputs it into the accounting system.</li>
 </ol>
 <p><strong>Sample Code Snippet:</strong></p>
-<pre><code class="language-vb">// UiPath Example: Extracting Data from Invoices
-// This sample code uses OCR to read an invoice and store the data in variables.
+<div class="codehilite"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">UiPath</span><span class="w"> </span><span class="n">Example</span><span class="p">:</span><span class="w"> </span><span class="n">Extracting</span><span class="w"> </span><span class="n">Data</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Invoices</span>
+<span class="o">//</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">uses</span><span class="w"> </span><span class="n">OCR</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">store</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">variables</span><span class="o">.</span>
 
-String invoiceText = OCR.ReadInvoice(&quot;C:\Invoices\invoice1.pdf&quot;)
-String[] invoiceLines = invoiceText.Split(new char[] {'\n'})
+<span class="nb nb-Type">String</span><span class="w"> </span><span class="n">invoiceText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OCR</span><span class="o">.</span><span class="n">ReadInvoice</span><span class="p">(</span><span class="s2">&quot;C:\Invoices\invoice1.pdf&quot;</span><span class="p">)</span>
+<span class="nb nb-Type">String</span><span class="p">[]</span><span class="w"> </span><span class="n">invoiceLines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">invoiceText</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="n">new</span><span class="w"> </span><span class="nb">char</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">})</span>
 
-// Assuming the invoice format is known
-String invoiceNumber = invoiceLines[0].Substring(5, 10) // Extract invoice number
-String totalAmount = invoiceLines[1].Substring(12, 6) // Extract total amount
+<span class="o">//</span><span class="w"> </span><span class="n">Assuming</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">known</span>
+<span class="nb nb-Type">String</span><span class="w"> </span><span class="n">invoiceNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">invoiceLines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Substring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">Extract</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="n">number</span>
+<span class="nb nb-Type">String</span><span class="w"> </span><span class="n">totalAmount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">invoiceLines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">Substring</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">Extract</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="n">amount</span>
 
-// Input to accounting system
-AccountingSystem.InputInvoice(invoiceNumber, totalAmount)
-</code></pre>
+<span class="o">//</span><span class="w"> </span><span class="n">Input</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">accounting</span><span class="w"> </span><span class="n">system</span>
+<span class="n">AccountingSystem</span><span class="o">.</span><span class="n">InputInvoice</span><span class="p">(</span><span class="n">invoiceNumber</span><span class="p">,</span><span class="w"> </span><span class="n">totalAmount</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Metrics:</strong>
 - <strong>Time Saved</strong>: Automating this process can reduce processing time from 15 minutes per invoice to just 1 minute.
 - <strong>Cost Savings</strong>: With an average cost of $15 per invoice for manual processing, automating 1,000 invoices can save $14,000 monthly.</p>
@@ -204,29 +204,30 @@ AccountingSystem.InputInvoice(invoiceNumber, totalAmount)
 <li>Create a bot that automatically responds to common inquiries by referencing a knowledge base.</li>
 </ol>
 <p><strong>Sample Code Snippet:</strong></p>
-<pre><code class="language-json">// Automation Anywhere Bot code for Email Responses
-{
-  &quot;Bot&quot;: {
-    &quot;Name&quot;: &quot;CustomerSupportBot&quot;,
-    &quot;Actions&quot;: [
-      {
-        &quot;Action&quot;: &quot;ReadEmails&quot;,
-        &quot;Criteria&quot;: &quot;Unanswered&quot;
-      },
-      {
-        &quot;Action&quot;: &quot;RespondWithTemplate&quot;,
-        &quot;Template&quot;: &quot;OrderStatusResponse&quot;,
-        &quot;Condition&quot;: &quot;OrderStatusInquiry&quot;
-      },
-      {
-        &quot;Action&quot;: &quot;RespondWithTemplate&quot;,
-        &quot;Template&quot;: &quot;ReturnPolicyResponse&quot;,
-        &quot;Condition&quot;: &quot;ReturnInquiry&quot;
-      }
-    ]
-  }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Automation Anywhere Bot code for Email Responses</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Bot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CustomerSupportBot&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReadEmails&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Unanswered&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RespondWithTemplate&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Template&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OrderStatusResponse&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OrderStatusInquiry&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RespondWithTemplate&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Template&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReturnPolicyResponse&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReturnInquiry&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p><strong>Metrics:</strong>
 - <strong>Response Time</strong>: Automating responses can reduce average response time from 24 hours to 1 hour.
 - <strong>Increased Satisfaction</strong>: Higher customer satisfaction leads to better retention rates, which can improve revenues by up to 25%.</p>
@@ -240,25 +241,26 @@ AccountingSystem.InputInvoice(invoiceNumber, totalAmount)
 <li>Develop a bot to collect new hire documents, verify them, and input data into the HR management system.</li>
 </ol>
 <p><strong>Sample Code Snippet:</strong></p>
-<pre><code class="language-csharp">// C# Example: Automating HR Onboarding with Blue Prism
-public void OnboardNewEmployee(string employeeId)
-{
-    // Collect documents
-    var documents = DocumentCollector.Collect(employeeId);
+<div class="codehilite"><pre><span></span><code><span class="c1">// C# Example: Automating HR Onboarding with Blue Prism</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnboardNewEmployee</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">employeeId</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Collect documents</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">documents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentCollector</span><span class="p">.</span><span class="n">Collect</span><span class="p">(</span><span class="n">employeeId</span><span class="p">);</span>
 
-    // Verify documents
-    foreach (var doc in documents)
-    {
-        if (!DocumentVerifier.Verify(doc))
-        {
-            throw new Exception(&quot;Document verification failed&quot;);
-        }
-    }
+<span class="w">    </span><span class="c1">// Verify documents</span>
+<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">documents</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">DocumentVerifier</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Document verification failed&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    // Input data to HR system
-    HRManagementSystem.AddEmployee(employeeId, documents);
-}
-</code></pre>
+<span class="w">    </span><span class="c1">// Input data to HR system</span>
+<span class="w">    </span><span class="n">HRManagementSystem</span><span class="p">.</span><span class="n">AddEmployee</span><span class="p">(</span><span class="n">employeeId</span><span class="p">,</span><span class="w"> </span><span class="n">documents</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p><strong>Metrics:</strong>
 - <strong>Time Efficiency</strong>: Onboarding time can be reduced from 5 days to 1 day per employee.
 - <strong>Cost Savings</strong>: Automating the onboarding process for 100 employees can save approximately $10,000 in labor costs.</p>

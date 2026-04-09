@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,8 +161,9 @@
 <li>Networking services: VPC, Direct Connect, Route 53</li>
 </ul>
 <p>To get started with AWS, you need to create an account and set up your AWS environment. This involves creating an IAM user, setting up a VPC, and launching an EC2 instance. Here is an example of how to launch an EC2 instance using the AWS CLI:</p>
-<pre><code class="language-bash">aws ec2 run-instances --image-id ami-0c94855ba95c71c99 --instance-type t2.micro --key-name my-key-pair
-</code></pre>
+<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="w"> </span>--image-id<span class="w"> </span>ami-0c94855ba95c71c99<span class="w"> </span>--instance-type<span class="w"> </span>t2.micro<span class="w"> </span>--key-name<span class="w"> </span>my-key-pair
+</code></pre></div>
+
 <p>This command launches a new EC2 instance with the specified AMI, instance type, and key pair.</p>
 <h2 id="designing-a-scalable-aws-architecture">Designing a Scalable AWS Architecture</h2>
 <p>When designing a scalable AWS architecture, there are several key considerations to keep in mind:
@@ -176,8 +176,9 @@
 * <strong>RDS database</strong>: Use an RDS database to store user data and scale the database tier as needed.
 * <strong>ElastiCache</strong>: Use ElastiCache to cache frequently accessed data and reduce the load on the database.</p>
 <p>Here is an example of how to create an Auto Scaling group using the AWS CLI:</p>
-<pre><code class="language-bash">aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --launch-configuration-name my-lc --min-size 1 --max-size 10
-</code></pre>
+<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>autoscaling<span class="w"> </span>create-auto-scaling-group<span class="w"> </span>--auto-scaling-group-name<span class="w"> </span>my-asg<span class="w"> </span>--launch-configuration-name<span class="w"> </span>my-lc<span class="w"> </span>--min-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--max-size<span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+
 <p>This command creates a new Auto Scaling group with the specified launch configuration, minimum size, and maximum size.</p>
 <h3 id="monitoring-and-troubleshooting-aws-resources">Monitoring and Troubleshooting AWS Resources</h3>
 <p>Monitoring and troubleshooting are critical components of any AWS architecture. AWS provides several tools and services to help you monitor and troubleshoot your resources, including:
@@ -186,22 +187,23 @@
 * <strong>X-Ray</strong>: Use X-Ray to analyze and debug distributed applications.</p>
 <p>To demonstrate the use of these tools, let's consider a scenario where we need to troubleshoot a performance issue with our web application. We can use CloudWatch to monitor metrics such as CPU utilization, memory usage, and request latency. We can also use CloudTrail to track API calls and events, and X-Ray to analyze and debug the application.</p>
 <p>Here is an example of how to create a CloudWatch alarm using the AWS CLI:</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-cloudwatch = boto3.client('cloudwatch')
-cloudwatch.put_metric_alarm(
-    AlarmName='my-alarm',
-    ComparisonOperator='GreaterThanThreshold',
-    EvaluationPeriods=1,
-    MetricName='CPUUtilization',
-    Namespace='AWS/EC2',
-    Period=300,
-    Statistic='Average',
-    Threshold=70,
-    ActionsEnabled=True,
-    AlarmActions=['arn:aws:sns:us-east-1:123456789012:my-topic']
-)
-</code></pre>
+<span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
+<span class="n">cloudwatch</span><span class="o">.</span><span class="n">put_metric_alarm</span><span class="p">(</span>
+    <span class="n">AlarmName</span><span class="o">=</span><span class="s1">&#39;my-alarm&#39;</span><span class="p">,</span>
+    <span class="n">ComparisonOperator</span><span class="o">=</span><span class="s1">&#39;GreaterThanThreshold&#39;</span><span class="p">,</span>
+    <span class="n">EvaluationPeriods</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;CPUUtilization&#39;</span><span class="p">,</span>
+    <span class="n">Namespace</span><span class="o">=</span><span class="s1">&#39;AWS/EC2&#39;</span><span class="p">,</span>
+    <span class="n">Period</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">Statistic</span><span class="o">=</span><span class="s1">&#39;Average&#39;</span><span class="p">,</span>
+    <span class="n">Threshold</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span>
+    <span class="n">ActionsEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">AlarmActions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;arn:aws:sns:us-east-1:123456789012:my-topic&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a new CloudWatch alarm that triggers when the CPU utilization exceeds 70%.</p>
 <h2 id="security-and-compliance-in-aws">Security and Compliance in AWS</h2>
 <p>Security and compliance are top priorities in any AWS architecture. AWS provides several tools and services to help you secure and comply with regulatory requirements, including:

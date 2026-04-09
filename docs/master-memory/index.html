@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,21 +153,22 @@
 <h3 id="understanding-memory-allocation">Understanding Memory Allocation</h3>
 <p>Memory allocation is the process of assigning memory to programs or applications. There are two primary types of memory allocation: static and dynamic. Static allocation occurs at compile-time, whereas dynamic allocation occurs at runtime. Dynamic allocation is more flexible, but it can lead to memory leaks and fragmentation if not managed properly.</p>
 <p>To illustrate the importance of proper memory allocation, consider a simple example in C++:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 
-int main() {
-    int* arr = new int[10]; // dynamic allocation
-    for (int i = 0; i &lt; 10; i++) {
-        arr[i] = i;
-    }
-    std::cout &lt;&lt; &quot;Array values: &quot;;
-    for (int i = 0; i &lt; 10; i++) {
-        std::cout &lt;&lt; arr[i] &lt;&lt; &quot; &quot;;
-    }
-    delete[] arr; // deallocation
-    return 0;
-}
-</code></pre>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"> </span><span class="c1">// dynamic allocation</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Array values: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">arr</span><span class="p">;</span><span class="w"> </span><span class="c1">// deallocation</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we allocate memory for an array of 10 integers using <code>new</code> and deallocate it using <code>delete[]</code>. This ensures that the memory is properly released back to the system, preventing memory leaks.</p>
 <h2 id="memory-profiling-and-monitoring">Memory Profiling and Monitoring</h2>
 <p>Memory profiling and monitoring are essential for identifying memory-related issues and optimizing memory usage. There are several tools available for memory profiling, including:</p>
@@ -178,36 +178,38 @@ int main() {
 <li>New Relic: a cloud-based application performance monitoring platform that provides detailed memory usage metrics</li>
 </ul>
 <p>For example, using Valgrind, we can profile a simple C program to detect memory leaks:</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
 
-int main() {
-    int* ptr = malloc(10 * sizeof(int));
-    // no free() call, causing a memory leak
-    return 0;
-}
-</code></pre>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="w">    </span><span class="c1">// no free() call, causing a memory leak</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>Running Valgrind on this program will output:</p>
-<pre><code>==12345== Memcheck, a memory error detector
-==12345== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==12345== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==12345== Command: ./example
-==12345==
-==12345==
-==12345== HEAP SUMMARY:
-==12345==     in use at exit: 40 bytes in 1 blocks
-==12345==   total heap usage: 1 allocs, 0 frees, 40 bytes allocated
-==12345==
-==12345== LEAK SUMMARY:
-==12345==    definitely lost: 40 bytes in 1 blocks
-==12345==    indirectly lost: 0 bytes in 0 blocks
-==12345==      possibly lost: 0 bytes in 0 blocks
-==12345==    still reachable: 0 bytes in 0 blocks
-==12345==         suppressed: 0 bytes in 0 blocks
-==12345==
-==12345== For counts of detected and suppressed errors, rerun with: -v
-==12345== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 3)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">==</span><span class="mi">12345</span><span class="o">==</span><span class="w"> </span><span class="nv">Memcheck</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span><span class="nv">error</span><span class="w"> </span><span class="nv">detector</span>
+<span class="o">==</span><span class="mi">12345</span><span class="o">==</span><span class="w"> </span><span class="nv">Copyright</span><span class="w"> </span><span class="ss">(</span><span class="nv">C</span><span class="ss">)</span><span class="w"> </span><span class="mi">2002</span><span class="o">-</span><span class="mi">2017</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">GNU</span><span class="w"> </span><span class="nv">GPL</span><span class="err">&#39;d, by Julian Seward et al.</span>
+<span class="err">==12345== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info</span>
+<span class="err">==12345== Command: ./example</span>
+<span class="err">==12345==</span>
+<span class="err">==12345==</span>
+<span class="err">==12345== HEAP SUMMARY:</span>
+<span class="err">==12345==     in use at exit: 40 bytes in 1 blocks</span>
+<span class="err">==12345==   total heap usage: 1 allocs, 0 frees, 40 bytes allocated</span>
+<span class="err">==12345==</span>
+<span class="err">==12345== LEAK SUMMARY:</span>
+<span class="err">==12345==    definitely lost: 40 bytes in 1 blocks</span>
+<span class="err">==12345==    indirectly lost: 0 bytes in 0 blocks</span>
+<span class="err">==12345==      possibly lost: 0 bytes in 0 blocks</span>
+<span class="err">==12345==    still reachable: 0 bytes in 0 blocks</span>
+<span class="err">==12345==         suppressed: 0 bytes in 0 blocks</span>
+<span class="err">==12345==</span>
+<span class="err">==12345== For counts of detected and suppressed errors, rerun with: -v</span>
+<span class="err">==12345== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 3)</span>
+</code></pre></div>
+
 <p>This output indicates a memory leak of 40 bytes, which can be fixed by adding a <code>free()</code> call to release the allocated memory.</p>
 <h2 id="memory-optimization-techniques">Memory Optimization Techniques</h2>
 <p>There are several memory optimization techniques that can be employed to reduce memory usage and improve performance:</p>
@@ -218,26 +220,27 @@ int main() {
 <li><strong>Data alignment</strong>: aligning data to cache line boundaries can improve memory access performance.</li>
 </ol>
 <p>For example, using the <code>gzip</code> library in C, we can compress data to reduce memory usage:</p>
-<pre><code class="language-c">#include &lt;zlib.h&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;zlib.h&gt;</span>
 
-int main() {
-    char* data = &quot;This is some sample data&quot;;
-    z_stream strm;
-    strm.zalloc = Z_NULL;
-    strm.zfree = Z_NULL;
-    strm.opaque = Z_NULL;
-    deflateInit(&amp;strm, Z_DEFAULT_COMPRESSION);
-    strm.avail_in = strlen(data);
-    strm.next_in = (Bytef*)data;
-    char compressed[1024];
-    strm.avail_out = 1024;
-    strm.next_out = (Bytef*)compressed;
-    deflate(&amp;strm, Z_FINISH);
-    deflateEnd(&amp;strm);
-    printf(&quot;Compressed data: %s\n&quot;, compressed);
-    return 0;
-}
-</code></pre>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This is some sample data&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">z_stream</span><span class="w"> </span><span class="n">strm</span><span class="p">;</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">zalloc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z_NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">zfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z_NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">opaque</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z_NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">deflateInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">strm</span><span class="p">,</span><span class="w"> </span><span class="n">Z_DEFAULT_COMPRESSION</span><span class="p">);</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">avail_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">next_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Bytef</span><span class="o">*</span><span class="p">)</span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">compressed</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">avail_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span>
+<span class="w">    </span><span class="n">strm</span><span class="p">.</span><span class="n">next_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Bytef</span><span class="o">*</span><span class="p">)</span><span class="n">compressed</span><span class="p">;</span>
+<span class="w">    </span><span class="n">deflate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">strm</span><span class="p">,</span><span class="w"> </span><span class="n">Z_FINISH</span><span class="p">);</span>
+<span class="w">    </span><span class="n">deflateEnd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">strm</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Compressed data: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">compressed</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example demonstrates how to compress data using the <code>gzip</code> library, reducing memory usage by a factor of 2-3.</p>
 <h2 id="common-memory-related-issues">Common Memory-Related Issues</h2>
 <p>There are several common memory-related issues that can occur in applications, including:</p>
@@ -260,18 +263,19 @@ int main() {
 <li><strong>Cloud computing</strong>: AWS, Azure, and Google Cloud use memory management to optimize resource utilization and reduce costs.</li>
 </ul>
 <p>For example, a web server like Apache can use memory pooling to reduce memory allocation and deallocation overhead:</p>
-<pre><code class="language-c">#include &lt;apr_pools.h&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;apr_pools.h&gt;</span>
 
-int main() {
-    apr_pool_t* pool = apr_pool_create(NULL);
-    // allocate memory from the pool
-    void* mem = apr_palloc(pool, 1024);
-    // use the memory
-    // release the memory back to the pool
-    apr_pool_destroy(pool);
-    return 0;
-}
-</code></pre>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">apr_pool_t</span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apr_pool_create</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// allocate memory from the pool</span>
+<span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apr_palloc</span><span class="p">(</span><span class="n">pool</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// use the memory</span>
+<span class="w">    </span><span class="c1">// release the memory back to the pool</span>
+<span class="w">    </span><span class="n">apr_pool_destroy</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example demonstrates how Apache can use memory pooling to reduce memory allocation and deallocation overhead, improving performance and reducing memory waste.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Memory management can have a significant impact on application performance. For example, a study by Google found that optimizing memory allocation and deallocation can improve performance by up to 30%:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,85 +158,90 @@
 * <strong>Open-source</strong>: .NET Core is open-source, which means that developers can contribute to the framework, report bugs, and access the source code.</p>
 <h2 id="building-a-simple-net-core-application">Building a Simple .NET Core Application</h2>
 <p>To demonstrate the power of .NET Core, let's build a simple console application. Here's an example of a "Hello World" application in C#:</p>
-<pre><code class="language-csharp">using System;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
 
-namespace HelloWorld
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(&quot;Hello World!&quot;);
-        }
-    }
-}
-</code></pre>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">HelloWorld</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>To build and run this application, we can use the .NET Core CLI. First, we need to install the .NET Core SDK on our machine. The .NET Core SDK is available for Windows, Linux, and macOS platforms, and can be downloaded from the official .NET website. The pricing for .NET Core SDK is free, and it includes a range of tools and libraries for building, testing, and debugging .NET Core applications.</p>
 <p>Once we have installed the .NET Core SDK, we can create a new console application using the following command:</p>
-<pre><code>dotnet new console -o HelloWorld
-</code></pre>
+<div class="codehilite"><pre><span></span><code>dotnet new console -o HelloWorld
+</code></pre></div>
+
 <p>This will create a new console application in a directory called "HelloWorld". We can then navigate to this directory and build the application using the following command:</p>
-<pre><code>dotnet build
-</code></pre>
+<div class="codehilite"><pre><span></span><code>dotnet build
+</code></pre></div>
+
 <p>Finally, we can run the application using the following command:</p>
-<pre><code>dotnet run
-</code></pre>
+<div class="codehilite"><pre><span></span><code>dotnet run
+</code></pre></div>
+
 <p>This will output "Hello World!" to the console.</p>
 <h2 id="using-entity-framework-core-for-database-operations">Using Entity Framework Core for Database Operations</h2>
 <p>Entity Framework Core is a popular ORM (Object-Relational Mapping) framework for .NET Core applications. It provides a range of features for working with databases, including support for SQL Server, MySQL, PostgreSQL, and more. Here's an example of how we can use Entity Framework Core to perform CRUD (Create, Read, Update, Delete) operations on a database:</p>
-<pre><code class="language-csharp">using Microsoft.EntityFrameworkCore;
-using System;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
 
-namespace EntityFrameworkCoreExample
-{
-    public class User
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-    }
+<span class="k">namespace</span><span class="w"> </span><span class="nn">EntityFrameworkCoreExample</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public class MyDbContext : DbContext
-    {
-        public DbSet&lt;User&gt; Users { get; set; }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyDbContext</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DbContext</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">DbSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Users</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@&quot;Server=myserver;Database=mydatabase;User Id=myuser;Password=mypassword;&quot;);
-        }
-    }
+<span class="w">        </span><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">DbContextOptionsBuilder</span><span class="w"> </span><span class="n">optionsBuilder</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">optionsBuilder</span><span class="p">.</span><span class="n">UseSqlServer</span><span class="p">(</span><span class="s">@&quot;Server=myserver;Database=mydatabase;User Id=myuser;Password=mypassword;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (var context = new MyDbContext())
-            {
-                // Create a new user
-                var user = new User { Name = &quot;John Doe&quot;, Email = &quot;john.doe@example.com&quot; };
-                context.Users.Add(user);
-                context.SaveChanges();
+<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyDbContext</span><span class="p">())</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Create a new user</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;john.doe@example.com&quot;</span><span class="w"> </span><span class="p">};</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
 
-                // Read all users
-                var users = context.Users.ToList();
-                foreach (var u in users)
-                {
-                    Console.WriteLine($&quot;Name: {u.Name}, Email: {u.Email}&quot;);
-                }
+<span class="w">                </span><span class="c1">// Read all users</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">ToList</span><span class="p">();</span>
+<span class="w">                </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">users</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;Name: {u.Name}, Email: {u.Email}&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
 
-                // Update a user
-                user.Name = &quot;Jane Doe&quot;;
-                context.Users.Update(user);
-                context.SaveChanges();
+<span class="w">                </span><span class="c1">// Update a user</span>
+<span class="w">                </span><span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Jane Doe&quot;</span><span class="p">;</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
 
-                // Delete a user
-                context.Users.Remove(user);
-                context.SaveChanges();
-            }
-        }
-    }
-}
-</code></pre>
+<span class="w">                </span><span class="c1">// Delete a user</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>User</code> class and a <code>MyDbContext</code> class that inherits from <code>DbContext</code>. We then use the <code>DbSet</code> property to perform CRUD operations on the <code>Users</code> table.</p>
 <p>Entity Framework Core provides a range of benefits, including:
 * <strong>Improved productivity</strong>: Entity Framework Core provides a range of features that simplify database operations, including support for LINQ queries and automatic transaction management.
@@ -250,43 +254,44 @@ namespace EntityFrameworkCoreExample
 * <strong>Azure Functions</strong>: A serverless compute platform for building event-driven applications.
 * <strong>Azure Storage</strong>: A cloud-based storage platform for storing and serving files, blobs, and queues.</p>
 <p>Here's an example of how we can use Azure App Service to host a .NET Core application:</p>
-<pre><code class="language-csharp">using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
 
-namespace AzureAppServiceExample
-{
-    public class Startup
-    {
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseRouting();
-            app.UseEndpoints(endpoints =&gt;
-            {
-                endpoints.MapGet(&quot;/&quot;, async context =&gt;
-                {
-                    await context.Response.WriteAsync(&quot;Hello World!&quot;);
-                });
-            });
-        }
-    }
+<span class="k">namespace</span><span class="w"> </span><span class="nn">AzureAppServiceExample</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Startup</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IWebHostEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseRouting</span><span class="p">();</span>
+<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">endpoints</span><span class="p">.</span><span class="n">MapGet</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">await</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">WriteAsync</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="p">});</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">CreateHostBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">).</span><span class="n">Build</span><span class="p">().</span><span class="n">Run</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =&gt;
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =&gt;
-                {
-                    webBuilder.UseStartup&lt;Startup&gt;();
-                });
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">IHostBuilder</span><span class="w"> </span><span class="nf">CreateHostBuilder</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">            </span><span class="n">Host</span><span class="p">.</span><span class="n">CreateDefaultBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="n">ConfigureWebHostDefaults</span><span class="p">(</span><span class="n">webBuilder</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">webBuilder</span><span class="p">.</span><span class="n">UseStartup</span><span class="o">&lt;</span><span class="n">Startup</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">                </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>Startup</code> class that configures the ASP.NET Core pipeline, and a <code>Program</code> class that creates and runs the host.</p>
 <p>The benefits of using Azure services for .NET Core applications include:
 * <strong>Improved scalability</strong>: Azure provides a range of services that support scalability, including support for load balancing and autoscaling.

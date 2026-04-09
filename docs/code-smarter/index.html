@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -177,12 +176,13 @@
 - $8/month for the Personal Pro plan, which includes unlimited file uploads and collaboration features.</p>
 <p><strong>Example Use Case</strong>: Organizing Learning Materials</p>
 <p>Create a database in Notion to catalog programming resources:</p>
-<pre><code class="language-markdown">| Language       | Resource Type | Title                  | URL                       |
+<div class="codehilite"><pre><span></span><code>| Language       | Resource Type | Title                  | URL                       |
 |----------------|---------------|------------------------|---------------------------|
-| JavaScript     | Article       | Understanding Closures | [Link](https://example.com) |
-| Python         | Video         | Python for Data Science | [Link](https://example.com) |
-| Go             | Book          | The Go Programming Language | [Link](https://example.com) |
-</code></pre>
+| JavaScript     | Article       | Understanding Closures | [<span class="nt">Link</span>](<span class="na">https://example.com</span>) |
+| Python         | Video         | Python for Data Science | [<span class="nt">Link</span>](<span class="na">https://example.com</span>) |
+| Go             | Book          | The Go Programming Language | [<span class="nt">Link</span>](<span class="na">https://example.com</span>) |
+</code></pre></div>
+
 <h3 id="2-code-snippet-managers">2. Code Snippet Managers</h3>
 <h4 id="snippetslab">SnippetsLab</h4>
 <p>SnippetsLab is a powerful snippet manager for developers. It allows you to store and categorize code snippets, making it easy to retrieve them when needed.</p>
@@ -193,17 +193,18 @@
 <p><strong>Pricing</strong>:
 - $14.99 for a one-time purchase on macOS.</p>
 <p><strong>Example Use Case</strong>: Storing Reusable Code Snippets</p>
-<pre><code class="language-javascript">// JavaScript Snippet to Debounce a Function
-function debounce(func, delay) {
-    let timeoutId;
-    return function(...args) {
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() =&gt; {
-            func.apply(this, args);
-        }, delay);
-    };
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// JavaScript Snippet to Debounce a Function</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">debounce</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span><span class="w"> </span><span class="nx">delay</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">timeoutId</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">timeoutId</span><span class="p">)</span><span class="w"> </span><span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timeoutId</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">timeoutId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">);</span>
+<span class="w">        </span><span class="p">},</span><span class="w"> </span><span class="nx">delay</span><span class="p">);</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="common-problems-and-solutions">Common Problems and Solutions</h4>
 <ul>
 <li><strong>Problem</strong>: Forgetting frequently used code snippets.</li>
@@ -254,21 +255,22 @@ function debounce(func, delay) {
 <h3 id="2-github-actions">2. GitHub Actions</h3>
 <p>If you're using GitHub for your projects, GitHub Actions can help automate your CI/CD pipeline.</p>
 <p><strong>Example Workflow</strong>: Automatically Deploying a Web Application</p>
-<pre><code class="language-yaml">name: Deploy to Production
-on:
-  push:
-    branches:
-      - main
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Deploy to server
-        run: |
-          ssh user@server &quot;cd /path/to/app &amp;&amp; git pull &amp;&amp; npm install &amp;&amp; pm2 restart app&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to Production</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to server</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">ssh user@server &quot;cd /path/to/app &amp;&amp; git pull &amp;&amp; npm install &amp;&amp; pm2 restart app&quot;</span>
+</code></pre></div>
+
 <h2 id="integration-of-tools">Integration of Tools</h2>
 <h3 id="1-combining-notion-trello-and-github">1. Combining Notion, Trello, and GitHub</h3>
 <p>You can create a seamless workflow by integrating Notion with Trello and GitHub. Here’s how:</p>
@@ -280,37 +282,38 @@ jobs:
 <h3 id="2-using-apis-for-custom-solutions">2. Using APIs for Custom Solutions</h3>
 <p>If existing tools do not meet your needs, consider building a custom solution using APIs. For example, you could use the Notion API to programmatically create or update notes based on your GitHub commits.</p>
 <p><strong>Example API Call</strong>:</p>
-<pre><code class="language-javascript">const fetch = require('node-fetch');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-fetch&#39;</span><span class="p">);</span>
 
-const createNotionPage = async (title, content) =&gt; {
-    const response = await fetch('https://api.notion.com/v1/pages', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer YOUR_INTEGRATION_TOKEN`,
-            'Content-Type': 'application/json',
-            'Notion-Version': '2022-06-28',
-        },
-        body: JSON.stringify({
-            parent: { database_id: 'YOUR_DATABASE_ID' },
-            properties: {
-                title: {
-                    title: [{ text: { content: title } }],
-                },
-            },
-            children: [
-                {
-                    object: 'block',
-                    type: 'paragraph',
-                    paragraph: {
-                        text: [{ text: { content } }],
-                    },
-                },
-            ],
-        }),
-    });
-    return response.json();
-};
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">createNotionPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">content</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.notion.com/v1/pages&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s1">&#39;Authorization&#39;</span><span class="o">:</span><span class="w"> </span><span class="sb">`Bearer YOUR_INTEGRATION_TOKEN`</span><span class="p">,</span>
+<span class="w">            </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+<span class="w">            </span><span class="s1">&#39;Notion-Version&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;2022-06-28&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">parent</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">database_id</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_DATABASE_ID&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nx">children</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">object</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;paragraph&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">paragraph</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">        </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <h2 id="best-practices-for-building-your-second-brain">Best Practices for Building Your Second Brain</h2>
 <ol>
 <li><strong>Regularly Review and Update</strong>: Schedule time each week to review your notes, snippets, and tasks. This helps in retaining information.</li>

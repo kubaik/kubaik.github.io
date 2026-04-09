@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -184,40 +183,40 @@
 </ul>
 <h3 id="code-example-creating-a-simple-blockchain-in-python">Code Example: Creating a Simple Blockchain in Python</h3>
 <p>Here’s a simplified example of how to create a basic blockchain in Python. This will help illustrate the fundamental concepts of blocks and transactions.</p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-import hashlib
-import time
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-class Block:
-    def __init__(self, index, previous_hash, timestamp, data, hash):
-        self.index = index
-        self.previous_hash = previous_hash
-        self.timestamp = timestamp
-        self.data = data
-        self.hash = hash
+<span class="k">class</span> <span class="nc">Block</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="n">previous_hash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="nb">hash</span>
 
-def calculate_hash(index, previous_hash, timestamp, data):
-    value = str(index) + str(previous_hash) + str(timestamp) + str(data)
-    return hashlib.sha256(value.encode()).hexdigest()
+<span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">previous_hash</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-def create_genesis_block():
-    return Block(0, &quot;0&quot;, int(time.time()), &quot;Genesis Block&quot;, calculate_hash(0, &quot;0&quot;, int(time.time()), &quot;Genesis Block&quot;))
+<span class="k">def</span> <span class="nf">create_genesis_block</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Block</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Genesis Block&quot;</span><span class="p">,</span> <span class="n">calculate_hash</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Genesis Block&quot;</span><span class="p">))</span>
 
-def create_new_block(previous_block, data):
-    index = previous_block.index + 1
-    timestamp = int(time.time())
-    hash = calculate_hash(index, previous_block.hash, timestamp, data)
-    return Block(index, previous_block.hash, timestamp, data, hash)
+<span class="k">def</span> <span class="nf">create_new_block</span><span class="p">(</span><span class="n">previous_block</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="nb">hash</span> <span class="o">=</span> <span class="n">calculate_hash</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Block</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
 
-# Example usage
-genesis_block = create_genesis_block()
-new_block = create_new_block(genesis_block, &quot;Transaction Data 1&quot;)
+<span class="c1"># Example usage</span>
+<span class="n">genesis_block</span> <span class="o">=</span> <span class="n">create_genesis_block</span><span class="p">()</span>
+<span class="n">new_block</span> <span class="o">=</span> <span class="n">create_new_block</span><span class="p">(</span><span class="n">genesis_block</span><span class="p">,</span> <span class="s2">&quot;Transaction Data 1&quot;</span><span class="p">)</span>
 
-print(f&quot;Previous Hash: {genesis_block.hash}&quot;)
-print(f&quot;New Block Hash: {new_block.hash}&quot;)
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Previous Hash: </span><span class="si">{</span><span class="n">genesis_block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New Block Hash: </span><span class="si">{</span><span class="n">new_block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <h3 id="explanation-of-the-code">Explanation of the Code</h3>
 <ul>
 <li><strong>Block Class</strong>: Represents each block in the blockchain with attributes for index, previous hash, timestamp, transaction data, and current hash.</li>
@@ -272,20 +271,21 @@ print(f&quot;New Block Hash: {new_block.hash}&quot;)
 <h3 id="smart-contracts">Smart Contracts</h3>
 <p>Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They automatically enforce and execute obligations when conditions are met.</p>
 <p><strong>Code Example: Simple Smart Contract in Solidity</strong></p>
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract SimpleStorage {
-    uint public storedData;
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">storedData</span><span class="p">;</span>
 
-    function set(uint x) public {
-        storedData = x;
-    }
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span>storedData<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function get() public view returns (uint) {
-        return storedData;
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">get</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>storedData<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="explanation-of-the-code_1">Explanation of the Code</h3>
 <ul>
 <li><strong>pragma</strong>: Specifies the version of Solidity used.</li>

@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,18 +153,19 @@
 <p><strong>Use Case:</strong> Predict continuous numerical values, e.g., house prices, stock prices.</p>
 <p><strong>How it works:</strong> Linear regression models the relationship between a dependent variable and one or more independent variables by fitting a linear equation.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">from sklearn.linear_model import LinearRegression
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Sample data
-X = np.array([[1200], [1500], [1700], [2000], [2500]])
-y = np.array([300000, 350000, 400000, 500000, 600000])
+<span class="c1"># Sample data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1200</span><span class="p">],</span> <span class="p">[</span><span class="mi">1500</span><span class="p">],</span> <span class="p">[</span><span class="mi">1700</span><span class="p">],</span> <span class="p">[</span><span class="mi">2000</span><span class="p">],</span> <span class="p">[</span><span class="mi">2500</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">300000</span><span class="p">,</span> <span class="mi">350000</span><span class="p">,</span> <span class="mi">400000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="mi">600000</span><span class="p">])</span>
 
-model = LinearRegression()
-model.fit(X, y)
-predicted_price = model.predict([[1800]])
-print(f&quot;Predicted price for 1800 sq ft: ${predicted_price[0]:,.2f}&quot;)
-</code></pre>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">predicted_price</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">1800</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted price for 1800 sq ft: $</span><span class="si">{</span><span class="n">predicted_price</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Check for linearity in your data.</li>
@@ -176,17 +176,18 @@ print(f&quot;Predicted price for 1800 sq ft: ${predicted_price[0]:,.2f}&quot;)
 <p><strong>Use Case:</strong> Classification and regression tasks with interpretability.</p>
 <p><strong>How it works:</strong> Decision trees split data based on feature thresholds to create a tree-like model that predicts target variables.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">from sklearn.tree import DecisionTreeClassifier
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
-# Example dataset
-X = [[0, 0], [1, 1], [0, 1], [1, 0]]
-y = [0, 1, 1, 0]
+<span class="c1"># Example dataset</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-clf = DecisionTreeClassifier()
-clf.fit(X, y)
-prediction = clf.predict([[0.5, 0.5]])
-print(f&quot;Prediction for [0.5, 0.5]: {prediction[0]}&quot;)
-</code></pre>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction for [0.5, 0.5]: </span><span class="si">{</span><span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Prune trees to avoid overfitting.</li>
@@ -197,19 +198,20 @@ print(f&quot;Prediction for [0.5, 0.5]: {prediction[0]}&quot;)
 <p><strong>Use Case:</strong> Classification with high-dimensional data; also effective for regression.</p>
 <p><strong>How it works:</strong> SVM finds the optimal hyperplane that maximizes the margin between different classes.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">from sklearn import svm
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
 
-*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
+<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
 
 
-X = [[0, 0], [1, 1], [0, 1], [1, 0]]
-y = [0, 1, 1, 0]
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-clf = svm.SVC(kernel='linear')
-clf.fit(X, y)
-prediction = clf.predict([[0.8, 0.8]])
-print(f&quot;Predicted class: {prediction[0]}&quot;)
-</code></pre>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted class: </span><span class="si">{</span><span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Experiment with different kernels (<code>linear</code>, <code>rbf</code>, <code>poly</code>).</li>
@@ -223,17 +225,18 @@ print(f&quot;Predicted class: {prediction[0]}&quot;)
 <p><strong>Use Case:</strong> Segmenting customers, image compression, grouping similar data points.</p>
 <p><strong>How it works:</strong> K-Means partitions data into <code>k</code> clusters by assigning each point to the nearest centroid and updating centroids iteratively.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">from sklearn.cluster import KMeans
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-X = np.array([[1, 2], [1, 4], [1, 0],
-              [10, 2], [10, 4], [10, 0]])
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 
-kmeans = KMeans(n_clusters=2, random_state=42)
-kmeans.fit(X)
-print(f&quot;Cluster centers: {kmeans.cluster_centers_}&quot;)
-print(f&quot;Labels: {kmeans.labels_}&quot;)
-</code></pre>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster centers: </span><span class="si">{</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Labels: </span><span class="si">{</span><span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Use the Elbow Method to determine optimal <code>k</code>.</li>
@@ -244,15 +247,16 @@ print(f&quot;Labels: {kmeans.labels_}&quot;)
 <p><strong>Use Case:</strong> Building dendrograms for data exploration, hierarchical grouping.</p>
 <p><strong>How it works:</strong> Builds nested clusters by either agglomerative (bottom-up) or divisive (top-down) approaches, creating a dendrogram.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">from scipy.cluster.hierarchy import linkage, dendrogram
-import matplotlib.pyplot as plt
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">dendrogram</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-X = np.array([[1, 2], [2, 3], [3, 4], [8, 8], [9, 9], [10, 10]])
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
 
-linked = linkage(X, method='single')
-dendrogram(linked)
-plt.show()
-</code></pre>
+<span class="n">linked</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">)</span>
+<span class="n">dendrogram</span><span class="p">(</span><span class="n">linked</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Use for exploratory data analysis.</li>
@@ -266,19 +270,19 @@ plt.show()
 <p><strong>Use Case:</strong> Versatile classification and regression tasks with high accuracy.</p>
 <p><strong>How it works:</strong> Builds numerous decision trees on random subsets of data and features, aggregating their predictions.</p>
 <p><strong>Practical Example:</strong></p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-from sklearn.ensemble import RandomForestClassifier
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
-X = [[0, 0], [1, 1], [0, 1], [1, 0]]
-y = [0, 1, 1, 0]
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-clf = RandomForestClassifier(n_estimators=100, random_state=42)
-clf.fit(X, y)
-prediction = clf.predict([[0.8, 0.8]])
-print(f&quot;Random Forest prediction: {prediction[0]}&quot;)
-</code></pre>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random Forest prediction: </span><span class="si">{</span><span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Use feature importance to interpret model.</li>
@@ -295,19 +299,20 @@ print(f&quot;Random Forest prediction: {prediction[0]}&quot;)
 <li><a href="https://catboost.ai/">CatBoost</a></li>
 </ul>
 <p><strong>Practical Example with XGBoost:</strong></p>
-<pre><code class="language-python">import xgboost as xgb
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
-# Example dataset
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+<span class="c1"># Example dataset</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-model = xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss')
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+<span class="n">model</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">XGBClassifier</span><span class="p">(</span><span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-print(f&quot;Accuracy: {accuracy_score(y_test, y_pred):.2f}&quot;)
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Focus on hyperparameter tuning (<code>learning_rate</code>, <code>n_estimators</code>, <code>max_depth</code>).</li>

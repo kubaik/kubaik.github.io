@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,102 +160,108 @@
 * <strong>Improved Performance</strong>: By only updating the components that have changed, Vue.js can improve application performance and reduce the number of DOM mutations.</p>
 <h2 id="creating-and-registering-vuejs-components">Creating and Registering Vue.js Components</h2>
 <p>To create a Vue.js component, you need to define a new Vue component using the <code>Vue.component()</code> method or the <code>@Component</code> decorator in a Vue single-file component (SFC). Here's an example of creating a simple <code>Button</code> component:</p>
-<pre><code class="language-javascript">// Button.vue
-&lt;template&gt;
-  &lt;button @click=&quot;$emit('click', $event)&quot;&gt;Click me&lt;/button&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Button.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;$emit(&#39;click&#39;, $event)&quot;</span><span class="o">&gt;</span><span class="nx">Click</span><span class="w"> </span><span class="nx">me</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-export default {
-  name: 'Button',
-  props: {
-    text: String
-  }
-}
-&lt;/script&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Button&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <p>To register the component, you can use the <code>Vue.component()</code> method:</p>
-<pre><code class="language-javascript">// main.js
-import Vue from 'vue'
-import Button from './Button.vue'
+<div class="codehilite"><pre><span></span><code><span class="c1">// main.js</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./Button.vue&#39;</span>
 
-Vue.component('button-component', Button)
-</code></pre>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="s1">&#39;button-component&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="p">)</span>
+</code></pre></div>
+
 <p>Alternatively, you can use the <code>@Component</code> decorator in a Vue SFC:</p>
-<pre><code class="language-javascript">// Button.vue
-&lt;template&gt;
-  &lt;button @click=&quot;$emit('click', $event)&quot;&gt;Click me&lt;/button&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Button.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;$emit(&#39;click&#39;, $event)&quot;</span><span class="o">&gt;</span><span class="nx">Click</span><span class="w"> </span><span class="nx">me</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-import { Component, Vue } from 'vue-property-decorator'
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue-property-decorator&#39;</span>
 
-@Component
-export default class Button extends Vue {
-  // component code
-}
-&lt;/script&gt;
-</code></pre>
+<span class="err">@</span><span class="nx">Component</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// component code</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <h2 id="component-communication">Component Communication</h2>
 <p>Components can communicate with each other using props, events, and slots. Here's an example of using props to pass data from a parent component to a child component:</p>
-<pre><code class="language-javascript">// Parent.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component :text=&quot;parentText&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Parent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">child</span><span class="o">-</span><span class="nx">component</span><span class="w"> </span><span class="o">:</span><span class="nx">text</span><span class="o">=</span><span class="s2">&quot;parentText&quot;</span><span class="o">&gt;&lt;</span><span class="err">/child-component&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-import ChildComponent from './ChildComponent.vue'
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">ChildComponent</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./ChildComponent.vue&#39;</span>
 
-export default {
-  components: { ChildComponent },
-  data() {
-    return {
-      parentText: 'Hello from parent'
-    }
-  }
-}
-&lt;/script&gt;
-</code></pre>
-<pre><code class="language-javascript">// ChildComponent.vue
-&lt;template&gt;
-  &lt;div&gt;{{ text }}&lt;/div&gt;
-&lt;/template&gt;
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ChildComponent</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">parentText</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello from parent&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
 
-&lt;script&gt;
-export default {
-  props: {
-    text: String
-  }
-}
-&lt;/script&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// ChildComponent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <p>In this example, the <code>Parent</code> component passes the <code>parentText</code> data to the <code>ChildComponent</code> using a prop called <code>text</code>.</p>
 <h2 id="component-lifecycle">Component Lifecycle</h2>
 <p>Vue.js components have a lifecycle that includes several hooks, such as <code>created</code>, <code>mounted</code>, <code>updated</code>, and <code>destroyed</code>. These hooks can be used to perform tasks at different stages of the component's life cycle. For example, you can use the <code>mounted</code> hook to fetch data from an API when the component is mounted:</p>
-<pre><code class="language-javascript">// Component.vue
-&lt;template&gt;
-  &lt;div&gt;{{ data }}&lt;/div&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Component.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      data: null
-    }
-  },
-  mounted() {
-    fetch('https://api.example.com/data')
-      .then(response =&gt; response.json())
-      .then(data =&gt; {
-        this.data = data
-      })
-  }
-}
-&lt;/script&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">mounted</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <p>In this example, the <code>mounted</code> hook is used to fetch data from an API when the component is mounted.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to Vue.js component architecture:</p>

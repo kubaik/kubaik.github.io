@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,67 +163,68 @@
 * Microsoft Azure Mobile Services: A BaaS provider that offers a range of features, including user authentication, data storage, and push notifications.</p>
 <h2 id="implementing-a-baas-in-a-mobile-app">Implementing a BaaS in a Mobile App</h2>
 <p>Implementing a BaaS in a mobile app can be a straightforward process. Here is an example of how to implement Firebase in a React Native app:</p>
-<pre><code class="language-jsx">// Import the Firebase SDK
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase SDK</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/auth&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/firestore&#39;</span><span class="p">;</span>
 
-// Initialize the Firebase app
-firebase.initializeApp({
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
-});
+<span class="c1">// Initialize the Firebase app</span>
+<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">projectId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_PROJECT_ID&#39;</span><span class="p">,</span>
+<span class="p">});</span>
 
-// Create a new user
-const createUser = async (email, password) =&gt; {
-  try {
-    const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-    console.log('User created:', user);
-  } catch (error) {
-    console.error('Error creating user:', error);
-  }
-};
+<span class="c1">// Create a new user</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">createUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">().</span><span class="nx">createUserWithEmailAndPassword</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User created:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating user:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
 
-// Login a user
-const login = async (email, password) =&gt; {
-  try {
-    const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-    console.log('User logged in:', user);
-  } catch (error) {
-    console.error('Error logging in:', error);
-  }
-};
-</code></pre>
+<span class="c1">// Login a user</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">().</span><span class="nx">signInWithEmailAndPassword</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User logged in:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error logging in:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, we are using the Firebase SDK to create a new user and login a user. We are also initializing the Firebase app with our API key, auth domain, and project ID.</p>
 <h3 id="data-storage-with-a-baas">Data Storage with a BaaS</h3>
 <p>Data storage is a critical component of any mobile app. With a BaaS, you can store data in a cloud-based database, which can be accessed from anywhere. Here is an example of how to store data in Firebase Firestore:</p>
-<pre><code class="language-javascript">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
 
-// Import the Firebase Firestore SDK
-import { firestore } from 'firebase/firestore';
+<span class="c1">// Import the Firebase Firestore SDK</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">firestore</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/firestore&#39;</span><span class="p">;</span>
 
-// Create a new document
-const createDocument = async (data) =&gt; {
-  try {
-    const doc = await firestore().collection('documents').add(data);
-    console.log('Document created:', doc);
-  } catch (error) {
-    console.error('Error creating document:', error);
-  }
-};
+<span class="c1">// Create a new document</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">createDocument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firestore</span><span class="p">().</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Document created:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doc</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating document:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
 
-// Get a document
-const getDocument = async (id) =&gt; {
-  try {
-    const doc = await firestore().collection('documents').doc(id).get();
-    console.log('Document:', doc.data());
-  } catch (error) {
-    console.error('Error getting document:', error);
-  }
-};
-</code></pre>
+<span class="c1">// Get a document</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">getDocument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firestore</span><span class="p">().</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">).</span><span class="nx">doc</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">get</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Document:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doc</span><span class="p">.</span><span class="nx">data</span><span class="p">());</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error getting document:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, we are using the Firebase Firestore SDK to create a new document and get a document. We are also using the <code>add</code> method to create a new document, and the <code>get</code> method to get a document.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>When it comes to performance, BaaS providers can vary significantly. Here are some performance benchmarks for Firebase and AWS Amplify:

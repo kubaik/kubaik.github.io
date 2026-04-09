@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,7 +159,7 @@
 <p>Some popular service mesh tools include Istio, Linkerd, and Consul. These tools provide a range of features and configurations to manage service communication.</p>
 <h2 id="implementing-a-service-mesh-with-istio">Implementing a Service Mesh with Istio</h2>
 <p>Istio is a popular open-source service mesh tool that provides a range of features for managing service communication. Here is an example of how to implement a service mesh with Istio:</p>
-<pre><code class="language-yml"># Define a service
+<div class="codehilite"><pre><span></span><code># Define a service
 apiVersion: v1
 kind: Service
 metadata:
@@ -172,8 +171,9 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
-</code></pre>
-<pre><code class="language-yml"># Define a virtual service
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code># Define a virtual service
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -192,7 +192,8 @@ spec:
         host: my-service
         port:
           number: 80
-</code></pre>
+</code></pre></div>
+
 <p>In this example, we define a service <code>my-service</code> and a virtual service <code>my-virtual-service</code>. The virtual service defines a route for traffic to the <code>my-service</code> service.</p>
 <h2 id="benefits-of-service-mesh-architecture">Benefits of Service Mesh Architecture</h2>
 <p>Service mesh architecture provides a range of benefits, including:
@@ -222,7 +223,7 @@ spec:
 * <strong>Airbnb</strong>: Airbnb uses a service mesh to manage communication between its microservices, providing a scalable and secure experience for its users</p>
 <h2 id="real-world-implementation-of-service-mesh-architecture">Real-World Implementation of Service Mesh Architecture</h2>
 <p>Here is an example of how to implement a service mesh with Istio and Kubernetes:</p>
-<pre><code class="language-yml"># Define a deployment
+<div class="codehilite"><pre><span></span><code># Define a deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -242,8 +243,9 @@ spec:
         image: my-image
         ports:
         - containerPort: 8080
-</code></pre>
-<pre><code class="language-yml"># Define a service
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code># Define a service
 apiVersion: v1
 kind: Service
 metadata:
@@ -255,8 +257,9 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
-</code></pre>
-<pre><code class="language-yml"># Define a virtual service
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code># Define a virtual service
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -275,7 +278,8 @@ spec:
         host: my-service
         port:
           number: 80
-</code></pre>
+</code></pre></div>
+
 <p>In this example, we define a deployment, service, and virtual service. The virtual service defines a route for traffic to the service.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>The cost of implementing a service mesh architecture can vary depending on the specific tools and platforms used. Here are some rough estimates of the costs involved:

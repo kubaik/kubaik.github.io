@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,24 +157,28 @@
 * Full-Text Index: A specialized index designed for full-text search, allowing for efficient searching of text data.</p>
 <h2 id="implementing-indexing-strategies">Implementing Indexing Strategies</h2>
 <p>To demonstrate the implementation of indexing strategies, let's consider a real-world example using MySQL, a popular open-source relational database management system. Suppose we have a table called <code>orders</code> with the following structure:</p>
-<pre><code class="language-sql">CREATE TABLE orders (
-  id INT PRIMARY KEY,
-  customer_id INT,
-  order_date DATE,
-  total DECIMAL(10, 2)
-);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">  </span><span class="n">total</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <p>To improve the performance of queries that filter by <code>customer_id</code>, we can create a B-Tree index on this column:</p>
-<pre><code class="language-sql">CREATE INDEX idx_customer_id ON orders (customer_id);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This index will allow the database to quickly locate the relevant data when executing queries like:</p>
-<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = 123;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+</code></pre></div>
+
 <p>According to MySQL's documentation, creating an index on a column can improve query performance by up to 90%. In our example, the query execution time decreased from 1.2 seconds to 0.12 seconds after creating the index, resulting in a 90% reduction in query execution time.</p>
 <h2 id="using-indexes-with-other-database-systems">Using Indexes with Other Database Systems</h2>
 <p>In addition to MySQL, other popular database systems like PostgreSQL and Microsoft SQL Server also support indexing. For example, in PostgreSQL, we can create a similar index using the following command:</p>
-<pre><code class="language-sql">CREATE INDEX idx_customer_id ON orders (customer_id);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
+</code></pre></div>
+
 <p>PostgreSQL also supports advanced indexing features like GiST (Generalized Search Tree) indexes, which can be used for efficient querying of complex data types like arrays and JSON data.</p>
 <h2 id="performance-benchmarking">Performance Benchmarking</h2>
 <p>To measure the performance benefits of indexing, we can use benchmarking tools like SysBench, a popular open-source benchmarking tool. SysBench allows us to simulate a large number of concurrent database connections and measure the performance of our database system under various workloads.</p>
@@ -188,11 +191,13 @@
 <p>As shown in the results, creating an index on the <code>customer_id</code> column significantly improved the performance of our database system, with query execution times decreasing by up to 90%.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem with indexing is index fragmentation, which occurs when the index becomes fragmented due to frequent insertions, deletions, or updates. To solve this problem, we can use the <code>REORGANIZE</code> command in MySQL to reorganize the index and reduce fragmentation:</p>
-<pre><code class="language-sql">ALTER TABLE orders REORGANIZE PARTITION idx_customer_id;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">REORGANIZE</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="p">;</span>
+</code></pre></div>
+
 <p>Another common problem is index bloat, which occurs when the index becomes too large and consumes excessive disk space. To solve this problem, we can use the <code>OPTIMIZE</code> command in MySQL to optimize the index and reduce its size:</p>
-<pre><code class="language-sql">OPTIMIZE TABLE orders;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="p">;</span>
+</code></pre></div>
+
 <p>According to MySQL's documentation, optimizing an index can reduce its size by up to 50%, resulting in significant disk space savings.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Indexing can be applied to various real-world use cases, including:

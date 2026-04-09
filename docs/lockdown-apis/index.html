@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,45 +157,46 @@
 * Input validation: Poor input validation can lead to SQL injection, cross-site scripting (XSS), and other types of attacks.
 * Rate limiting: Failure to implement rate limiting can result in brute-force attacks and denial-of-service (DoS) attacks.</p>
 <p>To mitigate these risks, it's essential to implement robust security measures. One such measure is authentication and authorization using OAuth 2.0, an industry-standard protocol for authorization. Here's an example of how to implement OAuth 2.0 using the Node.js <code>express</code> framework and the <code>oauth2-server</code> library:</p>
-<pre><code class="language-javascript">const express = require('express');
-const OAuth2Server = require('oauth2-server');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">OAuth2Server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;oauth2-server&#39;</span><span class="p">);</span>
 
-const app = express();
-const oauth2 = new OAuth2Server({
-  model: {
-    // Client credentials model
-    getClient: async (clientId) =&gt; {
-      // Retrieve client credentials from database
-      const client = await Client.findOne({ clientId });
-      return client;
-    },
-    // Access token model
-    saveAccessToken: async (token, client, user) =&gt; {
-      // Save access token to database
-      const accessToken = new AccessToken({
-        token,
-        client: client._id,
-        user: user._id,
-      });
-      await accessToken.save();
-    },
-  },
-});
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">oauth2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">OAuth2Server</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Client credentials model</span>
+<span class="w">    </span><span class="nx">getClient</span><span class="o">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">clientId</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Retrieve client credentials from database</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Client</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="p">});</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">client</span><span class="p">;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// Access token model</span>
+<span class="w">    </span><span class="nx">saveAccessToken</span><span class="o">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Save access token to database</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AccessToken</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">client</span><span class="o">:</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">accessToken</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
 
-app.post('/token', async (req, res) =&gt; {
-  try {
-    const token = await oauth2.token({
-      grantType: req.body.grant_type,
-      clientId: req.body.client_id,
-      clientSecret: req.body.client_secret,
-      redirectUri: req.body.redirect_uri,
-    });
-    res.json(token);
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid client credentials' });
-  }
-});
-</code></pre>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/token&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">oauth2</span><span class="p">.</span><span class="nx">token</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">grantType</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">grant_type</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">client_id</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">clientSecret</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">client_secret</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">redirectUri</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">redirect_uri</span><span class="p">,</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid client credentials&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This example demonstrates how to implement client credentials flow using OAuth 2.0. The <code>oauth2-server</code> library provides a robust implementation of the OAuth 2.0 protocol, including support for multiple grant types, token storage, and token revocation.</p>
 <h2 id="implementing-api-security-measures">Implementing API Security Measures</h2>
 <p>In addition to authentication and authorization, there are several other API security measures that can be implemented to lockdown APIs. These include:
@@ -204,15 +204,16 @@ app.post('/token', async (req, res) =&gt; {
 * <strong>Input validation</strong>: Validating user input can help prevent SQL injection and XSS attacks. For example, the <code>joi</code> library can be used to validate user input against a predefined schema.
 * <strong>Data encryption</strong>: Encrypting sensitive data can help protect it from interception and exploitation. For example, the <code>crypto</code> library can be used to encrypt data using the AES-256-CBC algorithm.</p>
 <p>Here's an example of how to implement rate limiting using the <code>express-rate-limit</code> library:</p>
-<pre><code class="language-javascript">const rateLimit = require('express-rate-limit');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rateLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-rate-limit&#39;</span><span class="p">);</span>
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
-});
+<span class="kd">const</span><span class="w"> </span><span class="nx">limiter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rateLimit</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">windowMs</span><span class="o">:</span><span class="w"> </span><span class="mf">15</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">,</span><span class="w"> </span><span class="c1">// 15 minutes</span>
+<span class="w">  </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="c1">// Limit each IP to 100 requests per window</span>
+<span class="p">});</span>
 
-app.use(limiter);
-</code></pre>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">limiter</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This example demonstrates how to limit the number of requests from a single IP address to 100 requests per 15-minute window.</p>
 <h2 id="using-api-security-tools-and-platforms">Using API Security Tools and Platforms</h2>
 <p>There are several API security tools and platforms available that can help lockdown APIs. These include:
@@ -224,8 +225,9 @@ app.use(limiter);
 * <strong>Authorization</strong>: Supports multiple authorization protocols, including IAM roles, Cognito user pools, and custom authorizers.
 * <strong>Rate limiting</strong>: Supports rate limiting using the <code>UsagePlan</code> feature, which enables limiting the number of requests from a single API key.</p>
 <p>Here's an example of how to create a usage plan in AWS API Gateway using the AWS CLI:</p>
-<pre><code class="language-bash">aws apigateway create-usage-plan --name MyUsagePlan --description &quot;My usage plan&quot; --quota-limit 100 --quota-period &quot;DAY&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>apigateway<span class="w"> </span>create-usage-plan<span class="w"> </span>--name<span class="w"> </span>MyUsagePlan<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;My usage plan&quot;</span><span class="w"> </span>--quota-limit<span class="w"> </span><span class="m">100</span><span class="w"> </span>--quota-period<span class="w"> </span><span class="s2">&quot;DAY&quot;</span>
+</code></pre></div>
+
 <p>This example demonstrates how to create a usage plan that limits the number of requests to 100 per day.</p>
 <h2 id="common-api-security-problems-and-solutions">Common API Security Problems and Solutions</h2>
 <p>Despite the availability of API security tools and platforms, common security problems still persist. These include:

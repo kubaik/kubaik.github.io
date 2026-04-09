@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -189,82 +188,88 @@
 <p>Let’s create a simple Kotlin Android application that fetches and displays a list of users from a public API. This example will demonstrate how to use Kotlin’s coroutines for network calls.</p>
 <h4 id="dependencies">Dependencies</h4>
 <p>Open <code>build.gradle</code> (Module: app) and add the following dependencies:</p>
-<pre><code class="language-groovy">dependencies {
-    implementation &quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0&quot;
-    implementation &quot;org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0&quot;
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s2">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0&quot;</span>
+<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s2">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0&quot;</span>
+<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;com.squareup.retrofit2:retrofit:2.9.0&#39;</span>
+<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;com.squareup.retrofit2:converter-gson:2.9.0&#39;</span>
+<span class="o">}</span>
+</code></pre></div>
+
 <p>Sync the project to download the dependencies.</p>
 <h4 id="user-data-model">User Data Model</h4>
 <p>Create a data model class to represent the user data:</p>
-<pre><code class="language-kotlin">data class User(
-    val id: Int,
-    val name: String,
-    val username: String,
-    val email: String
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">username</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">email</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <h4 id="retrofit-service">Retrofit Service</h4>
 <p>Next, create a Retrofit interface for making API calls:</p>
-<pre><code class="language-kotlin">interface ApiService {
-    @GET(&quot;users&quot;)
-    suspend fun getUsers(): List&lt;User&gt;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nc">ApiService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@GET</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="repository">Repository</h4>
 <p>Create a repository to handle data operations:</p>
-<pre><code class="language-kotlin">class UserRepository(private val apiService: ApiService) {
-    suspend fun fetchUsers(): List&lt;User&gt; {
-        return apiService.getUsers()
-    }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">UserRepository</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">apiService</span><span class="p">:</span><span class="w"> </span><span class="n">ApiService</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">fetchUsers</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">apiService</span><span class="p">.</span><span class="na">getUsers</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="viewmodel">ViewModel</h4>
 <p>Create a ViewModel to handle the UI-related data:</p>
-<pre><code class="language-kotlin">class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
-    private val _users = MutableLiveData&lt;List&lt;User&gt;&gt;()
-    val users: LiveData&lt;List&lt;User&gt;&gt; get() = _users
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">UserViewModel</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">userRepository</span><span class="p">:</span><span class="w"> </span><span class="n">UserRepository</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModel</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">_users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MutableLiveData</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">users</span><span class="p">:</span><span class="w"> </span><span class="n">LiveData</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="k">get</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_users</span>
 
-    fun fetchUsers() {
-        viewModelScope.launch {
-            _users.value = userRepository.fetchUsers()
-        }
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">fetchUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">viewModelScope</span><span class="p">.</span><span class="na">launch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_users</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">fetchUsers</span><span class="p">()</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="mainactivity">MainActivity</h4>
 <p>Finally, update your <code>MainActivity</code> to display the data:</p>
-<pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
-    private lateinit var userViewModel: UserViewModel
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">userViewModel</span><span class="p">:</span><span class="w"> </span><span class="n">UserViewModel</span>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">activity_main</span><span class="p">)</span>
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(&quot;https://jsonplaceholder.typicode.com/&quot;)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">retrofit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Retrofit</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">            </span><span class="p">.</span><span class="na">baseUrl</span><span class="p">(</span><span class="s">&quot;https://jsonplaceholder.typicode.com/&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">addConverterFactory</span><span class="p">(</span><span class="n">GsonConverterFactory</span><span class="p">.</span><span class="na">create</span><span class="p">())</span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
 
-        val apiService = retrofit.create(ApiService::class.java)
-        val repository = UserRepository(apiService)
-        userViewModel = ViewModelProvider(this, UserViewModelFactory(repository)).get(UserViewModel::class.java)
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">apiService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retrofit</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">ApiService</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserRepository</span><span class="p">(</span><span class="n">apiService</span><span class="p">)</span>
+<span class="w">        </span><span class="n">userViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ViewModelProvider</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">UserViewModelFactory</span><span class="p">(</span><span class="n">repository</span><span class="p">)).</span><span class="na">get</span><span class="p">(</span><span class="n">UserViewModel</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
 
-        userViewModel.fetchUsers()
+<span class="w">        </span><span class="n">userViewModel</span><span class="p">.</span><span class="na">fetchUsers</span><span class="p">()</span>
 
-        userViewModel.users.observe(this, Observer { users -&gt;
-            // Update UI with the list of users
-            displayUsers(users)
-        })
-    }
+<span class="w">        </span><span class="n">userViewModel</span><span class="p">.</span><span class="na">users</span><span class="p">.</span><span class="na">observe</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">Observer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="c1">// Update UI with the list of users</span>
+<span class="w">            </span><span class="n">displayUsers</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+<span class="w">        </span><span class="p">})</span>
+<span class="w">    </span><span class="p">}</span>
 
-    private fun displayUsers(users: List&lt;User&gt;) {
-        // Logic to display users in UI
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">displayUsers</span><span class="p">(</span><span class="n">users</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Logic to display users in UI</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <h4 id="problem-1-gradle-build-failures">Problem 1: Gradle Build Failures</h4>
 <p><strong>Symptoms</strong>: Gradle build fails due to dependency issues.</p>
@@ -283,30 +288,33 @@
 <h4 id="extension-functions">Extension Functions</h4>
 <p>Kotlin extension functions allow you to add new functions to existing classes without modifying their source code. This can be particularly useful for enhancing Android views.</p>
 <p>Example:</p>
-<pre><code class="language-kotlin">fun TextView.setTextColorResource(@ColorRes colorRes: Int) {
-    this.setTextColor(ContextCompat.getColor(this.context, colorRes))
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="n">TextView</span><span class="p">.</span><span class="nf">setTextColorResource</span><span class="p">(</span><span class="nd">@ColorRes</span><span class="w"> </span><span class="n">colorRes</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">setTextColor</span><span class="p">(</span><span class="n">ContextCompat</span><span class="p">.</span><span class="na">getColor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">context</span><span class="p">,</span><span class="w"> </span><span class="n">colorRes</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="sealed-classes">Sealed Classes</h4>
 <p>Sealed classes are a great way to represent restricted class hierarchies. They allow you to define a fixed set of subclasses.</p>
 <p>Example:</p>
-<pre><code class="language-kotlin">sealed class Result&lt;out T&gt; {
-    data class Success&lt;out T&gt;(val data: T) : Result&lt;T&gt;()
-    data class Error(val exception: Exception) : Result&lt;Nothing&gt;()
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">sealed</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Result</span><span class="o">&lt;</span><span class="k">out</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Success</span><span class="o">&lt;</span><span class="k">out</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">data</span><span class="p">:</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Error</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">exception</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Result</span><span class="o">&lt;</span><span class="n">Nothing</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="coroutines-for-asynchronous-programming">Coroutines for Asynchronous Programming</h4>
 <p>Kotlin coroutines provide a simple way to work with asynchronous code, making it easier to manage background tasks without blocking the main thread.</p>
 <p>Example of a coroutine:</p>
-<pre><code class="language-kotlin">fun fetchData() {
-    GlobalScope.launch(Dispatchers.IO) {
-        val data = apiService.getData() // This runs on a background thread
-        withContext(Dispatchers.Main) {
-            // Update UI with data
-        }
-    }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="nf">fetchData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">GlobalScope</span><span class="p">.</span><span class="na">launch</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">IO</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apiService</span><span class="p">.</span><span class="na">getData</span><span class="p">()</span><span class="w"> </span><span class="c1">// This runs on a background thread</span>
+<span class="w">        </span><span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">Main</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Update UI with data</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="tools-and-libraries-for-kotlin-android-development">Tools and Libraries for Kotlin Android Development</h3>
 <p>Here are some essential tools and libraries that can enhance your Kotlin Android development experience:</p>
 <ul>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,39 +157,41 @@
 <h2 id="cryptocurrency-development">Cryptocurrency Development</h2>
 <p>Cryptocurrency development involves creating new cryptocurrencies or tokens that can be used for various purposes. This can be done using a variety of programming languages, including Solidity, JavaScript, and Python. One popular platform for cryptocurrency development is Ethereum, which provides a robust set of tools and APIs for building and deploying smart contracts.</p>
 <p>For example, the following Solidity code snippet demonstrates a simple smart contract for a cryptocurrency:</p>
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract MyToken {
-    mapping(address =&gt; uint256) public balances;
+<span class="k">contract</span><span class="w"> </span><span class="ni">MyToken</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>balances<span class="p">;</span>
 
-    function transfer(address _to, uint256 _value) public {
-        require(balances[msg.sender] &gt;= _value, &quot;Insufficient balance&quot;);
-        balances[msg.sender] -= _value;
-        balances[_to] += _value;
-    }
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_value</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>_value<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
+<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>_value<span class="p">;</span>
+<span class="w">        </span>balances<span class="p">[</span>_to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>_value<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function balanceOf(address _owner) public view returns (uint256) {
-        return balances[_owner];
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_owner</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>balances<span class="p">[</span>_owner<span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This contract defines a simple token that can be transferred between accounts using the <code>transfer</code> function. The <code>balanceOf</code> function allows users to query the balance of a specific account.</p>
 <h3 id="cryptocurrency-trading">Cryptocurrency Trading</h3>
 <p>Cryptocurrency trading involves buying and selling cryptocurrencies on online exchanges. This can be done using a variety of platforms, including Binance, Coinbase, and Kraken. These platforms provide users with a range of tools and features, including real-time price charts, order books, and trading APIs.</p>
 <p>For example, the following Python code snippet demonstrates how to use the Binance API to retrieve the current price of Bitcoin:</p>
-<pre><code class="language-python">import requests
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
 
-api_url = &quot;https://api.binance.com/api/v3/ticker/price&quot;
-params = {&quot;symbol&quot;: &quot;BTCUSDT&quot;}
+<span class="n">api_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.binance.com/api/v3/ticker/price&quot;</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;symbol&quot;</span><span class="p">:</span> <span class="s2">&quot;BTCUSDT&quot;</span><span class="p">}</span>
 
-response = requests.get(api_url, params=params)
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 
-if response.status_code == 200:
-    data = response.json()
-    print(&quot;Current price of Bitcoin:&quot;, data[&quot;price&quot;])
-else:
-    print(&quot;Error retrieving price data&quot;)
-</code></pre>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current price of Bitcoin:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error retrieving price data&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code uses the <code>requests</code> library to send a GET request to the Binance API, which returns the current price of Bitcoin in USDT.</p>
 <h2 id="blockchain-use-cases">Blockchain Use Cases</h2>
 <p>Blockchain technology has a wide range of use cases beyond cryptocurrency, including:</p>
@@ -215,20 +216,21 @@ else:
 <li><strong>Second-layer scaling solutions</strong>: Second-layer scaling solutions involve using additional layers of infrastructure, such as payment channels and sidechains, to increase the scalability of a blockchain.</li>
 </ul>
 <p>For example, the following code snippet demonstrates how to use the Ethereum Layer 2 scaling solution, Optimism, to process off-chain transactions:</p>
-<pre><code class="language-javascript">const { ethers } = require(&quot;ethers&quot;);
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ethers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;ethers&quot;</span><span class="p">);</span>
 
-const provider = new ethers.providers.JsonRpcProvider(&quot;https://mainnet.optimism.io&quot;);
-const wallet = new ethers.Wallet(&quot;0x...&quot;, provider);
+<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">JsonRpcProvider</span><span class="p">(</span><span class="s2">&quot;https://mainnet.optimism.io&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Wallet</span><span class="p">(</span><span class="s2">&quot;0x...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">provider</span><span class="p">);</span>
 
-const contract = new ethers.Contract(&quot;0x...&quot;, [
-  &quot;function transfer(address _to, uint256 _value) public&quot;,
-]);
+<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="s2">&quot;0x...&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;function transfer(address _to, uint256 _value) public&quot;</span><span class="p">,</span>
+<span class="p">]);</span>
 
-const tx = contract.transfer(&quot;0x...&quot;, 100);
-tx.send().then((receipt) =&gt; {
-  console.log(&quot;Transaction receipt:&quot;, receipt);
-});
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">contract</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="s2">&quot;0x...&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
+<span class="nx">tx</span><span class="p">.</span><span class="nx">send</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">receipt</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Transaction receipt:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">receipt</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code uses the <code>ethers</code> library to interact with the Optimism network, which provides a Layer 2 scaling solution for Ethereum.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>There are a wide range of tools and platforms available for blockchain development, including:</p>
@@ -238,8 +240,9 @@ tx.send().then((receipt) =&gt; {
 <li><strong>Ganache</strong>: Ganache is a local development environment for Ethereum, which provides a simulated blockchain for testing and debugging.</li>
 </ul>
 <p>For example, the following command demonstrates how to use Truffle to deploy a smart contract to the Ethereum mainnet:</p>
-<pre><code class="language-bash">truffle migrate --network mainnet
-</code></pre>
+<div class="codehilite"><pre><span></span><code>truffle<span class="w"> </span>migrate<span class="w"> </span>--network<span class="w"> </span>mainnet
+</code></pre></div>
+
 <p>This command uses the <code>truffle</code> command-line tool to deploy a smart contract to the Ethereum mainnet.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of a blockchain can be measured using a variety of benchmarks, including:</p>

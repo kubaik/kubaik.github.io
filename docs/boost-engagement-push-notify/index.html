@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,26 +158,29 @@
 <p>For this example, we'll be using Firebase Cloud Messaging (FCM), which offers a free tier with unlimited notifications and a simple integration process.</p>
 <h2 id="implementing-push-notifications-with-fcm">Implementing Push Notifications with FCM</h2>
 <p>To get started with FCM, you'll need to create a project in the Firebase console and install the FCM SDK in your application. Here's an example of how to install the FCM SDK in a React Native application using npm:</p>
-<pre><code class="language-javascript">npm install @react-native-firebase/messaging
-</code></pre>
-<p>Once you've installed the SDK, you can request permission from the user to receive push notifications and register for an FCM token:</p>
-<pre><code class="language-javascript">import messaging from '@react-native-firebase/messaging';
+<div class="codehilite"><pre><span></span><code><span class="nx">npm</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="err">@</span><span class="nx">react</span><span class="o">-</span><span class="kr">native</span><span class="o">-</span><span class="nx">firebase</span><span class="o">/</span><span class="nx">messaging</span>
+</code></pre></div>
 
-messaging().requestPermission()
-  .then(() =&gt; {
-    messaging().getToken()
-      .then(token =&gt; {
-        console.log('FCM Token:', token);
-      });
-  });
-</code></pre>
+<p>Once you've installed the SDK, you can request permission from the user to receive push notifications and register for an FCM token:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">messaging</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@react-native-firebase/messaging&#39;</span><span class="p">;</span>
+
+<span class="nx">messaging</span><span class="p">().</span><span class="nx">requestPermission</span><span class="p">()</span>
+<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">messaging</span><span class="p">().</span><span class="nx">getToken</span><span class="p">()</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;FCM Token:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">  </span><span class="p">});</span>
+</code></pre></div>
+
 <p>This code requests permission from the user to receive push notifications and then registers for an FCM token, which is used to send targeted notifications to the user's device.</p>
 <h3 id="handling-push-notifications">Handling Push Notifications</h3>
 <p>Once you've registered for an FCM token, you can start sending push notifications to your users. To handle incoming notifications, you'll need to set up a notification listener:</p>
-<pre><code class="language-javascript">messaging().onMessage((message) =&gt; {
-  console.log('Received notification:', message);
-});
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">messaging</span><span class="p">().</span><span class="nx">onMessage</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Received notification:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code sets up a listener that will be triggered whenever a notification is received while the app is in the foreground. You can then use this listener to display the notification to the user or perform some other action.</p>
 <h2 id="common-use-cases-for-push-notifications">Common Use Cases for Push Notifications</h2>
 <p>Push notifications can be used in a variety of contexts to drive user engagement and retention. Here are some common use cases:

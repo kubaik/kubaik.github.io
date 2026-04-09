@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,48 +163,51 @@
 <p>To illustrate the power of advanced TypeScript types, let's consider a few practical code examples.</p>
 <h3 id="example-1-intersection-types">Example 1: Intersection Types</h3>
 <p>Suppose we are building a web application that requires users to log in before accessing certain features. We can define an intersection type to combine the <code>User</code> and <code>Authenticated</code> types:</p>
-<pre><code class="language-typescript">interface User {
-  id: number;
-  name: string;
-}
+<div class="codehilite"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
 
-interface Authenticated {
-  token: string;
-}
+<span class="kd">interface</span><span class="w"> </span><span class="nx">Authenticated</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
 
-type AuthenticatedUser = User &amp; Authenticated;
+<span class="kr">type</span><span class="w"> </span><span class="nx">AuthenticatedUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Authenticated</span><span class="p">;</span>
 
-const user: AuthenticatedUser = {
-  id: 1,
-  name: 'John Doe',
-  token: 'abc123',
-};
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kt">AuthenticatedUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;abc123&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, the <code>AuthenticatedUser</code> type is defined as the intersection of the <code>User</code> and <code>Authenticated</code> types. This ensures that any value of type <code>AuthenticatedUser</code> must have all the properties of both <code>User</code> and <code>Authenticated</code>.</p>
 <h3 id="example-2-union-types">Example 2: Union Types</h3>
 <p>Suppose we are building a web application that allows users to upload files in different formats. We can define a union type to represent the different file types:</p>
-<pre><code class="language-typescript">type FileType = 'image/jpeg' | 'image/png' | 'application/pdf';
+<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">FileType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;image/jpeg&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;image/png&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;application/pdf&#39;</span><span class="p">;</span>
 
-const file: { type: FileType; data: Buffer } = {
-  type: 'image/jpeg',
-  data: Buffer.from('image data'),
-};
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">file</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="nx">FileType</span><span class="p">;</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Buffer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Buffer.from</span><span class="p">(</span><span class="s1">&#39;image data&#39;</span><span class="p">),</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, the <code>FileType</code> type is defined as a union of three possible file types. This allows us to define a type that can represent different file types, while still providing type safety.</p>
 <h3 id="example-3-type-guards">Example 3: Type Guards</h3>
 <p>Suppose we are building a web application that requires users to provide a password to access certain features. We can define a type guard to narrow the type of a value within a specific scope:</p>
-<pre><code class="language-typescript">function isPasswordValid(password: string | null): password is string {
-  return password !== null &amp;&amp; password.length &gt;= 8;
-}
+<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">isPasswordValid</span><span class="p">(</span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">password</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">8</span><span class="p">;</span>
+<span class="p">}</span>
 
-const password: string | null = 'mysecretpassword';
+<span class="kd">const</span><span class="w"> </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mysecretpassword&#39;</span><span class="p">;</span>
 
-if (isPasswordValid(password)) {
-  console.log(password.length); // password is now known to be a string
-} else {
-  console.log('Invalid password');
-}
-</code></pre>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isPasswordValid</span><span class="p">(</span><span class="nx">password</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">password</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span><span class="w"> </span><span class="c1">// password is now known to be a string</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Invalid password&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, the <code>isPasswordValid</code> function is defined as a type guard that narrows the type of the <code>password</code> value within the <code>if</code> statement. This allows us to access the <code>length</code> property of the <code>password</code> value, which is only available on strings.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>There are several tools and platforms that support TypeScript, including:</p>

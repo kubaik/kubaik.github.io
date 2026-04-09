@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,57 +162,61 @@
 <h2 id="practical-example-building-a-todo-list-app-with-svelte">Practical Example: Building a Todo List App with Svelte</h2>
 <p>To demonstrate the power and simplicity of Svelte, let's build a simple Todo List app. We'll use the Svelte CLI to create a new project, and then add the necessary components and functionality to create a fully functional app.</p>
 <p>First, we'll create a new Svelte project using the Svelte CLI:</p>
-<pre><code class="language-bash">npx degit sveltejs/template my-todo-list-app
-cd my-todo-list-app
-npm install
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>degit<span class="w"> </span>sveltejs/template<span class="w"> </span>my-todo-list-app
+<span class="nb">cd</span><span class="w"> </span>my-todo-list-app
+npm<span class="w"> </span>install
+</code></pre></div>
+
 <p>Next, we'll create a new component for our Todo List item:</p>
-<pre><code class="language-svelte">&lt;!-- TodoItem.svelte --&gt;
-&lt;script&gt;
-  export let todo;
-&lt;/script&gt;
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- TodoItem.svelte --&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="w">  </span>export<span class="w"> </span>let<span class="w"> </span>todo;
+<span class="nt">&lt;/script&gt;</span>
 
-&lt;li&gt;
-  &lt;input type=&quot;checkbox&quot; checked={todo.completed} /&gt;
-  &lt;span&gt;{todo.text}&lt;/span&gt;
-&lt;/li&gt;
-</code></pre>
+<span class="nt">&lt;li&gt;</span>
+<span class="w">  </span><span class="nt">&lt;input</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;checkbox&quot;</span><span class="w"> </span><span class="na">checked=</span><span class="s">{todo.completed}</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;span&gt;</span>{todo.text}<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/li&gt;</span>
+</code></pre></div>
+
 <p>We'll also create a component for our Todo List:</p>
-<pre><code class="language-svelte">&lt;!-- TodoList.svelte --&gt;
-&lt;script&gt;
-  import TodoItem from './TodoItem.svelte';
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="err">!</span><span class="o">--</span> <span class="n">TodoList</span><span class="o">.</span><span class="n">svelte</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+  <span class="kn">import</span> <span class="nn">TodoItem</span> <span class="kn">from</span> <span class="s1">&#39;./TodoItem.svelte&#39;</span><span class="p">;</span>
 
-  let todos = [
-    { text: 'Buy milk', completed: false },
-    { text: 'Walk the dog', completed: true },
-    { text: 'Do laundry', completed: false }
-  ];
+  <span class="n">let</span> <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span> <span class="n">completed</span><span class="p">:</span> <span class="n">false</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Walk the dog&#39;</span><span class="p">,</span> <span class="n">completed</span><span class="p">:</span> <span class="n">true</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Do laundry&#39;</span><span class="p">,</span> <span class="n">completed</span><span class="p">:</span> <span class="n">false</span> <span class="p">}</span>
+  <span class="p">];</span>
 
-  function addTodo() {
-    todos = [...todos, { text: '', completed: false }];
-  }
+  <span class="n">function</span> <span class="n">addTodo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="n">todos</span><span class="p">,</span> <span class="p">{</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">completed</span><span class="p">:</span> <span class="n">false</span> <span class="p">}];</span>
+  <span class="p">}</span>
 
-  function removeTodo(index) {
-    todos = todos.filter((todo, i) =&gt; i !== index);
-  }
-&lt;/script&gt;
+  <span class="n">function</span> <span class="n">removeTodo</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">todos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">todo</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">i</span> <span class="o">!==</span> <span class="n">index</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
 
-&lt;ul&gt;
-  {#each todos as todo, index}
-    &lt;TodoItem todo={todo} /&gt;
-    &lt;button on:click={() =&gt; removeTodo(index)}&gt;Remove&lt;/button&gt;
-  {/each}
-  &lt;button on:click={addTodo}&gt;Add Todo&lt;/button&gt;
-&lt;/ul&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+  <span class="p">{</span><span class="c1">#each todos as todo, index}</span>
+    <span class="o">&lt;</span><span class="n">TodoItem</span> <span class="n">todo</span><span class="o">=</span><span class="p">{</span><span class="n">todo</span><span class="p">}</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">button</span> <span class="n">on</span><span class="p">:</span><span class="n">click</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="n">removeTodo</span><span class="p">(</span><span class="n">index</span><span class="p">)}</span><span class="o">&gt;</span><span class="n">Remove</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+  <span class="p">{</span><span class="o">/</span><span class="n">each</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="n">button</span> <span class="n">on</span><span class="p">:</span><span class="n">click</span><span class="o">=</span><span class="p">{</span><span class="n">addTodo</span><span class="p">}</span><span class="o">&gt;</span><span class="n">Add</span> <span class="n">Todo</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</code></pre></div>
+
 <p>Finally, we'll create our main App component:</p>
-<pre><code class="language-svelte">&lt;!-- App.svelte --&gt;
-&lt;script&gt;
-  import TodoList from './TodoList.svelte';
-&lt;/script&gt;
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="err">!</span><span class="o">--</span> <span class="n">App</span><span class="o">.</span><span class="n">svelte</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+  <span class="kn">import</span> <span class="nn">TodoList</span> <span class="kn">from</span> <span class="s1">&#39;./TodoList.svelte&#39;</span><span class="p">;</span>
+<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
 
-&lt;TodoList /&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="n">TodoList</span> <span class="o">/&gt;</span>
+</code></pre></div>
+
 <p>With these components in place, we can run our app using <code>npm run dev</code> and see our fully functional Todo List app in action.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To demonstrate the performance benefits of Svelte, let's compare the bundle sizes of our Todo List app with those of a similar app built using React. According to the Webpack Bundle Analyzer, our Svelte app has a bundle size of approximately 12KB, while a similar React app has a bundle size of around 120KB. This represents a reduction in bundle size of over 90%.</p>

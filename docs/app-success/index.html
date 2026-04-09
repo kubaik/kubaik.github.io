@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,86 +153,89 @@
 <h3 id="understanding-user-experience">Understanding User Experience</h3>
 <p>User experience (UX) is a critical component of app success. A well-designed app with an intuitive interface can increase user engagement and retention. According to a study by Localytics, 71% of users abandon apps within 90 days of download, primarily due to poor UX. To improve UX, developers can use tools like Adobe XD, Figma, or Sketch to design and prototype their apps.</p>
 <p>For example, when building a mobile app using React Native, you can use the following code to create a simple login screen:</p>
-<pre><code class="language-jsx">import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TextInput</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
 
-const LoginScreen = () =&gt; {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+<span class="kd">const</span><span class="w"> </span><span class="nx">LoginScreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="nx">setUsername</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">password</span><span class="p">,</span><span class="w"> </span><span class="nx">setPassword</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
 
-  const handleLogin = () =&gt; {
-    // Login logic here
-  };
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Login logic here</span>
+<span class="w">  </span><span class="p">};</span>
 
-  return (
-    &lt;View&gt;
-      &lt;Text&gt;Login&lt;/Text&gt;
-      &lt;TextInput
-        placeholder=&quot;Username&quot;
-        value={username}
-        onChangeText={(text) =&gt; setUsername(text)}
-      /&gt;
-      &lt;TextInput
-        placeholder=&quot;Password&quot;
-        secureTextEntry
-        value={password}
-        onChangeText={(text) =&gt; setPassword(text)}
-      /&gt;
-      &lt;Button title=&quot;Login&quot; onPress={handleLogin} /&gt;
-    &lt;/View&gt;
-  );
-};
-</code></pre>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Login</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">TextInput</span>
+<span class="w">        </span><span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Username&quot;</span>
+<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">username</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{(</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setUsername</span><span class="p">(</span><span class="nx">text</span><span class="p">)}</span>
+<span class="w">      </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">TextInput</span>
+<span class="w">        </span><span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Password&quot;</span>
+<span class="w">        </span><span class="na">secureTextEntry</span>
+<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">password</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{(</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setPassword</span><span class="p">(</span><span class="nx">text</span><span class="p">)}</span>
+<span class="w">      </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Login&quot;</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handleLogin</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>This code creates a basic login screen with username and password fields, and a login button. By using a library like React Native, developers can build cross-platform apps with a single codebase.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Performance is another critical factor in app success. Slow and buggy apps can lead to negative reviews and low ratings. To optimize performance, developers can use tools like Google's Firebase Performance Monitoring, which provides detailed insights into app performance, including metrics like startup time, screen rendering time, and network latency.</p>
 <p>For instance, when using Firebase Performance Monitoring, you can track the performance of your app's startup time using the following code:</p>
-<pre><code class="language-java">import com.google.firebase.perf.metrics.AddTrace;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.firebase.perf.metrics.AddTrace</span><span class="p">;</span>
 
-public class MainActivity extends AppCompatActivity {
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    AddTrace trace = FirebasePerformance.getInstance().newTrace(&quot;startup&quot;);
-    trace.start();
-    // Initialize app components here
-    trace.stop();
-  }
-}
-</code></pre>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainActivity</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nd">@Override</span>
+<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">Bundle</span><span class="w"> </span><span class="n">savedInstanceState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+<span class="w">    </span><span class="n">AddTrace</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FirebasePerformance</span><span class="p">.</span><span class="na">getInstance</span><span class="p">().</span><span class="na">newTrace</span><span class="p">(</span><span class="s">&quot;startup&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">trace</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// Initialize app components here</span>
+<span class="w">    </span><span class="n">trace</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code creates a new trace for the app's startup time and starts and stops the trace around the initialization code. By tracking performance metrics, developers can identify and fix bottlenecks in their app.</p>
 <h3 id="marketing-and-monetization">Marketing and Monetization</h3>
 <p>Marketing and monetization are essential components of app success. With over 5 million apps available, it's challenging to get your app discovered. Developers can use app store optimization (ASO) techniques, such as optimizing app titles, descriptions, and keywords, to improve their app's visibility in the app stores.</p>
 <p>According to a study by App Annie, the top-grossing apps in the app stores use in-app purchases (IAP) as their primary monetization strategy. IAP allows developers to sell digital goods and services within their apps, such as premium features, subscriptions, or virtual currencies. For example, when using the Google Play Billing library, you can implement IAP in your app using the following code:</p>
-<pre><code class="language-java">import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingResult;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.android.billingclient.api.BillingClient</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.android.billingclient.api.BillingResult</span><span class="p">;</span>
 
-public class MainActivity extends AppCompatActivity {
-  private BillingClient billingClient;
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainActivity</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">BillingClient</span><span class="w"> </span><span class="n">billingClient</span><span class="p">;</span>
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    billingClient = BillingClient.newBuilder(this).setListener(this).build();
-    billingClient.startConnection(new BillingClientStateListener() {
-      @Override
-      public void onBillingSetupFinished(BillingResult billingResult) {
-        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-          // IAP is available
-        }
-      }
-    });
-  }
+<span class="w">  </span><span class="nd">@Override</span>
+<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">Bundle</span><span class="w"> </span><span class="n">savedInstanceState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+<span class="w">    </span><span class="n">billingClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BillingClient</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="na">setListener</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="n">billingClient</span><span class="p">.</span><span class="na">startConnection</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">BillingClientStateListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nd">@Override</span>
+<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onBillingSetupFinished</span><span class="p">(</span><span class="n">BillingResult</span><span class="w"> </span><span class="n">billingResult</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">billingResult</span><span class="p">.</span><span class="na">getResponseCode</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">BillingClient</span><span class="p">.</span><span class="na">BillingResponseCode</span><span class="p">.</span><span class="na">OK</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// IAP is available</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
 
-  public void purchaseItem() {
-    BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-      .setSkuDetails(skuDetails)
-      .setType(BillingClient.SkuType.INAPP)
-      .build();
-    billingClient.launchBillingFlow(this, flowParams);
-  }
-}
-</code></pre>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">purchaseItem</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">BillingFlowParams</span><span class="w"> </span><span class="n">flowParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BillingFlowParams</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+<span class="w">      </span><span class="p">.</span><span class="na">setSkuDetails</span><span class="p">(</span><span class="n">skuDetails</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="na">setType</span><span class="p">(</span><span class="n">BillingClient</span><span class="p">.</span><span class="na">SkuType</span><span class="p">.</span><span class="na">INAPP</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="n">billingClient</span><span class="p">.</span><span class="na">launchBillingFlow</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">flowParams</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code initializes the Google Play Billing library and launches the billing flow for a specific SKU. By using IAP, developers can generate revenue from their apps and provide users with premium features and services.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the best efforts, mobile app development can be challenging, and common problems can arise. Here are some common problems and their solutions:</p>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -178,96 +177,101 @@
 <h3 id="example-1-using-cucumber-with-java">Example 1: Using Cucumber with Java</h3>
 <p>Let’s look at a simple example where we want to build a login feature using Cucumber and Java.</p>
 <h4 id="step-1-define-the-user-story">Step 1: Define the User Story</h4>
-<pre><code class="language-gherkin">Feature: User Login
+<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> User Login</span>
 
-  Scenario: Successful login with valid credentials
-    Given I have a valid username &quot;user@example.com&quot; and password &quot;password123&quot;
-    When I enter the username and password
-    Then I should be redirected to my dashboard
-</code></pre>
+<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Successful login with valid credentials</span>
+<span class="k">    Given </span><span class="nf">I have a valid username &quot;</span><span class="s">user@example.com</span><span class="nf">&quot; and password &quot;</span><span class="s">password123</span><span class="nf">&quot;</span>
+<span class="nf">    </span><span class="k">When </span><span class="nf">I enter the username and password</span>
+<span class="nf">    </span><span class="k">Then </span><span class="nf">I should be redirected to my dashboard</span>
+</code></pre></div>
+
 <h4 id="step-2-implement-step-definitions">Step 2: Implement Step Definitions</h4>
 <p>Create a Java class to define the step definitions for the scenarios.</p>
-<pre><code class="language-java">import io.cucumber.java.en.*;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">io.cucumber.java.en.*</span><span class="p">;</span>
 
-public class LoginSteps {
-    private String username;
-    private String password;
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LoginSteps</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
 
-    @Given(&quot;I have a valid username {string} and password {string}&quot;)
-    public void i_have_a_valid_username_and_password(String user, String pass) {
-        this.username = user;
-        this.password = pass;
-    }
+<span class="w">    </span><span class="nd">@Given</span><span class="p">(</span><span class="s">&quot;I have a valid username {string} and password {string}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_have_a_valid_username_and_password</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">pass</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pass</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @When(&quot;I enter the username and password&quot;)
-    public void i_enter_the_username_and_password() {
-        // Simulate entering username and password
-        System.out.println(&quot;Entering username: &quot; + username + &quot; and password: &quot; + password);
-    }
+<span class="w">    </span><span class="nd">@When</span><span class="p">(</span><span class="s">&quot;I enter the username and password&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_enter_the_username_and_password</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Simulate entering username and password</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Entering username: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; and password: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    @Then(&quot;I should be redirected to my dashboard&quot;)
-    public void i_should_be_redirected_to_my_dashboard() {
-        // Simulate dashboard redirection
-        System.out.println(&quot;Redirected to dashboard&quot;);
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="nd">@Then</span><span class="p">(</span><span class="s">&quot;I should be redirected to my dashboard&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_should_be_redirected_to_my_dashboard</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Simulate dashboard redirection</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Redirected to dashboard&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="step-3-run-the-tests">Step 3: Run the Tests</h4>
 <p>To run the tests, you would configure Cucumber with a test runner in JUnit:</p>
-<pre><code class="language-java">import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">io.cucumber.junit.Cucumber</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io.cucumber.junit.CucumberOptions</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.runner.RunWith</span><span class="p">;</span>
 
-@RunWith(Cucumber.class)
-@CucumberOptions(features = &quot;src/test/resources/features&quot;)
-public class RunCucumberTest {
-}
-</code></pre>
+<span class="nd">@RunWith</span><span class="p">(</span><span class="n">Cucumber</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="nd">@CucumberOptions</span><span class="p">(</span><span class="n">features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;src/test/resources/features&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RunCucumberTest</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="example-2-using-specflow-with-c">Example 2: Using SpecFlow with C</h3>
 <p>Now let’s see an implementation using SpecFlow in a .NET application.</p>
 <h4 id="step-1-define-the-user-story_1">Step 1: Define the User Story</h4>
-<pre><code class="language-gherkin">Feature: User Registration
+<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> User Registration</span>
 
-  Scenario: Successful registration with valid details
-    Given I am on the registration page
-    When I enter my details &quot;John Doe&quot; and &quot;john@example.com&quot; and &quot;Password123&quot;
-    Then I should see a confirmation message &quot;Registration Successful&quot;
-</code></pre>
+<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Successful registration with valid details</span>
+<span class="k">    Given </span><span class="nf">I am on the registration page</span>
+<span class="nf">    </span><span class="k">When </span><span class="nf">I enter my details &quot;</span><span class="s">John Doe</span><span class="nf">&quot; and &quot;</span><span class="s">john@example.com</span><span class="nf">&quot; and &quot;</span><span class="s">Password123</span><span class="nf">&quot;</span>
+<span class="nf">    </span><span class="k">Then </span><span class="nf">I should see a confirmation message &quot;</span><span class="s">Registration Successful</span><span class="nf">&quot;</span>
+</code></pre></div>
+
 <h4 id="step-2-implement-step-definitions_1">Step 2: Implement Step Definitions</h4>
 <p>Create a C# class for the step definitions:</p>
-<pre><code class="language-csharp">using TechTalk.SpecFlow;
-using NUnit.Framework;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">TechTalk.SpecFlow</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">NUnit.Framework</span><span class="p">;</span>
 
-[Binding]
-public class RegistrationSteps
-{
-    private string name;
-    private string email;
-    private string password;
+<span class="na">[Binding]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">RegistrationSteps</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
 
-    [Given(@&quot;I am on the registration page&quot;)]
-    public void GivenIAmOnTheRegistrationPage()
-    {
-        // Navigate to the registration page
-    }
+<span class="w">    </span><span class="na">[Given(@&quot;I am on the registration page&quot;)]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GivenIAmOnTheRegistrationPage</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Navigate to the registration page</span>
+<span class="w">    </span><span class="p">}</span>
 
-    [When(@&quot;I enter my details &quot;&quot;(.*)&quot;&quot; and &quot;&quot;(.*)&quot;&quot; and &quot;&quot;(.*)&quot;&quot;&quot;)]
-    public void WhenIEnterMyDetails(string name, string email, string password)
-    {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        // Code to simulate entering details into the form
-    }
+<span class="w">    </span><span class="na">[When(@&quot;I enter my details &quot;&quot;(.*)&quot;&quot; and &quot;&quot;(.*)&quot;&quot; and &quot;&quot;(.*)&quot;&quot;&quot;)]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">WhenIEnterMyDetails</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">password</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Code to simulate entering details into the form</span>
+<span class="w">    </span><span class="p">}</span>
 
-    [Then(@&quot;I should see a confirmation message &quot;&quot;(.*)&quot;&quot;&quot;)]
-    public void ThenIShouldSeeAConfirmationMessage(string message)
-    {
-        // Check if the confirmation message is displayed
-        Assert.AreEqual(&quot;Registration Successful&quot;, message);
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="na">[Then(@&quot;I should see a confirmation message &quot;&quot;(.*)&quot;&quot;&quot;)]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ThenIShouldSeeAConfirmationMessage</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Check if the confirmation message is displayed</span>
+<span class="w">        </span><span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="s">&quot;Registration Successful&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="step-3-run-the-tests_1">Step 3: Run the Tests</h4>
 <p>You can set up a test runner in Visual Studio to execute these SpecFlow tests.</p>
 <h2 id="use-cases-for-bdd">Use Cases for BDD</h2>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,35 +161,36 @@
 * <strong>Fixed Window Algorithm</strong>: This algorithm divides time into fixed windows (e.g., 1 minute) and limits the number of requests within each window.</p>
 <h3 id="example-code-token-bucket-algorithm">Example Code: Token Bucket Algorithm</h3>
 <p>Here is an example implementation of the token bucket algorithm in Python:</p>
-<pre><code class="language-python">import time
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
 
-class TokenBucket:
-    def __init__(self, rate, capacity):
-        self.rate = rate  # tokens per second
-        self.capacity = capacity  # maximum tokens
-        self.tokens = capacity
-        self.last_update = time.time()
+<span class="k">class</span> <span class="nc">TokenBucket</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>  <span class="c1"># tokens per second</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>  <span class="c1"># maximum tokens</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-    def consume(self, amount=1):
-        now = time.time()
-        elapsed = now - self.last_update
-        self.tokens = min(self.capacity, self.tokens + elapsed * self.rate)
-        self.last_update = now
+    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">+</span> <span class="n">elapsed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
 
-        if self.tokens &lt; amount:
-            return False  # not enough tokens
-        self.tokens -= amount
-        return True
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">&lt;</span> <span class="n">amount</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># not enough tokens</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">-=</span> <span class="n">amount</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-# Create a token bucket with 10 tokens per second and a capacity of 100 tokens
-bucket = TokenBucket(rate=10, capacity=100)
+<span class="c1"># Create a token bucket with 10 tokens per second and a capacity of 100 tokens</span>
+<span class="n">bucket</span> <span class="o">=</span> <span class="n">TokenBucket</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-# Consume 5 tokens
-if bucket.consume(5):
-    print(&quot;Tokens consumed successfully&quot;)
-else:
-    print(&quot;Not enough tokens available&quot;)
-</code></pre>
+<span class="c1"># Consume 5 tokens</span>
+<span class="k">if</span> <span class="n">bucket</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tokens consumed successfully&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not enough tokens available&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This implementation allows for a flexible rate limiting approach, where the rate and capacity can be adjusted according to the specific use case.</p>
 <h2 id="tools-and-platforms-for-rate-limiting">Tools and Platforms for Rate Limiting</h2>
 <p>Several tools and platforms provide built-in rate limiting and throttling features, including:
@@ -199,20 +199,21 @@ else:
 * <strong>Google Cloud Armor</strong>: A DDoS protection service that includes rate limiting and throttling capabilities.</p>
 <h3 id="example-use-case-rate-limiting-with-nginx">Example Use Case: Rate Limiting with NGINX</h3>
 <p>To rate limit incoming requests with NGINX, you can use the <code>limit_req</code> module. Here is an example configuration:</p>
-<pre><code class="language-nginx">http {
-    ...
-    limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
-    limit_req zone=one burst=10 nodelay;
+<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">...</span>
+<span class="w">    </span><span class="s">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=one:10m</span><span class="w"> </span><span class="s">rate=5r/s</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=one</span><span class="w"> </span><span class="s">burst=10</span><span class="w"> </span><span class="s">nodelay</span><span class="p">;</span>
 
-    server {
-        listen 80;
-        location / {
-            limit_req zone=one;
-            proxy_pass http://backend;
-        }
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=one</span><span class="p">;</span>
+<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This configuration limits incoming requests to 5 per second, with a burst limit of 10 requests. The <code>nodelay</code> parameter ensures that excess requests are delayed rather than rejected.</p>
 <h2 id="throttling-in-practice">Throttling in Practice</h2>
 <p>Throttling is often used to manage traffic during peak hours or to prevent brute-force attacks. Here are some common use cases for throttling:
@@ -221,41 +222,42 @@ else:
 * <strong>Network traffic</strong>: Throttling network traffic can help manage bandwidth and prevent network congestion.</p>
 <h3 id="example-code-throttling-login-attempts">Example Code: Throttling Login Attempts</h3>
 <p>Here is an example implementation of throttling login attempts in Python:</p>
-<pre><code class="language-python">import time
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
 
-class LoginThrottler:
-    def __init__(self, max_attempts, timeout):
-        self.max_attempts = max_attempts
-        self.timeout = timeout  # seconds
-        self.attempts = {}
+<span class="k">class</span> <span class="nc">LoginThrottler</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_attempts</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span> <span class="o">=</span> <span class="n">max_attempts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>  <span class="c1"># seconds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span> <span class="o">=</span> <span class="p">{}</span>
 
-    def is_allowed(self, username):
-        now = time.time()
-        if username not in self.attempts:
-            self.attempts[username] = []
-        attempts = self.attempts[username]
+    <span class="k">def</span> <span class="nf">is_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span><span class="p">[</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attempts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span><span class="p">[</span><span class="n">username</span><span class="p">]</span>
 
-        # Remove old attempts
-        attempts = [attempt for attempt in attempts if now - attempt &lt; self.timeout]
+        <span class="c1"># Remove old attempts</span>
+        <span class="n">attempts</span> <span class="o">=</span> <span class="p">[</span><span class="n">attempt</span> <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="n">attempts</span> <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">]</span>
 
-        # Check if the user has exceeded the maximum attempts
-        if len(attempts) &gt;= self.max_attempts:
-            return False
+        <span class="c1"># Check if the user has exceeded the maximum attempts</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">attempts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
-        # Add the current attempt
-        attempts.append(now)
-        self.attempts[username] = attempts
-        return True
+        <span class="c1"># Add the current attempt</span>
+        <span class="n">attempts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span><span class="p">[</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="n">attempts</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-# Create a login throttler with 5 maximum attempts and a 1-minute timeout
-throttler = LoginThrottler(max_attempts=5, timeout=60)
+<span class="c1"># Create a login throttler with 5 maximum attempts and a 1-minute timeout</span>
+<span class="n">throttler</span> <span class="o">=</span> <span class="n">LoginThrottler</span><span class="p">(</span><span class="n">max_attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 
-# Check if a login attempt is allowed
-if throttler.is_allowed(&quot;username&quot;):
-    print(&quot;Login attempt allowed&quot;)
-else:
-    print(&quot;Login attempt blocked due to throttling&quot;)
-</code></pre>
+<span class="c1"># Check if a login attempt is allowed</span>
+<span class="k">if</span> <span class="n">throttler</span><span class="o">.</span><span class="n">is_allowed</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Login attempt allowed&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Login attempt blocked due to throttling&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This implementation uses a dictionary to store the login attempts for each user, and checks if the user has exceeded the maximum attempts within the specified timeout.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to rate limiting and throttling:

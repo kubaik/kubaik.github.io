@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -195,18 +194,20 @@
 <li>Basic knowledge of Python and cryptocurrency concepts.</li>
 <li>Install the <code>bitcoinlib</code> library:</li>
 </ul>
-<pre><code class="language-bash">pip install bitcoinlib
-</code></pre>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>bitcoinlib
+</code></pre></div>
+
 <h4 id="code-snippet-creating-a-bitcoin-wallet">Code Snippet: Creating a Bitcoin Wallet</h4>
-<pre><code class="language-python">from bitcoinlib.wallets import Wallet
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">bitcoinlib.wallets</span> <span class="kn">import</span> <span class="n">Wallet</span>
 
-# Create a new Bitcoin wallet
-wallet = Wallet.create('MyWallet')
+<span class="c1"># Create a new Bitcoin wallet</span>
+<span class="n">wallet</span> <span class="o">=</span> <span class="n">Wallet</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;MyWallet&#39;</span><span class="p">)</span>
 
-# Print wallet details
-print(f&quot;Wallet Name: {wallet.name}&quot;)
-print(f&quot;Wallet Balance: {wallet.balance()} BTC&quot;)
-</code></pre>
+<span class="c1"># Print wallet details</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wallet Name: </span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wallet Balance: </span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">balance</span><span class="p">()</span><span class="si">}</span><span class="s2"> BTC&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <h4 id="explanation">Explanation</h4>
 <ul>
 <li>This code snippet uses the <code>bitcoinlib</code> library to create a new Bitcoin wallet named "MyWallet".</li>
@@ -214,19 +215,20 @@ print(f&quot;Wallet Balance: {wallet.balance()} BTC&quot;)
 </ul>
 <h3 id="sending-bitcoin-from-your-wallet">Sending Bitcoin from Your Wallet</h3>
 <p>To send Bitcoin, you need the recipient’s address and the amount to send. Here’s how to implement this:</p>
-<pre><code class="language-python">from bitcoinlib.wallets import Wallet
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">bitcoinlib.wallets</span> <span class="kn">import</span> <span class="n">Wallet</span>
 
-# Load the existing wallet
-wallet = Wallet('MyWallet')
+<span class="c1"># Load the existing wallet</span>
+<span class="n">wallet</span> <span class="o">=</span> <span class="n">Wallet</span><span class="p">(</span><span class="s1">&#39;MyWallet&#39;</span><span class="p">)</span>
 
-# Define recipient address and amount
-recipient_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'  # Example address
-amount_to_send = 0.001  # Amount in BTC
+<span class="c1"># Define recipient address and amount</span>
+<span class="n">recipient_address</span> <span class="o">=</span> <span class="s1">&#39;1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa&#39;</span>  <span class="c1"># Example address</span>
+<span class="n">amount_to_send</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># Amount in BTC</span>
 
-# Send Bitcoin
-tx = wallet.send_to(recipient_address, amount_to_send)
-print(f&quot;Transaction ID: {tx.txid}&quot;)
-</code></pre>
+<span class="c1"># Send Bitcoin</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">wallet</span><span class="o">.</span><span class="n">send_to</span><span class="p">(</span><span class="n">recipient_address</span><span class="p">,</span> <span class="n">amount_to_send</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transaction ID: </span><span class="si">{</span><span class="n">tx</span><span class="o">.</span><span class="n">txid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <h4 id="explanation_1">Explanation</h4>
 <ul>
 <li>This snippet loads the existing wallet and sends a specified amount of Bitcoin to the recipient's address.</li>
@@ -252,21 +254,22 @@ print(f&quot;Transaction ID: {tx.txid}&quot;)
 <p>Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They run on blockchain platforms like Ethereum, enabling trustless transactions without intermediaries.</p>
 <h4 id="example-simple-smart-contract-in-solidity">Example: Simple Smart Contract in Solidity</h4>
 <p>Here’s a simple smart contract written in Solidity that allows users to store a value:</p>
-<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="c1">// SPDX-License-Identifier: MIT</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract SimpleStorage {
-    uint256 storedData;
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">storedData</span><span class="p">;</span>
 
-    function set(uint256 x) public {
-        storedData = x;
-    }
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span>storedData<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function get() public view returns (uint256) {
-        return storedData;
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">get</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>storedData<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="explanation_2">Explanation</h4>
 <ul>
 <li>This contract allows setting and retrieving a number.</li>

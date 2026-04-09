@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,21 +161,22 @@
 </ul>
 <h2 id="building-a-pwa">Building a PWA</h2>
 <p>Building a PWA involves several steps, including setting up a service worker, creating a web app manifest, and implementing responsive design. Here is an example of how to set up a service worker using the Workbox library:</p>
-<pre><code class="language-javascript">// Import the Workbox library
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
+<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Workbox library</span>
+<span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js&#39;</span><span class="p">);</span>
 
-// Set up the service worker
-workbox.routing.registerRoute(
-  new RegExp('.*'),
-  new workbox.strategies.CacheFirst({
-    cacheName: 'my-cache',
-  }),
-);
+<span class="c1">// Set up the service worker</span>
+<span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">),</span>
+<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-cache&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">}),</span>
+<span class="p">);</span>
 
-// Set up the cache
-workbox.cacheNames.cacheName = 'my-cache';
-workbox.cacheNames.prefix = 'my-prefix';
-</code></pre>
+<span class="c1">// Set up the cache</span>
+<span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheNames</span><span class="p">.</span><span class="nx">cacheName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-cache&#39;</span><span class="p">;</span>
+<span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheNames</span><span class="p">.</span><span class="nx">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-prefix&#39;</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This code sets up a service worker that caches all requests using the CacheFirst strategy.</p>
 <h3 id="tools-and-platforms-for-building-pwas">Tools and Platforms for Building PWAs</h3>
 <p>There are several tools and platforms that can help you build PWAs, including:
@@ -193,27 +193,29 @@ workbox.cacheNames.prefix = 'my-prefix';
 <p>Twitter's PWA is a great example of how PWAs can provide a native app-like experience. The PWA uses a service worker to cache tweets and provide offline support, and it also uses push notifications to notify users of new tweets. According to Twitter, the PWA has resulted in a 20% increase in user engagement and a 15% increase in ad revenue.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems faced by developers when building PWAs is <strong>debugging service workers</strong>. Service workers can be difficult to debug because they run in the background and don't provide direct access to the console. To solve this problem, you can use the <strong>Chrome DevTools</strong> to debug your service worker. Here is an example of how to debug a service worker using Chrome DevTools:</p>
-<pre><code class="language-javascript">// Open the Chrome DevTools
-// Go to the Application tab
-// Click on the Service Workers option
-// Select the service worker you want to debug
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Open the Chrome DevTools</span>
+<span class="c1">// Go to the Application tab</span>
+<span class="c1">// Click on the Service Workers option</span>
+<span class="c1">// Select the service worker you want to debug</span>
+</code></pre></div>
+
 <p>This will allow you to debug your service worker and inspect its cache and other properties.</p>
 <h3 id="solving-the-cache-invalidation-problem">Solving the Cache Invalidation Problem</h3>
 <p>Another common problem faced by developers when building PWAs is <strong>cache invalidation</strong>. Cache invalidation occurs when the cache is not updated when the underlying data changes. To solve this problem, you can use a <strong>cache invalidation strategy</strong> like the CacheFirst strategy. Here is an example of how to implement the CacheFirst strategy using Workbox:</p>
-<pre><code class="language-javascript">// Set up the CacheFirst strategy
-workbox.routing.registerRoute(
-  new RegExp('.*'),
-  new workbox.strategies.CacheFirst({
-    cacheName: 'my-cache',
-    plugins: [
-      new workbox.cacheableResponse.CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-    ],
-  }),
-);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Set up the CacheFirst strategy</span>
+<span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">),</span>
+<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-cache&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">statuses</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">200</span><span class="p">],</span>
+<span class="w">      </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="p">}),</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <p>This code sets up the CacheFirst strategy and caches all requests with a status code of 200.</p>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>

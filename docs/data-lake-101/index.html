@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,25 +158,26 @@
 * <strong>Data Analytics</strong>: This layer provides a interface for data analysts and scientists to analyze the processed data and extract insights. Tools like Tableau, Power BI, and Apache Zeppelin can be used for data analytics.</p>
 <h2 id="implementing-a-data-lake">Implementing a Data Lake</h2>
 <p>To implement a data lake, you can use a combination of open-source tools and cloud-based services. Here's an example of how you can use Apache NiFi, Apache Spark, and Amazon S3 to build a data lake:</p>
-<pre><code class="language-python"># Import necessary libraries
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import necessary libraries</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">col</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName(&quot;Data Lake&quot;).getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Data Lake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Define the schema for the JSON data
-schema = spark.read.json(&quot;schema.json&quot;).schema
+<span class="c1"># Define the schema for the JSON data</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;schema.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">schema</span>
 
-# Read the JSON data from Amazon S3
-df = spark.read.json(&quot;s3a://my-bucket/data.json&quot;, schema=schema)
+<span class="c1"># Read the JSON data from Amazon S3</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;s3a://my-bucket/data.json&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
 
-# Process the data using Apache Spark
-df = df.filter(col(&quot;age&quot;) &gt; 30)
+<span class="c1"># Process the data using Apache Spark</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>
 
-# Write the processed data back to Amazon S3
-df.write.parquet(&quot;s3a://my-bucket/processed_data&quot;)
-</code></pre>
+<span class="c1"># Write the processed data back to Amazon S3</span>
+<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;s3a://my-bucket/processed_data&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we use Apache Spark to read JSON data from Amazon S3, process the data using Spark SQL, and write the processed data back to Amazon S3 in Parquet format.</p>
 <h3 id="using-cloud-based-services">Using Cloud-Based Services</h3>
 <p>Cloud-based services like Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) provide a managed platform for building and deploying data lakes. These services offer a range of tools and features that make it easy to implement a data lake, including:

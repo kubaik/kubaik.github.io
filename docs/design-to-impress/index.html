@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,17 +170,18 @@
 <li><strong>Caching</strong>: The ability to store frequently accessed data in a cache to reduce the load on the system.</li>
 </ul>
 <p>For example, consider a system that needs to handle 10,000 concurrent users, with each user making an average of 10 requests per minute. To design a scalable system, we could use a load balancer to distribute traffic across multiple servers, with each server having a caching layer to reduce the load on the database.</p>
-<pre><code class="language-python">import redis
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
 
-# Create a Redis client
-redis_client = redis.Redis(host='localhost', port=6379, db=0)
+<span class="c1"># Create a Redis client</span>
+<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-# Set a key-value pair in the cache
-redis_client.set('key', 'value')
+<span class="c1"># Set a key-value pair in the cache</span>
+<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
 
-# Get the value from the cache
-value = redis_client.get('key')
-</code></pre>
+<span class="c1"># Get the value from the cache</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we're using the Redis caching system to store frequently accessed data. By using a caching layer, we can reduce the load on the database and improve the performance of the system.</p>
 <h2 id="designing-a-highly-available-system">Designing a Highly Available System</h2>
 <p>To design a highly available system, it's essential to consider the following factors:</p>
@@ -191,32 +191,33 @@ value = redis_client.get('key')
 <li><strong>Monitoring</strong>: The ability to monitor the system and detect failures or issues before they become critical.</li>
 </ul>
 <p>For example, consider a system that needs to be available 99.99% of the time, with a maximum downtime of 5 minutes per year. To design a highly available system, we could use a combination of load balancing, redundancy, and failover to ensure that the system is always available.</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-# Create an AWS EC2 client
-ec2_client = boto3.client('ec2')
+<span class="c1"># Create an AWS EC2 client</span>
+<span class="n">ec2_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
 
-# Create a load balancer
-load_balancer = ec2_client.create_load_balancer(
-    LoadBalancerName='my-load-balancer',
-    Listeners=[
-        {
-            'Protocol': 'HTTP',
-            'LoadBalancerPort': 80,
-            'InstanceProtocol': 'HTTP',
-            'InstancePort': 80
-        }
-    ]
-)
+<span class="c1"># Create a load balancer</span>
+<span class="n">load_balancer</span> <span class="o">=</span> <span class="n">ec2_client</span><span class="o">.</span><span class="n">create_load_balancer</span><span class="p">(</span>
+    <span class="n">LoadBalancerName</span><span class="o">=</span><span class="s1">&#39;my-load-balancer&#39;</span><span class="p">,</span>
+    <span class="n">Listeners</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;Protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LoadBalancerPort&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+            <span class="s1">&#39;InstanceProtocol&#39;</span><span class="p">:</span> <span class="s1">&#39;HTTP&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;InstancePort&#39;</span><span class="p">:</span> <span class="mi">80</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
-# Create a auto scaling group
-auto_scaling_group = ec2_client.create_auto_scaling_group(
-    AutoScalingGroupName='my-auto-scaling-group',
-    LaunchConfigurationName='my-launch-configuration',
-    MinSize=1,
-    MaxSize=10
-)
-</code></pre>
+<span class="c1"># Create a auto scaling group</span>
+<span class="n">auto_scaling_group</span> <span class="o">=</span> <span class="n">ec2_client</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
+    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;my-auto-scaling-group&#39;</span><span class="p">,</span>
+    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;my-launch-configuration&#39;</span><span class="p">,</span>
+    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we're using Amazon Web Services (AWS) to create a load balancer and an auto scaling group. By using a load balancer and an auto scaling group, we can ensure that the system is always available and can scale to meet the needs of a growing user base.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that arise during system design interviews include:</p>
@@ -226,25 +227,26 @@ auto_scaling_group = ec2_client.create_auto_scaling_group(
 <li><strong>Handling high availability</strong>: To handle high availability, it's essential to use redundancy, failover, and monitoring to ensure that the system is always available.</li>
 </ul>
 <p>For example, consider a system that needs to handle 100,000 concurrent users, with each user making an average of 10 requests per minute. To handle this traffic, we could use a combination of load balancing, caching, and horizontal scaling to distribute the load across multiple servers.</p>
-<pre><code class="language-python">import nginx
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nginx</span>
 
-# Create an Nginx configuration
-nginx_config = nginx.Config(
-    worker_processes=4,
-    worker_connections=1024,
-    keepalive_timeout=65
-)
+<span class="c1"># Create an Nginx configuration</span>
+<span class="n">nginx_config</span> <span class="o">=</span> <span class="n">nginx</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span>
+    <span class="n">worker_processes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">worker_connections</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">keepalive_timeout</span><span class="o">=</span><span class="mi">65</span>
+<span class="p">)</span>
 
-# Create a load balancer
-load_balancer = nginx_config.add_load_balancer(
-    name='my-load-balancer',
-    servers=[
-        'server1:80',
-        'server2:80',
-        'server3:80'
-    ]
-)
-</code></pre>
+<span class="c1"># Create a load balancer</span>
+<span class="n">load_balancer</span> <span class="o">=</span> <span class="n">nginx_config</span><span class="o">.</span><span class="n">add_load_balancer</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-load-balancer&#39;</span><span class="p">,</span>
+    <span class="n">servers</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;server1:80&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;server2:80&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;server3:80&#39;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we're using Nginx to create a load balancer that distributes traffic across multiple servers. By using a load balancer, we can ensure that the system can handle high traffic and provide a good user experience.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Some common use cases for system design include:</p>

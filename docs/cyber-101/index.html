@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,8 +169,9 @@
 * <strong>Penetration testing</strong>: Simulating attacks to test system defenses
 * <strong>Code reviews</strong>: Analyzing code to identify potential security flaws</p>
 <p>For example, to perform a vulnerability scan using <strong>Nessus</strong>, you can use the following command:</p>
-<pre><code class="language-bash">nessus -i &lt;ip_address&gt; -p &lt;port&gt; -u &lt;username&gt; -p &lt;password&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>nessus<span class="w"> </span>-i<span class="w"> </span>&lt;ip_address&gt;<span class="w"> </span>-p<span class="w"> </span>&lt;port&gt;<span class="w"> </span>-u<span class="w"> </span>&lt;username&gt;<span class="w"> </span>-p<span class="w"> </span>&lt;password&gt;
+</code></pre></div>
+
 <p>This will scan the specified IP address and port for potential vulnerabilities, providing a detailed report of any issues found.</p>
 <h2 id="security-measures">Security Measures</h2>
 <p>To protect against cyber threats, various security measures can be implemented, including:
@@ -180,9 +180,10 @@
 * <strong>Encryption</strong>: Techniques for protecting data in transit or at rest
 * <strong>Access Control</strong>: Mechanisms for controlling user access to resources</p>
 <p>For example, to configure a <strong>firewall</strong> using <strong>iptables</strong>, you can use the following commands:</p>
-<pre><code class="language-bash">iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-</code></pre>
+<div class="codehilite"><pre><span></span><code>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">22</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+</code></pre></div>
+
 <p>These commands will allow incoming traffic on ports 80 (HTTP) and 22 (SSH), while blocking all other incoming traffic.</p>
 <h2 id="incident-response">Incident Response</h2>
 <p>In the event of a security incident, it's essential to have a plan in place for responding quickly and effectively. This includes:
@@ -203,26 +204,27 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 * <strong>Endpoint Protection</strong>: <strong>Symantec</strong>, <strong>McAfee</strong>
 * <strong>Network Segmentation</strong>: <strong>Cisco</strong>, <strong>Juniper</strong></p>
 <p>For example, to configure <strong>Splunk</strong> as a SIEM system, you can use the following commands:</p>
-<pre><code class="language-python">import splunklib.client as client
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">splunklib.client</span> <span class="k">as</span> <span class="nn">client</span>
 
-# Connect to the Splunk server
-conn = client.connect(
-    host=&quot;localhost&quot;,
-    port=8089,
-    username=&quot;admin&quot;,
-    password=&quot;password&quot;
-)
+<span class="c1"># Connect to the Splunk server</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">8089</span><span class="p">,</span>
+    <span class="n">username</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;password&quot;</span>
+<span class="p">)</span>
 
-# Define a search query
-search_query = &quot;index=main | stats count by source&quot;
+<span class="c1"># Define a search query</span>
+<span class="n">search_query</span> <span class="o">=</span> <span class="s2">&quot;index=main | stats count by source&quot;</span>
 
-# Execute the search query
-results = conn.search(search_query)
+<span class="c1"># Execute the search query</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_query</span><span class="p">)</span>
 
-# Print the results
-for result in results:
-    print(result)
-</code></pre>
+<span class="c1"># Print the results</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This will connect to a <strong>Splunk</strong> server, define a search query, execute the query, and print the results.</p>
 <h2 id="real-world-applications">Real-World Applications</h2>
 <p>Cybersecurity has numerous real-world applications, including:

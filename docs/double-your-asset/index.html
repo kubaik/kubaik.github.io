@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -173,55 +172,58 @@
 <h3 id="example-1-predictive-maintenance">Example 1: Predictive Maintenance</h3>
 <p>Predictive maintenance is a key application of digital twin technology. By creating a digital twin of a machine or device, manufacturers can simulate real-world scenarios and predict when maintenance is required. This can help reduce downtime and increase productivity.</p>
 <p>For example, the following code snippet shows how to use the Siemens MindSphere API to create a digital twin of a machine and predict when maintenance is required:</p>
-<pre><code class="language-python">import requests
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
 
-# Create a digital twin of a machine
-machine_id = &quot;123456&quot;
-digital_twin_url = f&quot;https://mindSphere.example.com/api/v1/machines/{machine_id}/digital-twin&quot;
-response = requests.post(digital_twin_url, auth=(&quot;username&quot;, &quot;password&quot;))
+<span class="c1"># Create a digital twin of a machine</span>
+<span class="n">machine_id</span> <span class="o">=</span> <span class="s2">&quot;123456&quot;</span>
+<span class="n">digital_twin_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://mindSphere.example.com/api/v1/machines/</span><span class="si">{</span><span class="n">machine_id</span><span class="si">}</span><span class="s2">/digital-twin&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">digital_twin_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">))</span>
 
-# Predict when maintenance is required
-maintenance_url = f&quot;https://mindSphere.example.com/api/v1/machines/{machine_id}/maintenance/predict&quot;
-response = requests.get(maintenance_url, auth=(&quot;username&quot;, &quot;password&quot;))
+<span class="c1"># Predict when maintenance is required</span>
+<span class="n">maintenance_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://mindSphere.example.com/api/v1/machines/</span><span class="si">{</span><span class="n">machine_id</span><span class="si">}</span><span class="s2">/maintenance/predict&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">maintenance_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">))</span>
 
-# Print the predicted maintenance schedule
-print(response.json())
-</code></pre>
+<span class="c1"># Print the predicted maintenance schedule</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+
 <p>This code snippet creates a digital twin of a machine using the Siemens MindSphere API, and then uses the API to predict when maintenance is required. The predicted maintenance schedule is then printed to the console.</p>
 <h3 id="example-2-energy-optimization">Example 2: Energy Optimization</h3>
 <p>Energy optimization is another key application of digital twin technology. By creating a digital twin of a building or industrial process, manufacturers can simulate real-world scenarios and optimize energy consumption.</p>
 <p>For example, the following code snippet shows how to use the GE Digital Predix API to create a digital twin of a building and optimize energy consumption:</p>
-<pre><code class="language-python">import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# Create a digital twin of a building
-building_id = &quot;123456&quot;
-digital_twin_url = f&quot;https://predix.example.com/api/v1/buildings/{building_id}/digital-twin&quot;
-response = requests.post(digital_twin_url, auth=(&quot;username&quot;, &quot;password&quot;))
+<span class="c1"># Create a digital twin of a building</span>
+<span class="n">building_id</span> <span class="o">=</span> <span class="s2">&quot;123456&quot;</span>
+<span class="n">digital_twin_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://predix.example.com/api/v1/buildings/</span><span class="si">{</span><span class="n">building_id</span><span class="si">}</span><span class="s2">/digital-twin&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">digital_twin_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">))</span>
 
-# Optimize energy consumption
-energy_url = f&quot;https://predix.example.com/api/v1/buildings/{building_id}/energy/optimize&quot;
-response = requests.get(energy_url, auth=(&quot;username&quot;, &quot;password&quot;))
+<span class="c1"># Optimize energy consumption</span>
+<span class="n">energy_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://predix.example.com/api/v1/buildings/</span><span class="si">{</span><span class="n">building_id</span><span class="si">}</span><span class="s2">/energy/optimize&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">energy_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">))</span>
 
-# Print the optimized energy consumption schedule
-print(response.json())
-</code></pre>
+<span class="c1"># Print the optimized energy consumption schedule</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+
 <p>This code snippet creates a digital twin of a building using the GE Digital Predix API, and then uses the API to optimize energy consumption. The optimized energy consumption schedule is then printed to the console.</p>
 <h3 id="example-3-supply-chain-optimization">Example 3: Supply Chain Optimization</h3>
 <p>Supply chain optimization is another key application of digital twin technology. By creating a digital twin of a supply chain, manufacturers can simulate real-world scenarios and optimize logistics and transportation.</p>
 <p>For example, the following code snippet shows how to use the Dassault Systèmes 3DEXPERIENCE API to create a digital twin of a supply chain and optimize logistics and transportation:</p>
-<pre><code class="language-java">import java.util.ArrayList;
-import java.util.List;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
 
-// Create a digital twin of a supply chain
-String supplyChainId = &quot;123456&quot;;
-DigitalTwin digitalTwin = new DigitalTwin(supplyChainId);
+<span class="c1">// Create a digital twin of a supply chain</span>
+<span class="n">String</span><span class="w"> </span><span class="n">supplyChainId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;123456&quot;</span><span class="p">;</span>
+<span class="n">DigitalTwin</span><span class="w"> </span><span class="n">digitalTwin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DigitalTwin</span><span class="p">(</span><span class="n">supplyChainId</span><span class="p">);</span>
 
-// Optimize logistics and transportation
-List&lt;LogisticsRoute&gt; routes = digitalTwin.optimizeLogistics();
-for (LogisticsRoute route : routes) {
-    System.out.println(route.getRoute());
-}
-</code></pre>
+<span class="c1">// Optimize logistics and transportation</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">LogisticsRoute</span><span class="o">&gt;</span><span class="w"> </span><span class="n">routes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalTwin</span><span class="p">.</span><span class="na">optimizeLogistics</span><span class="p">();</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">LogisticsRoute</span><span class="w"> </span><span class="n">route</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">routes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">route</span><span class="p">.</span><span class="na">getRoute</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code snippet creates a digital twin of a supply chain using the Dassault Systèmes 3DEXPERIENCE API, and then uses the API to optimize logistics and transportation. The optimized logistics and transportation routes are then printed to the console.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions associated with digital twin technology:</p>

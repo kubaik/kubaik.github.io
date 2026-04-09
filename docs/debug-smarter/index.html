@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,16 +166,17 @@
 </ul>
 <h3 id="example-using-print-debugging">Example: Using Print Debugging</h3>
 <p>Here is an example of using print debugging in Python:</p>
-<pre><code class="language-python">def calculate_total(price, quantity):
-    total = price * quantity
-    print(&quot;Total:&quot;, total)  # Print the total value
-    return total
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_total</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">quantity</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">price</span> <span class="o">*</span> <span class="n">quantity</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total:&quot;</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>  <span class="c1"># Print the total value</span>
+    <span class="k">return</span> <span class="n">total</span>
 
-price = 10.99
-quantity = 2
-total = calculate_total(price, quantity)
-print(&quot;Final total:&quot;, total)
-</code></pre>
+<span class="n">price</span> <span class="o">=</span> <span class="mf">10.99</span>
+<span class="n">quantity</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">quantity</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final total:&quot;</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, the <code>print</code> statement is used to output the <code>total</code> value. This can help developers understand the flow of the program and identify any errors.</p>
 <h2 id="debugging-tools">Debugging Tools</h2>
 <p>There are several debugging tools available, including:</p>
@@ -187,14 +187,15 @@ print(&quot;Final total:&quot;, total)
 </ul>
 <h3 id="example-using-pycharm-debugger">Example: Using PyCharm Debugger</h3>
 <p>Here is an example of using the PyCharm debugger:</p>
-<pre><code class="language-python">def calculate_total(price, quantity):
-    total = price * quantity
-    return total
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_total</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">quantity</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">price</span> <span class="o">*</span> <span class="n">quantity</span>
+    <span class="k">return</span> <span class="n">total</span>
 
-price = 10.99
-quantity = 2
-total = calculate_total(price, quantity)
-</code></pre>
+<span class="n">price</span> <span class="o">=</span> <span class="mf">10.99</span>
+<span class="n">quantity</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">quantity</span><span class="p">)</span>
+</code></pre></div>
+
 <p>To debug this code in PyCharm, follow these steps:
 1. Open the PyCharm IDE and create a new project.
 2. Create a new Python file and add the above code.
@@ -210,12 +211,13 @@ total = calculate_total(price, quantity)
 </ul>
 <h3 id="example-using-sumo-logic">Example: Using Sumo Logic</h3>
 <p>Here is an example of using Sumo Logic to analyze logs:</p>
-<pre><code class="language-json">{
-  &quot;timestamp&quot;: &quot;2022-01-01 12:00:00&quot;,
-  &quot;level&quot;: &quot;ERROR&quot;,
-  &quot;message&quot;: &quot;Failed to connect to database&quot;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-01 12:00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Failed to connect to database&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, the log message indicates an error connecting to the database. Sumo Logic can be used to analyze this log message and provide insights into the root cause of the error.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions that developers may encounter during debugging:
@@ -229,8 +231,9 @@ total = calculate_total(price, quantity)
 * <strong>JMeter</strong>: A popular open-source performance testing platform that provides a wide range of features and plugins.</p>
 <h3 id="example-using-apache-benchmark">Example: Using Apache Benchmark</h3>
 <p>Here is an example of using Apache Benchmark to benchmark a web application:</p>
-<pre><code class="language-bash">ab -n 100 -c 10 http://example.com/
-</code></pre>
+<div class="codehilite"><pre><span></span><code>ab<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>http://example.com/
+</code></pre></div>
+
 <p>In this example, the <code>ab</code> command is used to benchmark the web application with 100 requests and 10 concurrent connections. The output will provide performance metrics, such as response time and throughput.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for debugging techniques and tools:

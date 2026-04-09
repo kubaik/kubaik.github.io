@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,51 +164,53 @@
 * <strong>Word2Vec</strong>: A popular method for generating word embeddings, which can be used for text search and recommendation systems.
 * <strong>Sentence-BERT</strong>: A sentence embedding model that can be used for semantic search and text classification.</p>
 <p>To generate vector embeddings, you can use libraries like <strong>Transformers</strong> (by Hugging Face) or <strong>Sentence-Transformers</strong>. For example, the following Python code snippet uses the <strong>Transformers</strong> library to generate sentence embeddings:</p>
-<pre><code class="language-python">import torch
-from transformers import AutoModel, AutoTokenizer
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
 
-# Load pre-trained model and tokenizer
-model_name = &quot;sentence-transformers/all-MiniLM-L6-v2&quot;
-model = AutoModel.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+<span class="c1"># Load pre-trained model and tokenizer</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
 
-# Define a function to generate sentence embeddings
-def generate_embedding(sentence):
-    inputs = tokenizer(sentence, return_tensors=&quot;pt&quot;)
-    outputs = model(**inputs)
-    embeddings = outputs.last_hidden_state[:, 0, :]
-    return embeddings.detach().numpy()[0]
+<span class="c1"># Define a function to generate sentence embeddings</span>
+<span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
-# Generate an embedding for a sample sentence
-sentence = &quot;This is a sample sentence.&quot;
-embedding = generate_embedding(sentence)
-print(embedding.shape)  # Output: (384,)
-</code></pre>
+<span class="c1"># Generate an embedding for a sample sentence</span>
+<span class="n">sentence</span> <span class="o">=</span> <span class="s2">&quot;This is a sample sentence.&quot;</span>
+<span class="n">embedding</span> <span class="o">=</span> <span class="n">generate_embedding</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Output: (384,)</span>
+</code></pre></div>
+
 <p>In this example, we load a pre-trained <strong>Sentence-BERT</strong> model and use it to generate a sentence embedding for a given input sentence. The resulting embedding is a dense vector with 384 dimensions.</p>
 <h3 id="indexing-and-querying">Indexing and Querying</h3>
 <p>Once you have generated vector embeddings, you can index them using a vector database like <strong>Faiss</strong> or <strong>Pinecone</strong>. Indexing involves creating a data structure that allows for efficient similarity searches. For example, the following Python code snippet uses <strong>Faiss</strong> to index a set of vector embeddings:</p>
-<pre><code class="language-python">import numpy as np
-import faiss
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">faiss</span>
 
-# Generate some sample embeddings
-embeddings = np.random.rand(1000, 384).astype(&quot;float32&quot;)
+<span class="c1"># Generate some sample embeddings</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
-# Create a Faiss index
-index = faiss.IndexFlatL2(384)
+<span class="c1"># Create a Faiss index</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatL2</span><span class="p">(</span><span class="mi">384</span><span class="p">)</span>
 
-# Add the embeddings to the index
-index.add(embeddings)
+<span class="c1"># Add the embeddings to the index</span>
+<span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
 
-# Define a query embedding
-query_embedding = np.random.rand(1, 384).astype(&quot;float32&quot;)
+<span class="c1"># Define a query embedding</span>
+<span class="n">query_embedding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
-# Search for similar embeddings
-distances, indices = index.search(query_embedding, k=10)
+<span class="c1"># Search for similar embeddings</span>
+<span class="n">distances</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query_embedding</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-# Print the results
-print(distances)  # Output: [[0.123, 0.456, ...]]
-print(indices)  # Output: [[234, 567, ...]]
-</code></pre>
+<span class="c1"># Print the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>  <span class="c1"># Output: [[0.123, 0.456, ...]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>  <span class="c1"># Output: [[234, 567, ...]]</span>
+</code></pre></div>
+
 <p>In this example, we create a <strong>Faiss</strong> index using the <strong>IndexFlatL2</strong> algorithm, which is suitable for small to medium-sized datasets. We then add a set of sample embeddings to the index and define a query embedding. Finally, we search for similar embeddings using the <strong>search</strong> method, which returns the distances and indices of the top-10 most similar embeddings.</p>
 <h2 id="real-world-applications">Real-World Applications</h2>
 <p>Vector databases have numerous real-world applications, including:

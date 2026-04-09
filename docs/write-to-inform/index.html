@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,31 +167,33 @@ Some popular tools for technical writing include MadCap Flare, Paligo, and Notio
 <p>For example, when writing a technical document, you may need to use tools like GitHub to manage version control and collaborate with other team members. GitHub offers a range of features, including code review, issue tracking, and project management, which can help streamline the writing process and improve the overall quality of the content. According to a survey by GitHub, 72% of developers use the platform for version control, and 56% use it for collaboration.</p>
 <h3 id="code-examples">Code Examples</h3>
 <p>Here is an example of how to use Markdown to create a table:</p>
-<pre><code class="language-markdown">| Column 1 | Column 2 | Column 3 |
+<div class="codehilite"><pre><span></span><code>| Column 1 | Column 2 | Column 3 |
 | --- | --- | --- |
 | Cell 1 | Cell 2 | Cell 3 |
 | Cell 4 | Cell 5 | Cell 6 |
-</code></pre>
+</code></pre></div>
+
 <p>This code will render a table with three columns and two rows. You can customize the table by adding more rows and columns, and by using different formatting options, such as bold and italic text.</p>
 <p>Another example is how to use Python to generate a technical report:</p>
-<pre><code class="language-python">import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# Load the data
-data = pd.read_csv('data.csv')
+<span class="c1"># Load the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
 
-# Generate the report
-report = &quot;&quot;&quot;
-## Introduction
-This report provides an overview of the data.
+<span class="c1"># Generate the report</span>
+<span class="n">report</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">## Introduction</span>
+<span class="s2">This report provides an overview of the data.</span>
 
-## Data Summary
-The data consists of {0} rows and {1} columns.
-&quot;&quot;&quot;.format(len(data), len(data.columns))
+<span class="s2">## Data Summary</span>
+<span class="s2">The data consists of </span><span class="si">{0}</span><span class="s2"> rows and </span><span class="si">{1}</span><span class="s2"> columns.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
 
-# Save the report to a file
-with open('report.md', 'w') as f:
-    f.write(report)
-</code></pre>
+<span class="c1"># Save the report to a file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;report.md&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code will generate a report that includes an introduction and a data summary. The report will be saved to a file named <code>report.md</code>.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem in technical writing is ensuring that the content is accessible to a wide range of readers. To address this issue, you can use tools like Readability Score, which analyzes the text and provides a score based on its clarity and readability. According to a study by the American Press Institute, articles with a readability score of 60 or higher are more likely to be shared on social media.</p>

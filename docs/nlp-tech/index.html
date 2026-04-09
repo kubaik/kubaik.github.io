@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,71 +161,74 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples that demonstrate NLP techniques in action:</p>
 <h3 id="example-1-tokenization-and-stemming-with-nltk">Example 1: Tokenization and Stemming with NLTK</h3>
-<pre><code class="language-python">import nltk
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">PorterStemmer</span>
 
-# Download the required NLTK data
-nltk.download('punkt')
+<span class="c1"># Download the required NLTK data</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
 
-# Define a function to tokenize and stem text
-def tokenize_and_stem(text):
-    # Tokenize the text
-    tokens = word_tokenize(text)
+<span class="c1"># Define a function to tokenize and stem text</span>
+<span class="k">def</span> <span class="nf">tokenize_and_stem</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="c1"># Tokenize the text</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    # Initialize the stemmer
-    stemmer = PorterStemmer()
+    <span class="c1"># Initialize the stemmer</span>
+    <span class="n">stemmer</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
 
-    # Stem the tokens
-    stemmed_tokens = [stemmer.stem(token) for token in tokens]
+    <span class="c1"># Stem the tokens</span>
+    <span class="n">stemmed_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
 
-    return stemmed_tokens
+    <span class="k">return</span> <span class="n">stemmed_tokens</span>
 
-# Test the function
-text = &quot;This is an example sentence.&quot;
-print(tokenize_and_stem(text))
-</code></pre>
+<span class="c1"># Test the function</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is an example sentence.&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenize_and_stem</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</code></pre></div>
+
 <p>This code uses the NLTK library to tokenize and stem a piece of text. The <code>word_tokenize</code> function breaks the text down into individual words, and the <code>PorterStemmer</code> class reduces the words to their base form.</p>
 <h3 id="example-2-named-entity-recognition-with-spacy">Example 2: Named Entity Recognition with SpaCy</h3>
-<pre><code class="language-python">import spacy
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
 
-# Load the English language model
-nlp = spacy.load('en_core_web_sm')
+<span class="c1"># Load the English language model</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en_core_web_sm&#39;</span><span class="p">)</span>
 
-# Define a function to perform NER on text
-def perform_ner(text):
-    # Process the text
-    doc = nlp(text)
+<span class="c1"># Define a function to perform NER on text</span>
+<span class="k">def</span> <span class="nf">perform_ner</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="c1"># Process the text</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    # Extract the named entities
-    entities = [(entity.text, entity.label_) for entity in doc.ents]
+    <span class="c1"># Extract the named entities</span>
+    <span class="n">entities</span> <span class="o">=</span> <span class="p">[(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span> <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">]</span>
 
-    return entities
+    <span class="k">return</span> <span class="n">entities</span>
 
-# Test the function
-text = &quot;Apple is a technology company.&quot;
-print(perform_ner(text))
-</code></pre>
+<span class="c1"># Test the function</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is a technology company.&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">perform_ner</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</code></pre></div>
+
 <p>This code uses the SpaCy library to perform NER on a piece of text. The <code>en_core_web_sm</code> model is a pre-trained model that can identify a wide range of named entities, including people, places, and organizations.</p>
 <h3 id="example-3-sentiment-analysis-with-textblob">Example 3: Sentiment Analysis with TextBlob</h3>
-<pre><code class="language-python">from textblob import TextBlob
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
 
-# Define a function to perform sentiment analysis on text
-def perform_sentiment_analysis(text):
-    # Create a TextBlob object
-    blob = TextBlob(text)
+<span class="c1"># Define a function to perform sentiment analysis on text</span>
+<span class="k">def</span> <span class="nf">perform_sentiment_analysis</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="c1"># Create a TextBlob object</span>
+    <span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    # Get the sentiment polarity and subjectivity
-    polarity = blob.sentiment.polarity
-    subjectivity = blob.sentiment.subjectivity
+    <span class="c1"># Get the sentiment polarity and subjectivity</span>
+    <span class="n">polarity</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span>
+    <span class="n">subjectivity</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">subjectivity</span>
 
-    return polarity, subjectivity
+    <span class="k">return</span> <span class="n">polarity</span><span class="p">,</span> <span class="n">subjectivity</span>
 
-# Test the function
-text = &quot;I love this product!&quot;
-polarity, subjectivity = perform_sentiment_analysis(text)
-print(f&quot;Polarity: {polarity}, Subjectivity: {subjectivity}&quot;)
-</code></pre>
+<span class="c1"># Test the function</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love this product!&quot;</span>
+<span class="n">polarity</span><span class="p">,</span> <span class="n">subjectivity</span> <span class="o">=</span> <span class="n">perform_sentiment_analysis</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Polarity: </span><span class="si">{</span><span class="n">polarity</span><span class="si">}</span><span class="s2">, Subjectivity: </span><span class="si">{</span><span class="n">subjectivity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code uses the TextBlob library to perform sentiment analysis on a piece of text. The <code>TextBlob</code> class provides a simple way to get the sentiment polarity and subjectivity of a piece of text.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>There are many tools and platforms available for NLP, including:

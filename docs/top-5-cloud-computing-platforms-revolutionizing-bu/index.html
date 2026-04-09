@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -207,15 +206,16 @@
 <li><strong>Use Cloud Functions for Predictions</strong>: Trigger predictions via HTTP requests.</li>
 </ol>
 <h3 id="code-example-deploying-a-model">Code Example: Deploying a Model</h3>
-<pre><code class="language-python">from google.cloud import aiplatform
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
 
-# Initialize the AI Platform
-aiplatform.init(project='your-project-id', location='us-central1')
+<span class="c1"># Initialize the AI Platform</span>
+<span class="n">aiplatform</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;your-project-id&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;us-central1&#39;</span><span class="p">)</span>
 
-# Deploy model
-model = aiplatform.Model.upload(display_name='sales_model', artifact_uri='gs://your-bucket/model')
-model.deploy(machine_type='n1-standard-4')
-</code></pre>
+<span class="c1"># Deploy model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;sales_model&#39;</span><span class="p">,</span> <span class="n">artifact_uri</span><span class="o">=</span><span class="s1">&#39;gs://your-bucket/model&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">machine_type</span><span class="o">=</span><span class="s1">&#39;n1-standard-4&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <h3 id="pricing_2">Pricing</h3>
 <p>BigQuery charges $5 per TB of data processed and $0.02 per GB for storage. Costs can vary based on usage, making it essential to monitor data queries.</p>
 <h3 id="common-problems-solutions_2">Common Problems &amp; Solutions</h3>

@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,41 +160,43 @@
 <p><strong>Use case:</strong> Predicting continuous numerical outcomes.</p>
 <p><strong>How it works:</strong> Linear regression models the relationship between input features and a continuous target variable by fitting a straight line (or hyperplane in multiple dimensions).</p>
 <p><strong>Example:</strong> Estimating house prices based on size and location.</p>
-<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
-# Sample data
-X = [[1400], [1600], [1700], [1875], [1100]]
-y = [245000, 312000, 279000, 308000, 199000]
+<span class="c1"># Sample data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1400</span><span class="p">],</span> <span class="p">[</span><span class="mi">1600</span><span class="p">],</span> <span class="p">[</span><span class="mi">1700</span><span class="p">],</span> <span class="p">[</span><span class="mi">1875</span><span class="p">],</span> <span class="p">[</span><span class="mi">1100</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">245000</span><span class="p">,</span> <span class="mi">312000</span><span class="p">,</span> <span class="mi">279000</span><span class="p">,</span> <span class="mi">308000</span><span class="p">,</span> <span class="mi">199000</span><span class="p">]</span>
 
-model = LinearRegression()
-model.fit(X, y)
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-# Predict price for a 1500 sq ft house
-predicted_price = model.predict([[1500]])
-print(f&quot;Predicted price: ${predicted_price[0]:,.2f}&quot;)
-</code></pre>
+<span class="c1"># Predict price for a 1500 sq ft house</span>
+<span class="n">predicted_price</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">1500</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted price: $</span><span class="si">{</span><span class="n">predicted_price</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Actionable tip:</strong> Always check the assumptions of linear regression, such as linearity and homoscedasticity, before applying.</p>
 <hr />
 <h3 id="2-logistic-regression">2. Logistic Regression</h3>
 <p><strong>Use case:</strong> Binary classification problems.</p>
 <p><strong>How it works:</strong> Logistic regression estimates the probability that an input belongs to a particular class using the logistic (sigmoid) function.</p>
 <p><strong>Example:</strong> Predicting whether a customer will buy a product (Yes/No).</p>
-<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
+<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
 
 
-# Sample data
-X = [[25], [35], [45], [52], [23], [43], [52]]
-y = [0, 0, 1, 1, 0, 1, 1]  # 0: No, 1: Yes
+<span class="c1"># Sample data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">25</span><span class="p">],</span> <span class="p">[</span><span class="mi">35</span><span class="p">],</span> <span class="p">[</span><span class="mi">45</span><span class="p">],</span> <span class="p">[</span><span class="mi">52</span><span class="p">],</span> <span class="p">[</span><span class="mi">23</span><span class="p">],</span> <span class="p">[</span><span class="mi">43</span><span class="p">],</span> <span class="p">[</span><span class="mi">52</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 0: No, 1: Yes</span>
 
-model = LogisticRegression()
-model.fit(X, y)
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-# Predict probability for a 40-year-old
-probability = model.predict_proba([[40]])[0][1]
-print(f&quot;Chance of buying: {probability * 100:.2f}%&quot;)
-</code></pre>
+<span class="c1"># Predict probability for a 40-year-old</span>
+<span class="n">probability</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">40</span><span class="p">]])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chance of buying: </span><span class="si">{</span><span class="n">probability</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Tip:</strong> Use logistic regression as a baseline for binary classification before exploring more complex models.</p>
 <hr />
 <h3 id="3-decision-trees">3. Decision Trees</h3>
@@ -205,55 +206,58 @@ print(f&quot;Chance of buying: {probability * 100:.2f}%&quot;)
 - Easy to interpret.
 - Handles both numerical and categorical data.</p>
 <p><strong>Example:</strong> Classifying whether a loan application is approved.</p>
-<pre><code class="language-python">from sklearn.tree import DecisionTreeClassifier
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
-X = [[35, 50000], [50, 60000], [25, 40000], [40, 52000]]
-y = [0, 1, 0, 1]  # 0: Declined, 1: Approved
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">50000</span><span class="p">],</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60000</span><span class="p">],</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">40000</span><span class="p">],</span> <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">52000</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 0: Declined, 1: Approved</span>
 
-clf = DecisionTreeClassifier()
-clf.fit(X, y)
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-# Predict approval for a 30-year-old with $45,000 income
-prediction = clf.predict([[30, 45000]])
-print(&quot;Loan Approved&quot; if prediction[0] == 1 else &quot;Loan Declined&quot;)
-</code></pre>
+<span class="c1"># Predict approval for a 30-year-old with $45,000 income</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">45000</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loan Approved&quot;</span> <span class="k">if</span> <span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Loan Declined&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Tip:</strong> Use pruning or limit tree depth to prevent overfitting.</p>
 <hr />
 <h3 id="4-naive-bayes">4. Naive Bayes</h3>
 <p><strong>Use case:</strong> Text classification, spam detection, sentiment analysis.</p>
 <p><strong>How it works:</strong> Based on Bayes' theorem, assuming independence among features.</p>
 <p><strong>Example:</strong> Classifying emails as spam or not spam.</p>
-<pre><code class="language-python">from sklearn.naive_bayes import MultinomialNB
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
 
-# Sample data: word counts
-X = [[2, 1, 0], [1, 0, 1], [0, 2, 1], [1, 1, 0]]
-y = [0, 0, 1, 1]  # 0: Not Spam, 1: Spam
+<span class="c1"># Sample data: word counts</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 0: Not Spam, 1: Spam</span>
 
-model = MultinomialNB()
-model.fit(X, y)
+<span class="n">model</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-# Predict class for new email
-new_email = [1, 0, 1]
-prediction = model.predict([new_email])
-print(&quot;Spam&quot; if prediction[0] == 1 else &quot;Not Spam&quot;)
-</code></pre>
+<span class="c1"># Predict class for new email</span>
+<span class="n">new_email</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">new_email</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spam&quot;</span> <span class="k">if</span> <span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Not Spam&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Tip:</strong> Naive Bayes is fast and effective for large-scale text data.</p>
 <hr />
 <h3 id="5-k-nearest-neighbors-knn">5. K-Nearest Neighbors (KNN)</h3>
 <p><strong>Use case:</strong> Classification and regression, especially when decision boundaries are irregular.</p>
 <p><strong>How it works:</strong> Classifies a data point based on the majority class among its k closest neighbors.</p>
-<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
 
-X = [[0], [1], [2], [3]]
-y = [0, 0, 1, 1]
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(X, y)
+<span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-# Predict class for a new point
-prediction = knn.predict([[1.5]])
-print(&quot;Class:&quot;, prediction[0])
-</code></pre>
+<span class="c1"># Predict class for a new point</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Class:&quot;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+
 <p><strong>Tip:</strong> Choose k carefully; too small can be noisy, too large can dilute local patterns.</p>
 <hr />
 <h2 id="practical-tips-for-beginners">Practical Tips for Beginners</h2>
@@ -268,31 +272,32 @@ print(&quot;Class:&quot;, prediction[0])
 <hr />
 <h2 id="hands-on-example-building-a-classifier">Hands-On Example: Building a Classifier</h2>
 <p>Let's walk through a practical example of building a classifier with scikit-learn.</p>
-<pre><code class="language-python">from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
-# Load dataset
-iris = load_iris()
-X, y = iris.data, iris.target
+<span class="c1"># Load dataset</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
 
-# Split into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+<span class="c1"># Split into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
 
-# Initialize and train model
-clf = DecisionTreeClassifier()
-clf.fit(X_train, y_train)
+<span class="c1"># Initialize and train model</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Make predictions
-y_pred = clf.predict(X_test)
+<span class="c1"># Make predictions</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-# Evaluate
-accuracy = accuracy_score(y_test, y_pred)
-print(f&quot;Accuracy: {accuracy * 100:.2f}%&quot;)
-</code></pre>
+<span class="c1"># Evaluate</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Key Takeaway:</strong> Always evaluate your model on unseen data to gauge its real-world performance.</p>
 <hr />
 <h2 id="conclusion">Conclusion</h2>

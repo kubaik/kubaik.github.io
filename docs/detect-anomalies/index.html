@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,26 +163,27 @@
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h3 id="example-anomaly-detection-using-one-class-svm">Example: Anomaly Detection using One-Class SVM</h3>
 <p>One-Class SVM is a popular machine learning algorithm for anomaly detection. Here is an example of how to use One-Class SVM in Python using the scikit-learn library:</p>
-<pre><code class="language-python">from sklearn.svm import OneClassSVM
-from sklearn.datasets import make_blobs
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">OneClassSVM</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Generate sample data
-X, _ = make_blobs(n_samples=200, centers=1, cluster_std=0.5, random_state=0)
+<span class="c1"># Generate sample data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-# Create a One-Class SVM model
-model = OneClassSVM(kernel='rbf', gamma=0.1, nu=0.1)
+<span class="c1"># Create a One-Class SVM model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">OneClassSVM</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
-# Fit the model to the data
-model.fit(X)
+<span class="c1"># Fit the model to the data</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-# Predict anomalies
-anomaly_scores = model.decision_function(X)
-anomalies = anomaly_scores &lt; 0
+<span class="c1"># Predict anomalies</span>
+<span class="n">anomaly_scores</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">anomalies</span> <span class="o">=</span> <span class="n">anomaly_scores</span> <span class="o">&lt;</span> <span class="mi">0</span>
 
-# Print the number of anomalies
-print(&quot;Number of anomalies:&quot;, np.sum(anomalies))
-</code></pre>
+<span class="c1"># Print the number of anomalies</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of anomalies:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">anomalies</span><span class="p">))</span>
+</code></pre></div>
+
 <p>This code generates sample data, creates a One-Class SVM model, fits the model to the data, and predicts anomalies.</p>
 <h2 id="tools-and-platforms-for-anomaly-detection">Tools and Platforms for Anomaly Detection</h2>
 <p>There are several tools and platforms available for anomaly detection, including:
@@ -192,27 +192,28 @@ print(&quot;Number of anomalies:&quot;, np.sum(anomalies))
 * <strong>Google Cloud AI Platform</strong>: A managed platform for building, deploying, and managing machine learning models.</p>
 <h3 id="example-anomaly-detection-using-apache-spark">Example: Anomaly Detection using Apache Spark</h3>
 <p>Apache Spark provides a built-in module for anomaly detection called <code>spark.mllib</code>. Here is an example of how to use <code>spark.mllib</code> to detect anomalies in a dataset:</p>
-<pre><code class="language-python">from pyspark.ml.clustering import KMeans
-from pyspark.sql import SparkSession
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.ml.clustering</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName(&quot;Anomaly Detection&quot;).getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Anomaly Detection&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Load the data
-data = spark.read.csv(&quot;data.csv&quot;, header=True, inferSchema=True)
+<span class="c1"># Load the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Create a KMeans model
-kmeans = KMeans(k=5, seed=1)
+<span class="c1"># Create a KMeans model</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-# Fit the model to the data
-model = kmeans.fit(data)
+<span class="c1"># Fit the model to the data</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-# Predict anomalies
-anomalies = model.transform(data).filter(&quot;prediction == 0&quot;)
+<span class="c1"># Predict anomalies</span>
+<span class="n">anomalies</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;prediction == 0&quot;</span><span class="p">)</span>
 
-# Print the number of anomalies
-print(&quot;Number of anomalies:&quot;, anomalies.count())
-</code></pre>
+<span class="c1"># Print the number of anomalies</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of anomalies:&quot;</span><span class="p">,</span> <span class="n">anomalies</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+</code></pre></div>
+
 <p>This code creates a SparkSession, loads the data, creates a KMeans model, fits the model to the data, and predicts anomalies.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Anomaly detection has numerous real-world use cases, including:

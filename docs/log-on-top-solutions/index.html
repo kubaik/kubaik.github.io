@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,50 +167,53 @@
 </ul>
 <h3 id="splunk-implementation">Splunk Implementation</h3>
 <p>Splunk is a widely used log management platform that provides a range of features for collecting, storing, and analyzing log data. Here is an example of how to implement Splunk:</p>
-<pre><code class="language-python"># Splunk configuration file (inputs.conf)
-[monitor:///var/log/apache2/access.log]
-index = apache_access
-sourcetype = apache_access
+<div class="codehilite"><pre><span></span><code><span class="c1"># Splunk configuration file (inputs.conf)</span>
+<span class="p">[</span><span class="n">monitor</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="p">]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">apache_access</span>
+<span class="n">sourcetype</span> <span class="o">=</span> <span class="n">apache_access</span>
 
-# Splunk search query (search SPL)
-index=apache_access sourcetype=apache_access | stats count as num_requests by clientip
-</code></pre>
+<span class="c1"># Splunk search query (search SPL)</span>
+<span class="n">index</span><span class="o">=</span><span class="n">apache_access</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">apache_access</span> <span class="o">|</span> <span class="n">stats</span> <span class="n">count</span> <span class="k">as</span> <span class="n">num_requests</span> <span class="n">by</span> <span class="n">clientip</span>
+</code></pre></div>
+
 <p>In this example, we configure Splunk to collect Apache access logs from the <code>/var/log/apache2/access.log</code> file and store them in the <code>apache_access</code> index. We then use a search query to count the number of requests from each client IP address.</p>
 <h2 id="elk-stack-implementation">ELK Stack Implementation</h2>
 <p>The ELK Stack is an open-source log management solution that provides features such as log collection, parsing, and visualization. Here is an example of how to implement the ELK Stack:</p>
-<pre><code class="language-javascript">// Logstash configuration file (logstash.conf)
-input {
-  file {
-    path =&gt; &quot;/var/log/apache2/access.log&quot;
-    type =&gt; &quot;apache_access&quot;
-  }
-}
+<div class="codehilite"><pre><span></span><code><span class="c1">// Logstash configuration file (logstash.conf)</span>
+<span class="nx">input</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">file</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">path</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/apache2/access.log&quot;</span>
+<span class="w">    </span><span class="nx">type</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-filter {
-  grok {
-    match =&gt; { &quot;message&quot; =&gt; &quot;%{COMBINEDAPACHELOG}&quot; }
-  }
-}
+<span class="nx">filter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">grok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">match</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{COMBINEDAPACHELOG}&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-output {
-  elasticsearch {
-    hosts =&gt; &quot;localhost:9200&quot;
-    index =&gt; &quot;apache_access&quot;
-  }
-}
-</code></pre>
+<span class="nx">output</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">elasticsearch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">hosts</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
+<span class="w">    </span><span class="nx">index</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we configure Logstash to collect Apache access logs from the <code>/var/log/apache2/access.log</code> file, parse them using the <code>grok</code> filter, and output them to an Elasticsearch index named <code>apache_access</code>.</p>
 <h2 id="sumo-logic-implementation">Sumo Logic Implementation</h2>
 <p>Sumo Logic is a cloud-based log management platform that provides features such as log collection, analysis, and machine learning-based anomaly detection. Here is an example of how to implement Sumo Logic:</p>
-<pre><code class="language-python"># Sumo Logic collector configuration file (sumo.conf)
-[Apache Access Logs]
-sourceCategory = apache_access
-sourceName = apache_access
-path = /var/log/apache2/access.log
+<div class="codehilite"><pre><span></span><code><span class="c1"># Sumo Logic collector configuration file (sumo.conf)</span>
+<span class="p">[</span><span class="n">Apache</span> <span class="n">Access</span> <span class="n">Logs</span><span class="p">]</span>
+<span class="n">sourceCategory</span> <span class="o">=</span> <span class="n">apache_access</span>
+<span class="n">sourceName</span> <span class="o">=</span> <span class="n">apache_access</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span>
 
-# Sumo Logic search query (search query)
-_sourceCategory=apache_access | count as num_requests by clientip
-</code></pre>
+<span class="c1"># Sumo Logic search query (search query)</span>
+<span class="n">_sourceCategory</span><span class="o">=</span><span class="n">apache_access</span> <span class="o">|</span> <span class="n">count</span> <span class="k">as</span> <span class="n">num_requests</span> <span class="n">by</span> <span class="n">clientip</span>
+</code></pre></div>
+
 <p>In this example, we configure Sumo Logic to collect Apache access logs from the <code>/var/log/apache2/access.log</code> file and store them in a source category named <code>apache_access</code>. We then use a search query to count the number of requests from each client IP address.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>The performance of log management solutions can be measured using metrics such as:</p>

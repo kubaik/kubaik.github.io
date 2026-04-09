@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -157,71 +156,74 @@
 <p>Code splitting is a technique where a large application is split into smaller chunks, each containing a subset of the application's code. These chunks are loaded on demand, as the user navigates through the application. Code splitting is particularly useful for SPAs, where the entire application is loaded upfront. By splitting the code into smaller chunks, the initial payload size is reduced, resulting in faster page loads and improved performance.</p>
 <h2 id="implementing-lazy-loading-with-intersectionobserver">Implementing Lazy Loading with IntersectionObserver</h2>
 <p>One popular way to implement lazy loading is by using the IntersectionObserver API. This API allows you to observe the visibility of an element and load resources when they come into view. Here is an example of how to use IntersectionObserver to lazy load images:</p>
-<pre><code class="language-javascript">// Create an IntersectionObserver instance
-const observer = new IntersectionObserver((entries) =&gt; {
-  // Loop through the observed elements
-  entries.forEach((entry) =&gt; {
-    // If the element is visible, load the image
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      img.src = img.dataset.src;
-      // Stop observing the element
-      observer.unobserve(img);
-    }
-  });
-}, {
-  // Set the threshold to 1.0, so the image is loaded when it's fully visible
-  threshold: 1.0,
-});
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create an IntersectionObserver instance</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Loop through the observed elements</span>
+<span class="w">  </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// If the element is visible, load the image</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
+<span class="w">      </span><span class="c1">// Stop observing the element</span>
+<span class="w">      </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Set the threshold to 1.0, so the image is loaded when it&#39;s fully visible</span>
+<span class="w">  </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="p">});</span>
 
-// Observe the images
-const images = document.querySelectorAll('img.lazy');
-images.forEach((img) =&gt; {
-  observer.observe(img);
-});
-</code></pre>
+<span class="c1">// Observe the images</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
+<span class="nx">images</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">img</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, we create an IntersectionObserver instance and observe all images with the class <code>lazy</code>. When an image comes into view, the observer loads the image by setting its <code>src</code> attribute to the value stored in the <code>data-src</code> attribute.</p>
 <h2 id="implementing-code-splitting-with-webpack">Implementing Code Splitting with Webpack</h2>
 <p>Webpack is a popular bundler that provides built-in support for code splitting. Here is an example of how to use Webpack to split a large application into smaller chunks:</p>
-<pre><code class="language-javascript">// webpack.config.js
-module.exports = {
-  // ...
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 10000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
-    },
-  },
-};
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// webpack.config.js</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">splitChunks</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">minSize</span><span class="o">:</span><span class="w"> </span><span class="mf">10000</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">minChunks</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">maxAsyncRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">maxInitialRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">automaticNameDelimiter</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;~&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">cacheGroups</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">vendor</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/[\\/]node_modules[\\/]/</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;vendor&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, we configure Webpack to split the application into smaller chunks using the <code>splitChunks</code> option. We set the <code>minSize</code> option to 10KB, so chunks smaller than 10KB are not created. We also set the <code>maxAsyncRequests</code> option to 5, so a maximum of 5 chunks are loaded asynchronously.</p>
 <h2 id="using-react-lazy-and-suspense">Using React Lazy and Suspense</h2>
 <p>React provides two built-in features for implementing lazy loading and code splitting: React Lazy and Suspense. React Lazy allows you to load components lazily, while Suspense provides a way to handle the loading state of a component. Here is an example of how to use React Lazy and Suspense:</p>
-<pre><code class="language-javascript">// LazyComponent.js
-import React, { Suspense } from 'react';
+<div class="codehilite"><pre><span></span><code><span class="c1">// LazyComponent.js</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Suspense</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
 
-const LazyComponent = React.lazy(() =&gt; import('./Component'));
+<span class="kd">const</span><span class="w"> </span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">lazy</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./Component&#39;</span><span class="p">));</span>
 
-const App = () =&gt; {
-  return (
-    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
-      &lt;LazyComponent /&gt;
-    &lt;/Suspense&gt;
-  );
-};
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">Suspense</span><span class="w"> </span><span class="nx">fallback</span><span class="o">=</span><span class="p">{</span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;}&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">/&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="err">/Suspense&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>In this example, we use React Lazy to load the <code>Component</code> lazily, and Suspense to handle the loading state of the component. When the component is loading, the <code>fallback</code> component is rendered, displaying a "Loading..." message.</p>
 <h2 id="benefits-of-lazy-loading-and-code-splitting">Benefits of Lazy Loading and Code Splitting</h2>
 <p>The benefits of lazy loading and code splitting are numerous. Some of the most significant advantages include:</p>

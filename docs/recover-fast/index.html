@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,18 +165,19 @@
 <h3 id="using-aws-for-disaster-recovery">Using AWS for Disaster Recovery</h3>
 <p>Amazon Web Services (AWS) provides a range of tools and services that can be used for disaster recovery, including Amazon S3, Amazon Glacier, and Amazon EC2. For example, we can use AWS CloudFormation to create a disaster recovery plan that automates the deployment of IT resources in the event of a disaster.</p>
 <p>Here is an example of how we can use AWS CloudFormation to create a disaster recovery plan:</p>
-<pre><code class="language-yml">AWSTemplateFormatVersion: '2010-09-09'
+<div class="codehilite"><pre><span></span><code>AWSTemplateFormatVersion:<span class="w"> </span>&#39;2010-09-09&#39;
 Resources:
-  EC2Instance:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', 'AMI']
-      InstanceType: t2.micro
-  S3Bucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Sub 'my-bucket-${AWS::Region}'
-</code></pre>
+<span class="w">  </span>EC2Instance:
+<span class="w">    </span>Type:<span class="w"> </span>&#39;AWS::EC2::Instance&#39;
+<span class="w">    </span>Properties:
+<span class="w">      </span>ImageId:<span class="w"> </span>!FindInMap<span class="w"> </span>[RegionMap,<span class="w"> </span>!Ref<span class="w"> </span>&#39;AWS::Region&#39;,<span class="w"> </span>&#39;AMI&#39;]
+<span class="w">      </span>InstanceType:<span class="w"> </span>t2.micro
+<span class="w">  </span>S3Bucket:
+<span class="w">    </span>Type:<span class="w"> </span>&#39;AWS::S3::Bucket&#39;
+<span class="w">    </span>Properties:
+<span class="w">      </span>BucketName:<span class="w"> </span>!Sub<span class="w"> </span>&#39;my-bucket-<span class="cp">${</span><span class="n">AWS</span><span class="p">::</span><span class="n">Region</span><span class="cp">}</span>&#39;
+</code></pre></div>
+
 <p>This code creates an EC2 instance and an S3 bucket using AWS CloudFormation. We can use this template to deploy IT resources in the event of a disaster.</p>
 <h2 id="implementing-a-disaster-recovery-plan">Implementing a Disaster Recovery Plan</h2>
 <p>Implementing a disaster recovery plan involves several steps, including:</p>
@@ -189,19 +189,20 @@ Resources:
 <h3 id="using-azure-site-recovery-for-disaster-recovery">Using Azure Site Recovery for Disaster Recovery</h3>
 <p>Azure Site Recovery is a disaster recovery service provided by Microsoft Azure that allows us to replicate IT systems to a secondary location. For example, we can use Azure Site Recovery to replicate a Hyper-V virtual machine to a secondary location.</p>
 <p>Here is an example of how we can use Azure Site Recovery to replicate a Hyper-V virtual machine:</p>
-<pre><code class="language-powershell"># Install the Azure Site Recovery provider
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+<div class="codehilite"><pre><span></span><code><span class="c"># Install the Azure Site Recovery provider</span>
+<span class="nb">Install-PackageProvider</span> <span class="n">-Name</span> <span class="n">NuGet</span> <span class="n">-MinimumVersion</span> <span class="n">2</span><span class="p">.</span><span class="n">8</span><span class="p">.</span><span class="n">5</span><span class="p">.</span><span class="n">201</span> <span class="n">-Force</span>
 
-# Import the Azure Site Recovery module
-Import-Module -Name AzureRM.SiteRecovery
+<span class="c"># Import the Azure Site Recovery module</span>
+<span class="nb">Import-Module</span> <span class="n">-Name</span> <span class="n">AzureRM</span><span class="p">.</span><span class="n">SiteRecovery</span>
 
-# Set the Azure Site Recovery vault name and resource group
-$vaultName = &quot;my-vault&quot;
-$resourceGroupName = &quot;my-resource-group&quot;
+<span class="c"># Set the Azure Site Recovery vault name and resource group</span>
+<span class="nv">$vaultName</span> <span class="p">=</span> <span class="s2">&quot;my-vault&quot;</span>
+<span class="nv">$resourceGroupName</span> <span class="p">=</span> <span class="s2">&quot;my-resource-group&quot;</span>
 
-# Create a new Azure Site Recovery vault
-New-AzureRmSiteRecoveryVault -Name $vaultName -ResourceGroupName $resourceGroupName
-</code></pre>
+<span class="c"># Create a new Azure Site Recovery vault</span>
+<span class="nb">New-AzureRmSiteRecoveryVault</span> <span class="n">-Name</span> <span class="nv">$vaultName</span> <span class="n">-ResourceGroupName</span> <span class="nv">$resourceGroupName</span>
+</code></pre></div>
+
 <p>This code installs the Azure Site Recovery provider, imports the Azure Site Recovery module, and creates a new Azure Site Recovery vault.</p>
 <h2 id="common-challenges-in-disaster-recovery">Common Challenges in Disaster Recovery</h2>
 <p>Common challenges in disaster recovery include:</p>
@@ -219,14 +220,15 @@ New-AzureRmSiteRecoveryVault -Name $vaultName -ResourceGroupName $resourceGroupN
 </ul>
 <p>For example, we can use a combination of data backup and replication to ensure that data is available in the event of a disaster. Suppose we have a database that is critical to our business operations. We can use a backup and replication strategy to ensure that the database is available in the event of a disaster.</p>
 <p>Here is an example of how we can use a combination of data backup and replication to ensure that data is available in the event of a disaster:</p>
-<pre><code class="language-sql">-- Create a backup of the database
-BACKUP DATABASE [my-database] TO DISK = 'C:\Backup\my-database.bak'
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a backup of the database</span>
+<span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="p">[</span><span class="n">my</span><span class="o">-</span><span class="k">database</span><span class="p">]</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;C:\Backup\my-database.bak&#39;</span>
 
--- Replicate the database to a secondary location
-CREATE ENDPOINT [my-endpoint] STATE = STARTED AS TCP (LISTENER_PORT = 1433)
-FOR DATABASE_MIRRORING (ROLE = PARTNER, AUTHENTICATION = WINDOWS NEGOTIATE (
-  ENCRYPTION = REQUIRED ALGORITHM AES));
-</code></pre>
+<span class="c1">-- Replicate the database to a secondary location</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">ENDPOINT</span><span class="w"> </span><span class="p">[</span><span class="n">my</span><span class="o">-</span><span class="n">endpoint</span><span class="p">]</span><span class="w"> </span><span class="k">STATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">STARTED</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TCP</span><span class="w"> </span><span class="p">(</span><span class="n">LISTENER_PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1433</span><span class="p">)</span>
+<span class="k">FOR</span><span class="w"> </span><span class="n">DATABASE_MIRRORING</span><span class="w"> </span><span class="p">(</span><span class="k">ROLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PARTNER</span><span class="p">,</span><span class="w"> </span><span class="n">AUTHENTICATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WINDOWS</span><span class="w"> </span><span class="n">NEGOTIATE</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REQUIRED</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="n">AES</span><span class="p">));</span>
+</code></pre></div>
+
 <p>This code creates a backup of the database and replicates it to a secondary location using database mirroring.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Disaster recovery planning is used in a variety of real-world scenarios, including:</p>

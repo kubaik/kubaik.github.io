@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,20 +169,21 @@
 </ul>
 <h3 id="example-1-developing-a-simple-smart-contract">Example 1: Developing a Simple Smart Contract</h3>
 <p>Here is an example of a simple smart contract written in Solidity:</p>
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract SimpleContract {
-    address private owner;
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleContract</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">private </span><span class="nv">owner</span><span class="p">;</span>
 
-    constructor() public {
-        owner = msg.sender;
-    }
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function getOwner() public view returns (address) {
-        return owner;
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getOwner</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>owner<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This contract has a single function, <code>getOwner</code>, which returns the address of the contract owner. To deploy this contract, we can use the Truffle Suite, which provides a set of tools for building, testing, and deploying smart contracts.</p>
 <h2 id="blockchain-use-cases">Blockchain Use Cases</h2>
 <p>Blockchain technology has a wide range of use cases, from supply chain management to healthcare and finance. Some of the most promising use cases include:</p>
@@ -194,17 +194,18 @@ contract SimpleContract {
 </ol>
 <h3 id="example-2-implementing-a-supply-chain-management-system">Example 2: Implementing a Supply Chain Management System</h3>
 <p>Here is an example of a supply chain management system implemented using the Hyperledger Fabric platform:</p>
-<pre><code class="language-javascript">const { Wallets, Gateway } = require('fabric-network');
-const wallet = await Wallets.newFileSystemWallet('./wallet');
-const gateway = new Gateway();
-await gateway.connect({
-  wallet,
-  identity: 'admin',
-  discovery: { enabled: true, asLocalhost: true }
-});
-const network = await gateway.getNetwork('mychannel');
-const contract = network.getContract('supplychain');
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Wallets</span><span class="p">,</span><span class="w"> </span><span class="nx">Gateway</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-network&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Wallets</span><span class="p">.</span><span class="nx">newFileSystemWallet</span><span class="p">(</span><span class="s1">&#39;./wallet&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">gateway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Gateway</span><span class="p">();</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">gateway</span><span class="p">.</span><span class="nx">connect</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">wallet</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">identity</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">discovery</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">asLocalhost</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">gateway</span><span class="p">.</span><span class="nx">getNetwork</span><span class="p">(</span><span class="s1">&#39;mychannel&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">network</span><span class="p">.</span><span class="nx">getContract</span><span class="p">(</span><span class="s1">&#39;supplychain&#39;</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to connect to a Hyperledger Fabric network and interact with a smart contract using the Fabric SDK.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems faced by developers when working with blockchain technology is the complexity of the underlying architecture. To address this, it's essential to have a deep understanding of the technology and the tools and frameworks that support it. Some of the most common problems and solutions include:</p>
@@ -215,19 +216,20 @@ const contract = network.getContract('supplychain');
 </ul>
 <h3 id="example-3-implementing-a-cross-chain-atomic-swap">Example 3: Implementing a Cross-Chain Atomic Swap</h3>
 <p>Here is an example of a cross-chain atomic swap implemented using the Polkadot platform:</p>
-<pre><code class="language-javascript">const { ApiPromise } = require('@polkadot/api');
-const api = await ApiPromise.create();
-const fromChain = 'chain1';
-const toChain = 'chain2';
-const amount = 100;
-const recipient = 'recipientAddress';
-const swap = await api.tx.xcmPallet.transfer(
-  fromChain,
-  toChain,
-  amount,
-  recipient
-);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApiPromise</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@polkadot/api&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">ApiPromise</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">fromChain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;chain1&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">toChain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;chain2&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">recipient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;recipientAddress&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">swap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">tx</span><span class="p">.</span><span class="nx">xcmPallet</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">fromChain</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">toChain</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">amount</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">recipient</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to implement a cross-chain atomic swap using the Polkadot platform, enabling the transfer of assets between different blockchain networks.</p>
 <h2 id="real-world-metrics-and-pricing-data">Real-World Metrics and Pricing Data</h2>
 <p>The cost of developing and deploying blockchain solutions can vary widely, depending on the specific use case and requirements. Some of the most common metrics and pricing data include:</p>

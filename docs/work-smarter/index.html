@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,44 +161,45 @@
 <p>For example, a software development team can use Slack to communicate and collaborate on a project. They can create channels for different topics, such as #development, #design, and #testing, and use video conferencing to discuss project details.</p>
 <h3 id="code-example-integrating-slack-with-trello">Code Example: Integrating Slack with Trello</h3>
 <p>Here is an example of how to integrate Slack with Trello using the Slack API and the Trello API:</p>
-<pre><code class="language-python">import requests
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
 
-# Set up Slack API credentials
-slack_token = &quot;YOUR_SLACK_TOKEN&quot;
-slack_channel = &quot;YOUR_SLACK_CHANNEL&quot;
+<span class="c1"># Set up Slack API credentials</span>
+<span class="n">slack_token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_SLACK_TOKEN&quot;</span>
+<span class="n">slack_channel</span> <span class="o">=</span> <span class="s2">&quot;YOUR_SLACK_CHANNEL&quot;</span>
 
-# Set up Trello API credentials
-trello_key = &quot;YOUR_TRELLO_KEY&quot;
-trello_token = &quot;YOUR_TRELLO_TOKEN&quot;
-trello_board = &quot;YOUR_TRELLO_BOARD&quot;
+<span class="c1"># Set up Trello API credentials</span>
+<span class="n">trello_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TRELLO_KEY&quot;</span>
+<span class="n">trello_token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TRELLO_TOKEN&quot;</span>
+<span class="n">trello_board</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TRELLO_BOARD&quot;</span>
 
-# Create a new Trello card
-def create_card(card_name):
-    url = f&quot;https://api.trello.com/1/cards&quot;
-    params = {
-        &quot;key&quot;: trello_key,
-        &quot;token&quot;: trello_token,
-        &quot;name&quot;: card_name,
-        &quot;idList&quot;: trello_board
-    }
-    response = requests.post(url, params=params)
-    return response.json()
+<span class="c1"># Create a new Trello card</span>
+<span class="k">def</span> <span class="nf">create_card</span><span class="p">(</span><span class="n">card_name</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.trello.com/1/cards&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">trello_key</span><span class="p">,</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">trello_token</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">card_name</span><span class="p">,</span>
+        <span class="s2">&quot;idList&quot;</span><span class="p">:</span> <span class="n">trello_board</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-# Send a notification to Slack when a new Trello card is created
-def send_notification(card):
-    url = f&quot;https://slack.com/api/chat.postMessage&quot;
-    params = {
-        &quot;token&quot;: slack_token,
-        &quot;channel&quot;: slack_channel,
-        &quot;text&quot;: f&quot;New card created: {card['name']}&quot;
-    }
-    response = requests.post(url, params=params)
-    return response.json()
+<span class="c1"># Send a notification to Slack when a new Trello card is created</span>
+<span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="n">card</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://slack.com/api/chat.postMessage&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">slack_token</span><span class="p">,</span>
+        <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="n">slack_channel</span><span class="p">,</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;New card created: </span><span class="si">{</span><span class="n">card</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-# Create a new Trello card and send a notification to Slack
-card = create_card(&quot;New Card&quot;)
-send_notification(card)
-</code></pre>
+<span class="c1"># Create a new Trello card and send a notification to Slack</span>
+<span class="n">card</span> <span class="o">=</span> <span class="n">create_card</span><span class="p">(</span><span class="s2">&quot;New Card&quot;</span><span class="p">)</span>
+<span class="n">send_notification</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to integrate Slack with Trello using the Slack API and the Trello API. It creates a new Trello card and sends a notification to Slack when the card is created.</p>
 <h2 id="time-management-and-productivity">Time Management and Productivity</h2>
 <p>Time management and productivity are critical for remote work success. Here are some strategies for managing time and increasing productivity:</p>
@@ -212,49 +212,50 @@ send_notification(card)
 <p>For example, a freelance writer can use Toggl to track time spent on writing projects and minimize distractions using Freedom.</p>
 <h3 id="code-example-integrating-toggl-with-google-calendar">Code Example: Integrating Toggl with Google Calendar</h3>
 <p>Here is an example of how to integrate Toggl with Google Calendar using the Toggl API and the Google Calendar API:</p>
-<pre><code class="language-python">import requests
-from datetime import datetime, timedelta
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
-# Set up Toggl API credentials
-toggl_token = &quot;YOUR_TOGGL_TOKEN&quot;
-toggl_user = &quot;YOUR_TOGGL_USER&quot;
+<span class="c1"># Set up Toggl API credentials</span>
+<span class="n">toggl_token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TOGGL_TOKEN&quot;</span>
+<span class="n">toggl_user</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TOGGL_USER&quot;</span>
 
-# Set up Google Calendar API credentials
-google_token = &quot;YOUR_GOOGLE_TOKEN&quot;
-google_calendar = &quot;YOUR_GOOGLE_CALENDAR&quot;
+<span class="c1"># Set up Google Calendar API credentials</span>
+<span class="n">google_token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_GOOGLE_TOKEN&quot;</span>
+<span class="n">google_calendar</span> <span class="o">=</span> <span class="s2">&quot;YOUR_GOOGLE_CALENDAR&quot;</span>
 
-# Get the current date and time
-now = datetime.now()
+<span class="c1"># Get the current date and time</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 
-# Get the next 7 days of events from Google Calendar
-def get_events():
-    url = f&quot;https://www.googleapis.com/calendar/v3/calendars/{google_calendar}/events&quot;
-    params = {
-        &quot;token&quot;: google_token,
-        &quot;timeMin&quot;: now.isoformat() + &quot;Z&quot;,
-        &quot;timeMax&quot;: (now + timedelta(days=7)).isoformat() + &quot;Z&quot;
-    }
-    response = requests.get(url, params=params)
-    return response.json()
+<span class="c1"># Get the next 7 days of events from Google Calendar</span>
+<span class="k">def</span> <span class="nf">get_events</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://www.googleapis.com/calendar/v3/calendars/</span><span class="si">{</span><span class="n">google_calendar</span><span class="si">}</span><span class="s2">/events&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">google_token</span><span class="p">,</span>
+        <span class="s2">&quot;timeMin&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;timeMax&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">now</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-# Create a new Toggl entry for each event
-def create_toggl_entry(event):
-    url = f&quot;https://api.toggl.com/reports/v8/details&quot;
-    params = {
-        &quot;token&quot;: toggl_token,
-        &quot;user&quot;: toggl_user,
-        &quot;description&quot;: event[&quot;summary&quot;],
-        &quot;start&quot;: event[&quot;start&quot;][&quot;dateTime&quot;],
-        &quot;end&quot;: event[&quot;end&quot;][&quot;dateTime&quot;]
-    }
-    response = requests.post(url, params=params)
-    return response.json()
+<span class="c1"># Create a new Toggl entry for each event</span>
+<span class="k">def</span> <span class="nf">create_toggl_entry</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.toggl.com/reports/v8/details&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">toggl_token</span><span class="p">,</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">toggl_user</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">][</span><span class="s2">&quot;dateTime&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">][</span><span class="s2">&quot;dateTime&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-# Get the next 7 days of events and create Toggl entries
-events = get_events()[&quot;items&quot;]
-for event in events:
-    create_toggl_entry(event)
-</code></pre>
+<span class="c1"># Get the next 7 days of events and create Toggl entries</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">get_events</span><span class="p">()[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+    <span class="n">create_toggl_entry</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to integrate Toggl with Google Calendar using the Toggl API and the Google Calendar API. It gets the next 7 days of events from Google Calendar and creates a new Toggl entry for each event.</p>
 <h2 id="security-and-data-protection">Security and Data Protection</h2>
 <p>Security and data protection are critical for remote work success. Here are some strategies for protecting data and ensuring security:</p>
@@ -266,30 +267,31 @@ for event in events:
 <p>For example, a remote worker can use a VPN like ExpressVPN to protect data when working from a coffee shop or other public location.</p>
 <h3 id="code-example-implementing-encryption-using-openssl">Code Example: Implementing Encryption using OpenSSL</h3>
 <p>Here is an example of how to implement encryption using OpenSSL:</p>
-<pre><code class="language-python">import os
-import subprocess
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
 
-# Set up encryption parameters
-key = &quot;YOUR_ENCRYPTION_KEY&quot;
-input_file = &quot;input.txt&quot;
-output_file = &quot;output.txt&quot;
+<span class="c1"># Set up encryption parameters</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_ENCRYPTION_KEY&quot;</span>
+<span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;input.txt&quot;</span>
+<span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;output.txt&quot;</span>
 
-# Encrypt the input file
-def encrypt_file():
-    command = f&quot;openssl enc -aes-256-cbc -in {input_file} -out {output_file} -pass pass:{key}&quot;
-    subprocess.run(command, shell=True)
+<span class="c1"># Encrypt the input file</span>
+<span class="k">def</span> <span class="nf">encrypt_file</span><span class="p">():</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;openssl enc -aes-256-cbc -in </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2"> -out </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2"> -pass pass:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Decrypt the output file
-def decrypt_file():
-    command = f&quot;openssl enc -d -aes-256-cbc -in {output_file} -out {input_file} -pass pass:{key}&quot;
-    subprocess.run(command, shell=True)
+<span class="c1"># Decrypt the output file</span>
+<span class="k">def</span> <span class="nf">decrypt_file</span><span class="p">():</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;openssl enc -d -aes-256-cbc -in </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2"> -out </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2"> -pass pass:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Encrypt the input file
-encrypt_file()
+<span class="c1"># Encrypt the input file</span>
+<span class="n">encrypt_file</span><span class="p">()</span>
 
-# Decrypt the output file
-decrypt_file()
-</code></pre>
+<span class="c1"># Decrypt the output file</span>
+<span class="n">decrypt_file</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to implement encryption using OpenSSL. It encrypts an input file using a encryption key and decrypts the output file using the same key.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions for remote work:</p>

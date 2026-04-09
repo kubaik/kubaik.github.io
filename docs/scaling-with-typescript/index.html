@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,49 +157,52 @@
 * <strong>Interoperability with JavaScript</strong>: As a superset of JavaScript, TypeScript allows developers to easily integrate existing JavaScript code and libraries into their projects.</p>
 <h2 id="setting-up-a-typescript-project">Setting Up a TypeScript Project</h2>
 <p>To get started with TypeScript, you'll need to set up a new project and install the required dependencies. Here's an example of how to do this using npm:</p>
-<pre><code class="language-bash">npm init -y
-npm install --save-dev typescript @types/node
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>init<span class="w"> </span>-y
+npm<span class="w"> </span>install<span class="w"> </span>--save-dev<span class="w"> </span>typescript<span class="w"> </span>@types/node
+</code></pre></div>
+
 <p>In this example, we're installing the <code>typescript</code> package and the <code>@types/node</code> package, which provides type definitions for Node.js.</p>
 <h3 id="configuring-the-typescript-compiler">Configuring the TypeScript Compiler</h3>
 <p>Once you've installed the required dependencies, you'll need to configure the TypeScript compiler. This can be done by creating a <code>tsconfig.json</code> file in the root of your project:</p>
-<pre><code class="language-json">{
-  &quot;compilerOptions&quot;: {
-    &quot;target&quot;: &quot;es6&quot;,
-    &quot;module&quot;: &quot;commonjs&quot;,
-    &quot;outDir&quot;: &quot;build&quot;,
-    &quot;rootDir&quot;: &quot;src&quot;,
-    &quot;strict&quot;: true,
-    &quot;esModuleInterop&quot;: true
-  }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;commonjs&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;outDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rootDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;strict&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;esModuleInterop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we're configuring the TypeScript compiler to target ES6, use the CommonJS module system, and output compiled JavaScript files to the <code>build</code> directory.</p>
 <h2 id="practical-example-building-a-restful-api-with-typescript">Practical Example: Building a RESTful API with TypeScript</h2>
 <p>Let's consider a practical example of building a RESTful API using TypeScript and the Express.js framework. Here's an example of how you might define a <code>User</code> interface and a <code>UserController</code> class:</p>
-<pre><code class="language-typescript">// user.ts
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+<div class="codehilite"><pre><span></span><code><span class="c1">// user.ts</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
 
-// userController.ts
-import { Request, Response } from 'express';
-import { User } from './user';
+<span class="c1">// userController.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">Response</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./user&#39;</span><span class="p">;</span>
 
-class UserController {
-  async getUsers(req: Request, res: Response) {
-    const users: User[] = [
-      { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
-      { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com' },
-    ];
-    res.json(users);
-  }
-}
+<span class="kd">class</span><span class="w"> </span><span class="nx">UserController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">getUsers</span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="kt">User</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;jane.doe@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">];</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-export default UserController;
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">UserController</span><span class="p">;</span>
+</code></pre></div>
+
 <p>In this example, we're defining a <code>User</code> interface and a <code>UserController</code> class that provides a <code>getUsers</code> method. This method returns a JSON response containing an array of <code>User</code> objects.</p>
 <h2 id="performance-benchmarks-typescript-vs-javascript">Performance Benchmarks: TypeScript vs. JavaScript</h2>
 <p>When it comes to performance, TypeScript and JavaScript are often compared. Here are some real metrics from a benchmarking test:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,27 +163,28 @@
 * <strong>Device Monitoring</strong>: This involves monitoring device performance, health, and security.
 * <strong>Device Updates</strong>: This involves updating device software and firmware to ensure security and functionality.</p>
 <p>For example, the AWS IoT Core platform provides a robust device management system, including device provisioning, monitoring, and updates. The following code snippet demonstrates how to use the AWS IoT Core SDK to provision a device:</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-iot = boto3.client('iot')
+<span class="n">iot</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
 
-# Create a new device
-device = iot.create_thing(
-    thingName='MyDevice'
-)
+<span class="c1"># Create a new device</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">create_thing</span><span class="p">(</span>
+    <span class="n">thingName</span><span class="o">=</span><span class="s1">&#39;MyDevice&#39;</span>
+<span class="p">)</span>
 
-# Create a new certificate
-certificate = iot.create_certificate(
-    certificateBody='-----BEGIN CERTIFICATE-----',
-    privateKey='-----BEGIN RSA PRIVATE KEY-----'
-)
+<span class="c1"># Create a new certificate</span>
+<span class="n">certificate</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">create_certificate</span><span class="p">(</span>
+    <span class="n">certificateBody</span><span class="o">=</span><span class="s1">&#39;-----BEGIN CERTIFICATE-----&#39;</span><span class="p">,</span>
+    <span class="n">privateKey</span><span class="o">=</span><span class="s1">&#39;-----BEGIN RSA PRIVATE KEY-----&#39;</span>
+<span class="p">)</span>
 
-# Attach the certificate to the device
-iot.attach_principal_policy(
-    policyName='MyPolicy',
-    principal='MyCertificate'
-)
-</code></pre>
+<span class="c1"># Attach the certificate to the device</span>
+<span class="n">iot</span><span class="o">.</span><span class="n">attach_principal_policy</span><span class="p">(</span>
+    <span class="n">policyName</span><span class="o">=</span><span class="s1">&#39;MyPolicy&#39;</span><span class="p">,</span>
+    <span class="n">principal</span><span class="o">=</span><span class="s1">&#39;MyCertificate&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a new device, generates a new certificate, and attaches the certificate to the device.</p>
 <h2 id="data-processing-and-storage">Data Processing and Storage</h2>
 <p>Data processing and storage are critical components of IoT architecture. They involve processing and storing the vast amounts of data collected from devices. Some key aspects of data processing and storage include:
@@ -192,22 +192,23 @@ iot.attach_principal_policy(
 * <strong>Data Processing</strong>: This involves processing the ingested data, such as data cleaning, filtering, and analysis.
 * <strong>Data Storage</strong>: This involves storing the processed data, such as relational databases, NoSQL databases, and data warehouses.</p>
 <p>For example, the Apache Kafka platform provides a robust data ingestion and processing system. The following code snippet demonstrates how to use the Apache Kafka SDK to ingest data from a device:</p>
-<pre><code class="language-java">import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.KafkaProducer</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.ProducerConfig</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.ProducerRecord</span><span class="p">;</span>
 
-// Create a new Kafka producer
-Properties props = new Properties();
-props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);
-props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
-props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+<span class="c1">// Create a new Kafka producer</span>
+<span class="n">Properties</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">KEY_SERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">VALUE_SERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
 
-KafkaProducer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(props);
+<span class="n">KafkaProducer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaProducer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
 
-// Send data to Kafka topic
-ProducerRecord&lt;String, String&gt; record = new ProducerRecord&lt;&gt;(&quot;MyTopic&quot;, &quot;MyKey&quot;, &quot;MyValue&quot;);
-producer.send(record);
-</code></pre>
+<span class="c1">// Send data to Kafka topic</span>
+<span class="n">ProducerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProducerRecord</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;MyTopic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MyKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MyValue&quot;</span><span class="p">);</span>
+<span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code creates a new Kafka producer and sends data to a Kafka topic.</p>
 <h2 id="security">Security</h2>
 <p>Security is a critical component of IoT architecture. It involves protecting devices, data, and applications from unauthorized access and malicious attacks. Some key aspects of security include:
@@ -215,22 +216,23 @@ producer.send(record);
 * <strong>Authorization</strong>: This involves controlling access to devices, data, and applications.
 * <strong>Encryption</strong>: This involves encrypting data in transit and at rest.</p>
 <p>For example, the TLS (Transport Layer Security) protocol provides a robust encryption mechanism for IoT devices. The following code snippet demonstrates how to use the TLS protocol to encrypt data:</p>
-<pre><code class="language-c">#include &lt;openssl/ssl.h&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;openssl/ssl.h&gt;</span>
 
-// Create a new TLS context
-SSL_CTX* ctx = SSL_CTX_new(TLS_client_method());
+<span class="c1">// Create a new TLS context</span>
+<span class="n">SSL_CTX</span><span class="o">*</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_CTX_new</span><span class="p">(</span><span class="n">TLS_client_method</span><span class="p">());</span>
 
-// Load the certificate and private key
-SSL_CTX_use_certificate_file(ctx, &quot;certificate.pem&quot;, SSL_FILETYPE_PEM);
-SSL_CTX_use_private_key_file(ctx, &quot;private_key.pem&quot;, SSL_FILETYPE_PEM);
+<span class="c1">// Load the certificate and private key</span>
+<span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;certificate.pem&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_FILETYPE_PEM</span><span class="p">);</span>
+<span class="n">SSL_CTX_use_private_key_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;private_key.pem&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_FILETYPE_PEM</span><span class="p">);</span>
 
-// Create a new TLS connection
-SSL* ssl = SSL_new(ctx);
-SSL_set_connect_state(ssl);
+<span class="c1">// Create a new TLS connection</span>
+<span class="n">SSL</span><span class="o">*</span><span class="w"> </span><span class="n">ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_new</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="n">SSL_set_connect_state</span><span class="p">(</span><span class="n">ssl</span><span class="p">);</span>
 
-// Connect to the server
-SSL_connect(ssl);
-</code></pre>
+<span class="c1">// Connect to the server</span>
+<span class="n">SSL_connect</span><span class="p">(</span><span class="n">ssl</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code creates a new TLS context, loads the certificate and private key, and connects to the server.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>IoT architecture has numerous real-world use cases, including:

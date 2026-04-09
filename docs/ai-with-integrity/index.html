@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,29 +157,30 @@
 * <strong>Accountability and responsibility</strong>: Establishing clear lines of responsibility for AI systems and their actions.
 * <strong>Privacy and security</strong>: Protecting user data and preventing unauthorized access to AI systems.</p>
 <p>To illustrate these concepts, let's consider a practical example. Suppose we're building a machine learning model to predict creditworthiness using a dataset that includes demographic information like age, income, and location. To avoid bias, we might use techniques like:</p>
-<pre><code class="language-python">from sklearn.model_selection import train_test_split
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
+<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
 
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
 
-# Load dataset
-df = pd.read_csv('credit_data.csv')
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
 
-# Split dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(df.drop('creditworthy', axis=1), df['creditworthy'], test_size=0.2, random_state=42)
+<span class="c1"># Split dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Train logistic regression model
-model = LogisticRegression()
-model.fit(X_train, y_train)
+<span class="c1"># Train logistic regression model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Evaluate model performance
-y_pred = model.predict(X_test)
-print('Accuracy:', accuracy_score(y_test, y_pred))
-print('Classification Report:')
-print(classification_report(y_test, y_pred))
-</code></pre>
+<span class="c1"># Evaluate model performance</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classification Report:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div>
+
 <p>In this example, we're using a logistic regression model to predict creditworthiness based on a set of demographic features. To evaluate the model's performance, we're using metrics like accuracy and classification report, which can help us identify potential biases in the model.</p>
 <h2 id="responsible-ai-development">Responsible AI Development</h2>
 <p>Responsible AI development involves a range of practices and techniques designed to ensure that AI systems are developed and used in ways that are fair, transparent, and respectful of human rights. Some key strategies for responsible AI development include:
@@ -189,46 +189,47 @@ print(classification_report(y_test, y_pred))
 * <strong>Human oversight</strong>: Establishing processes for human review and oversight of AI-driven decisions.
 * <strong>Continuous monitoring</strong>: Regularly monitoring AI systems for signs of bias, error, or other problems.</p>
 <p>To illustrate these strategies, let's consider a use case involving the development of a chatbot for customer service. Suppose we're using a platform like Dialogflow to build the chatbot, and we want to ensure that it's fair and transparent in its interactions with users. We might use techniques like:</p>
-<pre><code class="language-python">import dialogflow
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">dialogflow</span>
 
-# Create Dialogflow client
-client = dialogflow.SessionsClient()
+<span class="c1"># Create Dialogflow client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dialogflow</span><span class="o">.</span><span class="n">SessionsClient</span><span class="p">()</span>
 
-# Define intent and entities
-intent = 'book_flight'
-entities = ['destination', 'departure_date']
+<span class="c1"># Define intent and entities</span>
+<span class="n">intent</span> <span class="o">=</span> <span class="s1">&#39;book_flight&#39;</span>
+<span class="n">entities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;destination&#39;</span><span class="p">,</span> <span class="s1">&#39;departure_date&#39;</span><span class="p">]</span>
 
-# Define response messages
-response_messages = {
-    'book_flight': 'I can help you book a flight. What is your destination and departure date?',
-    'error': 'Sorry, I didn\'t understand that. Can you please try again?'
-}
+<span class="c1"># Define response messages</span>
+<span class="n">response_messages</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;book_flight&#39;</span><span class="p">:</span> <span class="s1">&#39;I can help you book a flight. What is your destination and departure date?&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Sorry, I didn</span><span class="se">\&#39;</span><span class="s1">t understand that. Can you please try again?&#39;</span>
+<span class="p">}</span>
 
-# Define chatbot logic
-def chatbot(request):
-    # Get user input
-    user_input = request.get('query')
+<span class="c1"># Define chatbot logic</span>
+<span class="k">def</span> <span class="nf">chatbot</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Get user input</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
 
-    # Parse user input
-    intent_match = client.match_intent(user_input)
-    if intent_match:
-        # Handle intent
-        if intent_match.intent == intent:
-            # Get entities
-            entities_match = client.extract_entities(user_input)
-            if entities_match:
-                # Book flight
-                destination = entities_match.get('destination')
-                departure_date = entities_match.get('departure_date')
-                # ... book flight logic ...
-                return response_messages['book_flight']
-            else:
-                return response_messages['error']
-        else:
-            return response_messages['error']
-    else:
-        return response_messages['error']
-</code></pre>
+    <span class="c1"># Parse user input</span>
+    <span class="n">intent_match</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">match_intent</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">intent_match</span><span class="p">:</span>
+        <span class="c1"># Handle intent</span>
+        <span class="k">if</span> <span class="n">intent_match</span><span class="o">.</span><span class="n">intent</span> <span class="o">==</span> <span class="n">intent</span><span class="p">:</span>
+            <span class="c1"># Get entities</span>
+            <span class="n">entities_match</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">extract_entities</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">entities_match</span><span class="p">:</span>
+                <span class="c1"># Book flight</span>
+                <span class="n">destination</span> <span class="o">=</span> <span class="n">entities_match</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;destination&#39;</span><span class="p">)</span>
+                <span class="n">departure_date</span> <span class="o">=</span> <span class="n">entities_match</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;departure_date&#39;</span><span class="p">)</span>
+                <span class="c1"># ... book flight logic ...</span>
+                <span class="k">return</span> <span class="n">response_messages</span><span class="p">[</span><span class="s1">&#39;book_flight&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response_messages</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response_messages</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response_messages</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span>
+</code></pre></div>
+
 <p>In this example, we're using a Dialogflow client to define a chatbot that can book flights based on user input. To ensure that the chatbot is fair and transparent, we're using techniques like intent matching and entity extraction to parse user input and provide accurate responses.</p>
 <h3 id="tools-and-platforms-for-responsible-ai">Tools and Platforms for Responsible AI</h3>
 <p>There are a range of tools and platforms available to support responsible AI development, including:
@@ -238,28 +239,29 @@ def chatbot(request):
 * <strong>Microsoft Azure Machine Learning</strong>: A cloud-based platform that provides tools for AI development, deployment, and management.</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
 <p>To illustrate the use of these tools, let's consider a use case involving the development of a predictive maintenance model for industrial equipment. Suppose we're using a platform like Google Cloud AI Platform to develop and deploy the model, and we want to ensure that it's fair and transparent in its predictions. We might use techniques like:</p>
-<pre><code class="language-python">import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from google.cloud import aiplatform
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
 
-# Load dataset
-df = pd.read_csv('equipment_data.csv')
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;equipment_data.csv&#39;</span><span class="p">)</span>
 
-# Split dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(df.drop('failure', axis=1), df['failure'], test_size=0.2, random_state=42)
+<span class="c1"># Split dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;failure&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;failure&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Train random forest model
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+<span class="c1"># Train random forest model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Deploy model to Google Cloud AI Platform
-aiplatform.Model.upload(model, 'predictive_maintenance_model')
+<span class="c1"># Deploy model to Google Cloud AI Platform</span>
+<span class="n">aiplatform</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;predictive_maintenance_model&#39;</span><span class="p">)</span>
 
-# Evaluate model performance
-y_pred = model.predict(X_test)
-print('Accuracy:', accuracy_score(y_test, y_pred))
-</code></pre>
+<span class="c1"># Evaluate model performance</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div>
+
 <p>In this example, we're using a random forest model to predict equipment failure based on a set of sensor readings. To deploy the model to Google Cloud AI Platform, we're using the <code>aiplatform</code> library to upload the model and evaluate its performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of AI, there are a range of common problems that can arise during development and deployment, including:
@@ -294,25 +296,26 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
 * <strong>Recall</strong>: The proportion of true positives among all actual positive instances.
 * <strong>F1 score</strong>: The harmonic mean of precision and recall.</p>
 <p>To illustrate the use of these metrics, let's consider an example involving the development of a predictive analytics system for diabetes diagnosis. Suppose we're using a dataset that includes demographic and clinical features like age, sex, body mass index, and blood glucose levels. We might use techniques like:</p>
-<pre><code class="language-python">from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span>
 
-# Load dataset
-df = pd.read_csv('diabetes_data.csv')
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetes_data.csv&#39;</span><span class="p">)</span>
 
-# Split dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(df.drop('diagnosis', axis=1), df['diagnosis'], test_size=0.2, random_state=42)
+<span class="c1"># Split dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Train model
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+<span class="c1"># Train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Evaluate model performance
-y_pred = model.predict(X_test)
-print('Accuracy:', accuracy_score(y_test, y_pred))
-print('Precision:', precision_score(y_test, y_pred))
-print('Recall:', recall_score(y_test, y_pred))
-print('F1 score:', f1_score(y_test, y_pred))
-</code></pre>
+<span class="c1"># Evaluate model performance</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Precision:&#39;</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Recall:&#39;</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;F1 score:&#39;</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div>
+
 <p>In this example, we're using a random forest model to predict diabetes diagnosis based on a set of demographic and clinical features. To evaluate the model's performance, we're using metrics like accuracy, precision, recall, and F1 score.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>AI ethics and responsible AI development are critical components of any AI project. By prioritizing fairness, transparency, and accountability, we can ensure that AI systems are developed and used in ways that are respectful of human rights and beneficial to society. Some key takeaways from this article include:

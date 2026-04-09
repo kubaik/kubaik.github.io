@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,68 +161,72 @@
 <p>Custom Elements are a type of Web Component that allows developers to create new, custom HTML elements. They are defined using the <code>customElements</code> API, which provides a way to register and define custom elements. Custom Elements can be used to create a wide range of custom elements, from simple buttons and inputs to complex, interactive components.</p>
 <h2 id="creating-custom-elements">Creating Custom Elements</h2>
 <p>Creating a custom element is a straightforward process that involves defining a new class that extends the <code>HTMLElement</code> class. Here is an example of how to create a simple custom element:</p>
-<pre><code class="language-javascript">class MyButton extends HTMLElement {
-  constructor() {
-    super();
-    this.textContent = 'Click me!';
-  }
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyButton</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Click me!&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-  connectedCallback() {
-    this.addEventListener('click', () =&gt; {
-      alert('Button clicked!');
-    });
-  }
-}
+<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Button clicked!&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-customElements.define('my-button', MyButton);
-</code></pre>
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-button&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyButton</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code defines a new custom element called <code>my-button</code> that displays the text "Click me!" and alerts the user when clicked. The <code>connectedCallback</code> method is called when the element is inserted into the DOM, and is used to set up event listeners and other initialization tasks.</p>
 <h3 id="using-custom-elements">Using Custom Elements</h3>
 <p>Once a custom element is defined, it can be used in HTML just like a standard HTML element. Here is an example of how to use the <code>my-button</code> custom element:</p>
-<pre><code class="language-html">&lt;my-button&gt;&lt;/my-button&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-button</span><span class="p">&gt;&lt;/</span><span class="nt">my-button</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>This code creates a new instance of the <code>my-button</code> custom element and inserts it into the DOM.</p>
 <h2 id="practical-example-creating-a-custom-toast-component">Practical Example: Creating a Custom Toast Component</h2>
 <p>Toasts are a common UI component that display a brief message to the user. Here is an example of how to create a custom toast component using Web Components and Custom Elements:</p>
-<pre><code class="language-javascript">class Toast extends HTMLElement {
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: 'open' });
-    this.shadow.innerHTML = `
-      &lt;style&gt;
-        :host {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background-color: #333;
-          color: #fff;
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-      &lt;/style&gt;
-      &lt;slot&gt;&lt;/slot&gt;
-    `;
-  }
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">Toast</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadow</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">      &lt;style&gt;</span>
+<span class="sb">        :host {</span>
+<span class="sb">          position: fixed;</span>
+<span class="sb">          top: 50%;</span>
+<span class="sb">          left: 50%;</span>
+<span class="sb">          transform: translate(-50%, -50%);</span>
+<span class="sb">          background-color: #333;</span>
+<span class="sb">          color: #fff;</span>
+<span class="sb">          padding: 10px;</span>
+<span class="sb">          border-radius: 10px;</span>
+<span class="sb">          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);</span>
+<span class="sb">        }</span>
+<span class="sb">      &lt;/style&gt;</span>
+<span class="sb">      &lt;slot&gt;&lt;/slot&gt;</span>
+<span class="sb">    `</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-  show(message) {
-    this.textContent = message;
-    this.style.display = 'block';
-    setTimeout(() =&gt; {
-      this.style.display = 'none';
-    }, 2000);
-  }
-}
+<span class="w">  </span><span class="nx">show</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-customElements.define('my-toast', Toast);
-</code></pre>
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-toast&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">Toast</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code defines a new custom element called <code>my-toast</code> that displays a toast message to the user. The <code>show</code> method is used to display the toast message, and the <code>setTimeout</code> function is used to hide the toast after 2 seconds.</p>
 <h3 id="using-the-custom-toast-component">Using the Custom Toast Component</h3>
 <p>Here is an example of how to use the <code>my-toast</code> custom element:</p>
-<pre><code class="language-html">&lt;my-toast id=&quot;toast&quot;&gt;&lt;/my-toast&gt;
-&lt;button onclick=&quot;document.getElementById('toast').show('Hello, world!')&quot;&gt;Show toast&lt;/button&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-toast</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;toast&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">my-toast</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;document.getElementById(&#39;toast&#39;).show(&#39;Hello, world!&#39;)&quot;</span><span class="p">&gt;</span>Show toast<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>This code creates a new instance of the <code>my-toast</code> custom element and inserts it into the DOM. The <code>show</code> method is called when the button is clicked, displaying the toast message to the user.</p>
 <h2 id="performance-and-optimization">Performance and Optimization</h2>
 <p>Web Components and Custom Elements can have a significant impact on the performance of a web application. Here are some metrics to consider:

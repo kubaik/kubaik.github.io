@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,10 +169,11 @@
 <li><strong>Optimize App Listing</strong>: Incorporate the targeted keywords into your app's title, description, and keywords.</li>
 </ol>
 <p>For instance, let's say we want to optimize the FitPal app for the keyword "workout tracker". We could use the following code snippet to incorporate the keyword into the app's title and description:</p>
-<pre><code class="language-java">// Set the app title and description
-String appTitle = &quot;FitPal - Workout Tracker and Nutrition Planner&quot;;
-String appDescription = &quot;Track your workouts and nutrition with FitPal, the ultimate fitness companion.&quot;;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Set the app title and description</span>
+<span class="n">String</span><span class="w"> </span><span class="n">appTitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;FitPal - Workout Tracker and Nutrition Planner&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">appDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Track your workouts and nutrition with FitPal, the ultimate fitness companion.&quot;</span><span class="p">;</span>
+</code></pre></div>
+
 <p>We could also use tools like Keyword Tool or KWFinder to find long-tail keywords related to "workout tracker", such as "best workout tracker app" or "workout tracker for women".</p>
 <h3 id="optimizing-app-icons-and-screenshots">Optimizing App Icons and Screenshots</h3>
 <p>An app's icon and screenshots are crucial visual elements that can make or break its listing. Here are some tips to optimize them:</p>
@@ -183,17 +183,18 @@ String appDescription = &quot;Track your workouts and nutrition with FitPal, the
 <li><strong>Use A/B Testing</strong>: Test different icon and screenshot variations to see which ones perform better.</li>
 </ul>
 <p>For example, let's say we want to test two different icon variations for the FitPal app:</p>
-<pre><code class="language-java">// Define the icon variations
-String iconVariation1 = &quot;icon_fitpal_red.png&quot;;
-String iconVariation2 = &quot;icon_fitpal_blue.png&quot;;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Define the icon variations</span>
+<span class="n">String</span><span class="w"> </span><span class="n">iconVariation1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;icon_fitpal_red.png&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">iconVariation2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;icon_fitpal_blue.png&quot;</span><span class="p">;</span>
 
-// Use A/B testing to determine which icon performs better
-if (Math.random() &lt; 0.5) {
-    useIcon(iconVariation1);
-} else {
-    useIcon(iconVariation2);
-}
-</code></pre>
+<span class="c1">// Use A/B testing to determine which icon performs better</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">random</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">useIcon</span><span class="p">(</span><span class="n">iconVariation1</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">useIcon</span><span class="p">(</span><span class="n">iconVariation2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>We could use tools like VWO or Optimizely to conduct A/B testing and determine which icon variation results in a higher conversion rate.</p>
 <h2 id="managing-app-reviews-and-ratings">Managing App Reviews and Ratings</h2>
 <p>App reviews and ratings are essential for building credibility and trust with potential users. Here are some strategies to manage them:</p>
@@ -203,11 +204,12 @@ if (Math.random() &lt; 0.5) {
 <li><strong>Use Review Management Tools</strong>: Utilize tools like AppFollow or ReviewTrackers to track and manage app reviews.</li>
 </ul>
 <p>For instance, let's say we want to prompt users to leave a review after they've completed a workout:</p>
-<pre><code class="language-java">// Prompt the user to leave a review
-if (workoutCompleted) {
-    showReviewPrompt(&quot;Thanks for completing your workout! Please leave a review to help us improve.&quot;);
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Prompt the user to leave a review</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">workoutCompleted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">showReviewPrompt</span><span class="p">(</span><span class="s">&quot;Thanks for completing your workout! Please leave a review to help us improve.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>We could use tools like Appirio or ReviewBot to automate the review response process and ensure that all reviews are responded to in a timely manner.</p>
 <h2 id="common-aso-problems-and-solutions">Common ASO Problems and Solutions</h2>
 <p>Here are some common ASO problems and their solutions:</p>

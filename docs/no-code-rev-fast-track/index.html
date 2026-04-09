@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,20 +164,21 @@
 * <strong>Microsoft Power Apps</strong>: A low-code platform that enables users to create custom business applications.</p>
 <h3 id="example-creating-a-web-application-with-bubble">Example: Creating a Web Application with Bubble</h3>
 <p>Bubble is a no-code platform that enables users to create web applications without coding. Here's an example of how to create a simple web application with Bubble:</p>
-<pre><code class="language-javascript">// Create a new page
-const page = new Page({
-  name: 'Home',
-  layout: 'default'
-});
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new page</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Page</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Home&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;default&#39;</span>
+<span class="p">});</span>
 
-// Add a text element
-const textElement = new TextElement({
-  text: 'Hello, World!'
-});
+<span class="c1">// Add a text element</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">textElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">TextElement</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span>
+<span class="p">});</span>
 
-// Add the text element to the page
-page.addElement(textElement);
-</code></pre>
+<span class="c1">// Add the text element to the page</span>
+<span class="nx">page</span><span class="p">.</span><span class="nx">addElement</span><span class="p">(</span><span class="nx">textElement</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code creates a new page with a default layout and adds a text element with the text "Hello, World!". While this code is written in JavaScript, Bubble provides a visual interface that enables users to create applications without writing code.</p>
 <h2 id="use-cases-for-low-codeno-code-platforms">Use Cases for Low-Code/No-Code Platforms</h2>
 <p>Low-code and no-code platforms have a wide range of use cases, including:
@@ -188,20 +188,21 @@ page.addElement(textElement);
 4. <strong>Prototyping</strong>: Low-code platforms like Figma and Sketch enable users to create prototypes of web and mobile applications without coding.</p>
 <h3 id="example-creating-a-mobile-application-with-adalo">Example: Creating a Mobile Application with Adalo</h3>
 <p>Adalo is a no-code platform that enables users to create mobile applications without coding. Here's an example of how to create a simple mobile application with Adalo:</p>
-<pre><code class="language-python"># Create a new screen
-screen = new Screen({
-  name: 'Home',
-  layout: 'default'
-});
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new screen</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Screen</span><span class="p">({</span>
+  <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span>
+  <span class="n">layout</span><span class="p">:</span> <span class="s1">&#39;default&#39;</span>
+<span class="p">});</span>
 
-# Add a button element
-button = new Button({
-  text: 'Click me!'
-});
+<span class="c1"># Add a button element</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Button</span><span class="p">({</span>
+  <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Click me!&#39;</span>
+<span class="p">});</span>
 
-# Add the button element to the screen
-screen.addElement(button);
-</code></pre>
+<span class="c1"># Add the button element to the screen</span>
+<span class="n">screen</span><span class="o">.</span><span class="n">addElement</span><span class="p">(</span><span class="n">button</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code creates a new screen with a default layout and adds a button element with the text "Click me!". While this code is written in Python, Adalo provides a visual interface that enables users to create applications without writing code.</p>
 <h2 id="common-problems-with-low-codeno-code-platforms">Common Problems with Low-Code/No-Code Platforms</h2>
 <p>While low-code and no-code platforms offer several benefits, they also have some common problems, including:

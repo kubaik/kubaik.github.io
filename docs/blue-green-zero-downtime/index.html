@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,41 +165,42 @@
 5. <strong>Route traffic to the Green environment</strong>: Once the new version is validated, route traffic to the Green environment.</p>
 <h3 id="example-code-deploying-a-nodejs-application-to-aws">Example Code: Deploying a Node.js Application to AWS</h3>
 <p>Here is an example of how you can deploy a Node.js application to AWS using Blue-Green deployment:</p>
-<pre><code class="language-javascript">// deploy.js
-const aws = require('aws-sdk');
-const blueEnvironment = 'blue';
-const greenEnvironment = 'green';
+<div class="codehilite"><pre><span></span><code><span class="c1">// deploy.js</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">aws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">blueEnvironment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">greenEnvironment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;green&#39;</span><span class="p">;</span>
 
-// Create an AWS Elastic Beanstalk environment
-const eb = new aws.ElasticBeanstalk({
-  region: 'us-west-2'
-});
+<span class="c1">// Create an AWS Elastic Beanstalk environment</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">eb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">aws</span><span class="p">.</span><span class="nx">ElasticBeanstalk</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-west-2&#39;</span>
+<span class="p">});</span>
 
-// Deploy the new version to the Green environment
-eb.createEnvironment({
-  EnvironmentName: greenEnvironment,
-  VersionLabel: 'v2',
-  TemplateName: 'nodejs'
-}, (err, data) =&gt; {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Deployed to ${greenEnvironment} environment`);
-  }
-});
+<span class="c1">// Deploy the new version to the Green environment</span>
+<span class="nx">eb</span><span class="p">.</span><span class="nx">createEnvironment</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">EnvironmentName</span><span class="o">:</span><span class="w"> </span><span class="nx">greenEnvironment</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">VersionLabel</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;v2&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">TemplateName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;nodejs&#39;</span>
+<span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Deployed to </span><span class="si">${</span><span class="nx">greenEnvironment</span><span class="si">}</span><span class="sb"> environment`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
 
-// Route traffic to the Green environment
-eb.swapEnvironmentCNAMEs({
-  DestinationEnvironmentName: greenEnvironment,
-  SourceEnvironmentName: blueEnvironment
-}, (err, data) =&gt; {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Routed traffic to ${greenEnvironment} environment`);
-  }
-});
-</code></pre>
+<span class="c1">// Route traffic to the Green environment</span>
+<span class="nx">eb</span><span class="p">.</span><span class="nx">swapEnvironmentCNAMEs</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">DestinationEnvironmentName</span><span class="o">:</span><span class="w"> </span><span class="nx">greenEnvironment</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">SourceEnvironmentName</span><span class="o">:</span><span class="w"> </span><span class="nx">blueEnvironment</span>
+<span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Routed traffic to </span><span class="si">${</span><span class="nx">greenEnvironment</span><span class="si">}</span><span class="sb"> environment`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code creates a new Elastic Beanstalk environment for the Green environment, deploys the new version of the application to the Green environment, and then routes traffic to the Green environment.</p>
 <h2 id="tools-and-platforms-for-blue-green-deployment">Tools and Platforms for Blue-Green Deployment</h2>
 <p>There are several tools and platforms that support Blue-Green deployment, including:
@@ -209,7 +209,7 @@ eb.swapEnvironmentCNAMEs({
 * <strong>Azure App Service</strong>: Azure App Service is a platform offered by Microsoft Azure that allows you to deploy web applications and services.</p>
 <h3 id="example-code-deploying-a-containerized-application-to-kubernetes">Example Code: Deploying a Containerized Application to Kubernetes</h3>
 <p>Here is an example of how you can deploy a containerized application to Kubernetes using Blue-Green deployment:</p>
-<pre><code class="language-yml"># deployment.yaml
+<div class="codehilite"><pre><span></span><code># deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -249,7 +249,8 @@ spec:
         image: node:15
         ports:
         - containerPort: 3000
-</code></pre>
+</code></pre></div>
+
 <p>This code defines two deployments, one for the Blue environment and one for the Green environment. The Blue environment uses the <code>node:14</code> image, while the Green environment uses the <code>node:15</code> image.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Blue-Green deployment can have a significant impact on performance, particularly when it comes to deployment time and downtime. Here are some performance benchmarks for Blue-Green deployment:
@@ -257,35 +258,36 @@ spec:
 * <strong>Downtime</strong>: With Blue-Green deployment, downtime can be reduced to near zero, compared to traditional deployment methods which can result in downtime of up to 30 minutes.</p>
 <h3 id="example-code-measuring-deployment-time-with-aws-cloudwatch">Example Code: Measuring Deployment Time with AWS CloudWatch</h3>
 <p>Here is an example of how you can measure deployment time using AWS CloudWatch:</p>
-<pre><code class="language-javascript">// metrics.js
-const aws = require('aws-sdk');
-const cloudwatch = new aws.CloudWatch({
-  region: 'us-west-2'
-});
+<div class="codehilite"><pre><span></span><code><span class="c1">// metrics.js</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">aws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cloudwatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">aws</span><span class="p">.</span><span class="nx">CloudWatch</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-west-2&#39;</span>
+<span class="p">});</span>
 
-// Get the deployment time metric
-cloudwatch.getMetricStatistics({
-  Namespace: 'AWS/ElasticBeanstalk',
-  MetricName: 'DeploymentTime',
-  Dimensions: [
-    {
-      Name: 'EnvironmentName',
-      Value: 'blue'
-    }
-  ],
-  StartTime: new Date(Date.now() - 3600000),
-  EndTime: new Date(),
-  Period: 300,
-  Statistics: ['Average'],
-  Unit: 'Seconds'
-}, (err, data) =&gt; {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Deployment time: ${data.Datapoints[0].Average} seconds`);
-  }
-});
-</code></pre>
+<span class="c1">// Get the deployment time metric</span>
+<span class="nx">cloudwatch</span><span class="p">.</span><span class="nx">getMetricStatistics</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">Namespace</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS/ElasticBeanstalk&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">MetricName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;DeploymentTime&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">Dimensions</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">Name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;EnvironmentName&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">Value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">StartTime</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">3600000</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">EndTime</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(),</span>
+<span class="w">  </span><span class="nx">Period</span><span class="o">:</span><span class="w"> </span><span class="mf">300</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">Statistics</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">Unit</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Seconds&#39;</span>
+<span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Deployment time: </span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">Datapoints</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">Average</span><span class="si">}</span><span class="sb"> seconds`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code gets the deployment time metric for the Blue environment using AWS CloudWatch.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions for Blue-Green deployment:

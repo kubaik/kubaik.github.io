@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,50 +165,53 @@
 <p>Let's take a look at some practical examples of BI tools in action.</p>
 <h3 id="example-1-using-tableau-to-analyze-sales-data">Example 1: Using Tableau to Analyze Sales Data</h3>
 <p>Suppose we are a sales manager at an e-commerce company, and we want to analyze our sales data to identify trends and patterns. We can use Tableau to connect to our sales database and create a dashboard that shows our sales performance over time.</p>
-<pre><code class="language-tableau">// Connect to sales database
-WORKSHEET = &quot;Sales Data&quot;
-DATABASE = &quot;SalesDB&quot;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to sales database</span>
+<span class="n">WORKSHEET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sales Data&quot;</span>
+<span class="n">DATABASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SalesDB&quot;</span>
 
-// Create a calculation to calculate total sales
-TOTAL_SALES = SUM([Sales Amount])
+<span class="c1">// Create a calculation to calculate total sales</span>
+<span class="n">TOTAL_SALES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SUM</span><span class="p">([</span><span class="n">Sales</span><span class="w"> </span><span class="n">Amount</span><span class="p">])</span>
 
-// Create a chart to show sales performance over time
-CHART = &quot;Sales Performance&quot;
-TYPE = &quot;Line Chart&quot;
-FIELDS = [Date], [TOTAL_SALES]
-</code></pre>
+<span class="c1">// Create a chart to show sales performance over time</span>
+<span class="n">CHART</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sales Performance&quot;</span>
+<span class="n">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Line Chart&quot;</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">Date</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">TOTAL_SALES</span><span class="p">]</span>
+</code></pre></div>
+
 <p>This code connects to our sales database, creates a calculation to calculate total sales, and creates a line chart to show our sales performance over time.</p>
 <h3 id="example-2-using-power-bi-to-create-a-customer-segmentation-report">Example 2: Using Power BI to Create a Customer Segmentation Report</h3>
 <p>Suppose we are a marketing manager at a retail company, and we want to create a customer segmentation report to identify our most valuable customers. We can use Power BI to connect to our customer database and create a report that shows our customer segments based on demographics and purchase behavior.</p>
-<pre><code class="language-powerbi">// Connect to customer database
-SOURCE = &quot;CustomerDB&quot;
-TABLE = &quot;CustomerData&quot;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to customer database</span>
+<span class="n">SOURCE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;CustomerDB&quot;</span>
+<span class="n">TABLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;CustomerData&quot;</span>
 
-// Create a measure to calculate customer value
-CUSTOMER_VALUE = 'CustomerData'[Purchase Amount] * 'CustomerData'[Frequency]
+<span class="c1">// Create a measure to calculate customer value</span>
+<span class="n">CUSTOMER_VALUE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">CustomerData</span><span class="err">&#39;</span><span class="p">[</span><span class="n">Purchase</span><span class="w"> </span><span class="n">Amount</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="err">&#39;</span><span class="n">CustomerData</span><span class="err">&#39;</span><span class="p">[</span><span class="n">Frequency</span><span class="p">]</span>
 
-// Create a chart to show customer segments
-CHART = &quot;Customer Segments&quot;
-TYPE = &quot;Scatter Chart&quot;
-FIELDS = [Age], [CUSTOMER_VALUE]
-</code></pre>
+<span class="c1">// Create a chart to show customer segments</span>
+<span class="n">CHART</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Customer Segments&quot;</span>
+<span class="n">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Scatter Chart&quot;</span>
+<span class="n">FIELDS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">Age</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">CUSTOMER_VALUE</span><span class="p">]</span>
+</code></pre></div>
+
 <p>This code connects to our customer database, creates a measure to calculate customer value, and creates a scatter chart to show our customer segments based on age and customer value.</p>
 <h3 id="example-3-using-qlikview-to-create-a-supply-chain-dashboard">Example 3: Using QlikView to Create a Supply Chain Dashboard</h3>
 <p>Suppose we are a supply chain manager at a manufacturing company, and we want to create a dashboard to monitor our supply chain performance. We can use QlikView to connect to our supply chain database and create a dashboard that shows our inventory levels, shipment status, and supplier performance.</p>
-<pre><code class="language-qlikview">// Connect to supply chain database
-LIBRARY = &quot;SupplyChainDB&quot;
-TABLE = &quot;InventoryData&quot;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to supply chain database</span>
+LIBRARY<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;SupplyChainDB&quot;</span>
+TABLE<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;InventoryData&quot;</span>
 
-// Create a chart to show inventory levels
-CHART = &quot;Inventory Levels&quot;
-TYPE = &quot;Bar Chart&quot;
-FIELDS = [Product], [Quantity]
+<span class="c1">// Create a chart to show inventory levels</span>
+CHART<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Inventory Levels&quot;</span>
+TYPE<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Bar Chart&quot;</span>
+FIELDS<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">[Product]</span><span class="p">,</span><span class="w"> </span><span class="ss">[Quantity]</span>
 
-// Create a chart to show shipment status
-CHART = &quot;Shipment Status&quot;
-TYPE = &quot;Gauge Chart&quot;
-FIELDS = [Shipment Status], [Percentage]
-</code></pre>
+<span class="c1">// Create a chart to show shipment status</span>
+CHART<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Shipment Status&quot;</span>
+TYPE<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Gauge Chart&quot;</span>
+FIELDS<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">[Shipment Status]</span><span class="p">,</span><span class="w"> </span><span class="ss">[Percentage]</span>
+</code></pre></div>
+
 <p>This code connects to our supply chain database, creates a chart to show our inventory levels, and creates a gauge chart to show our shipment status.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of BI tools, there are some common problems that users may encounter. Here are some solutions to these problems:</p>

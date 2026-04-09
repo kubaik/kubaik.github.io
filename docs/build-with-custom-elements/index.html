@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -152,71 +151,77 @@
                 <h2 id="introduction-to-web-components-and-custom-elements">Introduction to Web Components and Custom Elements</h2>
 <p>Web Components are a set of web platform APIs that allow you to create custom, reusable, and encapsulated HTML tags to use in web pages and web apps. Custom Elements are a key part of Web Components, allowing developers to create their own HTML elements. They provide a way to extend the HTML standard with new elements that can be used in web pages, just like the built-in HTML elements.</p>
 <p>Custom Elements are defined using the <code>customElements</code> API, which provides a way to register a new element with the browser. Once registered, the element can be used in HTML just like any other element. For example, if we define a custom element called <code>my-element</code>, we can use it in HTML like this:</p>
-<pre><code class="language-html">&lt;my-element&gt;&lt;/my-element&gt;
-</code></pre>
-<p>To define the <code>my-element</code> custom element, we need to create a JavaScript class that extends the <code>HTMLElement</code> class and defines the element's behavior. Here's an example:</p>
-<pre><code class="language-javascript">class MyElement extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = '&lt;p&gt;Hello World!&lt;/p&gt;';
-  }
-}
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
+</code></pre></div>
 
-customElements.define('my-element', MyElement);
-</code></pre>
+<p>To define the <code>my-element</code> custom element, we need to create a JavaScript class that extends the <code>HTMLElement</code> class and defines the element's behavior. Here's an example:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;p&gt;Hello World!&lt;/p&gt;&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code defines a custom element called <code>my-element</code> that displays the text "Hello World!" when used in an HTML page.</p>
 <h2 id="using-custom-elements-with-popular-frameworks-and-libraries">Using Custom Elements with Popular Frameworks and Libraries</h2>
 <p>Custom Elements can be used with popular frameworks and libraries like React, Angular, and Vue.js. For example, in React, you can use a custom element like this:</p>
-<pre><code class="language-jsx">import React from 'react';
-import ReactDOM from 'react-dom';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">ReactDOM</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
 
-class MyElement extends HTMLElement {
-  // ...
-}
+<span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">}</span>
 
-customElements.define('my-element', MyElement);
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
 
-const App = () =&gt; {
-  return (
-    &lt;div&gt;
-      &lt;my-element&gt;&lt;/my-element&gt;
-    &lt;/div&gt;
-  );
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">my</span><span class="err">-</span><span class="na">element</span><span class="p">&gt;&lt;/</span><span class="nt">my</span><span class="p">-</span><span class="na">element</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
 
-ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
-</code></pre>
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(&lt;</span><span class="nt">App</span><span class="w"> </span><span class="p">/&gt;,</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
+</code></pre></div>
+
 <p>In Angular, you can use a custom element by importing the <code>CUSTOM_ELEMENTS_SCHEMA</code> and using the element in your template:</p>
-<pre><code class="language-typescript">import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="p">,</span><span class="w"> </span><span class="nx">CUSTOM_ELEMENTS_SCHEMA</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BrowserModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/platform-browser&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./app.component&#39;</span><span class="p">;</span>
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-</code></pre>
-<pre><code class="language-html">&lt;!-- app.component.html --&gt;
-&lt;my-element&gt;&lt;/my-element&gt;
-</code></pre>
+<span class="kd">@NgModule</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">BrowserModule</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">schemas</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">CUSTOM_ELEMENTS_SCHEMA</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nx">bootstrap</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AppModule</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- app.component.html --&gt;</span>
+<span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In Vue.js, you can use a custom element by defining it as a global component:</p>
-<pre><code class="language-javascript">import Vue from 'vue';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
-class MyElement extends HTMLElement {
-  // ...
-}
+<span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">}</span>
 
-customElements.define('my-element', MyElement);
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
 
-Vue.component('my-element', {
-  template: '&lt;my-element&gt;&lt;/my-element&gt;'
-});
-</code></pre>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;my-element&gt;&lt;/my-element&gt;&#39;</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <h3 id="benefits-of-using-custom-elements">Benefits of Using Custom Elements</h3>
 <p>Using Custom Elements provides several benefits, including:</p>
 <ul>
@@ -247,32 +252,34 @@ Vue.component('my-element', {
 </ul>
 <p>For example, the Google Maps team uses Custom Elements to build reusable UI components that can be used across multiple web pages and web apps. They define a custom element called <code>google-map</code> that can be used to display a map:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
-<pre><code class="language-html">&lt;google-map latitude=&quot;37.7749&quot; longitude=&quot;-122.4194&quot;&gt;&lt;/google-map&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">google-map</span> <span class="na">latitude</span><span class="o">=</span><span class="s">&quot;37.7749&quot;</span> <span class="na">longitude</span><span class="o">=</span><span class="s">&quot;-122.4194&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">google-map</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>To define the <code>google-map</code> custom element, they create a JavaScript class that extends the <code>HTMLElement</code> class and defines the element's behavior:</p>
-<pre><code class="language-javascript">class GoogleMap extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
-      &lt;style&gt;
-        /* styles for the map */
-      &lt;/style&gt;
-      &lt;div id=&quot;map&quot;&gt;&lt;/div&gt;
-    `;
-  }
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">GoogleMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">      &lt;style&gt;</span>
+<span class="sb">        /* styles for the map */</span>
+<span class="sb">      &lt;/style&gt;</span>
+<span class="sb">      &lt;div id=&quot;map&quot;&gt;&lt;/div&gt;</span>
+<span class="sb">    `</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-  connectedCallback() {
-    // initialize the map
-    const map = new google.maps.Map(this.shadowRoot.getElementById('map'), {
-      center: { lat: this.getAttribute('latitude'), lng: this.getAttribute('longitude') },
-      zoom: 12
-    });
-  }
-}
+<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// initialize the map</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nb">Map</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">center</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lat</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">),</span><span class="w"> </span><span class="nx">lng</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">zoom</span><span class="o">:</span><span class="w"> </span><span class="mf">12</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-customElements.define('google-map', GoogleMap);
-</code></pre>
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;google-map&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">GoogleMap</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code defines a custom element called <code>google-map</code> that can be used to display a map. The element's behavior is defined by the <code>GoogleMap</code> class, which extends the <code>HTMLElement</code> class and defines the element's HTML, CSS, and JavaScript code.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When using Custom Elements, there are several common problems that can arise, such as:</p>

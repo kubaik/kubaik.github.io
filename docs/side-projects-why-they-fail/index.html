@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,94 +165,97 @@
 * What features and functionalities do I want to include?
 * What are my performance and scalability requirements?</p>
 <p>For example, let's say you want to build a simple to-do list app using React and Node.js. Your goals and objectives might look like this:</p>
-<pre><code class="language-javascript">// Define project goals and objectives
-const projectGoals = {
-  problem: 'Help users manage their daily tasks and reminders',
-  targetAudience: 'Individuals and small teams',
-  features: [
-    'User authentication and authorization',
-    'Task creation and management',
-    'Due date reminders and notifications'
-  ],
-  performanceRequirements: {
-    responseTime: 200ms,
-    scalability: 'Handle up to 1000 concurrent users'
-  }
-};
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Define project goals and objectives</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">projectGoals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">problem</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Help users manage their daily tasks and reminders&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">targetAudience</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Individuals and small teams&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">features</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s1">&#39;User authentication and authorization&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;Task creation and management&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;Due date reminders and notifications&#39;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">performanceRequirements</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">responseTime</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="nx">ms</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">scalability</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Handle up to 1000 concurrent users&#39;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>By defining your project goals and objectives, you can create a roadmap for your project and stay focused on what's important.</p>
 <h2 id="managing-time-and-resources">Managing Time and Resources</h2>
 <p>Time and resource management are critical components of any successful project. As a side project, it's essential to allocate a specific amount of time each week to work on your project. According to a survey by Stack Overflow, 63% of developers spend less than 10 hours per week on their side projects.</p>
 <p>To manage your time effectively, consider using tools like Trello or Asana to create a project schedule and track your progress. You can also use time tracking tools like Harvest or Toggl to monitor how much time you spend on your project.</p>
 <p>In terms of resources, consider using cloud platforms like AWS or Google Cloud to host your project. These platforms offer a range of services, including computing power, storage, and databases, at a fraction of the cost of traditional infrastructure. For example, AWS offers a free tier for its Lambda function service, which allows you to run up to 1 million requests per month for free.</p>
 <p>Here's an example of how you can use AWS Lambda to create a serverless API:</p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-# Import required libraries
-import boto3
-import json
+<span class="c1"># Import required libraries</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
-# Define Lambda function handler
-def lambda_handler(event, context):
-  # Process API request
-  request_data = json.loads(event['body'])
-  response = {
-    'statusCode': 200,
-    'body': json.dumps({'message': 'Hello, World!'})
-  }
-  return response
+<span class="c1"># Define Lambda function handler</span>
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+  <span class="c1"># Process API request</span>
+  <span class="n">request_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">])</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, World!&#39;</span><span class="p">})</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">response</span>
 
-# Create Lambda function
-lambda_client = boto3.client('lambda')
-lambda_client.create_function(
-  FunctionName='my-lambda-function',
-  Runtime='python3.8',
-  Role='arn:aws:iam::123456789012:role/lambda-execution-role',
-  Handler='lambda_handler',
-  Code={'ZipFile': bytes(b'lambda_handler.py')}
-)
-</code></pre>
+<span class="c1"># Create Lambda function</span>
+<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
+<span class="n">lambda_client</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span>
+  <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-lambda-function&#39;</span><span class="p">,</span>
+  <span class="n">Runtime</span><span class="o">=</span><span class="s1">&#39;python3.8&#39;</span><span class="p">,</span>
+  <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/lambda-execution-role&#39;</span><span class="p">,</span>
+  <span class="n">Handler</span><span class="o">=</span><span class="s1">&#39;lambda_handler&#39;</span><span class="p">,</span>
+  <span class="n">Code</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ZipFile&#39;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;lambda_handler.py&#39;</span><span class="p">)}</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>By using cloud platforms and serverless architectures, you can reduce your resource costs and focus on developing your project.</p>
 <h2 id="overcoming-poor-project-management">Overcoming Poor Project Management</h2>
 <p>Poor project management is another common reason why side projects fail. Without a clear plan and organization, it's easy to get bogged down in the development process and lose sight of your goals.</p>
 <p>To overcome poor project management, consider using agile development methodologies like Scrum or Kanban. These methodologies emphasize iterative development, continuous improvement, and flexibility.</p>
 <p>Here's an example of how you can use Scrum to manage your side project:</p>
-<pre><code class="language-markdown"># Define project backlog
-* Feature 1: User authentication and authorization
-* Feature 2: Task creation and management
-* Feature 3: Due date reminders and notifications
+<div class="codehilite"><pre><span></span><code><span class="gh"># Define project backlog</span>
+<span class="k">*</span><span class="w"> </span>Feature 1: User authentication and authorization
+<span class="k">*</span><span class="w"> </span>Feature 2: Task creation and management
+<span class="k">*</span><span class="w"> </span>Feature 3: Due date reminders and notifications
 
-# Define sprint goals and objectives
-* Sprint 1: Implement user authentication and authorization
-* Sprint 2: Implement task creation and management
-* Sprint 3: Implement due date reminders and notifications
+<span class="gh"># Define sprint goals and objectives</span>
+<span class="k">*</span><span class="w"> </span>Sprint 1: Implement user authentication and authorization
+<span class="k">*</span><span class="w"> </span>Sprint 2: Implement task creation and management
+<span class="k">*</span><span class="w"> </span>Sprint 3: Implement due date reminders and notifications
 
-# Define daily stand-up meeting agenda
-* What did I work on yesterday?
-* What am I working on today?
-* What obstacles am I facing?
-</code></pre>
+<span class="gh"># Define daily stand-up meeting agenda</span>
+<span class="k">*</span><span class="w"> </span>What did I work on yesterday?
+<span class="k">*</span><span class="w"> </span>What am I working on today?
+<span class="k">*</span><span class="w"> </span>What obstacles am I facing?
+</code></pre></div>
+
 <p>By using agile development methodologies, you can create a flexible and adaptive plan for your project and stay focused on delivering value to your users.</p>
 <h2 id="avoiding-unrealistic-expectations">Avoiding Unrealistic Expectations</h2>
 <p>Unrealistic expectations are another common reason why side projects fail. Without a clear understanding of your project's scope, timeline, and resources, it's easy to overpromise and underdeliver.</p>
 <p>To avoid unrealistic expectations, consider creating a project roadmap that outlines your project's milestones, deadlines, and resource requirements. You can use tools like GitHub or Jira to create a project roadmap and track your progress.</p>
 <p>Here's an example of how you can create a project roadmap using GitHub:</p>
-<pre><code class="language-markdown"># Define project milestones
-* Milestone 1: Implement user authentication and authorization (due in 2 weeks)
-* Milestone 2: Implement task creation and management (due in 4 weeks)
-* Milestone 3: Implement due date reminders and notifications (due in 6 weeks)
+<div class="codehilite"><pre><span></span><code><span class="gh"># Define project milestones</span>
+<span class="k">*</span><span class="w"> </span>Milestone 1: Implement user authentication and authorization (due in 2 weeks)
+<span class="k">*</span><span class="w"> </span>Milestone 2: Implement task creation and management (due in 4 weeks)
+<span class="k">*</span><span class="w"> </span>Milestone 3: Implement due date reminders and notifications (due in 6 weeks)
 
-# Define project deadlines
-* Alpha release: 8 weeks
-* Beta release: 12 weeks
-* Production release: 16 weeks
+<span class="gh"># Define project deadlines</span>
+<span class="k">*</span><span class="w"> </span>Alpha release: 8 weeks
+<span class="k">*</span><span class="w"> </span>Beta release: 12 weeks
+<span class="k">*</span><span class="w"> </span>Production release: 16 weeks
 
-# Define resource requirements
-* Development team: 1-2 people
-* Design team: 1 person
-* Testing team: 1 person
-</code></pre>
+<span class="gh"># Define resource requirements</span>
+<span class="k">*</span><span class="w"> </span>Development team: 1-2 people
+<span class="k">*</span><span class="w"> </span>Design team: 1 person
+<span class="k">*</span><span class="w"> </span>Testing team: 1 person
+</code></pre></div>
+
 <p>By creating a project roadmap, you can set realistic expectations for your project and deliver value to your users.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that side projects face, along with specific solutions:

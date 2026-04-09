@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -181,23 +180,24 @@
 </ol>
 <h3 id="example-metric-calculation">Example Metric Calculation</h3>
 <p>Here's a Python code snippet to calculate some of these metrics using the <code>scikit-learn</code> library:</p>
-<pre><code class="language-python">from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span>
 
-# Sample predictions and ground truth
-y_true = [1, 0, 1, 1, 0, 1, 0, 0, 1, 0]
-y_pred = [1, 0, 1, 0, 0, 1, 1, 0, 1, 0]
+<span class="c1"># Sample predictions and ground truth</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-# Calculating metrics
-accuracy = accuracy_score(y_true, y_pred)
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
+<span class="c1"># Calculating metrics</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
-print(f'Accuracy: {accuracy:.2f}')
-print(f'Precision: {precision:.2f}')
-print(f'Recall: {recall:.2f}')
-print(f'F1-Score: {f1:.2f}')
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall: </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1-Score: </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="tools-and-platforms-for-model-monitoring">Tools and Platforms for Model Monitoring</h2>
 <p>Several tools and platforms have emerged to facilitate AI model monitoring. Here are some noteworthy options:</p>
 <ol>
@@ -259,88 +259,91 @@ print(f'F1-Score: {f1:.2f}')
 <li>Triggered evaluations based on specific conditions (e.g., data drifts).</li>
 </ul>
 <p>Here's an example of how to set up a simple evaluation loop using Python:</p>
-<pre><code class="language-python">import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
-# Sample data
-X, y = np.random.rand(1000, 10), np.random.randint(0, 2, 1000)
+<span class="c1"># Sample data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-# Splitting the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+<span class="c1"># Splitting the data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Training a model
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+<span class="c1"># Training a model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Function to evaluate the model
-def evaluate_model(model, X_test, y_test):
-    predictions = model.predict(X_test)
-    accuracy = accuracy_score(y_test, predictions)
-    print(f'Model Accuracy: {accuracy:.2f}')
+<span class="c1"># Function to evaluate the model</span>
+<span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Model Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-# Initial evaluation
-evaluate_model(model, X_test, y_test)
+<span class="c1"># Initial evaluation</span>
+<span class="n">evaluate_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 
-# Set up a simple loop to periodically evaluate
-import time
+<span class="c1"># Set up a simple loop to periodically evaluate</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-while True:
-    time.sleep(3600)  # Sleep for an hour
-    # Here you would typically fetch new data
-    evaluate_model(model, X_test, y_test)
-</code></pre>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3600</span><span class="p">)</span>  <span class="c1"># Sleep for an hour</span>
+    <span class="c1"># Here you would typically fetch new data</span>
+    <span class="n">evaluate_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="addressing-common-problems">Addressing Common Problems</h2>
 <h3 id="problem-1-data-drift">Problem 1: Data Drift</h3>
 <p><strong>Solution</strong>: Implement drift detection using statistical tests or ML techniques like Kullback-Leibler divergence.</p>
 <ul>
 <li><strong>Example</strong>: Use TFDV to automatically detect data drift. Here's how to implement it:</li>
 </ul>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-import tensorflow_data_validation as tfdv
+<span class="kn">import</span> <span class="nn">tensorflow_data_validation</span> <span class="k">as</span> <span class="nn">tfdv</span>
 
-# Load the schema and new dataset
-schema = tfdv.load_schema_text('schema.pbtxt')
-new_data = tfdv.load_statistics('new_data_statistics.pb')
+<span class="c1"># Load the schema and new dataset</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">tfdv</span><span class="o">.</span><span class="n">load_schema_text</span><span class="p">(</span><span class="s1">&#39;schema.pbtxt&#39;</span><span class="p">)</span>
+<span class="n">new_data</span> <span class="o">=</span> <span class="n">tfdv</span><span class="o">.</span><span class="n">load_statistics</span><span class="p">(</span><span class="s1">&#39;new_data_statistics.pb&#39;</span><span class="p">)</span>
 
-# Compare new data against the schema
-drift_report = tfdv.validate_statistics(new_data, schema)
-tfdv.visualize_statistics(drift_report)
-</code></pre>
+<span class="c1"># Compare new data against the schema</span>
+<span class="n">drift_report</span> <span class="o">=</span> <span class="n">tfdv</span><span class="o">.</span><span class="n">validate_statistics</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="n">tfdv</span><span class="o">.</span><span class="n">visualize_statistics</span><span class="p">(</span><span class="n">drift_report</span><span class="p">)</span>
+</code></pre></div>
+
 <h3 id="problem-2-model-drift">Problem 2: Model Drift</h3>
 <p><strong>Solution</strong>: Regularly retrain models using the latest data. Use tools like MLflow for model versioning and tracking.</p>
 <ul>
 <li><strong>Example</strong>: Here's how to log a model with MLflow:</li>
 </ul>
-<pre><code class="language-python">import mlflow
-import mlflow.sklearn
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
 
-# Start logging
-mlflow.start_run()
+<span class="c1"># Start logging</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span>
 
-# Log model
-mlflow.sklearn.log_model(model, &quot;random_forest_model&quot;)
+<span class="c1"># Log model</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;random_forest_model&quot;</span><span class="p">)</span>
 
-# End logging
-mlflow.end_run()
-</code></pre>
+<span class="c1"># End logging</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">end_run</span><span class="p">()</span>
+</code></pre></div>
+
 <h3 id="problem-3-compliance-and-ethics-concerns">Problem 3: Compliance and Ethics Concerns</h3>
 <p><strong>Solution</strong>: Implement fairness monitoring and explainability tools, such as SHAP (SHapley Additive exPlanations) or LIME (Local Interpretable Model-agnostic Explanations).</p>
 <ul>
 <li><strong>Example</strong>: Using SHAP to explain model predictions:</li>
 </ul>
-<pre><code class="language-python">import shap
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">shap</span>
 
-# Assuming 'model' is fitted and 'X_test' is your test data
-explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X_test)
+<span class="c1"># Assuming &#39;model&#39; is fitted and &#39;X_test&#39; is your test data</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-# Visualize the SHAP values
-shap.summary_plot(shap_values, X_test)
-</code></pre>
+<span class="c1"># Visualize the SHAP values</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="best-practices-for-ai-model-maintenance">Best Practices for AI Model Maintenance</h2>
 <ol>
 <li>

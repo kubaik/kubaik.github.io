@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -198,30 +197,32 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <h3 id="example-1-data-deduplication-with-python">Example 1: Data Deduplication with Python</h3>
 <p>Duplicates in datasets can lead to skewed analytics. Here’s how to remove duplicates from a CSV file using Python's Pandas library.</p>
-<pre><code class="language-python">import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# Load the dataset
-df = pd.read_csv('data.csv')
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
 
-# Display the number of entries before deduplication
-print(f&quot;Entries before deduplication: {len(df)}&quot;)
+<span class="c1"># Display the number of entries before deduplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entries before deduplication: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-# Remove duplicates
-df_cleaned = df.drop_duplicates()
+<span class="c1"># Remove duplicates</span>
+<span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
 
-# Display the number of entries after deduplication
-print(f&quot;Entries after deduplication: {len(df_cleaned)}&quot;)
+<span class="c1"># Display the number of entries after deduplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entries after deduplication: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_cleaned</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-# Save the cleaned dataset
-df_cleaned.to_csv('data_cleaned.csv', index=False)
-</code></pre>
+<span class="c1"># Save the cleaned dataset</span>
+<span class="n">df_cleaned</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_cleaned.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
 <p><strong>Explanation</strong>: This code loads a CSV file into a DataFrame, removes duplicate records, and saves the cleaned DataFrame back to a new CSV file. Before and after counts help visualize the impact of deduplication.</p>
 <h3 id="example-2-handling-missing-values-in-sql">Example 2: Handling Missing Values in SQL</h3>
 <p>Missing values can be filled or removed depending on the context. Below is an SQL example to replace NULL values with the average of a column.</p>
-<pre><code class="language-sql">UPDATE sales
-SET revenue = (SELECT AVG(revenue) FROM sales)
-WHERE revenue IS NULL;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">UPDATE</span><span class="w"> </span><span class="n">sales</span>
+<span class="k">SET</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">revenue</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</code></pre></div>
+
 <p><strong>Explanation</strong>: This SQL command updates the <code>revenue</code> column for any row where the value is NULL by replacing it with the average revenue from the entire table. This method can help maintain the dataset's integrity without losing rows.</p>
 <h3 id="example-3-data-profiling-with-talend">Example 3: Data Profiling with Talend</h3>
 <p>Using Talend for data profiling can uncover inconsistencies in your dataset. Here’s a simplified process:</p>

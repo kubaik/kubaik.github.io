@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -178,23 +177,24 @@
 <h2 id="goroutines-the-building-blocks-of-concurrency">Goroutines: The Building Blocks of Concurrency</h2>
 <p>A goroutine is a function that runs concurrently with other functions. You can create a goroutine by using the <code>go</code> keyword followed by a function call. </p>
 <h3 id="example-creating-a-goroutine">Example: Creating a Goroutine</h3>
-<pre><code class="language-go">package main
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-import (
-    &quot;fmt&quot;
-    &quot;time&quot;
-)
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-func sayHello() {
-    fmt.Println(&quot;Hello from Goroutine!&quot;)
-}
+<span class="kd">func</span><span class="w"> </span><span class="nx">sayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello from Goroutine!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
 
-func main() {
-    go sayHello() // Start the goroutine
-    time.Sleep(1 * time.Second) // Wait for the goroutine to finish
-    fmt.Println(&quot;Main function finished.&quot;)
-}
-</code></pre>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">sayHello</span><span class="p">()</span><span class="w"> </span><span class="c1">// Start the goroutine</span>
+<span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="w"> </span><span class="c1">// Wait for the goroutine to finish</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Main function finished.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="explanation">Explanation</h3>
 <ul>
 <li>The <code>sayHello</code> function is executed as a goroutine.</li>
@@ -204,25 +204,26 @@ func main() {
 <h2 id="channels-communicating-between-goroutines">Channels: Communicating Between Goroutines</h2>
 <p>Channels provide a way for goroutines to communicate with each other. They are typed conduits through which you can send and receive values.</p>
 <h3 id="creating-and-using-channels">Creating and Using Channels</h3>
-<pre><code class="language-go">package main
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-import (
-    &quot;fmt&quot;
-)
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
 
-func greet(name string, ch chan string) {
-    message := fmt.Sprintf(&quot;Hello, %s!&quot;, name)
-    ch &lt;- message // Send a message to the channel
-}
+<span class="kd">func</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">ch</span><span class="w"> </span><span class="kd">chan</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">message</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Hello, %s!&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">ch</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="c1">// Send a message to the channel</span>
+<span class="p">}</span>
 
-func main() {
-    ch := make(chan string) // Create a new channel
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ch</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="c1">// Create a new channel</span>
 
-    go greet(&quot;Alice&quot;, ch) // Start a goroutine
-    message := &lt;-ch       // Receive a message from the channel
-    fmt.Println(message)
-}
-</code></pre>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ch</span><span class="p">)</span><span class="w"> </span><span class="c1">// Start a goroutine</span>
+<span class="w">    </span><span class="nx">message</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">ch</span><span class="w">       </span><span class="c1">// Receive a message from the channel</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="explanation_1">Explanation</h3>
 <ul>
 <li>A channel <code>ch</code> is created using <code>make(chan string)</code>.</li>
@@ -233,50 +234,51 @@ func main() {
 <h3 id="example-1-web-scraper-with-goroutines">Example 1: Web Scraper with Goroutines</h3>
 <p>Let's create a simple web scraper that fetches data from multiple URLs concurrently. This example will demonstrate how goroutines can improve the performance of I/O-bound operations.</p>
 <h4 id="implementation">Implementation</h4>
-<pre><code class="language-go">package main
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-import (
-    &quot;fmt&quot;
-    &quot;io/ioutil&quot;
-    &quot;net/http&quot;
-    &quot;sync&quot;
-)
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;io/ioutil&quot;</span>
+<span class="w">    </span><span class="s">&quot;net/http&quot;</span>
+<span class="w">    </span><span class="s">&quot;sync&quot;</span>
+<span class="p">)</span>
 
-func fetchURL(url string, wg *sync.WaitGroup) {
-    defer wg.Done() // Indicate that the goroutine is done
-    resp, err := http.Get(url)
-    if err != nil {
-        fmt.Printf(&quot;Failed to fetch %s: %v\n&quot;, url, err)
-        return
-    }
-    defer resp.Body.Close()
+<span class="kd">func</span><span class="w"> </span><span class="nx">fetchURL</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">wg</span><span class="w"> </span><span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Done</span><span class="p">()</span><span class="w"> </span><span class="c1">// Indicate that the goroutine is done</span>
+<span class="w">    </span><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Failed to fetch %s: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
 
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Printf(&quot;Failed to read body: %v\n&quot;, err)
-        return
-    }
+<span class="w">    </span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadAll</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Failed to read body: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
 
-    fmt.Printf(&quot;Fetched %s: %d bytes\n&quot;, url, len(body))
-}
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Fetched %s: %d bytes\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+<span class="p">}</span>
 
-func main() {
-    var wg sync.WaitGroup
-    urls := []string{
-        &quot;https://www.example.com&quot;,
-        &quot;https://www.example.org&quot;,
-        &quot;https://www.example.net&quot;,
-    }
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">wg</span><span class="w"> </span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+<span class="w">    </span><span class="nx">urls</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;https://www.example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;https://www.example.org&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;https://www.example.net&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
 
-    for _, url := range urls {
-        wg.Add(1) // Increment the WaitGroup counter
-        go fetchURL(url, &amp;wg) // Start a goroutine
-    }
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">urls</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="c1">// Increment the WaitGroup counter</span>
+<span class="w">        </span><span class="k">go</span><span class="w"> </span><span class="nx">fetchURL</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span><span class="w"> </span><span class="c1">// Start a goroutine</span>
+<span class="w">    </span><span class="p">}</span>
 
-    wg.Wait() // Wait for all goroutines to finish
-    fmt.Println(&quot;All URLs fetched.&quot;)
-}
-</code></pre>
+<span class="w">    </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Wait</span><span class="p">()</span><span class="w"> </span><span class="c1">// Wait for all goroutines to finish</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;All URLs fetched.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="explanation_2">Explanation</h4>
 <ul>
 <li>A <code>sync.WaitGroup</code> is used to wait for all goroutines to complete.</li>
@@ -287,38 +289,39 @@ func main() {
 <h3 id="example-2-simple-chat-application-with-channels">Example 2: Simple Chat Application with Channels</h3>
 <p>In this example, we will create a simple chat application where multiple users can send messages to each other using channels.</p>
 <h4 id="implementation_1">Implementation</h4>
-<pre><code class="language-go">package main
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-import (
-    &quot;fmt&quot;
-    &quot;time&quot;
-)
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-type Message struct {
-    User    string
-    Content string
-}
+<span class="kd">type</span><span class="w"> </span><span class="nx">Message</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">User</span><span class="w">    </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Content</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
 
-func chat(user string, messages chan Message) {
-    for i := 0; i &lt; 3; i++ {
-        msg := Message{User: user, Content: fmt.Sprintf(&quot;Message %d from %s&quot;, i+1, user)}
-        messages &lt;- msg // Send message to the channel
-        time.Sleep(1 * time.Second) // Simulate delay
-    }
-}
+<span class="kd">func</span><span class="w"> </span><span class="nx">chat</span><span class="p">(</span><span class="nx">user</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="w"> </span><span class="kd">chan</span><span class="w"> </span><span class="nx">Message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">msg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Message</span><span class="p">{</span><span class="nx">User</span><span class="p">:</span><span class="w"> </span><span class="nx">user</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Message %d from %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">)}</span>
+<span class="w">        </span><span class="nx">messages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="c1">// Send message to the channel</span>
+<span class="w">        </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="w"> </span><span class="c1">// Simulate delay</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 
-func main() {
-    messages := make(chan Message)
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">messages</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="nx">Message</span><span class="p">)</span>
 
-    go chat(&quot;Alice&quot;, messages) // Start Alice's chat
-    go chat(&quot;Bob&quot;, messages)   // Start Bob's chat
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">chat</span><span class="p">(</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="p">)</span><span class="w"> </span><span class="c1">// Start Alice&#39;s chat</span>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">chat</span><span class="p">(</span><span class="s">&quot;Bob&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="p">)</span><span class="w">   </span><span class="c1">// Start Bob&#39;s chat</span>
 
-    for i := 0; i &lt; 6; i++ {
-        msg := &lt;-messages // Receive messages from the channel
-        fmt.Printf(&quot;[%s] %s\n&quot;, msg.User, msg.Content)
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">msg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">messages</span><span class="w"> </span><span class="c1">// Receive messages from the channel</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;[%s] %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">User</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="explanation_3">Explanation</h4>
 <ul>
 <li>A <code>Message</code> struct is defined to hold user messages.</li>
@@ -331,33 +334,34 @@ func main() {
 <p>Race conditions occur when two or more goroutines access shared data concurrently, and at least one of them modifies it. This can lead to inconsistent data states.</p>
 <h4 id="solution-use-mutexes">Solution: Use Mutexes</h4>
 <p>To prevent race conditions, you can use <code>sync.Mutex</code> to lock the shared resource.</p>
-<pre><code class="language-go">package main
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
-import (
-    &quot;fmt&quot;
-    &quot;sync&quot;
-)
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;sync&quot;</span>
+<span class="p">)</span>
 
-var counter int
-var mu sync.Mutex
+<span class="kd">var</span><span class="w"> </span><span class="nx">counter</span><span class="w"> </span><span class="kt">int</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">mu</span><span class="w"> </span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
 
-func increment(wg *sync.WaitGroup) {
-    defer wg.Done()
-    mu.Lock() // Lock the mutex
-    counter++
-    mu.Unlock() // Unlock the mutex
-}
+<span class="kd">func</span><span class="w"> </span><span class="nx">increment</span><span class="p">(</span><span class="nx">wg</span><span class="w"> </span><span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Done</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">mu</span><span class="p">.</span><span class="nx">Lock</span><span class="p">()</span><span class="w"> </span><span class="c1">// Lock the mutex</span>
+<span class="w">    </span><span class="nx">counter</span><span class="o">++</span>
+<span class="w">    </span><span class="nx">mu</span><span class="p">.</span><span class="nx">Unlock</span><span class="p">()</span><span class="w"> </span><span class="c1">// Unlock the mutex</span>
+<span class="p">}</span>
 
-func main() {
-    var wg sync.WaitGroup
-    for i := 0; i &lt; 1000; i++ {
-        wg.Add(1)
-        go increment(&amp;wg)
-    }
-    wg.Wait()
-    fmt.Println(&quot;Final counter value:&quot;, counter)
-}
-</code></pre>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">wg</span><span class="w"> </span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="k">go</span><span class="w"> </span><span class="nx">increment</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">wg</span><span class="p">.</span><span class="nx">Wait</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Final counter value:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">counter</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="problem-2-deadlocks">Problem 2: Deadlocks</h3>
 <p>Deadlocks happen when two or more goroutines are waiting indefinitely for each other to release resources.</p>
 <h4 id="solution-analyze-locking-order">Solution: Analyze Locking Order</h4>

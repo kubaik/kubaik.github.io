@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,26 +164,27 @@
 4. <strong>Implement data processing and analysis</strong>: Configure the SIEM platform to process and analyze the collected data.</p>
 <h3 id="example-configuring-logstash-for-data-collection">Example: Configuring Logstash for Data Collection</h3>
 <p>Logstash is a popular data collection tool that can be used to collect log data from various sources. Here is an example of how to configure Logstash to collect log data from a Linux server:</p>
-<pre><code class="language-ruby">input {
-  file {
-    path =&gt; &quot;/var/log/*.log&quot;
-    type =&gt; &quot;linux_log&quot;
-  }
-}
+<div class="codehilite"><pre><span></span><code><span class="n">input</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/*.log&quot;</span>
+<span class="w">    </span><span class="n">type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;linux_log&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-filter {
-  grok {
-    match =&gt; { &quot;message&quot; =&gt; &quot;%{HTTPDATE:timestamp} %{IP:client_ip} %{WORD:method} %{URIPATH:request_uri}&quot; }
-  }
-}
+<span class="n">filter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">grok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{HTTPDATE:timestamp} %{IP:client_ip} %{WORD:method} %{URIPATH:request_uri}&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-output {
-  elasticsearch {
-    hosts =&gt; &quot;localhost:9200&quot;
-    index =&gt; &quot;linux_logs&quot;
-  }
-}
-</code></pre>
+<span class="n">output</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">elasticsearch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">hosts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
+<span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;linux_logs&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This configuration collects log data from the <code>/var/log/</code> directory, parses the log messages using the <code>grok</code> filter, and outputs the parsed data to an Elasticsearch index.</p>
 <h2 id="benefits-of-a-siem-system">Benefits of a SIEM System</h2>
 <p>A well-implemented SIEM system can provide numerous benefits, including:
@@ -193,8 +193,9 @@ output {
 * <strong>Compliance and regulatory requirements</strong>: A SIEM system can help organizations meet compliance and regulatory requirements by providing audit trails and reporting.</p>
 <h3 id="example-using-splunk-for-threat-detection">Example: Using Splunk for Threat Detection</h3>
 <p>Splunk is a popular SIEM platform that can be used to detect potential security threats. Here is an example of how to use Splunk to detect brute-force login attempts:</p>
-<pre><code class="language-spl">index=linux_logs | stats count as attempts by src_ip | where attempts &gt; 10
-</code></pre>
+<div class="codehilite"><pre><span></span><code>index=linux_logs | stats count as attempts by src_ip | where attempts &gt; 10
+</code></pre></div>
+
 <p>This search query uses the <code>stats</code> command to count the number of login attempts by source IP address and filters the results to show only IP addresses with more than 10 attempts.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur when implementing a SIEM system, along with specific solutions:
@@ -206,20 +207,21 @@ output {
     + Solution: Implement a distributed architecture and use cloud-based services to scale the SIEM system.</p>
 <h3 id="example-using-ibm-qradar-for-scalability">Example: Using IBM QRadar for Scalability</h3>
 <p>IBM QRadar is a popular SIEM platform that can be used to scale a SIEM system. Here is an example of how to use IBM QRadar to deploy a distributed architecture:</p>
-<pre><code class="language-python">from qradar import QRadar
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">qradar</span> <span class="kn">import</span> <span class="n">QRadar</span>
 
-# Create a QRadar object
-qradar = QRadar(&quot;https://qradar.example.com&quot;, &quot;username&quot;, &quot;password&quot;)
+<span class="c1"># Create a QRadar object</span>
+<span class="n">qradar</span> <span class="o">=</span> <span class="n">QRadar</span><span class="p">(</span><span class="s2">&quot;https://qradar.example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span>
 
-# Create a new distributed configuration
-config = qradar.create_distributed_config(&quot;distributed_config&quot;)
+<span class="c1"># Create a new distributed configuration</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">qradar</span><span class="o">.</span><span class="n">create_distributed_config</span><span class="p">(</span><span class="s2">&quot;distributed_config&quot;</span><span class="p">)</span>
 
-# Add a new data node to the configuration
-config.add_data_node(&quot;data_node_1&quot;, &quot;https://data_node_1.example.com&quot;)
+<span class="c1"># Add a new data node to the configuration</span>
+<span class="n">config</span><span class="o">.</span><span class="n">add_data_node</span><span class="p">(</span><span class="s2">&quot;data_node_1&quot;</span><span class="p">,</span> <span class="s2">&quot;https://data_node_1.example.com&quot;</span><span class="p">)</span>
 
-# Deploy the configuration
-qradar.deploy_config(config)
-</code></pre>
+<span class="c1"># Deploy the configuration</span>
+<span class="n">qradar</span><span class="o">.</span><span class="n">deploy_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a new distributed configuration, adds a new data node to the configuration, and deploys the configuration to the QRadar system.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for popular SIEM platforms:

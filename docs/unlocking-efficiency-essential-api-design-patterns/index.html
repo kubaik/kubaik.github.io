@@ -91,7 +91,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -152,11 +151,12 @@
 <li>Response formats like JSON or XML</li>
 </ul>
 <p>Example of a RESTful endpoint:</p>
-<pre><code class="language-markdown">GET /api/users
+<div class="codehilite"><pre><span></span><code>GET /api/users
 POST /api/users
 PUT /api/users/{id}
 DELETE /api/users/{id}
-</code></pre>
+</code></pre></div>
+
 <h2 id="2-versioning">2. Versioning</h2>
 <p>As APIs evolve, it's essential to provide versioning to ensure backward compatibility and smooth transitions for consumers. There are different approaches to versioning APIs:</p>
 <ul>
@@ -171,8 +171,9 @@ DELETE /api/users/{id}
 <li>Filtering: <code>filter</code>, <code>sort</code></li>
 </ul>
 <p>Example of pagination:</p>
-<pre><code class="language-markdown">GET /api/users?page=2&amp;limit=10
-</code></pre>
+<div class="codehilite"><pre><span></span><code>GET /api/users?page=2&amp;limit=10
+</code></pre></div>
+
 <h2 id="4-error-handling">4. Error Handling</h2>
 <p>Proper error handling is crucial for API design to provide meaningful responses to clients. Some best practices include:</p>
 <ul>
@@ -181,13 +182,14 @@ DELETE /api/users/{id}
 <li>Provide detailed documentation for error responses</li>
 </ul>
 <p>Example of error response:</p>
-<pre><code class="language-json">{
-  &quot;error&quot;: {
-    &quot;code&quot;: 404,
-    &quot;message&quot;: &quot;Resource not found&quot;
-  }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">404</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Resource not found&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h2 id="5-caching">5. Caching</h2>
 <p>Caching can significantly improve API performance by reducing the number of requests made to the server. Use caching strategies like:</p>
 <ul>

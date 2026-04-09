@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -175,130 +174,133 @@
 <h3 id="practical-examples-of-automating-code">Practical Examples of Automating Code</h3>
 <p>Here are a few practical examples of how to automate code using some of the tools and platforms mentioned above:</p>
 <h4 id="example-1-automating-code-review-with-github-actions">Example 1: Automating Code Review with GitHub Actions</h4>
-<pre><code class="language-yml">name: Code Review
-on:
-  pull_request:
-    types: [opened, synchronize]
-jobs:
-  review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run linter
-        run: |
-          npm install
-          npm run lint
-      - name: Run tests
-        run: |
-          npm install
-          npm run test
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">Review</span>
+<span class="n">on</span><span class="o">:</span>
+<span class="w">  </span><span class="n">pull_request</span><span class="o">:</span>
+<span class="w">    </span><span class="n">types</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">opened</span><span class="o">,</span><span class="w"> </span><span class="n">synchronize</span><span class="o">]</span>
+<span class="n">jobs</span><span class="o">:</span>
+<span class="w">  </span><span class="n">review</span><span class="o">:</span>
+<span class="w">    </span><span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="o">:</span><span class="w"> </span><span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
+<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
+<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">linter</span>
+<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="o">|</span>
+<span class="w">          </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
+<span class="w">          </span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">lint</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">tests</span>
+<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="o">|</span>
+<span class="w">          </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
+<span class="w">          </span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">test</span>
+</code></pre></div>
+
 <p>This GitHub Actions workflow automates the code review process by running a linter and tests on any pull requests that are opened or updated.</p>
 <h4 id="example-2-automating-deployment-with-circleci">Example 2: Automating Deployment with CircleCI</h4>
-<pre><code class="language-yml">version: 2.1
-jobs:
-  deploy:
-    docker:
-      - image: circleci/node:14
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run build
-      - run: npm run deploy
-workflows:
-  deploy:
-    jobs:
-      - deploy
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">2.1</span>
+<span class="n">jobs</span><span class="o">:</span>
+<span class="w">  </span><span class="n">deploy</span><span class="o">:</span>
+<span class="w">    </span><span class="n">docker</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">circleci</span><span class="o">/</span><span class="n">node</span><span class="o">:</span><span class="mi">14</span>
+<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">checkout</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">build</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">deploy</span>
+<span class="n">workflows</span><span class="o">:</span>
+<span class="w">  </span><span class="n">deploy</span><span class="o">:</span>
+<span class="w">    </span><span class="n">jobs</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">deploy</span>
+</code></pre></div>
+
 <p>This CircleCI configuration automates the deployment process by installing dependencies, building the code, and deploying it to production.</p>
 <h4 id="example-3-automating-monitoring-with-aws-codepipeline">Example 3: Automating Monitoring with AWS CodePipeline</h4>
-<pre><code class="language-json">{
-  &quot;pipeline&quot;: {
-    &quot;roleArn&quot;: &quot;arn:aws:iam::123456789012:role/CodePipelineServiceRole&quot;,
-    &quot;artifactStore&quot;: {
-      &quot;type&quot;: &quot;S3&quot;,
-      &quot;location&quot;: &quot;s3://my-bucket&quot;
-    },
-    &quot;stages&quot;: [
-      {
-        &quot;name&quot;: &quot;Source&quot;,
-        &quot;actions&quot;: [
-          {
-            &quot;name&quot;: &quot;GetCode&quot;,
-            &quot;actionTypeId&quot;: {
-              &quot;category&quot;: &quot;Source&quot;,
-              &quot;owner&quot;: &quot;AWS&quot;,
-              &quot;provider&quot;: &quot;CodeCommit&quot;,
-              &quot;version&quot;: &quot;1&quot;
-            },
-            &quot;configuration&quot;: {
-              &quot;BranchName&quot;: &quot;main&quot;,
-              &quot;OutputArtifactFormat&quot;: &quot;CODE_ZIP&quot;,
-              &quot;RepositoryName&quot;: &quot;my-repo&quot;
-            },
-            &quot;outputArtifacts&quot;: [
-              {
-                &quot;name&quot;: &quot;Code&quot;
-              }
-            ]
-          }
-        ]
-      },
-      {
-        &quot;name&quot;: &quot;Build&quot;,
-        &quot;actions&quot;: [
-          {
-            &quot;name&quot;: &quot;BuildCode&quot;,
-            &quot;actionTypeId&quot;: {
-              &quot;category&quot;: &quot;Build&quot;,
-              &quot;owner&quot;: &quot;AWS&quot;,
-              &quot;provider&quot;: &quot;CodeBuild&quot;,
-              &quot;version&quot;: &quot;1&quot;
-            },
-            &quot;configuration&quot;: {
-              &quot;ProjectName&quot;: &quot;my-project&quot;
-            },
-            &quot;inputArtifacts&quot;: [
-              {
-                &quot;name&quot;: &quot;Code&quot;
-              }
-            ],
-            &quot;outputArtifacts&quot;: [
-              {
-                &quot;name&quot;: &quot;BuildOutput&quot;
-              }
-            ]
-          }
-        ]
-      },
-      {
-        &quot;name&quot;: &quot;Deploy&quot;,
-        &quot;actions&quot;: [
-          {
-            &quot;name&quot;: &quot;DeployCode&quot;,
-            &quot;actionTypeId&quot;: {
-              &quot;category&quot;: &quot;Deploy&quot;,
-              &quot;owner&quot;: &quot;AWS&quot;,
-              &quot;provider&quot;: &quot;CloudFormation&quot;,
-              &quot;version&quot;: &quot;1&quot;
-            },
-            &quot;configuration&quot;: {
-              &quot;StackName&quot;: &quot;my-stack&quot;,
-              &quot;TemplatePath&quot;: &quot;template.yaml&quot;
-            },
-            &quot;inputArtifacts&quot;: [
-              {
-                &quot;name&quot;: &quot;BuildOutput&quot;
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;roleArn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::123456789012:role/CodePipelineServiceRole&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;artifactStore&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S3&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3://my-bucket&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;stages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Source&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GetCode&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;actionTypeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Source&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;owner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AWS&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CodeCommit&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;BranchName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;OutputArtifactFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CODE_ZIP&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RepositoryName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-repo&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;outputArtifacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Code&quot;</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BuildCode&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;actionTypeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;owner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AWS&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CodeBuild&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;ProjectName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-project&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;inputArtifacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Code&quot;</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;outputArtifacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BuildOutput&quot;</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Deploy&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DeployCode&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;actionTypeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Deploy&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;owner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AWS&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CloudFormation&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;StackName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-stack&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;TemplatePath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;template.yaml&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;inputArtifacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BuildOutput&quot;</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This AWS CodePipeline configuration automates the monitoring process by getting code from a repository, building it, and deploying it to production.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers may encounter when automating code include:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,58 +170,59 @@
 <h3 id="example-implementing-zero-trust-security-with-azure-active-directory">Example: Implementing Zero Trust Security with Azure Active Directory</h3>
 <p>Azure Active Directory (Azure AD) is a cloud-based IAM system that can be used to implement a Zero Trust security architecture. Azure AD provides a range of features, including conditional access, multi-factor authentication, and identity protection.</p>
 <p>The following code example shows how to use Azure AD to implement conditional access policies:</p>
-<pre><code class="language-python">import msal
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">msal</span>
 
-# Client ID and client secret for Azure AD application
-client_id = &quot;your_client_id&quot;
-client_secret = &quot;your_client_secret&quot;
-tenant_id = &quot;your_tenant_id&quot;
+<span class="c1"># Client ID and client secret for Azure AD application</span>
+<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
+<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+<span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">&quot;your_tenant_id&quot;</span>
 
-# Authority URL for Azure AD
-authority = f&quot;https://login.microsoftonline.com/{tenant_id}&quot;
+<span class="c1"># Authority URL for Azure AD</span>
+<span class="n">authority</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://login.microsoftonline.com/</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
-# Scopes for Azure AD Graph API
-scopes = [&quot;https://graph.microsoft.com/.default&quot;]
+<span class="c1"># Scopes for Azure AD Graph API</span>
+<span class="n">scopes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://graph.microsoft.com/.default&quot;</span><span class="p">]</span>
 
-# Create a client application instance
-app = msal.ConfidentialClientApplication(
-    client_id,
-    client_credential=client_secret,
-    authority=authority
-)
+<span class="c1"># Create a client application instance</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">msal</span><span class="o">.</span><span class="n">ConfidentialClientApplication</span><span class="p">(</span>
+    <span class="n">client_id</span><span class="p">,</span>
+    <span class="n">client_credential</span><span class="o">=</span><span class="n">client_secret</span><span class="p">,</span>
+    <span class="n">authority</span><span class="o">=</span><span class="n">authority</span>
+<span class="p">)</span>
 
-# Acquire an access token for Azure AD Graph API
-result = app.acquire_token_for_client(scopes)
+<span class="c1"># Acquire an access token for Azure AD Graph API</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">acquire_token_for_client</span><span class="p">(</span><span class="n">scopes</span><span class="p">)</span>
 
-# Use the access token to create a conditional access policy
-if result:
-    access_token = result.get(&quot;access_token&quot;)
-    # Create a conditional access policy using Azure AD Graph API
-    policy = {
-        &quot;displayName&quot;: &quot;Conditional Access Policy&quot;,
-        &quot;description&quot;: &quot;This is a conditional access policy&quot;,
-        &quot;conditions&quot;: [
-            {
-                &quot;signInRiskLevels&quot;: [&quot;high&quot;],
-                &quot;clientAppTypes&quot;: [&quot;all&quot;]
-            }
-        ],
-        &quot;grantControls&quot;: [
-            {
-                &quot;operator&quot;: &quot;AND&quot;,
-                &quot;builtInControls&quot;: [&quot;MFA&quot;]
-            }
-        ]
-    }
-    headers = {&quot;Authorization&quot;: f&quot;Bearer {access_token}&quot;, &quot;Content-Type&quot;: &quot;application/json&quot;}
-    response = requests.post(f&quot;https://graph.microsoft.com/v1.0/policies/conditionalAccess/policies&quot;, headers=headers, json=policy)
-    if response.status_code == 201:
-        print(&quot;Conditional access policy created successfully&quot;)
-    else:
-        print(&quot;Error creating conditional access policy&quot;)
-else:
-    print(&quot;Error acquiring access token&quot;)
-</code></pre>
+<span class="c1"># Use the access token to create a conditional access policy</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">)</span>
+    <span class="c1"># Create a conditional access policy using Azure AD Graph API</span>
+    <span class="n">policy</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Conditional Access Policy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a conditional access policy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conditions&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;signInRiskLevels&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;high&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;clientAppTypes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;grantControls&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;AND&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;builtInControls&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;MFA&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://graph.microsoft.com/v1.0/policies/conditionalAccess/policies&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">policy</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conditional access policy created successfully&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error creating conditional access policy&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error acquiring access token&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example shows how to use Azure AD to create a conditional access policy that requires multi-factor authentication (MFA) for users with high sign-in risk levels.</p>
 <h2 id="benefits-of-zero-trust-security-architecture">Benefits of Zero Trust Security Architecture</h2>
 <p>The benefits of Zero Trust security architecture include:</p>
@@ -235,7 +235,7 @@ else:
 <h3 id="example-zero-trust-security-architecture-for-a-financial-institution">Example: Zero Trust Security Architecture for a Financial Institution</h3>
 <p>A financial institution can implement a Zero Trust security architecture to protect its sensitive data and applications. The institution can use a cloud security gateway, such as Palo Alto Networks Prisma Access, to protect its cloud-based applications and data.</p>
 <p>The following diagram shows an example of a Zero Trust security architecture for a financial institution:</p>
-<pre><code>                              +---------------+
+<div class="codehilite"><pre><span></span><code>                              +---------------+
                               |  Internet    |
                               +---------------+
                                     |
@@ -267,7 +267,8 @@ else:
                               |  Applications    |
                               |  and Data        |
                               +---------------+
-</code></pre>
+</code></pre></div>
+
 <p>This diagram shows how a financial institution can use a cloud security gateway, IAM system, and NAC system to implement a Zero Trust security architecture.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>The following are some common problems and solutions related to Zero Trust security architecture:</p>
