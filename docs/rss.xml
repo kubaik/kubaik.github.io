@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 21:22:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 18:27:49 +0000</lastBuildDate>
+    <item>
+      <title>Code to Wealth</title>
+      <link>https://kubaik.github.io/code-to-wealth/</link>
+      <description>Learn to code your way to wealth with passive income strategies for developers.</description>
+      <pubDate>Thu, 09 Apr 2026 18:27:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-to-wealth/</guid>
+    </item>
     <item>
       <title>Speed Up SQL...</title>
       <link>https://kubaik.github.io/speed-up-sql/</link>
@@ -138,13 +145,6 @@
       <description>Uncover why most digital transformations fail &amp; what it takes to succeed</description>
       <pubDate>Thu, 09 Apr 2026 11:50:36 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-dreams-denied/</guid>
-    </item>
-    <item>
-      <title>Log Management at Scale</title>
-      <link>https://kubaik.github.io/log-management-at-scale/</link>
-      <description>Master log management at scale. Learn what works for efficient logging and error tracking.</description>
-      <pubDate>Thu, 09 Apr 2026 11:32:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-management-at-scale/</guid>
     </item>
   </channel>
 </rss>
