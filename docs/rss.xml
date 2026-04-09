@@ -5,7 +5,28 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 21:15:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 18:18:00 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up SQL...</title>
+      <link>https://kubaik.github.io/speed-up-sql/</link>
+      <description>Boost database performance with expert query optimization tips.</description>
+      <pubDate>Thu, 09 Apr 2026 18:17:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up-sql/</guid>
+    </item>
+    <item>
+      <title>Understanding Container Security in Production Kubernetes: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-container-security-in-production-kub/</link>
+      <description>A comprehensive guide to Container Security in Production Kubernetes covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 09 Apr 2026 18:03:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-container-security-in-production-kub/</guid>
+    </item>
+    <item>
+      <title>AI&apos;s Dark Side</title>
+      <link>https://kubaik.github.io/ais-dark-side/</link>
+      <description>Exposing AI&apos;s dark side: the hidden ethics issues Big Tech doesn&apos;t want you to know.</description>
+      <pubDate>Thu, 09 Apr 2026 17:59:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ais-dark-side/</guid>
+    </item>
     <item>
       <title>Tech Bust: Why Most Fail</title>
       <link>https://kubaik.github.io/tech-bust-why-most-fail/</link>
@@ -124,13 +145,6 @@
       <description>Uncover why most digital transformations fail &amp; what it takes to succeed</description>
       <pubDate>Thu, 09 Apr 2026 11:50:36 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-dreams-denied/</guid>
-    </item>
-    <item>
-      <title>Log Management at Scale</title>
-      <link>https://kubaik.github.io/log-management-at-scale/</link>
-      <description>Master log management at scale. Learn what works for efficient logging and error tracking.</description>
-      <pubDate>Thu, 09 Apr 2026 11:32:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-management-at-scale/</guid>
     </item>
   </channel>
 </rss>
