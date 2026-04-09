@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,95 +163,92 @@
 2. <strong>Create a canary deployment</strong>: Create a canary deployment using the <code>kubectl create</code> command, specifying the new deployment and the percentage of traffic to route to the canary deployment.
 3. <strong>Verify the canary deployment</strong>: Verify that the canary deployment is working correctly by checking the application logs and monitoring the performance of the application.</p>
 <p>Here is an example of how to create a canary deployment using Kubernetes:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">template</span><span class="o">:</span>
-<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
-<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
-<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
-<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">:</span><span class="n">latest</span>
-<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">8080</span>
-<span class="o">---</span>
-<span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">canary</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">canary</span>
-<span class="w">  </span><span class="n">template</span><span class="o">:</span>
-<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
-<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
-<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">canary</span>
-<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
-<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">canary</span>
-<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">:</span><span class="n">canary</span>
-<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">8080</span>
-<span class="o">---</span>
-<span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">networking</span><span class="o">.</span><span class="na">k8s</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Ingress</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">ingress</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">rules</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">com</span>
-<span class="w">    </span><span class="n">http</span><span class="o">:</span>
-<span class="w">      </span><span class="n">paths</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">path</span><span class="o">:</span><span class="w"> </span><span class="o">/</span>
-<span class="w">        </span><span class="n">pathType</span><span class="o">:</span><span class="w"> </span><span class="n">Prefix</span>
-<span class="w">        </span><span class="n">backend</span><span class="o">:</span>
-<span class="w">          </span><span class="n">service</span><span class="o">:</span>
-<span class="w">            </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">            </span><span class="n">port</span><span class="o">:</span>
-<span class="w">              </span><span class="n">number</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">com</span>
-<span class="w">    </span><span class="n">http</span><span class="o">:</span>
-<span class="w">      </span><span class="n">paths</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">path</span><span class="o">:</span><span class="w"> </span><span class="o">/</span>
-<span class="w">        </span><span class="n">pathType</span><span class="o">:</span><span class="w"> </span><span class="n">Prefix</span>
-<span class="w">        </span><span class="n">backend</span><span class="o">:</span>
-<span class="w">          </span><span class="n">service</span><span class="o">:</span>
-<span class="w">            </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">canary</span>
-<span class="w">            </span><span class="n">port</span><span class="o">:</span>
-<span class="w">              </span><span class="n">number</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">        </span><span class="n">annotations</span><span class="o">:</span>
-<span class="w">          </span><span class="n">nginx</span><span class="o">.</span><span class="na">ingress</span><span class="o">.</span><span class="na">kubernetes</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">canary</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
-<span class="w">          </span><span class="n">nginx</span><span class="o">.</span><span class="na">ingress</span><span class="o">.</span><span class="na">kubernetes</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">canary</span><span class="o">-</span><span class="n">weight</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app-canary
+  template:
+    metadata:
+      labels:
+        app: my-app-canary
+    spec:
+      containers:
+      - name: my-app-canary
+        image: my-app:canary
+        ports:
+        - containerPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+spec:
+  rules:
+  - host: my-app.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app
+            port:
+              number: 80
+  - host: my-app.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app-canary
+            port:
+              number: 80
+        annotations:
+          nginx.ingress.kubernetes.io/canary: &quot;true&quot;
+          nginx.ingress.kubernetes.io/canary-weight: &quot;10&quot;
+</code></pre>
 <p>This example creates two deployments, <code>my-app</code> and <code>my-app-canary</code>, and an ingress resource that routes 10% of traffic to the canary deployment.</p>
 <h2 id="monitoring-and-analyzing-canary-deployments-with-prometheus-and-grafana">Monitoring and Analyzing Canary Deployments with Prometheus and Grafana</h2>
 <p>To monitor and analyze canary deployments, developers can use tools like Prometheus and Grafana. Prometheus is a monitoring system that provides a time-series database and a query language for analyzing metrics. Grafana is a visualization tool that provides a web-based interface for creating dashboards and charts.</p>
 <p>Here is an example of how to monitor a canary deployment using Prometheus and Grafana:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> prometheus.yml
+<pre><code class="language-yml"># prometheus.yml
 scrape_configs:
-  <span class="k">-</span> job_name: &#39;my-app&#39;
+  - job_name: 'my-app'
     static_configs:
-      <span class="k">-</span> targets: [&#39;my-app:8080&#39;]
-  <span class="k">-</span> job_name: &#39;my-app-canary&#39;
+      - targets: ['my-app:8080']
+  - job_name: 'my-app-canary'
     static_configs:
-      <span class="k">-</span> targets: [&#39;my-app-canary:8080&#39;]
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1"># Query to get the request latency for the canary deployment</span>
-<span class="nv">prometheus_query</span><span class="o">=</span><span class="s2">&quot;http_requests_latency_seconds_bucket{job=&#39;my-app-canary&#39;}&quot;</span>
-</code></pre></div>
-
+      - targets: ['my-app-canary:8080']
+</code></pre>
+<pre><code class="language-bash"># Query to get the request latency for the canary deployment
+prometheus_query=&quot;http_requests_latency_seconds_bucket{job='my-app-canary'}&quot;
+</code></pre>
 <p>This example configures Prometheus to scrape metrics from the <code>my-app</code> and <code>my-app-canary</code> deployments, and provides a query to get the request latency for the canary deployment.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when implementing canary deployments, along with specific solutions:

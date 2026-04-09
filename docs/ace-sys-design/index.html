@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,27 +166,26 @@
 * <strong>Use tools and platforms</strong>: Familiarize yourself with tools and platforms such as AWS, Azure, or Google Cloud. Understand their services, pricing, and limitations.</p>
 <h3 id="code-example-load-balancing-with-haproxy">Code Example: Load Balancing with HAProxy</h3>
 <p>Let's consider an example of load balancing using HAProxy. HAProxy is a popular open-source load balancer that can be used to distribute traffic across multiple servers.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># HAProxy configuration file</span>
-<span class="k">global</span>
-    <span class="n">maxconn</span> <span class="mi">256</span>
+<pre><code class="language-python"># HAProxy configuration file
+global
+    maxconn 256
 
-<span class="n">defaults</span>
-    <span class="n">mode</span> <span class="n">http</span>
-    <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">5000</span><span class="n">ms</span>
-    <span class="n">timeout</span> <span class="n">client</span>  <span class="mi">50000</span><span class="n">ms</span>
-    <span class="n">timeout</span> <span class="n">server</span>  <span class="mi">50000</span><span class="n">ms</span>
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
 
-<span class="n">frontend</span> <span class="n">http</span>
-    <span class="n">bind</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span>
-    <span class="n">default_backend</span> <span class="n">servers</span>
+frontend http
+    bind *:80
+    default_backend servers
 
-<span class="n">backend</span> <span class="n">servers</span>
-    <span class="n">mode</span> <span class="n">http</span>
-    <span class="n">balance</span> <span class="n">roundrobin</span>
-    <span class="n">server</span> <span class="n">server1</span> <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8001</span> <span class="n">check</span>
-    <span class="n">server</span> <span class="n">server2</span> <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8002</span> <span class="n">check</span>
-</code></pre></div>
-
+backend servers
+    mode http
+    balance roundrobin
+    server server1 127.0.0.1:8001 check
+    server server2 127.0.0.1:8002 check
+</code></pre>
 <p>In this example, we configure HAProxy to distribute traffic across two servers, <code>server1</code> and <code>server2</code>, using a round-robin algorithm.</p>
 <h2 id="common-system-design-interview-questions">Common System Design Interview Questions</h2>
 <p>Here are some common system design interview questions, along with tips and examples to help you solve them:
@@ -194,26 +194,25 @@
 * <strong>Design a recommendation system</strong>: Consider factors such as data storage, algorithms, and scalability.</p>
 <h3 id="code-example-real-time-communication-with-websockets">Code Example: Real-time Communication with WebSockets</h3>
 <p>Let's consider an example of real-time communication using WebSockets. WebSockets is a protocol that enables bidirectional, real-time communication between a client and a server.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Client-side WebSocket code</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="s1">&#39;ws://example.com&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Client-side WebSocket code
+const socket = new WebSocket('ws://example.com');
 
-<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Received message: </span><span class="si">${</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">};</span>
+socket.onmessage = (event) =&gt; {
+    console.log(`Received message: ${event.data}`);
+};
 
-<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello, server!&#39;</span><span class="p">);</span>
-<span class="p">};</span>
+socket.onopen = () =&gt; {
+    socket.send('Hello, server!');
+};
 
-<span class="nx">socket</span><span class="p">.</span><span class="nx">onerror</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Error occurred: </span><span class="si">${</span><span class="nx">error</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">};</span>
+socket.onerror = (error) =&gt; {
+    console.log(`Error occurred: ${error}`);
+};
 
-<span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connection closed&#39;</span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+socket.onclose = () =&gt; {
+    console.log('Connection closed');
+};
+</code></pre>
 <p>In this example, we establish a WebSocket connection between a client and a server, and send a message from the client to the server.</p>
 <h2 id="system-design-interview-tools-and-platforms">System Design Interview Tools and Platforms</h2>
 <p>Here are some tools and platforms that you should be familiar with for system design interviews:
@@ -222,18 +221,17 @@
 * <strong>Google Cloud</strong>: Google Cloud offers a range of services, including Compute Engine, Cloud Storage, and Cloud SQL. Pricing starts at $0.02 per hour for a basic Compute Engine instance.</p>
 <h3 id="code-example-database-indexing-with-mysql">Code Example: Database Indexing with MySQL</h3>
 <p>Let's consider an example of database indexing using MySQL. MySQL is a popular open-source relational database management system.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a table with an index</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Create a table with an index
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    INDEX (email)
+);
 
-<span class="c1">-- Query the table using the index</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Query the table using the index
+SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <p>In this example, we create a table with an index on the <code>email</code> column, and query the table using the index.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions that you may encounter in system design interviews:

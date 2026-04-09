@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,80 +164,78 @@
 3. <strong>Third-party libraries</strong>: Third-party libraries, such as Lozad.js or Lazy Load, can provide a simple and effective way to implement lazy loading.</p>
 <h3 id="example-1-implementing-lazy-loading-using-intersectionobserver-api">Example 1: Implementing Lazy Loading using IntersectionObserver API</h3>
 <p>The following code example demonstrates how to implement lazy loading using the IntersectionObserver API:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create an observer instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Loop through the observed elements</span>
-<span class="w">  </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Check if the element is visible</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Load the resource</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Stop observing the element</span>
-<span class="w">      </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Set the root margin to 100px</span>
-<span class="w">  </span><span class="nx">rootMargin</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;100px&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create an observer instance
+const observer = new IntersectionObserver((entries) =&gt; {
+  // Loop through the observed elements
+  entries.forEach((entry) =&gt; {
+    // Check if the element is visible
+    if (entry.isIntersecting) {
+      // Load the resource
+      const img = entry.target;
+      img.src = img.dataset.src;
+      // Stop observing the element
+      observer.unobserve(img);
+    }
+  });
+}, {
+  // Set the root margin to 100px
+  rootMargin: '100px',
+});
 
-<span class="c1">// Observe the elements</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
-<span class="nx">images</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">img</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Observe the elements
+const images = document.querySelectorAll('img.lazy');
+images.forEach((img) =&gt; {
+  observer.observe(img);
+});
+</code></pre>
 <p>In this example, we create an observer instance and observe all elements with the class <code>lazy</code>. When an element comes into view, we load the resource by setting the <code>src</code> attribute to the value stored in the <code>data-src</code> attribute.</p>
 <h3 id="example-2-implementing-lazy-loading-using-scroll-events">Example 2: Implementing Lazy Loading using Scroll Events</h3>
 <p>The following code example demonstrates how to implement lazy loading using scroll events:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Get the scroll position</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">scrollTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">scrollY</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">scrollBottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">scrollTop</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">;</span>
+<pre><code class="language-javascript">// Get the scroll position
+const scrollTop = window.scrollY;
+const scrollBottom = scrollTop + window.innerHeight;
 
-<span class="c1">// Get the elements to lazy load</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">);</span>
+// Get the elements to lazy load
+const elements = document.querySelectorAll('.lazy');
 
-<span class="c1">// Loop through the elements</span>
-<span class="nx">elements</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">element</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Get the element&#39;s position</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">elementTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">elementBottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">elementTop</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">;</span>
+// Loop through the elements
+elements.forEach((element) =&gt; {
+  // Get the element's position
+  const elementTop = element.offsetTop;
+  const elementBottom = elementTop + element.offsetHeight;
 
-<span class="w">  </span><span class="c1">// Check if the element is about to come into view</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">elementTop</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">scrollBottom</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">elementBottom</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">scrollTop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Load the resource</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">element</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+  // Check if the element is about to come into view
+  if (elementTop &lt; scrollBottom &amp;&amp; elementBottom &gt; scrollTop) {
+    // Load the resource
+    const img = element;
+    img.src = img.dataset.src;
+  }
+});
 
-<span class="c1">// Add an event listener to the scroll event</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Get the scroll position</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scrollTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">scrollY</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scrollBottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">scrollTop</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">;</span>
+// Add an event listener to the scroll event
+window.addEventListener('scroll', () =&gt; {
+  // Get the scroll position
+  const scrollTop = window.scrollY;
+  const scrollBottom = scrollTop + window.innerHeight;
 
-<span class="w">  </span><span class="c1">// Get the elements to lazy load</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">);</span>
+  // Get the elements to lazy load
+  const elements = document.querySelectorAll('.lazy');
 
-<span class="w">  </span><span class="c1">// Loop through the elements</span>
-<span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">element</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Get the element&#39;s position</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">elementTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">elementBottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">elementTop</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">;</span>
+  // Loop through the elements
+  elements.forEach((element) =&gt; {
+    // Get the element's position
+    const elementTop = element.offsetTop;
+    const elementBottom = elementTop + element.offsetHeight;
 
-<span class="w">    </span><span class="c1">// Check if the element is about to come into view</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">elementTop</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">scrollBottom</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">elementBottom</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">scrollTop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Load the resource</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">element</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+    // Check if the element is about to come into view
+    if (elementTop &lt; scrollBottom &amp;&amp; elementBottom &gt; scrollTop) {
+      // Load the resource
+      const img = element;
+      img.src = img.dataset.src;
+    }
+  });
+});
+</code></pre>
 <p>In this example, we get the scroll position and loop through the elements to lazy load. When an element is about to come into view, we load the resource by setting the <code>src</code> attribute to the value stored in the <code>data-src</code> attribute.</p>
 <h2 id="tools-and-platforms-for-lazy-loading">Tools and Platforms for Lazy Loading</h2>
 <p>Several tools and platforms can help with lazy loading, including:
@@ -246,19 +245,18 @@
 * <strong>WebPageTest</strong>: WebPageTest is a web performance testing tool that provides detailed metrics and recommendations for optimizing lazy loading.</p>
 <h3 id="example-3-implementing-lazy-loading-using-lozadjs">Example 3: Implementing Lazy Loading using Lozad.js</h3>
 <p>The following code example demonstrates how to implement lazy loading using Lozad.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import Lozad.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">lozad</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;lozad&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import Lozad.js
+import lozad from 'lozad';
 
-<span class="c1">// Initialize Lozad.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lozad</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Set the load threshold to 100px</span>
-<span class="w">  </span><span class="nx">load</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize Lozad.js
+const observer = lozad('.lazy', {
+  // Set the load threshold to 100px
+  load: 100,
+});
 
-<span class="c1">// Observe the elements</span>
-<span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">();</span>
-</code></pre></div>
-
+// Observe the elements
+observer.observe();
+</code></pre>
 <p>In this example, we import Lozad.js and initialize it with the class <code>lazy</code>. We set the load threshold to 100px, which means that the resource will be loaded when the element is 100px from the viewport.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Lazy loading has numerous real-world use cases, including:
@@ -267,14 +265,13 @@
 * <strong>Video streaming</strong>: Lazy loading can be used to defer the loading of video content, reducing the initial load time and improving the overall user experience.</p>
 <h3 id="use-case-implementing-lazy-loading-for-image-galleries">Use Case: Implementing Lazy Loading for Image Galleries</h3>
 <p>The following example demonstrates how to implement lazy loading for an image gallery:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Create an image gallery --&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;image-gallery&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image1.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image 1&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image2.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image 2&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image3.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image 3&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- Create an image gallery --&gt;
+&lt;div class=&quot;image-gallery&quot;&gt;
+  &lt;img class=&quot;lazy&quot; data-src=&quot;image1.jpg&quot; alt=&quot;Image 1&quot;&gt;
+  &lt;img class=&quot;lazy&quot; data-src=&quot;image2.jpg&quot; alt=&quot;Image 2&quot;&gt;
+  &lt;img class=&quot;lazy&quot; data-src=&quot;image3.jpg&quot; alt=&quot;Image 3&quot;&gt;
+&lt;/div&gt;
+</code></pre>
 <p>In this example, we create an image gallery with three images. We add the class <code>lazy</code> to each image and set the <code>data-src</code> attribute to the URL of the image. We then use a lazy loading library, such as Lozad.js, to defer the loading of the images until they come into view.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Lazy loading can have several common problems, including:
@@ -283,24 +280,23 @@
 * <strong>Performance issues</strong>: Performance issues can occur when the resource is loaded, causing a decrease in the overall performance of the page.</p>
 <h3 id="solution-avoiding-flickering">Solution: Avoiding Flickering</h3>
 <p>To avoid flickering, we can use a technique called "placeholder loading". Placeholder loading involves loading a placeholder image or content until the actual resource is loaded. The following code example demonstrates how to implement placeholder loading:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a placeholder image</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">);</span>
-<span class="nx">placeholder</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;placeholder.jpg&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Create a placeholder image
+const placeholder = document.createElement('img');
+placeholder.src = 'placeholder.jpg';
 
-<span class="c1">// Add the placeholder image to the element</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">);</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">placeholder</span><span class="p">);</span>
+// Add the placeholder image to the element
+const element = document.querySelector('.lazy');
+element.appendChild(placeholder);
 
-<span class="c1">// Load the actual resource</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">);</span>
-<span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;image.jpg&#39;</span><span class="p">;</span>
+// Load the actual resource
+const img = document.createElement('img');
+img.src = 'image.jpg';
 
-<span class="c1">// Replace the placeholder image with the actual resource</span>
-<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">element</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span><span class="w"> </span><span class="nx">placeholder</span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+// Replace the placeholder image with the actual resource
+img.onload = () =&gt; {
+  element.replaceChild(img, placeholder);
+};
+</code></pre>
 <p>In this example, we create a placeholder image and add it to the element. We then load the actual resource and replace the placeholder image with the actual resource when it is loaded.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Lazy loading can have a significant impact on the performance of a web application. The following metrics demonstrate the performance benefits of lazy loading:

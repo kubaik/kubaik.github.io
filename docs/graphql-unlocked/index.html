@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,38 +159,36 @@
 * <strong>Real-time updates</strong>: GraphQL provides support for real-time updates, allowing clients to receive updates as soon as data changes.</p>
 <h2 id="setting-up-a-graphql-api">Setting Up a GraphQL API</h2>
 <p>To set up a GraphQL API, you will need to define a schema, create resolvers for each field in the schema, and set up a server to handle incoming requests. Here is an example of a simple GraphQL schema defined using the GraphQL Schema Definition Language (SDL):</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">email</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type User {
+  id: ID!
+  name: String!
+  email: String!
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="nl">users</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="p">}</span>
+type Query {
+  user(id: ID!): User
+  users: [User]
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Mutation</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="n">updateUser</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="n">deleteUser</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Boolean</span>
-<span class="p">}</span>
-</code></pre></div>
-
+type Mutation {
+  createUser(name: String!, email: String!): User
+  updateUser(id: ID!, name: String, email: String): User
+  deleteUser(id: ID!): Boolean
+}
+</code></pre>
 <p>This schema defines a <code>User</code> type with fields for <code>id</code>, <code>name</code>, and <code>email</code>, as well as queries and mutations for retrieving and modifying users.</p>
 <h3 id="implementing-resolvers">Implementing Resolvers</h3>
 <p>Resolvers are functions that run on the server to fetch the data for each field in the schema. Here is an example of a resolver for the <code>user</code> query:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Fetch user data from database or other data source</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">user</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const resolvers = {
+  Query: {
+    user: (parent, { id }) =&gt; {
+      // Fetch user data from database or other data source
+      const user = users.find((user) =&gt; user.id === id);
+      return user;
+    },
+  },
+};
+</code></pre>
 <p>This resolver takes the <code>id</code> parameter from the query and uses it to fetch the corresponding user data from a database or other data source.</p>
 <h2 id="using-graphql-clients">Using GraphQL Clients</h2>
 <p>GraphQL clients are libraries that provide a convenient interface for making requests to a GraphQL API. Some popular GraphQL clients include:
@@ -197,27 +196,26 @@
 * <strong>Relay</strong>: A GraphQL client developed by Facebook that provides features like caching, error handling, and support for subscriptions.
 * <strong>GraphQL Request</strong>: A lightweight GraphQL client for JavaScript that provides a simple interface for making requests to a GraphQL API.</p>
 <p>Here is an example of using Apollo Client to make a request to a GraphQL API:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloClient</span><span class="p">,</span><span class="w"> </span><span class="nx">InMemoryCache</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@apollo/client&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloClient</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/graphql&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">cache</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">InMemoryCache</span><span class="p">(),</span>
-<span class="p">});</span>
+const client = new ApolloClient({
+  uri: 'https://example.com/graphql',
+  cache: new InMemoryCache(),
+});
 
-<span class="nx">client</span><span class="p">.</span><span class="nx">query</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="nx">gql</span><span class="sb">`</span>
-<span class="sb">    query {</span>
-<span class="sb">      user(id: &quot;123&quot;) {</span>
-<span class="sb">        name</span>
-<span class="sb">        email</span>
-<span class="sb">      }</span>
-<span class="sb">    }</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+client.query({
+  query: gql`
+    query {
+      user(id: &quot;123&quot;) {
+        name
+        email
+      }
+    }
+  `,
+}).then((result) =&gt; {
+  console.log(result.data);
+});
+</code></pre>
 <p>This code creates an instance of Apollo Client and uses it to make a request to a GraphQL API for a user's data.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>GraphQL APIs can provide significant performance improvements over traditional REST APIs. Here are some benchmarks comparing the performance of GraphQL and REST APIs:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -176,20 +177,19 @@
 * Installing dependencies and setting up your project environment
 * Familiarizing yourself with the project's codebase and contributing guidelines</p>
 <p>For example, to set up your environment for contributing to TensorFlow, you'll need to:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Git and GitHub</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">git</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="k">global</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="s2">&quot;Your Name&quot;</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="k">global</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="s2">&quot;your.email@example.com&quot;</span>
+<pre><code class="language-python"># Install Git and GitHub
+sudo apt-get install git
+git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;your.email@example.com&quot;
 
-<span class="c1"># Install TensorFlow dependencies</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">scipy</span>
+# Install TensorFlow dependencies
+pip install tensorflow
+pip install numpy
+pip install scipy
 
-<span class="c1"># Clone the TensorFlow repository</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">git</span>
-</code></pre></div>
-
+# Clone the TensorFlow repository
+git clone https://github.com/tensorflow/tensorflow.git
+</code></pre>
 <h2 id="submitting-pull-requests">Submitting Pull Requests</h2>
 <p>Once you've found a project to contribute to and set up your environment, it's time to start coding. Here are the steps to follow:
 1. <strong>Fork the repository</strong>: Create a copy of the project repository in your own GitHub account.
@@ -199,44 +199,42 @@
 5. <strong>Push your changes</strong>: Push your changes to your forked repository.
 6. <strong>Submit a pull request</strong>: Create a pull request to the original repository, including a description of your changes.</p>
 <p>For example, to submit a pull request to the TensorFlow repository, you can use the following commands:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Fork the TensorFlow repository</span>
-git<span class="w"> </span>fork<span class="w"> </span>https://github.com/tensorflow/tensorflow.git
+<pre><code class="language-bash"># Fork the TensorFlow repository
+git fork https://github.com/tensorflow/tensorflow.git
 
-<span class="c1"># Create a new branch</span>
-git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>fix/bug-123
+# Create a new branch
+git checkout -b fix/bug-123
 
-<span class="c1"># Make your changes</span>
-<span class="c1"># ...</span>
+# Make your changes
+# ...
 
-<span class="c1"># Commit your changes</span>
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Fix bug #123&quot;</span>
+# Commit your changes
+git commit -m &quot;Fix bug #123&quot;
 
-<span class="c1"># Push your changes</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>fix/bug-123
+# Push your changes
+git push origin fix/bug-123
 
-<span class="c1"># Submit a pull request</span>
-git<span class="w"> </span>pull-request<span class="w"> </span>-o<span class="w"> </span>tensorflow<span class="w"> </span>-r<span class="w"> </span>fix/bug-123
-</code></pre></div>
-
+# Submit a pull request
+git pull-request -o tensorflow -r fix/bug-123
+</code></pre>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>When contributing to open source projects, you may encounter common problems, such as:
 * <strong>Conflicting changes</strong>: When your changes conflict with others, use <code>git merge</code> or <code>git rebase</code> to resolve the conflicts.
 * <strong>Code review</strong>: When your pull request is reviewed, use the feedback to improve your code and resubmit your changes.
 * <strong>Testing and debugging</strong>: When your changes introduce bugs or failures, use testing frameworks like JUnit or PyUnit to identify and fix the issues.</p>
 <p>For example, to resolve conflicting changes, you can use the following commands:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Pull the latest changes from the remote repository</span>
-git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+<pre><code class="language-bash"># Pull the latest changes from the remote repository
+git pull origin master
 
-<span class="c1"># Merge the changes</span>
-git<span class="w"> </span>merge<span class="w"> </span>origin/master
+# Merge the changes
+git merge origin/master
 
-<span class="c1"># Resolve conflicts</span>
-<span class="c1"># ...</span>
+# Resolve conflicts
+# ...
 
-<span class="c1"># Commit the resolved changes</span>
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Resolved conflicts&quot;</span>
-</code></pre></div>
-
+# Commit the resolved changes
+git commit -m &quot;Resolved conflicts&quot;
+</code></pre>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some concrete use cases and implementation details for contributing to open source projects:
 * <strong>Fixing bugs</strong>: Identify bugs in the project's issue tracker, fix the bugs, and submit a pull request.
@@ -252,10 +250,9 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 * <strong>Memory usage</strong>: Measure the memory usage of your code to ensure it's optimized.
 * <strong>Code coverage</strong>: Measure the code coverage of your tests to ensure they're comprehensive.</p>
 <p>For example, to measure the execution time of your code, you can use the <code>time</code> command:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Measure the execution time</span>
-<span class="nb">time</span><span class="w"> </span>python<span class="w"> </span>your_code.py
-</code></pre></div>
-
+<pre><code class="language-bash"># Measure the execution time
+time python your_code.py
+</code></pre>
 <p>This will give you the execution time of your code, which you can use to optimize and improve performance.</p>
 <h2 id="pricing-data-and-cost-considerations">Pricing Data and Cost Considerations</h2>
 <p>When contributing to open source projects, it's essential to consider pricing data and cost considerations, such as:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,74 +154,71 @@
 <h3 id="types-of-components">Types of Components</h3>
 <p>Vue.js provides two primary types of components: global components and local components. Global components are registered globally and can be used throughout the application, whereas local components are registered locally and can only be used within a specific component or module.</p>
 <p>For example, let's consider a simple global component called <code>NavigationBar</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// navigation-bar.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span>
+<pre><code class="language-javascript">// navigation-bar.js
+import Vue from 'vue'
 
-<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="s1">&#39;navigation-bar&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;nav&gt;</span>
-<span class="sb">      &lt;ul&gt;</span>
-<span class="sb">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span>
-<span class="sb">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;</span>
-<span class="sb">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;</span>
-<span class="sb">      &lt;/ul&gt;</span>
-<span class="sb">    &lt;/nav&gt;</span>
-<span class="sb">  `</span>
-<span class="p">})</span>
-</code></pre></div>
-
+Vue.component('navigation-bar', {
+  template: `
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  `
+})
+</code></pre>
 <p>This component can be used in any part of the application by simply including the <code>&lt;navigation-bar&gt;</code> tag in the template.</p>
 <h3 id="creating-and-managing-components">Creating and Managing Components</h3>
 <p>To create a new component, you can use the <code>Vue.component()</code> method, as shown in the previous example. However, for more complex components, it's recommended to use the <code>Vue.extend()</code> method, which allows you to define a component as a separate JavaScript file.</p>
 <p>For instance, let's create a <code>UserProfile</code> component that displays a user's profile information:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// user-profile.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span>
+<pre><code class="language-javascript">// user-profile.js
+import Vue from 'vue'
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;div&gt;</span>
-<span class="sb">      &lt;h1&gt;{{ user.name }}&lt;/h1&gt;</span>
-<span class="sb">      &lt;p&gt;{{ user.email }}&lt;/p&gt;</span>
-<span class="sb">    &lt;/div&gt;</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Object</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">})</span>
-</code></pre></div>
-
+export default Vue.extend({
+  template: `
+    &lt;div&gt;
+      &lt;h1&gt;{{ user.name }}&lt;/h1&gt;
+      &lt;p&gt;{{ user.email }}&lt;/p&gt;
+    &lt;/div&gt;
+  `,
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  }
+})
+</code></pre>
 <p>This component expects a <code>user</code> object as a prop, which contains the user's name and email.</p>
 <h3 id="component-registration">Component Registration</h3>
 <p>To use a component in a Vue.js application, you need to register it with the Vue instance. There are two ways to register components: globally and locally.</p>
 <p>Global registration involves registering a component with the Vue instance using the <code>Vue.component()</code> method, as shown earlier. Local registration involves registering a component within a specific component or module using the <code>components</code> option.</p>
 <p>For example, let's register the <code>UserProfile</code> component locally within a <code>UserDashboard</code> component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// user-dashboard.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">UserProfile</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./user-profile&#39;</span>
+<pre><code class="language-javascript">// user-dashboard.js
+import Vue from 'vue'
+import UserProfile from './user-profile'
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;div&gt;</span>
-<span class="sb">      &lt;user-profile :user=&quot;user&quot;&gt;&lt;/user-profile&gt;</span>
-<span class="sb">    &lt;/div&gt;</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">UserProfile</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">})</span>
-</code></pre></div>
-
+export default Vue.extend({
+  template: `
+    &lt;div&gt;
+      &lt;user-profile :user=&quot;user&quot;&gt;&lt;/user-profile&gt;
+    &lt;/div&gt;
+  `,
+  components: {
+    UserProfile
+  },
+  data() {
+    return {
+      user: {
+        name: 'John Doe',
+        email: 'john.doe@example.com'
+      }
+    }
+  }
+})
+</code></pre>
 <p>In this example, the <code>UserProfile</code> component is registered locally within the <code>UserDashboard</code> component using the <code>components</code> option.</p>
 <h3 id="best-practices-for-building-scalable-applications">Best Practices for Building Scalable Applications</h3>
 <p>To build scalable and maintainable Vue.js applications, follow these best practices:</p>

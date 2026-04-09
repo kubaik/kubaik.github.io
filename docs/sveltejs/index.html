@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,30 +172,27 @@
 </ul>
 <h2 id="getting-started-with-svelte">Getting Started with Svelte</h2>
 <p>To get started with Svelte, you need to have Node.js installed. The latest version at the time of writing is Node.js 18.x. You can check your Node.js version by running:</p>
-<div class="codehilite"><pre><span></span><code>node<span class="w"> </span>-v
-</code></pre></div>
-
+<pre><code class="language-bash">node -v
+</code></pre>
 <h3 id="installing-svelte">Installing Svelte</h3>
 <p>The easiest way to create a new Svelte project is to use the Svelte template. You can set it up using the following commands:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>degit<span class="w"> </span>sveltejs/template<span class="w"> </span>svelte-app
-<span class="nb">cd</span><span class="w"> </span>svelte-app
-npm<span class="w"> </span>install
-npm<span class="w"> </span>run<span class="w"> </span>dev
-</code></pre></div>
-
+<pre><code class="language-bash">npx degit sveltejs/template svelte-app
+cd svelte-app
+npm install
+npm run dev
+</code></pre>
 <p>This will create a new Svelte project in a directory called <code>svelte-app</code>. The <code>npm run dev</code> command starts a local development server, accessible at <code>http://localhost:5000</code>.</p>
 <h3 id="project-structure">Project Structure</h3>
 <p>Once your project is set up, you'll notice the following structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">svelte</span><span class="o">-</span><span class="nx">app</span>
-<span class="err">├──</span><span class="w"> </span><span class="nx">public</span>
-<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">global</span><span class="p">.</span><span class="nx">css</span>
-<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span>
-<span class="err">├──</span><span class="w"> </span><span class="nx">src</span>
-<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">App</span><span class="p">.</span><span class="nx">svelte</span>
-<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
-<span class="err">└──</span><span class="w"> </span><span class="kn">package</span><span class="p">.</span><span class="nx">json</span>
-</code></pre></div>
-
+<pre><code>svelte-app
+├── public
+│   ├── global.css
+│   └── index.html
+├── src
+│   ├── App.svelte
+│   └── main.js
+└── package.json
+</code></pre>
 <ul>
 <li><strong>public/index.html</strong>: The main HTML file.</li>
 <li><strong>src/App.svelte</strong>: The main Svelte component.</li>
@@ -204,57 +202,54 @@ npm<span class="w"> </span>run<span class="w"> </span>dev
 <p>Let’s build a simple counter application to illustrate Svelte's reactivity and component structure.</p>
 <h4 id="step-1-create-the-counter-component">Step 1: Create the Counter Component</h4>
 <p>Create a new file called <code>Counter.svelte</code> in the <code>src</code> directory:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;script&gt;</span>
-<span class="w">    </span>let<span class="w"> </span>count<span class="w"> </span>=<span class="w"> </span>0;
+<pre><code class="language-svelte">&lt;script&gt;
+    let count = 0;
 
-<span class="w">    </span>function<span class="w"> </span>increment()<span class="w"> </span>{
-<span class="w">        </span>count<span class="w"> </span>+=<span class="w"> </span>1;
-<span class="w">    </span>}
+    function increment() {
+        count += 1;
+    }
 
-<span class="w">    </span>function<span class="w"> </span>decrement()<span class="w"> </span>{
-<span class="w">        </span>count<span class="w"> </span>-=<span class="w"> </span>1;
-<span class="w">    </span>}
-<span class="nt">&lt;/script&gt;</span>
+    function decrement() {
+        count -= 1;
+    }
+&lt;/script&gt;
 
-<span class="nt">&lt;style&gt;</span>
-<span class="w">    </span>button<span class="w"> </span>{
-<span class="w">        </span>margin:<span class="w"> </span>0<span class="w"> </span>5px;
-<span class="w">        </span>padding:<span class="w"> </span>10px;
-<span class="w">        </span>font-size:<span class="w"> </span>16px;
-<span class="w">    </span>}
-<span class="nt">&lt;/style&gt;</span>
+&lt;style&gt;
+    button {
+        margin: 0 5px;
+        padding: 10px;
+        font-size: 16px;
+    }
+&lt;/style&gt;
 
-<span class="nt">&lt;h1&gt;</span>Counter:<span class="w"> </span>{count}<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;button</span><span class="w"> </span><span class="na">on:click=</span><span class="s">{decrement}</span><span class="nt">&gt;</span>-<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span><span class="w"> </span><span class="na">on:click=</span><span class="s">{increment}</span><span class="nt">&gt;</span>+<span class="nt">&lt;/button&gt;</span>
-</code></pre></div>
-
+&lt;h1&gt;Counter: {count}&lt;/h1&gt;
+&lt;button on:click={decrement}&gt;-&lt;/button&gt;
+&lt;button on:click={increment}&gt;+&lt;/button&gt;
+</code></pre>
 <h4 id="step-2-use-the-counter-component-in-appsvelte">Step 2: Use the Counter Component in App.svelte</h4>
 <p>Now, include the <code>Counter</code> component in <code>App.svelte</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="nn">Counter</span> <span class="kn">from</span> <span class="s1">&#39;./Counter.svelte&#39;</span><span class="p">;</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+    import Counter from './Counter.svelte';
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Svelte</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">Counter</span> <span class="o">/&gt;</span>
-<span class="o">&lt;/</span><span class="n">main</span><span class="o">&gt;</span>
+&lt;main&gt;
+    &lt;h1&gt;Welcome to Svelte&lt;/h1&gt;
+    &lt;Counter /&gt;
+&lt;/main&gt;
 
-<span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
-    <span class="n">main</span> <span class="p">{</span>
-        <span class="n">text</span><span class="o">-</span><span class="n">align</span><span class="p">:</span> <span class="n">center</span><span class="p">;</span>
-        <span class="n">padding</span><span class="p">:</span> <span class="mi">1</span><span class="n">em</span><span class="p">;</span>
-        <span class="nb">max</span><span class="o">-</span><span class="n">width</span><span class="p">:</span> <span class="mi">240</span><span class="n">px</span><span class="p">;</span>
-        <span class="n">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="n">auto</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+    main {
+        text-align: center;
+        padding: 1em;
+        max-width: 240px;
+        margin: 0 auto;
+    }
+&lt;/style&gt;
+</code></pre>
 <h4 id="step-3-run-the-application">Step 3: Run the Application</h4>
 <p>Now, run your application:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>dev
-</code></pre></div>
-
+<pre><code class="language-bash">npm run dev
+</code></pre>
 <p>Open your browser and navigate to <code>http://localhost:5000</code>. You should see a simple counter that increments and decrements with each button click.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>One of the most compelling reasons to use Svelte is its performance. A typical Svelte application can have a significantly smaller bundle size compared to React or Vue applications.</p>
@@ -268,112 +263,108 @@ npm<span class="w"> </span>run<span class="w"> </span>dev
 <p>Now, let’s create a more complex application: a Todo List. This will demonstrate Svelte's reactive features and its ability to manage state effectively.</p>
 <h4 id="step-1-create-the-todo-component">Step 1: Create the Todo Component</h4>
 <p>Create a <code>Todo.svelte</code> file in the <code>src</code> directory:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;script&gt;</span>
-<span class="w">    </span>export<span class="w"> </span>let<span class="w"> </span>todo;
-<span class="w">    </span>export<span class="w"> </span>let<span class="w"> </span>onDelete;
+<pre><code class="language-svelte">&lt;script&gt;
+    export let todo;
+    export let onDelete;
 
-<span class="w">    </span>function<span class="w"> </span>handleDelete()<span class="w"> </span>{
-<span class="w">        </span>onDelete(todo.id);
-<span class="w">    </span>}
-<span class="nt">&lt;/script&gt;</span>
+    function handleDelete() {
+        onDelete(todo.id);
+    }
+&lt;/script&gt;
 
-<span class="nt">&lt;div&gt;</span>
-<span class="w">    </span><span class="nt">&lt;span&gt;</span>{todo.text}<span class="nt">&lt;/span&gt;</span>
-<span class="w">    </span><span class="nt">&lt;button</span><span class="w"> </span><span class="na">on:click=</span><span class="s">{handleDelete}</span><span class="nt">&gt;</span>Delete<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+&lt;div&gt;
+    &lt;span&gt;{todo.text}&lt;/span&gt;
+    &lt;button on:click={handleDelete}&gt;Delete&lt;/button&gt;
+&lt;/div&gt;
 
-<span class="nt">&lt;style&gt;</span>
-<span class="w">    </span>div<span class="w"> </span>{
-<span class="w">        </span>display:<span class="w"> </span>flex;
-<span class="w">        </span>justify-content:<span class="w"> </span>space-between;
-<span class="w">        </span>padding:<span class="w"> </span>10px;
-<span class="w">    </span>}
-<span class="nt">&lt;/style&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+    div {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+&lt;/style&gt;
+</code></pre>
 <h4 id="step-2-create-the-main-todo-list-component">Step 2: Create the Main Todo List Component</h4>
 <p>Now, create a <code>TodoList.svelte</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="nn">Todo</span> <span class="kn">from</span> <span class="s1">&#39;./Todo.svelte&#39;</span><span class="p">;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+    import Todo from './Todo.svelte';
 
-    <span class="n">let</span> <span class="n">todos</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="n">let</span> <span class="n">newTodo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    let todos = [];
+    let newTodo = '';
 
-    <span class="n">function</span> <span class="n">addTodo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">newTodo</span><span class="o">.</span><span class="n">trim</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="n">todos</span><span class="p">,</span> <span class="p">{</span> <span class="nb">id</span><span class="p">:</span> <span class="n">Date</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">text</span><span class="p">:</span> <span class="n">newTodo</span> <span class="p">}];</span>
-            <span class="n">newTodo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    function addTodo() {
+        if (newTodo.trim()) {
+            todos = [...todos, { id: Date.now(), text: newTodo }];
+            newTodo = '';
+        }
+    }
 
-    <span class="n">function</span> <span class="n">deleteTodo</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">todos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">todo</span> <span class="o">=&gt;</span> <span class="n">todo</span><span class="o">.</span><span class="n">id</span> <span class="o">!==</span> <span class="nb">id</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+    function deleteTodo(id) {
+        todos = todos.filter(todo =&gt; todo.id !== id);
+    }
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="n">bind</span><span class="p">:</span><span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="n">newTodo</span><span class="p">}</span> <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Add a new todo&quot;</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="n">button</span> <span class="n">on</span><span class="p">:</span><span class="n">click</span><span class="o">=</span><span class="p">{</span><span class="n">addTodo</span><span class="p">}</span><span class="o">&gt;</span><span class="n">Add</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+&lt;input type=&quot;text&quot; bind:value={newTodo} placeholder=&quot;Add a new todo&quot; /&gt;
+&lt;button on:click={addTodo}&gt;Add&lt;/button&gt;
 
-<span class="p">{</span><span class="c1">#each todos as todo (todo.id)}</span>
-    <span class="o">&lt;</span><span class="n">Todo</span> <span class="p">{</span><span class="n">todo</span><span class="p">}</span> <span class="n">onDelete</span><span class="o">=</span><span class="p">{</span><span class="n">deleteTodo</span><span class="p">}</span> <span class="o">/&gt;</span>
-<span class="p">{</span><span class="o">/</span><span class="n">each</span><span class="p">}</span>
+{#each todos as todo (todo.id)}
+    &lt;Todo {todo} onDelete={deleteTodo} /&gt;
+{/each}
 
-<span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
-    <span class="nb">input</span> <span class="p">{</span>
-        <span class="n">margin</span><span class="o">-</span><span class="n">right</span><span class="p">:</span> <span class="mi">10</span><span class="n">px</span><span class="p">;</span>
-        <span class="n">padding</span><span class="p">:</span> <span class="mi">5</span><span class="n">px</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+    input {
+        margin-right: 10px;
+        padding: 5px;
+    }
+&lt;/style&gt;
+</code></pre>
 <h4 id="step-3-use-the-todolist-component-in-appsvelte">Step 3: Use the TodoList Component in App.svelte</h4>
 <p>Modify <code>App.svelte</code> to include the <code>TodoList</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="nn">Counter</span> <span class="kn">from</span> <span class="s1">&#39;./Counter.svelte&#39;</span><span class="p">;</span>
-    <span class="kn">import</span> <span class="nn">TodoList</span> <span class="kn">from</span> <span class="s1">&#39;./TodoList.svelte&#39;</span><span class="p">;</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+    import Counter from './Counter.svelte';
+    import TodoList from './TodoList.svelte';
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Svelte</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">Counter</span> <span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">TodoList</span> <span class="o">/&gt;</span>
-<span class="o">&lt;/</span><span class="n">main</span><span class="o">&gt;</span>
+&lt;main&gt;
+    &lt;h1&gt;Welcome to Svelte&lt;/h1&gt;
+    &lt;Counter /&gt;
+    &lt;TodoList /&gt;
+&lt;/main&gt;
 
-<span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
-    <span class="n">main</span> <span class="p">{</span>
-        <span class="n">text</span><span class="o">-</span><span class="n">align</span><span class="p">:</span> <span class="n">center</span><span class="p">;</span>
-        <span class="n">padding</span><span class="p">:</span> <span class="mi">1</span><span class="n">em</span><span class="p">;</span>
-        <span class="nb">max</span><span class="o">-</span><span class="n">width</span><span class="p">:</span> <span class="mi">480</span><span class="n">px</span><span class="p">;</span>
-        <span class="n">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="n">auto</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+    main {
+        text-align: center;
+        padding: 1em;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+&lt;/style&gt;
+</code></pre>
 <h3 id="enhancing-the-todo-list-with-local-storage">Enhancing the Todo List with Local Storage</h3>
 <p>To persist the todo list across page refreshes, you can utilize the browser's Local Storage. Here’s how to incorporate that functionality.</p>
 <h4 id="step-1-update-todolistsvelte-to-use-local-storage">Step 1: Update TodoList.svelte to Use Local Storage</h4>
 <p>Modify the <code>TodoList.svelte</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="nn">Todo</span> <span class="kn">from</span> <span class="s1">&#39;./Todo.svelte&#39;</span><span class="p">;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+    import Todo from './Todo.svelte';
 
-    <span class="n">let</span> <span class="n">todos</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">localStorage</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="s1">&#39;todos&#39;</span><span class="p">))</span> <span class="o">||</span> <span class="p">[];</span>
-    <span class="n">let</span> <span class="n">newTodo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    let newTodo = '';
 
-    <span class="n">function</span> <span class="n">addTodo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">newTodo</span><span class="o">.</span><span class="n">trim</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="n">todos</span><span class="p">,</span> <span class="p">{</span> <span class="nb">id</span><span class="p">:</span> <span class="n">Date</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">text</span><span class="p">:</span> <span class="n">newTodo</span> <span class="p">}];</span>
-            <span class="n">localStorage</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s1">&#39;todos&#39;</span><span class="p">,</span> <span class="n">JSON</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">todos</span><span class="p">));</span>
-            <span class="n">newTodo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    function addTodo() {
+        if (newTodo.trim()) {
+            todos = [...todos, { id: Date.now(), text: newTodo }];
+            localStorage.setItem('todos', JSON.stringify(todos));
+            newTodo = '';
+        }
+    }
 
-    <span class="n">function</span> <span class="n">deleteTodo</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">todos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">todo</span> <span class="o">=&gt;</span> <span class="n">todo</span><span class="o">.</span><span class="n">id</span> <span class="o">!==</span> <span class="nb">id</span><span class="p">);</span>
-        <span class="n">localStorage</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s1">&#39;todos&#39;</span><span class="p">,</span> <span class="n">JSON</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">todos</span><span class="p">));</span>
-    <span class="p">}</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
-</code></pre></div>
-
+    function deleteTodo(id) {
+        todos = todos.filter(todo =&gt; todo.id !== id);
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+&lt;/script&gt;
+</code></pre>
 <h3 id="deployment-of-svelte-applications">Deployment of Svelte Applications</h3>
 <p>Once your application is ready, you may want to deploy it. A popular choice for deploying Svelte applications is Vercel or Netlify due to their simplicity and efficiency.</p>
 <h4 id="deploying-to-vercel">Deploying to Vercel</h4>
@@ -398,29 +389,27 @@ npm<span class="w"> </span>run<span class="w"> </span>dev
 <p>While Svelte's reactivity is powerful, managing state across multiple components can be tricky.</p>
 <p><strong>Solution</strong>:
 Use Svelte's built-in stores. A store allows you to share state between components easily.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// store.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">writable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;svelte/store&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// store.js
+import { writable } from 'svelte/store';
 
-<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">todoStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">writable</span><span class="p">([]);</span>
-</code></pre></div>
-
+export const todoStore = writable([]);
+</code></pre>
 <p>You can then import this store in any component to read and update the state.</p>
 <h4 id="problem-2-handling-asynchronous-data">Problem 2: Handling Asynchronous Data</h4>
 <p>Fetching data asynchronously can sometimes lead to issues with rendering the UI.</p>
 <p><strong>Solution</strong>:
 Use Svelte's lifecycle methods, specifically <code>onMount</code>, to fetch data when the component mounts.</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="p">{</span> <span class="n">onMount</span> <span class="p">}</span> <span class="kn">from</span> <span class="s1">&#39;svelte&#39;</span><span class="p">;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+    import { onMount } from 'svelte';
 
-    <span class="n">let</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[];</span>
+    let data = [];
 
-    <span class="n">onMount</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="n">const</span> <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">);</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">();</span>
-    <span class="p">});</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
-</code></pre></div>
-
+    onMount(async () =&gt; {
+        const response = await fetch('https://api.example.com/data');
+        data = await response.json();
+    });
+&lt;/script&gt;
+</code></pre>
 <h3 id="svelte-and-the-ecosystem">Svelte and the Ecosystem</h3>
 <p>Svelte has a growing ecosystem of tools and libraries that enhance its capabilities.</p>
 <ul>

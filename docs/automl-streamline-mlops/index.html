@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,31 +161,30 @@
 * Amazon SageMaker Autopilot: An automated ML feature that allows users to build, train, and deploy ML models with minimal manual intervention.</p>
 <h3 id="example-using-h2o-automl-to-build-a-classification-model">Example: Using H2O AutoML to Build a Classification Model</h3>
 <p>Here is an example of how to use H2O AutoML to build a classification model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">h2o</span>
-<span class="kn">from</span> <span class="nn">h2o.automl</span> <span class="kn">import</span> <span class="n">H2OAutoML</span>
+<pre><code class="language-python">import h2o
+from h2o.automl import H2OAutoML
 
-<span class="c1"># Initialize the H2O cluster</span>
-<span class="n">h2o</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+# Initialize the H2O cluster
+h2o.init()
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="s2">&quot;path/to/dataset.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+df = h2o.import_file(&quot;path/to/dataset.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">split_frame</span><span class="p">(</span><span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">])</span>
+# Split the data into training and testing sets
+train, test = df.split_frame(ratios=[0.8])
 
-<span class="c1"># Create an AutoML object</span>
-<span class="n">aml</span> <span class="o">=</span> <span class="n">H2OAutoML</span><span class="p">(</span><span class="n">max_runtime_secs</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
+# Create an AutoML object
+aml = H2OAutoML(max_runtime_secs=3600)
 
-<span class="c1"># Train the model</span>
-<span class="n">aml</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">training_frame</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+# Train the model
+aml.train(x=features, y=response, training_frame=train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">perf</span> <span class="o">=</span> <span class="n">aml</span><span class="o">.</span><span class="n">leader</span><span class="o">.</span><span class="n">model_performance</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+# Evaluate the model
+perf = aml.leader.model_performance(test)
 
-<span class="c1"># Print the performance metrics</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the performance metrics
+print(perf)
+</code></pre>
 <p>In this example, we use H2O AutoML to build a classification model on a sample dataset. We initialize the H2O cluster, load the dataset, split the data into training and testing sets, create an AutoML object, train the model, evaluate the model, and print the performance metrics.</p>
 <h2 id="ml-pipeline-automation">ML Pipeline Automation</h2>
 <p>ML pipeline automation involves automating the entire ML workflow, from data preparation to model deployment. This can be achieved using a range of tools and platforms, including:
@@ -193,79 +193,78 @@
 * TensorFlow Extended (TFX): A set of libraries and tools for building and deploying ML pipelines.</p>
 <h3 id="example-using-apache-airflow-to-automate-an-ml-pipeline">Example: Using Apache Airflow to Automate an ML Pipeline</h3>
 <p>Here is an example of how to use Apache Airflow to automate an ML pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.python_operator</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
+<pre><code class="language-python">from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
 
-<span class="c1"># Define the DAG</span>
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;depends_on_past&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;retry_delay&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-<span class="p">}</span>
+# Define the DAG
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2022, 12, 1),
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-    <span class="s1">&#39;ml_pipeline&#39;</span><span class="p">,</span>
-    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-    <span class="n">schedule_interval</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">)</span>
+dag = DAG(
+    'ml_pipeline',
+    default_args=default_args,
+    schedule_interval=timedelta(days=1),
+)
 
-<span class="c1"># Define the tasks</span>
-<span class="k">def</span> <span class="nf">data_preprocessing</span><span class="p">():</span>
-    <span class="c1"># Load the data</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;path/to/dataset.csv&quot;</span><span class="p">)</span>
+# Define the tasks
+def data_preprocessing():
+    # Load the data
+    df = pd.read_csv(&quot;path/to/dataset.csv&quot;)
 
-    <span class="c1"># Preprocess the data</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">scale</span><span class="p">()</span>
+    # Preprocess the data
+    df = df.dropna()
+    df = df.scale()
 
-    <span class="c1"># Save the data</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;path/to/preprocessed_data.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    # Save the data
+    df.to_csv(&quot;path/to/preprocessed_data.csv&quot;, index=False)
 
-<span class="k">def</span> <span class="nf">model_training</span><span class="p">():</span>
-    <span class="c1"># Load the preprocessed data</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;path/to/preprocessed_data.csv&quot;</span><span class="p">)</span>
+def model_training():
+    # Load the preprocessed data
+    df = pd.read_csv(&quot;path/to/preprocessed_data.csv&quot;)
 
-    <span class="c1"># Train the model</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">ensemble</span><span class="o">.</span><span class="n">RandomForestClassifier</span><span class="p">()</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+    # Train the model
+    model = sklearn.ensemble.RandomForestClassifier()
+    model.fit(df.drop(&quot;target&quot;, axis=1), df[&quot;target&quot;])
 
-    <span class="c1"># Save the model</span>
-    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;path/to/trained_model.joblib&quot;</span><span class="p">)</span>
+    # Save the model
+    joblib.dump(model, &quot;path/to/trained_model.joblib&quot;)
 
-<span class="k">def</span> <span class="nf">model_deployment</span><span class="p">():</span>
-    <span class="c1"># Load the trained model</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;path/to/trained_model.joblib&quot;</span><span class="p">)</span>
+def model_deployment():
+    # Load the trained model
+    model = joblib.load(&quot;path/to/trained_model.joblib&quot;)
 
-    <span class="c1"># Deploy the model</span>
-    <span class="c1"># ...</span>
+    # Deploy the model
+    # ...
 
-<span class="c1"># Create the tasks</span>
-<span class="n">data_preprocessing_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;data_preprocessing&#39;</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">data_preprocessing</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+# Create the tasks
+data_preprocessing_task = PythonOperator(
+    task_id='data_preprocessing',
+    python_callable=data_preprocessing,
+    dag=dag,
+)
 
-<span class="n">model_training_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;model_training&#39;</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">model_training</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+model_training_task = PythonOperator(
+    task_id='model_training',
+    python_callable=model_training,
+    dag=dag,
+)
 
-<span class="n">model_deployment_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;model_deployment&#39;</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">model_deployment</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+model_deployment_task = PythonOperator(
+    task_id='model_deployment',
+    python_callable=model_deployment,
+    dag=dag,
+)
 
-<span class="c1"># Define the dependencies</span>
-<span class="n">data_preprocessing_task</span> <span class="o">&gt;&gt;</span> <span class="n">model_training_task</span>
-<span class="n">model_training_task</span> <span class="o">&gt;&gt;</span> <span class="n">model_deployment_task</span>
-</code></pre></div>
-
+# Define the dependencies
+data_preprocessing_task &gt;&gt; model_training_task
+model_training_task &gt;&gt; model_deployment_task
+</code></pre>
 <p>In this example, we use Apache Airflow to automate an ML pipeline that involves data preprocessing, model training, and model deployment. We define the DAG, the tasks, and the dependencies between the tasks.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur when implementing AutoML and ML pipeline automation include:
@@ -274,34 +273,33 @@
 * <strong>Data quality issues</strong>: This can occur when the data is noisy, missing, or inconsistent. Solution: Use data preprocessing techniques, such as data cleaning and feature scaling, to improve the quality of the data.</p>
 <h3 id="example-using-hyperparameter-tuning-to-prevent-overfitting">Example: Using Hyperparameter Tuning to Prevent Overfitting</h3>
 <p>Here is an example of how to use hyperparameter tuning to prevent overfitting:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">hyperopt</span> <span class="kn">import</span> <span class="n">hp</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">tpe</span><span class="p">,</span> <span class="n">Trials</span>
+<pre><code class="language-python">from hyperopt import hp, fmin, tpe, Trials
 
-<span class="c1"># Define the hyperparameter space</span>
-<span class="n">space</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">hp</span><span class="o">.</span><span class="n">quniform</span><span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">hp</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
-<span class="p">}</span>
+# Define the hyperparameter space
+space = {
+    'max_depth': hp.quniform('max_depth', 1, 10, 1),
+    'learning_rate': hp.uniform('learning_rate', 0.01, 0.1),
+}
 
-<span class="c1"># Define the objective function</span>
-<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="c1"># Train the model</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">ensemble</span><span class="o">.</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">],</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">])</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Define the objective function
+def objective(params):
+    # Train the model
+    model = sklearn.ensemble.RandomForestClassifier(max_depth=params['max_depth'], learning_rate=params['learning_rate'])
+    model.fit(X_train, y_train)
 
-    <span class="c1"># Evaluate the model</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+    # Evaluate the model
+    score = model.score(X_val, y_val)
 
-    <span class="c1"># Return the negative score (since we want to maximize the score)</span>
-    <span class="k">return</span> <span class="o">-</span><span class="n">score</span>
+    # Return the negative score (since we want to maximize the score)
+    return -score
 
-<span class="c1"># Perform hyperparameter tuning</span>
-<span class="n">trials</span> <span class="o">=</span> <span class="n">Trials</span><span class="p">()</span>
-<span class="n">best</span> <span class="o">=</span> <span class="n">fmin</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="n">tpe</span><span class="o">.</span><span class="n">suggest</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">max_evals</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+# Perform hyperparameter tuning
+trials = Trials()
+best = fmin(objective, space, algo=tpe.suggest, trials=trials, max_evals=50)
 
-<span class="c1"># Print the best hyperparameters</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">best</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the best hyperparameters
+print(best)
+</code></pre>
 <p>In this example, we use hyperparameter tuning to prevent overfitting. We define the hyperparameter space, the objective function, and perform hyperparameter tuning using the Hyperopt library.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, AutoML and ML pipeline automation can help streamline MLOps by automating the process of building and deploying ML models. By using AutoML tools and platforms, such as H2O AutoML and Google Cloud AutoML, and ML pipeline automation tools, such as Apache Airflow and TensorFlow Extended, data scientists can focus on higher-level tasks, such as data preprocessing, feature engineering, and model interpretation.</p>

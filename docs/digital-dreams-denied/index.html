@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,88 +163,86 @@
 <p>One of the main technical challenges in digital transformation is integrating different systems and technologies. This can be a complex and time-consuming process, especially when dealing with legacy systems. For example, let's say you're trying to integrate a legacy CRM system with a new cloud-based marketing automation platform. You can use APIs to connect the two systems and synchronize data in real-time.</p>
 <h3 id="api-integration-example">API Integration Example</h3>
 <p>Here's an example of how you can use the MuleSoft Anypoint Platform to integrate a legacy CRM system with a new cloud-based marketing automation platform:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.mule.api.MuleMessage</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.mule.api.transformer.Transformer</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.mule.transformer.simple.StringToObject</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import org.mule.api.MuleMessage;
+import org.mule.api.transformer.Transformer;
+import org.mule.transformer.simple.StringToObject;
 
-<span class="c1">// Define the API endpoint for the CRM system</span>
-<span class="n">String</span><span class="w"> </span><span class="n">crmApiEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com/crm/api&quot;</span><span class="p">;</span>
+// Define the API endpoint for the CRM system
+String crmApiEndpoint = &quot;https://example.com/crm/api&quot;;
 
-<span class="c1">// Define the API endpoint for the marketing automation platform</span>
-<span class="n">String</span><span class="w"> </span><span class="n">marketingApiEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com/marketing/api&quot;</span><span class="p">;</span>
+// Define the API endpoint for the marketing automation platform
+String marketingApiEndpoint = &quot;https://example.com/marketing/api&quot;;
 
-<span class="c1">// Use the MuleSoft Anypoint Platform to connect to the CRM system and retrieve customer data</span>
-<span class="n">MuleMessage</span><span class="w"> </span><span class="n">crmResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">crmResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MuleClient</span><span class="p">.</span><span class="na">getInstance</span><span class="p">().</span><span class="na">sendSync</span><span class="p">(</span><span class="n">crmApiEndpoint</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/customers&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Handle the exception</span>
-<span class="p">}</span>
+// Use the MuleSoft Anypoint Platform to connect to the CRM system and retrieve customer data
+MuleMessage crmResponse = null;
+try {
+    crmResponse = MuleClient.getInstance().sendSync(crmApiEndpoint + &quot;/customers&quot;, null, null);
+} catch (Exception e) {
+    // Handle the exception
+}
 
-<span class="c1">// Use the MuleSoft Anypoint Platform to connect to the marketing automation platform and send the customer data</span>
-<span class="n">MuleMessage</span><span class="w"> </span><span class="n">marketingResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">marketingResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MuleClient</span><span class="p">.</span><span class="na">getInstance</span><span class="p">().</span><span class="na">sendSync</span><span class="p">(</span><span class="n">marketingApiEndpoint</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/customers&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">crmResponse</span><span class="p">.</span><span class="na">getPayload</span><span class="p">(),</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Handle the exception</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Use the MuleSoft Anypoint Platform to connect to the marketing automation platform and send the customer data
+MuleMessage marketingResponse = null;
+try {
+    marketingResponse = MuleClient.getInstance().sendSync(marketingApiEndpoint + &quot;/customers&quot;, crmResponse.getPayload(), null);
+} catch (Exception e) {
+    // Handle the exception
+}
+</code></pre>
 <p>This code snippet demonstrates how to use the MuleSoft Anypoint Platform to integrate a legacy CRM system with a new cloud-based marketing automation platform. By using APIs to connect the two systems, you can synchronize data in real-time and improve the efficiency of your marketing operations.</p>
 <h2 id="data-quality-and-analytics">Data Quality and Analytics</h2>
 <p>Data quality and analytics are critical components of a successful digital transformation project. Poor data quality can lead to inaccurate insights and ineffective decision-making, while inadequate analytics can make it difficult to measure the success of your project. For example, a study by Gartner found that 80% of organizations struggle with data quality issues, with the main reasons being lack of standardization and inadequate data governance.</p>
 <h3 id="data-quality-example">Data Quality Example</h3>
 <p>To improve data quality, you can use tools like Talend to standardize and cleanse your data. Here's an example of how you can use Talend to standardize customer data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.talend.core.model.process.ElementParameter</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.talend.core.model.process.Process</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import org.talend.core.model.process.ElementParameter;
+import org.talend.core.model.process.Process;
 
-<span class="c1">// Define the input file for the customer data</span>
-<span class="n">String</span><span class="w"> </span><span class="n">inputFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;customer_data.csv&quot;</span><span class="p">;</span>
+// Define the input file for the customer data
+String inputFile = &quot;customer_data.csv&quot;;
 
-<span class="c1">// Define the output file for the standardized customer data</span>
-<span class="n">String</span><span class="w"> </span><span class="n">outputFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;standardized_customer_data.csv&quot;</span><span class="p">;</span>
+// Define the output file for the standardized customer data
+String outputFile = &quot;standardized_customer_data.csv&quot;;
 
-<span class="c1">// Use Talend to standardize the customer data</span>
-<span class="n">Process</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">();</span>
-<span class="n">ElementParameter</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ElementParameter</span><span class="p">();</span>
-<span class="n">parameter</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;input_file&quot;</span><span class="p">);</span>
-<span class="n">parameter</span><span class="p">.</span><span class="na">setValue</span><span class="p">(</span><span class="n">inputFile</span><span class="p">);</span>
-<span class="n">process</span><span class="p">.</span><span class="na">addElementParameter</span><span class="p">(</span><span class="n">parameter</span><span class="p">);</span>
+// Use Talend to standardize the customer data
+Process process = new Process();
+ElementParameter parameter = new ElementParameter();
+parameter.setName(&quot;input_file&quot;);
+parameter.setValue(inputFile);
+process.addElementParameter(parameter);
 
-<span class="n">parameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ElementParameter</span><span class="p">();</span>
-<span class="n">parameter</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;output_file&quot;</span><span class="p">);</span>
-<span class="n">parameter</span><span class="p">.</span><span class="na">setValue</span><span class="p">(</span><span class="n">outputFile</span><span class="p">);</span>
-<span class="n">process</span><span class="p">.</span><span class="na">addElementParameter</span><span class="p">(</span><span class="n">parameter</span><span class="p">);</span>
+parameter = new ElementParameter();
+parameter.setName(&quot;output_file&quot;);
+parameter.setValue(outputFile);
+process.addElementParameter(parameter);
 
-<span class="n">process</span><span class="p">.</span><span class="na">execute</span><span class="p">();</span>
-</code></pre></div>
-
+process.execute();
+</code></pre>
 <p>This code snippet demonstrates how to use Talend to standardize customer data. By using tools like Talend, you can improve the quality of your data and make it easier to analyze and gain insights.</p>
 <h2 id="change-management-and-training">Change Management and Training</h2>
 <p>Change management and training are essential components of a successful digital transformation project. When you're implementing new technology and processes, it's essential to provide training and support to your employees to ensure they can use the new systems effectively. For example, a study by IBM found that 60% of organizations struggle with change management, with the main reasons being lack of communication and inadequate training.</p>
 <h3 id="change-management-example">Change Management Example</h3>
 <p>To implement effective change management, you can use tools like WalkMe to provide personalized training and support to your employees. Here's an example of how you can use WalkMe to provide training on a new CRM system:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">walkme</span>
+# Import the necessary libraries
+import walkme
 
-<span class="c1"># Define the CRM system and the training content</span>
-<span class="n">crm_system</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/crm&quot;</span>
-<span class="n">training_content</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Introduction to the CRM system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;This is an introduction to the CRM system&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Creating a new customer record&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;This is how you create a new customer record&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Managing customer interactions&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;This is how you manage customer interactions&quot;</span><span class="p">}</span>
-<span class="p">]</span>
+# Define the CRM system and the training content
+crm_system = &quot;https://example.com/crm&quot;
+training_content = [
+    {&quot;title&quot;: &quot;Introduction to the CRM system&quot;, &quot;content&quot;: &quot;This is an introduction to the CRM system&quot;},
+    {&quot;title&quot;: &quot;Creating a new customer record&quot;, &quot;content&quot;: &quot;This is how you create a new customer record&quot;},
+    {&quot;title&quot;: &quot;Managing customer interactions&quot;, &quot;content&quot;: &quot;This is how you manage customer interactions&quot;}
+]
 
-<span class="c1"># Use WalkMe to provide personalized training and support</span>
-<span class="n">walkme_client</span> <span class="o">=</span> <span class="n">walkme</span><span class="o">.</span><span class="n">WalkMeClient</span><span class="p">(</span><span class="n">crm_system</span><span class="p">)</span>
-<span class="n">walkme_client</span><span class="o">.</span><span class="n">create_training_content</span><span class="p">(</span><span class="n">training_content</span><span class="p">)</span>
-<span class="n">walkme_client</span><span class="o">.</span><span class="n">assign_training_content_to_users</span><span class="p">([</span><span class="s2">&quot;user1&quot;</span><span class="p">,</span> <span class="s2">&quot;user2&quot;</span><span class="p">,</span> <span class="s2">&quot;user3&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Use WalkMe to provide personalized training and support
+walkme_client = walkme.WalkMeClient(crm_system)
+walkme_client.create_training_content(training_content)
+walkme_client.assign_training_content_to_users([&quot;user1&quot;, &quot;user2&quot;, &quot;user3&quot;])
+</code></pre>
 <p>This code snippet demonstrates how to use WalkMe to provide personalized training and support to employees on a new CRM system. By using tools like WalkMe, you can improve the adoption and usage of new systems and reduce the risk of failure.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur during a digital transformation project. Here are some of the most common problems and their solutions:</p>

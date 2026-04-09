@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,33 +161,32 @@
 * <strong>Flexibility</strong>: Message queues support various messaging patterns, such as point-to-point, publish-subscribe, and request-response.</p>
 <h3 id="example-using-rabbitmq-with-python">Example: Using RabbitMQ with Python</h3>
 <p>Here's an example of using RabbitMQ with Python to send and receive messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="c1"># Producer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">)</span>
-<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+# Producer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+channel.basic_publish(exchange='',
+                      routing_key='hello',
+                      body='Hello World!')
+connection.close()
 
-<span class="c1"># Consumer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+# Consumer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received message:&quot;</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+def callback(ch, method, properties, body):
+    print(&quot;Received message:&quot;, body)
 
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-                      <span class="n">auto_ack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                      <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+channel.basic_consume(queue='hello',
+                      auto_ack=True,
+                      on_message_callback=callback)
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for messages...&#39;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
-</code></pre></div>
-
+print('Waiting for messages...')
+channel.start_consuming()
+</code></pre>
 <p>In this example, we use the <code>pika</code> library to connect to a RabbitMQ server, declare a queue, and send a message. The consumer connects to the same queue and consumes messages using a callback function.</p>
 <h2 id="use-cases-for-message-queues">Use Cases for Message Queues</h2>
 <p>Message queues have a wide range of applications, including:
@@ -195,38 +195,37 @@
 3. <strong>Microservices Architecture</strong>: Message queues can be used to communicate between microservices, enabling a more modular and scalable architecture.</p>
 <h3 id="example-using-apache-kafka-with-nodejs">Example: Using Apache Kafka with Node.js</h3>
 <p>Here's an example of using Apache Kafka with Node.js to produce and consume messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Kafka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;kafkajs&#39;</span><span class="p">).</span><span class="nx">Kafka</span><span class="p">;</span>
+<pre><code class="language-javascript">const Kafka = require('kafkajs').Kafka;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">kafka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Kafka</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-app&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">brokers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">]</span>
-<span class="p">});</span>
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: ['localhost:9092']
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">producer</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">consumer</span><span class="p">({</span><span class="w"> </span><span class="nx">groupId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-group&#39;</span><span class="w"> </span><span class="p">});</span>
+const producer = kafka.producer();
+const consumer = kafka.consumer({ groupId: 'my-group' });
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">produceMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">producer</span><span class="p">.</span><span class="nx">connect</span><span class="p">();</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">producer</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-topic&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span>
+async function produceMessage() {
+  await producer.connect();
+  await producer.send({
+    topic: 'my-topic',
+    messages: ['Hello World!']
+  });
+}
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">consumeMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">connect</span><span class="p">();</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">({</span><span class="w"> </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my-topic&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">run</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">eachMessage</span><span class="o">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">topic</span><span class="p">,</span><span class="w"> </span><span class="nx">partition</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Received message: </span><span class="si">${</span><span class="nx">message</span><span class="p">.</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span>
+async function consumeMessage() {
+  await consumer.connect();
+  await consumer.subscribe({ topic: 'my-topic' });
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }) =&gt; {
+      console.log(`Received message: ${message.value}`);
+    }
+  });
+}
 
-<span class="nx">produceMessage</span><span class="p">();</span>
-<span class="nx">consumeMessage</span><span class="p">();</span>
-</code></pre></div>
-
+produceMessage();
+consumeMessage();
+</code></pre>
 <p>In this example, we use the <code>kafkajs</code> library to connect to an Apache Kafka cluster, produce a message, and consume messages using a callback function.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working with message queues, several common problems can arise, including:
@@ -239,27 +238,26 @@
 * <strong>Monitor Performance</strong>: Monitor message queue performance using metrics such as throughput, latency, and queue size.</p>
 <h3 id="example-using-amazon-sqs-with-aws-lambda">Example: Using Amazon SQS with AWS Lambda</h3>
 <p>Here's an example of using Amazon SQS with AWS Lambda to process messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">sqs</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sqs&#39;</span><span class="p">)</span>
+sqs = boto3.client('sqs')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process message</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;body&#39;</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+def lambda_handler(event, context):
+    # Process message
+    message = event['Records'][0]['body']
+    print(f&quot;Received message: {message}&quot;)
 
-    <span class="c1"># Delete message from queue</span>
-    <span class="n">sqs</span><span class="o">.</span><span class="n">delete_message</span><span class="p">(</span>
-        <span class="n">QueueUrl</span><span class="o">=</span><span class="s1">&#39;https://sqs.us-east-1.amazonaws.com/123456789012/my-queue&#39;</span><span class="p">,</span>
-        <span class="n">ReceiptHandle</span><span class="o">=</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;receiptHandle&#39;</span><span class="p">]</span>
-    <span class="p">)</span>
+    # Delete message from queue
+    sqs.delete_message(
+        QueueUrl='https://sqs.us-east-1.amazonaws.com/123456789012/my-queue',
+        ReceiptHandle=event['Records'][0]['receiptHandle']
+    )
 
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;statusMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    return {
+        'statusCode': 200,
+        'statusMessage': 'OK'
+    }
+</code></pre>
 <p>In this example, we use the <code>boto3</code> library to connect to an Amazon SQS queue, process messages using an AWS Lambda function, and delete messages from the queue after processing.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of message queues can vary depending on the technology and configuration used. Here are some real-world performance benchmarks:

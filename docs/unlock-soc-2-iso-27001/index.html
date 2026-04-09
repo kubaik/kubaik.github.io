@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -169,24 +170,23 @@
 </ol>
 <h3 id="example-of-a-soc-2-control">Example of a SOC 2 Control</h3>
 <p>Here is an example of a SOC 2 control:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
+<pre><code class="language-python">import logging
 
-<span class="c1"># Define a logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+# Define a logger
+logger = logging.getLogger(__name__)
 
-<span class="c1"># Define a function to authenticate users</span>
-<span class="k">def</span> <span class="nf">authenticate_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="c1"># Check if the username and password are valid</span>
-    <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">and</span> <span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;password123&quot;</span><span class="p">:</span>
-        <span class="c1"># Log a successful authentication attempt</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User authenticated successfully&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Log an unsuccessful authentication attempt</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Authentication attempt failed&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>
-</code></pre></div>
-
+# Define a function to authenticate users
+def authenticate_user(username, password):
+    # Check if the username and password are valid
+    if username == &quot;admin&quot; and password == &quot;password123&quot;:
+        # Log a successful authentication attempt
+        logger.info(&quot;User authenticated successfully&quot;)
+        return True
+    else:
+        # Log an unsuccessful authentication attempt
+        logger.warning(&quot;Authentication attempt failed&quot;)
+        return False
+</code></pre>
 <p>In this example, the <code>authenticate_user</code> function is a control that ensures that only authorized users can access the system.</p>
 <h2 id="achieving-iso-27001-compliance">Achieving ISO 27001 Compliance</h2>
 <p>Achieving ISO 27001 compliance requires a thorough understanding of the standard's requirements and a well-planned implementation strategy. Here are the steps to achieve ISO 27001 compliance:</p>
@@ -199,15 +199,14 @@
 </ol>
 <h3 id="example-of-an-iso-27001-control">Example of an ISO 27001 Control</h3>
 <p>Here is an example of an ISO 27001 control:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<pre><code class="language-python">import hashlib
 
-<span class="c1"># Define a function to hash sensitive data</span>
-<span class="k">def</span> <span class="nf">hash_sensitive_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Use the SHA-256 algorithm to hash the data</span>
-    <span class="n">hashed_data</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">hashed_data</span>
-</code></pre></div>
-
+# Define a function to hash sensitive data
+def hash_sensitive_data(data):
+    # Use the SHA-256 algorithm to hash the data
+    hashed_data = hashlib.sha256(data.encode()).hexdigest()
+    return hashed_data
+</code></pre>
 <p>In this example, the <code>hash_sensitive_data</code> function is a control that ensures that sensitive data is protected by hashing it.</p>
 <h2 id="tools-and-platforms-for-security-compliance">Tools and Platforms for Security Compliance</h2>
 <p>There are several tools and platforms that can help organizations achieve security compliance. Here are a few examples:</p>
@@ -252,21 +251,20 @@
 </ul>
 <h3 id="code-examples">Code Examples</h3>
 <p>Here are some examples of code that can be used to implement security compliance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<pre><code class="language-python">import os
 
-<span class="c1"># Define a function to encrypt sensitive data</span>
-<span class="k">def</span> <span class="nf">encrypt_sensitive_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Use the AES algorithm to encrypt the data</span>
-    <span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">encrypted_data</span>
+# Define a function to encrypt sensitive data
+def encrypt_sensitive_data(data):
+    # Use the AES algorithm to encrypt the data
+    encrypted_data = os.urandom(32)
+    return encrypted_data
 
-<span class="c1"># Define a function to decrypt sensitive data</span>
-<span class="k">def</span> <span class="nf">decrypt_sensitive_data</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">):</span>
-    <span class="c1"># Use the AES algorithm to decrypt the data</span>
-    <span class="n">decrypted_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">decrypted_data</span>
-</code></pre></div>
-
+# Define a function to decrypt sensitive data
+def decrypt_sensitive_data(encrypted_data):
+    # Use the AES algorithm to decrypt the data
+    decrypted_data = os.urandom(32)
+    return decrypted_data
+</code></pre>
 <p>In this example, the <code>encrypt_sensitive_data</code> and <code>decrypt_sensitive_data</code> functions are used to encrypt and decrypt sensitive data.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some examples of performance benchmarks for security compliance:</p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -169,62 +170,58 @@
 <h3 id="1-minimize-network-requests">1. Minimize Network Requests</h3>
 <p>Each network request adds latency. Reducing the number of requests can significantly improve performance. </p>
 <p><strong>Example</strong>: If your app fetches user data in separate requests, consider combining them into a single API call.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Instead of multiple requests</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/user&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<pre><code class="language-javascript">// Instead of multiple requests
+fetch('https://api.example.com/user')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
 
-<span class="c1">// Combine requests into one</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/user?include=posts,comments&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-</code></pre></div>
-
+// Combine requests into one
+fetch('https://api.example.com/user?include=posts,comments')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
+</code></pre>
 <h3 id="2-use-a-content-delivery-network-cdn">2. Use a Content Delivery Network (CDN)</h3>
 <p>A CDN can drastically reduce latency by serving content from the closest server to the user. Services like Cloudflare and AWS CloudFront are popular choices. </p>
 <p><strong>Real Metrics</strong>: Using Cloudflare, one company reported a 50% reduction in load times across their app, which also improved their SEO ranking.</p>
 <h3 id="3-implement-caching-strategies">3. Implement Caching Strategies</h3>
 <p>Use local caching to store data that doesn’t change often. This reduces the need for repeated network requests.</p>
 <p><strong>Example</strong>: Implementing a simple caching mechanism in a React Native app:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">AsyncStorage</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@react-native-async-storage/async-storage&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import AsyncStorage from '@react-native-async-storage/async-storage';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">fetchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">cachedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;userData&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cachedData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">cachedData</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/user&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;userData&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const fetchData = async () =&gt; {
+  const cachedData = await AsyncStorage.getItem('userData');
+  if (cachedData) {
+    return JSON.parse(cachedData);
+  } else {
+    const response = await fetch('https://api.example.com/user');
+    const data = await response.json();
+    await AsyncStorage.setItem('userData', JSON.stringify(data));
+    return data;
+  }
+};
+</code></pre>
 <h2 id="code-optimization">Code Optimization</h2>
 <h3 id="1-optimize-rendering">1. Optimize Rendering</h3>
 <p>In frameworks like React Native, ensure that components only re-render when necessary. Use memoization techniques with <code>React.memo</code> or <code>useMemo</code>.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">memo</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { memo } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">UserProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">memo</span><span class="p">(({</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Rendering UserProfile&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+const UserProfile = memo(({ user }) =&gt; {
+  console.log('Rendering UserProfile');
+  return &lt;div&gt;{user.name}&lt;/div&gt;;
+});
+</code></pre>
 <h3 id="2-reduce-bundle-size">2. Reduce Bundle Size</h3>
 <p>A larger app size can lead to longer load times. Use tools such as Webpack or Rollup to analyze and reduce your bundle size.</p>
 <p><strong>Real Metrics</strong>: A company reduced their app size from 30MB to 15MB by effectively using code splitting, resulting in a 40% faster load time.</p>
 <h3 id="3-avoid-blocking-code">3. Avoid Blocking Code</h3>
 <p>Synchronous code can block rendering. Use asynchronous functions and Promises to keep the UI responsive.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">loadData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchData</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">renderData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// This won&#39;t block the UI</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const loadData = async () =&gt; {
+  const data = await fetchData();
+  renderData(data); // This won't block the UI
+};
+</code></pre>
 <h2 id="image-optimization">Image Optimization</h2>
 <h3 id="1-use-appropriate-formats">1. Use Appropriate Formats</h3>
 <p>Choose the right image formats. WebP is often preferred for its compression efficiency.</p>
@@ -232,15 +229,14 @@
 <h3 id="2-implement-lazy-loading">2. Implement Lazy Loading</h3>
 <p>Load images only when they enter the viewport. Libraries like <code>react-lazyload</code> can help with this.</p>
 <p><strong>Code Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">LazyLoad</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-lazyload&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import LazyLoad from 'react-lazyload';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">ImageComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">LazyLoad</span><span class="w"> </span><span class="nx">height</span><span class="o">=</span><span class="p">{</span><span class="mf">200</span><span class="p">}</span><span class="w"> </span><span class="nx">offset</span><span class="o">=</span><span class="p">{</span><span class="mf">100</span><span class="p">}</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;image.webp&quot;</span><span class="w"> </span><span class="nx">alt</span><span class="o">=</span><span class="s2">&quot;Example&quot;</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/LazyLoad&gt;</span>
-<span class="p">);</span>
-</code></pre></div>
-
+const ImageComponent = () =&gt; (
+  &lt;LazyLoad height={200} offset={100}&gt;
+    &lt;img src=&quot;image.webp&quot; alt=&quot;Example&quot; /&gt;
+  &lt;/LazyLoad&gt;
+);
+</code></pre>
 <h3 id="3-optimize-image-size">3. Optimize Image Size</h3>
 <p>Use tools like ImageOptim or TinyPNG to reduce image sizes without losing quality. </p>
 <p><strong>Real Metrics</strong>: A mobile app reduced its image sizes using TinyPNG, resulting in a 30% faster load time.</p>
@@ -249,23 +245,21 @@
 <p>Use tools like Android Profiler or Instruments for iOS to monitor memory usage and identify leaks.</p>
 <p><strong>Common Problem</strong>: Memory leaks often occur due to unclosed listeners or excessive caching.</p>
 <p><strong>Solution</strong>: Use <code>componentWillUnmount</code> to clean up listeners in React components.</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">componentWillUnmount</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="s1">&#39;resize&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">handleResize</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">componentWillUnmount() {
+  window.removeEventListener('resize', this.handleResize);
+}
+</code></pre>
 <h3 id="2-optimize-data-structures">2. Optimize Data Structures</h3>
 <p>Use appropriate data structures to manage memory efficiently. For example, use <code>Set</code> for unique collections instead of an array.</p>
 <h3 id="3-utilize-weak-references">3. Utilize Weak References</h3>
 <p>In JavaScript, using WeakMap can help to avoid memory leaks when dealing with large objects.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">WeakMap</span><span class="p">();</span>
+<pre><code class="language-javascript">const cache = new WeakMap();
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">cacheData</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function cacheData(key, value) {
+  cache.set(key, value);
+}
+</code></pre>
 <h2 id="battery-usage-reduction">Battery Usage Reduction</h2>
 <h3 id="1-background-processes">1. Background Processes</h3>
 <p>Limit background processes and network calls. Use tools like Firebase Performance Monitoring to track battery usage.</p>
@@ -273,13 +267,12 @@
 <h3 id="2-optimize-animations">2. Optimize Animations</h3>
 <p>Use native driver for animations in React Native to reduce CPU usage.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">Animated</span><span class="p">.</span><span class="nx">timing</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">toValue</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">500</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">useNativeDriver</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Use native driver for better performance</span>
-<span class="p">}).</span><span class="nx">start</span><span class="p">();</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">Animated.timing(this.state.value, {
+  toValue: 1,
+  duration: 500,
+  useNativeDriver: true, // Use native driver for better performance
+}).start();
+</code></pre>
 <h2 id="user-interface-ui-optimization">User Interface (UI) Optimization</h2>
 <h3 id="1-reduce-overdraw">1. Reduce Overdraw</h3>
 <p>Overdraw occurs when the application draws pixels multiple times in a single frame. Use tools like Android's GPU Overdraw tool to identify and reduce it.</p>

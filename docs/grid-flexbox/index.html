@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,32 +163,30 @@
 </ul>
 <h3 id="basic-syntax">Basic Syntax</h3>
 <p>Here’s a simple example of CSS Grid in action:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
-<span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
-<span class="w">    </span><span class="k">grid-template-rows</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
-<span class="w">    </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 10px;
+}
 
-<span class="p">.</span><span class="nc">item</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">lightblue</span><span class="p">;</span>
-<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+.item {
+    background: lightblue;
+    padding: 20px;
+    text-align: center;
+}
+</code></pre>
 <h3 id="example-1-creating-a-simple-grid-layout">Example 1: Creating a Simple Grid Layout</h3>
 <p>Let’s build a simple 3-column layout using CSS Grid.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 4<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 5<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Item 6<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 1&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 2&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 3&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 4&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 5&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Item 6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
 <p>In this example:</p>
 <ul>
 <li>The <code>.container</code> class sets the display to grid and defines three equal columns using <code>grid-template-columns: repeat(3, 1fr)</code>.</li>
@@ -195,13 +194,12 @@
 </ul>
 <h3 id="real-world-use-case">Real-World Use Case</h3>
 <p>Imagine you're building a responsive photo gallery on a platform like WordPress or Wix. With CSS Grid, you can easily create a layout that adjusts based on the screen size. For example, you can change the number of columns from 3 on desktop to 1 on mobile using media queries:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">600px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+</code></pre>
 <h2 id="understanding-flexbox">Understanding Flexbox</h2>
 <h3 id="what-is-flexbox">What is Flexbox?</h3>
 <p>Flexbox (Flexible Box Layout) is a one-dimensional layout method for laying out items in a single direction—either as a row or a column. It is particularly useful for distributing space and aligning items within a container.</p>
@@ -213,30 +211,28 @@
 </ul>
 <h3 id="basic-syntax_1">Basic Syntax</h3>
 <p>Here’s a simple example of Flexbox in action:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
-<span class="w">    </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span>
-<span class="w">    </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-between</span><span class="p">;</span>
-<span class="w">    </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
-<span class="p">.</span><span class="nc">item</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">lightgreen</span><span class="p">;</span>
-<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+.item {
+    background: lightgreen;
+    padding: 20px;
+    flex: 1;
+}
+</code></pre>
 <h3 id="example-2-creating-a-horizontal-navigation-menu">Example 2: Creating a Horizontal Navigation Menu</h3>
 <p>Let’s create a horizontal navigation menu using Flexbox.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Services<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;nav class=&quot;container&quot;&gt;
+    &lt;div class=&quot;item&quot;&gt;Home&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;About&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Services&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Contact&lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
 <p>In this example:</p>
 <ul>
 <li>The <code>.container</code> class sets the display to flex and aligns items horizontally.</li>
@@ -244,13 +240,12 @@
 </ul>
 <h3 id="real-world-use-case_1">Real-World Use Case</h3>
 <p>If you're building a dashboard using a framework like React or Vue.js, Flexbox can help you create a responsive sidebar that adjusts to different screen sizes. For instance, you can set the sidebar to be collapsible on mobile devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+</code></pre>
 <h2 id="when-to-use-css-grid-vs-flexbox">When to Use CSS Grid vs. Flexbox</h2>
 <p>Understanding when to use CSS Grid or Flexbox can make a significant difference in your layout strategy. Here’s a quick guide:</p>
 <ol>
@@ -270,31 +265,28 @@
 <p>Sometimes grid items may overlap if you don’t account for their sizes properly. </p>
 <p><strong>Solution</strong>: Ensure that the grid container has defined dimensions. You can also use properties like <code>minmax()</code> to set limits on how small or large a grid item can be.</p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nf">minmax</span><span class="p">(</span><span class="mi">100</span><span class="kt">px</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">));</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">.container {
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+}
+</code></pre>
 <h3 id="problem-2-flex-items-not-aligning-properly">Problem 2: Flex Items Not Aligning Properly</h3>
 <p>When using Flexbox, items may not align as expected if their combined widths exceed the container's width.</p>
 <p><strong>Solution</strong>: Check the <code>flex</code> property assigned to each item. You may need to adjust their <code>flex-grow</code>, <code>flex-shrink</code>, or <code>flex-basis</code> values.</p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">item</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span><span class="w"> </span><span class="c">/* allows items to grow and shrink */</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">.item {
+    flex: 1 1 auto; /* allows items to grow and shrink */
+}
+</code></pre>
 <h3 id="problem-3-responsive-design-issues">Problem 3: Responsive Design Issues</h3>
 <p>Sometimes layouts break down when viewed on different devices.</p>
 <p><strong>Solution</strong>: Utilize media queries to adjust your grid or flex properties based on screen size. </p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">600px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">;</span><span class="w"> </span><span class="c">/* single column layout */</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr; /* single column layout */
+    }
+}
+</code></pre>
 <h2 id="tools-and-platforms-for-css-grid-and-flexbox-mastery">Tools and Platforms for CSS Grid and Flexbox Mastery</h2>
 <p>As you dive deeper into CSS Grid and Flexbox, various tools can aid in your learning and implementation:</p>
 <ol>

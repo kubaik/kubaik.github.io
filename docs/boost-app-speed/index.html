@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,74 +164,71 @@
 <p>One of the most effective ways to boost application speed is by optimizing code at the lowest level. This involves using techniques like caching, memoization, and parallel processing to reduce computational overhead and improve response times.</p>
 <h3 id="example-1-caching-with-redis">Example 1: Caching with Redis</h3>
 <p>Consider a simple e-commerce application that retrieves product information from a database on each request. By using Redis, a popular in-memory caching platform, we can store frequently accessed data in memory, reducing the load on the database and improving response times.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Connect to Redis</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Connect to Redis
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Set a cache key with a TTL of 1 hour</span>
-<span class="k">def</span> <span class="nf">get_product_info</span><span class="p">(</span><span class="n">product_id</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;product:</span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s1">&#39;</span>
-    <span class="n">product_info</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">product_info</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">product_info</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Retrieve product info from database</span>
-        <span class="n">product_info</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SELECT * FROM products WHERE id = </span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">redis_client</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">product_info</span><span class="p">)</span>  <span class="c1"># Set cache key with 1-hour TTL</span>
-        <span class="k">return</span> <span class="n">product_info</span>
-</code></pre></div>
-
+# Set a cache key with a TTL of 1 hour
+def get_product_info(product_id):
+    cache_key = f'product:{product_id}'
+    product_info = redis_client.get(cache_key)
+    if product_info:
+        return product_info
+    else:
+        # Retrieve product info from database
+        product_info = database.query(f'SELECT * FROM products WHERE id = {product_id}')
+        redis_client.setex(cache_key, 3600, product_info)  # Set cache key with 1-hour TTL
+        return product_info
+</code></pre>
 <p>In this example, we use Redis to cache product information for 1 hour, reducing the number of database queries and improving response times. According to Redis Labs, caching with Redis can improve application performance by up to 90%.</p>
 <h3 id="example-2-parallel-processing-with-nodejs">Example 2: Parallel Processing with Node.js</h3>
 <p>Another technique for optimizing code is parallel processing, which involves executing multiple tasks concurrently to improve overall throughput. In Node.js, we can use the <code>cluster</code> module to create multiple worker processes that share the same server port.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cluster&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">numCPUs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">).</span><span class="nx">cpus</span><span class="p">().</span><span class="nx">length</span><span class="p">;</span>
+<pre><code class="language-javascript">const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cluster</span><span class="p">.</span><span class="nx">isMaster</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Master </span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="si">}</span><span class="sb"> is running`</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Fork workers</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">numCPUs</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">cluster</span><span class="p">.</span><span class="nx">fork</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">cluster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;exit&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">worker</span><span class="p">,</span><span class="w"> </span><span class="nx">code</span><span class="p">,</span><span class="w"> </span><span class="nx">signal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`worker </span><span class="si">${</span><span class="nx">worker</span><span class="p">.</span><span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="si">}</span><span class="sb"> died`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Workers can share any TCP connection</span>
-<span class="w">    </span><span class="c1">// In this case, it&#39;s an HTTP server</span>
-<span class="w">    </span><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;hello world\n&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mf">8000</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+if (cluster.isMaster) {
+    console.log(`Master ${process.pid} is running`);
+    // Fork workers
+    for (let i = 0; i &lt; numCPUs; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', (worker, code, signal) =&gt; {
+        console.log(`worker ${worker.process.pid} died`);
+    });
+} else {
+    // Workers can share any TCP connection
+    // In this case, it's an HTTP server
+    http.createServer((req, res) =&gt; {
+        res.writeHead(200);
+        res.end('hello world\n');
+    }).listen(8000);
+}
+</code></pre>
 <p>In this example, we use the <code>cluster</code> module to create multiple worker processes that share the same server port, improving overall throughput and responsiveness. According to Node.js documentation, using multiple worker processes can improve application performance by up to 300%.</p>
 <h2 id="infrastructure-optimization">Infrastructure Optimization</h2>
 <p>In addition to code-level optimization, infrastructure optimization is also critical for boosting application speed. This involves selecting the right cloud providers, configuring servers and databases for optimal performance, and using content delivery networks (CDNs) to reduce latency.</p>
 <h3 id="example-3-using-aws-lambda-for-serverless-computing">Example 3: Using AWS Lambda for Serverless Computing</h3>
 <p>Consider a simple web application that handles user requests and returns responses. By using AWS Lambda, a serverless computing platform, we can create a scalable and cost-effective architecture that reduces latency and improves response times.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS Lambda function</span>
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
-<span class="n">lambda_function</span> <span class="o">=</span> <span class="n">lambda_client</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-function&#39;</span><span class="p">,</span>
-    <span class="n">Runtime</span><span class="o">=</span><span class="s1">&#39;python3.8&#39;</span><span class="p">,</span>
-    <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/lambda-execution-role&#39;</span><span class="p">,</span>
-    <span class="n">Handler</span><span class="o">=</span><span class="s1">&#39;index.handler&#39;</span><span class="p">,</span>
-    <span class="n">Code</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ZipFile&#39;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;import json</span><span class="se">\n\n</span><span class="s1">def handler(event, context):</span><span class="se">\n</span><span class="s1">    return {</span><span class="se">\n</span><span class="s1">        &quot;statusCode&quot;: 200,</span><span class="se">\n</span><span class="s1">        &quot;body&quot;: json.dumps(&quot;Hello from Lambda!&quot;),</span><span class="se">\n</span><span class="s1">    }</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)},</span>
-<span class="p">)</span>
+# Create an AWS Lambda function
+lambda_client = boto3.client('lambda')
+lambda_function = lambda_client.create_function(
+    FunctionName='my-function',
+    Runtime='python3.8',
+    Role='arn:aws:iam::123456789012:role/lambda-execution-role',
+    Handler='index.handler',
+    Code={'ZipFile': bytes(b'import json\n\ndef handler(event, context):\n    return {\n        &quot;statusCode&quot;: 200,\n        &quot;body&quot;: json.dumps(&quot;Hello from Lambda!&quot;),\n    }\n')},
+)
 
-<span class="c1"># Invoke the Lambda function</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">lambda_client</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-function&#39;</span><span class="p">,</span>
-    <span class="n">InvocationType</span><span class="o">=</span><span class="s1">&#39;RequestResponse&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Payload&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></div>
-
+# Invoke the Lambda function
+response = lambda_client.invoke(
+    FunctionName='my-function',
+    InvocationType='RequestResponse',
+)
+print(response['Payload'].read().decode('utf-8'))
+</code></pre>
 <p>In this example, we use AWS Lambda to create a serverless computing architecture that reduces latency and improves response times. According to AWS, using Lambda can reduce costs by up to 90% and improve application performance by up to 50%.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that affect application performance include:

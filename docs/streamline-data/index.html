@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,23 +171,22 @@
 <h2 id="building-a-data-engineering-pipeline-with-apache-beam">Building a Data Engineering Pipeline with Apache Beam</h2>
 <p>Apache Beam is a popular open-source framework for building data engineering pipelines. It provides a unified programming model for both batch and streaming data processing.</p>
 <p>Here is an example of how to build a simple data engineering pipeline using Apache Beam:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
+<pre><code class="language-python">import apache_beam as beam
 
-<span class="c1"># Define the pipeline</span>
-<span class="k">with</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span> <span class="k">as</span> <span class="n">pipeline</span><span class="p">:</span>
-    <span class="c1"># Read data from a CSV file</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Define the pipeline
+with beam.Pipeline() as pipeline:
+    # Read data from a CSV file
+    data = pipeline | beam.ReadFromText('data.csv')
 
-    <span class="c1"># Transform the data</span>
-    <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    # Transform the data
+    transformed_data = data | beam.Map(lambda x: x.split(','))
 
-    <span class="c1"># Write the transformed data to a BigQuery table</span>
-    <span class="n">transformed_data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">WriteToBigQuery</span><span class="p">(</span>
-        <span class="s1">&#39;my-project:my-dataset.my-table&#39;</span><span class="p">,</span>
-        <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;id:INTEGER,name:STRING&#39;</span>
-    <span class="p">)</span>
-</code></pre></div>
-
+    # Write the transformed data to a BigQuery table
+    transformed_data | beam.io.WriteToBigQuery(
+        'my-project:my-dataset.my-table',
+        schema='id:INTEGER,name:STRING'
+    )
+</code></pre>
 <p>This pipeline reads data from a CSV file, transforms it by splitting each line into a list of values, and writes the transformed data to a BigQuery table.</p>
 <h3 id="performance-benchmarking">Performance Benchmarking</h3>
 <p>Apache Beam provides a powerful framework for building data engineering pipelines, but its performance can vary depending on the specific use case and configuration. To give you a better idea of its performance, here are some benchmarking results:</p>
@@ -199,26 +199,25 @@
 <h2 id="managing-data-engineering-pipelines-with-aws-glue">Managing Data Engineering Pipelines with AWS Glue</h2>
 <p>AWS Glue is a fully managed service that makes it easy to build, run, and manage data engineering pipelines. It provides a simple and intuitive interface for defining pipelines, as well as a powerful engine for executing them.</p>
 <p>Here is an example of how to define a data engineering pipeline using AWS Glue:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">awsglue</span>
+<pre><code class="language-python">import awsglue
 
-<span class="c1"># Define the pipeline</span>
-<span class="n">glue</span> <span class="o">=</span> <span class="n">awsglue</span><span class="o">.</span><span class="n">GlueContext</span><span class="p">(</span><span class="n">SparkContext</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">())</span>
+# Define the pipeline
+glue = awsglue.GlueContext(SparkContext.getOrCreate())
 
-<span class="c1"># Read data from an S3 bucket</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">glue</span><span class="o">.</span><span class="n">create_dynamic_frame</span><span class="o">.</span><span class="n">from_options</span><span class="p">(</span>
-    <span class="s1">&#39;s3&#39;</span><span class="p">,</span>
-    <span class="p">{</span><span class="s1">&#39;paths&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;s3://my-bucket/data.csv&#39;</span><span class="p">]}</span>
-<span class="p">)</span>
+# Read data from an S3 bucket
+data = glue.create_dynamic_frame.from_options(
+    's3',
+    {'paths': ['s3://my-bucket/data.csv']}
+)
 
-<span class="c1"># Transform the data</span>
-<span class="n">transformed_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply_mapping</span><span class="p">(</span>
-    <span class="p">[(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">)]</span>
-<span class="p">)</span>
+# Transform the data
+transformed_data = data.apply_mapping(
+    [('id', 'integer'), ('name', 'string')]
+)
 
-<span class="c1"># Write the transformed data to a Redshift table</span>
-<span class="n">transformed_data</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;redshift&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;dbtable&#39;</span><span class="p">,</span> <span class="s1">&#39;my-table&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my-redshift-cluster&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Write the transformed data to a Redshift table
+transformed_data.write.format('redshift').option('dbtable', 'my-table').save('my-redshift-cluster')
+</code></pre>
 <p>This pipeline reads data from an S3 bucket, transforms it using a simple mapping function, and writes the transformed data to a Redshift table.</p>
 <h3 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h3>
 <p>AWS Glue provides a cost-effective way to build and manage data engineering pipelines. The service is priced based on the amount of data processed, with costs starting at $0.000004 per byte. To give you a better idea of the costs, here are some estimates:</p>

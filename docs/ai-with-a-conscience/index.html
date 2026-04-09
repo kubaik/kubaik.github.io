@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,34 +167,33 @@
 <p>To illustrate the importance of fairness in AI, let's consider an example of a machine learning model that is used to predict creditworthiness. The model is trained on a dataset that includes information about the applicant's credit history, income, and other factors. However, the dataset is biased, with a higher proportion of white applicants than black applicants. To address this bias, we can use techniques such as data preprocessing, feature engineering, and regularization. Here is an example of how to implement fairness in AI using Python and the scikit-learn library:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<pre><code class="language-python">from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import StandardScaler
 
-<span class="c1"># Generate a biased dataset</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_repeated</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Generate a biased dataset
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=0, n_repeated=0, n_classes=2, n_clusters_per_class=1, random_state=42)
 
-<span class="c1"># Split the dataset into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Scale the data</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Scale the data
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-<span class="c1"># Train a logistic regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a logistic regression model
+model = LogisticRegression()
+model.fit(X_train_scaled, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+y_pred = model.predict(X_test_scaled)
+print(&quot;Accuracy:&quot;, accuracy_score(y_test, y_pred))
+print(&quot;Classification Report:&quot;)
+print(classification_report(y_test, y_pred))
+</code></pre>
 <p>This code generates a biased dataset, splits it into training and testing sets, scales the data, trains a logistic regression model, and evaluates its performance.</p>
 <h2 id="tools-and-platforms-for-ai-ethics">Tools and Platforms for AI Ethics</h2>
 <p>There are several tools and platforms that can be used to implement AI ethics, including:
@@ -202,44 +202,43 @@
 * <strong>IBM's Watson Studio</strong>: A cloud-based platform that provides a range of tools and resources for building, deploying, and managing AI models, including those related to ethics and fairness.</p>
 <h3 id="example-2-model-interpretability">Example 2: Model Interpretability</h3>
 <p>To illustrate the importance of model interpretability, let's consider an example of a machine learning model that is used to predict house prices. The model is trained on a dataset that includes information about the house's features, such as the number of bedrooms and bathrooms, and the location. However, the model is complex and difficult to interpret, making it challenging to understand how it is making its predictions. To address this challenge, we can use techniques such as feature importance, partial dependence plots, and SHAP values. Here is an example of how to implement model interpretability using Python and the scikit-learn library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">permutation_importance</span>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.inspection import permutation_importance
 
-<span class="c1"># Generate a dataset</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+# Generate a dataset
+np.random.seed(42)
+X = np.random.rand(100, 10)
+y = np.random.rand(100)
 
-<span class="c1"># Split the dataset into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest regressor model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest regressor model
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+# Evaluate the model
+y_pred = model.predict(X_test)
+print(&quot;Mean Squared Error:&quot;, mean_squared_error(y_test, y_pred))
 
-<span class="c1"># Calculate feature importance</span>
-<span class="n">feature_importance</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Importance:&quot;</span><span class="p">,</span> <span class="n">feature_importance</span><span class="p">)</span>
+# Calculate feature importance
+feature_importance = model.feature_importances_
+print(&quot;Feature Importance:&quot;, feature_importance)
 
-<span class="c1"># Plot feature importance</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_importance</span><span class="p">)),</span> <span class="n">feature_importance</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature Index&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature Importance&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+# Plot feature importance
+plt.bar(range(len(feature_importance)), feature_importance)
+plt.xlabel(&quot;Feature Index&quot;)
+plt.ylabel(&quot;Feature Importance&quot;)
+plt.show()
 
-<span class="c1"># Calculate permutation importance</span>
-<span class="n">permutation_importance_result</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Permutation Importance:&quot;</span><span class="p">,</span> <span class="n">permutation_importance_result</span><span class="o">.</span><span class="n">importances_mean</span><span class="p">)</span>
-</code></pre></div>
-
+# Calculate permutation importance
+permutation_importance_result = permutation_importance(model, X_test, y_test, n_repeats=10, random_state=42)
+print(&quot;Permutation Importance:&quot;, permutation_importance_result.importances_mean)
+</code></pre>
 <p>This code generates a dataset, splits it into training and testing sets, trains a random forest regressor model, evaluates its performance, calculates feature importance, plots feature importance, and calculates permutation importance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can arise when implementing AI ethics, including:
@@ -252,25 +251,24 @@
 * <strong>Implement robust security and privacy measures</strong>: Use techniques such as encryption, access controls, and data anonymization to protect users' personal data.</p>
 <h3 id="example-3-data-protection">Example 3: Data Protection</h3>
 <p>To illustrate the importance of data protection, let's consider an example of a machine learning model that is used to predict customer churn. The model is trained on a dataset that includes sensitive information about customers, such as their credit card numbers and addresses. However, the dataset is not adequately protected, posing a risk to customers' personal data. To address this challenge, we can use techniques such as encryption, access controls, and data anonymization. Here is an example of how to implement data protection using Python and the cryptography library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">cryptography.fernet</span> <span class="kn">import</span> <span class="n">Fernet</span>
+<pre><code class="language-python">from cryptography.fernet import Fernet
 
-<span class="c1"># Generate a key</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">Fernet</span><span class="o">.</span><span class="n">generate_key</span><span class="p">()</span>
+# Generate a key
+key = Fernet.generate_key()
 
-<span class="c1"># Create a Fernet object</span>
-<span class="n">cipher_suite</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+# Create a Fernet object
+cipher_suite = Fernet(key)
 
-<span class="c1"># Encrypt the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello, World!&quot;</span>
-<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">cipher_suite</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Encrypt the data
+data = b&quot;Hello, World!&quot;
+encrypted_data = cipher_suite.encrypt(data)
 
-<span class="c1"># Decrypt the data</span>
-<span class="n">decrypted_data</span> <span class="o">=</span> <span class="n">cipher_suite</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>
+# Decrypt the data
+decrypted_data = cipher_suite.decrypt(encrypted_data)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Encrypted Data:&quot;</span><span class="p">,</span> <span class="n">encrypted_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Decrypted Data:&quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
-</code></pre></div>
-
+print(&quot;Encrypted Data:&quot;, encrypted_data)
+print(&quot;Decrypted Data:&quot;, decrypted_data)
+</code></pre>
 <p>This code generates a key, creates a Fernet object, encrypts the data, decrypts the data, and prints the encrypted and decrypted data.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, AI ethics is a critical aspect of AI development, and it is essential to ensure that AI systems are developed and used in ways that are fair, transparent, and respectful of human rights. To implement AI ethics in practice, it is essential to use a combination of technical, organizational, and societal efforts. This includes using techniques such as data preprocessing, model interpretability, and human oversight, as well as implementing robust security and privacy measures.</p>

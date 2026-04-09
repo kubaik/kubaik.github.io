@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,9 +171,8 @@
 <li>Microsoft Azure Synapse Analytics: A cloud-based data warehouse service that supports SQL querying, machine learning, and data integration.</li>
 </ul>
 <p>For example, let's consider a scenario where we want to load data from a MySQL database into an Amazon Redshift data warehouse using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>redshift-data<span class="w"> </span>import<span class="w"> </span>--cluster-identifier<span class="w"> </span>my-cluster<span class="w"> </span>--database-name<span class="w"> </span>my-database<span class="w"> </span>--username<span class="w"> </span>my-username<span class="w"> </span>--password<span class="w"> </span>my-password<span class="w"> </span>--sql<span class="w"> </span><span class="s2">&quot;SELECT * FROM my-table&quot;</span><span class="w"> </span>--output-file<span class="w"> </span>my-output-file.csv
-</code></pre></div>
-
+<pre><code class="language-bash">aws redshift-data import --cluster-identifier my-cluster --database-name my-database --username my-username --password my-password --sql &quot;SELECT * FROM my-table&quot; --output-file my-output-file.csv
+</code></pre>
 <p>This command imports data from the <code>my-table</code> table in the <code>my-database</code> database into a CSV file named <code>my-output-file.csv</code>.</p>
 <h3 id="data-integration-and-etl">Data Integration and ETL</h3>
 <p>Data integration and ETL (Extract, Transform, Load) are critical components of a data warehousing solution. ETL involves extracting data from various sources, transforming it into a standardized format, and loading it into the data warehouse. Some popular ETL tools include:</p>
@@ -182,25 +182,24 @@
 <li>Informatica PowerCenter: A commercial data integration platform that supports ETL, data quality, and data governance.</li>
 </ul>
 <p>For example, let's consider a scenario where we want to use Apache NiFi to extract data from a log file, transform it into a JSON format, and load it into a Kafka topic:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Define the log file source</span>
-<span class="n">FileInputStream</span><span class="w"> </span><span class="n">logFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="s">&quot;log_file.log&quot;</span><span class="p">);</span>
+<pre><code class="language-java">// Define the log file source
+FileInputStream logFile = new FileInputStream(&quot;log_file.log&quot;);
 
-<span class="c1">// Define the JSON transformation</span>
-<span class="n">JsonRecordSetWriter</span><span class="w"> </span><span class="n">jsonWriter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JsonRecordSetWriter</span><span class="p">();</span>
-<span class="n">jsonWriter</span><span class="p">.</span><span class="na">setSchema</span><span class="p">(</span><span class="n">schema</span><span class="p">);</span>
+// Define the JSON transformation
+JsonRecordSetWriter jsonWriter = new JsonRecordSetWriter();
+jsonWriter.setSchema(schema);
 
-<span class="c1">// Define the Kafka sink</span>
-<span class="n">KafkaProducer</span><span class="w"> </span><span class="n">kafkaProducer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaProducer</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="n">kafkaProducer</span><span class="p">.</span><span class="na">setBootstrapServers</span><span class="p">(</span><span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
+// Define the Kafka sink
+KafkaProducer kafkaProducer = new KafkaProducer&lt;&gt;();
+kafkaProducer.setBootstrapServers(&quot;localhost:9092&quot;);
 
-<span class="c1">// Process the log file and send the data to Kafka</span>
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">logLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logFile</span><span class="p">.</span><span class="na">readLine</span><span class="p">();</span>
-<span class="w">    </span><span class="n">jsonWriter</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">logLine</span><span class="p">);</span>
-<span class="w">    </span><span class="n">kafkaProducer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ProducerRecord</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;my_topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">jsonWriter</span><span class="p">.</span><span class="na">getOutput</span><span class="p">()));</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Process the log file and send the data to Kafka
+while (true) {
+    byte[] logLine = logFile.readLine();
+    jsonWriter.write(logLine);
+    kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;my_topic&quot;, jsonWriter.getOutput()));
+}
+</code></pre>
 <p>This code snippet demonstrates how to use Apache NiFi to extract data from a log file, transform it into a JSON format, and load it into a Kafka topic.</p>
 <h2 id="data-warehousing-performance-and-optimization">Data Warehousing Performance and Optimization</h2>
 <p>Data warehousing performance and optimization are critical to ensuring that your data warehouse can handle large volumes of data and support fast querying and analysis. Some best practices for optimizing data warehousing performance include:</p>
@@ -211,18 +210,17 @@
 <li>Optimizing SQL queries: Optimizing SQL queries can improve query performance by reducing the amount of data that needs to be scanned and processed.</li>
 </ul>
 <p>For example, let's consider a scenario where we want to optimize a SQL query that retrieves data from a large fact table:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Original query</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">fact_table</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2020-01-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2020-12-31&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- Original query
+SELECT *
+FROM fact_table
+WHERE date &gt;= '2020-01-01' AND date &lt;= '2020-12-31';
 
-<span class="c1">-- Optimized query</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">fact_table</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2020-01-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2020-12-31&#39;</span>
-<span class="k">AND</span><span class="w"> </span><span class="n">fact_table</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dim_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my_category&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+-- Optimized query
+SELECT *
+FROM fact_table
+WHERE date &gt;= '2020-01-01' AND date &lt;= '2020-12-31'
+AND fact_table.id IN (SELECT id FROM dim_table WHERE category = 'my_category');
+</code></pre>
 <p>This optimized query uses a subquery to filter the data before joining it with the fact table, reducing the amount of data that needs to be scanned and processed.</p>
 <h3 id="data-warehousing-security-and-governance">Data Warehousing Security and Governance</h3>
 <p>Data warehousing security and governance are critical to ensuring that your data is protected and compliant with regulatory requirements. Some best practices for securing and governing your data warehouse include:</p>

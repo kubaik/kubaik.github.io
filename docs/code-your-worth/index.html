@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,22 +155,21 @@
 <p>To negotiate effectively, it's essential to understand the market rate for your role and location. Websites like Glassdoor, Payscale, and LinkedIn can provide valuable insights into average salaries and benefits packages. For example, according to LinkedIn's data, the average salary for a data scientist in New York City is around $118,000 per year, while in San Francisco, it's around $141,000 per year. By researching the market rate, you can determine a fair and realistic salary range to aim for in your negotiation.</p>
 <h2 id="negotiation-strategies">Negotiation Strategies</h2>
 <p>There are several negotiation strategies that can be effective in salary discussions. One approach is to use a "anchor-based" negotiation, where you start with a high anchor point and then work downwards. For example, if you're targeting a salary of $120,000, you could start by asking for $150,000 and then negotiate down to your target range. This approach can be illustrated with a simple Python script:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">anchor_based_negotiation</span><span class="p">(</span><span class="n">target_salary</span><span class="p">,</span> <span class="n">anchor_point</span><span class="p">):</span>
-    <span class="c1"># Start with the anchor point and work downwards</span>
-    <span class="n">offer</span> <span class="o">=</span> <span class="n">anchor_point</span>
-    <span class="k">while</span> <span class="n">offer</span> <span class="o">&gt;</span> <span class="n">target_salary</span><span class="p">:</span>
-        <span class="c1"># Decrease the offer by 10% each iteration</span>
-        <span class="n">offer</span> <span class="o">*=</span> <span class="mf">0.9</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Offer: $</span><span class="si">{</span><span class="n">offer</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">offer</span>
+<pre><code class="language-python">def anchor_based_negotiation(target_salary, anchor_point):
+    # Start with the anchor point and work downwards
+    offer = anchor_point
+    while offer &gt; target_salary:
+        # Decrease the offer by 10% each iteration
+        offer *= 0.9
+        print(f&quot;Offer: ${offer:.2f}&quot;)
+    return offer
 
-<span class="c1"># Example usage:</span>
-<span class="n">target_salary</span> <span class="o">=</span> <span class="mi">120000</span>
-<span class="n">anchor_point</span> <span class="o">=</span> <span class="mi">150000</span>
-<span class="n">final_offer</span> <span class="o">=</span> <span class="n">anchor_based_negotiation</span><span class="p">(</span><span class="n">target_salary</span><span class="p">,</span> <span class="n">anchor_point</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final offer: $</span><span class="si">{</span><span class="n">final_offer</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage:
+target_salary = 120000
+anchor_point = 150000
+final_offer = anchor_based_negotiation(target_salary, anchor_point)
+print(f&quot;Final offer: ${final_offer:.2f}&quot;)
+</code></pre>
 <p>This script demonstrates how to use an anchor-based negotiation strategy to arrive at a final offer. By starting with a high anchor point and working downwards, you can create a psychological anchor that influences the negotiation in your favor.</p>
 <h3 id="using-data-to-inform-negotiation">Using Data to Inform Negotiation</h3>
 <p>Another key strategy is to use data to inform your negotiation. This can include metrics such as your current salary, industry standards, and the company's budget for the role. For example, if you're currently earning $100,000 per year and the industry standard for your role is $120,000, you can use this data to argue for a higher salary. Tools like GitHub's Salary Calculator can provide valuable insights into industry standards and help you make a stronger case for your requested salary.</p>
@@ -192,44 +192,42 @@
 <p>Another key factor to consider in salary negotiation is performance benchmarks. These can include metrics such as code quality, deployment frequency, and customer satisfaction. By using performance benchmarks to evaluate your work, you can demonstrate your value to the company and negotiate a higher salary. For example, if you're a software engineer and you've been able to reduce deployment time by 30% through process improvements, you can use this metric to argue for a higher salary. Tools like Jenkins and Travis CI can provide valuable insights into code quality and deployment frequency, while customer satisfaction can be measured using tools like SurveyMonkey and Medallia.</p>
 <h3 id="code-example-measuring-deployment-frequency">Code Example: Measuring Deployment Frequency</h3>
 <p>To illustrate the importance of measuring deployment frequency, let's consider an example using Python and the Jenkins API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="k">def</span> <span class="nf">get_deployment_frequency</span><span class="p">(</span><span class="n">jenkins_url</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
-    <span class="c1"># Use the Jenkins API to retrieve deployment data</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">jenkins_url</span><span class="si">}</span><span class="s2">/job/</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2">/api/json&quot;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="n">deployments</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;builds&quot;</span><span class="p">]</span>
-    <span class="n">deployment_frequency</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">deployments</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">deployment_frequency</span>
+def get_deployment_frequency(jenkins_url, job_name):
+    # Use the Jenkins API to retrieve deployment data
+    response = requests.get(f&quot;{jenkins_url}/job/{job_name}/api/json&quot;)
+    data = response.json()
+    deployments = data[&quot;builds&quot;]
+    deployment_frequency = len(deployments) / (data[&quot;timestamp&quot;] / 1000)
+    return deployment_frequency
 
-<span class="c1"># Example usage:</span>
-<span class="n">jenkins_url</span> <span class="o">=</span> <span class="s2">&quot;https://your-jenkins-instance.com&quot;</span>
-<span class="n">job_name</span> <span class="o">=</span> <span class="s2">&quot;your-job-name&quot;</span>
-<span class="n">deployment_frequency</span> <span class="o">=</span> <span class="n">get_deployment_frequency</span><span class="p">(</span><span class="n">jenkins_url</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deployment frequency: </span><span class="si">{</span><span class="n">deployment_frequency</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> deployments per minute&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage:
+jenkins_url = &quot;https://your-jenkins-instance.com&quot;
+job_name = &quot;your-job-name&quot;
+deployment_frequency = get_deployment_frequency(jenkins_url, job_name)
+print(f&quot;Deployment frequency: {deployment_frequency:.2f} deployments per minute&quot;)
+</code></pre>
 <p>This script demonstrates how to use the Jenkins API to retrieve deployment data and calculate deployment frequency. By using metrics like these, you can demonstrate your value to the company and negotiate a higher salary.</p>
 <h2 id="pricing-data">Pricing Data</h2>
 <p>Pricing data is another critical factor to consider in salary negotiation. This can include metrics such as the cost of living in your area, the cost of benefits, and the company's budget for the role. By using pricing data to inform your negotiation, you can make a stronger case for your requested salary and negotiate a more competitive compensation package. For example, if you're living in a high-cost-of-living area like San Francisco, you may need to adjust your salary expectations accordingly. Tools like Numbeo and PayScale can provide valuable insights into the cost of living and the cost of benefits, while the company's budget for the role can be determined through research and negotiation.</p>
 <h3 id="code-example-calculating-the-cost-of-benefits">Code Example: Calculating the Cost of Benefits</h3>
 <p>To illustrate the importance of calculating the cost of benefits, let's consider an example using Python and the Numbeo API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="k">def</span> <span class="nf">get_cost_of_benefits</span><span class="p">(</span><span class="n">numbeo_url</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-    <span class="c1"># Use the Numbeo API to retrieve cost of living data</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">numbeo_url</span><span class="si">}</span><span class="s2">/cost-of-living/</span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="n">cost_of_benefits</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;healthcare&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;housing&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;food&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">cost_of_benefits</span>
+def get_cost_of_benefits(numbeo_url, location):
+    # Use the Numbeo API to retrieve cost of living data
+    response = requests.get(f&quot;{numbeo_url}/cost-of-living/{location}&quot;)
+    data = response.json()
+    cost_of_benefits = data[&quot;healthcare&quot;] + data[&quot;housing&quot;] + data[&quot;food&quot;]
+    return cost_of_benefits
 
-<span class="c1"># Example usage:</span>
-<span class="n">numbeo_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.numbeo.com&quot;</span>
-<span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;San-Francisco-CA&quot;</span>
-<span class="n">cost_of_benefits</span> <span class="o">=</span> <span class="n">get_cost_of_benefits</span><span class="p">(</span><span class="n">numbeo_url</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cost of benefits: $</span><span class="si">{</span><span class="n">cost_of_benefits</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> per month&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage:
+numbeo_url = &quot;https://www.numbeo.com&quot;
+location = &quot;San-Francisco-CA&quot;
+cost_of_benefits = get_cost_of_benefits(numbeo_url, location)
+print(f&quot;Cost of benefits: ${cost_of_benefits:.2f} per month&quot;)
+</code></pre>
 <p>This script demonstrates how to use the Numbeo API to retrieve cost of living data and calculate the cost of benefits. By using metrics like these, you can make a stronger case for your requested salary and negotiate a more competitive compensation package.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, salary negotiation is a critical skill for tech professionals to master, as it can significantly impact their career earnings and job satisfaction. By using strategies like anchor-based negotiation, data-driven negotiation, and performance-based negotiation, you can negotiate a more competitive compensation package and achieve your career goals. Here are some actionable next steps you can take:

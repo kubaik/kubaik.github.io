@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -189,63 +190,61 @@
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <h4 id="example-1-building-a-restful-api-with-expressjs">Example 1: Building a RESTful API with Express.js</h4>
 <p>Here is a simple example demonstrating how to set up a RESTful API using Express.js.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = 3000;
 
-<span class="c1">// Middleware</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+// Middleware
+app.use(express.json());
 
-<span class="c1">// In-memory data store</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+// In-memory data store
+let users = [];
 
-<span class="c1">// Create a new user</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="p">});</span>
+// Create a new user
+app.post('/users', (req, res) =&gt; {
+    const user = { id: users.length + 1, ...req.body };
+    users.push(user);
+    res.status(201).json(user);
+});
 
-<span class="c1">// Get all users</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+// Get all users
+app.get('/users', (req, res) =&gt; {
+    res.status(200).json(users);
+});
 
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://digitalocean.com&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">DigitalOcean</span><span class="w"> </span><span class="nx">Cloud</span><span class="w"> </span><span class="nx">Hosting</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://digitalocean.com&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;DigitalOcean Cloud Hosting&lt;/a&gt;*
 
-<span class="c1">// Start server</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server is running on http://localhost:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Start server
+app.listen(PORT, () =&gt; {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+</code></pre>
 <p><strong>Explanation</strong>:
 - This code sets up a basic Express server that can handle creating and retrieving users.
 - By using JSON middleware, it simplifies parsing incoming request bodies.
 - The data is stored in memory, which is suitable for demonstration but not for production.</p>
 <h4 id="example-2-using-docker-for-containerization">Example 2: Using Docker for Containerization</h4>
 <p>To deploy the above application in a containerized environment, you can use Docker. First, create a <code>Dockerfile</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Use the official Node.js image</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># Use the official Node.js image
+FROM node:14
 
-<span class="c"># Set the working directory</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+# Set the working directory
+WORKDIR /app
 
-<span class="c"># Copy package.json and install dependencies</span>
-<span class="k">COPY</span><span class="w"> </span>package.json<span class="w"> </span>./
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+# Copy package.json and install dependencies
+COPY package.json ./
+RUN npm install
 
-<span class="c"># Copy the application code</span>
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+# Copy the application code
+COPY . .
 
-<span class="c"># Expose the application port</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+# Expose the application port
+EXPOSE 3000
 
-<span class="c"># Start the application</span>
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;server.js&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+# Start the application
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
 <p><strong>Build and Run</strong>:
 1. Build the Docker image:
    <code>bash
@@ -262,24 +261,23 @@
 <li><strong>Install RabbitMQ</strong>: Follow the <a href="https://www.rabbitmq.com/download.html">official installation guide</a> for your OS.</li>
 <li><strong>Publish a message</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">amqp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;amqplib/callback_api&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const amqp = require('amqplib/callback_api');
 
-<span class="nx">amqp</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;amqp://localhost&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">error0</span><span class="p">,</span><span class="w"> </span><span class="nx">connection</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">error0</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">connection</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">((</span><span class="nx">error1</span><span class="p">,</span><span class="w"> </span><span class="nx">channel</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error1</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">error1</span><span class="p">;</span>
+amqp.connect('amqp://localhost', (error0, connection) =&gt; {
+    if (error0) throw error0;
+    connection.createChannel((error1, channel) =&gt; {
+        if (error1) throw error1;
 
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;task_queue&#39;</span><span class="p">;</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Hello World&#39;</span><span class="p">;</span>
+        const queue = 'task_queue';
+        const msg = 'Hello World';
 
-<span class="w">        </span><span class="nx">channel</span><span class="p">.</span><span class="nx">assertQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">durable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
-<span class="w">        </span><span class="nx">channel</span><span class="p">.</span><span class="nx">sendToQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">msg</span><span class="p">),</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">persistent</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+        channel.assertQueue(queue, { durable: true });
+        channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
 
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot; [x] Sent %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+        console.log(&quot; [x] Sent %s&quot;, msg);
+    });
+});
+</code></pre>
 <p><strong>Explanation</strong>:
 - This code connects to the RabbitMQ server, creates a channel and sends a message to a queue called <code>task_queue</code>.
 - The <code>durable</code> option ensures that the queue survives a broker restart, and <code>persistent</code> ensures that the message is saved.</p>
@@ -303,12 +301,11 @@
 <li><strong>Solution</strong>: Centralize error handling with middleware.</li>
 <li><strong>Example</strong>: Create an error-handling middleware in Express.js to catch and log errors globally.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Something broke!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">app.use((err, req, res, next) =&gt; {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+</code></pre>
 <h3 id="measuring-performance">Measuring Performance</h3>
 <p>To ensure your backend architecture meets performance expectations, consider using tools like:</p>
 <ul>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,39 +157,38 @@
 * <strong>Seasonality</strong>: Periodic fluctuations in a time series that occur at fixed intervals.
 * <strong>Trend</strong>: The overall direction or pattern in a time series.</p>
 <p>To illustrate these concepts, let's consider a simple example using Python and the popular <code>statsmodels</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
 
-<span class="c1"># Generate a sample time series with seasonality and trend</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)))</span>
+# Generate a sample time series with seasonality and trend
+np.random.seed(0)
+time_series = pd.Series(np.random.rand(100) + np.arange(100) + np.sin(np.arange(100)))
 
-<span class="c1"># Perform seasonal decomposition</span>
-<span class="n">decomposition</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
+# Perform seasonal decomposition
+decomposition = seasonal_decompose(time_series, model='additive')
 
-<span class="c1"># Plot the decomposition</span>
-<span class="n">trend</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">trend</span>
-<span class="n">seasonal</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">seasonal</span>
-<span class="n">residual</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span>
+# Plot the decomposition
+trend = decomposition.trend
+seasonal = decomposition.seasonal
+residual = decomposition.resid
 
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">411</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">412</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trend</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trend&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">413</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">seasonal</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Seasonality&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">414</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+plt.subplot(411)
+plt.plot(time_series, label='Original')
+plt.legend(loc='best')
+plt.subplot(412)
+plt.plot(trend, label='Trend')
+plt.legend(loc='best')
+plt.subplot(413)
+plt.plot(seasonal,label='Seasonality')
+plt.legend(loc='best')
+plt.subplot(414)
+plt.plot(residual, label='Residuals')
+plt.legend(loc='best')
+plt.tight_layout()
+plt.show()
+</code></pre>
 <p>This code generates a sample time series with seasonality and trend, performs seasonal decomposition, and plots the original time series along with its trend, seasonality, and residuals.</p>
 <h2 id="ai-powered-time-series-forecasting-tools">AI-Powered Time Series Forecasting Tools</h2>
 <p>Several AI-powered tools and platforms are available for time series forecasting, including:
@@ -198,52 +198,51 @@
 <p>These platforms provide a range of features, including automated model selection, hyperparameter tuning, and model deployment. For example, Google Cloud AI Platform provides a range of pre-built algorithms for time series forecasting, including ARIMA, Prophet, and LSTM.</p>
 <h3 id="practical-example-with-google-cloud-ai-platform">Practical Example with Google Cloud AI Platform</h3>
 <p>Let's consider a practical example using Google Cloud AI Platform to forecast future sales for an e-commerce company:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
+<pre><code class="language-python">import pandas as pd
+from google.cloud import aiplatform
 
-<span class="c1"># Load the sales data</span>
-<span class="n">sales_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sales_data.csv&#39;</span><span class="p">)</span>
+# Load the sales data
+sales_data = pd.read_csv('sales_data.csv')
 
-<span class="c1"># Create a dataset and model</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Sales Data&#39;</span><span class="p">,</span>
-    <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Sales data for e-commerce company&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a dataset and model
+dataset = aiplatform.Dataset.create(
+    display_name='Sales Data',
+    metadata={
+        'description': 'Sales data for e-commerce company'
+    }
+)
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Sales Forecasting Model&#39;</span><span class="p">,</span>
-    <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Sales forecasting model using ARIMA&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+model = aiplatform.Model.create(
+    display_name='Sales Forecasting Model',
+    metadata={
+        'description': 'Sales forecasting model using ARIMA'
+    }
+)
 
-<span class="c1"># Train the model</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">training_job</span><span class="p">(</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Sales Forecasting Training Job&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
-    <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ARIMA&#39;</span><span class="p">,</span>
-    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mi">1</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Train the model
+job = aiplatform.Model.training_job(
+    display_name='Sales Forecasting Training Job',
+    model=model,
+    dataset=dataset,
+    algorithm='ARIMA',
+    hyperparameters={
+        'p': 1,
+        'd': 1,
+        'q': 1
+    }
+)
 
-<span class="c1"># Deploy the model</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">endpoint</span><span class="p">(</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Sales Forecasting Endpoint&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">model</span>
-<span class="p">)</span>
+# Deploy the model
+endpoint = aiplatform.Model.endpoint(
+    display_name='Sales Forecasting Endpoint',
+    model=model
+)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">endpoint</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">sales_data</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Make predictions
+predictions = endpoint.predict(
+    input_data=sales_data
+)
+</code></pre>
 <p>This code creates a dataset and model using Google Cloud AI Platform, trains an ARIMA model, deploys the model, and makes predictions on the sales data.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Time series forecasting with AI can be challenging, and several common problems can arise:
@@ -256,15 +255,14 @@
 3. <strong>Data preprocessing</strong>: Handling missing values, outliers, and data normalization to improve data quality.
 4. <strong>Hyperparameter tuning</strong>: Tuning hyperparameters to optimize model performance, such as grid search, random search, or Bayesian optimization.</p>
 <p>For example, to address overfitting, we can use L1 regularization with a hyperparameter <code>alpha</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
+<pre><code class="language-python">from sklearn.linear_model import Lasso
 
-<span class="c1"># Create a Lasso model with L1 regularization</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+# Create a Lasso model with L1 regularization
+model = Lasso(alpha=0.1)
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sales_data</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+model.fit(sales_data)
+</code></pre>
 <p>This code creates a Lasso model with L1 regularization and trains the model on the sales data.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Time series forecasting with AI has numerous applications across various industries:

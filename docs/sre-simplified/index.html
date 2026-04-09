@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,13 +164,12 @@
 <h3 id="1-service-level-objectives-slos">1. Service Level Objectives (SLOs)</h3>
 <p>SLOs are critical for measuring the success of an SRE team. They define the target level of reliability for a service and are often expressed as a percentage. For example, an SLO might state that a web service must have 99.9% availability over a month.</p>
 <h4 id="example">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-web-service</span>
-<span class="nt">slo</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">availability</span><span class="p">:</span><span class="w"> </span>
-<span class="w">    </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">99.9%</span>
-<span class="w">    </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30 days</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">service: my-web-service
+slo:
+  availability: 
+    target: 99.9%
+    duration: 30 days
+</code></pre>
 <h3 id="2-error-budgets">2. Error Budgets</h3>
 <p>An error budget is the permissible level of failures before the SLO is breached. For instance, if your SLO is 99.9% availability, you can afford approximately 43.2 minutes of downtime per month. This metric helps teams prioritize between reliability improvements and feature development.</p>
 <h4 id="calculation">Calculation:</h4>
@@ -196,40 +196,37 @@
 <p>To monitor services effectively, SREs often use Prometheus alongside Grafana. Here’s a step-by-step guide to setting up monitoring for a web service.</p>
 <h4 id="step-1-install-prometheus">Step 1: Install Prometheus</h4>
 <p>You can install Prometheus using Docker with the following command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">9090</span>:9090<span class="w"> </span>prom/prometheus
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -p 9090:9090 prom/prometheus
+</code></pre>
 <h4 id="step-2-configure-prometheus">Step 2: Configure Prometheus</h4>
 <p>Create a <code>prometheus.yml</code> configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15s</span>
+<pre><code class="language-yaml">global:
+  scrape_interval: 15s
 
-<span class="nt">scrape_configs</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;my-web-service&#39;</span>
-<span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:8080&#39;</span><span class="p p-Indicator">]</span>
-</code></pre></div>
-
+scrape_configs:
+  - job_name: 'my-web-service'
+    static_configs:
+      - targets: ['localhost:8080']
+</code></pre>
 <h4 id="step-3-run-your-application">Step 3: Run your Application</h4>
 <p>Ensure your web service exposes metrics in a format that Prometheus can scrape. Here's a sample Python Flask application that exposes metrics:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
-<span class="kn">from</span> <span class="nn">prometheus_flask_exporter</span> <span class="kn">import</span> <span class="n">PrometheusMetrics</span>
+<pre><code class="language-python">from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">PrometheusMetrics</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/metrics&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">metrics_endpoint</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">metrics</span><span class="o">.</span><span class="n">generate_latest</span><span class="p">()</span>
+@app.route('/metrics')
+def metrics_endpoint():
+    return metrics.generate_latest()
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
+@app.route('/')
+def hello():
+    return &quot;Hello, World!&quot;
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    app.run(port=8080)
+</code></pre>
 <h4 id="step-4-visualize-with-grafana">Step 4: Visualize with Grafana</h4>
 <ol>
 <li>Install Grafana using Docker:</li>
@@ -267,48 +264,47 @@
 </ol>
 <h3 id="implementation-example">Implementation Example</h3>
 <p>Here’s a sample CloudFormation template to create a highly available architecture:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">Resources</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">VPC</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::EC2::VPC&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">CidrBlock</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10.0.0.0/16&#39;</span>
+<pre><code class="language-yaml">Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: '10.0.0.0/16'
 
-<span class="w">  </span><span class="nt">SubnetA</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::EC2::Subnet&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">VpcId</span><span class="p">:</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VPC</span>
-<span class="w">      </span><span class="nt">CidrBlock</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10.0.1.0/24&#39;</span>
-<span class="w">      </span><span class="nt">AvailabilityZone</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;us-east-1a&#39;</span>
+  SubnetA:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: '10.0.1.0/24'
+      AvailabilityZone: 'us-east-1a'
 
-<span class="w">  </span><span class="nt">SubnetB</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::EC2::Subnet&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">VpcId</span><span class="p">:</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VPC</span>
-<span class="w">      </span><span class="nt">CidrBlock</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10.0.2.0/24&#39;</span>
-<span class="w">      </span><span class="nt">AvailabilityZone</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;us-east-1b&#39;</span>
+  SubnetB:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: '10.0.2.0/24'
+      AvailabilityZone: 'us-east-1b'
 
-<span class="w">  </span><span class="nt">LoadBalancer</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::ElasticLoadBalancingV2::LoadBalancer&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">Subnets</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubnetA</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubnetB</span>
+  LoadBalancer:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      Subnets:
+        - !Ref SubnetA
+        - !Ref SubnetB
 
-<span class="w">  </span><span class="nt">InstanceA</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::EC2::Instance&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ImageId</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ami-12345678&#39;</span>
-<span class="w">      </span><span class="nt">InstanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;t2.micro&#39;</span>
-<span class="w">      </span><span class="nt">SubnetId</span><span class="p">:</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubnetA</span>
+  InstanceA:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'ami-12345678'
+      InstanceType: 't2.micro'
+      SubnetId: !Ref SubnetA
 
-<span class="w">  </span><span class="nt">InstanceB</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;AWS::EC2::Instance&#39;</span>
-<span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ImageId</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ami-12345678&#39;</span>
-<span class="w">      </span><span class="nt">InstanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;t2.micro&#39;</span>
-<span class="w">      </span><span class="nt">SubnetId</span><span class="p">:</span><span class="w"> </span><span class="kt">!Ref</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubnetB</span>
-</code></pre></div>
-
+  InstanceB:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'ami-12345678'
+      InstanceType: 't2.micro'
+      SubnetId: !Ref SubnetB
+</code></pre>
 <h3 id="cost-analysis">Cost Analysis</h3>
 <p>Implementing a highly available architecture in AWS can incur significant costs. Here's a rough estimate based on the resources used:</p>
 <ul>

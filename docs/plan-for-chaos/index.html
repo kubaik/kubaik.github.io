@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,28 +165,27 @@
 * <strong>PagerDuty</strong>: An incident management platform that provides alerting, on-call scheduling, and incident response workflows
 * <strong>AWS CloudWatch</strong>: A monitoring and logging service that provides real-time insights into AWS resources and applications</p>
 <p>For example, using Splunk, an organization can create a dashboard to monitor network traffic and detect potential security threats. The following code snippet illustrates how to create a Splunk dashboard using the Splunk SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">splunklib.binding</span> <span class="k">as</span> <span class="nn">binding</span>
+<pre><code class="language-python">import splunklib.binding as binding
 
-<span class="c1"># Create a Splunk connection</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">binding</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;https://localhost:8089&#39;</span><span class="p">,</span>
-    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
-<span class="p">)</span>
+# Create a Splunk connection
+connection = binding.connect(
+    host='https://localhost:8089',
+    username='admin',
+    password='password'
+)
 
-<span class="c1"># Create a dashboard</span>
-<span class="n">dashboard</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s1">&#39;/servicesNS/nobody/search/dashboard&#39;</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Security Dashboard&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Monitor security threats&#39;</span><span class="p">}</span>
-<span class="p">)</span>
+# Create a dashboard
+dashboard = connection.post(
+    '/servicesNS/nobody/search/dashboard',
+    data={'name': 'Security Dashboard', 'description': 'Monitor security threats'}
+)
 
-<span class="c1"># Add a panel to the dashboard</span>
-<span class="n">panel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s1">&#39;/servicesNS/nobody/search/dashboard/</span><span class="si">{0}</span><span class="s1">/panel&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dashboard</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Network Traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Monitor network traffic&#39;</span><span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Add a panel to the dashboard
+panel = connection.post(
+    '/servicesNS/nobody/search/dashboard/{0}/panel'.format(dashboard['id']),
+    data={'name': 'Network Traffic', 'description': 'Monitor network traffic'}
+)
+</code></pre>
 <p>This code creates a new Splunk dashboard and adds a panel to monitor network traffic.</p>
 <h2 id="common-challenges-in-incident-response">Common Challenges in Incident Response</h2>
 <p>Despite the importance of incident response planning, many organizations face common challenges, including:
@@ -197,16 +197,15 @@
 * Provide regular training and exercises to employees to ensure they are prepared to respond to incidents
 * Allocate sufficient resources to support incident response efforts, including personnel, funding, and technology</p>
 <p>For example, an organization can use <strong>PagerDuty</strong> to create an incident response plan and provide on-call scheduling and alerting for employees. The following code snippet illustrates how to create a PagerDuty incident using the PagerDuty API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Create a PagerDuty incident</span>
-<span class="n">incident</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s1">&#39;https://api.pagerduty.com/incidents&#39;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer YOUR_API_KEY&#39;</span><span class="p">},</span>
-    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;incident&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Security Incident&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Potential security threat&#39;</span><span class="p">}}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a PagerDuty incident
+incident = requests.post(
+    'https://api.pagerduty.com/incidents',
+    headers={'Authorization': 'Bearer YOUR_API_KEY'},
+    json={'incident': {'title': 'Security Incident', 'description': 'Potential security threat'}}
+)
+</code></pre>
 <p>This code creates a new PagerDuty incident with a title and description.</p>
 <h2 id="use-cases-for-incident-response">Use Cases for Incident Response</h2>
 <p>Incident response planning can be applied to various use cases, including:
@@ -214,26 +213,25 @@
 2. <strong>System failures</strong>: Responding to hardware or software failures, such as database crashes or network outages
 3. <strong>Natural disasters</strong>: Responding to natural disasters, such as hurricanes or earthquakes</p>
 <p>For example, an organization can use <strong>AWS CloudWatch</strong> to monitor its AWS resources and respond to system failures. The following code snippet illustrates how to create a CloudWatch alarm using the AWS SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a CloudWatch client</span>
-<span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
+# Create a CloudWatch client
+cloudwatch = boto3.client('cloudwatch')
 
-<span class="c1"># Create a CloudWatch alarm</span>
-<span class="n">alarm</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">put_metric_alarm</span><span class="p">(</span>
-    <span class="n">AlarmName</span><span class="o">=</span><span class="s1">&#39;System Failure Alarm&#39;</span><span class="p">,</span>
-    <span class="n">ComparisonOperator</span><span class="o">=</span><span class="s1">&#39;GreaterThanThreshold&#39;</span><span class="p">,</span>
-    <span class="n">EvaluationPeriods</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;CPUUtilization&#39;</span><span class="p">,</span>
-    <span class="n">Namespace</span><span class="o">=</span><span class="s1">&#39;AWS/EC2&#39;</span><span class="p">,</span>
-    <span class="n">Period</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">Statistic</span><span class="o">=</span><span class="s1">&#39;Average&#39;</span><span class="p">,</span>
-    <span class="n">Threshold</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
-    <span class="n">ActionsEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AlarmActions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;arn:aws:sns:REGION:ACCOUNT_ID:ALARM_TOPIC&#39;</span><span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a CloudWatch alarm
+alarm = cloudwatch.put_metric_alarm(
+    AlarmName='System Failure Alarm',
+    ComparisonOperator='GreaterThanThreshold',
+    EvaluationPeriods=1,
+    MetricName='CPUUtilization',
+    Namespace='AWS/EC2',
+    Period=300,
+    Statistic='Average',
+    Threshold=80,
+    ActionsEnabled=True,
+    AlarmActions=['arn:aws:sns:REGION:ACCOUNT_ID:ALARM_TOPIC']
+)
+</code></pre>
 <p>This code creates a new CloudWatch alarm that triggers when CPU utilization exceeds 80%.</p>
 <h2 id="implementation-details">Implementation Details</h2>
 <p>To implement an incident response plan, organizations should:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,74 +164,71 @@
 <p>In this section, we will explore some practical examples of database management tools in action.</p>
 <h3 id="example-1-using-oracle-enterprise-manager-to-monitor-database-performance">Example 1: Using Oracle Enterprise Manager to Monitor Database Performance</h3>
 <p>Oracle Enterprise Manager is a powerful database management tool that provides a range of features for monitoring and optimizing database performance. Here is an example of how to use Oracle Enterprise Manager to monitor database performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new database instance</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydb</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a new database instance
+CREATE DATABASE mydb;
 
-<span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">NUMBER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="p">);</span>
+-- Create a new table
+CREATE TABLE mytable (
+  id NUMBER PRIMARY KEY,
+  name VARCHAR2(20)
+);
 
-<span class="c1">-- Insert some data into the table</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Jane&#39;</span><span class="p">);</span>
+-- Insert some data into the table
+INSERT INTO mytable (id, name) VALUES (1, 'John');
+INSERT INTO mytable (id, name) VALUES (2, 'Jane');
 
-<span class="c1">-- Use Oracle Enterprise Manager to monitor database performance</span>
-<span class="c1">-- Connect to the database instance</span>
-<span class="k">CONNECT</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SYSDBA</span>
+-- Use Oracle Enterprise Manager to monitor database performance
+-- Connect to the database instance
+CONNECT / AS SYSDBA
 
-<span class="c1">-- Run a query to monitor database performance</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$SYSMETRIC</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">metric_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CPU Usage&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Run a query to monitor database performance
+SELECT * FROM V$SYSMETRIC WHERE metric_name = 'CPU Usage';
+</code></pre>
 <p>This code creates a new database instance, creates a new table, and inserts some data into the table. It then uses Oracle Enterprise Manager to monitor database performance, including CPU usage.</p>
 <h3 id="example-2-using-mongodb-compass-to-optimize-database-queries">Example 2: Using MongoDB Compass to Optimize Database Queries</h3>
 <p>MongoDB Compass is a powerful database management tool that provides a range of features for optimizing database queries. Here is an example of how to use MongoDB Compass to optimize database queries:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to the database</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">MongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mongodb://localhost:27017&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dbName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mydb&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Connect to the database
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
+const dbName = 'mydb';
 
-<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to database&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">db</span><span class="p">(</span><span class="nx">dbName</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">collection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;mycollection&#39;</span><span class="p">);</span>
+MongoClient.connect(url, function(err, client) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Connected to database');
+    const db = client.db(dbName);
+    const collection = db.collection('mycollection');
 
-<span class="w">    </span><span class="c1">// Create an index on the collection</span>
-<span class="w">    </span><span class="nx">collection</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Index created&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
+    // Create an index on the collection
+    collection.createIndex({ name: 1 }, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Index created');
+      }
+    });
 
-<span class="w">    </span><span class="c1">// Run a query to test the index</span>
-<span class="w">    </span><span class="nx">collection</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="w"> </span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+    // Run a query to test the index
+    collection.find({ name: 'John' }).toArray(function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    });
+  }
+});
+</code></pre>
 <p>This code connects to a MongoDB database, creates an index on a collection, and runs a query to test the index.</p>
 <h3 id="example-3-using-microsoft-sql-server-management-studio-to-backup-and-recover-a-database">Example 3: Using Microsoft SQL Server Management Studio to Backup and Recover a Database</h3>
 <p>Microsoft SQL Server Management Studio is a powerful database management tool that provides a range of features for backing up and recovering databases. Here is an example of how to use Microsoft SQL Server Management Studio to backup and recover a database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Backup the database</span>
-<span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydb</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;C:\backup\mydb.bak&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- Backup the database
+BACKUP DATABASE mydb TO DISK = 'C:\backup\mydb.bak';
 
-<span class="c1">-- Recover the database</span>
-<span class="n">RESTORE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydb</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;C:\backup\mydb.bak&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Recover the database
+RESTORE DATABASE mydb FROM DISK = 'C:\backup\mydb.bak';
+</code></pre>
 <p>This code backs up a database to a file and then recovers the database from the file.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>In this section, we will explore some common problems that can occur when using database management tools and provide solutions to these problems.</p>

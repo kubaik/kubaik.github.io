@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,19 +168,18 @@
 </ul>
 <h3 id="data-structures-and-algorithms">Data Structures and Algorithms</h3>
 <p>Data structures and algorithms are a fundamental part of any tech interview. Here's an example of how to implement a binary search algorithm in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">binary_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">:</span>
-        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">mid</span>
-        <span class="k">elif</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
-            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-</code></pre></div>
-
+<pre><code class="language-python">def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low &lt;= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+</code></pre>
 <p>This algorithm has a time complexity of O(log n), making it much faster than a linear search for large datasets.</p>
 <h2 id="practice-resources">Practice Resources</h2>
 <p>To prepare for a tech interview, it's essential to practice regularly. Here are some resources to help you get started:</p>
@@ -190,36 +190,34 @@
 </ul>
 <h3 id="whiteboarding-exercises">Whiteboarding Exercises</h3>
 <p>Whiteboarding exercises are a common part of tech interviews, where you'll be asked to solve a problem on a whiteboard or shared document. Here's an example of how to solve a common whiteboarding exercise:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">reverse_linked_list</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-    <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">current</span> <span class="o">=</span> <span class="n">head</span>
-    <span class="k">while</span> <span class="n">current</span><span class="p">:</span>
-        <span class="n">next_node</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">next</span>
-        <span class="n">current</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">current</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="n">next_node</span>
-    <span class="k">return</span> <span class="n">prev</span>
-</code></pre></div>
-
+<pre><code class="language-python">def reverse_linked_list(head):
+    prev = None
+    current = head
+    while current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    return prev
+</code></pre>
 <p>This algorithm has a time complexity of O(n), where n is the length of the linked list.</p>
 <h2 id="system-design">System Design</h2>
 <p>System design is a critical part of any tech interview, where you'll be asked to design a system to solve a real-world problem. Here's an example of how to design a system for a chat application:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ChatServer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+<pre><code class="language-python">class ChatServer:
+    def __init__(self):
+        self.users = {}
+        self.messages = []
 
-    <span class="k">def</span> <span class="nf">add_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    def add_user(self, user_id):
+        self.users[user_id] = []
 
-    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">user_id</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    def send_message(self, user_id, message):
+        self.messages.append((user_id, message))
+        self.users[user_id].append(message)
 
-    <span class="k">def</span> <span class="nf">get_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span>
-</code></pre></div>
-
+    def get_messages(self, user_id):
+        return self.users[user_id]
+</code></pre>
 <p>This system uses a simple dictionary to store user data and a list to store messages. It has a time complexity of O(1) for adding users and sending messages, and O(n) for getting messages, where n is the number of messages.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that people face during tech interviews, along with specific solutions:</p>

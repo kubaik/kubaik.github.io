@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,73 +162,67 @@
 </ul>
 <h3 id="practical-example-deploying-a-web-application-with-docker">Practical Example: Deploying a Web Application with Docker</h3>
 <p>Let's take a look at a practical example of deploying a web application using Docker. We will use a simple Node.js application as an example.</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Use an official Node.js image as a base</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># Use an official Node.js image as a base
+FROM node:14
 
-<span class="c"># Set the working directory to /app</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+# Set the working directory to /app
+WORKDIR /app
 
-<span class="c"># Copy the package.json file to the working directory</span>
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+# Copy the package.json file to the working directory
+COPY package*.json ./
 
-<span class="c"># Install the dependencies</span>
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+# Install the dependencies
+RUN npm install
 
-<span class="c"># Copy the application code to the working directory</span>
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+# Copy the application code to the working directory
+COPY . .
 
-<span class="c"># Expose the port that the application will use</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+# Expose the port that the application will use
+EXPOSE 3000
 
-<span class="c"># Run the command to start the application</span>
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.js&quot;</span><span class="w"> </span><span class="p">]</span>
-</code></pre></div>
-
+# Run the command to start the application
+CMD [ &quot;node&quot;, &quot;app.js&quot; ]
+</code></pre>
 <p>This Dockerfile creates a Docker image for our Node.js application, installing the dependencies and copying the application code. We can then build the image using the following command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-node-app<span class="w"> </span>.
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-node-app .
+</code></pre>
 <p>We can then run the container using the following command:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>my-node-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -p 3000:3000 my-node-app
+</code></pre>
 <p>This will start the container and map port 3000 on the host machine to port 3000 in the container.</p>
 <h2 id="container-orchestration">Container Orchestration</h2>
 <p>Container orchestration is the process of automating the deployment, scaling, and management of containers. There are several container orchestration tools available, including Kubernetes, Docker Swarm, and Apache Mesos.</p>
 <h3 id="practical-example-deploying-a-scalable-web-application-with-kubernetes">Practical Example: Deploying a Scalable Web Application with Kubernetes</h3>
 <p>Let's take a look at a practical example of deploying a scalable web application using Kubernetes. We will use a simple Python application as an example.</p>
-<div class="codehilite"><pre><span></span><code>apiVersion:<span class="w"> </span>apps/v1
-kind:<span class="w"> </span>Deployment
+<pre><code class="language-yml">apiVersion: apps/v1
+kind: Deployment
 metadata:
-<span class="w">  </span>name:<span class="w"> </span>python-app
+  name: python-app
 
-*Recommended:<span class="w"> </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="na">target=</span><span class="s">&quot;_blank&quot;</span><span class="w"> </span><span class="na">rel=</span><span class="s">&quot;nofollow sponsored&quot;</span><span class="nt">&gt;</span>Python<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>by<span class="w"> </span>Sebastian<span class="w"> </span>Raschka<span class="nt">&lt;/a&gt;</span>*
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
 spec:
-<span class="w">  </span>replicas:<span class="w"> </span>3
-<span class="w">  </span>selector:
-<span class="w">    </span>matchLabels:
-<span class="w">      </span>app:<span class="w"> </span>python-app
-<span class="w">  </span>template:
-<span class="w">    </span>metadata:
-<span class="w">      </span>labels:
-<span class="w">        </span>app:<span class="w"> </span>python-app
-<span class="w">    </span>spec:
-<span class="w">      </span>containers:
-<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>python-app
-<span class="w">        </span>image:<span class="w"> </span>python:3.9
-<span class="w">        </span>ports:
-<span class="w">        </span>-<span class="w"> </span>containerPort:<span class="w"> </span>80
-</code></pre></div>
-
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: python:3.9
+        ports:
+        - containerPort: 80
+</code></pre>
 <p>This YAML file defines a Kubernetes deployment for our Python application, specifying three replicas and exposing port 80. We can then apply the configuration using the following command:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f deployment.yaml
+</code></pre>
 <p>This will create the deployment and start the three replicas. We can then scale the deployment using the following command:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>python-app<span class="w"> </span>--replicas<span class="o">=</span><span class="m">5</span>
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl scale deployment python-app --replicas=5
+</code></pre>
 <p>This will increase the number of replicas to five, automatically scaling our application.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when using container technologies, including:</p>

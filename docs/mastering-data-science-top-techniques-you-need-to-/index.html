@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,20 +154,20 @@
 </ul>
 <h3 id="example-handling-missing-values-in-python">Example: Handling Missing Values in Python</h3>
 <p>Using the <code>pandas</code> library, you can handle missing values easily:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+import pandas as pd
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load dataset
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Check for missing values</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+# Check for missing values
+print(data.isnull().sum())
 
-<span class="c1"># Impute missing values with the mean</span>
-<span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+# Impute missing values with the mean
+data.fillna(data.mean(), inplace=True)
+</code></pre>
 <h3 id="use-case-customer-churn-prediction">Use Case: Customer Churn Prediction</h3>
 <p>In a customer churn prediction model, preprocessing might include removing duplicates, handling missing values, and one-hot encoding categorical variables like <code>gender</code> or <code>subscription type</code>. This ensures that the data fed into your machine learning model is clean and representative.</p>
 <h2 id="2-exploratory-data-analysis-eda">2. Exploratory Data Analysis (EDA)</h2>
@@ -177,18 +178,17 @@
 <li><strong>Tableau or Power BI:</strong> For interactive visualizations.</li>
 </ul>
 <h3 id="example-visualizing-data-with-seaborn">Example: Visualizing Data with Seaborn</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import seaborn as sns
+import matplotlib.pyplot as plt
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load dataset
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Create a box plot to visualize distribution of a continuous variable</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;subscription_type&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;monthly_fee&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Monthly Fee by Subscription Type&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Create a box plot to visualize distribution of a continuous variable
+sns.boxplot(x='subscription_type', y='monthly_fee', data=data)
+plt.title('Monthly Fee by Subscription Type')
+plt.show()
+</code></pre>
 <h3 id="key-metrics-to-analyze-in-eda">Key Metrics to Analyze in EDA:</h3>
 <ul>
 <li><strong>Descriptive Statistics:</strong> Mean, median, and standard deviation.</li>
@@ -205,13 +205,12 @@
 <li><strong>Binning:</strong> Convert continuous variables into categorical bins.</li>
 </ul>
 <h3 id="example-creating-polynomial-features">Example: Creating Polynomial Features</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<pre><code class="language-python">from sklearn.preprocessing import PolynomialFeatures
 
-<span class="c1"># Assume X is your feature set</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">X_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</code></pre></div>
-
+# Assume X is your feature set
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+</code></pre>
 <h3 id="use-case-predicting-house-prices">Use Case: Predicting House Prices</h3>
 <p>In a house price prediction model, you could create features like the age of the house (current year - year built) or the total number of rooms (bedrooms + bathrooms). This additional information can provide better insights for your model.</p>
 <h2 id="4-model-selection-and-evaluation">4. Model Selection and Evaluation</h2>
@@ -226,41 +225,40 @@
 <li><strong>For Classification Models:</strong> Accuracy, Precision, Recall, F1-Score.</li>
 </ul>
 <h3 id="example-evaluating-a-classification-model">Example: Evaluating a Classification Model</h3>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
 
-<span class="c1"># Splitting data</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+# Splitting data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-<span class="c1"># Train a Random Forest Classifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a Random Forest Classifier
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
 
-<span class="c1"># Predictions</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Predictions
+y_pred = model.predict(X_test)
 
-<span class="c1"># Evaluation</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluation
+print(classification_report(y_test, y_pred))
+</code></pre>
 <h3 id="use-case-fraud-detection-in-banking">Use Case: Fraud Detection in Banking</h3>
 <p>In a fraud detection system, you could use a Random Forest classifier to identify fraudulent transactions. Evaluating your model using precision and recall will help mitigate false positives, which are costly for banks.</p>
 <h2 id="5-hyperparameter-tuning">5. Hyperparameter Tuning</h2>
 <p>Hyperparameter tuning is essential for optimizing model performance. Techniques such as Grid Search and Random Search help identify the best parameters.</p>
 <h3 id="example-hyperparameter-tuning-with-gridsearchcv">Example: Hyperparameter Tuning with GridSearchCV</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">],</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]}</span>
-<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+param_grid = {'n_estimators': [50, 100, 150], 'max_depth': [None, 10, 20]}
+grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=5)
+grid_search.fit(X_train, y_train)
 
-<span class="c1"># Best parameters</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-</code></pre></div>
-
+# Best parameters
+print(grid_search.best_params_)
+</code></pre>
 <h3 id="use-case-improving-model-accuracy">Use Case: Improving Model Accuracy</h3>
 <p>In the context of a marketing campaign, tuning hyperparameters for a classification model can improve the prediction of customer responses, enabling more targeted campaigns that yield higher conversion rates.</p>
 <h2 id="6-deployment-and-monitoring">6. Deployment and Monitoring</h2>
@@ -272,15 +270,14 @@
 <li><strong>Monitoring:</strong> Use tools like Prometheus or Grafana to monitor model performance.</li>
 </ol>
 <h3 id="example-saving-a-model-with-joblib">Example: Saving a Model with Joblib</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">joblib</span>
+<pre><code class="language-python">import joblib
 
-<span class="c1"># Save model</span>
-<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;random_forest_model.pkl&#39;</span><span class="p">)</span>
+# Save model
+joblib.dump(model, 'random_forest_model.pkl')
 
-<span class="c1"># Load model</span>
-<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;random_forest_model.pkl&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Load model
+loaded_model = joblib.load('random_forest_model.pkl')
+</code></pre>
 <h3 id="use-case-real-time-predictions">Use Case: Real-Time Predictions</h3>
 <p>For an e-commerce platform, deploying a recommendation system using the trained model can provide real-time product recommendations to users, enhancing their shopping experience.</p>
 <h2 id="conclusion">Conclusion</h2>

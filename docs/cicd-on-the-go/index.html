@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -269,31 +270,30 @@
 <p>jobs:
      build:
        runs-on: ubuntu-latest</p>
-<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="n">steps</span><span class="p">:</span>
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
-<span class="w">     </span><span class="n">uses</span><span class="p">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
+<pre><code>   steps:
+   - name: Checkout code
+     uses: actions/checkout@v2
 
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Setup</span><span class="w"> </span><span class="n">Node</span><span class="o">.</span><span class="n">js</span>
-<span class="w">     </span><span class="n">uses</span><span class="p">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">node</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">     </span><span class="n">with</span><span class="p">:</span>
-<span class="w">       </span><span class="n">node</span><span class="o">-</span><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;14&#39;</span>
+   - name: Setup Node.js
+     uses: actions/setup-node@v2
+     with:
+       node-version: '14'
 
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Install</span><span class="w"> </span><span class="n">Dependencies</span>
-<span class="w">     </span><span class="n">run</span><span class="p">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
+   - name: Install Dependencies
+     run: npm install
 
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">Tests</span>
-<span class="w">     </span><span class="n">run</span><span class="p">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">test</span>
+   - name: Run Tests
+     run: npm test
 
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Build</span><span class="w"> </span><span class="n">Android</span><span class="w"> </span><span class="n">APK</span>
-<span class="w">     </span><span class="n">run</span><span class="p">:</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="n">android</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">./</span><span class="n">gradlew</span><span class="w"> </span><span class="n">assembleRelease</span>
+   - name: Build Android APK
+     run: cd android &amp;&amp; ./gradlew assembleRelease
 
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Upload</span><span class="w"> </span><span class="n">APK</span>
-<span class="w">     </span><span class="n">uses</span><span class="p">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">upload</span><span class="o">-</span><span class="n">artifact</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">     </span><span class="n">with</span><span class="p">:</span>
-<span class="w">       </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">android</span><span class="o">-</span><span class="n">apk</span>
-<span class="w">       </span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="n">android</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">outputs</span><span class="o">/</span><span class="n">apk</span><span class="o">/</span><span class="n">release</span><span class="o">/</span><span class="n">app</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">apk</span>
-</code></pre></div>
-
+   - name: Upload APK
+     uses: actions/upload-artifact@v2
+     with:
+       name: android-apk
+       path: android/app/build/outputs/apk/release/app-release.apk
+</code></pre>
 <p>```</p>
 <ol>
 <li><strong>Triggering the Workflow</strong>:</li>
@@ -303,24 +303,22 @@
 <h4 id="problem-long-build-times">Problem: Long Build Times</h4>
 <p><strong>Solution</strong>: 
 - Optimize your build process by caching dependencies. For instance, GitHub Actions allows you to cache dependencies like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cache Node.js modules</span>
-<span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/cache@v2</span>
-<span class="w">  </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.npm</span>
-<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span>
-<span class="w">    </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">      </span><span class="no">${{ runner.os }}-node-</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">- name: Cache Node.js modules
+  uses: actions/cache@v2
+  with:
+    path: ~/.npm
+    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+    restore-keys: |
+      ${{ runner.os }}-node-
+</code></pre>
 <h4 id="problem-failed-tests-in-cicd">Problem: Failed Tests in CI/CD</h4>
 <p><strong>Solution</strong>: 
 - Ensure test scripts are robust and run locally before pushing changes. Use tools like Jest or mocha for unit testing and set up proper error handling to catch issues early.
 - Example of a simple Jest test:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;adds 1 + 2 to equal 3&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">expect</span><span class="p">(</span><span class="mf">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">test('adds 1 + 2 to equal 3', () =&gt; {
+  expect(1 + 2).toBe(3);
+});
+</code></pre>
 <h4 id="problem-deployment-issues">Problem: Deployment Issues</h4>
 <p><strong>Solution</strong>: 
 - Use environment variables to manage different configurations for development, staging, and production. Tools like Bitrise and GitHub Actions both support environment variables that can be securely stored and accessed during the CI/CD process.</p>

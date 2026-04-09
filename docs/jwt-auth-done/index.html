@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,98 +164,96 @@
 <h2 id="implementing-jwt-authentication-with-nodejs-and-express">Implementing JWT Authentication with Node.js and Express</h2>
 <p>To demonstrate the implementation of JWT authentication, let's consider an example using Node.js and Express. We will use the <code>jsonwebtoken</code> library to generate and verify JWT tokens.</p>
 <h3 id="example-code-generating-and-verifying-jwt-tokens">Example Code: Generating and Verifying JWT Tokens</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-secret-key&#39;</span><span class="p">;</span>
+const app = express();
+const secretKey = 'my-secret-key';
 
-<span class="c1">// Generate JWT token</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Verify user credentials</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">username</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">({</span><span class="w"> </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid credentials&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+// Generate JWT token
+app.post('/login', (req, res) =&gt; {
+  const username = req.body.username;
+  const password = req.body.password;
+  // Verify user credentials
+  if (username === 'admin' &amp;&amp; password === 'password') {
+    const token = jwt.sign({ username: 'admin', role: 'admin' }, secretKey, { expiresIn: '1h' });
+    res.json({ token });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+});
 
-<span class="c1">// Verify JWT token</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/protected&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;No token provided&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid token&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">decoded</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">!`</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Verify JWT token
+app.get('/protected', (req, res) =&gt; {
+  const token = req.header('Authorization');
+  if (!token) {
+    res.status(401).json({ error: 'No token provided' });
+  } else {
+    jwt.verify(token, secretKey, (err, decoded) =&gt; {
+      if (err) {
+        res.status(401).json({ error: 'Invalid token' });
+      } else {
+        res.json({ message: `Hello, ${decoded.username}!` });
+      }
+    });
+  }
+});
+</code></pre>
 <p>In this example, we generate a JWT token when the user logs in and verify the token on subsequent requests to the <code>/protected</code> endpoint.</p>
 <h2 id="using-jwt-with-oauth-20-and-openid-connect">Using JWT with OAuth 2.0 and OpenID Connect</h2>
 <p>JWT is often used in conjunction with OAuth 2.0 and OpenID Connect to provide a standardized authentication and authorization framework. OAuth 2.0 provides a mechanism for clients to access protected resources on behalf of the user, while OpenID Connect provides a simple identity layer on top of OAuth 2.0.</p>
 <h3 id="example-code-using-jwt-with-oauth-20-and-openid-connect">Example Code: Using JWT with OAuth 2.0 and OpenID Connect</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-client-id&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-client-secret&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">authorizationServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://example.com/authorize&#39;</span><span class="p">;</span>
+const app = express();
+const clientId = 'my-client-id';
+const clientSecret = 'my-client-secret';
+const authorizationServer = 'https://example.com/authorize';
 
-<span class="c1">// Redirect user to authorization server</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">redirectUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;openid profile email&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-state&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-nonce&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">authorizationServer</span><span class="si">}</span><span class="sb">?client_id=</span><span class="si">${</span><span class="nx">clientId</span><span class="si">}</span><span class="sb">&amp;redirect_uri=</span><span class="si">${</span><span class="nx">redirectUri</span><span class="si">}</span><span class="sb">&amp;scope=</span><span class="si">${</span><span class="nx">scope</span><span class="si">}</span><span class="sb">&amp;state=</span><span class="si">${</span><span class="nx">state</span><span class="si">}</span><span class="sb">&amp;nonce=</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
-<span class="p">});</span>
+// Redirect user to authorization server
+app.get('/login', (req, res) =&gt; {
+  const redirectUri = 'http://localhost:3000/callback';
+  const scope = 'openid profile email';
+  const state = 'my-state';
+  const nonce = 'my-nonce';
+  const url = `${authorizationServer}?client_id=${clientId}&amp;redirect_uri=${redirectUri}&amp;scope=${scope}&amp;state=${state}&amp;nonce=${nonce}`;
+  res.redirect(url);
+});
 
-<span class="c1">// Handle authorization code redirect</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/callback&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokenEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://example.com/token&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">grant_type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;authorization_code&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">code</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">redirect_uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">client_id</span><span class="o">:</span><span class="w"> </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">client_secret</span><span class="o">:</span><span class="w"> </span><span class="nx">clientSecret</span><span class="p">,</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="w">  </span><span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">tokenEndpoint</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">access_token</span><span class="p">;</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">idToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">id_token</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Verify JWT token</span>
-<span class="w">      </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">idToken</span><span class="p">,</span><span class="w"> </span><span class="nx">clientSecret</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid token&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">decoded</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">!`</span><span class="w"> </span><span class="p">});</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid code&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Handle authorization code redirect
+app.get('/callback', (req, res) =&gt; {
+  const code = req.query.code;
+  const tokenEndpoint = 'https://example.com/token';
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+  const data = {
+    grant_type: 'authorization_code',
+    code,
+    redirect_uri: 'http://localhost:3000/callback',
+    client_id: clientId,
+    client_secret: clientSecret,
+  };
+  axios.post(tokenEndpoint, data, { headers })
+    .then((response) =&gt; {
+      const token = response.data.access_token;
+      const idToken = response.data.id_token;
+      // Verify JWT token
+      jwt.verify(idToken, clientSecret, (err, decoded) =&gt; {
+        if (err) {
+          res.status(401).json({ error: 'Invalid token' });
+        } else {
+          res.json({ message: `Hello, ${decoded.username}!` });
+        }
+      });
+    })
+    .catch((error) =&gt; {
+      res.status(401).json({ error: 'Invalid code' });
+    });
+});
+</code></pre>
 <p>In this example, we use the <code>axios</code> library to send a request to the authorization server to obtain an access token and ID token. We then verify the ID token using the <code>jsonwebtoken</code> library.</p>
 <h2 id="real-world-use-cases-and-implementation-details">Real-World Use Cases and Implementation Details</h2>
 <p>Here are some real-world use cases for JWT authentication, along with implementation details:</p>

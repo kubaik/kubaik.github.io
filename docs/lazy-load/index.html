@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,9 +168,8 @@
 <h2 id="implementation-of-lazy-loading">Implementation of Lazy Loading</h2>
 <h3 id="example-1-lazy-loading-images">Example 1: Lazy Loading Images</h3>
 <p>One of the most common implementations of lazy loading is with images. Below is a simple example using the native HTML <code>loading</code> attribute.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;placeholder.jpg&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;placeholder.jpg&quot; data-src=&quot;image.jpg&quot; alt=&quot;Description&quot; loading=&quot;lazy&quot;&gt;
+</code></pre>
 <p>In this example, <code>placeholder.jpg</code> is a low-resolution image that is displayed initially while <code>image.jpg</code> is loaded only when it enters the viewport.</p>
 <h4 id="how-it-works">How It Works</h4>
 <ul>
@@ -182,32 +182,30 @@
 <ol>
 <li><strong>HTML Structure</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img class=&quot;lazy&quot; data-src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
+</code></pre>
 <ol>
 <li><strong>JavaScript Code</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">lazyImages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">document.addEventListener(&quot;DOMContentLoaded&quot;, function () {
+    const lazyImages = document.querySelectorAll('.lazy');
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">imageObserver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">,</span><span class="w"> </span><span class="nx">observer</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">entry</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">                </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span><span class="w"> </span><span class="c1">// Load the image</span>
-<span class="w">                </span><span class="nx">img</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">);</span>
-<span class="w">                </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span><span class="w"> </span><span class="c1">// Stop observing the loaded image</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
+    const imageObserver = new IntersectionObserver((entries, observer) =&gt; {
+        entries.forEach(entry =&gt; {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src; // Load the image
+                img.classList.remove('lazy');
+                observer.unobserve(img); // Stop observing the loaded image
+            }
+        });
+    });
 
-<span class="w">    </span><span class="nx">lazyImages</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">image</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">imageObserver</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+    lazyImages.forEach(image =&gt; {
+        imageObserver.observe(image);
+    });
+});
+</code></pre>
 <h4 id="how-it-works_1">How It Works</h4>
 <ul>
 <li><strong>Intersection Observer</strong>: This API allows you to observe when an image enters the viewport. When it does, the <code>src</code> attribute is set to the value of <code>data-src</code>, loading the image.</li>
@@ -219,24 +217,23 @@
 <ol>
 <li><strong>Dynamic Import</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Suspense</span><span class="p">,</span><span class="w"> </span><span class="nx">lazy</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { Suspense, lazy } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lazy</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./LazyComponent&#39;</span><span class="p">));</span>
+const LazyComponent = lazy(() =&gt; import('./LazyComponent'));
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Application</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">Suspense</span><span class="w"> </span><span class="nx">fallback</span><span class="o">=</span><span class="p">{</span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;}&gt;</span>
-<span class="w">                </span><span class="o">&lt;</span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="err">/Suspense&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">}</span>
+function App() {
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;My Application&lt;/h1&gt;
+            &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+                &lt;LazyComponent /&gt;
+            &lt;/Suspense&gt;
+        &lt;/div&gt;
+    );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
-</code></pre></div>
-
+export default App;
+</code></pre>
 <h4 id="how-it-works_2">How It Works</h4>
 <ul>
 <li><strong>Dynamic Import</strong>: <code>React.lazy</code> allows you to define a component that is loaded dynamically. This means the component code is split into separate chunks and loaded only when required.</li>
@@ -249,51 +246,45 @@
 <li><strong>Description</strong>: Lazysizes is a fast, SEO-friendly lazy loader that supports images, iframes, scripts, and more.</li>
 <li><strong>Installation</strong>: You can include it via CDN:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.0/lazysizes.min.js&quot;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.0/lazysizes.min.js&quot; async&gt;&lt;/script&gt;
+</code></pre>
 <ul>
 <li><strong>Usage</strong>:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazyload&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img data-src=&quot;image.jpg&quot; class=&quot;lazyload&quot; alt=&quot;Description&quot;&gt;
+</code></pre>
 <h3 id="2-blazyjs">2. <strong>Blazy.js</strong></h3>
 <ul>
 <li><strong>Description</strong>: A lightweight lazy loading library that is easy to implement and provides a simple API.</li>
 <li><strong>Installation</strong>: Include via npm or a CDN:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>blazy
-</code></pre></div>
-
+<pre><code class="language-bash">npm install blazy
+</code></pre>
 <ul>
 <li><strong>Usage</strong>:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">bLazy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Blazy</span><span class="p">();</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">img</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;b-lazy&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script&gt;
+    var bLazy = new Blazy();
+&lt;/script&gt;
+&lt;img data-src=&quot;image.jpg&quot; class=&quot;b-lazy&quot; alt=&quot;Description&quot;&gt;
+</code></pre>
 <h3 id="3-react-loadable">3. <strong>React Loadable</strong></h3>
 <ul>
 <li><strong>Description</strong>: A higher-order component for loading components dynamically in React applications.</li>
 <li><strong>Installation</strong>: Use npm to add it to your project:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>react-loadable
-</code></pre></div>
-
+<pre><code class="language-bash">npm install react-loadable
+</code></pre>
 <ul>
 <li><strong>Usage</strong>:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Loadable</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-loadable&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import Loadable from 'react-loadable';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">LoadableComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Loadable</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">loader</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./MyComponent&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="nx">loading</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;,</span>
-<span class="p">});</span>
-</code></pre></div>
-
+const LoadableComponent = Loadable({
+    loader: () =&gt; import('./MyComponent'),
+    loading: () =&gt; &lt;div&gt;Loading...&lt;/div&gt;,
+});
+</code></pre>
 <h2 id="performance-metrics-and-benchmarks">Performance Metrics and Benchmarks</h2>
 <h3 id="real-world-example-e-commerce-site">Real-World Example: E-commerce Site</h3>
 <p>Let’s consider a hypothetical e-commerce website that implemented lazy loading for images and reduced the initial load time significantly.</p>

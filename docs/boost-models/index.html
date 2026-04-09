@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,32 +172,31 @@
 <li><strong>Embedded methods</strong>: These methods select features as part of the model training process.</li>
 </ul>
 <p>Here is an example of using the recursive feature elimination (RFE) algorithm to select features:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">RFE</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a logistic regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+# Create a logistic regression model
+model = LogisticRegression()
 
-<span class="c1"># Create an RFE object</span>
-<span class="n">rfe</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+# Create an RFE object
+rfe = RFE(model, 2)
 
-<span class="c1"># Fit the RFE object to the training data</span>
-<span class="n">rfe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Fit the RFE object to the training data
+rfe.fit(X_train, y_train)
 
-<span class="c1"># Print the selected features</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">rfe</span><span class="o">.</span><span class="n">support_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the selected features
+print(rfe.support_)
+</code></pre>
 <p>In this example, we use the RFE algorithm to select the top 2 features from the iris dataset. The <code>support_</code> attribute of the RFE object returns a boolean array indicating whether each feature was selected.</p>
 <h2 id="feature-transformation-techniques">Feature Transformation Techniques</h2>
 <p>Feature transformation is the process of transforming the existing features into new features that are more suitable for modeling. There are several feature transformation techniques, including:</p>
@@ -206,29 +206,28 @@
 <li><strong>Normalization</strong>: This involves normalizing the features to have similar distributions.</li>
 </ul>
 <p>Here is an example of using the standard scaler to scale the features:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a standard scaler object</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+# Create a standard scaler object
+scaler = StandardScaler()
 
-<span class="c1"># Fit the scaler to the training data and transform both the training and testing data</span>
-<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Fit the scaler to the training data and transform both the training and testing data
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-<span class="c1"># Print the scaled features</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the scaled features
+print(X_train_scaled)
+</code></pre>
 <p>In this example, we use the standard scaler to scale the features of the iris dataset. The <code>fit_transform</code> method fits the scaler to the training data and transforms the data, while the <code>transform</code> method transforms the testing data using the same scaler.</p>
 <h2 id="feature-creation-techniques">Feature Creation Techniques</h2>
 <p>Feature creation is the process of creating new features from the existing features. There are several feature creation techniques, including:</p>
@@ -238,29 +237,28 @@
 <li><strong>Derived features</strong>: This involves creating new features by applying mathematical functions to the existing features.</li>
 </ul>
 <p>Here is an example of using the polynomial features to create new features:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.preprocessing import PolynomialFeatures
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a polynomial features object</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+# Create a polynomial features object
+poly = PolynomialFeatures(degree=2)
 
-<span class="c1"># Fit the polynomial features to the training data and transform both the training and testing data</span>
-<span class="n">X_train_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Fit the polynomial features to the training data and transform both the training and testing data
+X_train_poly = poly.fit_transform(X_train)
+X_test_poly = poly.transform(X_test)
 
-<span class="c1"># Print the polynomial features</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">X_train_poly</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the polynomial features
+print(X_train_poly)
+</code></pre>
 <p>In this example, we use the polynomial features to create new features by raising the existing features to powers up to degree 2.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur during feature engineering include:</p>

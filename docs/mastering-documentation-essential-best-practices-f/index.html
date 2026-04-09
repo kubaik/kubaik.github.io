@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,38 +169,37 @@
 </ul>
 <h4 id="example-api-documentation-for-developers">Example: API Documentation for Developers</h4>
 <p>If you're writing API documentation for a complex software library, assume the reader has a basic understanding of programming but may not be familiar with your specific library. </p>
-<div class="codehilite"><pre><span></span><code><span class="gu">## API Overview</span>
+<pre><code class="language-markdown">## API Overview
 
 The XYZ Library provides a simple interface for interacting with the XYZ service.
 
-<span class="gu">### Authentication</span>
+### Authentication
 
 To authenticate, include your API key in the headers:
 
 ```javascript
-fetch(&#39;https://api.xyz.com/data&#39;, {
-  method: &#39;GET&#39;,
+fetch('https://api.xyz.com/data', {
+  method: 'GET',
   headers: {
-    &#39;Authorization&#39;: &#39;Bearer YOUR_API_KEY&#39;
+    'Authorization': 'Bearer YOUR_API_KEY'
   }
 });
-</code></pre></div>
+</code></pre>
+<pre><code>
+In this snippet, we assume the reader knows what `fetch` and `headers` are, but we still provide enough context to ensure clarity.
 
-<div class="codehilite"><pre><span></span><code><span class="k">In</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">snippet</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">assume</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="n">knows</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n n-Quoted">`fetch`</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n n-Quoted">`headers`</span><span class="w"> </span><span class="n">are</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">enough</span><span class="w"> </span><span class="k">context</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">ensure</span><span class="w"> </span><span class="n">clarity</span><span class="p">.</span>
+### 2. Use Clear and Concise Language
 
-<span class="c1">### 2. Use Clear and Concise Language</span>
+Avoid jargon and overly technical terms unless necessary. If you must use complex terms, provide a glossary.
 
-<span class="n">Avoid</span><span class="w"> </span><span class="n">jargon</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">overly</span><span class="w"> </span><span class="n">technical</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="n">necessary</span><span class="p">.</span><span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">complex</span><span class="w"> </span><span class="n">terms</span><span class="p">,</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">glossary</span><span class="p">.</span>
+#### Example: Glossary Section
 
-<span class="c1">#### Example: Glossary Section</span>
+```markdown
+## Glossary
 
-<span class="n n-Quoted">`</span><span class="n n-Quoted n-Quoted-Escape">``</span><span class="n n-Quoted">markdown</span>
-<span class="n n-Quoted">## Glossary</span>
-
-<span class="n n-Quoted">- **API**: Application Programming Interface, a set of rules that allows different software entities to communicate.</span>
-<span class="n n-Quoted">- **SDK**: Software Development Kit, a collection of tools that developers use to build applications.</span>
-</code></pre></div>
-
+- **API**: Application Programming Interface, a set of rules that allows different software entities to communicate.
+- **SDK**: Software Development Kit, a collection of tools that developers use to build applications.
+</code></pre>
 <h3 id="3-structure-your-documentation">3. Structure Your Documentation</h3>
 <p>Use a clear structure that enables easy navigation. A common approach is to use a hierarchical structure:</p>
 <ol>
@@ -213,78 +213,73 @@ fetch(&#39;https://api.xyz.com/data&#39;, {
 <li><strong>Glossary</strong></li>
 </ol>
 <h4 id="example-structured-documentation">Example: Structured Documentation</h4>
-<div class="codehilite"><pre><span></span><code><span class="gh"># XYZ Library Documentation</span>
+<pre><code class="language-markdown"># XYZ Library Documentation
 
-<span class="gu">## Introduction</span>
+## Introduction
 An overview of the XYZ Library.
 
-<span class="gu">## Installation</span>
+## Installation
 Follow these steps to install the library.
 
-<span class="gu">## Getting Started</span>
+## Getting Started
 Quick examples to get you up and running.
 
-<span class="gu">## Usage</span>
+## Usage
 Detailed usage instructions.
 
-<span class="gu">## Examples</span>
+## Examples
 Real-world use cases.
 
-<span class="gu">## Troubleshooting</span>
+## Troubleshooting
 Common issues and their solutions.
 
-<span class="gu">## FAQ</span>
+## FAQ
 Frequently asked questions.
 
-<span class="gu">## Glossary</span>
+## Glossary
 Definitions of key terms.
-</code></pre></div>
-
+</code></pre>
 <h3 id="4-include-practical-code-examples">4. Include Practical Code Examples</h3>
 <p>Real, working code examples enhance understanding and reduce the learning curve. Ensure that code examples are executable and relevant.</p>
 <h4 id="example-fetching-data-from-an-api">Example: Fetching Data from an API</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Fetching user data from the XYZ API</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">fetchUserData</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://api.xyz.com/users/</span><span class="si">${</span><span class="nx">userId</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="s1">&#39;Authorization&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Bearer YOUR_API_KEY&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
+<pre><code class="language-javascript">// Fetching user data from the XYZ API
+async function fetchUserData(userId) {
+  const response = await fetch(`https://api.xyz.com/users/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer YOUR_API_KEY'
+    }
+  });
 
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Network response was not ok&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">}</span>
+  const data = await response.json();
+  console.log(data);
+}
 
-<span class="c1">// Usage</span>
-<span class="nx">fetchUserData</span><span class="p">(</span><span class="mf">123</span><span class="p">);</span>
-</code></pre></div>
-
+// Usage
+fetchUserData(123);
+</code></pre>
 <h3 id="5-visual-aids-and-diagrams">5. Visual Aids and Diagrams</h3>
 <p>Visual aids can simplify complex concepts. Tools like Lucidchart or Draw.io can help create flowcharts or diagrams.</p>
 <h4 id="example-sequence-diagram-for-api-calls">Example: Sequence Diagram for API Calls</h4>
-<div class="codehilite"><pre><span></span><code>![<span class="nt">Sequence Diagram</span>](<span class="na">https://www.example.com/sequence-diagram.png</span>)
-</code></pre></div>
-
+<pre><code class="language-markdown">![Sequence Diagram](https://www.example.com/sequence-diagram.png)
+</code></pre>
 <h3 id="6-versioning-your-documentation">6. Versioning Your Documentation</h3>
 <p>Documentation should evolve with your software. Use versioning to keep track of changes. Use Git tags for versioning and ensure that users can access documentation for previous versions.</p>
 <h4 id="example-git-tagging">Example: Git Tagging</h4>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v1.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial release&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v1.0
-</code></pre></div>
-
+<pre><code class="language-bash">git tag -a v1.0 -m &quot;Initial release&quot;
+git push origin v1.0
+</code></pre>
 <h3 id="7-user-feedback-loops">7. User Feedback Loops</h3>
 <p>Incorporate user feedback to improve documentation continuously. Tools like ReadMe or GitHub Issues can be instrumental in gathering user insights.</p>
 <h4 id="example-using-github-issues-for-feedback">Example: Using GitHub Issues for Feedback</h4>
-<div class="codehilite"><pre><span></span><code><span class="gu">## Feedback</span>
+<pre><code class="language-markdown">## Feedback
 
-If you have suggestions or issues with this documentation, please submit an issue on our [<span class="nt">GitHub repository</span>](<span class="na">https://github.com/xyz/library/issues</span>).
-</code></pre></div>
-
+If you have suggestions or issues with this documentation, please submit an issue on our [GitHub repository](https://github.com/xyz/library/issues).
+</code></pre>
 <h3 id="8-regular-updates">8. Regular Updates</h3>
 <p>Set a schedule for regular updates to keep the documentation relevant. Use automated tools to check for outdated links and references.</p>
 <h4 id="example-automated-documentation-updates">Example: Automated Documentation Updates</h4>
@@ -301,10 +296,9 @@ If you have suggestions or issues with this documentation, please submit an issu
 <p>Treat documentation like code. Use tools to validate that examples work as intended.</p>
 <h4 id="example-using-markdownlint">Example: Using MarkdownLint</h4>
 <p>To ensure Markdown files are well-formed, you can use MarkdownLint:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>markdownlint-cli
-markdownlint<span class="w"> </span>**/*.md
-</code></pre></div>
-
+<pre><code class="language-bash">npm install -g markdownlint-cli
+markdownlint **/*.md
+</code></pre>
 <h2 id="tools-for-effective-documentation">Tools for Effective Documentation</h2>
 <ol>
 <li><strong>ReadTheDocs</strong>: A popular hosting service for documentation, allowing you to build, version, and host your documentation easily. Pricing starts at $0 for public projects.</li>

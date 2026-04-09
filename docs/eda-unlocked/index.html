@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,56 +160,53 @@
 <h2 id="implementing-eda-with-apache-kafka">Implementing EDA with Apache Kafka</h2>
 <p>Apache Kafka is a popular messaging platform that can be used to implement EDA. Kafka provides a scalable and fault-tolerant event bus, allowing components to produce and consume events in a decentralized manner.</p>
 <p>Here's an example of producing an event using Kafka's Python client:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python">from kafka import KafkaProducer
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Define the event data</span>
-<span class="n">event_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="mi">456</span><span class="p">,</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">}</span>
+# Define the event data
+event_data = {'order_id': 123, 'customer_id': 456, 'total': 100.0}
 
-<span class="c1"># Produce the event</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">event_data</span><span class="p">)</span>
-</code></pre></div>
-
+# Produce the event
+producer.send('orders_topic', value=event_data)
+</code></pre>
 <p>In this example, we create a Kafka producer and define the event data as a Python dictionary. We then produce the event by sending it to the <code>orders_topic</code> topic.</p>
 <h3 id="consuming-events-with-kafka">Consuming Events with Kafka</h3>
 <p>To consume events, we can use Kafka's consumer API. Here's an example of consuming events using the Python client:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+<pre><code class="language-python">from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders_topic&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders_topic', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume events</span>
-<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</code></pre></div>
-
+# Consume events
+for event in consumer:
+    print(event.value)
+</code></pre>
 <p>In this example, we create a Kafka consumer and subscribe to the <code>orders_topic</code> topic. We then consume events by iterating over the consumer's event stream.</p>
 <h2 id="using-aws-lambda-for-event-processing">Using AWS Lambda for Event Processing</h2>
 <p>AWS Lambda is a serverless compute service that can be used to process events in an EDA system. Lambda provides a scalable and cost-effective way to handle events, with pricing starting at $0.000004 per invocation.</p>
 <p>Here's an example of processing events with AWS Lambda using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Define the event processing function</span>
-<span class="k">def</span> <span class="nf">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Process the event data</span>
-    <span class="n">order_id</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span>
-    <span class="n">customer_id</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>
+# Define the event processing function
+def process_event(event):
+    # Process the event data
+    order_id = event['order_id']
+    customer_id = event['customer_id']
+    total = event['total']
 
-    <span class="c1"># Update the database</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;dynamodb&#39;</span><span class="p">)</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span>
-    <span class="n">table</span><span class="o">.</span><span class="n">update_item</span><span class="p">(</span><span class="n">Key</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">},</span> <span class="n">UpdateExpression</span><span class="o">=</span><span class="s1">&#39;set #total = :total&#39;</span><span class="p">,</span>
-                        <span class="n">ExpressionAttributeNames</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;#total&#39;</span><span class="p">:</span> <span class="s1">&#39;total&#39;</span><span class="p">},</span> <span class="n">ExpressionAttributeValues</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;:total&#39;</span><span class="p">:</span> <span class="n">total</span><span class="p">})</span>
+    # Update the database
+    db = boto3.resource('dynamodb')
+    table = db.Table('orders')
+    table.update_item(Key={'order_id': order_id}, UpdateExpression='set #total = :total',
+                        ExpressionAttributeNames={'#total': 'total'}, ExpressionAttributeValues={':total': total})
 
-<span class="c1"># Define the Lambda handler</span>
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="n">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">}</span>
-</code></pre></div>
-
+# Define the Lambda handler
+def lambda_handler(event, context):
+    process_event(event)
+    return {'statusCode': 200}
+</code></pre>
 <p>In this example, we define an event processing function that updates a DynamoDB table with the event data. We then define a Lambda handler that calls the event processing function and returns a success response.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>To demonstrate the performance of AWS Lambda, let's consider a benchmarking test that processes 100,000 events per second. According to AWS, the average latency for a Lambda function is around 50-100ms. With a cost of $0.000004 per invocation, the total cost for processing 100,000 events per second would be around $4.00 per second.</p>

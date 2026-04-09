@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,65 +163,61 @@
 3. <strong>Use a continuous integration and continuous deployment (CI/CD) pipeline</strong>: Automate the build, test, and deployment process to ensure that the application is delivered quickly and reliably.</p>
 <h3 id="practical-example-implementing-a-modular-architecture">Practical Example: Implementing a Modular Architecture</h3>
 <p>Let's consider an example of implementing a modular architecture in an Angular enterprise application. Suppose we are building an e-commerce application that requires separate modules for product catalog, shopping cart, and payment processing. We can create separate Angular modules for each of these features and use the <code>@NgModule</code> decorator to define the modules:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// product-catalog.module.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ProductCatalogComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./product-catalog.component&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// product-catalog.module.ts
+import { NgModule } from '@angular/core';
+import { ProductCatalogComponent } from './product-catalog.component';
 
-<span class="kd">@NgModule</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">ProductCatalogComponent</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">CommonModule</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">exports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">ProductCatalogComponent</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ProductCatalogModule</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
+@NgModule({
+  declarations: [ProductCatalogComponent],
+  imports: [CommonModule],
+  exports: [ProductCatalogComponent]
+})
+export class ProductCatalogModule {}
+</code></pre>
+<pre><code class="language-typescript">// shopping-cart.module.ts
+import { NgModule } from '@angular/core';
+import { ShoppingCartComponent } from './shopping-cart.component';
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// shopping-cart.module.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ShoppingCartComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./shopping-cart.component&#39;</span><span class="p">;</span>
+@NgModule({
+  declarations: [ShoppingCartComponent],
+  imports: [CommonModule],
+  exports: [ShoppingCartComponent]
+})
+export class ShoppingCartModule {}
+</code></pre>
+<pre><code class="language-typescript">// payment-processing.module.ts
+import { NgModule } from '@angular/core';
+import { PaymentProcessingComponent } from './payment-processing.component';
 
-<span class="kd">@NgModule</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">ShoppingCartComponent</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">CommonModule</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">exports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">ShoppingCartComponent</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ShoppingCartModule</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1">// payment-processing.module.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PaymentProcessingComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./payment-processing.component&#39;</span><span class="p">;</span>
-
-<span class="kd">@NgModule</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">PaymentProcessingComponent</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">CommonModule</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">exports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">PaymentProcessingComponent</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PaymentProcessingModule</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
-
+@NgModule({
+  declarations: [PaymentProcessingComponent],
+  imports: [CommonModule],
+  exports: [PaymentProcessingComponent]
+})
+export class PaymentProcessingModule {}
+</code></pre>
 <p>We can then use the <code>@NgModule</code> decorator to import and export these modules in the main application module:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// app.module.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BrowserModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/platform-browser&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./app.component&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ProductCatalogModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./product-catalog/product-catalog.module&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ShoppingCartModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./shopping-cart/shopping-cart.module&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PaymentProcessingModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./payment-processing/payment-processing.module&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { ProductCatalogModule } from './product-catalog/product-catalog.module';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { PaymentProcessingModule } from './payment-processing/payment-processing.module';
 
-<span class="kd">@NgModule</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">],</span>
-<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="nx">BrowserModule</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">ProductCatalogModule</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">ShoppingCartModule</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">PaymentProcessingModule</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">  </span><span class="nx">bootstrap</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AppModule</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
-
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    ProductCatalogModule,
+    ShoppingCartModule,
+    PaymentProcessingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+</code></pre>
 <h2 id="deploying-angular-enterprise-applications">Deploying Angular Enterprise Applications</h2>
 <p>Deploying Angular enterprise applications requires careful consideration of the deployment strategy, infrastructure, and tools. Here are some popular deployment options:
 * <strong>AWS</strong>: Amazon Web Services (AWS) provides a comprehensive set of cloud services, including EC2, S3, and CloudFront, that can be used to deploy and manage Angular enterprise applications. According to a report by AWS, the cost of deploying an Angular application on AWS can be as low as $0.0055 per hour.
@@ -228,14 +225,12 @@
 * <strong>Microsoft Azure</strong>: Microsoft Azure provides a set of cloud services, including Virtual Machines, Blob Storage, and Content Delivery Network (CDN), that can be used to deploy and manage Angular enterprise applications. According to a report by Microsoft, the cost of deploying an Angular application on Azure can be as low as $0.013 per hour.</p>
 <h3 id="practical-example-deploying-an-angular-application-on-aws">Practical Example: Deploying an Angular Application on AWS</h3>
 <p>Let's consider an example of deploying an Angular application on AWS. Suppose we have an Angular application that we want to deploy on AWS using the AWS CLI. We can use the following command to create an S3 bucket and upload the application files:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://my-bucket
-aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span>dist/my-app<span class="w"> </span>s3://my-bucket<span class="w"> </span>--recursive
-</code></pre></div>
-
+<pre><code class="language-bash">aws s3 mb s3://my-bucket
+aws s3 cp dist/my-app s3://my-bucket --recursive
+</code></pre>
 <p>We can then use the following command to create a CloudFront distribution and configure it to serve the application files from the S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>cloudfront<span class="w"> </span>create-distribution<span class="w"> </span>--origin-domain-name<span class="w"> </span>my-bucket.s3.amazonaws.com<span class="w"> </span>--default-root-object<span class="w"> </span>index.html
-</code></pre></div>
-
+<pre><code class="language-bash">aws cloudfront create-distribution --origin-domain-name my-bucket.s3.amazonaws.com --default-root-object index.html
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when building and deploying Angular enterprise applications, along with specific solutions:
 * <strong>Performance issues</strong>: Use the Angular DevTools to identify performance bottlenecks and optimize the application code accordingly. For example, a study by Google found that using the <code>ng-opt</code> compiler can improve application performance by up to 20%.

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,38 +165,36 @@
 </ul>
 <h3 id="benchmarking-redis-and-memcached">Benchmarking Redis and Memcached</h3>
 <p>To illustrate the performance differences between Redis and Memcached, let's consider a simple benchmarking test using the <code>redis</code> and <code>pymemcache</code> libraries in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
-<span class="kn">import</span> <span class="nn">pymemcache.client.base</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import redis
+import pymemcache.client.base
+import time
 
-<span class="c1"># Redis client</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Redis client
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Memcached client</span>
-<span class="n">memcached_client</span> <span class="o">=</span> <span class="n">pymemcache</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Client</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">11211</span><span class="p">))</span>
+# Memcached client
+memcached_client = pymemcache.client.base.Client(('localhost', 11211))
 
-<span class="c1"># Set a key-value pair in Redis and Memcached</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
-<span class="n">memcached_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Set a key-value pair in Redis and Memcached
+redis_client.set('key', 'value')
+memcached_client.set('key', 'value')
 
-<span class="c1"># Measure the time it takes to retrieve the value</span>
-<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-<span class="n">redis_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+# Measure the time it takes to retrieve the value
+start_time = time.time()
+redis_client.get('key')
+redis_time = time.time() - start_time
 
-<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">memcached_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-<span class="n">memcached_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+start_time = time.time()
+memcached_client.get('key')
+memcached_time = time.time() - start_time
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Redis time: </span><span class="si">{</span><span class="n">redis_time</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Memcached time: </span><span class="si">{</span><span class="n">memcached_time</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Redis time: {redis_time:.6f} seconds&quot;)
+print(f&quot;Memcached time: {memcached_time:.6f} seconds&quot;)
+</code></pre>
 <p>This test sets a key-value pair in both Redis and Memcached, then measures the time it takes to retrieve the value. On a local machine with 16 GB of RAM, the results are:</p>
-<div class="codehilite"><pre><span></span><code>Redis time: 0.000123 seconds
+<pre><code>Redis time: 0.000123 seconds
 Memcached time: 0.000156 seconds
-</code></pre></div>
-
+</code></pre>
 <p>While both Redis and Memcached offer fast performance, Redis tends to be slightly faster for simple key-value pairs.</p>
 <h2 id="practical-use-cases-for-redis-and-memcached">Practical Use Cases for Redis and Memcached</h2>
 <p>Here are some concrete use cases for Redis and Memcached:</p>
@@ -207,39 +206,37 @@ Memcached time: 0.000156 seconds
 </ol>
 <h3 id="example-implementing-a-leaderboard-with-memcached">Example: Implementing a Leaderboard with Memcached</h3>
 <p>To illustrate the use of Memcached for leaderboard data, let's consider an example using the <code>pymemcache</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymemcache.client.base</span>
+<pre><code class="language-python">import pymemcache.client.base
 
-<span class="c1"># Memcached client</span>
-<span class="n">memcached_client</span> <span class="o">=</span> <span class="n">pymemcache</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Client</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">11211</span><span class="p">))</span>
+# Memcached client
+memcached_client = pymemcache.client.base.Client(('localhost', 11211))
 
-<span class="c1"># Set the leaderboard data</span>
-<span class="n">memcached_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;leaderboard&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;jane&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span>
-<span class="p">])</span>
+# Set the leaderboard data
+memcached_client.set('leaderboard', [
+    {'user': 'john', 'score': 100},
+    {'user': 'jane', 'score': 90},
+    {'user': 'bob', 'score': 80}
+])
 
-<span class="c1"># Retrieve the leaderboard data</span>
-<span class="n">leaderboard</span> <span class="o">=</span> <span class="n">memcached_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;leaderboard&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)</span>
-</code></pre></div>
-
+# Retrieve the leaderboard data
+leaderboard = memcached_client.get('leaderboard')
+print(leaderboard)
+</code></pre>
 <p>This example sets the leaderboard data in Memcached, then retrieves it using the <code>get</code> method. The leaderboard data is stored as a JSON-encoded string, making it easy to parse and display in the application.</p>
 <h3 id="example-implementing-a-content-delivery-network-with-redis">Example: Implementing a Content Delivery Network with Redis</h3>
 <p>To illustrate the use of Redis as a CDN cache, let's consider an example using the <code>redis</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Redis client</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Redis client
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Set the content data</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;content:123&#39;</span><span class="p">,</span> <span class="s1">&#39;This is some example content&#39;</span><span class="p">)</span>
+# Set the content data
+redis_client.set('content:123', 'This is some example content')
 
-<span class="c1"># Retrieve the content data</span>
-<span class="n">content</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content:123&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-</code></pre></div>
-
+# Retrieve the content data
+content = redis_client.get('content:123')
+print(content)
+</code></pre>
 <p>This example sets the content data in Redis, then retrieves it using the <code>get</code> method. The content data is stored as a string, making it easy to serve directly to clients.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when using Redis and Memcached:</p>

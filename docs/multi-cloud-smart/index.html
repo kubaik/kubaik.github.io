@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,26 +164,25 @@
 * Cloud-agnostic services such as AWS Lambda, Google Cloud Functions, or Azure Functions, which provide a serverless computing environment that can be used with multiple cloud providers.</p>
 <h3 id="example-1-using-aws-lambda-and-google-cloud-functions">Example 1: Using AWS Lambda and Google Cloud Functions</h3>
 <p>For example, an organization can use AWS Lambda and Google Cloud Functions to create a serverless application that can be deployed on both AWS and Google Cloud. Here is an example of how to create a simple serverless function using AWS Lambda and Google Cloud Functions:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># AWS Lambda function</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># AWS Lambda function
+import boto3
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process the event</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello from AWS Lambda!&#39;</span>
-    <span class="p">}</span>
+def lambda_handler(event, context):
+    # Process the event
+    print(event)
+    return {
+        'statusCode': 200,
+        'body': 'Hello from AWS Lambda!'
+    }
 
-<span class="c1"># Google Cloud Function</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">storage</span>
+# Google Cloud Function
+from google.cloud import storage
 
-<span class="k">def</span> <span class="nf">hello_world</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="c1"># Process the request</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;Hello from Google Cloud Function!&#39;</span>
-</code></pre></div>
-
+def hello_world(request):
+    # Process the request
+    print(request)
+    return 'Hello from Google Cloud Function!'
+</code></pre>
 <p>In this example, the organization can deploy the AWS Lambda function on AWS and the Google Cloud Function on Google Cloud, using a cloud-agnostic API gateway such as NGINX or Amazon API Gateway to route traffic to the correct function.</p>
 <h2 id="challenges-and-limitations-of-multi-cloud-strategy">Challenges and Limitations of Multi-Cloud Strategy</h2>
 <p>While a multi-cloud strategy can offer several benefits, it also presents several challenges and limitations, including:
@@ -191,7 +191,7 @@
 3. <strong>Security and compliance risks</strong>: With multiple cloud providers, organizations may face increased security and compliance risks, as they need to ensure that each provider meets their security and compliance requirements.</p>
 <h3 id="example-2-using-kubernetes-to-manage-multiple-cloud-providers">Example 2: Using Kubernetes to Manage Multiple Cloud Providers</h3>
 <p>To address the complexity and security risks associated with multi-cloud, organizations can use containerization platforms such as Kubernetes to manage their applications and services. Here is an example of how to use Kubernetes to deploy a simple web application on both AWS and Google Cloud:</p>
-<div class="codehilite"><pre><span></span><code># Kubernetes deployment YAML file
+<pre><code class="language-yml"># Kubernetes deployment YAML file
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -211,8 +211,7 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-</code></pre></div>
-
+</code></pre>
 <p>In this example, the organization can use Kubernetes to deploy the web application on both AWS and Google Cloud, using a cloud-agnostic storage class such as AWS Elastic Block Store (EBS) or Google Cloud Persistent Disk (PD) to store the application data.</p>
 <h2 id="real-world-use-cases-and-implementation-details">Real-World Use Cases and Implementation Details</h2>
 <p>Several organizations have successfully implemented a multi-cloud strategy, including:
@@ -221,28 +220,27 @@ spec:
 * <strong>Uber</strong>: Uber uses a multi-cloud approach to manage its global ride-hailing platform, using a combination of AWS, Google Cloud, and Microsoft Azure to provide a scalable and reliable infrastructure for its users.</p>
 <h3 id="example-3-using-terraform-to-manage-multi-cloud-infrastructure">Example 3: Using Terraform to Manage Multi-Cloud Infrastructure</h3>
 <p>To manage their multi-cloud infrastructure, organizations can use infrastructure-as-code (IaC) tools such as Terraform, which provides a cloud-agnostic way to manage infrastructure resources. Here is an example of how to use Terraform to create a simple virtual machine on both AWS and Google Cloud:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Terraform configuration file</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Terraform configuration file
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;google&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-project&quot;</span>
-<span class="w">  </span><span class="na">region</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-central1&quot;</span>
-<span class="p">}</span>
+provider &quot;google&quot; {
+  project = &quot;my-project&quot;
+  region  = &quot;us-central1&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-abc123&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="p">}</span>
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-abc123&quot;
+  instance_type = &quot;t2.micro&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_compute_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-vm&quot;</span>
-<span class="w">  </span><span class="na">machine_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;f1-micro&quot;</span>
-<span class="w">  </span><span class="na">zone</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-central1-a&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+resource &quot;google_compute_instance&quot; &quot;example&quot; {
+  name         = &quot;example-vm&quot;
+  machine_type = &quot;f1-micro&quot;
+  zone         = &quot;us-central1-a&quot;
+}
+</code></pre>
 <p>In this example, the organization can use Terraform to create a virtual machine on both AWS and Google Cloud, using a cloud-agnostic configuration file to manage the infrastructure resources.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Several common problems can arise when implementing a multi-cloud strategy, including:

@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -189,48 +190,47 @@
 </ul>
 <h4 id="code-example">Code Example</h4>
 <p>The following code snippet allows you to control an LED from your smartphone through a web interface:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ESP8266WiFi.h&gt;</span>
+<pre><code class="language-cpp">#include &lt;ESP8266WiFi.h&gt;
 
-<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">ssid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;YOUR_SSID&quot;</span><span class="p">;</span>
-<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;YOUR_PASSWORD&quot;</span><span class="p">;</span>
+const char* ssid = &quot;YOUR_SSID&quot;;
+const char* password = &quot;YOUR_PASSWORD&quot;;
 
-<span class="n">WiFiServer</span><span class="w"> </span><span class="nf">server</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">ledPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+WiFiServer server(80);
+int ledPin = 2;
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
-<span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
-<span class="w">  </span><span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
-<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">WL_CONNECTED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Connecting to WiFi...&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Connected to WiFi&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
-<span class="p">}</span>
+void setup() {
+  Serial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println(&quot;Connecting to WiFi...&quot;);
+  }
+  Serial.println(&quot;Connected to WiFi&quot;);
+  server.begin();
+}
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">WiFiClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">server</span><span class="p">.</span><span class="n">available</span><span class="p">();</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">client</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">readStringUntil</span><span class="p">(</span><span class="sc">&#39;\r&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">&quot;/LED=ON&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">&quot;/LED=OFF&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;HTTP/1.1 200 OK&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Content-type:text/html&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;LED Control&lt;/h1&gt;&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;&lt;a href=</span><span class="se">\&quot;</span><span class="s">/LED=ON</span><span class="se">\&quot;</span><span class="s">&gt;Turn LED ON&lt;/a&gt;&lt;br&gt;&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;&lt;a href=</span><span class="se">\&quot;</span><span class="s">/LED=OFF</span><span class="se">\&quot;</span><span class="s">&gt;Turn LED OFF&lt;/a&gt;&lt;br&gt;&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+void loop() {
+  WiFiClient client = server.available();
+  if (client) {
+    String request = client.readStringUntil('\r');
+    client.flush();
+    if (request.indexOf(&quot;/LED=ON&quot;) != -1) {
+      digitalWrite(ledPin, HIGH);
+    } else if (request.indexOf(&quot;/LED=OFF&quot;) != -1) {
+      digitalWrite(ledPin, LOW);
+    }
+    client.println(&quot;HTTP/1.1 200 OK&quot;);
+    client.println(&quot;Content-type:text/html&quot;);
+    client.println();
+    client.println(&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;LED Control&lt;/h1&gt;&quot;);
+    client.println(&quot;&lt;a href=\&quot;/LED=ON\&quot;&gt;Turn LED ON&lt;/a&gt;&lt;br&gt;&quot;);
+    client.println(&quot;&lt;a href=\&quot;/LED=OFF\&quot;&gt;Turn LED OFF&lt;/a&gt;&lt;br&gt;&quot;);
+    client.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);
+    client.stop();
+  }
+}
+</code></pre>
 <h4 id="explanation">Explanation</h4>
 <ol>
 <li><strong>Wi-Fi Connection</strong>: The code connects to a specified Wi-Fi network using the ESP8266 module.</li>
@@ -261,27 +261,26 @@
 </li>
 </ol>
 <p>Using Python, you can publish moisture data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="nn">mqtt</span>
-<span class="kn">import</span> <span class="nn">Adafruit_DHT</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import paho.mqtt.client as mqtt
+import Adafruit_DHT
+import time
 
-<span class="n">DHT_SENSOR</span> <span class="o">=</span> <span class="n">Adafruit_DHT</span><span class="o">.</span><span class="n">DHT22</span>
-<span class="n">DHT_PIN</span> <span class="o">=</span> <span class="mi">4</span>
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 4
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
-<span class="n">client</span><span class="o">.</span><span class="n">tls_set</span><span class="p">(</span><span class="s2">&quot;root-CA.crt&quot;</span><span class="p">)</span>
-<span class="n">client</span><span class="o">.</span><span class="n">username_pw_set</span><span class="p">(</span><span class="s2">&quot;YOUR_AWS_IOT_ACCESS_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;YOUR_AWS_IOT_SECRET_KEY&quot;</span><span class="p">)</span>
-<span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;YOUR_AWS_IOT_ENDPOINT&quot;</span><span class="p">,</span> <span class="mi">8883</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+client = mqtt.Client()
+client.tls_set(&quot;root-CA.crt&quot;)
+client.username_pw_set(&quot;YOUR_AWS_IOT_ACCESS_KEY&quot;, &quot;YOUR_AWS_IOT_SECRET_KEY&quot;)
+client.connect(&quot;YOUR_AWS_IOT_ENDPOINT&quot;, 8883, 60)
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">humidity</span><span class="p">,</span> <span class="n">temperature</span> <span class="o">=</span> <span class="n">Adafruit_DHT</span><span class="o">.</span><span class="n">read_retry</span><span class="p">(</span><span class="n">DHT_SENSOR</span><span class="p">,</span> <span class="n">DHT_PIN</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">humidity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">temperature</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">moisture_level</span> <span class="o">=</span> <span class="n">read_moisture_sensor</span><span class="p">()</span>  <span class="c1"># Implement this function</span>
-        <span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;farm/soil/moisture&quot;</span><span class="p">,</span> <span class="n">moisture_level</span><span class="p">)</span>
-        <span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;farm/temperature&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-</code></pre></div>
-
+while True:
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    if humidity is not None and temperature is not None:
+        moisture_level = read_moisture_sensor()  # Implement this function
+        client.publish(&quot;farm/soil/moisture&quot;, moisture_level)
+        client.publish(&quot;farm/temperature&quot;, temperature)
+    time.sleep(60)
+</code></pre>
 <h4 id="explanation_1">Explanation</h4>
 <ul>
 <li><strong>MQTT Protocol</strong>: The code uses the MQTT protocol to send soil moisture and temperature data to AWS IoT Core every minute.</li>

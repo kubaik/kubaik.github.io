@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,29 +167,28 @@
 2. Configure your DNS settings: You will need to update your DNS settings to point to Cloudflare's servers.
 3. Enable DDoS protection: Cloudflare offers a range of DDoS protection features, including IP blocking and rate limiting.</p>
 <p>Here is an example of how to use Cloudflare's API to enable DDoS protection:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set your Cloudflare API credentials</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>
-<span class="n">api_email</span> <span class="o">=</span> <span class="s2">&quot;your_api_email&quot;</span>
+# Set your Cloudflare API credentials
+api_key = &quot;your_api_key&quot;
+api_email = &quot;your_api_email&quot;
 
-<span class="c1"># Set the zone ID for your domain</span>
-<span class="n">zone_id</span> <span class="o">=</span> <span class="s2">&quot;your_zone_id&quot;</span>
+# Set the zone ID for your domain
+zone_id = &quot;your_zone_id&quot;
 
-<span class="c1"># Enable DDoS protection</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;https://api.cloudflare.com/client/v4/zones/</span><span class="si">{</span><span class="n">zone_id</span><span class="si">}</span><span class="s2">/ddos_protection&quot;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Auth-Email&quot;</span><span class="p">:</span> <span class="n">api_email</span><span class="p">,</span> <span class="s2">&quot;X-Auth-Key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">},</span>
-    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
-<span class="p">)</span>
+# Enable DDoS protection
+response = requests.post(
+    f&quot;https://api.cloudflare.com/client/v4/zones/{zone_id}/ddos_protection&quot;,
+    headers={&quot;X-Auth-Email&quot;: api_email, &quot;X-Auth-Key&quot;: api_key},
+    json={&quot;enabled&quot;: True}
+)
 
-<span class="c1"># Check the response</span>
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DDoS protection enabled&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error enabling DDoS protection&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Check the response
+if response.status_code == 200:
+    print(&quot;DDoS protection enabled&quot;)
+else:
+    print(&quot;Error enabling DDoS protection&quot;)
+</code></pre>
 <p>This code uses the Cloudflare API to enable DDoS protection for a specific zone (domain).</p>
 <h2 id="load-balancing-for-ddos-protection">Load Balancing for DDoS Protection</h2>
 <p>Load balancing can help to distribute traffic across multiple servers, reducing the load on any one system and making it more difficult for an attacker to overwhelm a single system. There are several load balancing algorithms that can be used, including:
@@ -196,46 +196,44 @@
 * Least connections: This algorithm distributes traffic to the server with the fewest active connections.
 * IP hashing: This algorithm distributes traffic based on the client's IP address.</p>
 <p>Here is an example of how to use HAProxy to implement load balancing:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install HAProxy</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>haproxy
+<pre><code class="language-bash"># Install HAProxy
+sudo apt-get install haproxy
 
-<span class="c1"># Configure HAProxy</span>
-sudo<span class="w"> </span>nano<span class="w"> </span>/etc/haproxy/haproxy.cfg
+# Configure HAProxy
+sudo nano /etc/haproxy/haproxy.cfg
 
-<span class="c1"># Add the following configuration</span>
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>default_backend<span class="w"> </span>servers
+# Add the following configuration
+frontend http
+    bind *:80
+    mode http
+    default_backend servers
 
-backend<span class="w"> </span>servers
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.100:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.101:80<span class="w"> </span>check
-</code></pre></div>
-
+backend servers
+    mode http
+    balance roundrobin
+    server server1 192.168.1.100:80 check
+    server server2 192.168.1.101:80 check
+</code></pre>
 <p>This configuration uses HAProxy to distribute traffic across two servers using the round-robin algorithm.</p>
 <h2 id="using-a-ddos-protection-service">Using a DDoS Protection Service</h2>
 <p>Specialized DDoS protection services, such as Akamai or Verizon, can provide advanced protection against DDoS attacks. These services typically use a combination of techniques, including traffic filtering, rate limiting, and IP blocking, to protect against DDoS attacks.</p>
 <p>Here is an example of how to use Akamai's API to enable DDoS protection:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Properties</span><span class="p">;</span>
+<pre><code class="language-java">import java.util.Properties;
 
-<span class="c1">// Set your Akamai API credentials</span>
-<span class="n">Properties</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
-<span class="n">props</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;client.token&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your_client_token&quot;</span><span class="p">);</span>
-<span class="n">props</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;client.secret&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your_client_secret&quot;</span><span class="p">);</span>
-<span class="n">props</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;access.token&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your_access_token&quot;</span><span class="p">);</span>
+// Set your Akamai API credentials
+Properties props = new Properties();
+props.setProperty(&quot;client.token&quot;, &quot;your_client_token&quot;);
+props.setProperty(&quot;client.secret&quot;, &quot;your_client_secret&quot;);
+props.setProperty(&quot;access.token&quot;, &quot;your_access_token&quot;);
 
-<span class="c1">// Set the contract ID for your account</span>
-<span class="n">String</span><span class="w"> </span><span class="n">contractId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your_contract_id&quot;</span><span class="p">;</span>
+// Set the contract ID for your account
+String contractId = &quot;your_contract_id&quot;;
 
-<span class="c1">// Enable DDoS protection</span>
-<span class="n">EdgeGrid</span><span class="w"> </span><span class="n">edgeGrid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EdgeGrid</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
-<span class="n">DDoSProtection</span><span class="w"> </span><span class="n">dDoSProtection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edgeGrid</span><span class="p">.</span><span class="na">ddosProtection</span><span class="p">(</span><span class="n">contractId</span><span class="p">);</span>
-<span class="n">dDoSProtection</span><span class="p">.</span><span class="na">enable</span><span class="p">();</span>
-</code></pre></div>
-
+// Enable DDoS protection
+EdgeGrid edgeGrid = new EdgeGrid(props);
+DDoSProtection dDoSProtection = edgeGrid.ddosProtection(contractId);
+dDoSProtection.enable();
+</code></pre>
 <p>This code uses Akamai's API to enable DDoS protection for a specific contract.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when implementing DDoS protection, including:

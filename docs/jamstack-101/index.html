@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,30 +163,29 @@
 * <strong>Enhanced Security</strong>: With the backend decoupled from the frontend, Jamstack websites are less vulnerable to attacks, reducing the risk of sensitive data exposure.
 * <strong>Scalability</strong>: Jamstack websites can handle large volumes of traffic with ease, thanks to the use of content delivery networks (CDNs) and edge computing.</p>
 <p>To illustrate the performance benefits of Jamstack, consider the following example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Using Next.js to generate static HTML content</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Using Next.js to generate static HTML content
+import { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">setData</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
+function HomePage() {
+  const [data, setData] = useState([]);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setData</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    fetch('https://api.example.com/data')
+      .then(response =&gt; response.json())
+      .then(data =&gt; setData(data));
+  }, []);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">      </span><span class="p">))}</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+  return (
+    &lt;div&gt;
+      {data.map(item =&gt; (
+        &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we use Next.js to generate static HTML content for the homepage, which is then served directly by a CDN. This approach eliminates the need for server-side rendering, resulting in faster page load times and improved performance.</p>
 <h2 id="practical-implementation">Practical Implementation</h2>
 <p>To get started with Jamstack, you'll need to choose a few key tools and platforms. Some popular options include:
@@ -204,40 +204,38 @@
 3. Configure the <code>next.config.js</code> file to use Vercel's build output and static build features.
 4. Deploy the application to Vercel using the <code>vercel build</code> and <code>vercel deploy</code> commands.</p>
 <p>Here's an example <code>next.config.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;serverless&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">buildOutput</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@vercel/build-output&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">staticBuild</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@vercel/static-build&#39;</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  target: 'serverless',
+  buildOutput: '@vercel/build-output',
+  staticBuild: '@vercel/static-build',
+};
+</code></pre>
 <p>And here's an example <code>pages/index.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">posts</span><span class="p">,</span><span class="w"> </span><span class="nx">setPosts</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
+function HomePage() {
+  const [posts, setPosts] = useState([]);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/posts&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setPosts</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    fetch('https://api.example.com/posts')
+      .then(response =&gt; response.json())
+      .then(data =&gt; setPosts(data));
+  }, []);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">posts</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">post</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span>
-<span class="w">          </span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
-<span class="w">          </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">content</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">      </span><span class="p">))}</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+  return (
+    &lt;div&gt;
+      {posts.map(post =&gt; (
+        &lt;div key={post.id}&gt;
+          &lt;h2&gt;{post.title}&lt;/h2&gt;
+          &lt;p&gt;{post.content}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we use Next.js to build a blog application, which is then deployed to Vercel. The application uses Vercel's build output and static build features to generate pre-built, static HTML content, resulting in fast page load times and improved performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working with Jamstack, you may encounter a few common problems, including:
@@ -249,41 +247,40 @@
 * <strong>Use an authentication library</strong>: Libraries like <code>next-auth</code> and <code>auth0</code> can help simplify authentication and authorization.
 * <strong>Use a caching library</strong>: Libraries like <code>react-cache</code> and <code>lru-cache</code> can help simplify caching and management.</p>
 <p>For example, to implement data fetching using <code>react-query</code>, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useQuery</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-query&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { useQuery } from 'react-query';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">,</span><span class="w"> </span><span class="nx">isLoading</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useQuery</span><span class="p">(</span>
-<span class="w">    </span><span class="s1">&#39;posts&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/posts&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">staleTime</span><span class="o">:</span><span class="w"> </span><span class="mf">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="p">,</span><span class="w"> </span><span class="c1">// 1 hour</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">);</span>
+function HomePage() {
+  const { data, error, isLoading } = useQuery(
+    'posts',
+    async () =&gt; {
+      const response = await fetch('https://api.example.com/posts');
+      return response.json();
+    },
+    {
+      staleTime: 1000 * 60 * 60, // 1 hour
+    }
+  );
 
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isLoading</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
-<span class="w">  </span><span class="p">}</span>
+  if (isLoading) {
+    return &lt;div&gt;Loading...&lt;/div&gt;;
+  }
 
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="ne">Error</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
-<span class="w">  </span><span class="p">}</span>
+  if (error) {
+    return &lt;div&gt;Error: {error.message}&lt;/div&gt;;
+  }
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">post</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span>
-<span class="w">          </span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
-<span class="w">          </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">post</span><span class="p">.</span><span class="nx">content</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">      </span><span class="p">))}</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      {data.map(post =&gt; (
+        &lt;div key={post.id}&gt;
+          &lt;h2&gt;{post.title}&lt;/h2&gt;
+          &lt;p&gt;{post.content}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <p>In this example, we use <code>react-query</code> to fetch data from an API, with caching and error handling built-in.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Jamstack is a powerful architecture for building fast, secure, and scalable websites. By decoupling the frontend from the backend, Jamstack enables developers to build applications with ease, using a variety of tools and platforms. To get started with Jamstack, consider the following next steps:

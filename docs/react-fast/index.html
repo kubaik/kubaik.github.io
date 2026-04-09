@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -152,12 +153,11 @@
 <p>Incident response planning is a critical component of any organization's IT strategy, enabling teams to respond quickly and effectively to unexpected events, such as security breaches, system outages, or data loss. A well-planned incident response strategy can minimize downtime, reduce the risk of data breaches, and ensure business continuity. In this article, we will explore the key elements of incident response planning, including incident detection, response, and recovery, with a focus on practical implementation using tools like PagerDuty, Splunk, and AWS.</p>
 <h3 id="incident-detection">Incident Detection</h3>
 <p>Incident detection is the process of identifying potential incidents, such as security threats, system failures, or performance issues. This can be achieved through monitoring tools, like Splunk, which provide real-time visibility into system logs, network traffic, and performance metrics. For example, Splunk's Enterprise Security module can detect suspicious activity, such as login attempts from unknown IP addresses, and trigger alerts to incident response teams.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example Splunk query to detect suspicious login activity</span>
-<span class="n">index</span><span class="o">=</span><span class="n">security</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">login_attempts</span> 
-<span class="o">|</span> <span class="n">stats</span> <span class="n">count</span> <span class="k">as</span> <span class="n">num_attempts</span> <span class="n">by</span> <span class="n">src_ip</span> 
-<span class="o">|</span> <span class="n">where</span> <span class="n">num_attempts</span> <span class="o">&gt;</span> <span class="mi">5</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Example Splunk query to detect suspicious login activity
+index=security sourcetype=login_attempts 
+| stats count as num_attempts by src_ip 
+| where num_attempts &gt; 5
+</code></pre>
 <p>This query detects IP addresses with more than 5 login attempts, indicating potential suspicious activity.</p>
 <h2 id="incident-response">Incident Response</h2>
 <p>Incident response involves taking swift action to contain and mitigate the impact of an incident. This can include tasks, such as:
@@ -165,39 +165,38 @@
 * Conducting forensic analysis to identify root causes
 * Coordinating with stakeholders, including incident response teams, management, and external partners</p>
 <p>Tools like PagerDuty can streamline incident response by providing automated alerting, escalation, and incident management capabilities. For instance, PagerDuty's incident response platform can trigger alerts to on-call teams, provide real-time incident updates, and facilitate collaboration through integrated chat and video conferencing.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example PagerDuty incident response script</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">pagerduty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pagerduty&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Example PagerDuty incident response script
+const pagerduty = require('pagerduty');
 
-<span class="c1">// Create a new incident</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">incident</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s1">&#39;incident&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;incident&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;title&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Security Breach&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;service&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="s1">&#39;id&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;PXXXXXX&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;service_reference&#39;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="s1">&#39;assignments&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="s1">&#39;assignee&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="s1">&#39;id&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;UXXXXXX&#39;</span><span class="p">,</span>
-<span class="w">          </span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;user_reference&#39;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
+// Create a new incident
+const incident = {
+  'incident': {
+    'type': 'incident',
+    'title': 'Security Breach',
+    'service': {
+      'id': 'PXXXXXX',
+      'type': 'service_reference'
+    },
+    'assignments': [
+      {
+        'assignee': {
+          'id': 'UXXXXXX',
+          'type': 'user_reference'
+        }
+      }
+    ]
+  }
+};
 
-<span class="c1">// Trigger the incident</span>
-<span class="nx">pagerduty</span><span class="p">.</span><span class="nx">incidents</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">incident</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Incident triggered: </span><span class="si">${</span><span class="nx">res</span><span class="p">.</span><span class="nx">incident</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Trigger the incident
+pagerduty.incidents.create(incident, (err, res) =&gt; {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`Incident triggered: ${res.incident.id}`);
+  }
+});
+</code></pre>
 <p>This script creates a new incident in PagerDuty, assigning it to a specific service and on-call team member.</p>
 <h3 id="incident-recovery">Incident Recovery</h3>
 <p>Incident recovery involves restoring systems, services, or data to a stable state, ensuring business continuity and minimizing downtime. This can be achieved through:
@@ -205,10 +204,9 @@
 2. <strong>Disaster recovery planning</strong>: Developing a disaster recovery plan can help teams respond quickly and effectively to disasters, such as natural disasters or major system failures.
 3. <strong>Cloud-based services</strong>: Cloud-based services, like AWS, can provide scalable, on-demand infrastructure and services, enabling teams to quickly recover from disasters.</p>
 <p>For example, AWS provides a range of disaster recovery services, including Amazon S3, Amazon Glacier, and AWS Backup, which can be used to create a comprehensive disaster recovery plan.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example AWS CLI command to create a backup vault</span>
-aws<span class="w"> </span>backup<span class="w"> </span>create-backup-vault<span class="w"> </span>--backup-vault-name<span class="w"> </span>my-vault
-</code></pre></div>
-
+<pre><code class="language-bash"># Example AWS CLI command to create a backup vault
+aws backup create-backup-vault --backup-vault-name my-vault
+</code></pre>
 <p>This command creates a new backup vault in AWS, which can be used to store and manage backups.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered during incident response planning include:

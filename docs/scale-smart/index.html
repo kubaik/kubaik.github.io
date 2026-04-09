@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -182,17 +183,16 @@
 </ul>
 <h3 id="code-example">Code Example</h3>
 <p>Here’s a sample function that can monitor and suggest vertical scaling based on CPU usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">psutil</span>
+<pre><code class="language-python">import psutil
 
-<span class="k">def</span> <span class="nf">check_cpu_usage</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
-    <span class="n">cpu_usage</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">cpu_percent</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">cpu_usage</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Consider scaling up your server.&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;CPU usage is within acceptable limits.&quot;</span>
+def check_cpu_usage(threshold=80):
+    cpu_usage = psutil.cpu_percent(interval=1)
+    if cpu_usage &gt; threshold:
+        return &quot;Consider scaling up your server.&quot;
+    return &quot;CPU usage is within acceptable limits.&quot;
 
-<span class="nb">print</span><span class="p">(</span><span class="n">check_cpu_usage</span><span class="p">())</span>
-</code></pre></div>
-
+print(check_cpu_usage())
+</code></pre>
 <h3 id="limitations">Limitations</h3>
 <ul>
 <li>Cost: Upgrading can lead to higher expenses.</li>
@@ -214,27 +214,26 @@
 </ul>
 <h3 id="code-example_1">Code Example</h3>
 <p>Implementing a Kubernetes deployment for a web application can look like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-web-app</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-web-app</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-web-app</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-web-app-image:latest</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-web-app
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - name: web
+        image: my-web-app-image:latest
+        ports:
+        - containerPort: 80
+</code></pre>
 <h3 id="advantages">Advantages</h3>
 <ul>
 <li>Redundancy: If one server fails, others can take over.</li>
@@ -260,22 +259,21 @@
 </ul>
 <h3 id="code-example_2">Code Example</h3>
 <p>A simple Spring Boot microservice can be created with the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyMicroserviceApplication</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MyMicroserviceApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-java">@SpringBootApplication
+public class MyMicroserviceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MyMicroserviceApplication.class, args);
+    }
+}
 
-<span class="nd">@RestController</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyController</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/api/data&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Data from My Microservice&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@RestController
+public class MyController {
+    @GetMapping(&quot;/api/data&quot;)
+    public String getData() {
+        return &quot;Data from My Microservice&quot;;
+    }
+}
+</code></pre>
 <h3 id="advantages_1">Advantages</h3>
 <ul>
 <li>Independent Deployment: Each service can be deployed without affecting others.</li>
@@ -301,23 +299,22 @@
 </ul>
 <h3 id="code-example_3">Code Example</h3>
 <p>Here's an NGINX configuration for load balancing:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">upstream</span><span class="w"> </span><span class="s">myapp</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">app1.example.com</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">app2.example.com</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="s">app3.example.com</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    upstream myapp {
+        server app1.example.com;
+        server app2.example.com;
+        server app3.example.com;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+    server {
+        listen 80;
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://myapp</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        location / {
+            proxy_pass http://myapp;
+        }
+    }
+}
+</code></pre>
 <h3 id="advantages_2">Advantages</h3>
 <ul>
 <li>High Availability: If one server goes down, traffic is redirected.</li>
@@ -343,20 +340,19 @@
 </ul>
 <h3 id="code-example_4">Code Example</h3>
 <p>Using Redis to cache API responses in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import redis
+import requests
 
-<span class="n">cache</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">)</span>
+cache = redis.Redis(host='localhost', port=6379)
 
-<span class="k">def</span> <span class="nf">get_data_from_api</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">cache</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;api_data&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_data&#39;</span><span class="p">)</span>
+def get_data_from_api():
+    if cache.exists('api_data'):
+        return cache.get('api_data')
 
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">)</span>
-    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;api_data&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">ex</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>  <span class="c1"># Cache for 1 hour</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre></div>
-
+    response = requests.get('https://api.example.com/data')
+    cache.set('api_data', response.json(), ex=3600)  # Cache for 1 hour
+    return response.json()
+</code></pre>
 <h3 id="advantages_3">Advantages</h3>
 <ul>
 <li>Reduced Latency: Faster response times due to in-memory data.</li>
@@ -386,10 +382,9 @@
 <li><strong>Choose a Shard Key</strong>: Select a field that evenly distributes data.</li>
 <li><strong>Enable Sharding</strong>: Use the following commands in the MongoDB shell:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nx">sh</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">&quot;myDatabase&quot;</span><span class="p">)</span>
-<span class="nx">sh</span><span class="p">.</span><span class="nx">shardCollection</span><span class="p">(</span><span class="s2">&quot;myDatabase.myCollection&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;shardKey&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">})</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">sh.enableSharding(&quot;myDatabase&quot;)
+sh.shardCollection(&quot;myDatabase.myCollection&quot;, { &quot;shardKey&quot;: 1 })
+</code></pre>
 <h3 id="advantages_4">Advantages</h3>
 <ul>
 <li>Improved Performance: Queries can be distributed across shards.</li>
@@ -415,14 +410,13 @@
 </ul>
 <h3 id="code-example_5">Code Example</h3>
 <p>A simple Kafka producer in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python">from kafka import KafkaProducer
 
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my-topic&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-</code></pre></div>
-
+producer.send('my-topic', b'Hello, World!')
+producer.flush()
+</code></pre>
 <h3 id="advantages_5">Advantages</h3>
 <ul>
 <li>Decoupling: Services can evolve independently.</li>

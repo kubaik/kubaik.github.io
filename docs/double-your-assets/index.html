@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -174,29 +175,28 @@
 * <strong>Dassault Systèmes 3DEXPERIENCE</strong>: A platform for product design, simulation, and digital twin applications.</p>
 <h3 id="practical-example-implementing-a-digital-twin-using-siemens-mindsphere">Practical Example: Implementing a Digital Twin using Siemens MindSphere</h3>
 <p>Here is an example of how to implement a digital twin using Siemens MindSphere:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">mindconnect</span>
+<pre><code class="language-python">import mindconnect
 
-<span class="c1"># Create a MindConnect instance</span>
-<span class="n">mc</span> <span class="o">=</span> <span class="n">mindconnect</span><span class="o">.</span><span class="n">MindConnect</span><span class="p">()</span>
+# Create a MindConnect instance
+mc = mindconnect.MindConnect()
 
-<span class="c1"># Create a digital twin model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;MyDigitalTwin&quot;</span><span class="p">)</span>
+# Create a digital twin model
+model = mc.create_model(&quot;MyDigitalTwin&quot;)
 
-<span class="c1"># Add sensors to the model</span>
-<span class="n">sensor1</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">create_sensor</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;Celsius&quot;</span><span class="p">)</span>
-<span class="n">sensor2</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">create_sensor</span><span class="p">(</span><span class="s2">&quot;Pressure&quot;</span><span class="p">,</span> <span class="s2">&quot;Bar&quot;</span><span class="p">)</span>
+# Add sensors to the model
+sensor1 = mc.create_sensor(&quot;Temperature&quot;, &quot;Celsius&quot;)
+sensor2 = mc.create_sensor(&quot;Pressure&quot;, &quot;Bar&quot;)
 
-<span class="c1"># Add the sensors to the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add_sensor</span><span class="p">(</span><span class="n">sensor1</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add_sensor</span><span class="p">(</span><span class="n">sensor2</span><span class="p">)</span>
+# Add the sensors to the model
+model.add_sensor(sensor1)
+model.add_sensor(sensor2)
 
-<span class="c1"># Simulate the model</span>
-<span class="n">simulation</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">create_simulation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+# Simulate the model
+simulation = mc.create_simulation(model)
 
-<span class="c1"># Run the simulation</span>
-<span class="n">simulation</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-
+# Run the simulation
+simulation.run()
+</code></pre>
 <p>This code creates a digital twin model using Siemens MindSphere, adds two sensors to the model, and simulates the model.</p>
 <h2 id="benefits-of-digital-twin-technology">Benefits of Digital Twin Technology</h2>
 <p>The benefits of digital twin technology include:
@@ -218,22 +218,21 @@
 * <strong>Cybersecurity measures</strong>: Implementing cybersecurity measures, such as encryption and access controls, can help to protect the digital twin model from cyber attacks.</p>
 <h3 id="practical-example-implementing-data-validation-and-cleansing">Practical Example: Implementing Data Validation and Cleansing</h3>
 <p>Here is an example of how to implement data validation and cleansing using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
+# Load the data
+data = pd.read_csv(&quot;data.csv&quot;)
 
-<span class="c1"># Validate the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>  <span class="c1"># Remove rows with missing values</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>  <span class="c1"># Remove duplicate rows</span>
+# Validate the data
+data = data.dropna()  # Remove rows with missing values
+data = data.drop_duplicates()  # Remove duplicate rows
 
-<span class="c1"># Cleanse the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>  <span class="c1"># Remove whitespace from strings</span>
+# Cleanse the data
+data = data.apply(lambda x: x.astype(str).str.strip())  # Remove whitespace from strings
 
-<span class="c1"># Save the cleaned data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;cleaned_data.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the cleaned data
+data.to_csv(&quot;cleaned_data.csv&quot;, index=False)
+</code></pre>
 <p>This code loads a dataset, validates it by removing rows with missing values and duplicate rows, and cleanses it by removing whitespace from strings.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Some real-world use cases for digital twin technology include:

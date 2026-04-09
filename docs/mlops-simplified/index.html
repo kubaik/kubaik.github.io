@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -157,26 +158,25 @@
 * Model deployment: deploying the trained model to a production environment
 * Model monitoring: tracking the performance of the deployed model and retraining as necessary</p>
 <p>To illustrate this workflow, let's consider a real-world example. Suppose we're building a recommendation system for an e-commerce platform using TensorFlow and scikit-learn. We can use the following code snippet to train a simple model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;user_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('user_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('label', axis=1), df['label'], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+y_pred = model.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+</code></pre>
 <p>This code trains a random forest classifier on a sample dataset and evaluates its performance using accuracy score.</p>
 <h2 id="mlops-tools-and-platforms">MLOps Tools and Platforms</h2>
 <p>Several tools and platforms are available to support the MLOps workflow. Some popular options include:
@@ -196,18 +196,17 @@
 * <strong>Serverless deployment</strong>: deploying the model to a serverless platform like AWS Lambda or Google Cloud Functions
 * <strong>Kubernetes deployment</strong>: deploying the model to a Kubernetes cluster using tools like Kubeflow</p>
 <p>To illustrate model deployment, let's consider an example using TensorFlow and Docker. We can use the following code snippet to create a Docker container for our model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Load the trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
+# Load the trained model
+model = tf.keras.models.load_model('model.h5')
 
-<span class="c1"># Create a Docker container for the model</span>
-<span class="n">docker_container</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">containerize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;model_container&#39;</span><span class="p">)</span>
+# Create a Docker container for the model
+docker_container = tf.keras.models.containerize(model, 'model_container')
 
-<span class="c1"># Deploy the container to a production environment</span>
-<span class="n">docker_container</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="s1">&#39;production_environment&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Deploy the container to a production environment
+docker_container.deploy('production_environment')
+</code></pre>
 <p>This code creates a Docker container for our trained model and deploys it to a production environment.</p>
 <h2 id="model-monitoring-and-maintenance">Model Monitoring and Maintenance</h2>
 <p>Model monitoring and maintenance are critical components of the MLOps workflow. They involve tracking the performance of the deployed model and retraining it as necessary to ensure that it remains accurate and reliable. Some popular model monitoring and maintenance strategies include:
@@ -215,17 +214,16 @@
 * <strong>Data drift detection</strong>: detecting changes in the data distribution that may affect the model's performance
 * <strong>Model retraining</strong>: retraining the model on new data to adapt to changes in the environment</p>
 <p>For example, we can use the following code snippet to monitor the performance of our deployed model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load the deployment data</span>
-<span class="n">deployment_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deployment_data.csv&#39;</span><span class="p">)</span>
+# Load the deployment data
+deployment_data = pd.read_csv('deployment_data.csv')
 
-<span class="c1"># Evaluate the model&#39;s performance</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">deployment_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">deployment_data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model's performance
+y_pred = model.predict(deployment_data)
+print('Accuracy:', accuracy_score(deployment_data['label'], y_pred))
+</code></pre>
 <p>This code loads the deployment data and evaluates the model's performance using accuracy score.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that arise in MLOps include:
@@ -237,17 +235,16 @@
 2. <strong>Model updating</strong>: update the model regularly to adapt to changes in the environment
 3. <strong>Scalability planning</strong>: plan for scalability by using distributed computing and containerization</p>
 <p>For example, we can use the following code snippet to preprocess the data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the data
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Preprocess the data</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">data</span><span class="p">[[</span><span class="s1">&#39;feature1&#39;</span><span class="p">,</span> <span class="s1">&#39;feature2&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;feature1&#39;</span><span class="p">,</span> <span class="s1">&#39;feature2&#39;</span><span class="p">]])</span>
-</code></pre></div>
-
+# Preprocess the data
+scaler = StandardScaler()
+data[['feature1', 'feature2']] = scaler.fit_transform(data[['feature1', 'feature2']])
+</code></pre>
 <p>This code preprocesses the data by scaling the features using StandardScaler.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>MLOps has many real-world use cases, including:
@@ -255,26 +252,25 @@
 * <strong>Image classification</strong>: building image classification models for medical diagnosis or self-driving cars
 * <strong>Natural language processing</strong>: building NLP models for text classification or sentiment analysis</p>
 <p>For example, we can use MLOps to build a recommendation system for an e-commerce platform. We can use the following code snippet to train a model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;user_data.csv&#39;</span><span class="p">)</span>
+# Load the data
+data = pd.read_csv('user_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('label', axis=1), data['label'], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+y_pred = model.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+</code></pre>
 <p>This code trains a random forest classifier on a sample dataset and evaluates its performance using accuracy score.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, MLOps is a critical component of building and deploying machine learning models in production environments. By streamlining the MLOps workflow, we can ensure that our models are scalable, reliable, and maintainable. To get started with MLOps, consider the following next steps:

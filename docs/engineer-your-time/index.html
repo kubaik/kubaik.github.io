@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -180,46 +181,44 @@
 <li><strong>Neither Urgent Nor Important</strong>: Eliminate these tasks.</li>
 </ul>
 <p><strong>Example</strong>: Here’s how you could implement the Eisenhower Matrix in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">categorize_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
-    <span class="n">matrix</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;urgent_important&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;important_not_urgent&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;urgent_not_important&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;neither&quot;</span><span class="p">:</span> <span class="p">[]</span>
-    <span class="p">}</span>
+<pre><code class="language-python">def categorize_tasks(tasks):
+    matrix = {
+        &quot;urgent_important&quot;: [],
+        &quot;important_not_urgent&quot;: [],
+        &quot;urgent_not_important&quot;: [],
+        &quot;neither&quot;: []
+    }
 
-    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;urgent&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;important&#39;</span><span class="p">]:</span>
-            <span class="n">matrix</span><span class="p">[</span><span class="s1">&#39;urgent_important&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;important&#39;</span><span class="p">]:</span>
-            <span class="n">matrix</span><span class="p">[</span><span class="s1">&#39;important_not_urgent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;urgent&#39;</span><span class="p">]:</span>
-            <span class="n">matrix</span><span class="p">[</span><span class="s1">&#39;urgent_not_important&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">matrix</span><span class="p">[</span><span class="s1">&#39;neither&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    for task in tasks:
+        if task['urgent'] and task['important']:
+            matrix['urgent_important'].append(task)
+        elif task['important']:
+            matrix['important_not_urgent'].append(task)
+        elif task['urgent']:
+            matrix['urgent_not_important'].append(task)
+        else:
+            matrix['neither'].append(task)
 
-    <span class="k">return</span> <span class="n">matrix</span>
+    return matrix
 
-<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Fix critical bug&#39;</span><span class="p">,</span> <span class="s1">&#39;urgent&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;important&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Prepare presentation&#39;</span><span class="p">,</span> <span class="s1">&#39;urgent&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;important&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Check emails&#39;</span><span class="p">,</span> <span class="s1">&#39;urgent&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;important&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Clean desk&#39;</span><span class="p">,</span> <span class="s1">&#39;urgent&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;important&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-<span class="p">]</span>
+tasks = [
+    {'name': 'Fix critical bug', 'urgent': True, 'important': True},
+    {'name': 'Prepare presentation', 'urgent': False, 'important': True},
+    {'name': 'Check emails', 'urgent': True, 'important': False},
+    {'name': 'Clean desk', 'urgent': False, 'important': False},
+]
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">categorize_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</code></pre></div>
-
+result = categorize_tasks(tasks)
+print(result)
+</code></pre>
 <p><strong>Output</strong>:</p>
-<div class="codehilite"><pre><span></span><code>{
-    &#39;urgent_important&#39;: [{&#39;name&#39;: &#39;Fix critical bug&#39;, &#39;urgent&#39;: True, &#39;important&#39;: True}],
-    &#39;important_not_urgent&#39;: [{&#39;name&#39;: &#39;Prepare presentation&#39;, &#39;urgent&#39;: False, &#39;important&#39;: True}],
-    &#39;urgent_not_important&#39;: [{&#39;name&#39;: &#39;Check emails&#39;, &#39;urgent&#39;: True, &#39;important&#39;: False}],
-    &#39;neither&#39;: [{&#39;name&#39;: &#39;Clean desk&#39;, &#39;urgent&#39;: False, &#39;important&#39;: False}]
+<pre><code class="language-plaintext">{
+    'urgent_important': [{'name': 'Fix critical bug', 'urgent': True, 'important': True}],
+    'important_not_urgent': [{'name': 'Prepare presentation', 'urgent': False, 'important': True}],
+    'urgent_not_important': [{'name': 'Check emails', 'urgent': True, 'important': False}],
+    'neither': [{'name': 'Clean desk', 'urgent': False, 'important': False}]
 }
-</code></pre></div>
-
+</code></pre>
 <h4 id="2-time-tracking">2. Time Tracking</h4>
 <p>Time tracking can provide insights into how your time is allocated. <strong>Toggl</strong> is a user-friendly tool that allows you to track time spent on various tasks.</p>
 <p><strong>Implementation Steps</strong>:</p>
@@ -248,19 +247,18 @@
 <li>After four Pomodoros, take a longer break (15-30 minutes).</li>
 </ol>
 <p><strong>Example Code</strong>: Here’s a simple Pomodoro timer in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import time
 
-<span class="k">def</span> <span class="nf">pomodoro_timer</span><span class="p">(</span><span class="n">minutes</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>  <span class="c1"># Four Pomodoros</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Work for </span><span class="si">{}</span><span class="s2"> minutes.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minutes</span><span class="p">))</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># Simulates working time</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Take a 5-minute break.&quot;</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># Simulates break time</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Take a longer break now!&quot;</span><span class="p">)</span>
+def pomodoro_timer(minutes):
+    for _ in range(4):  # Four Pomodoros
+        print(&quot;Work for {} minutes.&quot;.format(minutes))
+        time.sleep(minutes * 60)  # Simulates working time
+        print(&quot;Take a 5-minute break.&quot;)
+        time.sleep(5 * 60)  # Simulates break time
+    print(&quot;Take a longer break now!&quot;)
 
-<span class="n">pomodoro_timer</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-</code></pre></div>
-
+pomodoro_timer(25)
+</code></pre>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <h4 id="case-study-software-development-team">Case Study: Software Development Team</h4>
 <p>A software development team at a medium-sized tech company faced issues with project deadlines. By implementing the Eisenhower Matrix and using Toggl, they managed to increase their delivery rate by 30% over three months.</p>

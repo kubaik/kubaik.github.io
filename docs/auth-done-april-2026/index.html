@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -176,89 +177,87 @@
 * Configure the authorization server and client settings.
 * Use the Okta SDK to handle the OAuth 2.0 flow.</p>
 <p>Here's an example code snippet in Node.js using the <a href="https://github.com/okta/okta-sdk-nodejs">Okta SDK</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">OktaClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@okta/okta-sdk-nodejs&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { OktaClient } = require('@okta/okta-sdk-nodejs');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">oktaClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">OktaClient</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">orgUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your-okta-domain.okta.com&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-okta-token&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+const oktaClient = new OktaClient({
+  orgUrl: 'https://your-okta-domain.okta.com',
+  token: 'your-okta-token',
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your-client-id&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your-client-secret&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">redirectUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">;</span>
+const clientId = 'your-client-id';
+const clientSecret = 'your-client-secret';
+const redirectUri = 'http://localhost:3000/callback';
 
-<span class="c1">// Step 1: Redirect the user to the authorization server</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">authorizationUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">oktaClient</span><span class="p">.</span><span class="nx">getAuthorizationUrl</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">redirectUri</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;openid profile email&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Step 1: Redirect the user to the authorization server
+const authorizationUrl = oktaClient.getAuthorizationUrl({
+  clientId,
+  redirectUri,
+  scope: 'openid profile email',
+});
 
-<span class="c1">// Step 2: Handle the authorization code redirect</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/callback&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">authorizationCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">oktaClient</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">getAccessToken</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">clientSecret</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">redirectUri</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">code</span><span class="o">:</span><span class="w"> </span><span class="nx">authorizationCode</span><span class="p">,</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">tokenResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tokenResponse</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
-<span class="w">    </span><span class="c1">// Use the access token to access the protected resource</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Step 2: Handle the authorization code redirect
+app.get('/callback', (req, res) =&gt; {
+  const authorizationCode = req.query.code;
+  oktaClient.token.getAccessToken({
+    clientId,
+    clientSecret,
+    redirectUri,
+    code: authorizationCode,
+  })
+  .then((tokenResponse) =&gt; {
+    const accessToken = tokenResponse.accessToken;
+    // Use the access token to access the protected resource
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+});
+</code></pre>
 <p>This example demonstrates how to use the Okta SDK to handle the OAuth 2.0 flow and obtain an access token.</p>
 <h3 id="example-2-openid-connect-with-okta">Example 2: OpenID Connect with Okta</h3>
 <p>To implement OpenID Connect with Okta, you need to:
 * Configure the OpenID Connect settings in the Okta developer console.
 * Use the Okta SDK to handle the OpenID Connect flow.</p>
 <p>Here's an example code snippet in Node.js using the <a href="https://github.com/okta/okta-sdk-nodejs">Okta SDK</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">OktaClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@okta/okta-sdk-nodejs&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { OktaClient } = require('@okta/okta-sdk-nodejs');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">oktaClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">OktaClient</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">orgUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your-okta-domain.okta.com&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-okta-token&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+const oktaClient = new OktaClient({
+  orgUrl: 'https://your-okta-domain.okta.com',
+  token: 'your-okta-token',
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your-client-id&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your-client-secret&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">redirectUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">;</span>
+const clientId = 'your-client-id';
+const clientSecret = 'your-client-secret';
+const redirectUri = 'http://localhost:3000/callback';
 
-<span class="c1">// Step 1: Redirect the user to the authorization server</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">authorizationUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">oktaClient</span><span class="p">.</span><span class="nx">getAuthorizationUrl</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">redirectUri</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;openid profile email&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">responseType</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;code id_token&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Step 1: Redirect the user to the authorization server
+const authorizationUrl = oktaClient.getAuthorizationUrl({
+  clientId,
+  redirectUri,
+  scope: 'openid profile email',
+  responseType: 'code id_token',
+});
 
-<span class="c1">// Step 2: Handle the authorization code and ID token redirect</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/callback&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">authorizationCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">idToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">id_token</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">oktaClient</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">getAccessToken</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">clientSecret</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">redirectUri</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">code</span><span class="o">:</span><span class="w"> </span><span class="nx">authorizationCode</span><span class="p">,</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">tokenResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tokenResponse</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">idTokenPayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">oktaClient</span><span class="p">.</span><span class="nx">tokens</span><span class="p">.</span><span class="nx">verifyIdToken</span><span class="p">(</span><span class="nx">idToken</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Use the access token and ID token to authenticate the user</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Step 2: Handle the authorization code and ID token redirect
+app.get('/callback', (req, res) =&gt; {
+  const authorizationCode = req.query.code;
+  const idToken = req.query.id_token;
+  oktaClient.token.getAccessToken({
+    clientId,
+    clientSecret,
+    redirectUri,
+    code: authorizationCode,
+  })
+  .then((tokenResponse) =&gt; {
+    const accessToken = tokenResponse.accessToken;
+    const idTokenPayload = oktaClient.tokens.verifyIdToken(idToken);
+    // Use the access token and ID token to authenticate the user
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+});
+</code></pre>
 <p>This example demonstrates how to use the Okta SDK to handle the OpenID Connect flow and obtain an access token and ID token.</p>
 <h3 id="example-3-using-openid-connect-with-azure-ad">Example 3: Using OpenID Connect with Azure AD</h3>
 <p>Let's consider an example of using OpenID Connect with <a href="https://azure.microsoft.com/en-us/services/active-directory/">Azure Active Directory (Azure AD)</a>. Azure AD provides a comprehensive identity and access management solution that supports OpenID Connect.</p>
@@ -267,33 +266,32 @@
 * Configure the OpenID Connect settings in the application registration.
 * Use the Azure AD SDK to handle the OpenID Connect flow.</p>
 <p>Here's an example code snippet in C# using the <a href="https://github.com/AzureAD/azure-activedirectory-library-for-dotnet">Azure AD SDK</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Identity.Client</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.Identity.Client;
 
-<span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your-client-id&quot;</span><span class="p">;</span>
-<span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your-client-secret&quot;</span><span class="p">;</span>
-<span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">redirectUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://localhost:3000/callback&quot;</span><span class="p">;</span>
-<span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">tenantId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your-tenant-id&quot;</span><span class="p">;</span>
+const string clientId = &quot;your-client-id&quot;;
+const string clientSecret = &quot;your-client-secret&quot;;
+const string redirectUri = &quot;http://localhost:3000/callback&quot;;
+const string tenantId = &quot;your-tenant-id&quot;;
 
-<span class="kt">var</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConfidentialClientApplicationBuilder</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">clientId</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">WithClientSecret</span><span class="p">(</span><span class="n">clientSecret</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">WithTenantId</span><span class="p">(</span><span class="n">tenantId</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+var app = ConfidentialClientApplicationBuilder.Create(clientId)
+  .WithClientSecret(clientSecret)
+  .WithTenantId(tenantId)
+  .Build();
 
-<span class="kt">var</span><span class="w"> </span><span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;https://graph.microsoft.com/.default&quot;</span><span class="w"> </span><span class="p">};</span>
+var scopes = new[] { &quot;https://graph.microsoft.com/.default&quot; };
 
-<span class="kt">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">app</span><span class="p">.</span><span class="n">AcquireTokenSilentAsync</span><span class="p">(</span><span class="n">scopes</span><span class="p">,</span><span class="w"> </span><span class="n">authority</span><span class="p">:</span><span class="w"> </span><span class="s">$&quot;https://login.microsoftonline.com/{tenantId}&quot;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="kt">var</span><span class="w"> </span><span class="n">redirectUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">app</span><span class="p">.</span><span class="n">GetAuthorizationUrlAsync</span><span class="p">(</span><span class="n">scopes</span><span class="p">,</span><span class="w"> </span><span class="n">redirectUri</span><span class="p">);</span>
-<span class="w">  </span><span class="c1">// Redirect the user to the authorization URL</span>
-<span class="p">}</span>
+var result = await app.AcquireTokenSilentAsync(scopes, authority: $&quot;https://login.microsoftonline.com/{tenantId}&quot;);
+if (result == null)
+{
+  var redirectUrl = await app.GetAuthorizationUrlAsync(scopes, redirectUri);
+  // Redirect the user to the authorization URL
+}
 
-<span class="c1">// Handle the authorization code redirect</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">tokenResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">app</span><span class="p">.</span><span class="n">AcquireTokenByAuthorizationCodeAsync</span><span class="p">(</span><span class="n">scopes</span><span class="p">,</span><span class="w"> </span><span class="n">redirectUri</span><span class="p">);</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenResponse</span><span class="p">.</span><span class="n">AccessToken</span><span class="p">;</span>
-<span class="c1">// Use the access token to access the protected resource</span>
-</code></pre></div>
-
+// Handle the authorization code redirect
+var tokenResponse = await app.AcquireTokenByAuthorizationCodeAsync(scopes, redirectUri);
+var accessToken = tokenResponse.AccessToken;
+// Use the access token to access the protected resource
+</code></pre>
 <p>This example demonstrates how to use the Azure AD SDK to handle the OpenID Connect flow and obtain an access token.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing OAuth 2.0 and OpenID Connect, you may encounter common problems such as:

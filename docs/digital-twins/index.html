@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,75 +160,73 @@
 * <strong>Visualization</strong>: The graphical representation of the digital twin, which allows users to interact with and visualize the data.</p>
 <h2 id="implementing-digital-twins-with-azure-digital-twins">Implementing Digital Twins with Azure Digital Twins</h2>
 <p>Azure Digital Twins is a cloud-based platform that enables the creation and management of digital twins. It provides a range of features, including data ingestion, simulation, and analytics. Here is an example of how to create a digital twin using Azure Digital Twins:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">azure.digitaltwins.core</span> <span class="k">as</span> <span class="nn">dt</span>
+<pre><code class="language-python">import os
+import azure.digitaltwins.core as dt
 
-<span class="c1"># Set up the Azure Digital Twins instance</span>
-<span class="n">instance_url</span> <span class="o">=</span> <span class="s2">&quot;https://&lt;instance_name&gt;.azure-digitaltwins.net&quot;</span>
-<span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;tenant_id&gt;&quot;</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;client_id&gt;&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;&lt;client_secret&gt;&quot;</span>
+# Set up the Azure Digital Twins instance
+instance_url = &quot;https://&lt;instance_name&gt;.azure-digitaltwins.net&quot;
+tenant_id = &quot;&lt;tenant_id&gt;&quot;
+client_id = &quot;&lt;client_id&gt;&quot;
+client_secret = &quot;&lt;client_secret&gt;&quot;
 
-<span class="c1"># Create a new digital twin</span>
-<span class="n">dt_client</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">DigitalTwinsClient</span><span class="p">(</span><span class="n">instance_url</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">)</span>
-<span class="n">digital_twin</span> <span class="o">=</span> <span class="n">dt_client</span><span class="o">.</span><span class="n">create_digital_twin</span><span class="p">(</span><span class="s2">&quot;MyDigitalTwin&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MyDigitalTwin&quot;</span><span class="p">})</span>
+# Create a new digital twin
+dt_client = dt.DigitalTwinsClient(instance_url, tenant_id, client_id, client_secret)
+digital_twin = dt_client.create_digital_twin(&quot;MyDigitalTwin&quot;, {&quot;name&quot;: &quot;MyDigitalTwin&quot;})
 
-<span class="c1"># Ingest sensor data into the digital twin</span>
-<span class="n">sensor_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">}</span>
-<span class="n">dt_client</span><span class="o">.</span><span class="n">ingest_sensor_data</span><span class="p">(</span><span class="n">digital_twin</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sensor_data</span><span class="p">)</span>
-</code></pre></div>
-
+# Ingest sensor data into the digital twin
+sensor_data = {&quot;temperature&quot;: 25, &quot;humidity&quot;: 60}
+dt_client.ingest_sensor_data(digital_twin.id, sensor_data)
+</code></pre>
 <p>In this example, we create a new digital twin using the Azure Digital Twins client library, and then ingest sensor data into the digital twin.</p>
 <h2 id="using-unity-for-digital-twin-visualization">Using Unity for Digital Twin Visualization</h2>
 <p>Unity is a popular game engine that can be used to create interactive and immersive visualizations of digital twins. Here is an example of how to create a simple digital twin visualization using Unity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using System.Collections;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DigitalTwinVisualizer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Set up the digital twin data</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">digitalTwinId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;MyDigitalTwin&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">instanceUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://&lt;instance_name&gt;.azure-digitaltwins.net&quot;</span><span class="p">;</span>
+public class DigitalTwinVisualizer : MonoBehaviour
+{
+    // Set up the digital twin data
+    public string digitalTwinId = &quot;MyDigitalTwin&quot;;
+    public string instanceUrl = &quot;https://&lt;instance_name&gt;.azure-digitaltwins.net&quot;;
 
-<span class="w">    </span><span class="c1">// Create a new Unity scene</span>
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new Unity scene</span>
-<span class="w">        </span><span class="n">GameObject</span><span class="w"> </span><span class="n">scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GameObject</span><span class="p">(</span><span class="s">&quot;DigitalTwinScene&quot;</span><span class="p">);</span>
+    // Create a new Unity scene
+    void Start()
+    {
+        // Create a new Unity scene
+        GameObject scene = new GameObject(&quot;DigitalTwinScene&quot;);
 
-<span class="w">        </span><span class="c1">// Create a new digital twin visualizer</span>
-<span class="w">        </span><span class="n">DigitalTwinVisualizer</span><span class="w"> </span><span class="n">visualizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scene</span><span class="p">.</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">DigitalTwinVisualizer</span><span class="o">&gt;</span><span class="p">();</span>
+        // Create a new digital twin visualizer
+        DigitalTwinVisualizer visualizer = scene.AddComponent&lt;DigitalTwinVisualizer&gt;();
 
-<span class="w">        </span><span class="c1">// Load the digital twin data</span>
-<span class="w">        </span><span class="n">visualizer</span><span class="p">.</span><span class="n">LoadDigitalTwinData</span><span class="p">(</span><span class="n">digitalTwinId</span><span class="p">,</span><span class="w"> </span><span class="n">instanceUrl</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Load the digital twin data
+        visualizer.LoadDigitalTwinData(digitalTwinId, instanceUrl);
+    }
 
-<span class="w">    </span><span class="c1">// Load the digital twin data</span>
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadDigitalTwinData</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">digitalTwinId</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">instanceUrl</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Load the digital twin data from Azure Digital Twins</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">digitalTwinData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadDigitalTwinDataFromAzure</span><span class="p">(</span><span class="n">digitalTwinId</span><span class="p">,</span><span class="w"> </span><span class="n">instanceUrl</span><span class="p">);</span>
+    // Load the digital twin data
+    void LoadDigitalTwinData(string digitalTwinId, string instanceUrl)
+    {
+        // Load the digital twin data from Azure Digital Twins
+        string digitalTwinData = LoadDigitalTwinDataFromAzure(digitalTwinId, instanceUrl);
 
-<span class="w">        </span><span class="c1">// Create a new Unity object to represent the digital twin</span>
-<span class="w">        </span><span class="n">GameObject</span><span class="w"> </span><span class="n">digitalTwinObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GameObject</span><span class="p">(</span><span class="s">&quot;DigitalTwinObject&quot;</span><span class="p">);</span>
+        // Create a new Unity object to represent the digital twin
+        GameObject digitalTwinObject = new GameObject(&quot;DigitalTwinObject&quot;);
 
-<span class="w">        </span><span class="c1">// Set up the digital twin object</span>
-<span class="w">        </span><span class="n">digitalTwinObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">digitalTwinObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+        // Set up the digital twin object
+        digitalTwinObject.transform.position = new Vector3(0, 0, 0);
+        digitalTwinObject.transform.rotation = Quaternion.identity;
+    }
 
-<span class="w">    </span><span class="c1">// Load the digital twin data from Azure Digital Twins</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nf">LoadDigitalTwinDataFromAzure</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">digitalTwinId</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">instanceUrl</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Use the Azure Digital Twins API to load the digital twin data</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">digitalTwinData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+    // Load the digital twin data from Azure Digital Twins
+    string LoadDigitalTwinDataFromAzure(string digitalTwinId, string instanceUrl)
+    {
+        // Use the Azure Digital Twins API to load the digital twin data
+        string digitalTwinData = &quot;&quot;;
 
-<span class="w">        </span><span class="c1">// Use the digital twin data to create a new Unity object</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">digitalTwinData</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Use the digital twin data to create a new Unity object
+        return digitalTwinData;
+    }
+}
+</code></pre>
 <p>In this example, we create a new Unity scene and load the digital twin data from Azure Digital Twins. We then create a new Unity object to represent the digital twin and set up its position and rotation.</p>
 <h2 id="real-world-use-cases-for-digital-twins">Real-World Use Cases for Digital Twins</h2>
 <p>Digital twins have a wide range of applications in various industries. Here are a few examples:

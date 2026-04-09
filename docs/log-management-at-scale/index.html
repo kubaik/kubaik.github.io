@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,27 +168,26 @@
 </ul>
 <h3 id="example-collecting-logs-with-logstash">Example: Collecting Logs with Logstash</h3>
 <p>Logstash is a popular log collection tool that can collect logs from various sources, such as files, network devices, and applications. Here is an example of how to collect logs from a file using Logstash:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/apache2/access.log&quot;</span>
-<span class="w">    </span><span class="n">type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-ruby">input {
+  file {
+    path =&gt; &quot;/var/log/apache2/access.log&quot;
+    type =&gt; &quot;apache&quot;
+  }
+}
 
-<span class="n">filter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">grok</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{IPORHOST:client_ip} %{HTTPDATE:timestamp} </span><span class="se">\&quot;</span><span class="s2">%{WORD:method} %{URIPATH:request} HTTP/%{NUMBER:http_version}</span><span class="se">\&quot;</span><span class="s2"> %{NUMBER:status} %{NUMBER:bytes}&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+filter {
+  grok {
+    match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:client_ip} %{HTTPDATE:timestamp} \&quot;%{WORD:method} %{URIPATH:request} HTTP/%{NUMBER:http_version}\&quot; %{NUMBER:status} %{NUMBER:bytes}&quot; }
+  }
+}
 
-<span class="n">output</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">elasticsearch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">hosts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
-<span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_logs&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+output {
+  elasticsearch {
+    hosts =&gt; &quot;localhost:9200&quot;
+    index =&gt; &quot;apache_logs&quot;
+  }
+}
+</code></pre>
 <p>This example collects logs from an Apache access log file, parses the log data using the Grok filter, and outputs the data to an Elasticsearch index.</p>
 <h2 id="implementing-log-management-at-scale">Implementing Log Management at Scale</h2>
 <p>To implement log management at scale, organizations should follow these best practices:</p>
@@ -205,24 +205,23 @@
 </ul>
 <h3 id="example-analyzing-logs-with-elasticsearch">Example: Analyzing Logs with Elasticsearch</h3>
 <p>Elasticsearch is a popular search and analytics engine that can be used to analyze log data. Here is an example of how to analyze logs using Elasticsearch:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="kn">import</span> <span class="n">Elasticsearch</span>
+<pre><code class="language-python">from elasticsearch import Elasticsearch
 
-<span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">()</span>
+es = Elasticsearch()
 
-<span class="c1"># Search for logs with a specific status code</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;apache_logs&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-  <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;match&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;404&quot;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">})</span>
+# Search for logs with a specific status code
+response = es.search(index=&quot;apache_logs&quot;, body={
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;status&quot;: &quot;404&quot;
+    }
+  }
+})
 
-<span class="c1"># Print the search results</span>
-<span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">][</span><span class="s2">&quot;hits&quot;</span><span class="p">]:</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">hit</span><span class="p">[</span><span class="s2">&quot;_source&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the search results
+for hit in response[&quot;hits&quot;][&quot;hits&quot;]:
+  print(hit[&quot;_source&quot;])
+</code></pre>
 <p>This example searches for logs with a status code of 404 using the Elasticsearch Python client and prints the search results.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that organizations may encounter when implementing log management at scale include:</p>
@@ -239,30 +238,29 @@
 </ul>
 <h3 id="example-encrypting-logs-with-ssltls">Example: Encrypting Logs with SSL/TLS</h3>
 <p>SSL/TLS encryption can be used to encrypt log data in transit and ensure its security and compliance. Here is an example of how to configure SSL/TLS encryption for Logstash:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/apache2/access.log&quot;</span>
-<span class="w">    </span><span class="n">type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-ruby">input {
+  file {
+    path =&gt; &quot;/var/log/apache2/access.log&quot;
+    type =&gt; &quot;apache&quot;
+  }
+}
 
-<span class="n">filter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">grok</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{IPORHOST:client_ip} %{HTTPDATE:timestamp} </span><span class="se">\&quot;</span><span class="s2">%{WORD:method} %{URIPATH:request} HTTP/%{NUMBER:http_version}</span><span class="se">\&quot;</span><span class="s2"> %{NUMBER:status} %{NUMBER:bytes}&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+filter {
+  grok {
+    match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:client_ip} %{HTTPDATE:timestamp} \&quot;%{WORD:method} %{URIPATH:request} HTTP/%{NUMBER:http_version}\&quot; %{NUMBER:status} %{NUMBER:bytes}&quot; }
+  }
+}
 
-<span class="n">output</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">elasticsearch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">hosts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
-<span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_logs&quot;</span>
-<span class="w">    </span><span class="n">ssl</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kp">true</span>
-<span class="w">    </span><span class="n">ssl_certificate</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/etc/logstash/certs/logstash.crt&quot;</span>
-<span class="w">    </span><span class="n">ssl_key</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/etc/logstash/certs/logstash.key&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+output {
+  elasticsearch {
+    hosts =&gt; &quot;localhost:9200&quot;
+    index =&gt; &quot;apache_logs&quot;
+    ssl =&gt; true
+    ssl_certificate =&gt; &quot;/etc/logstash/certs/logstash.crt&quot;
+    ssl_key =&gt; &quot;/etc/logstash/certs/logstash.key&quot;
+  }
+}
+</code></pre>
 <p>This example configures Logstash to use SSL/TLS encryption when sending log data to Elasticsearch.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>The performance and pricing of log management tools and platforms can vary widely. Here are some examples of performance benchmarks and pricing for popular log management tools and platforms:</p>

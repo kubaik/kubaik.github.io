@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,42 +161,39 @@
 <p>Let's take a look at some practical examples of functional programming in action. We will use JavaScript as our programming language of choice, but the concepts apply to any language that supports functional programming.</p>
 <h3 id="example-1-using-map-and-filter-to-process-data">Example 1: Using Map and Filter to Process Data</h3>
 <p>Suppose we have an array of objects representing users, and we want to extract the names of users who are older than 30. We can use the <code>map</code> and <code>filter</code> functions to achieve this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">25</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">35</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+<pre><code class="language-javascript">const users = [
+  { name: 'John', age: 25 },
+  { name: 'Jane', age: 35 },
+  { name: 'Bob', age: 40 },
+];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">olderThan30</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">user</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">30</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">olderThan30</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">user</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+const olderThan30 = users.filter(user =&gt; user.age &gt; 30);
+const names = olderThan30.map(user =&gt; user.name);
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">names</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: [&#39;Jane&#39;, &#39;Bob&#39;]</span>
-</code></pre></div>
-
+console.log(names); // Output: ['Jane', 'Bob']
+</code></pre>
 <p>In this example, we use the <code>filter</code> function to create a new array of users who are older than 30, and then use the <code>map</code> function to extract the names of these users.</p>
 <h3 id="example-2-using-reduce-to-calculate-aggregates">Example 2: Using Reduce to Calculate Aggregates</h3>
 <p>Suppose we have an array of numbers, and we want to calculate the sum of these numbers. We can use the <code>reduce</code> function to achieve this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">];</span>
+<pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">numbers</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">acc</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">acc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">current</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+const sum = numbers.reduce((acc, current) =&gt; acc + current, 0);
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: 15</span>
-</code></pre></div>
-
+console.log(sum); // Output: 15
+</code></pre>
 <p>In this example, we use the <code>reduce</code> function to calculate the sum of the numbers in the array. The <code>reduce</code> function takes a callback function that is called for each element in the array, and an initial value of 0.</p>
 <h3 id="example-3-using-recursion-to-solve-a-problem">Example 3: Using Recursion to Solve a Problem</h3>
 <p>Suppose we want to calculate the factorial of a number using recursion. We can define a recursive function like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">function factorial(n) {
+  if (n === 0) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mf">5</span><span class="p">));</span><span class="w"> </span><span class="c1">// Output: 120</span>
-</code></pre></div>
-
+console.log(factorial(5)); // Output: 120
+</code></pre>
 <p>In this example, we define a recursive function <code>factorial</code> that calls itself to calculate the factorial of a number.</p>
 <h2 id="tools-and-platforms-for-functional-programming">Tools and Platforms for Functional Programming</h2>
 <p>There are many tools and platforms that support functional programming, including:

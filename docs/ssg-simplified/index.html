@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,34 +163,31 @@
 * <strong>Hugo</strong>: A fast and flexible static site generator written in Go. Hugo provides a simple and easy-to-use API for generating static HTML files.</p>
 <h3 id="example-building-a-static-site-with-nextjs">Example: Building a Static Site with Next.js</h3>
 <p>To demonstrate the power of SSG, let's build a simple static site using Next.js. First, we need to create a new Next.js project:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-static-site
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-static-site
+</code></pre>
 <p>Next, we need to create a new page component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Head</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next/head&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// pages/index.js
+import Head from 'next/head';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Static</span><span class="w"> </span><span class="nx">Site</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">site</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function HomePage() {
+  return (
+    &lt;div&gt;
+      &lt;Head&gt;
+        &lt;title&gt;My Static Site&lt;/title&gt;
+      &lt;/Head&gt;
+      &lt;h1&gt;Welcome to my static site&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>Finally, we need to configure Next.js to use SSG:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// next.config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;serverless&#39;</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-js">// next.config.js
+module.exports = {
+  target: 'serverless',
+};
+</code></pre>
 <p>With this configuration, Next.js will generate static HTML files for our website, which can be served directly by a CDN.</p>
 <h2 id="common-use-cases-for-ssg">Common Use Cases for SSG</h2>
 <p>SSG is suitable for a wide range of use cases, including:
@@ -198,47 +196,44 @@
 3. <strong>E-commerce websites</strong>: SSG can be used for e-commerce websites, where content is updated frequently. For example, the website for the popular e-commerce platform Shopify uses SSG to generate static HTML files, which are then served by a CDN.</p>
 <h3 id="example-building-an-e-commerce-website-with-gatsby">Example: Building an E-commerce Website with Gatsby</h3>
 <p>To demonstrate the power of SSG for e-commerce websites, let's build a simple e-commerce website using Gatsby. First, we need to create a new Gatsby project:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>gatsby<span class="w"> </span>new<span class="w"> </span>my-ecommerce-website
-</code></pre></div>
-
+<pre><code class="language-bash">npx gatsby new my-ecommerce-website
+</code></pre>
 <p>Next, we need to create a new page component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Link</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;gatsby&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// src/pages/index.js
+import React from 'react';
+import { Link } from 'gatsby';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="nx">e</span><span class="o">-</span><span class="nx">commerce</span><span class="w"> </span><span class="nx">website</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">&quot;/product1&quot;</span><span class="p">&gt;</span><span class="nx">Product</span><span class="w"> </span><span class="mf">1</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">&quot;/product2&quot;</span><span class="p">&gt;</span><span class="nx">Product</span><span class="w"> </span><span class="mf">2</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function HomePage() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Welcome to my e-commerce website&lt;/h1&gt;
+      &lt;ul&gt;
+        &lt;li&gt;
+          &lt;Link to=&quot;/product1&quot;&gt;Product 1&lt;/Link&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;Link to=&quot;/product2&quot;&gt;Product 2&lt;/Link&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>Finally, we need to configure Gatsby to use SSG:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// gatsby-config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">resolve</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gatsby-plugin-sitemap&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/sitemap.xml&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-js">// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        output: '/sitemap.xml',
+      },
+    },
+  ],
+};
+</code></pre>
 <p>With this configuration, Gatsby will generate static HTML files for our e-commerce website, which can be served directly by a CDN.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To demonstrate the performance benefits of SSG, let's compare the page load times for a static site and a dynamic site:
@@ -247,27 +242,24 @@
 <p>As we can see, static sites load significantly faster than dynamic sites. This is because static sites can be served directly by a CDN, reducing the time it takes for a user to load a page.</p>
 <h3 id="example-optimizing-page-load-time-with-hugo">Example: Optimizing Page Load Time with Hugo</h3>
 <p>To demonstrate the power of SSG for optimizing page load time, let's build a simple website using Hugo. First, we need to create a new Hugo project:</p>
-<div class="codehilite"><pre><span></span><code>hugo<span class="w"> </span>new<span class="w"> </span>site<span class="w"> </span>my-website
-</code></pre></div>
-
+<pre><code class="language-bash">hugo new site my-website
+</code></pre>
 <p>Next, we need to create a new page component:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- layouts/index.html --&gt;</span>
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Website<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to my website<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- layouts/index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to my website&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>Finally, we need to configure Hugo to use SSG:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># config.toml</span>
-<span class="n">baseURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://example.com&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-toml"># config.toml
+baseURL = &quot;https://example.com&quot;
+</code></pre>
 <p>With this configuration, Hugo will generate static HTML files for our website, which can be served directly by a CDN. According to a study by Google, this can result in a 20-30% increase in conversions.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>While SSG offers many benefits, it also presents some challenges:
@@ -276,41 +268,38 @@
 * <strong>SEO</strong>: With SSG, SEO can be a challenge. To overcome this, we can use a plugin like gatsby-plugin-sitemap to generate a sitemap for our website.</p>
 <h3 id="example-managing-content-with-contentful">Example: Managing Content with Contentful</h3>
 <p>To demonstrate the power of SSG for managing content, let's build a simple website using Contentful. First, we need to create a new Contentful project:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>contentful<span class="w"> </span>create
-</code></pre></div>
-
+<pre><code class="language-bash">npx contentful create
+</code></pre>
 <p>Next, we need to create a new content model:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// content-model.json</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Blog Post&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;fields&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;body&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">// content-model.json
+{
+  &quot;name&quot;: &quot;Blog Post&quot;,
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;title&quot;,
+      &quot;type&quot;: &quot;Text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;body&quot;,
+      &quot;type&quot;: &quot;Text&quot;
+    }
+  ]
+}
+</code></pre>
 <p>Finally, we need to configure our website to use Contentful:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// gatsby-config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">resolve</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gatsby-source-contentful&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">spaceId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-space-id&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">accessToken</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-access-token&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-js">// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-contentful',
+      options: {
+        spaceId: 'your-space-id',
+        accessToken: 'your-access-token',
+      },
+    },
+  ],
+};
+</code></pre>
 <p>With this configuration, we can manage our content using Contentful, and generate static HTML files for our website using Gatsby.</p>
 <h2 id="pricing-and-cost-savings">Pricing and Cost Savings</h2>
 <p>SSG can result in significant cost savings, particularly when it comes to hosting and maintenance. According to a study by Netlify, SSG can result in a 50-70% reduction in hosting costs. Here are some pricing examples:

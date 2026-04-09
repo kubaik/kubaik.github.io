@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -173,9 +174,8 @@
 <li>Configure the VM's networking settings, such as the IP address and firewall rules, to allow incoming traffic.</li>
 </ol>
 <p>Here is an example of how to create a new Azure VM using Azure CLI:</p>
-<div class="codehilite"><pre><span></span><code>az<span class="w"> </span>vm<span class="w"> </span>create<span class="w"> </span>--resource-group<span class="w"> </span>myResourceGroup<span class="w"> </span>--name<span class="w"> </span>myVM<span class="w"> </span>--image<span class="w"> </span>UbuntuLTS<span class="w"> </span>--size<span class="w"> </span>Standard_DS2_v2
-</code></pre></div>
-
+<pre><code class="language-bash">az vm create --resource-group myResourceGroup --name myVM --image UbuntuLTS --size Standard_DS2_v2
+</code></pre>
 <p>This command creates a new Azure VM with the name "myVM" and the Ubuntu LTS image, in the "myResourceGroup" resource group.</p>
 <h3 id="example-2-building-a-serverless-application-using-azure-functions">Example 2: Building a Serverless Application using Azure Functions</h3>
 <p>To build a serverless application using Azure Functions, you can follow these steps:
@@ -184,9 +184,8 @@
 3. Deploy your application code to Azure, either by uploading it manually or using a deployment tool like Azure DevOps.
 4. Configure the function's triggers and bindings, such as HTTP triggers or timer triggers, to invoke the function.</p>
 <p>Here is an example of how to create a new Azure Function using Azure CLI:</p>
-<div class="codehilite"><pre><span></span><code>az<span class="w"> </span>functionapp<span class="w"> </span>create<span class="w"> </span>--resource-group<span class="w"> </span>myResourceGroup<span class="w"> </span>--name<span class="w"> </span>myFunctionApp<span class="w"> </span>--runtime<span class="w"> </span>dotnet
-</code></pre></div>
-
+<pre><code class="language-bash">az functionapp create --resource-group myResourceGroup --name myFunctionApp --runtime dotnet
+</code></pre>
 <p>This command creates a new Azure Function app with the name "myFunctionApp" and the .NET runtime, in the "myResourceGroup" resource group.</p>
 <h3 id="example-3-using-azure-storage-for-data-analytics">Example 3: Using Azure Storage for Data Analytics</h3>
 <p>To use Azure Storage for data analytics, you can follow these steps:
@@ -195,9 +194,8 @@
 3. Use a data analytics service like Azure Synapse Analytics or Azure Databricks to analyze and process your data.
 4. Visualize your data using a visualization tool like Power BI or Tableau.</p>
 <p>Here is an example of how to create a new Azure Storage account using Azure CLI:</p>
-<div class="codehilite"><pre><span></span><code>az<span class="w"> </span>storage<span class="w"> </span>account<span class="w"> </span>create<span class="w"> </span>--resource-group<span class="w"> </span>myResourceGroup<span class="w"> </span>--name<span class="w"> </span>myStorageAccount<span class="w"> </span>--sku<span class="w"> </span>Standard_LRS
-</code></pre></div>
-
+<pre><code class="language-bash">az storage account create --resource-group myResourceGroup --name myStorageAccount --sku Standard_LRS
+</code></pre>
 <p>This command creates a new Azure Storage account with the name "myStorageAccount" and the Standard LRS sku, in the "myResourceGroup" resource group.</p>
 <h2 id="pricing-and-performance-metrics">Pricing and Performance Metrics</h2>
 <p>Azure provides a pay-as-you-go pricing model, which means that organizations only pay for the resources they use. The pricing for Azure services varies depending on the service, location, and usage.</p>

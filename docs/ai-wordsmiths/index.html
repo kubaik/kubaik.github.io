@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,26 +164,25 @@
 <p>For example, the language translation platform, Google Translate, uses LLMs to translate text and speech in over 100 languages. According to Google, their translation platform can translate over 100 billion words per day, with an accuracy rate of over 90%.</p>
 <h3 id="code-example-text-generation-with-hugging-face-transformers">Code Example: Text Generation with Hugging Face Transformers</h3>
 <p>The Hugging Face Transformers library provides a simple and efficient way to work with LLMs. Here is an example of generating text using the T5 model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">T5Tokenizer</span><span class="p">,</span> <span class="n">T5ForConditionalGeneration</span>
+<pre><code class="language-python">import torch
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 
-<span class="c1"># Load pre-trained T5 model and tokenizer</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">T5ForConditionalGeneration</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;t5-small&#39;</span><span class="p">)</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">T5Tokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;t5-small&#39;</span><span class="p">)</span>
+# Load pre-trained T5 model and tokenizer
+model = T5ForConditionalGeneration.from_pretrained('t5-small')
+tokenizer = T5Tokenizer.from_pretrained('t5-small')
 
-<span class="c1"># Define input text</span>
-<span class="n">input_text</span> <span class="o">=</span> <span class="s2">&quot;Generate a summary of the article about AI&quot;</span>
+# Define input text
+input_text = &quot;Generate a summary of the article about AI&quot;
 
-<span class="c1"># Tokenize input text</span>
-<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span><span class="p">)</span>
+# Tokenize input text
+input_ids = tokenizer.encode(input_text, return_tensors='pt')
 
-<span class="c1"># Generate output text</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+# Generate output text
+output = model.generate(input_ids, max_length=100)
 
-<span class="c1"># Print generated text</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</code></pre></div>
-
+# Print generated text
+print(tokenizer.decode(output[0], skip_special_tokens=True))
+</code></pre>
 <p>This code generates a summary of the input text using the T5 model. The <code>T5ForConditionalGeneration</code> class is used to load the pre-trained model, and the <code>T5Tokenizer</code> class is used to tokenize the input text.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>While generative AI has made significant progress, there are still several common problems that need to be addressed:</p>
@@ -199,22 +199,21 @@
 </ol>
 <h3 id="code-example-evaluating-llms-with-bleu-score">Code Example: Evaluating LLMs with BLEU Score</h3>
 <p>The BLEU score is a widely used metric for evaluating the performance of LLMs. Here is an example of calculating the BLEU score using the NLTK library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.translate.bleu_score</span> <span class="kn">import</span> <span class="n">sentence_bleu</span>
+<pre><code class="language-python">import nltk
+from nltk.translate.bleu_score import sentence_bleu
 
-<span class="c1"># Define reference sentence</span>
-<span class="n">reference_sentence</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;sentence&quot;</span><span class="p">]</span>
+# Define reference sentence
+reference_sentence = [&quot;This&quot;, &quot;is&quot;, &quot;a&quot;, &quot;test&quot;, &quot;sentence&quot;]
 
-<span class="c1"># Define generated sentence</span>
-<span class="n">generated_sentence</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;another&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;sentence&quot;</span><span class="p">]</span>
+# Define generated sentence
+generated_sentence = [&quot;This&quot;, &quot;is&quot;, &quot;another&quot;, &quot;test&quot;, &quot;sentence&quot;]
 
-<span class="c1"># Calculate BLEU score</span>
-<span class="n">bleu_score</span> <span class="o">=</span> <span class="n">sentence_bleu</span><span class="p">([</span><span class="n">reference_sentence</span><span class="p">],</span> <span class="n">generated_sentence</span><span class="p">)</span>
+# Calculate BLEU score
+bleu_score = sentence_bleu([reference_sentence], generated_sentence)
 
-<span class="c1"># Print BLEU score</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BLEU score:&quot;</span><span class="p">,</span> <span class="n">bleu_score</span><span class="p">)</span>
-</code></pre></div>
-
+# Print BLEU score
+print(&quot;BLEU score:&quot;, bleu_score)
+</code></pre>
 <p>This code calculates the BLEU score between the reference sentence and the generated sentence. The <code>sentence_bleu</code> function is used to calculate the BLEU score, which is then printed to the console.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Generative AI has numerous real-world use cases, including:</p>
@@ -226,29 +225,29 @@
 <p>For example, the company, Content Blossom, uses generative AI to create high-quality content for their clients. According to their website, they can generate over 100 articles per day, with an average word count of 500 words per article. Their pricing starts at $500 per month for 100 articles, with discounts available for larger orders.</p>
 <h3 id="code-example-automating-customer-support-with-dialogflow">Code Example: Automating Customer Support with Dialogflow</h3>
 <p>Dialogflow is a popular platform for building conversational interfaces. Here is an example of automating customer support with Dialogflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">dialogflow</span>
+import dialogflow
 
-<span class="c1"># Create Dialogflow client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">dialogflow</span><span class="o">.</span><span class="n">SessionsClient</span><span class="p">()</span>
+# Create Dialogflow client
+client = dialogflow.SessionsClient()
 
-<span class="c1"># Define session ID</span>
-<span class="n">session_id</span> <span class="o">=</span> <span class="s2">&quot;customer-support-session&quot;</span>
+# Define session ID
+session_id = &quot;customer-support-session&quot;
 
-<span class="c1"># Define user input</span>
-<span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;I have a question about my order&quot;</span>
+# Define user input
+user_input = &quot;I have a question about my order&quot;
 
-<span class="c1"># Create session</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">session_path</span><span class="p">(</span><span class="s2">&quot;projects/your-project/locations/your-location/agents/your-agent/sessions/&quot;</span> <span class="o">+</span> <span class="n">session_id</span><span class="p">)</span>
+# Create session
+session = client.session_path(&quot;projects/your-project/locations/your-location/agents/your-agent/sessions/&quot; + session_id)
 
-<span class="c1"># Detect intent</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">detect_intent</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+# Detect intent
+response = client.detect_intent(session, user_input)
 
-<span class="c1"># Print response</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Response:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">query_result</span><span class="o">.</span><span class="n">fulfillment_text</span><span class="p">)</span>
-</code></pre></div>
-
+# Print response
+print(&quot;Response:&quot;, response.query_result.fulfillment_text)
+</code></pre>
 <p>This code automates customer support by detecting the user's intent and responding accordingly. The <code>SessionsClient</code> class is used to create a Dialogflow client, and the <code>detect_intent</code> method is used to detect the user's intent.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of LLMs can be evaluated using various benchmarks, including:</p>

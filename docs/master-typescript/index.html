@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,24 +161,23 @@
 </ul>
 <h2 id="intersection-types">Intersection Types</h2>
 <p>Intersection types are used to combine multiple types into a single type. This is achieved using the <code>&amp;</code> operator. For example, suppose we have two types, <code>Circle</code> and <code>Rectangle</code>, and we want to create a type that represents a shape that is both a circle and a rectangle.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Circle</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">interface Circle {
+    radius: number;
+}
 
-<span class="kd">interface</span><span class="w"> </span><span class="nx">Rectangle</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">}</span>
+interface Rectangle {
+    width: number;
+    height: number;
+}
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">CircleRectangle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Circle</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Rectangle</span><span class="p">;</span>
+type CircleRectangle = Circle &amp; Rectangle;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">shape</span><span class="o">:</span><span class="w"> </span><span class="kt">CircleRectangle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="kt">5</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="kt">20</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const shape: CircleRectangle = {
+    radius: 5,
+    width: 10,
+    height: 20,
+};
+</code></pre>
 <p>In this example, the <code>CircleRectangle</code> type is an intersection of the <code>Circle</code> and <code>Rectangle</code> types. The <code>shape</code> variable conforms to the <code>CircleRectangle</code> type because it has all the properties required by both <code>Circle</code> and <code>Rectangle</code>.</p>
 <h3 id="benefits-of-intersection-types">Benefits of Intersection Types</h3>
 <p>Intersection types provide several benefits, including:</p>
@@ -188,13 +188,12 @@
 </ul>
 <h2 id="union-types">Union Types</h2>
 <p>Union types are used to represent a value that can be one of multiple types. This is achieved using the <code>|</code> operator. For example, suppose we have two types, <code>Number</code> and <code>String</code>, and we want to create a type that represents a value that can be either a number or a string.</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NumberOrString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<pre><code class="language-typescript">type NumberOrString = number | string;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">NumberOrString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="c1">// valid</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">value2</span><span class="o">:</span><span class="w"> </span><span class="kt">NumberOrString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// valid</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">value3</span><span class="o">:</span><span class="w"> </span><span class="kt">NumberOrString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// error</span>
-</code></pre></div>
-
+const value: NumberOrString = 10; // valid
+const value2: NumberOrString = 'hello'; // valid
+const value3: NumberOrString = true; // error
+</code></pre>
 <p>In this example, the <code>NumberOrString</code> type is a union of the <code>number</code> and <code>string</code> types. The <code>value</code> and <code>value2</code> variables conform to the <code>NumberOrString</code> type because they are either numbers or strings. The <code>value3</code> variable does not conform to the <code>NumberOrString</code> type because it is a boolean value.</p>
 <h3 id="benefits-of-union-types">Benefits of Union Types</h3>
 <p>Union types provide several benefits, including:</p>
@@ -205,22 +204,21 @@
 </ul>
 <h2 id="type-guards">Type Guards</h2>
 <p>Type guards are used to narrow the type of a value within a specific scope. This is achieved using the <code>is</code> keyword or user-defined type guards. For example, suppose we have a function that takes a value of type <code>NumberOrString</code> and we want to perform different actions based on the type of the value.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">isNumber</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">NumberOrString</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;number&#39;</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">function isNumber(value: NumberOrString): value is number {
+    return typeof value === 'number';
+}
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">processValue</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">NumberOrString</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isNumber</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The value is a number: </span><span class="si">${</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The value is a string: </span><span class="si">${</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+function processValue(value: NumberOrString) {
+    if (isNumber(value)) {
+        console.log(`The value is a number: ${value}`);
+    } else {
+        console.log(`The value is a string: ${value}`);
+    }
+}
 
-<span class="nx">processValue</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// outputs: The value is a number: 10</span>
-<span class="nx">processValue</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// outputs: The value is a string: hello</span>
-</code></pre></div>
-
+processValue(10); // outputs: The value is a number: 10
+processValue('hello'); // outputs: The value is a string: hello
+</code></pre>
 <p>In this example, the <code>isNumber</code> function is a type guard that checks if the value is a number. The <code>processValue</code> function uses the <code>isNumber</code> type guard to narrow the type of the value within the <code>if</code> scope.</p>
 <h3 id="benefits-of-type-guards">Benefits of Type Guards</h3>
 <p>Type guards provide several benefits, including:</p>
@@ -231,20 +229,19 @@
 </ul>
 <h2 id="conditional-types">Conditional Types</h2>
 <p>Conditional types are used to make type decisions based on conditions. This is achieved using the <code>extends</code> keyword. For example, suppose we have a function that takes a value of type <code>T</code> and we want to return a value of type <code>T</code> if it extends the <code>string</code> type, otherwise return a value of type <code>never</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">never</span><span class="p">;</span>
+<pre><code class="language-typescript">type ConditionalType&lt;T&gt; = T extends string ? T : never;
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">processValue</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Value must be a string&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+function processValue&lt;T&gt;(value: T): ConditionalType&lt;T&gt; {
+    if (typeof value === 'string') {
+        return value;
+    } else {
+        throw new Error('Value must be a string');
+    }
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">result1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">processValue</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// type of result1 is string</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">result2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">processValue</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// error</span>
-</code></pre></div>
-
+const result1 = processValue('hello'); // type of result1 is string
+const result2 = processValue(10); // error
+</code></pre>
 <p>In this example, the <code>ConditionalType</code> type is a conditional type that checks if the type <code>T</code> extends the <code>string</code> type. The <code>processValue</code> function uses the <code>ConditionalType</code> type to return a value of type <code>T</code> if it is a string, otherwise throws an error.</p>
 <h3 id="benefits-of-conditional-types">Benefits of Conditional Types</h3>
 <p>Conditional types provide several benefits, including:</p>

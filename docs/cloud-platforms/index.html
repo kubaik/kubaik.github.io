@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,47 +159,45 @@
 * Reliability: Cloud computing platforms provide built-in redundancy and failover capabilities, which can help businesses ensure high uptime and availability.</p>
 <h2 id="practical-examples-of-cloud-computing-platforms">Practical Examples of Cloud Computing Platforms</h2>
 <p>Let's take a look at some practical examples of cloud computing platforms in action. For example, let's say we want to deploy a web application on AWS. We can use the following code to create an AWS Elastic Beanstalk environment:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">beanstalk</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elasticbeanstalk&#39;</span><span class="p">)</span>
+beanstalk = boto3.client('elasticbeanstalk')
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">beanstalk</span><span class="o">.</span><span class="n">create_environment</span><span class="p">(</span>
-    <span class="n">EnvironmentName</span><span class="o">=</span><span class="s1">&#39;my-environment&#39;</span><span class="p">,</span>
-    <span class="n">ApplicationName</span><span class="o">=</span><span class="s1">&#39;my-application&#39;</span><span class="p">,</span>
-    <span class="n">VersionLabel</span><span class="o">=</span><span class="s1">&#39;my-version&#39;</span><span class="p">,</span>
-    <span class="n">SolutionStackName</span><span class="o">=</span><span class="s1">&#39;64bit Amazon Linux 2018.03 v2.12.10 running Docker 18.09.7&#39;</span>
-<span class="p">)</span>
+response = beanstalk.create_environment(
+    EnvironmentName='my-environment',
+    ApplicationName='my-application',
+    VersionLabel='my-version',
+    SolutionStackName='64bit Amazon Linux 2018.03 v2.12.10 running Docker 18.09.7'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+print(response)
+</code></pre>
 <p>This code creates a new AWS Elastic Beanstalk environment with the specified name, application, version, and solution stack.</p>
 <p>Another example is using Microsoft Azure to deploy a containerized application. We can use the following code to create an Azure Container Instance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">azure.containerinstance</span> <span class="kn">import</span> <span class="n">ContainerGroup</span><span class="p">,</span> <span class="n">Container</span><span class="p">,</span> <span class="n">ContainerPort</span>
+<pre><code class="language-python">import os
+from azure.containerinstance import ContainerGroup, Container, ContainerPort
 
-<span class="c1"># Create a container group</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">ContainerGroup</span><span class="p">(</span>
-    <span class="n">location</span><span class="o">=</span><span class="s1">&#39;westus&#39;</span><span class="p">,</span>
-    <span class="n">containers</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">Container</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-container&#39;</span><span class="p">,</span>
-            <span class="n">image</span><span class="o">=</span><span class="s1">&#39;mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine&#39;</span><span class="p">,</span>
-            <span class="n">ports</span><span class="o">=</span><span class="p">[</span><span class="n">ContainerPort</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)]</span>
-        <span class="p">)</span>
-    <span class="p">],</span>
-    <span class="n">os_type</span><span class="o">=</span><span class="s1">&#39;Linux&#39;</span>
-<span class="p">)</span>
+# Create a container group
+group = ContainerGroup(
+    location='westus',
+    containers=[
+        Container(
+            name='my-container',
+            image='mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine',
+            ports=[ContainerPort(port=80)]
+        )
+    ],
+    os_type='Linux'
+)
 
-<span class="c1"># Create the container group</span>
-<span class="kn">from</span> <span class="nn">azure.containerinstance</span> <span class="kn">import</span> <span class="n">ContainerInstanceClient</span>
+# Create the container group
+from azure.containerinstance import ContainerInstanceClient
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Docker</span> <span class="n">Deep</span> <span class="n">Dive</span> <span class="n">by</span> <span class="n">Nigel</span> <span class="n">Poulton</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">ContainerInstanceClient</span><span class="o">.</span><span class="n">from_config</span><span class="p">()</span>
-<span class="n">client</span><span class="o">.</span><span class="n">container_groups</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="s1">&#39;my-resource-group&#39;</span><span class="p">,</span> <span class="s1">&#39;my-container-group&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
-</code></pre></div>
-
+client = ContainerInstanceClient.from_config()
+client.container_groups.create_or_update('my-resource-group', 'my-container-group', group)
+</code></pre>
 <p>This code creates a new Azure Container Instance with the specified location, container, and port.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>Let's take a look at some performance benchmarks and pricing data for cloud computing platforms. For example, according to a benchmarking study by Cloud Spectator, the average CPU performance of AWS EC2 instances is 345, while the average CPU performance of Azure Virtual Machines is 278. Similarly, the average memory performance of GCP Compute Engine instances is 124, while the average memory performance of AWS EC2 instances is 115.</p>

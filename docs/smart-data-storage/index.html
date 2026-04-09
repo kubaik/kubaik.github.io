@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,121 +162,117 @@
 * Data processing: This is the component that processes the data, such as aggregating, filtering, and transforming the data.
 * Data analysis: This is the component that analyzes the data, such as generating reports, creating visualizations, and performing predictive analytics.</p>
 <p>Here is an example of a data warehousing architecture using Amazon Redshift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an Amazon Redshift client</span>
-<span class="n">redshift</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;redshift&#39;</span><span class="p">)</span>
+# Create an Amazon Redshift client
+redshift = boto3.client('redshift')
 
-<span class="c1"># Create a cluster</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">redshift</span><span class="o">.</span><span class="n">create_cluster</span><span class="p">(</span>
-    <span class="n">DBName</span><span class="o">=</span><span class="s1">&#39;mydatabase&#39;</span><span class="p">,</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="s1">&#39;mycluster&#39;</span><span class="p">,</span>
-    <span class="n">MasterUsername</span><span class="o">=</span><span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-    <span class="n">MasterUserPassword</span><span class="o">=</span><span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
-    <span class="n">NodeType</span><span class="o">=</span><span class="s1">&#39;dc2.large&#39;</span><span class="p">,</span>
-    <span class="n">ClusterType</span><span class="o">=</span><span class="s1">&#39;single-node&#39;</span>
-<span class="p">)</span>
+# Create a cluster
+cluster = redshift.create_cluster(
+    DBName='mydatabase',
+    ClusterIdentifier='mycluster',
+    MasterUsername='myuser',
+    MasterUserPassword='mypassword',
+    NodeType='dc2.large',
+    ClusterType='single-node'
+)
 
-<span class="c1"># Create a schema</span>
-<span class="n">schema</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">CREATE TABLE sales (</span>
-<span class="s2">    id INTEGER,</span>
-<span class="s2">    date DATE,</span>
-<span class="s2">    region VARCHAR(255),</span>
-<span class="s2">    product VARCHAR(255),</span>
-<span class="s2">    amount DECIMAL(10, 2)</span>
-<span class="s2">);</span>
-<span class="s2">&quot;&quot;&quot;</span>
+# Create a schema
+schema = &quot;&quot;&quot;
+CREATE TABLE sales (
+    id INTEGER,
+    date DATE,
+    region VARCHAR(255),
+    product VARCHAR(255),
+    amount DECIMAL(10, 2)
+);
+&quot;&quot;&quot;
 
-<span class="c1"># Execute the schema</span>
-<span class="n">redshift</span><span class="o">.</span><span class="n">execute_statement</span><span class="p">(</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="s1">&#39;mycluster&#39;</span><span class="p">,</span>
-    <span class="n">Database</span><span class="o">=</span><span class="s1">&#39;mydatabase&#39;</span><span class="p">,</span>
-    <span class="n">DbUser</span><span class="o">=</span><span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-    <span class="n">Sql</span><span class="o">=</span><span class="n">schema</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Execute the schema
+redshift.execute_statement(
+    ClusterIdentifier='mycluster',
+    Database='mydatabase',
+    DbUser='myuser',
+    Sql=schema
+)
+</code></pre>
 <p>This code creates an Amazon Redshift cluster, creates a schema, and executes the schema to create a table.</p>
 <h3 id="data-ingestion">Data Ingestion</h3>
 <p>Data ingestion is the process of extracting data from the data sources and loading it into the data warehouse. There are several tools and platforms available for data ingestion, including AWS Glue, Apache NiFi, and Google Cloud Dataflow.</p>
 <p>For example, AWS Glue is a fully managed service that provides a simple and cost-effective way to extract, transform, and load data. It supports a wide range of data sources, including Amazon S3, Amazon DynamoDB, and JDBC databases.</p>
 <p>Here is an example of using AWS Glue to ingest data from Amazon S3:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS Glue client</span>
-<span class="n">glue</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;glue&#39;</span><span class="p">)</span>
+# Create an AWS Glue client
+glue = boto3.client('glue')
 
-<span class="c1"># Create a job</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">glue</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;myjob&#39;</span><span class="p">,</span>
-    <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;myrole&#39;</span><span class="p">,</span>
-    <span class="n">Command</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;glueetl&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;ScriptLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://mybucket/myscript.py&#39;</span>
-    <span class="p">},</span>
-    <span class="n">DefaultArguments</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;--input_path&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://mybucket/input/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;--output_path&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://mybucket/output/&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a job
+job = glue.create_job(
+    Name='myjob',
+    Role='myrole',
+    Command={
+        'Name': 'glueetl',
+        'ScriptLocation': 's3://mybucket/myscript.py'
+    },
+    DefaultArguments={
+        '--input_path': 's3://mybucket/input/',
+        '--output_path': 's3://mybucket/output/'
+    }
+)
 
-<span class="c1"># Run the job</span>
-<span class="n">glue</span><span class="o">.</span><span class="n">start_job_run</span><span class="p">(</span>
-    <span class="n">JobName</span><span class="o">=</span><span class="s1">&#39;myjob&#39;</span><span class="p">,</span>
-    <span class="n">Arguments</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;--input_path&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://mybucket/input/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;--output_path&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://mybucket/output/&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Run the job
+glue.start_job_run(
+    JobName='myjob',
+    Arguments={
+        '--input_path': 's3://mybucket/input/',
+        '--output_path': 's3://mybucket/output/'
+    }
+)
+</code></pre>
 <p>This code creates an AWS Glue job, defines the job, and runs the job to ingest data from Amazon S3.</p>
 <h2 id="data-storage">Data Storage</h2>
 <p>Data storage is the component that stores the data in the data warehouse. There are several data storage solutions available, including relational databases, NoSQL databases, and cloud-based object storage.</p>
 <p>For example, Amazon S3 is a cloud-based object storage service that provides a durable and scalable way to store data. It supports a wide range of data formats, including CSV, JSON, and Parquet.</p>
 <p>Here is an example of using Amazon S3 to store data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an Amazon S3 client</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+# Create an Amazon S3 client
+s3 = boto3.client('s3')
 
-<span class="c1"># Upload a file to Amazon S3</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="s1">&#39;data.csv&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;mybucket&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;data.csv&#39;</span>
-<span class="p">)</span>
+# Upload a file to Amazon S3
+s3.upload_file(
+    'data.csv',
+    'mybucket',
+    'data.csv'
+)
 
-<span class="c1"># Download a file from Amazon S3</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span>
-    <span class="s1">&#39;mybucket&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;data.csv&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;data.csv&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Download a file from Amazon S3
+s3.download_file(
+    'mybucket',
+    'data.csv',
+    'data.csv'
+)
+</code></pre>
 <p>This code uploads a file to Amazon S3 and downloads a file from Amazon S3.</p>
 <h3 id="data-processing">Data Processing</h3>
 <p>Data processing is the component that processes the data, such as aggregating, filtering, and transforming the data. There are several data processing solutions available, including Apache Spark, Apache Flink, and Google Cloud Dataflow.</p>
 <p>For example, Apache Spark is a unified analytics engine that provides a high-level API for processing data. It supports a wide range of data sources, including HDFS, Amazon S3, and JDBC databases.</p>
 <p>Here is an example of using Apache Spark to process data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a Spark session</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a Spark session
+spark = SparkSession.builder.appName('myapp').getOrCreate()
 
-<span class="c1"># Load data from Amazon S3</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;s3://mybucket/data.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Load data from Amazon S3
+df = spark.read.csv('s3://mybucket/data.csv', header=True, inferSchema=True)
 
-<span class="c1"># Process the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;amount&#39;</span><span class="p">)</span>
+# Process the data
+df = df.filter(df['age'] &gt; 30)
+df = df.groupBy('region').sum('amount')
 
-<span class="c1"># Save the data to Amazon S3</span>
-<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;s3://mybucket/output&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the data to Amazon S3
+df.write.csv('s3://mybucket/output', header=True)
+</code></pre>
 <p>This code loads data from Amazon S3, processes the data, and saves the data to Amazon S3.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when implementing a data warehousing solution, including:

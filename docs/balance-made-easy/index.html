@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,26 +160,25 @@
 <li>Geographical: Incoming requests are directed to a server based on the client's geolocation.</li>
 </ul>
 <p>For example, let's consider a scenario where we have three servers, each with a different workload capacity. We can use the Round-Robin technique to distribute incoming requests across these servers.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
+<pre><code class="language-python">import random
 
-<span class="c1"># Define the list of servers</span>
-<span class="n">servers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Server1&#39;</span><span class="p">,</span> <span class="s1">&#39;Server2&#39;</span><span class="p">,</span> <span class="s1">&#39;Server3&#39;</span><span class="p">]</span>
+# Define the list of servers
+servers = ['Server1', 'Server2', 'Server3']
 
-<span class="c1"># Define the current server index</span>
-<span class="n">current_server_index</span> <span class="o">=</span> <span class="mi">0</span>
+# Define the current server index
+current_server_index = 0
 
-<span class="c1"># Function to get the next server</span>
-<span class="k">def</span> <span class="nf">get_next_server</span><span class="p">():</span>
-    <span class="k">global</span> <span class="n">current_server_index</span>
-    <span class="n">next_server</span> <span class="o">=</span> <span class="n">servers</span><span class="p">[</span><span class="n">current_server_index</span><span class="p">]</span>
-    <span class="n">current_server_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_server_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">servers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">next_server</span>
+# Function to get the next server
+def get_next_server():
+    global current_server_index
+    next_server = servers[current_server_index]
+    current_server_index = (current_server_index + 1) % len(servers)
+    return next_server
 
-<span class="c1"># Test the function</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_next_server</span><span class="p">())</span>
-</code></pre></div>
-
+# Test the function
+for _ in range(10):
+    print(get_next_server())
+</code></pre>
 <p>This code snippet demonstrates a simple Round-Robin load balancing technique where each incoming request is sent to the next available server in a predetermined sequence.</p>
 <h2 id="load-balancing-tools-and-platforms">Load Balancing Tools and Platforms</h2>
 <p>There are several load balancing tools and platforms available, including:</p>
@@ -189,29 +189,28 @@
 <li>Google Cloud Load Balancing: A fully managed load balancing service offered by GCP, supporting various algorithms and protocols.</li>
 </ul>
 <p>For example, let's consider a scenario where we want to use HAProxy to load balance traffic across multiple servers. We can configure HAProxy to use the Least Connection algorithm to direct incoming requests to the server with the fewest active connections.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># HAProxy configuration file</span>
+<pre><code class="language-bash"># HAProxy configuration file
 global
-<span class="w">    </span>maxconn<span class="w"> </span><span class="m">256</span>
+    maxconn 256
 
 defaults
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>timeout<span class="w"> </span>connect<span class="w"> </span>5000ms
-<span class="w">    </span>timeout<span class="w"> </span>client<span class="w">  </span>50000ms
-<span class="w">    </span>timeout<span class="w"> </span>server<span class="w">  </span>50000ms
+    mode http
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
 
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
+frontend http
+    bind *:80
 
-<span class="w">    </span>default_backend<span class="w"> </span>servers
+    default_backend servers
 
-backend<span class="w"> </span>servers
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>leastconn
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">127</span>.0.0.1:8080<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">127</span>.0.0.1:8081<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">127</span>.0.0.1:8082<span class="w"> </span>check
-</code></pre></div>
-
+backend servers
+    mode http
+    balance leastconn
+    server server1 127.0.0.1:8080 check
+    server server2 127.0.0.1:8081 check
+    server server3 127.0.0.1:8082 check
+</code></pre>
 <p>This configuration file demonstrates how to use HAProxy to load balance traffic across multiple servers using the Least Connection algorithm.</p>
 <h3 id="load-balancing-metrics-and-pricing">Load Balancing Metrics and Pricing</h3>
 <p>When it comes to load balancing, there are several metrics that need to be considered, including:</p>
@@ -250,30 +249,29 @@ backend<span class="w"> </span>servers
 </li>
 </ol>
 <p>For example, let's consider a scenario where we are using HAProxy to load balance traffic across multiple servers, and we want to implement session persistence using cookie-based persistence. We can configure HAProxy to use the <code>cookie</code> parameter to insert a cookie into the client's request, which can then be used to direct subsequent requests to the same server.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># HAProxy configuration file</span>
+<pre><code class="language-bash"># HAProxy configuration file
 global
-<span class="w">    </span>maxconn<span class="w"> </span><span class="m">256</span>
+    maxconn 256
 
 defaults
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>timeout<span class="w"> </span>connect<span class="w"> </span>5000ms
-<span class="w">    </span>timeout<span class="w"> </span>client<span class="w">  </span>50000ms
-<span class="w">    </span>timeout<span class="w"> </span>server<span class="w">  </span>50000ms
+    mode http
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
 
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
+frontend http
+    bind *:80
 
-<span class="w">    </span>default_backend<span class="w"> </span>servers
+    default_backend servers
 
-backend<span class="w"> </span>servers
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>cookie<span class="w"> </span>JSESSIONID<span class="w"> </span>prefix<span class="w"> </span>nocache
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">127</span>.0.0.1:8080<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server1
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">127</span>.0.0.1:8081<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server2
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">127</span>.0.0.1:8082<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server3
-</code></pre></div>
-
+backend servers
+    mode http
+    balance roundrobin
+    cookie JSESSIONID prefix nocache
+    server server1 127.0.0.1:8080 check cookie server1
+    server server2 127.0.0.1:8081 check cookie server2
+    server server3 127.0.0.1:8082 check cookie server3
+</code></pre>
 <p>This configuration file demonstrates how to use HAProxy to implement session persistence using cookie-based persistence.</p>
 <h3 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h3>
 <p>Load balancing can be used in a variety of scenarios, including:</p>

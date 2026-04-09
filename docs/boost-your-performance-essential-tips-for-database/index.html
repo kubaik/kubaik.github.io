@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,68 +157,62 @@
 <p><strong>Problem</strong>: Query execution times can slow down due to improper indexing or inefficient query structures.</p>
 <p><strong>Solution</strong>: Use indexing to speed up data retrieval.</p>
 <h4 id="example-creating-indexes-in-sql">Example: Creating Indexes in SQL</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_user_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_user_email ON users (email);
+</code></pre>
 <p>By creating an index on the <code>email</code> column in the <code>users</code> table, queries filtering by email will run significantly faster. According to a benchmark by Percona, adding an index can reduce query time from seconds to milliseconds.</p>
 <h3 id="2-redundant-data">2. Redundant Data</h3>
 <p><strong>Problem</strong>: Redundant or duplicated data can lead to increased storage costs and slower query performance.</p>
 <p><strong>Solution</strong>: Normalize your database schema.</p>
 <h4 id="use-case-normalizing-a-user-table">Use Case: Normalizing a User Table</h4>
 <p>Suppose you have a <code>users</code> table that includes both user information and their orders:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    order_id INT,
+    order_date DATE
+);
+</code></pre>
 <p>Instead, normalize it by separating orders into a different table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    order_date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+</code></pre>
 <p>Normalization reduces data redundancy and improves overall performance. A study by the University of Cambridge found that proper normalization can reduce data size by 30-40%.</p>
 <h3 id="3-unoptimized-queries">3. Unoptimized Queries</h3>
 <p><strong>Problem</strong>: Poorly written queries can lead to high execution times and resource usage.</p>
 <p><strong>Solution</strong>: Refactor your queries for efficiency.</p>
 <h4 id="example-refactoring-a-sql-query">Example: Refactoring a SQL Query</h4>
 <p>Imagine you have a query that retrieves user email addresses and their order counts:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">)</span><span class="w"> </span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">email</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT u.email, COUNT(o.order_id) 
+FROM users u 
+JOIN orders o ON u.user_id = o.user_id 
+GROUP BY u.email;
+</code></pre>
 <p>Instead, you can use a subquery:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">order_count</span><span class="w"> </span>
-<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span><span class="w"> </span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span>
-<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span>
-<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">user_id</span>
-<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_orders</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT email, order_count 
+FROM (
+    SELECT u.email, COUNT(o.order_id) AS order_count 
+    FROM users u 
+    LEFT JOIN orders o ON u.user_id = o.user_id 
+    GROUP BY u.user_id
+) AS user_orders;
+</code></pre>
 <p>This optimizes performance by reducing the number of rows processed in the <code>JOIN</code> operation, effectively lowering execution time.</p>
 <h2 id="tools-for-database-optimization">Tools for Database Optimization</h2>
 <h3 id="1-query-profiling-tools">1. Query Profiling Tools</h3>
 <p><strong>MySQL EXPLAIN</strong>: This command helps analyze how MySQL executes queries. It can identify bottlenecks in your SQL statements.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">email</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT u.email FROM users u WHERE u.user_id = 10;
+</code></pre>
 <p>The output details the query execution plan, showing how indexes are used and the estimated number of rows processed.</p>
 <h3 id="2-monitoring-tools">2. Monitoring Tools</h3>
 <p><strong>New Relic</strong>: This tool provides insights into database performance, identifying slow queries and resource usage.</p>
@@ -247,36 +242,34 @@
 <li><strong>Redis</strong>: A popular in-memory data structure store that can cache frequently accessed data.</li>
 </ul>
 <h4 id="example-implementing-redis-cache-in-nodejs">Example: Implementing Redis Cache in Node.js</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">getUserEmail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="nx">reject</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`user:</span><span class="si">${</span><span class="nx">userId</span><span class="si">}</span><span class="sb">:email`</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">email</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">resolve</span><span class="p">(</span><span class="nx">email</span><span class="p">);</span>
-<span class="w">            </span><span class="c1">// Fetch from database if not in cache</span>
-<span class="w">            </span><span class="c1">// db.query(&#39;SELECT email FROM users WHERE user_id = ?&#39;, userId, ...);</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const getUserEmail = (userId) =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+        client.get(`user:${userId}:email`, (err, email) =&gt; {
+            if (err) return reject(err);
+            if (email) return resolve(email);
+            // Fetch from database if not in cache
+            // db.query('SELECT email FROM users WHERE user_id = ?', userId, ...);
+        });
+    });
+};
+</code></pre>
 <p>By caching user emails, you can significantly reduce database queries, leading to enhanced application performance.</p>
 <h3 id="3-partitioning-large-tables">3. Partitioning Large Tables</h3>
 <p>For large datasets, consider partitioning your tables.</p>
 <ul>
 <li><strong>Range Partitioning</strong>: Useful for time-series data.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">)</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">RANGE</span><span class="w"> </span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">order_date</span><span class="p">))</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2021</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2022</span><span class="p">),</span>
-<span class="w">    </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2022</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2023</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE orders (
+    order_id INT,
+    order_date DATE
+) PARTITION BY RANGE (YEAR(order_date)) (
+    PARTITION p2021 VALUES LESS THAN (2022),
+    PARTITION p2022 VALUES LESS THAN (2023)
+);
+</code></pre>
 <p>This method can improve query performance by limiting the amount of data scanned.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Database optimization is an ongoing process that requires continuous monitoring and adjustment. Here are actionable next steps to implement:</p>

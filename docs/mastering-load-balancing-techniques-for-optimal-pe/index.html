@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,17 +168,16 @@
 <p><strong>Implementation Example:</strong></p>
 <p>Let’s assume you have three servers (Server A, Server B, and Server C). Here's how you can implement Round Robin load balancing using HAProxy, a popular open-source load balancer.</p>
 <h4 id="haproxy-configuration">HAProxy Configuration</h4>
-<div class="codehilite"><pre><span></span><code>frontend<span class="w"> </span>http_front
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">    </span>default_backend<span class="w"> </span>http_back
+<pre><code class="language-bash">frontend http_front
+    bind *:80
+    default_backend http_back
 
-backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check
-</code></pre></div>
-
+backend http_back
+    balance roundrobin
+    server server1 192.168.1.1:80 check
+    server server2 192.168.1.2:80 check
+    server server3 192.168.1.3:80 check
+</code></pre>
 <p><strong>Explanation:</strong>
 - <code>frontend</code> is the entry point for incoming requests.
 - <code>backend</code> defines the servers that will handle requests.
@@ -187,13 +187,12 @@ backend<span class="w"> </span>http_back
 <p><strong>Use Case:</strong> Works well when servers have different performance levels.</p>
 <p><strong>Implementation Example:</strong></p>
 <p>Continuing with HAProxy, here's how to configure Least Connections:</p>
-<div class="codehilite"><pre><span></span><code>backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>leastconn
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check
-</code></pre></div>
-
+<pre><code class="language-bash">backend http_back
+    balance leastconn
+    server server1 192.168.1.1:80 check
+    server server2 192.168.1.2:80 check
+    server server3 192.168.1.3:80 check
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>balance leastconn</code> directive tells HAProxy to route requests to the server with the least number of active connections.</p>
 <h3 id="3-ip-hashing">3. IP Hashing</h3>
@@ -201,13 +200,12 @@ backend<span class="w"> </span>http_back
 <p><strong>Use Case:</strong> Useful for applications requiring session stickiness.</p>
 <p><strong>Implementation Example:</strong></p>
 <p>Using HAProxy for IP Hashing:</p>
-<div class="codehilite"><pre><span></span><code>backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>iphash
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check
-</code></pre></div>
-
+<pre><code class="language-bash">backend http_back
+    balance iphash
+    server server1 192.168.1.1:80 check
+    server server2 192.168.1.2:80 check
+    server server3 192.168.1.3:80 check
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>balance iphash</code> option routes requests based on the hashed value of the client’s IP address.</p>
 <h3 id="4-weighted-load-balancing">4. Weighted Load Balancing</h3>
@@ -215,13 +213,12 @@ backend<span class="w"> </span>http_back
 <p><strong>Use Case:</strong> When you want to utilize a more powerful server more than others.</p>
 <p><strong>Implementation Example:</strong></p>
 <p>For HAProxy with weighted load balancing:</p>
-<div class="codehilite"><pre><span></span><code>backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>weight<span class="w"> </span><span class="m">3</span><span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>weight<span class="w"> </span><span class="m">1</span><span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>weight<span class="w"> </span><span class="m">1</span><span class="w"> </span>check
-</code></pre></div>
-
+<pre><code class="language-bash">backend http_back
+    balance roundrobin
+    server server1 192.168.1.1:80 weight 3 check
+    server server2 192.168.1.2:80 weight 1 check
+    server server3 192.168.1.3:80 weight 1 check
+</code></pre>
 <p><strong>Explanation:</strong>
 - In this example, <code>server1</code> will receive requests three times as often as <code>server2</code> and <code>server3</code>.</p>
 <h3 id="5-health-checks">5. Health Checks</h3>
@@ -229,13 +226,12 @@ backend<span class="w"> </span>http_back
 <p><strong>Use Case:</strong> To avoid routing traffic to downed or overloaded servers.</p>
 <p><strong>Implementation Example:</strong></p>
 <p>Adding health checks to HAProxy:</p>
-<div class="codehilite"><pre><span></span><code>backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check
-</code></pre></div>
-
+<pre><code class="language-bash">backend http_back
+    balance roundrobin
+    server server1 192.168.1.1:80 check
+    server server2 192.168.1.2:80 check
+    server server3 192.168.1.3:80 check
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>check</code> option enables health checks for each server. HAProxy will automatically stop sending traffic to any server that fails these checks.</p>
 <h3 id="6-session-persistence">6. Session Persistence</h3>
@@ -243,14 +239,13 @@ backend<span class="w"> </span>http_back
 <p><strong>Use Case:</strong> Necessary for applications where user sessions are maintained on a specific server.</p>
 <p><strong>Implementation Example:</strong></p>
 <p>Using sticky sessions in HAProxy:</p>
-<div class="codehilite"><pre><span></span><code>backend<span class="w"> </span>http_back
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>cookie<span class="w"> </span>SERVERID<span class="w"> </span>insert<span class="w"> </span>indirect<span class="w"> </span>nocache
-<span class="w">    </span>server<span class="w"> </span>server1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server1
-<span class="w">    </span>server<span class="w"> </span>server2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server2
-<span class="w">    </span>server<span class="w"> </span>server3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check<span class="w"> </span>cookie<span class="w"> </span>server3
-</code></pre></div>
-
+<pre><code class="language-bash">backend http_back
+    balance roundrobin
+    cookie SERVERID insert indirect nocache
+    server server1 192.168.1.1:80 check cookie server1
+    server server2 192.168.1.2:80 check cookie server2
+    server server3 192.168.1.3:80 check cookie server3
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>cookie</code> directive creates a session cookie for each server, maintaining session persistence.</p>
 <h3 id="tools-and-platforms-for-load-balancing">Tools and Platforms for Load Balancing</h3>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,23 +163,22 @@
 </ul>
 <h3 id="example-1-spark-dataframes">Example 1: Spark DataFrames</h3>
 <p>Here's an example of using Spark DataFrames to process a simple dataset:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// create a SparkSession</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&quot;SparkDataFrameExample&quot;</span><span class="p">).</span><span class="n">getOrCreate</span><span class="p">()</span>
+<pre><code class="language-scala">// create a SparkSession
+val spark = SparkSession.builder.appName(&quot;SparkDataFrameExample&quot;).getOrCreate()
 
-<span class="c1">// create a sample dataset</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;John&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Jane&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bob&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">)</span>
-<span class="p">)</span>
+// create a sample dataset
+val data = Seq(
+  (1, &quot;John&quot;, 25),
+  (2, &quot;Jane&quot;, 30),
+  (3, &quot;Bob&quot;, 35)
+)
 
-<span class="c1">// convert the dataset to a DataFrame</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spark</span><span class="p">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+// convert the dataset to a DataFrame
+val df = spark.createDataFrame(data)
 
-<span class="c1">// print the DataFrame</span>
-<span class="n">df</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+// print the DataFrame
+df.show()
+</code></pre>
 <p>This code creates a SparkSession, defines a sample dataset, and converts it to a DataFrame using the <code>createDataFrame</code> method. The resulting DataFrame is then printed to the console using the <code>show</code> method.</p>
 <h2 id="use-cases-for-spark">Use Cases for Spark</h2>
 <p>Spark has a wide range of use cases, including:</p>
@@ -190,23 +190,22 @@
 </ol>
 <h3 id="example-2-spark-streaming">Example 2: Spark Streaming</h3>
 <p>Here's an example of using Spark Streaming to process a stream of data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// create a SparkSession</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&quot;SparkStreamingExample&quot;</span><span class="p">).</span><span class="n">getOrCreate</span><span class="p">()</span>
+<pre><code class="language-scala">// create a SparkSession
+val spark = SparkSession.builder.appName(&quot;SparkStreamingExample&quot;).getOrCreate()
 
-<span class="c1">// create a Spark Streaming context</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">ssc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">StreamingContext</span><span class="p">(</span><span class="n">spark</span><span class="p">.</span><span class="n">sparkContext</span><span class="p">,</span><span class="w"> </span><span class="nc">Seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+// create a Spark Streaming context
+val ssc = new StreamingContext(spark.sparkContext, Seconds(1))
 
-<span class="c1">// create a stream of data</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ssc</span><span class="p">.</span><span class="n">socketTextStream</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9999</span><span class="p">)</span>
+// create a stream of data
+val stream = ssc.socketTextStream(&quot;localhost&quot;, 9999)
 
-<span class="c1">// process the stream</span>
-<span class="n">stream</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="n">toInt</span><span class="p">)).</span><span class="n">pprint</span><span class="p">()</span>
+// process the stream
+stream.map(x =&gt; x.split(&quot; &quot;).map(_.toInt)).pprint()
 
-<span class="c1">// start the stream</span>
-<span class="n">ssc</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
-<span class="n">ssc</span><span class="p">.</span><span class="n">awaitTermination</span><span class="p">()</span>
-</code></pre></div>
-
+// start the stream
+ssc.start()
+ssc.awaitTermination()
+</code></pre>
 <p>This code creates a SparkSession, defines a Spark Streaming context, and creates a stream of data from a socket. The stream is then processed using the <code>map</code> method, and the results are printed to the console using the <code>pprint</code> method.</p>
 <h2 id="tools-and-platforms-for-spark">Tools and Platforms for Spark</h2>
 <p>There are several tools and platforms that can be used with Spark, including:</p>
@@ -218,26 +217,25 @@
 </ul>
 <h3 id="example-3-spark-with-databricks">Example 3: Spark with Databricks</h3>
 <p>Here's an example of using Spark with Databricks to process a dataset:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># import the necessary libraries</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python"># import the necessary libraries
+from pyspark.sql import SparkSession
 
-<span class="c1"># create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;DatabricksExample&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# create a SparkSession
+spark = SparkSession.builder.appName(&quot;DatabricksExample&quot;).getOrCreate()
 
-<span class="c1"># create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
-  <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
-  <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
-<span class="p">]</span>
+# create a sample dataset
+data = [
+  (1, &quot;John&quot;, 25),
+  (2, &quot;Jane&quot;, 30),
+  (3, &quot;Bob&quot;, 35)
+]
 
-<span class="c1"># convert the dataset to a DataFrame</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# convert the dataset to a DataFrame
+df = spark.createDataFrame(data)
 
-<span class="c1"># print the DataFrame</span>
-<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# print the DataFrame
+df.show()
+</code></pre>
 <p>This code creates a SparkSession, defines a sample dataset, and converts it to a DataFrame using the <code>createDataFrame</code> method. The resulting DataFrame is then printed to the console using the <code>show</code> method.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur when using Spark include:</p>

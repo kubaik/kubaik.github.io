@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,49 +160,48 @@
 <h2 id="implementing-federated-learning">Implementing Federated Learning</h2>
 <p>To implement federated learning, we can use popular frameworks such as TensorFlow Federated (TFF) or PyTorch. Here, we will use TFF to demonstrate a simple example.</p>
 <h3 id="example-1-basic-federated-learning-with-tff">Example 1: Basic Federated Learning with TFF</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_federated</span> <span class="k">as</span> <span class="nn">tff</span>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_federated as tff
 
-<span class="c1"># Define the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">])</span>
+# Define the model
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(10, input_shape=(10,)),
+    tf.keras.layers.Dense(1)
+])
 
-<span class="c1"># Define the loss and optimizer</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">MeanSquaredError</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+# Define the loss and optimizer
+loss_fn = tf.keras.losses.MeanSquaredError()
+optimizer = tf.keras.optimizers.SGD(learning_rate=0.01)
 
-<span class="c1"># Define the federated averaging process</span>
-<span class="nd">@tff</span><span class="o">.</span><span class="n">tf_computation</span><span class="p">(</span><span class="n">tff</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">client_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-    <span class="n">gradients</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">)</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">gradients</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the federated averaging process
+@tff.tf_computation(tff.TensorType(tf.float32, [10]))
+def client_update(model, data):
+    with tf.GradientTape() as tape:
+        predictions = model(data, training=True)
+        loss = loss_fn(predictions, data)
+    gradients = tape.gradient(loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    return model
 
-<span class="c1"># Define the server update process</span>
-<span class="nd">@tff</span><span class="o">.</span><span class="n">tf_computation</span><span class="p">(</span><span class="n">tff</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">server_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">updates</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">map_structure</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">updates</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the server update process
+@tff.tf_computation(tff.TensorType(tf.float32, [10]))
+def server_update(model, updates):
+    model = tf.nest.map_structure(lambda x, y: x + y, model, updates)
+    return model
 
-<span class="c1"># Initialize the model and aggregator</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tff</span><span class="o">.</span><span class="n">federated_variables</span><span class="o">.</span><span class="n">FederatedVariable</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">aggregator</span> <span class="o">=</span> <span class="n">tff</span><span class="o">.</span><span class="n">aggregators</span><span class="o">.</span><span class="n">FederatedAveragingAggregator</span><span class="p">()</span>
+# Initialize the model and aggregator
+model = tff.federated_variables.FederatedVariable(model)
+aggregator = tff.aggregators.FederatedAveragingAggregator()
 
-<span class="c1"># Train the model</span>
-<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">client_updates</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">client_update_result</span> <span class="o">=</span> <span class="n">client_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">client_data</span><span class="p">[</span><span class="n">client</span><span class="p">])</span>
-        <span class="n">client_updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client_update_result</span><span class="p">)</span>
-    <span class="n">server_update_result</span> <span class="o">=</span> <span class="n">server_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">aggregator</span><span class="p">(</span><span class="n">client_updates</span><span class="p">))</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">server_update_result</span>
-</code></pre></div>
-
+# Train the model
+for round in range(10):
+    client_updates = []
+    for client in range(10):
+        client_update_result = client_update(model, client_data[client])
+        client_updates.append(client_update_result)
+    server_update_result = server_update(model, aggregator(client_updates))
+    model = server_update_result
+</code></pre>
 <p>In this example, we define a simple neural network model and a federated averaging process. We then train the model using a simulated client-server architecture.</p>
 <h2 id="benefits-of-federated-learning">Benefits of Federated Learning</h2>
 <p>Federated learning offers several benefits, including:
@@ -224,41 +224,40 @@
 * <strong>Client clustering</strong>: Client clustering can help group clients with similar data distributions, reducing the impact of non-IID data.
 * <strong>Personalization</strong>: Personalization techniques can help adapt the model to each client's specific data distribution.</p>
 <h3 id="example-2-addressing-non-iid-data-with-client-clustering">Example 2: Addressing Non-IID Data with Client Clustering</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import numpy as np
 
-<span class="c1"># Define the client data</span>
-<span class="n">client_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
-<span class="p">])</span>
+# Define the client data
+client_data = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [10, 11, 12],
+    [13, 14, 15]
+])
 
-<span class="c1"># Define the client clusters</span>
-<span class="n">client_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-<span class="p">])</span>
+# Define the client clusters
+client_clusters = np.array([
+    [0, 1],
+    [2, 3],
+    [4]
+])
 
-<span class="c1"># Define the cluster-specific models</span>
-<span class="n">cluster_models</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">client_clusters</span><span class="p">:</span>
-    <span class="n">cluster_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="p">])</span>
-    <span class="n">cluster_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cluster_model</span><span class="p">)</span>
+# Define the cluster-specific models
+cluster_models = []
+for cluster in client_clusters:
+    cluster_model = tf.keras.models.Sequential([
+        tf.keras.layers.Dense(10, input_shape=(10,)),
+        tf.keras.layers.Dense(1)
+    ])
+    cluster_models.append(cluster_model)
 
-<span class="c1"># Train the cluster-specific models</span>
-<span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">client_clusters</span><span class="p">:</span>
-    <span class="n">cluster_data</span> <span class="o">=</span> <span class="n">client_data</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
-    <span class="n">cluster_model</span> <span class="o">=</span> <span class="n">cluster_models</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
-    <span class="c1"># Train the cluster-specific model</span>
-    <span class="n">cluster_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cluster_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the cluster-specific models
+for cluster in client_clusters:
+    cluster_data = client_data[cluster]
+    cluster_model = cluster_models[cluster]
+    # Train the cluster-specific model
+    cluster_model.fit(cluster_data, epochs=10)
+</code></pre>
 <p>In this example, we define client clusters and train cluster-specific models to address non-IID data.</p>
 <h2 id="tools-and-platforms-for-federated-learning">Tools and Platforms for Federated Learning</h2>
 <p>Several tools and platforms support federated learning, including:
@@ -267,53 +266,52 @@
 * <strong>Microsoft Federated Learning</strong>: A cloud-based platform for federated learning.
 * <strong>AWS SageMaker</strong>: A cloud-based platform that supports federated learning.</p>
 <h3 id="example-3-using-tensorflow-federated-with-aws-sagemaker">Example 3: Using TensorFlow Federated with AWS SageMaker</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_federated</span> <span class="k">as</span> <span class="nn">tff</span>
-<span class="kn">import</span> <span class="nn">sagemaker</span>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_federated as tff
+import sagemaker
 
-<span class="c1"># Define the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">])</span>
+# Define the model
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(10, input_shape=(10,)),
+    tf.keras.layers.Dense(1)
+])
 
-<span class="c1"># Define the loss and optimizer</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">MeanSquaredError</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+# Define the loss and optimizer
+loss_fn = tf.keras.losses.MeanSquaredError()
+optimizer = tf.keras.optimizers.SGD(learning_rate=0.01)
 
-<span class="c1"># Define the federated averaging process</span>
-<span class="nd">@tff</span><span class="o">.</span><span class="n">tf_computation</span><span class="p">(</span><span class="n">tff</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">client_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-    <span class="n">gradients</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">)</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">gradients</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the federated averaging process
+@tff.tf_computation(tff.TensorType(tf.float32, [10]))
+def client_update(model, data):
+    with tf.GradientTape() as tape:
+        predictions = model(data, training=True)
+        loss = loss_fn(predictions, data)
+    gradients = tape.gradient(loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    return model
 
-<span class="c1"># Define the server update process</span>
-<span class="nd">@tff</span><span class="o">.</span><span class="n">tf_computation</span><span class="p">(</span><span class="n">tff</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">server_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">updates</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">map_structure</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">updates</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the server update process
+@tff.tf_computation(tff.TensorType(tf.float32, [10]))
+def server_update(model, updates):
+    model = tf.nest.map_structure(lambda x, y: x + y, model, updates)
+    return model
 
-<span class="c1"># Initialize the model and aggregator</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tff</span><span class="o">.</span><span class="n">federated_variables</span><span class="o">.</span><span class="n">FederatedVariable</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">aggregator</span> <span class="o">=</span> <span class="n">tff</span><span class="o">.</span><span class="n">aggregators</span><span class="o">.</span><span class="n">FederatedAveragingAggregator</span><span class="p">()</span>
+# Initialize the model and aggregator
+model = tff.federated_variables.FederatedVariable(model)
+aggregator = tff.aggregators.FederatedAveragingAggregator()
 
-<span class="c1"># Train the model using AWS SageMaker</span>
-<span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span>
-    <span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;federated_learning.py&#39;</span><span class="p">,</span>
-    <span class="n">role</span><span class="o">=</span><span class="s1">&#39;sagemaker-execution-role&#39;</span><span class="p">,</span>
-    <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;tensorflow:2.3.1&#39;</span><span class="p">,</span>
-    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span><span class="p">,</span>
-    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span>
-<span class="p">)</span>
-<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">client_update</span><span class="p">,</span> <span class="n">server_update</span><span class="p">,</span> <span class="n">aggregator</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model using AWS SageMaker
+sagemaker_session = sagemaker.Session()
+estimator = sagemaker.estimator.Estimator(
+    entry_point='federated_learning.py',
+    role='sagemaker-execution-role',
+    image_name='tensorflow:2.3.1',
+    instance_count=1,
+    instance_type='ml.m5.xlarge',
+    sagemaker_session=sagemaker_session
+)
+estimator.fit(client_update, server_update, aggregator)
+</code></pre>
 <p>In this example, we use TensorFlow Federated with AWS SageMaker to train a federated learning model.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Federated learning can achieve comparable performance to traditional centralized learning approaches. For example, a study on federated learning for image classification achieved an accuracy of 95.5% on the CIFAR-10 dataset, compared to 96.2% achieved by a centralized approach.</p>

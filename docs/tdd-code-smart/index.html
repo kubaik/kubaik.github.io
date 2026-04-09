@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,29 +167,26 @@
 * <strong>Confidence in code changes</strong>: With a robust set of tests in place, you can make changes to the codebase with confidence, knowing that the tests will catch any regressions.</p>
 <h3 id="practical-example-calculator-class">Practical Example: Calculator Class</h3>
 <p>Let's consider a simple example of a Calculator class in Python, using the popular testing framework Pytest. We want to implement a method <code>add</code> that takes two numbers as input and returns their sum.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># calculator.py</span>
-<span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">pass</span>
-</code></pre></div>
-
+<pre><code class="language-python"># calculator.py
+class Calculator:
+    def add(self, a, b):
+        pass
+</code></pre>
 <p>We start by writing a test for the <code>add</code> method:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># test_calculator.py</span>
-<span class="kn">import</span> <span class="nn">pytest</span>
-<span class="kn">from</span> <span class="nn">calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
+<pre><code class="language-python"># test_calculator.py
+import pytest
+from calculator import Calculator
 
-<span class="k">def</span> <span class="nf">test_add</span><span class="p">():</span>
-    <span class="n">calculator</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">calculator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
-</code></pre></div>
-
+def test_add():
+    calculator = Calculator()
+    assert calculator.add(2, 3) == 5
+</code></pre>
 <p>Running this test will fail, as we haven't implemented the <code>add</code> method yet. Now, we write the minimal amount of code required to pass the test:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># calculator.py</span>
-<span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-</code></pre></div>
-
+<pre><code class="language-python"># calculator.py
+class Calculator:
+    def add(self, a, b):
+        return a + b
+</code></pre>
 <p>With this implementation, the test should pass. We can then refactor the code to make it more maintainable and efficient. In this case, the implementation is already quite simple, so we might not need to refactor it.</p>
 <h3 id="tools-and-platforms-for-tdd">Tools and Platforms for TDD</h3>
 <p>There are numerous tools and platforms available to support TDD, including:

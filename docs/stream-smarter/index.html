@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,109 +161,106 @@
 <p>To illustrate the concepts and technologies discussed above, let's consider a few practical examples with accompanying code snippets.</p>
 <h3 id="example-1-streaming-data-processing-with-apache-kafka-and-python">Example 1: Streaming Data Processing with Apache Kafka and Python</h3>
 <p>In this example, we'll use Apache Kafka and Python to process streaming data from a simulated sensor. We'll use the <code>confluent-kafka</code> library to interact with Kafka and the <code>pandas</code> library for data manipulation.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">confluent_kafka</span> <span class="kn">import</span> <span class="n">Consumer</span><span class="p">,</span> <span class="n">Producer</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">from confluent_kafka import Consumer, Producer
+import pandas as pd
+import json
 
-<span class="c1"># Kafka settings</span>
-<span class="n">bootstrap_servers</span> <span class="o">=</span> <span class="s1">&#39;localhost:9092&#39;</span>
-<span class="n">topic_name</span> <span class="o">=</span> <span class="s1">&#39;sensor_data&#39;</span>
+# Kafka settings
+bootstrap_servers = 'localhost:9092'
+topic_name = 'sensor_data'
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">Consumer</span><span class="p">({</span>
-    <span class="s1">&#39;bootstrap.servers&#39;</span><span class="p">:</span> <span class="n">bootstrap_servers</span><span class="p">,</span>
-    <span class="s1">&#39;group.id&#39;</span><span class="p">:</span> <span class="s1">&#39;sensor_group&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;auto.offset.reset&#39;</span><span class="p">:</span> <span class="s1">&#39;earliest&#39;</span>
-<span class="p">})</span>
+# Create a Kafka consumer
+consumer = Consumer({
+    'bootstrap.servers': bootstrap_servers,
+    'group.id': 'sensor_group',
+    'auto.offset.reset': 'earliest'
+})
 
-<span class="c1"># Subscribe to the topic</span>
-<span class="n">consumer</span><span class="o">.</span><span class="n">subscribe</span><span class="p">([</span><span class="n">topic_name</span><span class="p">])</span>
+# Subscribe to the topic
+consumer.subscribe([topic_name])
 
-<span class="c1"># Process messages</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">consumer</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">continue</span>
-    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">error</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Consumer error: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">error</span><span class="p">()))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Parse the message value</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-        <span class="c1"># Process the data</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">data</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+# Process messages
+while True:
+    message = consumer.poll(1.0)
+    if message is None:
+        continue
+    elif message.error():
+        print(&quot;Consumer error: {}&quot;.format(message.error()))
+    else:
+        # Parse the message value
+        data = json.loads(message.value().decode('utf-8'))
+        # Process the data
+        df = pd.DataFrame([data])
+        print(df)
+</code></pre>
 <h3 id="example-2-real-time-data-processing-with-apache-flink-and-java">Example 2: Real-Time Data Processing with Apache Flink and Java</h3>
 <p>In this example, we'll use Apache Flink and Java to process real-time data from a simulated log stream. We'll use the <code>org.apache.flink</code> package to interact with Flink and the <code>java.util</code> package for data manipulation.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LogProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a Flink execution environment</span>
-<span class="w">        </span><span class="n">StreamExecutionEnvironment</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StreamExecutionEnvironment</span><span class="p">.</span><span class="na">getExecutionEnvironment</span><span class="p">();</span>
+public class LogProcessor {
+    public static void main(String[] args) throws Exception {
+        // Create a Flink execution environment
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-<span class="w">        </span><span class="c1">// Create a data stream from a simulated log source</span>
-<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">logStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">addSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SimulatedLogSource</span><span class="p">());</span>
+        // Create a data stream from a simulated log source
+        DataStream&lt;String&gt; logStream = env.addSource(new SimulatedLogSource());
 
-<span class="w">        </span><span class="c1">// Process the log stream</span>
-<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">processedStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logStream</span>
-<span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nd">@Override</span>
-<span class="w">                </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">log</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="c1">// Parse the log message</span>
-<span class="w">                    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
-<span class="w">                    </span><span class="n">String</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
-<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">responseCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
-<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">,</span><span class="w"> </span><span class="n">responseCode</span><span class="p">);</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">});</span>
+        // Process the log stream
+        DataStream&lt;Tuple2&lt;String, Integer&gt;&gt; processedStream = logStream
+            .map(new MapFunction&lt;String, Tuple2&lt;String, Integer&gt;&gt;() {
+                @Override
+                public Tuple2&lt;String, Integer&gt; map(String log) throws Exception {
+                    // Parse the log message
+                    String[] parts = log.split(&quot;,&quot;);
+                    String ipAddress = parts[0];
+                    int responseCode = Integer.parseInt(parts[1]);
+                    return new Tuple2&lt;&gt;(ipAddress, responseCode);
+                }
+            });
 
-<span class="w">        </span><span class="c1">// Print the processed stream</span>
-<span class="w">        </span><span class="n">processedStream</span><span class="p">.</span><span class="na">print</span><span class="p">();</span>
+        // Print the processed stream
+        processedStream.print();
 
-<span class="w">        </span><span class="c1">// Execute the Flink job</span>
-<span class="w">        </span><span class="n">env</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;Log Processor&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Execute the Flink job
+        env.execute(&quot;Log Processor&quot;);
+    }
+}
+</code></pre>
 <h3 id="example-3-real-time-analytics-with-apache-spark-and-scala">Example 3: Real-Time Analytics with Apache Spark and Scala</h3>
 <p>In this example, we'll use Apache Spark and Scala to perform real-time analytics on a simulated e-commerce dataset. We'll use the <code>org.apache.spark</code> package to interact with Spark and the <code>scala.collection</code> package for data manipulation.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">org</span><span class="p">.</span><span class="nn">apache</span><span class="p">.</span><span class="nn">spark</span><span class="p">.</span><span class="nc">SparkConf</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org</span><span class="p">.</span><span class="nn">apache</span><span class="p">.</span><span class="nn">spark</span><span class="p">.</span><span class="nn">streaming</span><span class="p">.{</span><span class="nc">Seconds</span><span class="p">,</span><span class="w"> </span><span class="nc">StreamingContext</span><span class="p">}</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org</span><span class="p">.</span><span class="nn">apache</span><span class="p">.</span><span class="nn">spark</span><span class="p">.</span><span class="nn">streaming</span><span class="p">.</span><span class="nn">kafka</span><span class="p">.</span><span class="nc">KafkaUtils</span>
+<pre><code class="language-scala">import org.apache.spark.SparkConf
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.kafka.KafkaUtils
 
-<span class="k">object</span><span class="w"> </span><span class="nc">EcommerceAnalyzer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span><span class="w"> </span><span class="nc">Array</span><span class="p">[</span><span class="nc">String</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Create a Spark configuration</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">SparkConf</span><span class="p">().</span><span class="n">setAppName</span><span class="p">(</span><span class="s">&quot;Ecommerce Analyzer&quot;</span><span class="p">)</span>
+object EcommerceAnalyzer {
+  def main(args: Array[String]) {
+    // Create a Spark configuration
+    val conf = new SparkConf().setAppName(&quot;Ecommerce Analyzer&quot;)
 
-<span class="w">    </span><span class="c1">// Create a Spark streaming context</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">ssc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">StreamingContext</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span><span class="w"> </span><span class="nc">Seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    // Create a Spark streaming context
+    val ssc = new StreamingContext(conf, Seconds(1))
 
-<span class="w">    </span><span class="c1">// Create a Kafka stream</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">kafkaStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">KafkaUtils</span><span class="p">.</span><span class="n">createDirectStream</span><span class="p">[</span>
-<span class="w">      </span><span class="nc">String</span><span class="p">,</span><span class="w"> </span><span class="nc">String</span><span class="p">](</span><span class="n">ssc</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;localhost:9092&quot;</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;ecommerce_group&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="s">&quot;ecommerce_topic&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+    // Create a Kafka stream
+    val kafkaStream = KafkaUtils.createDirectStream[
+      String, String](ssc, [&quot;localhost:9092&quot;], &quot;ecommerce_group&quot;, Map(&quot;ecommerce_topic&quot; -&gt; 1))
 
-<span class="w">    </span><span class="c1">// Process the Kafka stream</span>
-<span class="w">    </span><span class="n">kafkaStream</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">value</span><span class="p">).</span><span class="n">foreachRDD</span><span class="p">(</span><span class="n">rdd</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Perform real-time analytics</span>
-<span class="w">      </span><span class="kd">val</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rdd</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)).</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">toInt</span><span class="p">))</span>
-<span class="w">      </span><span class="kd">val</span><span class="w"> </span><span class="n">orderCounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="n">reduceByKey</span><span class="p">(</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">_</span><span class="p">)</span>
-<span class="w">      </span><span class="n">orderCounts</span><span class="p">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">)</span>
-<span class="w">    </span><span class="p">})</span>
+    // Process the Kafka stream
+    kafkaStream.map(x =&gt; x.value).foreachRDD(rdd =&gt; {
+      // Perform real-time analytics
+      val orders = rdd.map(x =&gt; x.split(&quot;,&quot;)).map(x =&gt; (x(0), x(1).toInt))
+      val orderCounts = orders.map(x =&gt; (x._1, 1)).reduceByKey(_ + _)
+      orderCounts.foreach(println)
+    })
 
-<span class="w">    </span><span class="c1">// Start the Spark streaming context</span>
-<span class="w">    </span><span class="n">ssc</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
-<span class="w">    </span><span class="n">ssc</span><span class="p">.</span><span class="n">awaitTermination</span><span class="p">()</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Start the Spark streaming context
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working with real-time data processing, several common problems can arise. Here are some specific solutions to these problems:</p>
 <ol>

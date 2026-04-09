@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,60 +166,57 @@
 * AWS CodeDeploy for automated deployment
 * CircleCI for continuous integration and continuous deployment (CI/CD)</p>
 <p>Here is an example of how to implement a canary deployment using Kubernetes and Istio:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">networking</span><span class="o">.</span><span class="na">istio</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">v1beta1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">VirtualService</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">example</span><span class="o">-</span><span class="n">vs</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">hosts</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">example</span><span class="o">.</span><span class="na">com</span>
-<span class="w">  </span><span class="n">http</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">match</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">uri</span><span class="o">:</span>
-<span class="w">        </span><span class="n">prefix</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">v1</span>
-<span class="w">    </span><span class="n">route</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">destination</span><span class="o">:</span>
-<span class="w">        </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">example</span><span class="o">-</span><span class="n">v1</span>
-<span class="w">        </span><span class="n">port</span><span class="o">:</span>
-<span class="w">          </span><span class="n">number</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">      </span><span class="n">weight</span><span class="o">:</span><span class="w"> </span><span class="mi">90</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">match</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">uri</span><span class="o">:</span>
-<span class="w">        </span><span class="n">prefix</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">v2</span>
-<span class="w">    </span><span class="n">route</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">destination</span><span class="o">:</span>
-<span class="w">        </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">example</span><span class="o">-</span><span class="n">v2</span>
-<span class="w">        </span><span class="n">port</span><span class="o">:</span>
-<span class="w">          </span><span class="n">number</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">      </span><span class="n">weight</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: example-vs
+spec:
+  hosts:
+  - example.com
+  http:
+  - match:
+    - uri:
+        prefix: /v1
+    route:
+    - destination:
+        host: example-v1
+        port:
+          number: 80
+      weight: 90
+  - match:
+    - uri:
+        prefix: /v2
+    route:
+    - destination:
+        host: example-v2
+        port:
+          number: 80
+      weight: 10
+</code></pre>
 <p>In this example, the <code>VirtualService</code> defines a routing rule that sends 90% of traffic to the <code>example-v1</code> service and 10% to the <code>example-v2</code> service. The <code>example-v2</code> service is the new version of the application, and the <code>example-v1</code> service is the previous version.</p>
 <h3 id="automated-deployment-with-circleci">Automated Deployment with CircleCI</h3>
 <p>To automate the deployment process, you can use CircleCI to integrate with your GitHub repository and deploy your application to a Kubernetes cluster. Here is an example of how to configure CircleCI to deploy a canary deployment:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">2.1</span>
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">deploy</span><span class="o">:</span>
-<span class="w">    </span><span class="n">docker</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">circleci</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">:</span><span class="mf">1.21</span><span class="o">.</span><span class="mi">1</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">checkout</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">deploy</span><span class="o">.</span><span class="na">yaml</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">rollout</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">deployment</span><span class="o">/</span><span class="n">example</span><span class="o">-</span><span class="n">deployment</span>
-</code></pre></div>
-
+<pre><code class="language-yml">version: 2.1
+jobs:
+  deploy:
+    docker:
+      - image: circleci/kubernetes:1.21.1
+    steps:
+      - checkout
+      - run: kubectl apply -f deploy.yaml
+      - run: kubectl rollout status deployment/example-deployment
+</code></pre>
 <p>In this example, the <code>deploy</code> job checks out the code, applies the deployment configuration to the Kubernetes cluster, and rolls out the deployment.</p>
 <h2 id="monitoring-and-logging">Monitoring and Logging</h2>
 <p>To monitor and log your canary deployment, you can use tools like Prometheus and Grafana. Prometheus is a popular monitoring system that can collect metrics from your application, while Grafana is a visualization platform that can display the metrics in a dashboard.</p>
 <p>Here is an example of how to configure Prometheus to collect metrics from your application:</p>
-<div class="codehilite"><pre><span></span><code>scrape_configs:
-  <span class="k">-</span> job_name: example
+<pre><code class="language-yml">scrape_configs:
+  - job_name: example
     scrape_interval: 10s
     metrics_path: /metrics
     static_configs:
-      <span class="k">-</span> targets: [&quot;example:80&quot;]
-</code></pre></div>
-
+      - targets: [&quot;example:80&quot;]
+</code></pre>
 <p>In this example, the <code>scrape_configs</code> defines a scraping configuration that collects metrics from the <code>example</code> application every 10 seconds.</p>
 <h3 id="real-world-example-deploying-a-canary-release-to-aws">Real-World Example: Deploying a Canary Release to AWS</h3>
 <p>Let's consider a real-world example of deploying a canary release to AWS. Suppose we have a web application that handles 10,000 requests per minute, and we want to deploy a new version of the application to 10% of the users.</p>

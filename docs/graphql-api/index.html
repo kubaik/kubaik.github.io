@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,17 +160,16 @@
 * <strong>Interface types</strong>: These represent a set of types that have a common set of fields.
 * <strong>Union types</strong>: These represent a set of types that can be used in a single field.</p>
 <p>Here is an example of a simple GraphQL schema:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">email</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type User {
+  id: ID!
+  name: String!
+  email: String!
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">users</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+type Query {
+  users: [User]
+}
+</code></pre>
 <p>This schema defines a <code>User</code> type with <code>id</code>, <code>name</code>, and <code>email</code> fields, as well as a <code>Query</code> type with a <code>users</code> field that returns a list of <code>User</code> objects.</p>
 <h2 id="implementing-a-graphql-api">Implementing a GraphQL API</h2>
 <p>There are a number of tools and platforms that can be used to implement a GraphQL API. Some popular options include:
@@ -177,38 +177,37 @@
 * <strong>GraphQL Yoga</strong>: This is a lightweight GraphQL server that provides a simple and easy-to-use API.
 * <strong>Prisma</strong>: This is a powerful ORM that provides a GraphQL API for interacting with databases.</p>
 <p>To implement a GraphQL API using Apollo Server, you will need to install the <code>apollo-server</code> package and create a new server instance. Here is an example of how to do this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">  type User {</span>
-<span class="sb">    id: ID!</span>
-<span class="sb">    name: String!</span>
-<span class="sb">    email: String!</span>
-<span class="sb">  }</span>
+const typeDefs = `
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+  }
 
-<span class="sb">  type Query {</span>
-<span class="sb">    users: [User]</span>
-<span class="sb">  }</span>
-<span class="sb">`</span><span class="p">;</span>
+  type Query {
+    users: [User]
+  }
+`;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;jane@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">];</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const resolvers = {
+  Query: {
+    users: () =&gt; {
+      return [
+        { id: 1, name: 'John Doe', email: 'john@example.com' },
+        { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
+      ];
+    },
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span><span class="w"> </span><span class="nx">typeDefs</span><span class="p">,</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">});</span>
+const server = new ApolloServer({ typeDefs, resolvers });
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>This code defines a simple GraphQL schema with a <code>User</code> type and a <code>Query</code> type with a <code>users</code> field. It then creates a new Apollo Server instance with the schema and a set of resolvers that return a list of users.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>One of the key benefits of GraphQL is its ability to reduce the amount of data that needs to be transferred over the network. However, this can also lead to performance issues if not implemented correctly. Here are some tips for optimizing the performance of a GraphQL API:
@@ -216,11 +215,10 @@
 * <strong>Use pagination</strong>: Pagination can be used to reduce the amount of data that needs to be transferred over the network. This can be implemented using a <code>limit</code> and <code>offset</code> parameter in the query.
 * <strong>Use query optimization</strong>: Query optimization can be used to reduce the number of database queries that need to be made. This can be implemented using a library such as <code>graphql-query-optimizer</code>.</p>
 <p>Here is an example of how to use pagination to optimize the performance of a GraphQL API:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">users</span><span class="p">(</span><span class="n">limit</span><span class="p">:</span><span class="w"> </span><span class="no">Int</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="p">:</span><span class="w"> </span><span class="no">Int</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">type Query {
+  users(limit: Int, offset: Int): [User]
+}
+</code></pre>
 <p>This schema defines a <code>users</code> field that takes a <code>limit</code> and <code>offset</code> parameter. The <code>limit</code> parameter specifies the maximum number of users to return, and the <code>offset</code> parameter specifies the starting point for the query.</p>
 <h2 id="security">Security</h2>
 <p>Security is an important consideration when implementing a GraphQL API. Here are some tips for securing a GraphQL API:
@@ -228,45 +226,44 @@
 * <strong>Use authorization</strong>: Authorization can be used to ensure that users only have access to the data they are authorized to access. This can be implemented using a library such as <code>graphql-authorization</code>.
 * <strong>Use input validation</strong>: Input validation can be used to ensure that user input is valid and safe. This can be implemented using a library such as <code>graphql-input-validator</code>.</p>
 <p>Here is an example of how to use authentication to secure a GraphQL API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AuthenticationError</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server-errors&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
+const { AuthenticationError } = require('apollo-server-errors');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">  type User {</span>
-<span class="sb">    id: ID!</span>
-<span class="sb">    name: String!</span>
-<span class="sb">    email: String!</span>
-<span class="sb">  }</span>
+const typeDefs = `
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+  }
 
-<span class="sb">  type Query {</span>
-<span class="sb">    users: [User]</span>
-<span class="sb">  }</span>
-<span class="sb">`</span><span class="p">;</span>
+  type Query {
+    users: [User]
+  }
+`;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">,</span><span class="w"> </span><span class="nx">context</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">context</span><span class="p">.</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AuthenticationError</span><span class="p">(</span><span class="s1">&#39;You must be logged in to access this data&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;jane@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">];</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const resolvers = {
+  Query: {
+    users: (parent, args, context) =&gt; {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to access this data');
+      }
+      return [
+        { id: 1, name: 'John Doe', email: 'john@example.com' },
+        { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
+      ];
+    },
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">typeDefs</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">resolvers</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">context</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">authenticateUser</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">});</span>
-</code></pre></div>
-
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) =&gt; {
+    const user = authenticateUser(req);
+    return { user };
+  },
+});
+</code></pre>
 <p>This code defines a simple GraphQL schema with a <code>User</code> type and a <code>Query</code> type with a <code>users</code> field. It then creates a new Apollo Server instance with the schema and a set of resolvers that check if the user is logged in before returning the data.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur when implementing a GraphQL API, along with their solutions:

@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -155,13 +156,12 @@
 <li><strong>Resilience</strong>: Failure in one service does not necessarily compromise the entire system.</li>
 </ul>
 <h3 id="example-architecture-diagram">Example Architecture Diagram</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------+</span><span class="c">       </span><span class="nb">+-------------------+</span><span class="c">       </span><span class="nb">+-------------------+</span>
-<span class="c">| User Service      |       | Order Service     |       | Inventory Service |</span>
-<span class="nb">+-------------------+</span><span class="c">       </span><span class="nb">+-------------------+</span><span class="c">       </span><span class="nb">+-------------------+</span>
-<span class="c">        |                            |                            |</span>
-<span class="c">        </span><span class="nb">+-----------</span><span class="c"> REST API </span><span class="nb">-------+-----------</span><span class="c"> REST API </span><span class="nb">-------+</span>
-</code></pre></div>
-
+<pre><code class="language-plaintext">+-------------------+       +-------------------+       +-------------------+
+| User Service      |       | Order Service     |       | Inventory Service |
++-------------------+       +-------------------+       +-------------------+
+        |                            |                            |
+        +----------- REST API -------+----------- REST API -------+
+</code></pre>
 <p>In this example, each service handles specific functions like user management, order processing, or inventory management, communicating via REST APIs.</p>
 <hr />
 <h2 id="benefits-of-microservices-architecture">Benefits of Microservices Architecture</h2>
@@ -250,18 +250,17 @@
 <hr />
 <h2 id="practical-example-e-commerce-microservices-system">Practical Example: E-Commerce Microservices System</h2>
 <p>Imagine building an e-commerce platform with microservices. Here's how you might structure it:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------------+</span><span class="c">        </span><span class="nb">+-------------------------+</span>
-<span class="c">| User Service            |        | Product Catalog Service |</span>
-<span class="nb">+-------------------------+</span><span class="c">        </span><span class="nb">+-------------------------+</span>
-<span class="c">        |                                   |</span>
-<span class="c">        |                                   |</span>
-<span class="nb">+-------------------------+</span><span class="c">        </span><span class="nb">+-------------------------+</span>
-<span class="c">| Order Service           |        | Payment Service         |</span>
-<span class="nb">+-------------------------+</span><span class="c">        </span><span class="nb">+-------------------------+</span>
-<span class="c">        |                                   |</span>
-<span class="c">        </span><span class="nb">+----------</span><span class="c"> REST API </span><span class="nb">-----------------+</span>
-</code></pre></div>
-
+<pre><code class="language-plaintext">+-------------------------+        +-------------------------+
+| User Service            |        | Product Catalog Service |
++-------------------------+        +-------------------------+
+        |                                   |
+        |                                   |
++-------------------------+        +-------------------------+
+| Order Service           |        | Payment Service         |
++-------------------------+        +-------------------------+
+        |                                   |
+        +---------- REST API -----------------+
+</code></pre>
 <h3 id="development-tips">Development Tips:</h3>
 <ul>
 <li><strong>User Service</strong> manages customer profiles and authentication.</li>

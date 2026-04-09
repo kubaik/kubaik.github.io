@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,24 +165,23 @@
 * Docker: A containerization platform that allows developers to package their applications and dependencies into a single container, making it easier to deploy and manage.</p>
 <h3 id="example-1-automating-testing-with-github-actions">Example 1: Automating Testing with GitHub Actions</h3>
 <p>Here is an example of how to use GitHub Actions to automate testing for a Node.js application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Node</span><span class="o">.</span><span class="na">js</span><span class="w"> </span><span class="n">CI</span>
+<pre><code class="language-yml">name: Node.js CI
 
-<span class="n">on</span><span class="o">:</span>
-<span class="w">  </span><span class="n">push</span><span class="o">:</span>
-<span class="w">    </span><span class="n">branches</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">]</span>
+on:
+  push:
+    branches: [ main ]
 
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">build</span><span class="o">:</span>
-<span class="w">    </span><span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="o">:</span><span class="w"> </span><span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Install</span><span class="w"> </span><span class="n">dependencies</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">tests</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">test</span>
-</code></pre></div>
-
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+</code></pre>
 <p>This YAML file defines a GitHub Actions workflow that runs on every push to the main branch. It checks out the code, installs the dependencies, and runs the tests using the <code>npm test</code> command.</p>
 <h2 id="implementing-auto-dev-flow">Implementing Auto Dev Flow</h2>
 <p>Implementing auto dev flow requires a thorough understanding of the development workflow and the tools and platforms available. Here are some steps to follow:
@@ -191,23 +191,22 @@
 4. <strong>Test and refine the workflow</strong>: Test the automation workflow and refine it as needed to ensure that it is working correctly and efficiently.</p>
 <h3 id="example-2-automating-deployment-with-jenkins">Example 2: Automating Deployment with Jenkins</h3>
 <p>Here is an example of how to use Jenkins to automate deployment for a Java application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
-<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;mvn clean package&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;scp target/myapp.jar user@remote-server:/path/to/deploy&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'scp target/myapp.jar user@remote-server:/path/to/deploy'
+            }
+        }
+    }
+}
+</code></pre>
 <p>This Groovy script defines a Jenkins pipeline that builds a Java application using Maven and deploys it to a remote server using SCP.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems faced when implementing auto dev flow is the lack of standardization. Different teams and projects may have different workflows, making it challenging to implement automation. Here are some solutions to this problem:
@@ -216,17 +215,16 @@
 * <strong>Develop a culture of automation</strong>: Develop a culture of automation within the organization by providing training and resources to teams and individuals.</p>
 <h3 id="example-3-automating-code-review-with-circleci">Example 3: Automating Code Review with CircleCI</h3>
 <p>Here is an example of how to use CircleCI to automate code review for a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">2.1</span>
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">build</span><span class="o">:</span>
-<span class="w">    </span><span class="n">docker</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">circleci</span><span class="o">/</span><span class="n">python</span><span class="o">:</span><span class="mf">3.9</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">checkout</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="o">.</span><span class="na">txt</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="n">flake8</span><span class="w"> </span><span class="o">.</span>
-</code></pre></div>
-
+<pre><code class="language-yml">version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run: pip install -r requirements.txt
+      - run: python -m flake8 .
+</code></pre>
 <p>This YAML file defines a CircleCI workflow that checks out the code, installs the dependencies, and runs the Flake8 linter to check for coding standards and errors.</p>
 <h2 id="performance-metrics-and-benchmarking">Performance Metrics and Benchmarking</h2>
 <p>To measure the effectiveness of auto dev flow, it's essential to track performance metrics and benchmarking. Some of the key metrics to track include:

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,93 +167,90 @@
 <p>Let's take a look at some practical examples of how low-code/no-code platforms can be used.</p>
 <h3 id="example-1-building-a-custom-crm-with-microsoft-power-apps">Example 1: Building a Custom CRM with Microsoft Power Apps</h3>
 <p>Microsoft Power Apps is a low-code platform that enables users to build custom business applications. Here's an example of how to build a custom CRM using Power Apps:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new screen</span>
-<span class="n">Screen1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Screen</span><span class="p">(</span>
-<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Customer List&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">Controls</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="c1">// Add a data source</span>
-<span class="w">        </span><span class="n">DataSource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Table</span><span class="p">(</span>
-<span class="w">            </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Customers&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="n">Fields</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="p">},</span>
-<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Email&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="p">}</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="c1">// Add a gallery control</span>
-<span class="w">        </span><span class="n">Gallery1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Gallery</span><span class="p">(</span>
-<span class="w">            </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Customer Gallery&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="n">DataSource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Customers</span><span class="p">,</span>
-<span class="w">            </span><span class="n">Fields</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Name&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Email&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">)</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-powerapps">// Create a new screen
+Screen1 = Screen(
+    Name = &quot;Customer List&quot;,
+    Controls = [
+        // Add a data source
+        DataSource = Table(
+            Name = &quot;Customers&quot;,
+            Fields = [
+                { Name = &quot;Name&quot;, Type = Text },
+                { Name = &quot;Email&quot;, Type = Email }
+            ]
+        ),
+        // Add a gallery control
+        Gallery1 = Gallery(
+            Name = &quot;Customer Gallery&quot;,
+            DataSource = Customers,
+            Fields = [
+                { Name = &quot;Name&quot; },
+                { Name = &quot;Email&quot; }
+            ]
+        )
+    ]
+)
+</code></pre>
 <p>In this example, we create a new screen called "Customer List" and add a data source called "Customers". We then add a gallery control to display the customer data.</p>
 <h3 id="example-2-building-a-custom-chatbot-with-google-app-maker">Example 2: Building a Custom Chatbot with Google App Maker</h3>
 <p>Google App Maker is a low-code platform that enables users to build custom business applications. Here's an example of how to build a custom chatbot using App Maker:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new page</span>
-<span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">pages</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s2">&quot;Chatbot&quot;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Create a new page
+page = app.pages.create(&quot;Chatbot&quot;);
 
-<span class="c1">// Add a text input field</span>
-<span class="nx">textInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="nx">page</span><span class="p">].</span><span class="nx">addTextBox</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;UserInput&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">placeholder</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Type a message&quot;</span>
-<span class="p">});</span>
+// Add a text input field
+textInput = app.pages[page].addTextBox({
+    name: &quot;UserInput&quot;,
+    placeholder: &quot;Type a message&quot;
+});
 
-<span class="c1">// Add a button to submit the input</span>
-<span class="nx">submitButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="nx">page</span><span class="p">].</span><span class="nx">addButton</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Submit&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Send&quot;</span>
-<span class="p">});</span>
+// Add a button to submit the input
+submitButton = app.pages[page].addButton({
+    name: &quot;Submit&quot;,
+    text: &quot;Send&quot;
+});
 
-<span class="c1">// Add a script to handle the submit button click event</span>
-<span class="nx">submitButton</span><span class="p">.</span><span class="nx">onClick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Get the user input</span>
-<span class="w">    </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">textInput</span><span class="p">.</span><span class="nx">getValue</span><span class="p">();</span>
-<span class="w">    </span><span class="c1">// Send the input to the chatbot API</span>
-<span class="w">    </span><span class="nx">apiResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">UrlFetchApp</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;https://example.com/chatbot-api&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;post&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">payload</span><span class="o">:</span><span class="w"> </span><span class="nx">userInput</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">    </span><span class="c1">// Display the chatbot response</span>
-<span class="w">    </span><span class="nx">responseText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">apiResponse</span><span class="p">.</span><span class="nx">getContentText</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">app</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="nx">page</span><span class="p">].</span><span class="nx">addLabel</span><span class="p">({</span>
-<span class="w">        </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Response&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="nx">responseText</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Add a script to handle the submit button click event
+submitButton.onClick = function() {
+    // Get the user input
+    userInput = textInput.getValue();
+    // Send the input to the chatbot API
+    apiResponse = UrlFetchApp.fetch(&quot;https://example.com/chatbot-api&quot;, {
+        method: &quot;post&quot;,
+        payload: userInput
+    });
+    // Display the chatbot response
+    responseText = apiResponse.getContentText();
+    app.pages[page].addLabel({
+        name: &quot;Response&quot;,
+        text: responseText
+    });
+}
+</code></pre>
 <p>In this example, we create a new page called "Chatbot" and add a text input field and a submit button. We then add a script to handle the submit button click event, which sends the user input to the chatbot API and displays the response.</p>
 <h3 id="example-3-building-a-custom-e-commerce-site-with-bubble">Example 3: Building a Custom E-commerce Site with Bubble</h3>
 <p>Bubble is a no-code platform that enables users to build custom web applications. Here's an example of how to build a custom e-commerce site using Bubble:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Create a new page --&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;page&quot;</span><span class="p">&gt;</span>
-    <span class="cm">&lt;!-- Add a product list --&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;!-- Create a new page --&gt;
+&lt;div class=&quot;page&quot;&gt;
+    &lt;!-- Add a product list --&gt;
+    &lt;ul&gt;
         {{#each products}}
-        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+        &lt;li&gt;
             {{name}}
             {{price}}
-        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        &lt;/li&gt;
         {{/each}}
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="cm">&lt;!-- Add a shopping cart --&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;cart&quot;</span><span class="p">&gt;</span>
+    &lt;/ul&gt;
+    &lt;!-- Add a shopping cart --&gt;
+    &lt;div class=&quot;cart&quot;&gt;
         {{#each cart}}
-        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+        &lt;p&gt;
             {{name}}
             {{price}}
-        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        &lt;/p&gt;
         {{/each}}
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
 <p>In this example, we create a new page and add a product list and a shopping cart. We use Bubble's templating engine to display the product data and the cart contents.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Low-code/no-code platforms have a wide range of real-world use cases, including:

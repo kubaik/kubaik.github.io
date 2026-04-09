@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,15 +157,14 @@
 * Enhanced performance: Replication allows for load balancing and distribution of read traffic, reducing the load on individual servers.
 * Simplified backup and recovery: Replication makes it easier to perform backups and recoveries, as data can be restored from a replica in case of a failure.</p>
 <p>For example, let's consider a scenario where we have a MySQL database with a master-slave replication setup. We can use the following code to configure replication:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Master server configuration</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- Master server configuration
+CREATE USER 'replication_user'@'%' IDENTIFIED BY 'replication_password';
+GRANT REPLICATION SLAVE ON *.* TO 'replication_user'@'%';
 
-<span class="c1">-- Slave server configuration</span>
-<span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;master_server_ip&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PORT</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;replication_user&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-<span class="k">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
-</code></pre></div>
-
+-- Slave server configuration
+CHANGE MASTER TO MASTER_HOST='master_server_ip', MASTER_PORT=3306, MASTER_USER='replication_user', MASTER_PASSWORD='replication_password';
+START SLAVE;
+</code></pre>
 <p>In this example, we create a replication user on the master server and grant the necessary permissions. On the slave server, we configure the replication settings and start the slave.</p>
 <h3 id="benefits-of-database-sharding">Benefits of Database Sharding</h3>
 <p>Database sharding offers several benefits, including:
@@ -172,14 +172,13 @@
 * Increased storage capacity: Sharding enables the use of multiple servers to store data, increasing the overall storage capacity.
 * Simplified maintenance: Sharding makes it easier to perform maintenance tasks, such as upgrades and backups, as individual shards can be taken offline without affecting the entire system.</p>
 <p>For instance, let's consider a scenario where we have a PostgreSQL database with a sharded setup using the Citus extension. We can use the following code to create a distributed table:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a distributed table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
-<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">)</span><span class="w"> </span><span class="n">DISTRIBUTED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">-- Create a distributed table
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    customer_id INTEGER,
+    order_date DATE
+) DISTRIBUTED BY (customer_id);
+</code></pre>
 <p>In this example, we create a distributed table called <code>orders</code> and specify the <code>customer_id</code> column as the distribution key. The Citus extension will automatically shard the data based on the distribution key.</p>
 <h2 id="tools-and-platforms-for-database-replication-and-sharding">Tools and Platforms for Database Replication and Sharding</h2>
 <p>There are several tools and platforms available for database replication and sharding, including:
@@ -189,10 +188,9 @@
 * Amazon Aurora: A MySQL- and PostgreSQL-compatible database service that provides automated replication and sharding.
 * Google Cloud SQL: A fully-managed database service that provides automated replication and sharding for MySQL, PostgreSQL, and SQL Server.</p>
 <p>For example, let's consider a scenario where we have a MySQL database hosted on Amazon RDS, and we want to set up replication with Amazon Aurora. We can use the following code to create a read replica:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a read replica</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="s1">&#39;aurora_instance_identifier&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">-- Create a read replica
+CREATE REPLICATION SLAVE 'aurora_instance_identifier' IDENTIFIED BY 'replication_password';
+</code></pre>
 <p>In this example, we create a read replica of the MySQL database using Amazon Aurora.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>The performance and pricing of database replication and sharding solutions can vary significantly depending on the tool or platform used. For instance:
@@ -206,18 +204,17 @@
 * <strong>Network latency</strong>: Network latency can occur when data is transmitted between replicas or shards. Solution: Implement a caching layer, such as Redis or Memcached, to reduce the load on the database and minimize network latency.
 * <strong>Shard key selection</strong>: Shard key selection can be a challenging task, as it requires careful consideration of the data distribution and query patterns. Solution: Use a shard key that is evenly distributed and has a high cardinality, such as a UUID or a hash of the primary key.</p>
 <p>For example, let's consider a scenario where we have a PostgreSQL database with a sharded setup using the Citus extension, and we want to implement a caching layer using Redis. We can use the following code to configure Redis:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Create a Redis connection</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;redis_host&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Create a Redis connection
+redis_client = redis.Redis(host='redis_host', port=6379, db=0)
 
-<span class="c1"># Set a key-value pair</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Set a key-value pair
+redis_client.set('key', 'value')
 
-<span class="c1"># Get a key-value pair</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Get a key-value pair
+value = redis_client.get('key')
+</code></pre>
 <p>In this example, we create a Redis connection and set a key-value pair using the <code>set</code> method. We can then retrieve the value using the <code>get</code> method.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>There are several use cases for database replication and sharding, including:

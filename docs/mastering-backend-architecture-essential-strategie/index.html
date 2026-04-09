@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -216,20 +217,19 @@
 <li>Ensure your backend is stateless to facilitate horizontal scaling</li>
 <li>Use sticky sessions only if necessary; prefer token-based stateless sessions (e.g., JWT)</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example NGINX load balancing configuration</span>
-upstream<span class="w"> </span>backend<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span>server<span class="w"> </span>app1.example.com<span class="p">;</span>
-<span class="w">    </span>server<span class="w"> </span>app2.example.com<span class="p">;</span>
-<span class="o">}</span>
+<pre><code class="language-bash"># Example NGINX load balancing configuration
+upstream backend {
+    server app1.example.com;
+    server app2.example.com;
+}
 
-server<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span>listen<span class="w"> </span><span class="m">80</span><span class="p">;</span>
-<span class="w">    </span>location<span class="w"> </span>/<span class="w"> </span><span class="o">{</span>
-<span class="w">        </span>proxy_pass<span class="w"> </span>http://backend<span class="p">;</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+server {
+    listen 80;
+    location / {
+        proxy_pass http://backend;
+    }
+}
+</code></pre>
 <hr />
 <h3 id="3-implement-effective-data-storage-and-management">3. Implement Effective Data Storage and Management</h3>
 <p>Choosing the right database and data model is crucial.</p>
@@ -267,17 +267,16 @@ server<span class="w"> </span><span class="o">{</span>
 - Save the photo to storage
 - Place a message in a queue for thumbnail generation
 - Respond immediately to the user</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example using Celery (Python) for async task</span>
-<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+<pre><code class="language-python"># Example using Celery (Python) for async task
+from celery import Celery
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">(</span><span class="s1">&#39;tasks&#39;</span><span class="p">,</span> <span class="n">broker</span><span class="o">=</span><span class="s1">&#39;redis://localhost:6379/0&#39;</span><span class="p">)</span>
+app = Celery('tasks', broker='redis://localhost:6379/0')
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">task</span>
-<span class="k">def</span> <span class="nf">generate_thumbnail</span><span class="p">(</span><span class="n">photo_path</span><span class="p">):</span>
-    <span class="c1"># Thumbnail generation logic</span>
-    <span class="k">pass</span>
-</code></pre></div>
-
+@app.task
+def generate_thumbnail(photo_path):
+    # Thumbnail generation logic
+    pass
+</code></pre>
 <hr />
 <h3 id="5-prioritize-security-and-data-privacy">5. Prioritize Security and Data Privacy</h3>
 <p>Security is paramount in backend architecture.</p>
@@ -290,15 +289,15 @@ server<span class="w"> </span><span class="o">{</span>
 </ul>
 <h4 id="example">Example:</h4>
 <p>Implementing JWT authentication in Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+const jwt = require('jsonwebtoken');
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">generateToken</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">role</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s1">&#39;secretKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function generateToken(user) {
+  return jwt.sign({ id: user.id, role: user.role }, 'secretKey', { expiresIn: '1h' });
+}
+</code></pre>
 <hr />
 <h2 id="practical-tips-for-building-robust-backend-systems">Practical Tips for Building Robust Backend Systems</h2>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,50 +172,50 @@
 </ol>
 <h3 id="example-code-creating-a-simple-blockchain">Example Code: Creating a Simple Blockchain</h3>
 <p>Here is an example of how to create a simple blockchain using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">time</span>
+import hashlib
+import time
 
-<span class="k">class</span> <span class="nc">Block</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="n">previous_hash</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
+class Block:
+    def __init__(self, index, previous_hash, timestamp, data):
+        self.index = index
+        self.previous_hash = previous_hash
+        self.timestamp = timestamp
+        self.data = data
+        self.hash = self.calculate_hash()
 
-    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">data_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    def calculate_hash(self):
+        data_string = str(self.index) + self.previous_hash + str(self.timestamp) + str(self.data)
+        return hashlib.sha256(data_string.encode()).hexdigest()
 
-<span class="k">class</span> <span class="nc">Blockchain</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">create_genesis_block</span><span class="p">()]</span>
+class Blockchain:
+    def __init__(self):
+        self.chain = [self.create_genesis_block()]
 
-    <span class="k">def</span> <span class="nf">create_genesis_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Block</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Genesis Block&quot;</span><span class="p">)</span>
+    def create_genesis_block(self):
+        return Block(0, &quot;0&quot;, int(time.time()), &quot;Genesis Block&quot;)
 
-    <span class="k">def</span> <span class="nf">get_latest_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    def get_latest_block(self):
+        return self.chain[-1]
 
-    <span class="k">def</span> <span class="nf">add_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_block</span><span class="p">):</span>
-        <span class="n">new_block</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span>
-        <span class="n">new_block</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">new_block</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_block</span><span class="p">)</span>
+    def add_block(self, new_block):
+        new_block.previous_hash = self.get_latest_block().hash
+        new_block.hash = new_block.calculate_hash()
+        self.chain.append(new_block)
 
-<span class="c1"># Create a new blockchain</span>
-<span class="n">my_blockchain</span> <span class="o">=</span> <span class="n">Blockchain</span><span class="p">()</span>
+# Create a new blockchain
+my_blockchain = Blockchain()
 
-<span class="c1"># Add some blocks to the blockchain</span>
-<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Transaction 1&quot;</span><span class="p">))</span>
-<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Transaction 2&quot;</span><span class="p">))</span>
+# Add some blocks to the blockchain
+my_blockchain.add_block(Block(1, my_blockchain.get_latest_block().hash, int(time.time()), &quot;Transaction 1&quot;))
+my_blockchain.add_block(Block(2, my_blockchain.get_latest_block().hash, int(time.time()), &quot;Transaction 2&quot;))
 
-<span class="c1"># Print out the blockchain</span>
-<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">chain</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2"> - Hash: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Print out the blockchain
+for block in my_blockchain.chain:
+    print(f&quot;Block {block.index} - Hash: {block.hash}&quot;)
+</code></pre>
 <p>This code creates a simple blockchain with two blocks, and demonstrates how to add new blocks to the chain.</p>
 <h2 id="blockchain-platforms-and-tools">Blockchain Platforms and Tools</h2>
 <p>There are several blockchain platforms and tools available, including:</p>
@@ -227,24 +228,23 @@
 </ul>
 <h3 id="example-code-deploying-a-smart-contract-on-ethereum">Example Code: Deploying a Smart Contract on Ethereum</h3>
 <p>Here is an example of how to deploy a smart contract on Ethereum using the Truffle Suite:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Truffle contract module</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">TruffleContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;truffle-contract&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the Truffle contract module
+const TruffleContract = require('truffle-contract');
 
-<span class="c1">// Define the smart contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">MyContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">artifacts</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./MyContract.sol&#39;</span><span class="p">);</span>
+// Define the smart contract
+const MyContract = artifacts.require('./MyContract.sol');
 
-<span class="c1">// Deploy the smart contract</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">deployer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">deployer</span><span class="p">.</span><span class="nx">deploy</span><span class="p">(</span><span class="nx">MyContract</span><span class="p">);</span>
-<span class="p">};</span>
+// Deploy the smart contract
+module.exports = function(deployer) {
+  deployer.deploy(MyContract);
+};
 
-<span class="c1">// Interact with the smart contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">myContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">MyContract</span><span class="p">.</span><span class="nx">at</span><span class="p">(</span><span class="s1">&#39;0x...&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Replace with the contract address</span>
-<span class="nx">myContract</span><span class="p">.</span><span class="nx">myFunction</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Interact with the smart contract
+const myContract = MyContract.at('0x...'); // Replace with the contract address
+myContract.myFunction('Hello, World!').then((result) =&gt; {
+  console.log(result);
+});
+</code></pre>
 <p>This code deploys a smart contract on the Ethereum blockchain, and demonstrates how to interact with the contract using the Truffle Suite.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Blockchain technology has a wide range of real-world use cases, including:</p>
@@ -256,44 +256,43 @@
 </ul>
 <h3 id="example-supply-chain-management">Example: Supply Chain Management</h3>
 <p>Here is an example of how blockchain can be used for supply chain management:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<pre><code class="language-python">import hashlib
 
-<span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product_id</span><span class="p">,</span> <span class="n">manufacturer</span><span class="p">,</span> <span class="n">production_date</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">product_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">manufacturer</span> <span class="o">=</span> <span class="n">manufacturer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">production_date</span> <span class="o">=</span> <span class="n">production_date</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
+class Product:
+    def __init__(self, product_id, manufacturer, production_date):
+        self.product_id = product_id
+        self.manufacturer = manufacturer
+        self.production_date = production_date
+        self.hash = self.calculate_hash()
 
-    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">data_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">product_id</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">manufacturer</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">production_date</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    def calculate_hash(self):
+        data_string = str(self.product_id) + self.manufacturer + str(self.production_date)
+        return hashlib.sha256(data_string.encode()).hexdigest()
 
-<span class="k">class</span> <span class="nc">SupplyChain</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">products</span> <span class="o">=</span> <span class="p">[]</span>
+class SupplyChain:
+    def __init__(self):
+        self.products = []
 
-    <span class="k">def</span> <span class="nf">add_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+    def add_product(self, product):
+        self.products.append(product)
 
-    <span class="k">def</span> <span class="nf">get_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product_id</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">product</span><span class="o">.</span><span class="n">product_id</span> <span class="o">==</span> <span class="n">product_id</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">product</span>
-        <span class="k">return</span> <span class="kc">None</span>
+    def get_product(self, product_id):
+        for product in self.products:
+            if product.product_id == product_id:
+                return product
+        return None
 
-<span class="c1"># Create a new supply chain</span>
-<span class="n">my_supply_chain</span> <span class="o">=</span> <span class="n">SupplyChain</span><span class="p">()</span>
+# Create a new supply chain
+my_supply_chain = SupplyChain()
 
-<span class="c1"># Add some products to the supply chain</span>
-<span class="n">my_supply_chain</span><span class="o">.</span><span class="n">add_product</span><span class="p">(</span><span class="n">Product</span><span class="p">(</span><span class="s2">&quot;12345&quot;</span><span class="p">,</span> <span class="s2">&quot;Manufacturer A&quot;</span><span class="p">,</span> <span class="s2">&quot;2022-01-01&quot;</span><span class="p">))</span>
-<span class="n">my_supply_chain</span><span class="o">.</span><span class="n">add_product</span><span class="p">(</span><span class="n">Product</span><span class="p">(</span><span class="s2">&quot;67890&quot;</span><span class="p">,</span> <span class="s2">&quot;Manufacturer B&quot;</span><span class="p">,</span> <span class="s2">&quot;2022-02-01&quot;</span><span class="p">))</span>
+# Add some products to the supply chain
+my_supply_chain.add_product(Product(&quot;12345&quot;, &quot;Manufacturer A&quot;, &quot;2022-01-01&quot;))
+my_supply_chain.add_product(Product(&quot;67890&quot;, &quot;Manufacturer B&quot;, &quot;2022-02-01&quot;))
 
-<span class="c1"># Get a product from the supply chain</span>
-<span class="n">product</span> <span class="o">=</span> <span class="n">my_supply_chain</span><span class="o">.</span><span class="n">get_product</span><span class="p">(</span><span class="s2">&quot;12345&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Product </span><span class="si">{</span><span class="n">product</span><span class="o">.</span><span class="n">product_id</span><span class="si">}</span><span class="s2"> - Hash: </span><span class="si">{</span><span class="n">product</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Get a product from the supply chain
+product = my_supply_chain.get_product(&quot;12345&quot;)
+print(f&quot;Product {product.product_id} - Hash: {product.hash}&quot;)
+</code></pre>
 <p>This code creates a simple supply chain management system, and demonstrates how to add products to the chain and retrieve them by ID.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur when working with blockchain technology include:</p>
@@ -310,43 +309,42 @@
 </ul>
 <h3 id="example-scalability-solution">Example: Scalability Solution</h3>
 <p>Here is an example of how sharding can be used to improve scalability:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<pre><code class="language-python">import hashlib
 
-<span class="k">class</span> <span class="nc">Shard</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shard_id</span><span class="p">,</span> <span class="n">transactions</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shard_id</span> <span class="o">=</span> <span class="n">shard_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">transactions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
+class Shard:
+    def __init__(self, shard_id, transactions):
+        self.shard_id = shard_id
+        self.transactions = transactions
+        self.hash = self.calculate_hash()
 
-    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">data_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shard_id</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    def calculate_hash(self):
+        data_string = str(self.shard_id) + str(self.transactions)
+        return hashlib.sha256(data_string.encode()).hexdigest()
 
-<span class="k">class</span> <span class="nc">Blockchain</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shards</span> <span class="o">=</span> <span class="p">[]</span>
+class Blockchain:
+    def __init__(self):
+        self.shards = []
 
-    <span class="k">def</span> <span class="nf">add_shard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shard</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shard</span><span class="p">)</span>
+    def add_shard(self, shard):
+        self.shards.append(shard)
 
-    <span class="k">def</span> <span class="nf">get_shard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shard_id</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shards</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">shard</span><span class="o">.</span><span class="n">shard_id</span> <span class="o">==</span> <span class="n">shard_id</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">shard</span>
-        <span class="k">return</span> <span class="kc">None</span>
+    def get_shard(self, shard_id):
+        for shard in self.shards:
+            if shard.shard_id == shard_id:
+                return shard
+        return None
 
-<span class="c1"># Create a new blockchain</span>
-<span class="n">my_blockchain</span> <span class="o">=</span> <span class="n">Blockchain</span><span class="p">()</span>
+# Create a new blockchain
+my_blockchain = Blockchain()
 
-<span class="c1"># Create some shards</span>
-<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_shard</span><span class="p">(</span><span class="n">Shard</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Transaction 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Transaction 2&quot;</span><span class="p">]))</span>
-<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_shard</span><span class="p">(</span><span class="n">Shard</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Transaction 3&quot;</span><span class="p">,</span> <span class="s2">&quot;Transaction 4&quot;</span><span class="p">]))</span>
+# Create some shards
+my_blockchain.add_shard(Shard(1, [&quot;Transaction 1&quot;, &quot;Transaction 2&quot;]))
+my_blockchain.add_shard(Shard(2, [&quot;Transaction 3&quot;, &quot;Transaction 4&quot;]))
 
-<span class="c1"># Get a shard from the blockchain</span>
-<span class="n">shard</span> <span class="o">=</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">get_shard</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shard </span><span class="si">{</span><span class="n">shard</span><span class="o">.</span><span class="n">shard_id</span><span class="si">}</span><span class="s2"> - Hash: </span><span class="si">{</span><span class="n">shard</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Get a shard from the blockchain
+shard = my_blockchain.get_shard(1)
+print(f&quot;Shard {shard.shard_id} - Hash: {shard.hash}&quot;)
+</code></pre>
 <p>This code creates a simple sharding system, and demonstrates how to add shards to the blockchain and retrieve them by ID.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of blockchain technology can vary widely depending on the specific use case and implementation. Some common performance benchmarks include:</p>
@@ -363,31 +361,30 @@
 </ul>
 <h3 id="example-performance-benchmarking">Example: Performance Benchmarking</h3>
 <p>Here is an example of how to benchmark the performance of a blockchain platform:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import time
+import requests
 
-<span class="c1"># Define the blockchain platform API endpoint</span>
-<span class="n">api_endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.example.com&quot;</span>
+# Define the blockchain platform API endpoint
+api_endpoint = &quot;https://api.example.com&quot;
 
-<span class="c1"># Define the number of transactions to send</span>
-<span class="n">num_transactions</span> <span class="o">=</span> <span class="mi">100</span>
+# Define the number of transactions to send
+num_transactions = 100
 
-<span class="c1"># Define the time interval between transactions</span>
-<span class="n">time_interval</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># second</span>
+# Define the time interval between transactions
+time_interval = 1  # second
 
-<span class="c1"># Send the transactions and measure the time</span>
-<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_transactions</span><span class="p">):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;transaction&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Transaction </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time_interval</span><span class="p">)</span>
-<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+# Send the transactions and measure the time
+start_time = time.time()
+for i in range(num_transactions):
+    response = requests.post(api_endpoint, json={&quot;transaction&quot;: f&quot;Transaction {i}&quot;})
+    time.sleep(time_interval)
+end_time = time.time()
 
-<span class="c1"># Calculate the transaction throughput</span>
-<span class="n">transaction_throughput</span> <span class="o">=</span> <span class="n">num_transactions</span> <span class="o">/</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+# Calculate the transaction throughput
+transaction_throughput = num_transactions / (end_time - start_time)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transaction throughput: </span><span class="si">{</span><span class="n">transaction_throughput</span><span class="si">}</span><span class="s2"> transactions per second&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Transaction throughput: {transaction_throughput} transactions per second&quot;)
+</code></pre>
 <p>This code sends a series of transactions to a blockchain platform and measures the time it takes to process them, which can be used to calculate the transaction throughput.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, blockchain technology has the potential to revolutionize a wide range of industries and use cases. However, it is still a relatively new and rapidly evolving field, and there are many challenges and limitations to overcome. By understanding the key components and concepts of blockchain technology, as well as the common problems and solutions, developers and organizations can begin to build and deploy their own blockchain-based applications.</p>

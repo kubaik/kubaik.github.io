@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,67 +169,65 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>To illustrate the usage of message queues, let's consider a simple example using RabbitMQ and Python. We'll create a producer that sends messages to a queue and a consumer that receives and processes these messages.</p>
 <h3 id="rabbitmq-example">RabbitMQ Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="c1"># Producer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello_queue&#39;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;hello_queue&#39;</span><span class="p">,</span>
-                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
-<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+# Producer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello_queue')
+channel.basic_publish(exchange='',
+                      routing_key='hello_queue',
+                      body='Hello, World!')
+connection.close()
 
-<span class="c1"># Consumer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello_queue&#39;</span><span class="p">)</span>
+# Consumer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello_queue')
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received message: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+def callback(ch, method, properties, body):
+    print(&quot;Received message: {}&quot;.format(body))
 
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello_queue&#39;</span><span class="p">,</span>
-                      <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
-                      <span class="n">no_ack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+channel.basic_consume(queue='hello_queue',
+                      on_message_callback=callback,
+                      no_ack=True)
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for messages...&#39;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
-</code></pre></div>
-
+print('Waiting for messages...')
+channel.start_consuming()
+</code></pre>
 <p>In this example, we create a producer that sends a "Hello, World!" message to a queue named <code>hello_queue</code>. The consumer connects to the same queue and starts listening for incoming messages, printing them to the console as they arrive.</p>
 <h3 id="apache-kafka-example">Apache Kafka Example</h3>
 <p>Here's an example using Apache Kafka and the <code>confluent-kafka</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">confluent_kafka</span> <span class="kn">import</span> <span class="n">Producer</span>
+<pre><code class="language-python">from confluent_kafka import Producer
 
-<span class="c1"># Producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">Producer</span><span class="p">({</span>
-    <span class="s1">&#39;bootstrap.servers&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;client.id&#39;</span><span class="p">:</span> <span class="s1">&#39;my_producer&#39;</span>
-<span class="p">})</span>
+# Producer
+producer = Producer({
+    'bootstrap.servers': 'localhost:9092',
+    'client.id': 'my_producer'
+})
 
-<span class="n">producer</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
+producer.produce('my_topic', value='Hello, World!')
 
-<span class="c1"># Consumer</span>
-<span class="kn">from</span> <span class="nn">confluent_kafka</span> <span class="kn">import</span> <span class="n">Consumer</span>
+# Consumer
+from confluent_kafka import Consumer
 
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">Consumer</span><span class="p">({</span>
-    <span class="s1">&#39;bootstrap.servers&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;group.id&#39;</span><span class="p">:</span> <span class="s1">&#39;my_group&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;auto.offset.reset&#39;</span><span class="p">:</span> <span class="s1">&#39;earliest&#39;</span>
-<span class="p">})</span>
+consumer = Consumer({
+    'bootstrap.servers': 'localhost:9092',
+    'group.id': 'my_group',
+    'auto.offset.reset': 'earliest'
+})
 
-<span class="n">consumer</span><span class="o">.</span><span class="n">subscribe</span><span class="p">([</span><span class="s1">&#39;my_topic&#39;</span><span class="p">])</span>
+consumer.subscribe(['my_topic'])
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">consumer</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">continue</span>
-    <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">error</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">error</span><span class="p">()))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received message: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
-</code></pre></div>
-
+while True:
+    msg = consumer.poll(1.0)
+    if msg is None:
+        continue
+    elif msg.error():
+        print(&quot;Error: {}&quot;.format(msg.error()))
+    else:
+        print(&quot;Received message: {}&quot;.format(msg.value().decode('utf-8')))
+</code></pre>
 <p>In this example, we create a producer that sends a "Hello, World!" message to a Kafka topic named <code>my_topic</code>. The consumer subscribes to the same topic and starts listening for incoming messages, printing them to the console as they arrive.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Message queues have numerous applications in real-world systems. Here are a few examples:</p>

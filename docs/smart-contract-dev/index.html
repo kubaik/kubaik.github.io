@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,82 +162,79 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Let's take a look at some practical code examples to illustrate the concept of smart contract development.</p>
 <h3 id="example-1-simple-auction-contract">Example 1: Simple Auction Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Auction</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBid</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBidder</span><span class="p">;</span>
+contract Auction {
+    address public owner;
+    uint public highestBid;
+    address public highestBidder;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        owner = msg.sender;
+        highestBid = 0;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_bid</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>_bid<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>highestBid<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Bid must be higher than the current highest bid&quot;</span><span class="p">);</span>
-<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span>_bid<span class="p">;</span>
-<span class="w">        </span>highestBidder<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function bid(uint _bid) public {
+        require(_bid &gt; highestBid, &quot;Bid must be higher than the current highest bid&quot;);
+        highestBid = _bid;
+        highestBidder = msg.sender;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">endAuction</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can end the auction&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span>highestBidder<span class="p">).</span>transfer<span class="p">(</span>highestBid<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function endAuction() public {
+        require(msg.sender == owner, &quot;Only the owner can end the auction&quot;);
+        payable(highestBidder).transfer(highestBid);
+    }
+}
+</code></pre>
 <p>This contract allows users to bid on an auction, and the owner can end the auction and transfer the highest bid to the winner.</p>
 <h3 id="example-2-token-contract">Example 2: Token Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Token</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>balances<span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">totalSupply</span><span class="p">;</span>
+contract Token {
+    mapping(address =&gt; uint) public balances;
+    uint public totalSupply;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>totalSupply<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1000000</span><span class="p">;</span>
-<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>totalSupply<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        totalSupply = 1000000;
+        balances[msg.sender] = totalSupply;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>_amount<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">        </span>balances<span class="p">[</span>_to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function transfer(address _to, uint _amount) public {
+        require(balances[msg.sender] &gt;= _amount, &quot;Insufficient balance&quot;);
+        balances[msg.sender] -= _amount;
+        balances[_to] += _amount;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_owner</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>balances<span class="p">[</span>_owner<span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function balanceOf(address _owner) public view returns (uint) {
+        return balances[_owner];
+    }
+}
+</code></pre>
 <p>This contract allows users to transfer tokens to each other and check their balance.</p>
 <h3 id="example-3-decentralized-finance-defi-contract">Example 3: Decentralized Finance (DeFi) Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">DeFi</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>deposits<span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">totalDeposits</span><span class="p">;</span>
+contract DeFi {
+    mapping(address =&gt; uint) public deposits;
+    uint public totalDeposits;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">deposit</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>_amount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Deposit amount must be greater than zero&quot;</span><span class="p">);</span>
-<span class="w">        </span>deposits<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">        </span>totalDeposits<span class="w"> </span><span class="o">+=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function deposit(uint _amount) public {
+        require(_amount &gt; 0, &quot;Deposit amount must be greater than zero&quot;);
+        deposits[msg.sender] += _amount;
+        totalDeposits += _amount;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>deposits<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>_amount<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span>deposits<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">        </span>totalDeposits<span class="w"> </span><span class="o">-=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function withdraw(uint _amount) public {
+        require(deposits[msg.sender] &gt;= _amount, &quot;Insufficient balance&quot;);
+        deposits[msg.sender] -= _amount;
+        totalDeposits -= _amount;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getInterestRate</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>totalDeposits<span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m m-Decimal">5</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">100</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getInterestRate() public view returns (uint) {
+        return totalDeposits * 5 / 100;
+    }
+}
+</code></pre>
 <p>This contract allows users to deposit and withdraw funds, and calculates an interest rate based on the total deposits.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of smart contracts can vary depending on the blockchain platform and the complexity of the contract. According to a recent study, the average gas cost for executing a smart contract on the Ethereum blockchain is around 20,000-50,000 gas. The cost of deploying a smart contract on the Ethereum blockchain can range from $10 to $100, depending on the complexity of the contract and the current gas prices.</p>

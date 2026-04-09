@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,24 +162,22 @@
 * O(2^n) - exponential time complexity</p>
 <h3 id="analyzing-time-complexity">Analyzing Time Complexity</h3>
 <p>To analyze the time complexity of an algorithm, we need to examine its loop structures, recursive calls, and conditional statements. We can use tools like Visual Studio Code or IntelliJ IDEA to analyze the time complexity of our code. For example, let's consider a simple algorithm that finds the maximum element in an array:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find_max</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_element</span><span class="p">:</span>
-            <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">max_element</span>
-</code></pre></div>
-
+<pre><code class="language-python">def find_max(arr):
+    max_element = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] &gt; max_element:
+            max_element = arr[i]
+    return max_element
+</code></pre>
 <p>The time complexity of this algorithm is O(n), where n is the length of the input array. This is because we are iterating through the array once, and the number of operations is directly proportional to the input size.</p>
 <h3 id="analyzing-space-complexity">Analyzing Space Complexity</h3>
 <p>To analyze the space complexity of an algorithm, we need to examine its memory usage. We can use tools like Memory Profiler or Valgrind to analyze the memory usage of our code. For example, let's consider a simple algorithm that creates a copy of an array:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">copy_array</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="n">new_arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-        <span class="n">new_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">new_arr</span>
-</code></pre></div>
-
+<pre><code class="language-python">def copy_array(arr):
+    new_arr = [0] * len(arr)
+    for i in range(len(arr)):
+        new_arr[i] = arr[i]
+    return new_arr
+</code></pre>
 <p>The space complexity of this algorithm is O(n), where n is the length of the input array. This is because we are creating a new array of the same size as the input array.</p>
 <h3 id="practical-use-cases">Practical Use Cases</h3>
 <p>Algorithm complexity analysis has numerous practical use cases in various fields, including:
@@ -217,24 +216,23 @@
 * <strong>Microsoft Azure</strong>: Microsoft Azure provides a pricing model based on the number of requests and the amount of data processed. For example, the cost of using Azure Functions is $0.000005 per request.</p>
 <h3 id="code-example-optimizing-algorithm-complexity">Code Example: Optimizing Algorithm Complexity</h3>
 <p>Here is an example of optimizing algorithm complexity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find_max</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="c1"># Original algorithm with O(n^2) time complexity</span>
-    <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_element</span><span class="p">:</span>
-                <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">max_element</span>
+<pre><code class="language-python">def find_max(arr):
+    # Original algorithm with O(n^2) time complexity
+    max_element = arr[0]
+    for i in range(1, len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[j] &gt; max_element:
+                max_element = arr[j]
+    return max_element
 
-<span class="k">def</span> <span class="nf">find_max_optimized</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="c1"># Optimized algorithm with O(n) time complexity</span>
-    <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_element</span><span class="p">:</span>
-            <span class="n">max_element</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">max_element</span>
-</code></pre></div>
-
+def find_max_optimized(arr):
+    # Optimized algorithm with O(n) time complexity
+    max_element = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] &gt; max_element:
+            max_element = arr[i]
+    return max_element
+</code></pre>
 <p>In this example, the original algorithm has a time complexity of O(n^2), while the optimized algorithm has a time complexity of O(n).</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Algorithm complexity analysis is a crucial aspect of software development, as it helps developers understand the performance and scalability of their code. By using big O notation, analyzing loop structures, and optimizing algorithms, developers can reduce the time and space complexity of their code and improve the overall user experience. In this article, we have explored the concepts, tools, and applications of algorithm complexity analysis, and provided practical code examples, real-world use cases, and performance benchmarks to demonstrate its importance. We hope that this article has provided valuable insights and actionable next steps for developers to improve the complexity of their algorithms.</p>

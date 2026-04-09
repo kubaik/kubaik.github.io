@@ -92,6 +92,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -155,59 +156,57 @@
 <p>Linear regression is a simple yet powerful algorithm for predicting a continuous target variable based on one or more predictors.</p>
 <p><strong>Use Case</strong>: Predicting housing prices based on features like size, location, and number of rooms.</p>
 <p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-<span class="c1"># Load dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;housing_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="s1">&#39;rooms&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+# Load dataset
+df = pd.read_csv('housing_data.csv')
+X = df[['size', 'location', 'rooms']]
+y = df['price']
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a Linear Regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create a Linear Regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Make predictions
+predictions = model.predict(X_test)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+mse = mean_squared_error(y_test, predictions)
+print(f'Mean Squared Error: {mse}')
+</code></pre>
 <p><strong>Performance Metrics</strong>:
 - If your Mean Squared Error (MSE) is around 1000, it might indicate a well-fitted model for housing prices, depending on the scale of the target variable.</p>
 <h4 id="2-decision-trees">2. Decision Trees</h4>
 <p>Decision Trees are versatile for both classification and regression tasks. They work by splitting the data into subsets based on feature values.</p>
 <p><strong>Use Case</strong>: Classifying customer churn based on demographic and behavioral data.</p>
 <p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<pre><code class="language-python">from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import classification_report
 
-<span class="c1"># Load dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;customer_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">,</span> <span class="s1">&#39;account_length&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;churn&#39;</span><span class="p">]</span>
+# Load dataset
+df = pd.read_csv('customer_data.csv')
+X = df[['age', 'income', 'account_length']]
+y = df['churn']
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-<span class="c1"># Create a Decision Tree model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create a Decision Tree model
+model = DecisionTreeClassifier(max_depth=5)
+model.fit(X_train, y_train)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Make predictions
+predictions = model.predict(X_test)
 
-<span class="c1"># Evaluate the model</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+print(classification_report(y_test, predictions))
+</code></pre>
 <p><strong>Common Problems &amp; Solutions</strong>:
 - <strong>Overfitting</strong>: Decision Trees can easily overfit. Limit the maximum depth of the tree, as shown in the code.</p>
 <h3 id="unsupervised-learning-algorithms">Unsupervised Learning Algorithms</h3>
@@ -216,35 +215,34 @@
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <p><strong>Use Case</strong>: Customer segmentation for targeted marketing.</p>
 <p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
-<span class="c1"># Load dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;customer_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">]]</span>
+# Load dataset
+df = pd.read_csv('customer_data.csv')
+X = df[['age', 'income']]
 
-<span class="c1"># Determine the optimal number of clusters using the Elbow method</span>
-<span class="n">inertia</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">inertia</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+# Determine the optimal number of clusters using the Elbow method
+inertia = []
+for k in range(1, 11):
+    model = KMeans(n_clusters=k)
+    model.fit(X)
+    inertia.append(model.inertia_)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">inertia</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of clusters&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Inertia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Elbow Method&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.plot(range(1, 11), inertia)
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.title('Elbow Method')
+plt.show()
 
-<span class="c1"># Create model with optimal clusters</span>
-<span class="n">optimal_k</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Assume we found this from the elbow method</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">optimal_k</span><span class="p">)</span>
-<span class="n">clusters</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Create model with optimal clusters
+optimal_k = 4  # Assume we found this from the elbow method
+model = KMeans(n_clusters=optimal_k)
+clusters = model.fit_predict(X)
 
-<span class="c1"># Add cluster labels to the original dataset</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span>
-</code></pre></div>
-
+# Add cluster labels to the original dataset
+df['Cluster'] = clusters
+</code></pre>
 <p><strong>Performance Metrics</strong>:
 - Use the Elbow method to determine the optimal number of clusters. A significant drop in inertia indicates a good choice for K.</p>
 <h3 id="reinforcement-learning-algorithms">Reinforcement Learning Algorithms</h3>
@@ -253,42 +251,41 @@
 <p><strong>Use Case</strong>: Training an agent to play chess.</p>
 <p><strong>Implementation</strong>:
 Due to the complexity, let’s outline a simple version of Q-learning:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import numpy as np
 
-<span class="c1"># Define the environment and parameters</span>
-<span class="n">num_states</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">num_actions</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">q_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">))</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">discount_factor</span> <span class="o">=</span> <span class="mf">0.9</span>
-<span class="n">exploration_rate</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">exploration_decay</span> <span class="o">=</span> <span class="mf">0.99</span>
+# Define the environment and parameters
+num_states = 5
+num_actions = 2
+q_table = np.zeros((num_states, num_actions))
+learning_rate = 0.1
+discount_factor = 0.9
+exploration_rate = 1.0
+exploration_decay = 0.99
 
-<span class="c1"># Define the training loop</span>
-<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_states</span><span class="p">)</span>
-    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+# Define the training loop
+for episode in range(1000):
+    state = np.random.randint(0, num_states)
+    done = False
 
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-        <span class="c1"># Epsilon-greedy action selection</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">exploration_rate</span><span class="p">:</span>
-            <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_actions</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">])</span>
+    while not done:
+        # Epsilon-greedy action selection
+        if np.random.rand() &lt; exploration_rate:
+            action = np.random.choice(num_actions)
+        else:
+            action = np.argmax(q_table[state])
 
-        <span class="c1"># Simulate taking action and receiving reward</span>
-        <span class="n">next_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="n">action</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_states</span>  <span class="c1"># Simplistic transition</span>
-        <span class="n">reward</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">next_state</span> <span class="o">==</span> <span class="n">num_states</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>  <span class="c1"># Reward for reaching the final state</span>
+        # Simulate taking action and receiving reward
+        next_state = (state + action) % num_states  # Simplistic transition
+        reward = 1 if next_state == num_states - 1 else 0  # Reward for reaching the final state
 
-        <span class="c1"># Update Q-value</span>
-        <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">+=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="n">discount_factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">next_state</span><span class="p">])</span> <span class="o">-</span> <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">])</span>
+        # Update Q-value
+        q_table[state, action] += learning_rate * (reward + discount_factor * np.max(q_table[next_state]) - q_table[state, action])
 
-        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
-        <span class="n">done</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">num_states</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        state = next_state
+        done = (state == num_states - 1)
 
-    <span class="n">exploration_rate</span> <span class="o">*=</span> <span class="n">exploration_decay</span>
-</code></pre></div>
-
+    exploration_rate *= exploration_decay
+</code></pre>
 <h3 id="tools-and-platforms">Tools and Platforms</h3>
 <ul>
 <li><strong>Scikit-Learn</strong>: Ideal for traditional machine learning algorithms. Free to use and integrates well with other Python libraries.</li>

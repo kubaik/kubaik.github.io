@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,59 +164,56 @@
 <p>Here are a few practical examples of using power types in TypeScript:</p>
 <h3 id="intersection-types">Intersection Types</h3>
 <p>Intersection types are used to combine multiple types into a single type. For example, let's say we have two types, <code>Person</code> and <code>Employee</code>, and we want to create a new type that combines both:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">};</span>
+<pre><code class="language-typescript">type Person = {
+  name: string;
+  age: number;
+};
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">Employee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">department</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">};</span>
+type Employee = {
+  id: number;
+  department: string;
+};
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">EmployeePerson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Employee</span><span class="p">;</span>
+type EmployeePerson = Person &amp; Employee;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">employee</span><span class="o">:</span><span class="w"> </span><span class="kt">EmployeePerson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">30</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">department</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Sales&#39;</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const employee: EmployeePerson = {
+  name: 'John Doe',
+  age: 30,
+  id: 1,
+  department: 'Sales',
+};
+</code></pre>
 <p>In this example, the <code>EmployeePerson</code> type is an intersection of the <code>Person</code> and <code>Employee</code> types, which means it has all the properties of both types.</p>
 <h3 id="union-types">Union Types</h3>
 <p>Union types are used to define a type that can be one of multiple types. For example, let's say we have a function that can return either a <code>string</code> or a <code>number</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getRandomValue</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">42</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">function getRandomValue(): string | number {
+  if (Math.random() &lt; 0.5) {
+    return 'hello';
+  } else {
+    return 42;
+  }
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getRandomValue</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: &quot;hello&quot; or 42</span>
-</code></pre></div>
-
+const value = getRandomValue();
+console.log(value); // Output: &quot;hello&quot; or 42
+</code></pre>
 <p>In this example, the <code>getRandomValue</code> function returns a union type of <code>string | number</code>, which means it can return either a <code>string</code> or a <code>number</code>.</p>
 <h3 id="conditional-types">Conditional Types</h3>
 <p>Conditional types are used to define a type that depends on a condition. For example, let's say we have a function that can return either a <code>string</code> or a <code>number</code> based on a boolean parameter:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kt">boolean</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">isString</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isString</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">42</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">function getValue&lt;T extends boolean&gt;(isString: T): T extends true ? string : number {
+  if (isString) {
+    return 'hello';
+  } else {
+    return 42;
+  }
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">stringValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getValue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">stringValue</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: &quot;hello&quot;</span>
+const stringValue = getValue(true);
+console.log(stringValue); // Output: &quot;hello&quot;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">numberValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getValue</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">numberValue</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: 42</span>
-</code></pre></div>
-
+const numberValue = getValue(false);
+console.log(numberValue); // Output: 42
+</code></pre>
 <p>In this example, the <code>getValue</code> function uses a conditional type to return either a <code>string</code> or a <code>number</code> based on the value of the <code>isString</code> parameter.</p>
 <h2 id="tools-and-platforms-for-working-with-power-types">Tools and Platforms for Working with Power Types</h2>
 <p>There are several tools and platforms that can help developers work with power types in TypeScript. Some of the most popular ones include:</p>

@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,28 +164,27 @@
 4. <strong>Reporting</strong>: The ability to create reports and dashboards to communicate insights to stakeholders.</p>
 <h3 id="example-using-tableau-to-visualize-sales-data">Example: Using Tableau to Visualize Sales Data</h3>
 <p>Tableau is a popular self-service BI tool that provides a wide range of features, including data visualization and reporting. Here is an example of how to use Tableau to visualize sales data:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="k">Connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">dataset</span>
-<span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">connect</span><span class="p">(</span><span class="ss">&quot;sales_data.csv&quot;</span><span class="p">)</span>
+<pre><code class="language-tableau">// Connect to the sales data dataset
+dataset = connect(&quot;sales_data.csv&quot;)
 
-<span class="o">//</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">bar</span><span class="w"> </span><span class="n">chart</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">region</span>
-<span class="n">bar_chart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="err">:</span><span class="n">sales</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="o">[</span><span class="n">Sales</span><span class="o">]</span><span class="p">),</span>
-<span class="w">  </span><span class="err">:</span><span class="n">region</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dimension</span><span class="p">(</span><span class="o">[</span><span class="n">Region</span><span class="o">]</span><span class="p">)</span>
-<span class="err">}</span>
+// Create a bar chart to show sales by region
+bar_chart = {
+  :sales =&gt; sum([Sales]),
+  :region =&gt; dimension([Region])
+}
 
-<span class="o">//</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">country</span>
-<span class="k">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="err">:</span><span class="n">sales</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="o">[</span><span class="n">Sales</span><span class="o">]</span><span class="p">),</span>
-<span class="w">  </span><span class="err">:</span><span class="n">country</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dimension</span><span class="p">(</span><span class="o">[</span><span class="n">Country</span><span class="o">]</span><span class="p">)</span>
-<span class="err">}</span>
+// Create a map to show sales by country
+map = {
+  :sales =&gt; sum([Sales]),
+  :country =&gt; dimension([Country])
+}
 
-<span class="o">//</span><span class="w"> </span><span class="n">Display</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">bar</span><span class="w"> </span><span class="n">chart</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">dashboard</span>
-<span class="n">dashboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">  </span><span class="err">:</span><span class="n">bar_chart</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">bar_chart</span><span class="p">,</span>
-<span class="w">  </span><span class="err">:</span><span class="k">map</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">map</span>
-<span class="err">}</span>
-</code></pre></div>
-
+// Display the bar chart and map in a dashboard
+dashboard = {
+  :bar_chart =&gt; bar_chart,
+  :map =&gt; map
+}
+</code></pre>
 <p>This code connects to a sales data dataset, creates a bar chart to show sales by region, and a map to show sales by country. The dashboard displays both visualizations, providing a comprehensive view of sales performance.</p>
 <h2 id="implementation-and-use-cases">Implementation and Use Cases</h2>
 <p>BI tools can be used in a wide range of scenarios, including:
@@ -193,29 +193,28 @@
 * <strong>Operations and Supply Chain</strong>: BI tools can be used to analyze operational performance, track inventory levels, and optimize supply chain management.</p>
 <h3 id="example-using-power-bi-to-analyze-customer-behavior">Example: Using Power BI to Analyze Customer Behavior</h3>
 <p>Power BI is a popular self-service BI tool that provides a wide range of features, including data visualization and reporting. Here is an example of how to use Power BI to analyze customer behavior:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to the customer data dataset</span>
-<span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;customer_data.csv&quot;</span><span class="p">)</span>
+<pre><code class="language-powerbi">// Connect to the customer data dataset
+dataset = connect(&quot;customer_data.csv&quot;)
 
-<span class="c1">// Create a clustering model to segment customers</span>
-<span class="n">clustering_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="o">:</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dimension</span><span class="p">([</span><span class="n">Customer</span><span class="w"> </span><span class="n">ID</span><span class="p">]),</span>
-<span class="w">  </span><span class="o">:</span><span class="n">age</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">measure</span><span class="p">([</span><span class="n">Age</span><span class="p">]),</span>
-<span class="w">  </span><span class="o">:</span><span class="n">income</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">measure</span><span class="p">([</span><span class="n">Income</span><span class="p">])</span>
-<span class="p">}</span>
+// Create a clustering model to segment customers
+clustering_model = {
+  :customer_id =&gt; dimension([Customer ID]),
+  :age =&gt; measure([Age]),
+  :income =&gt; measure([Income])
+}
 
-<span class="c1">// Create a decision tree to predict customer churn</span>
-<span class="n">decision_tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="o">:</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dimension</span><span class="p">([</span><span class="n">Customer</span><span class="w"> </span><span class="n">ID</span><span class="p">]),</span>
-<span class="w">  </span><span class="o">:</span><span class="n">churn</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">measure</span><span class="p">([</span><span class="n">Churn</span><span class="p">])</span>
-<span class="p">}</span>
+// Create a decision tree to predict customer churn
+decision_tree = {
+  :customer_id =&gt; dimension([Customer ID]),
+  :churn =&gt; measure([Churn])
+}
 
-<span class="c1">// Display the clustering model and decision tree in a dashboard</span>
-<span class="n">dashboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="o">:</span><span class="n">clustering_model</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clustering_model</span><span class="p">,</span>
-<span class="w">  </span><span class="o">:</span><span class="n">decision_tree</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">decision_tree</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Display the clustering model and decision tree in a dashboard
+dashboard = {
+  :clustering_model =&gt; clustering_model,
+  :decision_tree =&gt; decision_tree
+}
+</code></pre>
 <p>This code connects to a customer data dataset, creates a clustering model to segment customers, and a decision tree to predict customer churn. The dashboard displays both models, providing a comprehensive view of customer behavior.</p>
 <h2 id="performance-and-pricing">Performance and Pricing</h2>
 <p>The performance and pricing of BI tools vary widely, depending on the specific tool and deployment scenario. Here are some examples of BI tools and their pricing:
@@ -228,24 +227,23 @@
 * <strong>Google Data Studio</strong>: can handle datasets up to 100,000 rows</p>
 <h3 id="example-using-amazon-quicksight-to-analyze-large-datasets">Example: Using Amazon QuickSight to Analyze Large Datasets</h3>
 <p>Amazon QuickSight is a cloud-based BI tool that provides a wide range of features, including data visualization and reporting. Here is an example of how to use Amazon QuickSight to analyze large datasets:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a dataset from an Amazon S3 bucket</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">DATASET</span><span class="w"> </span><span class="n">sales_data</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">S3_BUCKET</span><span class="w"> </span><span class="s1">&#39;s3://my-bucket/sales-data&#39;</span>
+<pre><code class="language-sql">-- Create a dataset from an Amazon S3 bucket
+CREATE DATASET sales_data
+FROM S3_BUCKET 's3://my-bucket/sales-data'
 
-<span class="c1">-- Create a visualization to show sales by region</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">VISUALIZATION</span><span class="w"> </span><span class="n">sales_by_region</span>
-<span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_sales</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">sales_data</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">region</span>
+-- Create a visualization to show sales by region
+CREATE VISUALIZATION sales_by_region
+AS
+SELECT region, SUM(sales) AS total_sales
+FROM sales_data
+GROUP BY region
 
-<span class="c1">-- Display the visualization in a dashboard</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">DASHBOARD</span><span class="w"> </span><span class="n">sales_dashboard</span>
-<span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">sales_by_region</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">sales_data</span>
-</code></pre></div>
-
+-- Display the visualization in a dashboard
+CREATE DASHBOARD sales_dashboard
+AS
+SELECT sales_by_region
+FROM sales_data
+</code></pre>
 <p>This code creates a dataset from an Amazon S3 bucket, creates a visualization to show sales by region, and displays the visualization in a dashboard.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>BI tools can be prone to common problems, including:
@@ -258,20 +256,19 @@
 * <strong>Access Control</strong>: provides role-based access control to ensure that only authorized users can access sensitive data.</p>
 <h3 id="example-using-sap-businessobjects-to-address-data-quality-issues">Example: Using SAP BusinessObjects to Address Data Quality Issues</h3>
 <p>SAP BusinessObjects is an enterprise BI tool that provides a wide range of features, including data validation and data quality management. Here is an example of how to use SAP BusinessObjects to address data quality issues:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">--</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="nv">validation</span><span class="w"> </span><span class="nv">rule</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">missing</span><span class="w"> </span><span class="k">values</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="nv">VALIDATION</span><span class="w"> </span><span class="nv">RULE</span><span class="w"> </span><span class="nv">missing_values</span>
-<span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="nv">sales_data</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="nv">sales</span><span class="w"> </span><span class="nv">IS</span><span class="w"> </span><span class="nv">NULL</span>
+<pre><code class="language-abap">-- Create a data validation rule to check for missing values
+CREATE VALIDATION RULE missing_values
+AS
+SELECT *
+FROM sales_data
+WHERE sales IS NULL
 
-<span class="o">--</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="nv">quality</span><span class="w"> </span><span class="nv">dashboard</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nv">monitor</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="nv">quality</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="nv">DASHBOARD</span><span class="w"> </span><span class="nv">data_quality_dashboard</span>
-<span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nv">missing_values</span>
-<span class="k">FROM</span><span class="w"> </span><span class="nv">sales_data</span>
-</code></pre></div>
-
+-- Create a data quality dashboard to monitor data quality
+CREATE DASHBOARD data_quality_dashboard
+AS
+SELECT missing_values
+FROM sales_data
+</code></pre>
 <p>This code creates a data validation rule to check for missing values, and a data quality dashboard to monitor data quality.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, BI tools are powerful software applications that enable organizations to analyze and visualize data to make informed decisions. By understanding the different types of BI tools, their features, and how they can be used to drive business success, organizations can unlock the full potential of their data.</p>

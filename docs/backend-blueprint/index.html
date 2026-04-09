@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -152,71 +153,69 @@
 <p>Backend architecture patterns are the foundation of a scalable, maintainable, and efficient software system. A well-designed backend architecture can handle increased traffic, reduce latency, and improve overall user experience. In this article, we will explore different backend architecture patterns, their advantages, and disadvantages. We will also discuss practical examples, implementation details, and performance benchmarks.</p>
 <h3 id="monolithic-architecture">Monolithic Architecture</h3>
 <p>Monolithic architecture is a traditional approach where all components of an application are built into a single, self-contained unit. This approach is simple to develop, test, and deploy, but it can become cumbersome as the application grows.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of a monolithic architecture in Python</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<pre><code class="language-python"># Example of a monolithic architecture in Python
+from flask import Flask, request
+app = Flask(__name__)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
-    <span class="c1"># Database query to retrieve users</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">([</span><span class="n">user</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">])</span>
+@app.route('/users', methods=['GET'])
+def get_users():
+    # Database query to retrieve users
+    users = db.query(User).all()
+    return jsonify([user.to_dict() for user in users])
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
 <p>In the above example, we have a simple Flask application that handles user requests. The <code>get_users</code> function retrieves users from the database and returns them in JSON format. This approach works well for small applications, but it can become difficult to maintain and scale as the application grows.</p>
 <h2 id="microservices-architecture">Microservices Architecture</h2>
 <p>Microservices architecture is a modern approach where an application is broken down into smaller, independent services. Each service is responsible for a specific business capability and can be developed, tested, and deployed independently.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a microservices architecture in Java</span>
-<span class="nd">@Service</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserRepository</span><span class="w"> </span><span class="n">userRepository</span><span class="p">;</span>
+<pre><code class="language-java">// Example of a microservices architecture in Java
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Database query to retrieve users</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public List&lt;User&gt; getUsers() {
+        // Database query to retrieve users
+        return userRepository.findAll();
+    }
+}
+</code></pre>
 <p>In the above example, we have a <code>UserService</code> class that is responsible for handling user-related operations. The <code>getUsers</code> method retrieves users from the database using the <code>UserRepository</code> interface. This approach allows for greater flexibility, scalability, and maintainability.</p>
 <h3 id="event-driven-architecture">Event-Driven Architecture</h3>
 <p>Event-driven architecture is a design pattern where an application produces and handles events. Events can be used to notify other services or components of changes or actions.</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="c1">// Example of an event-driven architecture in Node.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">eventEmitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+// Example of an event-driven architecture in Node.js
+const express = require('express');
+const app = express();
+const eventEmitter = require('events');
 
-<span class="c1">// Define an event emitter</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userEventEmitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">eventEmitter</span><span class="p">();</span>
+// Define an event emitter
+const userEventEmitter = new eventEmitter();
 
-<span class="c1">// Define an event handler</span>
-<span class="nx">userEventEmitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;userCreated&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Send a welcome email to the user</span>
-<span class="w">    </span><span class="nx">sendWelcomeEmail</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="p">});</span>
+// Define an event handler
+userEventEmitter.on('userCreated', (user) =&gt; {
+    // Send a welcome email to the user
+    sendWelcomeEmail(user);
+});
 
-<span class="c1">// Define a route to create a new user</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Save the user to the database</span>
-<span class="w">    </span><span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Emit the userCreated event</span>
-<span class="w">            </span><span class="nx">userEventEmitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;userCreated&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
-<span class="w">            </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Define a route to create a new user
+app.post('/users', (req, res) =&gt; {
+    const user = new User(req.body);
+    // Save the user to the database
+    user.save((err) =&gt; {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            // Emit the userCreated event
+            userEventEmitter.emit('userCreated', user);
+            res.send(user);
+        }
+    });
+});
+</code></pre>
 <p>In the above example, we have an event-driven architecture where an event is emitted when a new user is created. The event is handled by a separate function that sends a welcome email to the user. This approach allows for loose coupling between services and components.</p>
 <h2 id="comparison-of-backend-architecture-patterns">Comparison of Backend Architecture Patterns</h2>
 <p>The following table compares the different backend architecture patterns:</p>

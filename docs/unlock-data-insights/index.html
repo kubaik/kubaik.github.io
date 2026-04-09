@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,28 +169,27 @@
 </ol>
 <h3 id="example-code-loading-data-into-amazon-redshift">Example Code: Loading Data into Amazon Redshift</h3>
 <p>The following example code demonstrates how to load data into Amazon Redshift using the AWS SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import boto3
+import pandas as pd
 
-<span class="c1"># Create an Amazon Redshift client</span>
-<span class="n">redshift</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;redshift&#39;</span><span class="p">)</span>
+# Create an Amazon Redshift client
+redshift = boto3.client('redshift')
 
-<span class="c1"># Create a pandas dataframe</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
-<span class="p">})</span>
+# Create a pandas dataframe
+df = pd.DataFrame({
+    'id': [1, 2, 3],
+    'name': ['John', 'Jane', 'Bob'],
+    'age': [25, 30, 35]
+})
 
-<span class="c1"># Load the data into Amazon Redshift</span>
-<span class="n">redshift</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="s1">&#39;my-cluster&#39;</span><span class="p">,</span>
-    <span class="n">Database</span><span class="o">=</span><span class="s1">&#39;my-database&#39;</span><span class="p">,</span>
-    <span class="n">Table</span><span class="o">=</span><span class="s1">&#39;my-table&#39;</span><span class="p">,</span>
-    <span class="n">Data</span><span class="o">=</span><span class="n">df</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Load the data into Amazon Redshift
+redshift.load_data(
+    ClusterIdentifier='my-cluster',
+    Database='my-database',
+    Table='my-table',
+    Data=df
+)
+</code></pre>
 <p>This code creates a pandas dataframe, loads the data into Amazon Redshift using the <code>load_data</code> method, and specifies the cluster identifier, database, table, and data to be loaded.</p>
 <h2 id="data-transformation-and-processing">Data Transformation and Processing</h2>
 <p>Data transformation and processing are critical steps in the data warehousing process. This involves cleaning, transforming, and aggregating the data to prepare it for analysis. There are several tools and technologies available for data transformation and processing, including:</p>
@@ -200,25 +200,24 @@
 </ul>
 <h3 id="example-code-data-transformation-using-apache-spark">Example Code: Data Transformation using Apache Spark</h3>
 <p>The following example code demonstrates how to transform data using Apache Spark:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s1">&#39;Data Transformation&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName('Data Transformation').getOrCreate()
 
-<span class="c1"># Create a dataframe</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
-<span class="p">],</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">])</span>
+# Create a dataframe
+df = spark.createDataFrame([
+    ('John', 25),
+    ('Jane', 30),
+    ('Bob', 35)
+], ['name', 'age'])
 
-<span class="c1"># Transform the data</span>
-<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>
+# Transform the data
+transformed_df = df.filter(df['age'] &gt; 30)
 
-<span class="c1"># Print the transformed data</span>
-<span class="n">transformed_df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Print the transformed data
+transformed_df.show()
+</code></pre>
 <p>This code creates a SparkSession, creates a dataframe, transforms the data using the <code>filter</code> method, and prints the transformed data.</p>
 <h2 id="data-analysis-and-visualization">Data Analysis and Visualization</h2>
 <p>Data analysis and visualization are critical steps in the data warehousing process. This involves using various tools and technologies to analyze and visualize the data, and gain insights into the business. There are several tools and technologies available for data analysis and visualization, including:</p>
@@ -229,23 +228,22 @@
 </ul>
 <h3 id="example-code-data-visualization-using-matplotlib">Example Code: Data Visualization using Matplotlib</h3>
 <p>The following example code demonstrates how to visualize data using Matplotlib:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+# Create a sample dataset
+data = [10, 20, 30, 40, 50]
 
-<span class="c1"># Create a line chart</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a line chart
+plt.plot(data)
 
-<span class="c1"># Add title and labels</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample Data&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X Axis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y Axis&#39;</span><span class="p">)</span>
+# Add title and labels
+plt.title('Sample Data')
+plt.xlabel('X Axis')
+plt.ylabel('Y Axis')
 
-<span class="c1"># Show the chart</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Show the chart
+plt.show()
+</code></pre>
 <p>This code creates a sample dataset, creates a line chart using Matplotlib, adds a title and labels, and displays the chart.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when implementing a data warehouse, including:</p>

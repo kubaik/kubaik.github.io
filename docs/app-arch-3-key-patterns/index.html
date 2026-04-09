@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -156,47 +157,46 @@
 * <strong>View</strong>: Handles the user interface and displays the data provided by the model.
 * <strong>Controller</strong>: Acts as an intermediary between the model and view, receiving input from the user and updating the model accordingly.</p>
 <p>Here is an example of how the MVC pattern can be implemented in a simple iOS app using Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">var</span> <span class="nv">age</span><span class="p">:</span> <span class="nb">Int</span>
+<pre><code class="language-swift">// Model
+class User {
+    var name: String
+    var age: Int
 
-    <span class="kd">init</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">Int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kc">self</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span>
-        <span class="kc">self</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="n">age</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
 
-<span class="c1">// View</span>
-<span class="kd">class</span> <span class="nc">UserController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kr">@IBOutlet</span> <span class="kr">weak</span> <span class="kd">var</span> <span class="nv">nameLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="p">!</span>
-    <span class="kr">@IBOutlet</span> <span class="kr">weak</span> <span class="kd">var</span> <span class="nv">ageLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="p">!</span>
+// View
+class UserController: UIViewController {
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
 
-    <span class="kd">var</span> <span class="nv">user</span><span class="p">:</span> <span class="n">User</span><span class="p">?</span>
+    var user: User?
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="c1">// Update the view with the user data</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">user</span> <span class="p">=</span> <span class="n">user</span> <span class="p">{</span>
-            <span class="n">nameLabel</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span>
-            <span class="n">ageLabel</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;</span><span class="si">\(</span><span class="n">user</span><span class="p">.</span><span class="n">age</span><span class="si">)</span><span class="s">&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Update the view with the user data
+        if let user = user {
+            nameLabel.text = user.name
+            ageLabel.text = &quot;\(user.age)&quot;
+        }
+    }
+}
 
-<span class="c1">// Controller</span>
-<span class="kd">class</span> <span class="nc">UserControllerController</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">user</span><span class="p">:</span> <span class="n">User</span><span class="p">?</span>
-    <span class="kd">var</span> <span class="nv">view</span><span class="p">:</span> <span class="n">UserController</span><span class="p">?</span>
+// Controller
+class UserControllerController {
+    var user: User?
+    var view: UserController?
 
-    <span class="kd">func</span> <span class="nf">updateUser</span><span class="p">(</span><span class="kc">_</span> <span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kc">self</span><span class="p">.</span><span class="n">user</span> <span class="p">=</span> <span class="n">user</span>
-        <span class="n">view</span><span class="p">?.</span><span class="n">user</span> <span class="p">=</span> <span class="n">user</span>
-        <span class="n">view</span><span class="p">?.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    func updateUser(_ user: User) {
+        self.user = user
+        view?.user = user
+        view?.viewDidLoad()
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserController</code> class represents the view, and the <code>UserControllerController</code> class represents the controller. The controller updates the model and notifies the view to update itself.</p>
 <h3 id="model-view-viewmodel-mvvm-pattern">Model-View-ViewModel (MVVM) Pattern</h3>
 <p>The MVVM pattern is similar to the MVC pattern, but it uses a view model to separate the presentation logic from the business logic. The view model acts as an intermediary between the model and view, exposing the data and functionality in a form that is easily consumable by the view.
@@ -204,43 +204,42 @@
 * <strong>View</strong>: Handles the user interface and displays the data provided by the view model.
 * <strong>ViewModel</strong>: Exposes the data and functionality of the model in a form that is easily consumable by the view.</p>
 <p>Here is an example of how the MVVM pattern can be implemented in a simple Android app using Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">age</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span>
+<pre><code class="language-kotlin">// Model
+data class User(val name: String, val age: Int)
 
-<span class="c1">// ViewModel</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">UserViewModel</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MutableLiveData</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">()</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="p">:</span><span class="w"> </span><span class="n">LiveData</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_user</span>
+// ViewModel
+class UserViewModel {
+    private val _user = MutableLiveData&lt;User&gt;()
+    val user: LiveData&lt;User&gt; = _user
 
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">loadUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Load the user data from the repository</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserRepository</span><span class="p">.</span><span class="na">loadUser</span><span class="p">()</span>
-<span class="w">        </span><span class="n">_user</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    fun loadUser() {
+        // Load the user data from the repository
+        val user = UserRepository.loadUser()
+        _user.value = user
+    }
+}
 
-<span class="c1">// View</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">UserActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">viewModel</span><span class="p">:</span><span class="w"> </span><span class="n">UserViewModel</span>
+// View
+class UserActivity : AppCompatActivity() {
+    private lateinit var viewModel: UserViewModel
 
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="c1">// Create the view model</span>
-<span class="w">        </span><span class="n">viewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserViewModel</span><span class="p">()</span>
-<span class="w">        </span><span class="c1">// Observe the user data</span>
-<span class="w">        </span><span class="n">viewModel</span><span class="p">.</span><span class="na">user</span><span class="p">.</span><span class="na">observe</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">            </span><span class="c1">// Update the view with the user data</span>
-<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">nameLabel</span><span class="p">:</span><span class="w"> </span><span class="n">TextView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">id</span><span class="p">.</span><span class="na">name_label</span><span class="p">)</span>
-<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">ageLabel</span><span class="p">:</span><span class="w"> </span><span class="n">TextView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">id</span><span class="p">.</span><span class="na">age_label</span><span class="p">)</span>
-<span class="w">            </span><span class="n">nameLabel</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">name</span>
-<span class="w">            </span><span class="n">ageLabel</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">age</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="c1">// Load the user data</span>
-<span class="w">        </span><span class="n">viewModel</span><span class="p">.</span><span class="na">loadUser</span><span class="p">()</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Create the view model
+        viewModel = UserViewModel()
+        // Observe the user data
+        viewModel.user.observe(this) { user -&gt;
+            // Update the view with the user data
+            val nameLabel: TextView = findViewById(R.id.name_label)
+            val ageLabel: TextView = findViewById(R.id.age_label)
+            nameLabel.text = user.name
+            ageLabel.text = user.age.toString()
+        }
+        // Load the user data
+        viewModel.loadUser()
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserViewModel</code> class represents the view model, and the <code>UserActivity</code> class represents the view. The view model exposes the user data as a <code>LiveData</code> object, which is observed by the view.</p>
 <h3 id="model-view-presenter-mvp-pattern">Model-View-Presenter (MVP) Pattern</h3>
 <p>The MVP pattern is similar to the MVC pattern, but it uses a presenter to separate the presentation logic from the business logic. The presenter acts as an intermediary between the model and view, handling the business logic and updating the view accordingly.
@@ -248,57 +247,56 @@
 * <strong>View</strong>: Handles the user interface and displays the data provided by the presenter.
 * <strong>Presenter</strong>: Handles the business logic and updates the view accordingly.</p>
 <p>Here is an example of how the MVP pattern can be implemented in a simple React Native app using JavaScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Model</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">age</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Model
+class User {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
 
-<span class="c1">// Presenter</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">UserPresenter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">view</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">view</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+// Presenter
+class UserPresenter {
+    constructor(view) {
+        this.view = view;
+    }
 
-<span class="w">    </span><span class="nx">loadUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Load the user data from the repository</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">UserRepository</span><span class="p">.</span><span class="nx">loadUser</span><span class="p">();</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">updateUser</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    loadUser() {
+        // Load the user data from the repository
+        const user = UserRepository.loadUser();
+        this.view.updateUser(user);
+    }
+}
 
-<span class="c1">// View</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">UserScreen</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">presenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">UserPresenter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+// View
+class UserScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: null,
+        };
+        this.presenter = new UserPresenter(this);
+    }
 
-<span class="w">    </span><span class="nx">componentDidMount</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">presenter</span><span class="p">.</span><span class="nx">loadUser</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    componentDidMount() {
+        this.presenter.loadUser();
+    }
 
-<span class="w">    </span><span class="nx">updateUser</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
+    updateUser(user) {
+        this.setState({ user });
+    }
 
-<span class="w">    </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
-<span class="w">                </span><span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
-<span class="w">                </span><span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">age</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="err">/View&gt;</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    render() {
+        const { user } = this.state;
+        return (
+            &lt;View&gt;
+                &lt;Text&gt;{user.name}&lt;/Text&gt;
+                &lt;Text&gt;{user.age}&lt;/Text&gt;
+            &lt;/View&gt;
+        );
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class represents the model, the <code>UserPresenter</code> class represents the presenter, and the <code>UserScreen</code> class represents the view. The presenter handles the business logic and updates the view accordingly.</p>
 <h2 id="comparison-of-the-three-patterns">Comparison of the Three Patterns</h2>
 <p>Each of the three patterns has its own strengths and weaknesses. Here is a comparison of the three patterns:

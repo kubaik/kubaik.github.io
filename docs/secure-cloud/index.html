@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,16 +162,15 @@
 </ul>
 <h3 id="practical-example-implementing-iam-with-aws">Practical Example: Implementing IAM with AWS</h3>
 <p>Here is an example of how to implement IAM with AWS using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new IAM user</span>
-aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>myuser
+<pre><code class="language-bash"># Create a new IAM user
+aws iam create-user --user-name myuser
 
-<span class="c1"># Create a new IAM policy</span>
-aws<span class="w"> </span>iam<span class="w"> </span>create-policy<span class="w"> </span>--policy-name<span class="w"> </span>mypolicy<span class="w"> </span>--policy-document<span class="w"> </span>file://mypolicy.json
+# Create a new IAM policy
+aws iam create-policy --policy-name mypolicy --policy-document file://mypolicy.json
 
-<span class="c1"># Attach the policy to the user</span>
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>myuser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::123456789012:policy/mypolicy
-</code></pre></div>
-
+# Attach the policy to the user
+aws iam attach-user-policy --user-name myuser --policy-arn arn:aws:iam::123456789012:policy/mypolicy
+</code></pre>
 <p>In this example, we create a new IAM user, create a new IAM policy, and attach the policy to the user. The policy document (<code>mypolicy.json</code>) defines the permissions and access levels for the user.</p>
 <h2 id="cloud-security-tools-and-platforms">Cloud Security Tools and Platforms</h2>
 <p>There are many cloud security tools and platforms available, each with its own strengths and weaknesses. Some popular options include:</p>
@@ -199,27 +199,26 @@ Solution: Use cloud security gateways, such as AWS Network Firewall, to control 
 </ul>
 <h3 id="practical-example-securing-cloud-storage-buckets-with-aws">Practical Example: Securing Cloud Storage Buckets with AWS</h3>
 <p>Here is an example of how to secure cloud storage buckets with AWS using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a new S3 bucket</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">create_bucket</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;mybucket&#39;</span><span class="p">)</span>
+# Create a new S3 bucket
+s3 = boto3.client('s3')
+s3.create_bucket(Bucket='mybucket')
 
-<span class="c1"># Enable bucket encryption</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">put_bucket_encryption</span><span class="p">(</span>
-    <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;mybucket&#39;</span><span class="p">,</span>
-    <span class="n">ServerSideEncryptionConfiguration</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Rules&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;ApplyServerSideEncryptionByDefault&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;SSEAlgorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;AES256&#39;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Enable bucket encryption
+s3.put_bucket_encryption(
+    Bucket='mybucket',
+    ServerSideEncryptionConfiguration={
+        'Rules': [
+            {
+                'ApplyServerSideEncryptionByDefault': {
+                    'SSEAlgorithm': 'AES256'
+                }
+            }
+        ]
+    }
+)
+</code></pre>
 <p>In this example, we create a new S3 bucket and enable bucket encryption using the <code>put_bucket_encryption</code> method.</p>
 <h2 id="cloud-security-use-cases">Cloud Security Use Cases</h2>
 <p>Some common cloud security use cases include:</p>
@@ -249,31 +248,30 @@ Solution: Use cloud security gateways, such as AWS Network Firewall, to control 
 * <strong>Microsoft Azure Security Center documentation</strong>: <a href="https://docs.microsoft.com/en-us/azure/security-center/">https://docs.microsoft.com/en-us/azure/security-center/</a></p>
 <p>By leveraging these resources and following the guidance outlined in this article, organizations can navigate the complex world of cloud security and protect their cloud-based assets from cyber threats. </p>
 <p>Here is another example that uses Node.js to connect to an AWS S3 bucket and upload a file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">AWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const AWS = require('aws-sdk');
 
-<span class="c1">// Create a new S3 client</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">s3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AWS</span><span class="p">.</span><span class="nx">S3</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-west-2&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">accessKeyId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_ACCESS_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">secretAccessKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_SECRET_KEY&#39;</span>
-<span class="p">});</span>
+// Create a new S3 client
+const s3 = new AWS.S3({
+  region: 'us-west-2',
+  accessKeyId: 'YOUR_ACCESS_KEY',
+  secretAccessKey: 'YOUR_SECRET_KEY'
+});
 
-<span class="c1">// Upload a file to the S3 bucket</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Bucket</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;mybucket&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">Key</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;myfile.txt&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">Body</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span>
-<span class="p">};</span>
+// Upload a file to the S3 bucket
+const params = {
+  Bucket: 'mybucket',
+  Key: 'myfile.txt',
+  Body: 'Hello, world!'
+};
 
-<span class="nx">s3</span><span class="p">.</span><span class="nx">upload</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+s3.upload(params, (err, data) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
+</code></pre>
 <p>This example demonstrates how to use the AWS SDK for Node.js to connect to an S3 bucket and upload a file. The <code>upload</code> method takes a <code>params</code> object that specifies the bucket, key, and body of the file to upload. The <code>accessKeyId</code> and <code>secretAccessKey</code> variables should be replaced with the organization's AWS access key and secret key.</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"

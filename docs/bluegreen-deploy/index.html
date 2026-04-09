@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,16 +164,15 @@
 </ol>
 <h3 id="example-code-blue-green-deployment-with-aws-elastic-beanstalk">Example Code: Blue-Green Deployment with AWS Elastic Beanstalk</h3>
 <p>Here's an example of how you can implement blue-green deployment using AWS Elastic Beanstalk and the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new environment for the green deployment</span>
-aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>create-environment<span class="w"> </span>--environment-name<span class="w"> </span>my-app-green<span class="w"> </span>--version-label<span class="w"> </span>v2
+<pre><code class="language-bash"># Create a new environment for the green deployment
+aws elasticbeanstalk create-environment --environment-name my-app-green --version-label v2
 
-<span class="c1"># Deploy the new version of the application to the green environment</span>
-aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>create-environment-version<span class="w"> </span>--environment-name<span class="w"> </span>my-app-green<span class="w"> </span>--version-label<span class="w"> </span>v2<span class="w"> </span>--source-bundle<span class="w"> </span>file://path/to/source/bundle.zip
+# Deploy the new version of the application to the green environment
+aws elasticbeanstalk create-environment-version --environment-name my-app-green --version-label v2 --source-bundle file://path/to/source/bundle.zip
 
-<span class="c1"># Swap the blue and green environments</span>
-aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>swap-environment-cnames<span class="w"> </span>--source-environment-name<span class="w"> </span>my-app-blue<span class="w"> </span>--destination-environment-name<span class="w"> </span>my-app-green
-</code></pre></div>
-
+# Swap the blue and green environments
+aws elasticbeanstalk swap-environment-cnames --source-environment-name my-app-blue --destination-environment-name my-app-green
+</code></pre>
 <p>In this example, we create a new environment for the green deployment, deploy the new version of the application to the green environment, and then swap the blue and green environments using the <code>swap-environment-cnames</code> command.</p>
 <h2 id="practical-use-cases-for-blue-green-deployment">Practical Use Cases for Blue-Green Deployment</h2>
 <p>Blue-green deployment is useful in a variety of scenarios, including:</p>
@@ -189,56 +189,55 @@ aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>swap-environm
 </ul>
 <h3 id="example-code-blue-green-deployment-with-kubernetes">Example Code: Blue-Green Deployment with Kubernetes</h3>
 <p>Here's an example of how you can implement blue-green deployment using Kubernetes and the <code>kubectl</code> command-line tool:</p>
-<div class="codehilite"><pre><span></span><code>#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">deployment</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">blue</span><span class="w"> </span><span class="nv">environment</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">apps</span><span class="o">/</span><span class="nv">v1</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">Deployment</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span><span class="o">-</span><span class="nv">blue</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">replicas</span>:<span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="nv">selector</span>:
-<span class="w">    </span><span class="nv">matchLabels</span>:
-<span class="w">      </span><span class="nv">app</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">  </span><span class="nv">template</span>:
-<span class="w">    </span><span class="nv">metadata</span>:
-<span class="w">      </span><span class="nv">labels</span>:
-<span class="w">        </span><span class="nv">app</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">    </span><span class="nv">spec</span>:
-<span class="w">      </span><span class="nv">containers</span>:
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">        </span><span class="nv">image</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>:<span class="nv">v1</span>
-<span class="w">        </span><span class="nv">ports</span>:
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="nv">containerPort</span>:<span class="w"> </span><span class="mi">80</span>
+<pre><code class="language-yml"># Define a deployment for the blue environment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:v1
+        ports:
+        - containerPort: 80
 
-#<span class="w"> </span><span class="nv">Define</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">deployment</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">green</span><span class="w"> </span><span class="nv">environment</span>
-<span class="nv">apiVersion</span>:<span class="w"> </span><span class="nv">apps</span><span class="o">/</span><span class="nv">v1</span>
-<span class="nv">kind</span>:<span class="w"> </span><span class="nv">Deployment</span>
-<span class="nv">metadata</span>:
-<span class="w">  </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span><span class="o">-</span><span class="nv">green</span>
-<span class="nv">spec</span>:
-<span class="w">  </span><span class="nv">replicas</span>:<span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="nv">selector</span>:
-<span class="w">    </span><span class="nv">matchLabels</span>:
-<span class="w">      </span><span class="nv">app</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">  </span><span class="nv">template</span>:
-<span class="w">    </span><span class="nv">metadata</span>:
-<span class="w">      </span><span class="nv">labels</span>:
-<span class="w">        </span><span class="nv">app</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">    </span><span class="nv">spec</span>:
-<span class="w">      </span><span class="nv">containers</span>:
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nv">name</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>
-<span class="w">        </span><span class="nv">image</span>:<span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span>:<span class="nv">v2</span>
-<span class="w">        </span><span class="nv">ports</span>:
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="nv">containerPort</span>:<span class="w"> </span><span class="mi">80</span>
+# Define a deployment for the green environment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:v2
+        ports:
+        - containerPort: 80
 
-#<span class="w"> </span><span class="nv">Create</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">deployments</span>
-<span class="nv">kubectl</span><span class="w"> </span><span class="nv">apply</span><span class="w"> </span><span class="o">-</span><span class="nv">f</span><span class="w"> </span><span class="nv">deployment</span><span class="o">-</span><span class="nv">blue</span>.<span class="nv">yaml</span>
-<span class="nv">kubectl</span><span class="w"> </span><span class="nv">apply</span><span class="w"> </span><span class="o">-</span><span class="nv">f</span><span class="w"> </span><span class="nv">deployment</span><span class="o">-</span><span class="nv">green</span>.<span class="nv">yaml</span>
+# Create the deployments
+kubectl apply -f deployment-blue.yaml
+kubectl apply -f deployment-green.yaml
 
-#<span class="w"> </span><span class="nv">Route</span><span class="w"> </span><span class="nv">traffic</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">green</span><span class="w"> </span><span class="nv">environment</span>
-<span class="nv">kubectl</span><span class="w"> </span><span class="nv">patch</span><span class="w"> </span><span class="nv">svc</span><span class="w"> </span><span class="nv">my</span><span class="o">-</span><span class="nv">app</span><span class="w"> </span><span class="o">-</span><span class="nv">p</span><span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;selector&quot;:{&quot;app&quot;:&quot;my-app&quot;}}}&#39;</span>
-</code></pre></div>
-
+# Route traffic to the green environment
+kubectl patch svc my-app -p '{&quot;spec&quot;:{&quot;selector&quot;:{&quot;app&quot;:&quot;my-app&quot;}}}'
+</code></pre>
 <p>In this example, we define two deployments, one for the blue environment and one for the green environment, and then create the deployments using the <code>kubectl apply</code> command. We then route traffic to the green environment using the <code>kubectl patch</code> command.</p>
 <h2 id="common-problems-with-blue-green-deployment">Common Problems with Blue-Green Deployment</h2>
 <p>While blue-green deployment can be a powerful strategy for deploying new versions of your application, there are some common problems to watch out for, including:</p>
@@ -255,37 +254,36 @@ aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>swap-environm
 </ul>
 <h3 id="example-code-automating-blue-green-deployment-with-aws-cloudformation">Example Code: Automating Blue-Green Deployment with AWS CloudFormation</h3>
 <p>Here's an example of how you can automate blue-green deployment using AWS CloudFormation:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Define a CloudFormation template for the blue environment
+<pre><code class="language-yml"># Define a CloudFormation template for the blue environment
 Resources:
   MyAppBlue:
-    Type: &#39;AWS::ElasticBeanstalk::Environment&#39;
+    Type: 'AWS::ElasticBeanstalk::Environment'
     Properties:
       ApplicationName: !Ref MyApp
       EnvironmentName: my-app-blue
       VersionLabel: v1
 
-<span class="gh">#</span> Define a CloudFormation template for the green environment
+# Define a CloudFormation template for the green environment
 Resources:
   MyAppGreen:
-    Type: &#39;AWS::ElasticBeanstalk::Environment&#39;
+    Type: 'AWS::ElasticBeanstalk::Environment'
     Properties:
       ApplicationName: !Ref MyApp
       EnvironmentName: my-app-green
       VersionLabel: v2
 
-<span class="gh">#</span> Define a CloudFormation template for the deployment
+# Define a CloudFormation template for the deployment
 Resources:
   MyAppDeployment:
-    Type: &#39;AWS::ElasticBeanstalk::EnvironmentVersion&#39;
+    Type: 'AWS::ElasticBeanstalk::EnvironmentVersion'
     Properties:
       EnvironmentName: !Ref MyAppGreen
       VersionLabel: v2
       SourceBundle: file://path/to/source/bundle.zip
 
-<span class="gh">#</span> Create the CloudFormation stack
+# Create the CloudFormation stack
 aws cloudformation create-stack --stack-name my-app --template-body file://path/to/template.yaml --capabilities CAPABILITY_IAM
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we define three CloudFormation templates, one for the blue environment, one for the green environment, and one for the deployment, and then create the CloudFormation stack using the <code>aws cloudformation create-stack</code> command.</p>
 <h2 id="performance-metrics-and-pricing">Performance Metrics and Pricing</h2>
 <p>When implementing blue-green deployment, it's essential to consider the performance metrics and pricing of the underlying infrastructure. Some key metrics to consider include:</p>

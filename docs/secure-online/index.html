@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,68 +161,65 @@
 <h2 id="practical-code-examples-for-cybersecurity">Practical Code Examples for Cybersecurity</h2>
 <p>Let's take a look at some practical code examples to illustrate key cybersecurity concepts:</p>
 <h3 id="example-1-password-hashing-with-python">Example 1: Password Hashing with Python</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">secrets</span>
+<pre><code class="language-python">import hashlib
+import secrets
 
-<span class="k">def</span> <span class="nf">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-    <span class="n">salt</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-    <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s1">&#39;sha256&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">salt</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">salt</span> <span class="o">+</span> <span class="n">hashed_password</span>
+def hash_password(password):
+    salt = secrets.token_bytes(16)
+    hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
+    return salt + hashed_password
 
-<span class="k">def</span> <span class="nf">verify_password</span><span class="p">(</span><span class="n">stored_password</span><span class="p">,</span> <span class="n">provided_password</span><span class="p">):</span>
-    <span class="n">salt</span> <span class="o">=</span> <span class="n">stored_password</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
-    <span class="n">stored_hash</span> <span class="o">=</span> <span class="n">stored_password</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span>
-    <span class="n">new_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s1">&#39;sha256&#39;</span><span class="p">,</span> <span class="n">provided_password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">salt</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_hash</span> <span class="o">==</span> <span class="n">stored_hash</span>
+def verify_password(stored_password, provided_password):
+    salt = stored_password[:16]
+    stored_hash = stored_password[16:]
+    new_hash = hashlib.pbkdf2_hmac('sha256', provided_password.encode('utf-8'), salt, 100000)
+    return new_hash == stored_hash
 
-<span class="c1"># Generate a random password</span>
-<span class="n">password</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+# Generate a random password
+password = secrets.token_urlsafe(16)
 
-<span class="c1"># Hash the password</span>
-<span class="n">hashed_password</span> <span class="o">=</span> <span class="n">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+# Hash the password
+hashed_password = hash_password(password)
 
-<span class="c1"># Verify the password</span>
-<span class="n">is_valid</span> <span class="o">=</span> <span class="n">verify_password</span><span class="p">(</span><span class="n">hashed_password</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_valid</span><span class="p">)</span>  <span class="c1"># Should print: True</span>
-</code></pre></div>
-
+# Verify the password
+is_valid = verify_password(hashed_password, password)
+print(is_valid)  # Should print: True
+</code></pre>
 <p>This example demonstrates how to securely hash and verify passwords using Python's <code>hashlib</code> and <code>secrets</code> libraries.</p>
 <h3 id="example-2-secure-data-transmission-with-ssltls">Example 2: Secure Data Transmission with SSL/TLS</h3>
 <p>To secure data transmission, it's essential to use SSL/TLS (Secure Sockets Layer/Transport Layer Security) encryption. Here's an example using Python's <code>ssl</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">ssl</span>
-<span class="kn">import</span> <span class="nn">socket</span>
+<pre><code class="language-python">import ssl
+import socket
 
-<span class="c1"># Create an SSL context</span>
-<span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span>
+# Create an SSL context
+context = ssl.create_default_context()
 
-<span class="c1"># Create a socket</span>
-<span class="n">server_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+# Create a socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-<span class="c1"># Wrap the socket with the SSL context</span>
-<span class="n">ssl_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">wrap_socket</span><span class="p">(</span><span class="n">server_socket</span><span class="p">,</span> <span class="n">server_hostname</span><span class="o">=</span><span class="s1">&#39;example.com&#39;</span><span class="p">)</span>
+# Wrap the socket with the SSL context
+ssl_socket = context.wrap_socket(server_socket, server_hostname='example.com')
 
-<span class="c1"># Connect to the server</span>
-<span class="n">ssl_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="mi">443</span><span class="p">))</span>
+# Connect to the server
+ssl_socket.connect(('example.com', 443))
 
-<span class="c1"># Send and receive data securely</span>
-<span class="n">ssl_socket</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Hello, server!&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">ssl_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>  <span class="c1"># Should print the server&#39;s response</span>
-</code></pre></div>
-
+# Send and receive data securely
+ssl_socket.sendall(b'Hello, server!')
+response = ssl_socket.recv(1024)
+print(response.decode('utf-8'))  # Should print the server's response
+</code></pre>
 <p>This example demonstrates how to establish a secure connection to a server using SSL/TLS encryption.</p>
 <h3 id="example-3-web-application-firewall-waf-with-owasp-modsecurity">Example 3: Web Application Firewall (WAF) with OWASP ModSecurity</h3>
 <p>A Web Application Firewall (WAF) is a critical component of any web application's security posture. Here's an example using OWASP ModSecurity:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install ModSecurity</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>modsecurity
+<pre><code class="language-bash"># Install ModSecurity
+sudo apt-get install modsecurity
 
-<span class="c1"># Configure ModSecurity</span>
-sudo<span class="w"> </span>nano<span class="w"> </span>/etc/modsecurity/modsecurity.conf
+# Configure ModSecurity
+sudo nano /etc/modsecurity/modsecurity.conf
 
-<span class="c1"># Add a rule to detect and prevent SQL injection attacks</span>
-SecRule<span class="w"> </span>REQUEST_URI<span class="w"> </span><span class="s2">&quot;@contains /select/&quot;</span><span class="w"> </span><span class="s2">&quot;id:1000,phase:1,t:none,log,deny,status:403&quot;</span>
-</code></pre></div>
-
+# Add a rule to detect and prevent SQL injection attacks
+SecRule REQUEST_URI &quot;@contains /select/&quot; &quot;id:1000,phase:1,t:none,log,deny,status:403&quot;
+</code></pre>
 <p>This example demonstrates how to install and configure ModSecurity to detect and prevent SQL injection attacks.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common cybersecurity problems and their solutions include:

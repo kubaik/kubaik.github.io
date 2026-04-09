@@ -97,6 +97,7 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,17 +159,15 @@
 * <strong>Prettier</strong>: A code formatter that ensures your code is consistently formatted, making it easier to read and maintain.</p>
 <h2 id="code-example-using-prettier-to-format-code">Code Example: Using Prettier to Format Code</h2>
 <p>Let's take a look at an example of how Prettier can be used to format code. Suppose we have a JavaScript file with the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello, &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function greet(name) {
+  console.log('Hello, ' + name)
+}
+</code></pre>
 <p>We can use Prettier to format this code by installing the Prettier extension and configuring it to run on save. Here's an example of how the formatted code would look:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function greet(name) {
+  console.log(`Hello, ${name}`);
+}
+</code></pre>
 <p>As you can see, Prettier has reformatted the code to use template literals, making it more readable and consistent.</p>
 <h2 id="debugging-and-testing">Debugging and Testing</h2>
 <p>Debugging and testing are essential parts of the development process. VS Code offers several extensions that can help streamline these tasks, including:
@@ -177,19 +176,17 @@
 3. <strong>Mocha</strong>: A testing framework that provides a simple and intuitive API for writing tests.</p>
 <h3 id="code-example-using-jest-to-write-unit-tests">Code Example: Using Jest to Write Unit Tests</h3>
 <p>Let's take a look at an example of how Jest can be used to write unit tests. Suppose we have a simple calculator function that adds two numbers:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function add(a, b) {
+  return a + b;
+}
+</code></pre>
 <p>We can use Jest to write a unit test for this function:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;add function&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return the sum of two numbers&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">describe('add function', () =&gt; {
+  it('should return the sum of two numbers', () =&gt; {
+    expect(add(2, 3)).toBe(5);
+  });
+});
+</code></pre>
 <p>This test uses the <code>expect</code> function to assert that the <code>add</code> function returns the correct result.</p>
 <h2 id="code-navigation-and-refactoring">Code Navigation and Refactoring</h2>
 <p>Code navigation and refactoring are critical aspects of software development. VS Code offers several extensions that can help improve code navigation and refactoring, including:
@@ -198,16 +195,14 @@
 * <strong>Code Map</strong>: A extension that provides a visual representation of your code, making it easier to navigate and understand.</p>
 <h3 id="code-example-using-intellisense-to-improve-code-completion">Code Example: Using IntelliSense to Improve Code Completion</h3>
 <p>Let's take a look at an example of how IntelliSense can be used to improve code completion. Suppose we have a JavaScript file with the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const person = {
+  name: 'John',
+  age: 30
+};
+</code></pre>
 <p>We can use IntelliSense to get code suggestions for the <code>person</code> object:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">person</span><span class="p">.</span><span class="w"> </span><span class="c1">// IntelliSense will provide suggestions like &#39;name&#39;, &#39;age&#39;, etc.</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">person. // IntelliSense will provide suggestions like 'name', 'age', etc.
+</code></pre>
 <p>This feature can save a significant amount of time and improve overall coding efficiency.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Performance optimization is a critical aspect of software development. VS Code offers several extensions that can help optimize performance, including:
