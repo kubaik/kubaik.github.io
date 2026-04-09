@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 16:51:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 17:01:00 +0000</lastBuildDate>
+    <item>
+      <title>Top Free AI APIs</title>
+      <link>https://kubaik.github.io/top-free-ai-apis/</link>
+      <description>Discover top free AI APIs for developers, boost innovation without the cost.</description>
+      <pubDate>Thu, 09 Apr 2026 17:00:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-free-ai-apis/</guid>
+    </item>
     <item>
       <title>Socket to Me</title>
       <link>https://kubaik.github.io/socket-to-me/</link>
@@ -138,13 +145,6 @@
       <description>Refactor legacy code safely with expert tips and best practices.</description>
       <pubDate>Thu, 09 Apr 2026 07:52:26 +0000</pubDate>
       <guid>https://kubaik.github.io/refactor-safe/</guid>
-    </item>
-    <item>
-      <title>Side Projects: Why They Fail</title>
-      <link>https://kubaik.github.io/side-projects-why-they-fail/</link>
-      <description>Learn why most side projects fail and how to succeed with actionable tips.</description>
-      <pubDate>Thu, 09 Apr 2026 07:04:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/side-projects-why-they-fail/</guid>
     </item>
   </channel>
 </rss>
