@@ -71,5 +71,6 @@
   "Database Query Optimization: Finding and Fixing Slow Queries",
   "How to Build Passive Income as a Developer",
   "Debugging Mindset: How Experts Find Bugs",
-  "The Engineering Culture That Built Google"
+  "The Engineering Culture That Built Google",
+  "Blue-Green vs Canary Deployments: Which and When"
 ]
