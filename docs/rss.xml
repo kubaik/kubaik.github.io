@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 18:27:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 18:37:00 +0000</lastBuildDate>
+    <item>
+      <title>Debug Like Pros</title>
+      <link>https://kubaik.github.io/debug-like-pros/</link>
+      <description>Learn expert debugging techniques to find bugs efficiently.</description>
+      <pubDate>Thu, 09 Apr 2026 18:36:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-like-pros/</guid>
+    </item>
     <item>
       <title>Code to Wealth</title>
       <link>https://kubaik.github.io/code-to-wealth/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tune LLMs without a GPU: Learn how to optimize performance on CPUs.</description>
       <pubDate>Thu, 09 Apr 2026 12:20:50 +0000</pubDate>
       <guid>https://kubaik.github.io/llms-on-cpu/</guid>
-    </item>
-    <item>
-      <title>Digital Dreams Denied</title>
-      <link>https://kubaik.github.io/digital-dreams-denied/</link>
-      <description>Uncover why most digital transformations fail &amp; what it takes to succeed</description>
-      <pubDate>Thu, 09 Apr 2026 11:50:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-dreams-denied/</guid>
     </item>
   </channel>
 </rss>
