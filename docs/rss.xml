@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 03:38:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 04:29:37 +0000</lastBuildDate>
+    <item>
+      <title>AI vs Devs</title>
+      <link>https://kubaik.github.io/ai-vs-devs/</link>
+      <description>Explore the future of software development in &quot;AI vs Devs.&quot; Discover whether AI will replace developers or enhance their roles. Get the honest answer!</description>
+      <pubDate>Thu, 09 Apr 2026 04:29:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-vs-devs/</guid>
+    </item>
     <item>
       <title>Code Smarter</title>
       <link>https://kubaik.github.io/code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Protect your network with proactive security monitoring &amp; SIEM solutions.</description>
       <pubDate>Wed, 08 Apr 2026 16:56:07 +0000</pubDate>
       <guid>https://kubaik.github.io/watch-your-back/</guid>
-    </item>
-    <item>
-      <title>Code in Sync</title>
-      <link>https://kubaik.github.io/code-in-sync/</link>
-      <description>Streamline dev workflows with expert project management tips.</description>
-      <pubDate>Wed, 08 Apr 2026 16:04:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-in-sync/</guid>
     </item>
   </channel>
 </rss>
