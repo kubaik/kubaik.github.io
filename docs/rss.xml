@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 15:26:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 12:28:50 +0000</lastBuildDate>
+    <item>
+      <title>Multi-Cloud: Smart?</title>
+      <link>https://kubaik.github.io/multi-cloud-smart/</link>
+      <description>Is multi-cloud a smart move or overkill? Explore the pros and cons in our latest blog post.</description>
+      <pubDate>Thu, 09 Apr 2026 12:28:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-cloud-smart/</guid>
+    </item>
     <item>
       <title>LLMs on CPU</title>
       <link>https://kubaik.github.io/llms-on-cpu/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential backend architecture patterns to build smart, scalable applications. Elevate your development skills with expert insights and practical tips!</description>
       <pubDate>Wed, 08 Apr 2026 23:23:22 +0000</pubDate>
       <guid>https://kubaik.github.io/build-smart/</guid>
-    </item>
-    <item>
-      <title>WASM Turbo</title>
-      <link>https://kubaik.github.io/wasm-turbo/</link>
-      <description>Boost WebAssembly performance with WASM Turbo, expert tips and tricks inside.</description>
-      <pubDate>Wed, 08 Apr 2026 22:33:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/wasm-turbo/</guid>
     </item>
   </channel>
 </rss>
