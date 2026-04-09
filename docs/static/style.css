@@ -263,6 +263,9 @@ main {
     font-size: 1.4rem;
     color: #2c3e50;
     transition: color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .post-card:hover h3 {
@@ -300,9 +303,35 @@ main {
 .post-card .tags {
     display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
     margin-top: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Fade out at the right edge when tags overflow */
+.post-card .tags::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2rem;
+    background: linear-gradient(to right, transparent, #fff);
+    pointer-events: none;
+}
+
+/* Uniform tag sizing — no wrapping inside tag */
+.post-card .tag {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .tag {
