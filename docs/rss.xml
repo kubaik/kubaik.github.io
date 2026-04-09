@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 05:31:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 06:18:11 +0000</lastBuildDate>
+    <item>
+      <title>Humanize AI Content</title>
+      <link>https://kubaik.github.io/humanize-ai-content/</link>
+      <description>Create authentic content with AI. Learn how to humanize AI-generated text and connect with your audience.</description>
+      <pubDate>Thu, 09 Apr 2026 06:18:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/humanize-ai-content/</guid>
+    </item>
     <item>
       <title>Learn Faster</title>
       <link>https://kubaik.github.io/learn-faster/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of the Snowflake Cloud Data Platform in our blog post &quot;Snowflake Simplified.&quot; Unlock data insights effortlessly with this comprehensive guide!</description>
       <pubDate>Wed, 08 Apr 2026 17:44:49 +0000</pubDate>
       <guid>https://kubaik.github.io/snowflake-simplified/</guid>
-    </item>
-    <item>
-      <title>Limit the Chaos</title>
-      <link>https://kubaik.github.io/limit-the-chaos/</link>
-      <description>Discover how rate limiting and throttling can help you manage traffic, enhance performance, and prevent chaos in your applications. Learn more now!</description>
-      <pubDate>Wed, 08 Apr 2026 17:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-chaos/</guid>
     </item>
   </channel>
 </rss>
