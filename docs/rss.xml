@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 12:54:25 +0000</lastBuildDate>
-    <item>
-      <title>AI Cash Secrets</title>
-      <link>https://kubaik.github.io/ai-cash-secrets/</link>
-      <description>Unlock AI-powered income streams. Learn how to make money online with AI.</description>
-      <pubDate>Thu, 09 Apr 2026 12:54:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-cash-secrets/</guid>
-    </item>
+    <lastBuildDate>Thu, 09 Apr 2026 16:03:36 +0000</lastBuildDate>
     <item>
       <title>React Showdown</title>
       <link>https://kubaik.github.io/react-showdown/</link>
@@ -145,6 +138,13 @@
       <description>Protect your site with a Web Application Firewall (WAF). Learn how Firewall Shield safeguards your online presence.</description>
       <pubDate>Thu, 09 Apr 2026 00:03:38 +0000</pubDate>
       <guid>https://kubaik.github.io/firewall-shield/</guid>
+    </item>
+    <item>
+      <title>Mastering Load Balancing: Techniques for Optimal Performance</title>
+      <link>https://kubaik.github.io/mastering-load-balancing-techniques-for-optimal-pe/</link>
+      <description>Improve app performance with expert load balancing techniques.</description>
+      <pubDate>Wed, 08 Apr 2026 23:33:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-load-balancing-techniques-for-optimal-pe/</guid>
     </item>
   </channel>
 </rss>

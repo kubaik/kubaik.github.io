@@ -419,22 +419,8 @@ def _build_templates() -> dict:
                 <p>Loading more posts...</p>
             </div>
 
-            {% if posts|length > posts_per_page %}
-            <div id="load-more-container" class="load-more-container">
-                <button id="load-more" type="button" class="load-more-button">
-                    <span class="button-text">Load More Posts</span>
-                    <span class="button-icon">&#8595;</span>
-                </button>
-            </div>
-            {% endif %}
+            <div id="scroll-sentinel" style="height:1px;"></div>
 
-            <div class="scroll-options">
-                <label class="toggle-switch" hidden>
-                    <input type="checkbox" id="infinite-scroll-toggle">
-                    <span class="slider"></span>
-                    Enable Infinite Scroll
-                </label>
-            </div>
             {% else %}
             <p>No posts yet. Check back soon!</p>
             {% endif %}
@@ -458,21 +444,22 @@ def _build_templates() -> dict:
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        var searchInput      = document.getElementById('search-input');
-        var clearSearchBtn   = document.getElementById('clear-search');
-        var resultsCount     = document.getElementById('search-results-count');
-        var postsContainer   = document.getElementById('posts-container');
-        var loadMoreButton   = document.getElementById('load-more');
-        var loadingSpinner   = document.getElementById('loading-spinner');
-        var backToTopButton  = document.getElementById('back-to-top');
+        var searchInput     = document.getElementById('search-input');
+        var clearSearchBtn  = document.getElementById('clear-search');
+        var resultsCount    = document.getElementById('search-results-count');
+        var postsContainer  = document.getElementById('posts-container');
+        var loadingSpinner  = document.getElementById('loading-spinner');
+        var sentinel        = document.getElementById('scroll-sentinel');
+        var backToTopButton = document.getElementById('back-to-top');
 
         var postsPerPage = {{ posts_per_page }};
         var allPosts     = [];
         var currentPage  = 1;
         var isLoading    = false;
         var searchActive = false;
+        var observer     = null;
 
-        // Reads server-rendered <a class="post-card"> elements
+        // Reads server-rendered <a class="post-card"> elements as fallback
         function seedFromDOM() {
             if (!postsContainer) return;
             allPosts = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
@@ -495,8 +482,7 @@ def _build_templates() -> dict:
             })
             .then(function(posts) {
                 allPosts = posts;
-                updateLoadMoreButton();
-                enableInfiniteScroll();
+                startObserver();
                 if (searchInput && searchInput.value.trim()) {
                     performSearch(searchInput.value.trim().toLowerCase());
                 }
@@ -504,9 +490,21 @@ def _build_templates() -> dict:
             .catch(function(err) {
                 console.warn('posts.json fetch failed, falling back to DOM seed:', err);
                 seedFromDOM();
-                updateLoadMoreButton();
-                enableInfiniteScroll();
+                startObserver();
             });
+
+        // ── IntersectionObserver: fires when sentinel enters the viewport ──
+        function startObserver() {
+            if (!sentinel || !window.IntersectionObserver) return;
+            observer = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting) loadMorePosts();
+            }, { rootMargin: '0px 0px 300px 0px' });
+            observer.observe(sentinel);
+        }
+
+        function stopObserver() {
+            if (observer) { observer.disconnect(); observer = null; }
+        }
 
         function escapeRe(s) {
             return s.replace(/[.*+?^${}()|[\\\\]\\\\]/g, '\\\\\\\\$&');
@@ -553,6 +551,7 @@ def _build_templates() -> dict:
         function performSearch(query) {
             if (!allPosts.length) return;
             searchActive = true;
+            stopObserver();
 
             var matched = allPosts.filter(function(post) {
                 var t = (post.title            || '').toLowerCase();
@@ -573,9 +572,6 @@ def _build_templates() -> dict:
                 postsContainer.appendChild(el);
             });
 
-            var lmc = document.getElementById('load-more-container');
-            if (lmc) lmc.style.display = 'none';
-
             var n = matched.length;
             resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
                                      : n === 1 ? '1 post found'
@@ -584,10 +580,10 @@ def _build_templates() -> dict:
             var noRes = document.getElementById('no-results');
             if (n === 0) {
                 if (!noRes) {
-                    noRes             = document.createElement('div');
-                    noRes.id          = 'no-results';
-                    noRes.className   = 'no-results-message';
-                    noRes.innerHTML   =
+                    noRes           = document.createElement('div');
+                    noRes.id        = 'no-results';
+                    noRes.className = 'no-results-message';
+                    noRes.innerHTML =
                         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">' +
                         '<circle cx="11" cy="11" r="8"/>' +
                         '<path d="m21 21-4.35-4.35"/></svg>' +
@@ -603,14 +599,14 @@ def _build_templates() -> dict:
         function clearSearch() {
             searchActive             = false;
             postsContainer.innerHTML = '';
+            currentPage              = 1;
             allPosts.slice(0, postsPerPage).forEach(function(post) {
                 postsContainer.appendChild(createPostElement(post));
             });
-            currentPage              = 1;
             resultsCount.textContent = '';
             var noRes = document.getElementById('no-results');
             if (noRes) noRes.remove();
-            updateLoadMoreButton();
+            startObserver();
         }
 
         if (searchInput) {
@@ -620,8 +616,8 @@ def _build_templates() -> dict:
                 if (q) { performSearch(q); } else { clearSearch(); }
             });
             clearSearchBtn.addEventListener('click', function () {
-                searchInput.value    = '';
-                this.style.display   = 'none';
+                searchInput.value  = '';
+                this.style.display = 'none';
                 clearSearch();
                 searchInput.focus();
             });
@@ -631,13 +627,6 @@ def _build_templates() -> dict:
                     clearSearchBtn.style.display = 'none';
                     clearSearch();
                 }
-            });
-        }
-
-        if (loadMoreButton) {
-            loadMoreButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                loadMorePosts();
             });
         }
 
@@ -653,14 +642,16 @@ def _build_templates() -> dict:
         }
 
         function loadMorePosts() {
-            if (isLoading || searchActive || !hasMorePosts()) return;
+            if (isLoading || searchActive || !hasMorePosts()) {
+                if (!hasMorePosts()) stopObserver();
+                return;
+            }
             isLoading = true;
             if (loadingSpinner) loadingSpinner.style.display = 'flex';
-            if (loadMoreButton) { loadMoreButton.disabled = true; loadMoreButton.style.opacity = '0.6'; }
 
             setTimeout(function() {
                 currentPage++;
-                var start = (currentPage - 1) * postsPerPage;
+                var start    = (currentPage - 1) * postsPerPage;
                 var fragment = document.createDocumentFragment();
                 var newCards = [];
                 allPosts.slice(start, start + postsPerPage).forEach(function(post) {
@@ -670,42 +661,21 @@ def _build_templates() -> dict:
                     newCards.push(el);
                 });
                 postsContainer.appendChild(fragment);
-                // Trigger CSS animation on next frame so the class is painted first
+                // Double rAF ensures the browser has painted the entering state before animating
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         newCards.forEach(function(el, i) {
-                            setTimeout(function() {
-                                el.classList.remove('post-card--entering');
-                            }, i * 80);
+                            setTimeout(function() { el.classList.remove('post-card--entering'); }, i * 60);
                         });
                     });
                 });
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
-                if (loadMoreButton) { loadMoreButton.disabled = false; loadMoreButton.style.opacity = '1'; }
-                updateLoadMoreButton();
                 isLoading = false;
-            }, 400);
+                if (!hasMorePosts()) stopObserver();
+            }, 300);
         }
 
         function hasMorePosts() { return currentPage * postsPerPage < allPosts.length; }
-
-        function updateLoadMoreButton() {
-            if (searchActive) return;
-            var lmc = document.getElementById('load-more-container');
-            // Load More button is hidden — infinite scroll handles loading automatically
-            if (loadMoreButton) loadMoreButton.style.display = 'none';
-            if (lmc)            lmc.style.display            = 'none';
-        }
-
-        function enableInfiniteScroll()  { window.addEventListener('scroll', infiniteScrollHandler, { passive: true }); }
-        function disableInfiniteScroll() { window.removeEventListener('scroll', infiniteScrollHandler); }
-
-        function infiniteScrollHandler() {
-            if (isLoading || searchActive || !hasMorePosts()) return;
-            var scrolled  = window.pageYOffset || document.documentElement.scrollTop;
-            var threshold = document.documentElement.scrollHeight - window.innerHeight - 300;
-            if (scrolled >= threshold) loadMorePosts();
-        }
     });
     </script>
 </body>
