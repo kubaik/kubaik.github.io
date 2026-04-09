@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 19:15:03 +0000</lastBuildDate>
-    <item>
-      <title>Google&apos;s Secret Sauce</title>
-      <link>https://kubaik.github.io/googles-secret-sauce/</link>
-      <description>Unlock Google&apos;s success secrets: discover the engineering culture behind the tech giant&apos;s rise to dominance</description>
-      <pubDate>Thu, 09 Apr 2026 19:14:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/googles-secret-sauce/</guid>
-    </item>
+    <lastBuildDate>Thu, 09 Apr 2026 22:41:50 +0000</lastBuildDate>
     <item>
       <title>Debug Like Pros</title>
       <link>https://kubaik.github.io/debug-like-pros/</link>
@@ -145,6 +138,13 @@
       <description>Is multi-cloud a smart move or overkill? Explore the pros and cons in our latest blog post.</description>
       <pubDate>Thu, 09 Apr 2026 12:28:43 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-cloud-smart/</guid>
+    </item>
+    <item>
+      <title>LLMs on CPU</title>
+      <link>https://kubaik.github.io/llms-on-cpu/</link>
+      <description>Fine-tune LLMs without a GPU: Learn how to optimize performance on CPUs.</description>
+      <pubDate>Thu, 09 Apr 2026 12:20:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/llms-on-cpu/</guid>
     </item>
   </channel>
 </rss>
