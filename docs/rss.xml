@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 18:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 18:03:10 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Container Security in Production Kubernetes: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-container-security-in-production-kub/</link>
+      <description>A comprehensive guide to Container Security in Production Kubernetes covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 09 Apr 2026 18:03:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-container-security-in-production-kub/</guid>
+    </item>
     <item>
       <title>AI&apos;s Dark Side</title>
       <link>https://kubaik.github.io/ais-dark-side/</link>
@@ -138,13 +145,6 @@
       <description>Master log management at scale. Learn what works for efficient logging and error tracking.</description>
       <pubDate>Thu, 09 Apr 2026 11:32:28 +0000</pubDate>
       <guid>https://kubaik.github.io/log-management-at-scale/</guid>
-    </item>
-    <item>
-      <title>Big Tech Exodus</title>
-      <link>https://kubaik.github.io/big-tech-exodus/</link>
-      <description>Top devs ditch Big Tech. Find out why senior developers are leaving &amp; what&apos;s next.</description>
-      <pubDate>Thu, 09 Apr 2026 10:44:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exodus/</guid>
     </item>
   </channel>
 </rss>
