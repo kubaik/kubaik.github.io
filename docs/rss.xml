@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 16:02:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 16:51:36 +0000</lastBuildDate>
+    <item>
+      <title>Socket to Me</title>
+      <link>https://kubaik.github.io/socket-to-me/</link>
+      <description>Build real-time apps with WebSockets. Learn how to create interactive experiences with instant updates.</description>
+      <pubDate>Thu, 09 Apr 2026 16:51:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/socket-to-me/</guid>
+    </item>
     <item>
       <title>Build WhatsApp</title>
       <link>https://kubaik.github.io/build-whatsapp/</link>
@@ -138,13 +145,6 @@
       <description>Learn why most side projects fail and how to succeed with actionable tips.</description>
       <pubDate>Thu, 09 Apr 2026 07:04:30 +0000</pubDate>
       <guid>https://kubaik.github.io/side-projects-why-they-fail/</guid>
-    </item>
-    <item>
-      <title>Humanize AI Content</title>
-      <link>https://kubaik.github.io/humanize-ai-content/</link>
-      <description>Create authentic content with AI. Learn how to humanize AI-generated text and connect with your audience.</description>
-      <pubDate>Thu, 09 Apr 2026 06:18:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/humanize-ai-content/</guid>
     </item>
   </channel>
 </rss>
