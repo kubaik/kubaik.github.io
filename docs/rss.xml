@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:57:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 18:00:01 +0000</lastBuildDate>
+    <item>
+      <title>AI&apos;s Dark Side</title>
+      <link>https://kubaik.github.io/ais-dark-side/</link>
+      <description>Exposing AI&apos;s dark side: the hidden ethics issues Big Tech doesn&apos;t want you to know.</description>
+      <pubDate>Thu, 09 Apr 2026 17:59:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ais-dark-side/</guid>
+    </item>
     <item>
       <title>Tech Bust: Why Most Fail</title>
       <link>https://kubaik.github.io/tech-bust-why-most-fail/</link>
@@ -138,13 +145,6 @@
       <description>Top devs ditch Big Tech. Find out why senior developers are leaving &amp; what&apos;s next.</description>
       <pubDate>Thu, 09 Apr 2026 10:44:15 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus/</guid>
-    </item>
-    <item>
-      <title>Fast TDD</title>
-      <link>https://kubaik.github.io/fast-tdd/</link>
-      <description>Boost dev speed with Fast TDD, efficient testing without the slowdown.</description>
-      <pubDate>Thu, 09 Apr 2026 10:07:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/fast-tdd/</guid>
     </item>
   </channel>
 </rss>
