@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 10:44:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 11:32:33 +0000</lastBuildDate>
+    <item>
+      <title>Log Management at Scale</title>
+      <link>https://kubaik.github.io/log-management-at-scale/</link>
+      <description>Master log management at scale. Learn what works for efficient logging and error tracking.</description>
+      <pubDate>Thu, 09 Apr 2026 11:32:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-management-at-scale/</guid>
+    </item>
     <item>
       <title>Big Tech Exodus</title>
       <link>https://kubaik.github.io/big-tech-exodus/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient development with Agile methodologies. Discover how to transform your process today!</description>
       <pubDate>Wed, 08 Apr 2026 21:37:58 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-agile-transform-your-development-process/</guid>
-    </item>
-    <item>
-      <title>Build Fast with .NET Core</title>
-      <link>https://kubaik.github.io/build-fast-with-net-core/</link>
-      <description>Discover how to accelerate your development process with .NET Core! Learn best practices, tips, and tools for building efficient C# applications.</description>
-      <pubDate>Wed, 08 Apr 2026 21:27:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-fast-with-net-core/</guid>
     </item>
   </channel>
 </rss>
