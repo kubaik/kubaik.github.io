@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 21:27:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 21:45:45 +0000</lastBuildDate>
+    <item>
+      <title>5G: App Dev Game Changer</title>
+      <link>https://kubaik.github.io/5g-app-dev-game-changer/</link>
+      <description>Discover how 5G revolutionizes app development with faster speeds &amp; lower latency.</description>
+      <pubDate>Thu, 09 Apr 2026 21:45:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-app-dev-game-changer/</guid>
+    </item>
     <item>
       <title>Netflix: 200M Streams</title>
       <link>https://kubaik.github.io/netflix-200m-streams/</link>
@@ -138,13 +145,6 @@
       <description>Learn system design interview skills from a senior engineer&apos;s perspective.</description>
       <pubDate>Thu, 09 Apr 2026 15:17:08 +0000</pubDate>
       <guid>https://kubaik.github.io/think-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>AI Life Hacks</title>
-      <link>https://kubaik.github.io/ai-life-hacks/</link>
-      <description>Streamline your life with AI and Python. Discover automation hacks and boost productivity.</description>
-      <pubDate>Thu, 09 Apr 2026 15:10:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-life-hacks/</guid>
     </item>
   </channel>
 </rss>
