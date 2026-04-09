@@ -2,22 +2,21 @@ name: Watchdog - Blog Automation Monitor
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs  every hour
-    - cron: '15 * * * *'  # Runs 15 mins past every hour
-    - cron: '30 * * * *'  # Runs 30 minutes past every hour
-    - cron: '45 * * * *'  # Runs 45 minutes past every hour
+    - cron: "15 * * * *" # Runs 15 mins past every hour
+    - cron: "30 * * * *" # Runs 30 minutes past every hour
+    - cron: "45 * * * *" # Runs 45 minutes past every hour
+    - cron: "0 * * * *" # Runs  every hour
 
-
-  workflow_dispatch:  # Allow manual trigger for testing
+  workflow_dispatch: # Allow manual trigger for testing
 
 permissions:
   contents: read
-  actions: write  # Required to trigger and inspect workflows
+  actions: write # Required to trigger and inspect workflows
 
 jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 5  # Watchdog itself should complete quickly
+    timeout-minutes: 5 # Watchdog itself should complete quickly
 
     steps:
       - name: Check last blog automation run
@@ -100,7 +99,7 @@ jobs:
           RUN_ID="${{ steps.check_run.outputs.last_run_id }}"
           echo "Cancelling hung run ID: $RUN_ID"
           gh run cancel "$RUN_ID" --repo ${{ github.repository }} || echo "Cancel failed or run already finished."
-          
+
           # Brief pause to let GitHub process the cancellation
           sleep 10
 
