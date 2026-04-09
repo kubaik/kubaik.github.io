@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 12:28:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 12:44:41 +0000</lastBuildDate>
+    <item>
+      <title>React Showdown</title>
+      <link>https://kubaik.github.io/react-showdown/</link>
+      <description>Compare React, Next.js &amp; Remix. Choose the best tool for your project.</description>
+      <pubDate>Thu, 09 Apr 2026 12:44:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-showdown/</guid>
+    </item>
     <item>
       <title>Multi-Cloud: Smart?</title>
       <link>https://kubaik.github.io/multi-cloud-smart/</link>
@@ -138,13 +145,6 @@
       <description>Improve app performance with expert load balancing techniques.</description>
       <pubDate>Wed, 08 Apr 2026 23:33:52 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-load-balancing-techniques-for-optimal-pe/</guid>
-    </item>
-    <item>
-      <title>Build Smart...</title>
-      <link>https://kubaik.github.io/build-smart/</link>
-      <description>Discover essential backend architecture patterns to build smart, scalable applications. Elevate your development skills with expert insights and practical tips!</description>
-      <pubDate>Wed, 08 Apr 2026 23:23:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-smart/</guid>
     </item>
   </channel>
 </rss>
