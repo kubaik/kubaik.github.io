@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:01:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 20:58:50 +0000</lastBuildDate>
+    <item>
+      <title>Ransomware 101</title>
+      <link>https://kubaik.github.io/ransomware-101/</link>
+      <description>Discover how ransomware attacks work and learn essential strategies to protect your data. Equip yourself with survival tips in our comprehensive guide!</description>
+      <pubDate>Thu, 09 Apr 2026 20:58:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ransomware-101/</guid>
+    </item>
     <item>
       <title>Debug Fast</title>
       <link>https://kubaik.github.io/debug-fast/</link>
@@ -138,13 +145,6 @@
       <description>Discover real-world blockchain use cases beyond the hype</description>
       <pubDate>Thu, 09 Apr 2026 14:17:36 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-beyond-hype/</guid>
-    </item>
-    <item>
-      <title>AI Agents 101</title>
-      <link>https://kubaik.github.io/ai-agents-101/</link>
-      <description>Discover AI agents: what they are, how they work, and their impact on industries.</description>
-      <pubDate>Thu, 09 Apr 2026 13:22:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-101/</guid>
     </item>
   </channel>
 </rss>
