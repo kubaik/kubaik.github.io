@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 16:20:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 13:22:50 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents 101</title>
+      <link>https://kubaik.github.io/ai-agents-101/</link>
+      <description>Discover AI agents: what they are, how they work, and their impact on industries.</description>
+      <pubDate>Thu, 09 Apr 2026 13:22:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-101/</guid>
+    </item>
     <item>
       <title>2026 Layoffs: The Truth</title>
       <link>https://kubaik.github.io/2026-layoffs-the-truth/</link>
@@ -138,13 +145,6 @@
       <description>Boost your career with in-demand AI skills. Discover the top AI skills to get hired in 2026.</description>
       <pubDate>Thu, 09 Apr 2026 03:19:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-2026/</guid>
-    </item>
-    <item>
-      <title>Monitor Smarter</title>
-      <link>https://kubaik.github.io/monitor-smarter/</link>
-      <description>Boost app performance with smart monitoring. Learn how to optimize your applications.</description>
-      <pubDate>Thu, 09 Apr 2026 01:29:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/monitor-smarter/</guid>
     </item>
   </channel>
 </rss>
