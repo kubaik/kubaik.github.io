@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 10:07:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 10:44:19 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech Exodus</title>
+      <link>https://kubaik.github.io/big-tech-exodus/</link>
+      <description>Top devs ditch Big Tech. Find out why senior developers are leaving &amp; what&apos;s next.</description>
+      <pubDate>Thu, 09 Apr 2026 10:44:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus/</guid>
+    </item>
     <item>
       <title>Fast TDD</title>
       <link>https://kubaik.github.io/fast-tdd/</link>
@@ -138,13 +145,6 @@
       <description>Discover how to accelerate your development process with .NET Core! Learn best practices, tips, and tools for building efficient C# applications.</description>
       <pubDate>Wed, 08 Apr 2026 21:27:46 +0000</pubDate>
       <guid>https://kubaik.github.io/build-fast-with-net-core/</guid>
-    </item>
-    <item>
-      <title>Mesh Up...</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservices management with Service Mesh Architecture</description>
-      <pubDate>Wed, 08 Apr 2026 20:37:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
