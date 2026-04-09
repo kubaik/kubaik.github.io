@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 00:03:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 01:29:08 +0000</lastBuildDate>
+    <item>
+      <title>Monitor Smarter</title>
+      <link>https://kubaik.github.io/monitor-smarter/</link>
+      <description>Boost app performance with smart monitoring. Learn how to optimize your applications.</description>
+      <pubDate>Thu, 09 Apr 2026 01:29:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/monitor-smarter/</guid>
+    </item>
     <item>
       <title>Firewall Shield</title>
       <link>https://kubaik.github.io/firewall-shield/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Digital Twin Technology with Twin Vision. Discover its impact on industries and innovation.</description>
       <pubDate>Wed, 08 Apr 2026 15:05:24 +0000</pubDate>
       <guid>https://kubaik.github.io/twin-vision/</guid>
-    </item>
-    <item>
-      <title>Mastering Application Security: SAST vs. DAST Explained</title>
-      <link>https://kubaik.github.io/mastering-application-security-sast-vs-dast-explai/</link>
-      <description>Learn the difference between SAST &amp; DAST in app security testing.</description>
-      <pubDate>Wed, 08 Apr 2026 14:14:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-application-security-sast-vs-dast-explai/</guid>
     </item>
   </channel>
 </rss>
