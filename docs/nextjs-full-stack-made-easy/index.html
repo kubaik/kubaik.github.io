@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,116 +169,120 @@
 </ul>
 <h4 id="setting-up-a-new-nextjs-project">Setting Up a New Next.js Project</h4>
 <p>You can create a new Next.js application using the following command:</p>
-<pre><code class="language-bash">npx create-next-app my-fullstack-app
-cd my-fullstack-app
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-fullstack-app
+<span class="nb">cd</span><span class="w"> </span>my-fullstack-app
+</code></pre></div>
+
 <p>This command sets up a new Next.js application in a directory called <code>my-fullstack-app</code>.</p>
 <h4 id="project-structure">Project Structure</h4>
 <p>Here’s a quick overview of the default project structure:</p>
-<pre><code>my-fullstack-app/
-├── node_modules/
-├── pages/
-│   ├── api/
-│   ├── _app.js
-│   └── index.js
-├── public/
-├── styles/
-├── .gitignore
-├── package.json
-└── README.md
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">my</span><span class="o">-</span><span class="nx">fullstack</span><span class="o">-</span><span class="nx">app</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">node_modules</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">pages</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="kn">api</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">_app</span><span class="p">.</span><span class="nx">js</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">index</span><span class="p">.</span><span class="nx">js</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">public</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">styles</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="p">.</span><span class="nx">gitignore</span>
+<span class="err">├──</span><span class="w"> </span><span class="kn">package</span><span class="p">.</span><span class="nx">json</span>
+<span class="err">└──</span><span class="w"> </span><span class="nx">README</span><span class="p">.</span><span class="nx">md</span>
+</code></pre></div>
+
 <h3 id="building-a-simple-full-stack-application">Building a Simple Full-Stack Application</h3>
 <p>In this section, we will build a simple full-stack application using Next.js that allows users to submit feedback. We will utilize API routes for data handling and implement a simple front-end form.</p>
 <h4 id="step-1-create-api-routes">Step 1: Create API Routes</h4>
 <p>Next.js allows you to create API routes within the <code>pages/api</code> directory. Let’s create a simple API endpoint for handling feedback submissions.</p>
 <p>Create a new file <code>pages/api/feedback.js</code>:</p>
-<pre><code class="language-javascript">// pages/api/feedback.js
-let feedbacks = [];
+<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/feedback.js</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">feedbacks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
 
-export default function handler(req, res) {
-  if (req.method === 'POST') {
-    const { name, message } = req.body;
-    feedbacks.push({ name, message });
-    return res.status(201).json({ success: true });
-  }
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">feedbacks</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
 
-  if (req.method === 'GET') {
-    return res.status(200).json(feedbacks);
-  }
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">feedbacks</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-  return res.status(405).json({ message: 'Method not allowed' });
-}
-</code></pre>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">405</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Method not allowed&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p><strong>Explanation</strong>:
 - This API route handles two methods: <code>POST</code> for submitting feedback and <code>GET</code> for retrieving feedback.
 - The feedbacks are stored in an array in memory, which is suitable for demonstration but not for production.</p>
 <h4 id="step-2-create-the-feedback-form">Step 2: Create the Feedback Form</h4>
 <p>Next, let’s create a simple feedback form on the front end. Open <code>pages/index.js</code> and modify it as follows:</p>
-<pre><code class="language-javascript">// pages/index.js
-import { useState, useEffect } from 'react';
+<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
 
-export default function Home() {
-  const [feedbacks, setFeedbacks] = useState([]);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">Home</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">feedbacks</span><span class="p">,</span><span class="w"> </span><span class="nx">setFeedbacks</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">setName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">setMessage</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
 
-  useEffect(() =&gt; {
-    fetch('/api/feedback')
-      .then(res =&gt; res.json())
-      .then(data =&gt; setFeedbacks(data));
-  }, []);
+<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/feedback&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setFeedbacks</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
 
-  const handleSubmit = async (e) =&gt; {
-    e.preventDefault();
-    const res = await fetch('/api/feedback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, message }),
-    });
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleSubmit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/feedback&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">});</span>
 
-    if (res.ok) {
-      setName('');
-      setMessage('');
-      const newFeedbacks = await fetch('/api/feedback');
-      const data = await newFeedbacks.json();
-      setFeedbacks(data);
-    }
-  };
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">setName</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">setMessage</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">newFeedbacks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/feedback&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">newFeedbacks</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">      </span><span class="nx">setFeedbacks</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
 
-  return (
-    &lt;div&gt;
-      &lt;h1&gt;Feedback Form&lt;/h1&gt;
-      &lt;form onSubmit={handleSubmit}&gt;
-        &lt;input
-          type=&quot;text&quot;
-          placeholder=&quot;Your name&quot;
-          value={name}
-          onChange={(e) =&gt; setName(e.target.value)}
-          required
-        /&gt;
-        &lt;textarea
-          placeholder=&quot;Your feedback&quot;
-          value={message}
-          onChange={(e) =&gt; setMessage(e.target.value)}
-          required
-        /&gt;
-        &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
-      &lt;/form&gt;
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Feedback</span><span class="w"> </span><span class="nx">Form</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">form</span><span class="w"> </span><span class="nx">onSubmit</span><span class="o">=</span><span class="p">{</span><span class="nx">handleSubmit</span><span class="p">}</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="nx">input</span>
+<span class="w">          </span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+<span class="w">          </span><span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Your name&quot;</span>
+<span class="w">          </span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span>
+<span class="w">          </span><span class="nx">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setName</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span>
+<span class="w">          </span><span class="nx">required</span>
+<span class="w">        </span><span class="o">/&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="nx">textarea</span>
+<span class="w">          </span><span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Your feedback&quot;</span>
+<span class="w">          </span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">message</span><span class="p">}</span>
+<span class="w">          </span><span class="nx">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setMessage</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span>
+<span class="w">          </span><span class="nx">required</span>
+<span class="w">        </span><span class="o">/&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span><span class="o">&gt;</span><span class="nx">Submit</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="err">/form&gt;</span>
 
-      &lt;h2&gt;Feedbacks&lt;/h2&gt;
-      &lt;ul&gt;
-        {feedbacks.map((feedback, index) =&gt; (
-          &lt;li key={index}&gt;
-            &lt;strong&gt;{feedback.name}&lt;/strong&gt;: {feedback.message}
-          &lt;/li&gt;
-        ))}
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Feedbacks</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span><span class="nx">feedbacks</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">feedback</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="o">&lt;</span><span class="nx">li</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}</span><span class="o">&gt;</span>
+<span class="w">            </span><span class="o">&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">feedback</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/strong&gt;: {feedback.message}</span>
+<span class="w">          </span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+<span class="w">        </span><span class="p">))}</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="err">/ul&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p><strong>Explanation</strong>:
 - The form collects user feedback and sends it to our API endpoint.
 - On submission, we fetch the list of feedbacks to update the UI.</p>
@@ -306,29 +309,30 @@ export default function Home() {
 <li><strong><code>getServerSideProps</code></strong>: Use for dynamic content that needs to be rendered on each request.</li>
 </ul>
 <p><strong>Example</strong>: Using <code>getServerSideProps</code> to fetch user data:</p>
-<pre><code class="language-javascript">// pages/users.js
-export async function getServerSideProps() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users');
-  const users = await res.json();
+<div class="codehilite"><pre><span></span><code><span class="c1">// pages/users.js</span>
+<span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getServerSideProps</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://jsonplaceholder.typicode.com/users&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
 
-  return {
-    props: { users },
-  };
-}
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
 
-export default function Users({ users }) {
-  return (
-    &lt;div&gt;
-      &lt;h1&gt;User List&lt;/h1&gt;
-      &lt;ul&gt;
-        {users.map((user) =&gt; (
-          &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;
-        ))}
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">Users</span><span class="p">({</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">User</span><span class="w"> </span><span class="nx">List</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span><span class="nx">users</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="o">&lt;</span><span class="nx">li</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+<span class="w">        </span><span class="p">))}</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="err">/ul&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="2-api-rate-limiting">2. API Rate Limiting</h4>
 <p>If you are using third-party APIs, ensure to handle rate limits effectively. Utilize caching mechanisms or implement a queue system to manage requests.</p>
 <ul>
@@ -341,39 +345,42 @@ export default function Users({ users }) {
 <ol>
 <li>Install NextAuth.js:</li>
 </ol>
-<pre><code class="language-bash">npm install next-auth
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>next-auth
+</code></pre></div>
+
 <ol>
 <li>Create a new API route for authentication in <code>pages/api/auth/[...nextauth].js</code>:</li>
 </ol>
-<pre><code class="language-javascript">import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">NextAuth</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next-auth&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">Providers</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next-auth/providers&#39;</span><span class="p">;</span>
 
-export default NextAuth({
-  providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-  ],
-  database: process.env.DATABASE_URL,
-});
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">NextAuth</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">Providers</span><span class="p">.</span><span class="nx">Google</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">GOOGLE_CLIENT_ID</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">clientSecret</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">GOOGLE_CLIENT_SECRET</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}),</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">database</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DATABASE_URL</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <ol>
 <li>Use the <code>useSession</code> hook in your components:</li>
 </ol>
-<pre><code class="language-javascript">import { useSession } from 'next-auth/react';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useSession</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next-auth/react&#39;</span><span class="p">;</span>
 
-const MyComponent = () =&gt; {
-  const { data: session } = useSession();
+<span class="kd">const</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSession</span><span class="p">();</span>
 
-  if (session) {
-    return &lt;p&gt;Welcome, {session.user.name}&lt;/p&gt;;
-  } else {
-    return &lt;p&gt;Please sign in&lt;/p&gt;;
-  }
-};
-</code></pre>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Please</span><span class="w"> </span><span class="nx">sign</span><span class="w"> </span><span class="ow">in</span><span class="o">&lt;</span><span class="err">/p&gt;;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Let’s explore some practical use cases for Next.js in full-stack development.</p>
 <h4 id="e-commerce-platform">E-commerce Platform</h4>

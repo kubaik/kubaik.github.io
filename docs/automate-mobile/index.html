@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -168,27 +167,28 @@
 </ul>
 <h2 id="code-example-automating-android-build-and-testing-with-jenkins">Code Example: Automating Android Build and Testing with Jenkins</h2>
 <p>Here is an example of how to automate the Android build and testing process using Jenkins:</p>
-<pre><code class="language-groovy">pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'gradle assembleDebug'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'gradle testDebug'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'gradle deployDebug'
-            }
-        }
-    }
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
+<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;gradle assembleDebug&#39;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;gradle testDebug&#39;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;gradle deployDebug&#39;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
 <p>This Jenkinsfile defines a pipeline that consists of three stages: Build, Test, and Deploy. The Build stage uses the Gradle build tool to assemble the Android application in debug mode. The Test stage uses Gradle to run the unit tests and instrumented tests for the application. The Deploy stage uses Gradle to deploy the application to a staging environment.</p>
 <h3 id="tools-and-platforms-for-mobile-cicd-automation">Tools and Platforms for Mobile CI/CD Automation</h3>
 <p>Some popular tools and platforms for mobile CI/CD automation include:</p>
@@ -209,25 +209,26 @@
 </ul>
 <h2 id="real-world-use-case-automating-ios-build-and-deployment-with-fastlane">Real-World Use Case: Automating iOS Build and Deployment with Fastlane</h2>
 <p>Here is an example of how to automate the iOS build and deployment process using Fastlane:</p>
-<pre><code class="language-ruby">lane :beta do
-  # Build and archive the application
-  build_app(
-    scheme: &quot;MyApp&quot;,
-    configuration: &quot;Release&quot;
-  )
-  archive(
-    scheme: &quot;MyApp&quot;,
-    configuration: &quot;Release&quot;
-  )
+<div class="codehilite"><pre><span></span><code><span class="n">lane</span><span class="w"> </span><span class="ss">:beta</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="c1"># Build and archive the application</span>
+<span class="w">  </span><span class="n">build_app</span><span class="p">(</span>
+<span class="w">    </span><span class="ss">scheme</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MyApp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="ss">configuration</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="w">  </span><span class="n">archive</span><span class="p">(</span>
+<span class="w">    </span><span class="ss">scheme</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MyApp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="ss">configuration</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span>
+<span class="w">  </span><span class="p">)</span>
 
-  # Upload the application to TestFlight
-  upload_to_testflight(
-    ipa: &quot;MyApp.ipa&quot;,
-    username: &quot;my@apple.com&quot;,
-    password: &quot;my_password&quot;
-  )
-end
-</code></pre>
+<span class="w">  </span><span class="c1"># Upload the application to TestFlight</span>
+<span class="w">  </span><span class="n">upload_to_testflight</span><span class="p">(</span>
+<span class="w">    </span><span class="ss">ipa</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MyApp.ipa&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my@apple.com&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="ss">password</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_password&quot;</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
 <p>This Fastfile defines a lane called "beta" that automates the build and deployment process for an iOS application. The lane uses the <code>build_app</code> and <code>archive</code> actions to build and archive the application, and then uses the <code>upload_to_testflight</code> action to upload the application to TestFlight.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Some common problems that developers may encounter when implementing mobile CI/CD automation include:</p>

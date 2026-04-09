@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,28 +159,30 @@
 <p>We will use TensorFlow and Keras to implement transfer learning. Specifically, we will use the VGG16 model pre-trained on the ImageNet dataset.</p>
 <h3 id="loading-the-pre-trained-model">Loading the Pre-trained Model</h3>
 <p>To load the pre-trained VGG16 model, we can use the following code:</p>
-<pre><code class="language-python">from tensorflow.keras.applications import VGG16
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tensorflow.keras.applications</span> <span class="kn">import</span> <span class="n">VGG16</span>
 
-# Load the pre-trained VGG16 model
-base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-</code></pre>
+<span class="c1"># Load the pre-trained VGG16 model</span>
+<span class="n">base_model</span> <span class="o">=</span> <span class="n">VGG16</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+
 <p>In this code, we load the VGG16 model pre-trained on the ImageNet dataset, excluding the top layers (i.e., the classification layers). We also specify the input shape as (224, 224, 3), which is the expected input shape for the VGG16 model.</p>
 <h3 id="freezing-and-fine-tuning-the-model">Freezing and Fine-Tuning the Model</h3>
 <p>To fine-tune the pre-trained model, we need to freeze some of the layers and add new layers on top. We can use the following code:</p>
-<pre><code class="language-python"># Freeze the base model layers
-for layer in base_model.layers:
-    layer.trainable = False
+<div class="codehilite"><pre><span></span><code><span class="c1"># Freeze the base model layers</span>
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">base_model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">False</span>
 
-# Add new layers on top of the base model
-x = base_model.output
-x = tf.keras.layers.Flatten()(x)
-x = tf.keras.layers.Dense(128, activation='relu')(x)
-x = tf.keras.layers.Dropout(0.2)(x)
-x = tf.keras.layers.Dense(10, activation='softmax')(x)
+<span class="c1"># Add new layers on top of the base model</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">base_model</span><span class="o">.</span><span class="n">output</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
 
-# Create the new model
-model = tf.keras.Model(inputs=base_model.input, outputs=x)
-</code></pre>
+<span class="c1"># Create the new model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">base_model</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this code, we freeze the base model layers by setting <code>trainable</code> to <code>False</code>. We then add new layers on top of the base model, including a flatten layer, two dense layers, and a dropout layer. Finally, we create a new model with the base model input and the new output.</p>
 <h2 id="practical-applications-of-transfer-learning">Practical Applications of Transfer Learning</h2>
 <p>Transfer learning has numerous practical applications, including:
@@ -190,23 +191,24 @@ model = tf.keras.Model(inputs=base_model.input, outputs=x)
 * Speech recognition: Transfer learning can be used to improve speech recognition models, such as speech-to-text or voice recognition.</p>
 <h3 id="example-use-case-image-classification-with-vgg16">Example Use Case: Image Classification with VGG16</h3>
 <p>Let's consider an example use case where we want to classify images into different categories using the VGG16 model. We can use the following code:</p>
-<pre><code class="language-python"># Load the dataset
-train_dir = 'path/to/train/directory'
-validation_dir = 'path/to/validation/directory'
+<div class="codehilite"><pre><span></span><code><span class="c1"># Load the dataset</span>
+<span class="n">train_dir</span> <span class="o">=</span> <span class="s1">&#39;path/to/train/directory&#39;</span>
+<span class="n">validation_dir</span> <span class="o">=</span> <span class="s1">&#39;path/to/validation/directory&#39;</span>
 
-# Define the data generators
-train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
-validation_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
+<span class="c1"># Define the data generators</span>
+<span class="n">train_datagen</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">validation_datagen</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
 
-train_generator = train_datagen.flow_from_directory(train_dir, target_size=(224, 224), batch_size=32, class_mode='categorical')
-validation_generator = validation_datagen.flow_from_directory(validation_dir, target_size=(224, 224), batch_size=32, class_mode='categorical')
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">train_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span><span class="n">train_dir</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;categorical&#39;</span><span class="p">)</span>
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="n">validation_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span><span class="n">validation_dir</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;categorical&#39;</span><span class="p">)</span>
 
-# Compile the model
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+<span class="c1"># Compile the model</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
 
-# Train the model
-history = model.fit(train_generator, epochs=10, validation_data=validation_generator)
-</code></pre>
+<span class="c1"># Train the model</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_generator</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this code, we load the dataset and define the data generators for the training and validation sets. We then compile the model and train it for 10 epochs using the Adam optimizer and categorical cross-entropy loss.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Transfer learning can be challenging, and there are several common problems that can arise:

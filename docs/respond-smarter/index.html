@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,38 +165,39 @@
 4. <strong>Develop incident response playbooks</strong>: Create detailed playbooks that outline response procedures for common incident types, such as ransomware attacks or DoS attacks.</p>
 <h3 id="code-example-incident-response-playbook">Code Example: Incident Response Playbook</h3>
 <p>Here is an example of an incident response playbook in Python, using the <code>paramiko</code> library to automate SSH connections and incident response actions:</p>
-<pre><code class="language-python">import paramiko
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paramiko</span>
 
-# Define incident response playbook
-def incident_response_playbook(incident_type):
-    if incident_type == &quot;ransomware&quot;:
-        # Connect to affected system via SSH
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(&quot;affected_system&quot;, username=&quot;admin&quot;, password=&quot;password&quot;)
+<span class="c1"># Define incident response playbook</span>
+<span class="k">def</span> <span class="nf">incident_response_playbook</span><span class="p">(</span><span class="n">incident_type</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">incident_type</span> <span class="o">==</span> <span class="s2">&quot;ransomware&quot;</span><span class="p">:</span>
+        <span class="c1"># Connect to affected system via SSH</span>
+        <span class="n">ssh</span> <span class="o">=</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;affected_system&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
 
-        # Run incident response commands
-        ssh.exec_command(&quot;sudo rm -rf /tmp/malware&quot;)
-        ssh.exec_command(&quot;sudo apt-get update &amp;&amp; sudo apt-get install -y clamav&quot;)
+        <span class="c1"># Run incident response commands</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;sudo rm -rf /tmp/malware&quot;</span><span class="p">)</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;sudo apt-get update &amp;&amp; sudo apt-get install -y clamav&quot;</span><span class="p">)</span>
 
-        # Disconnect from SSH session
-        ssh.close()
-    elif incident_type == &quot;dos&quot;:
-        # Connect to affected system via SSH
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(&quot;affected_system&quot;, username=&quot;admin&quot;, password=&quot;password&quot;)
+        <span class="c1"># Disconnect from SSH session</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">incident_type</span> <span class="o">==</span> <span class="s2">&quot;dos&quot;</span><span class="p">:</span>
+        <span class="c1"># Connect to affected system via SSH</span>
+        <span class="n">ssh</span> <span class="o">=</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;affected_system&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
 
-        # Run incident response commands
-        ssh.exec_command(&quot;sudo iptables -A INPUT -p tcp --dport 80 -j DROP&quot;)
-        ssh.exec_command(&quot;sudo service nginx restart&quot;)
+        <span class="c1"># Run incident response commands</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;sudo iptables -A INPUT -p tcp --dport 80 -j DROP&quot;</span><span class="p">)</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;sudo service nginx restart&quot;</span><span class="p">)</span>
 
-        # Disconnect from SSH session
-        ssh.close()
+        <span class="c1"># Disconnect from SSH session</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-# Example usage
-incident_response_playbook(&quot;ransomware&quot;)
-</code></pre>
+<span class="c1"># Example usage</span>
+<span class="n">incident_response_playbook</span><span class="p">(</span><span class="s2">&quot;ransomware&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to automate incident response actions using a Python playbook. The playbook connects to an affected system via SSH, runs incident response commands, and disconnects from the SSH session.</p>
 <h3 id="common-challenges-in-incident-response">Common Challenges in Incident Response</h3>
 <p>Incident response teams often face common challenges, including:
@@ -211,56 +211,58 @@ incident_response_playbook(&quot;ransomware&quot;)
 * <strong>Develop incident response playbooks</strong>: Incident response playbooks can help standardize response procedures and reduce the complexity of incident response.</p>
 <h3 id="code-example-automation-with-ansible">Code Example: Automation with Ansible</h3>
 <p>Here is an example of using Ansible to automate incident response actions:</p>
-<pre><code class="language-python"># Define Ansible playbook
----
-- name: Incident Response Playbook
-  hosts: affected_system
-  become: yes
+<div class="codehilite"><pre><span></span><code><span class="c1"># Define Ansible playbook</span>
+<span class="o">---</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Incident</span> <span class="n">Response</span> <span class="n">Playbook</span>
+  <span class="n">hosts</span><span class="p">:</span> <span class="n">affected_system</span>
+  <span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
 
-  tasks:
-  - name: Remove malware
-    command: rm -rf /tmp/malware
+  <span class="n">tasks</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Remove</span> <span class="n">malware</span>
+    <span class="n">command</span><span class="p">:</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">malware</span>
 
-  - name: Update and install ClamAV
-    apt:
-      name: clamav
-      state: present
+  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Update</span> <span class="ow">and</span> <span class="n">install</span> <span class="n">ClamAV</span>
+    <span class="n">apt</span><span class="p">:</span>
+      <span class="n">name</span><span class="p">:</span> <span class="n">clamav</span>
+      <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
 
-  - name: Restart Nginx
-    service:
-      name: nginx
-      state: restarted
-</code></pre>
+  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Restart</span> <span class="n">Nginx</span>
+    <span class="n">service</span><span class="p">:</span>
+      <span class="n">name</span><span class="p">:</span> <span class="n">nginx</span>
+      <span class="n">state</span><span class="p">:</span> <span class="n">restarted</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to use Ansible to automate incident response actions, such as removing malware, updating and installing ClamAV, and restarting Nginx.</p>
 <h3 id="code-example-cloud-based-incident-response-with-aws">Code Example: Cloud-Based Incident Response with AWS</h3>
 <p>Here is an example of using AWS to support incident response efforts:</p>
-<pre><code class="language-python"># Import AWS SDK
-import boto3
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import AWS SDK</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
 
-# Define AWS incident response function
-def aws_incident_response(incident_type):
-    if incident_type == &quot;dos&quot;:
-        # Create AWS CloudWatch event
-        cloudwatch = boto3.client(&quot;cloudwatch&quot;)
-        cloudwatch.put_event(
-            Event={
-                &quot;Source&quot;: &quot;aws.incident-response&quot;,
-                &quot;Resources&quot;: [&quot;affected_system&quot;],
-                &quot;DetailType&quot;: &quot;Incident Response&quot;,
-                &quot;Detail&quot;: &quot;{\&quot;incident_type\&quot;: \&quot;dos\&quot;}&quot;
-            }
-        )
+<span class="c1"># Define AWS incident response function</span>
+<span class="k">def</span> <span class="nf">aws_incident_response</span><span class="p">(</span><span class="n">incident_type</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">incident_type</span> <span class="o">==</span> <span class="s2">&quot;dos&quot;</span><span class="p">:</span>
+        <span class="c1"># Create AWS CloudWatch event</span>
+        <span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;cloudwatch&quot;</span><span class="p">)</span>
+        <span class="n">cloudwatch</span><span class="o">.</span><span class="n">put_event</span><span class="p">(</span>
+            <span class="n">Event</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;aws.incident-response&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Resources&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;affected_system&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;DetailType&quot;</span><span class="p">:</span> <span class="s2">&quot;Incident Response&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Detail&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">incident_type</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">dos</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
 
-        # Trigger AWS Lambda function
-        lambda_client = boto3.client(&quot;lambda&quot;)
-        lambda_client.invoke(
-            FunctionName=&quot;incident-response-lambda&quot;,
-            InvocationType=&quot;Event&quot;
-        )
+        <span class="c1"># Trigger AWS Lambda function</span>
+        <span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;lambda&quot;</span><span class="p">)</span>
+        <span class="n">lambda_client</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+            <span class="n">FunctionName</span><span class="o">=</span><span class="s2">&quot;incident-response-lambda&quot;</span><span class="p">,</span>
+            <span class="n">InvocationType</span><span class="o">=</span><span class="s2">&quot;Event&quot;</span>
+        <span class="p">)</span>
 
-# Example usage
-aws_incident_response(&quot;dos&quot;)
-</code></pre>
+<span class="c1"># Example usage</span>
+<span class="n">aws_incident_response</span><span class="p">(</span><span class="s2">&quot;dos&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to use AWS to support incident response efforts, such as creating a CloudWatch event and triggering a Lambda function.</p>
 <h3 id="real-world-metrics-and-pricing-data">Real-World Metrics and Pricing Data</h3>
 <p>Here are some real-world metrics and pricing data for incident response tools and services:

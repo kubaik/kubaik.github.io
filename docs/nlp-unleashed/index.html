@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,70 +160,73 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples that demonstrate the use of NLP techniques:</p>
 <h3 id="example-1-text-classification-using-scikit-learn">Example 1: Text Classification using Scikit-Learn</h3>
-<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
-# Load the dataset
-train_data = pd.read_csv('train.csv')
+<span class="c1"># Load the dataset</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(train_data['text'], train_data['label'], test_size=0.2, random_state=42)
+<span class="c1"># Split the data into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Create a TF-IDF vectorizer
-vectorizer = TfidfVectorizer()
+<span class="c1"># Create a TF-IDF vectorizer</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
 
-# Fit the vectorizer to the training data and transform both the training and testing data
-X_train_vectorized = vectorizer.fit_transform(X_train)
-X_test_vectorized = vectorizer.transform(X_test)
+<span class="c1"># Fit the vectorizer to the training data and transform both the training and testing data</span>
+<span class="n">X_train_vectorized</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_vectorized</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-# Train a Multinomial Naive Bayes classifier
-clf = MultinomialNB()
-clf.fit(X_train_vectorized, y_train)
+<span class="c1"># Train a Multinomial Naive Bayes classifier</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_vectorized</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Make predictions on the testing data
-y_pred = clf.predict(X_test_vectorized)
+<span class="c1"># Make predictions on the testing data</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_vectorized</span><span class="p">)</span>
 
-# Evaluate the model
-accuracy = accuracy_score(y_test, y_pred)
-print('Accuracy:', accuracy)
-</code></pre>
+<span class="c1"># Evaluate the model</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates the use of text classification to predict the label of a given piece of text. The accuracy of the model is evaluated using the <code>accuracy_score</code> function from Scikit-Learn.</p>
 <h3 id="example-2-sentiment-analysis-using-nltk-and-vader">Example 2: Sentiment Analysis using NLTK and VADER</h3>
-<pre><code class="language-python">import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.sentiment.vader</span> <span class="kn">import</span> <span class="n">SentimentIntensityAnalyzer</span>
 
-# Download the VADER lexicon
-nltk.download('vader_lexicon')
+<span class="c1"># Download the VADER lexicon</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;vader_lexicon&#39;</span><span class="p">)</span>
 
-# Create a SentimentIntensityAnalyzer object
-sia = SentimentIntensityAnalyzer()
+<span class="c1"># Create a SentimentIntensityAnalyzer object</span>
+<span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
 
-# Analyze the sentiment of a given piece of text
-text = 'I love this product!'
-sentiment = sia.polarity_scores(text)
+<span class="c1"># Analyze the sentiment of a given piece of text</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I love this product!&#39;</span>
+<span class="n">sentiment</span> <span class="o">=</span> <span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-# Print the sentiment scores
-print('Positive sentiment score:', sentiment['pos'])
-print('Negative sentiment score:', sentiment['neg'])
-print('Neutral sentiment score:', sentiment['neu'])
-print('Compound sentiment score:', sentiment['compound'])
-</code></pre>
+<span class="c1"># Print the sentiment scores</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Positive sentiment score:&#39;</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Negative sentiment score:&#39;</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">[</span><span class="s1">&#39;neg&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Neutral sentiment score:&#39;</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">[</span><span class="s1">&#39;neu&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Compound sentiment score:&#39;</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">[</span><span class="s1">&#39;compound&#39;</span><span class="p">])</span>
+</code></pre></div>
+
 <p>This code example demonstrates the use of sentiment analysis to analyze the sentiment of a given piece of text. The <code>SentimentIntensityAnalyzer</code> object is used to calculate the sentiment scores of the text.</p>
 <h3 id="example-3-language-translation-using-google-cloud-translation-api">Example 3: Language Translation using Google Cloud Translation API</h3>
-<pre><code class="language-python">from google.cloud import translate_v2 as translate
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">translate_v2</span> <span class="k">as</span> <span class="n">translate</span>
 
-# Create a client object
-client = translate.Client()
+<span class="c1"># Create a client object</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">translate</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
 
-# Translate a given piece of text from English to Spanish
-text = 'Hello, how are you?'
-translation = client.translate(text, target_language='es')
+<span class="c1"># Translate a given piece of text from English to Spanish</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Hello, how are you?&#39;</span>
+<span class="n">translation</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">target_language</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
 
-# Print the translated text
-print('Translated text:', translation['translatedText'])
-</code></pre>
+<span class="c1"># Print the translated text</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Translated text:&#39;</span><span class="p">,</span> <span class="n">translation</span><span class="p">[</span><span class="s1">&#39;translatedText&#39;</span><span class="p">])</span>
+</code></pre></div>
+
 <p>This code example demonstrates the use of language translation to translate a given piece of text from one language to another. The Google Cloud Translation API is used to perform the translation.</p>
 <h2 id="nlp-tools-and-platforms">NLP Tools and Platforms</h2>
 <p>There are many NLP tools and platforms available, including:

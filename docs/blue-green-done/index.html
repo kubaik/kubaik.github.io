@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,29 +166,31 @@
 6. <strong>Monitor and rollback</strong>: Monitor the new environment for any issues and roll back to the previous environment if necessary.</p>
 <h3 id="example-code-deploying-to-kubernetes">Example Code: Deploying to Kubernetes</h3>
 <p>Here's an example of how to deploy a new version of an application to a Kubernetes cluster using the <code>kubectl</code> command:</p>
-<pre><code class="language-bash"># Create a new deployment for the green environment
-kubectl create deployment green-deployment --image=nginx:latest
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new deployment for the green environment</span>
+kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>green-deployment<span class="w"> </span>--image<span class="o">=</span>nginx:latest
 
-# Expose the deployment as a service
-kubectl expose deployment green-deployment --type=LoadBalancer --port=80
+<span class="c1"># Expose the deployment as a service</span>
+kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span class="w"> </span>green-deployment<span class="w"> </span>--type<span class="o">=</span>LoadBalancer<span class="w"> </span>--port<span class="o">=</span><span class="m">80</span>
 
-# Switch traffic to the green environment
-kubectl patch svc/ingress -p '{&quot;spec&quot;:{&quot;rules&quot;:[{&quot;host&quot;:&quot;example.com&quot;,&quot;http&quot;:{&quot;paths&quot;:[{&quot;backend&quot;:{&quot;serviceName&quot;:&quot;green-deployment&quot;,&quot;servicePort&quot;:80}}]}}]}}'
-</code></pre>
+<span class="c1"># Switch traffic to the green environment</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>svc/ingress<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;rules&quot;:[{&quot;host&quot;:&quot;example.com&quot;,&quot;http&quot;:{&quot;paths&quot;:[{&quot;backend&quot;:{&quot;serviceName&quot;:&quot;green-deployment&quot;,&quot;servicePort&quot;:80}}]}}]}}&#39;</span>
+</code></pre></div>
+
 <p>In this example, we create a new deployment for the green environment, expose it as a service, and then switch traffic to the green environment by updating the ingress service.</p>
 <h2 id="using-cloud-providers-for-blue-green-deployment">Using Cloud Providers for Blue-Green Deployment</h2>
 <p>Cloud providers like AWS and Google Cloud offer a range of features that can be used for blue-green deployment. For instance, AWS offers Elastic Beanstalk, which is a service that allows developers to deploy web applications and services without worrying about the underlying infrastructure. Google Cloud offers App Engine, which is a platform-as-a-service that allows developers to deploy web applications without worrying about the underlying infrastructure.</p>
 <h3 id="example-code-deploying-to-aws-elastic-beanstalk">Example Code: Deploying to AWS Elastic Beanstalk</h3>
 <p>Here's an example of how to deploy a new version of an application to AWS Elastic Beanstalk using the AWS CLI:</p>
-<pre><code class="language-bash"># Create a new environment for the green deployment
-aws elasticbeanstalk create-environment --environment-name green-env --version-label latest
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new environment for the green deployment</span>
+aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>create-environment<span class="w"> </span>--environment-name<span class="w"> </span>green-env<span class="w"> </span>--version-label<span class="w"> </span>latest
 
-# Deploy the new version of the application to the green environment
-aws elasticbeanstalk deploy --environment-name green-env --version-label latest
+<span class="c1"># Deploy the new version of the application to the green environment</span>
+aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>deploy<span class="w"> </span>--environment-name<span class="w"> </span>green-env<span class="w"> </span>--version-label<span class="w"> </span>latest
 
-# Switch traffic to the green environment
-aws elasticbeanstalk swap-environment-cnames --source-environment-name blue-env --destination-environment-name green-env
-</code></pre>
+<span class="c1"># Switch traffic to the green environment</span>
+aws<span class="w"> </span>elasticbeanstalk<span class="w"> </span>swap-environment-cnames<span class="w"> </span>--source-environment-name<span class="w"> </span>blue-env<span class="w"> </span>--destination-environment-name<span class="w"> </span>green-env
+</code></pre></div>
+
 <p>In this example, we create a new environment for the green deployment, deploy the new version of the application to the green environment, and then switch traffic to the green environment by swapping the environment CNAMEs.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur during blue-green deployment include:

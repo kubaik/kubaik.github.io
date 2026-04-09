@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -223,15 +222,16 @@
 <h2 id="practical-examples-of-serverless-applications">Practical Examples of Serverless Applications</h2>
 <h3 id="example-1-building-a-restful-api">Example 1: Building a RESTful API</h3>
 <p>Suppose you want to create a simple REST API that responds to user requests.</p>
-<pre><code class="language-python"># Example AWS Lambda function in Python
-def lambda_handler(event, context):
-    name = event.get('queryStringParameters', {}).get('name', 'World')
-    response = {
-        'statusCode': 200,
-        'body': f'Hello, {name}!'
-    }
-    return response
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Example AWS Lambda function in Python</span>
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;queryStringParameters&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;World&#39;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">!&#39;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">response</span>
+</code></pre></div>
+
 <ul>
 <li>Deploy this function via AWS Lambda.</li>
 <li>Use API Gateway to expose it as an HTTP endpoint.</li>

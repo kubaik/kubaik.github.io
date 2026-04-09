@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,28 +164,29 @@
 * Grafana: An open-source platform for building dashboards and visualizing data
 * New Relic: A comprehensive monitoring platform that provides insights into application performance and health</p>
 <p>Here's an example of how you can use Prometheus to monitor a Node.js application:</p>
-<pre><code class="language-javascript">const express = require('express');
-const app = express();
-const client = require('prom-client');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;prom-client&#39;</span><span class="p">);</span>
 
-// Create a Prometheus client
-const counter = new client.Counter({
-  name: 'my_counter',
-  help: 'An example counter'
-});
+<span class="c1">// Create a Prometheus client</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Counter</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my_counter&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">help</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;An example counter&#39;</span>
+<span class="p">});</span>
 
-// Increment the counter for each request
-app.get('/', (req, res) =&gt; {
-  counter.inc();
-  res.send('Hello World!');
-});
+<span class="c1">// Increment the counter for each request</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">counter</span><span class="p">.</span><span class="nx">inc</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
+<span class="p">});</span>
 
-// Expose the Prometheus metrics
-app.get('/metrics', (req, res) =&gt; {
-  res.set(&quot;Content-Type&quot;, client.register.contentType);
-  res.end(client.register.metrics());
-});
-</code></pre>
+<span class="c1">// Expose the Prometheus metrics</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/metrics&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">.</span><span class="nx">contentType</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">.</span><span class="nx">metrics</span><span class="p">());</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This example creates a Prometheus client and increments a counter for each request to the root URL. The <code>/metrics</code> endpoint exposes the Prometheus metrics, which can be scraped by a Prometheus server.</p>
 <h2 id="implementing-alerting-and-notification">Implementing Alerting and Notification</h2>
 <p>Once you have monitoring tools in place, you'll need to set up alerting and notification systems to notify your team of issues. Some popular options include:
@@ -194,57 +194,57 @@ app.get('/metrics', (req, res) =&gt; {
 * Splunk: A platform for monitoring and analyzing machine-generated data
 * Slack: A communication platform that can be used for alerting and notification</p>
 <p>Here's an example of how you can use PagerDuty to set up alerting for a Prometheus metric:</p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-import requests
+<span class="kn">import</span> <span class="nn">requests</span>
 
-# Define the Prometheus metric and threshold
-metric = 'my_counter'
-threshold = 100
+<span class="c1"># Define the Prometheus metric and threshold</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;my_counter&#39;</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">100</span>
 
-# Define the PagerDuty API endpoint and authentication token
-pagerduty_api = 'https://api.pagerduty.com/incidents'
-pagerduty_token = 'your_pagerduty_token'
+<span class="c1"># Define the PagerDuty API endpoint and authentication token</span>
+<span class="n">pagerduty_api</span> <span class="o">=</span> <span class="s1">&#39;https://api.pagerduty.com/incidents&#39;</span>
+<span class="n">pagerduty_token</span> <span class="o">=</span> <span class="s1">&#39;your_pagerduty_token&#39;</span>
 
-# Define a function to send an alert to PagerDuty
-def send_alert():
-  headers = {
-    'Authorization': f'Bearer {pagerduty_token}',
-    'Content-Type': 'application/json'
-  }
-  data = {
-    'incident': {
-      'type': 'incident',
-      'title': f'{metric} exceeded threshold',
-      'service': {
-        'id': 'your_pagerduty_service_id',
-        'type': 'service_reference'
-      }
-    }
-  }
-  response = requests.post(pagerduty_api, headers=headers, json=data)
-  if response.status_code != 201:
-    print(f'Error sending alert: {response.text}')
+<span class="c1"># Define a function to send an alert to PagerDuty</span>
+<span class="k">def</span> <span class="nf">send_alert</span><span class="p">():</span>
+  <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="n">pagerduty_token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
+  <span class="p">}</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;incident&#39;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;incident&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> exceeded threshold&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;your_pagerduty_service_id&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_reference&#39;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">pagerduty_api</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">201</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error sending alert: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-# Define a function to check the Prometheus metric and send an alert if it exceeds the threshold
-def check_metric():
-  prometheus_api = 'http://your_prometheus_server:9090/api/v1/query'
-  query = f'sum({metric})'
-  response = requests.get(prometheus_api, params={'query': query})
-  if response.status_code == 200:
-    value = response.json()['data']['result'][0]['value'][1]
-    if float(value) &gt; threshold:
-      send_alert()
+<span class="c1"># Define a function to check the Prometheus metric and send an alert if it exceeds the threshold</span>
+<span class="k">def</span> <span class="nf">check_metric</span><span class="p">():</span>
+  <span class="n">prometheus_api</span> <span class="o">=</span> <span class="s1">&#39;http://your_prometheus_server:9090/api/v1/query&#39;</span>
+  <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sum(</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">)&#39;</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prometheus_api</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">})</span>
+  <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+      <span class="n">send_alert</span><span class="p">()</span>
 
-# Run the check_metric function every minute
-import schedule
-import time
-schedule.every(1).minutes.do(check_metric)
-while True:
-  schedule.run_pending()
-  time.sleep(1)
-</code></pre>
+<span class="c1"># Run the check_metric function every minute</span>
+<span class="kn">import</span> <span class="nn">schedule</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">every</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">minutes</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">check_metric</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+  <span class="n">schedule</span><span class="o">.</span><span class="n">run_pending</span><span class="p">()</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example defines a function to send an alert to PagerDuty and a function to check the Prometheus metric and send an alert if it exceeds the threshold. The <code>check_metric</code> function is run every minute using the <code>schedule</code> library.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can be solved using proactive monitoring include:

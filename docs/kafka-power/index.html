@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,19 +166,20 @@
 <h3 id="example-use-case-real-time-analytics">Example Use Case: Real-Time Analytics</h3>
 <p>For example, a company like Uber might use Kafka to stream data from their mobile app, such as location data, ride requests, and driver availability, to a real-time analytics platform. This data can then be used to provide real-time insights, such as the number of available drivers in a given area, or the average wait time for a ride.</p>
 <p>Here is an example of how this might be implemented in code:</p>
-<pre><code class="language-python">from kafka import KafkaProducer
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
 
-# Create a Kafka producer
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+<span class="c1"># Create a Kafka producer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
 
-# Define a function to send data to Kafka
-def send_data(data):
-    producer.send('uber_data', value=data)
+<span class="c1"># Define a function to send data to Kafka</span>
+<span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;uber_data&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
-# Send some example data to Kafka
-send_data(b'{&quot;location&quot;: &quot;San Francisco&quot;, &quot;ride_request&quot;: true}')
-send_data(b'{&quot;location&quot;: &quot;New York&quot;, &quot;driver_availability&quot;: 10}')
-</code></pre>
+<span class="c1"># Send some example data to Kafka</span>
+<span class="n">send_data</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;location&quot;: &quot;San Francisco&quot;, &quot;ride_request&quot;: true}&#39;</span><span class="p">)</span>
+<span class="n">send_data</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;location&quot;: &quot;New York&quot;, &quot;driver_availability&quot;: 10}&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a Kafka producer and defines a function to send data to a Kafka topic. The <code>send_data</code> function takes a byte string as input, which is then sent to the <code>uber_data</code> topic.</p>
 <h2 id="implementing-apache-kafka">Implementing Apache Kafka</h2>
 <p>Implementing Apache Kafka requires a good understanding of the underlying architecture and configuration options. Here are some steps to follow:
@@ -189,35 +189,36 @@ send_data(b'{&quot;location&quot;: &quot;New York&quot;, &quot;driver_availabili
 4. <strong>Implement your producers and consumers</strong>: Implement your producers and consumers, using a Kafka client library such as the Apache Kafka Java client or the Confluent Kafka Python client.</p>
 <h3 id="example-implementation-producer-and-consumer">Example Implementation: Producer and Consumer</h3>
 <p>Here is an example of how to implement a producer and consumer in Python, using the Confluent Kafka client library:</p>
-<pre><code class="language-python">from confluent_kafka import Producer, Consumer
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">confluent_kafka</span> <span class="kn">import</span> <span class="n">Producer</span><span class="p">,</span> <span class="n">Consumer</span>
 
-# Create a Kafka producer
-producer = Producer({
-    'bootstrap.servers': 'localhost:9092',
-    'client.id': 'my_producer'
-})
+<span class="c1"># Create a Kafka producer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">Producer</span><span class="p">({</span>
+    <span class="s1">&#39;bootstrap.servers&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;client.id&#39;</span><span class="p">:</span> <span class="s1">&#39;my_producer&#39;</span>
+<span class="p">})</span>
 
-# Create a Kafka consumer
-consumer = Consumer({
-    'bootstrap.servers': 'localhost:9092',
-    'group.id': 'my_group',
-    'auto.offset.reset': 'earliest'
-})
+<span class="c1"># Create a Kafka consumer</span>
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">Consumer</span><span class="p">({</span>
+    <span class="s1">&#39;bootstrap.servers&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;group.id&#39;</span><span class="p">:</span> <span class="s1">&#39;my_group&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;auto.offset.reset&#39;</span><span class="p">:</span> <span class="s1">&#39;earliest&#39;</span>
+<span class="p">})</span>
 
-# Subscribe to a topic
-consumer.subscribe(['my_topic'])
+<span class="c1"># Subscribe to a topic</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">subscribe</span><span class="p">([</span><span class="s1">&#39;my_topic&#39;</span><span class="p">])</span>
 
-# Produce some messages
-for i in range(10):
-    producer.produce('my_topic', value=f'Message {i}'.encode('utf-8'))
+<span class="c1"># Produce some messages</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">producer</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Message </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
 
-# Consume some messages
-while True:
-    msg = consumer.poll(1.0)
-    if msg is None:
-        continue
-    print(f'Received message: {msg.value().decode(&quot;utf-8&quot;)}')
-</code></pre>
+<span class="c1"># Consume some messages</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">consumer</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received message: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a Kafka producer and consumer, and uses them to produce and consume messages from a topic.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when working with Apache Kafka:
@@ -226,8 +227,9 @@ while True:
 * <strong>Data loss</strong>: Data loss can be caused by a variety of factors, including broker failure, disk failure, or insufficient replication. To solve this problem, try increasing the replication factor, adding more brokers, or using a more robust storage solution.</p>
 <h3 id="example-solution-increasing-throughput">Example Solution: Increasing Throughput</h3>
 <p>For example, if you are experiencing low throughput, you might try increasing the number of partitions in your topic. This can be done using the <code>kafka-topics</code> command-line tool:</p>
-<pre><code class="language-bash">kafka-topics --bootstrap-server localhost:9092 --alter --topic my_topic --partitions 10
-</code></pre>
+<div class="codehilite"><pre><span></span><code>kafka-topics<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span>--alter<span class="w"> </span>--topic<span class="w"> </span>my_topic<span class="w"> </span>--partitions<span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+
 <p>This command increases the number of partitions in the <code>my_topic</code> topic to 10, which can help increase throughput.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Apache Kafka has been shown to have high performance and scalability in a variety of benchmarks. For example, in a benchmark published by Confluent, Kafka was shown to be able to handle over 1 million messages per second, with latency as low as 2 milliseconds.</p>
@@ -237,8 +239,9 @@ while True:
 * <strong>Scalability</strong>: Kafka is highly scalable, with support for horizontal scaling and load balancing.</p>
 <h3 id="example-benchmark-throughput">Example Benchmark: Throughput</h3>
 <p>For example, you might use the <code>kafka-producer-perf-test</code> command-line tool to benchmark the throughput of your Kafka cluster:</p>
-<pre><code class="language-bash">kafka-producer-perf-test --bootstrap-server localhost:9092 --topic my_topic --num-records 1000000 --record-size 1024 --throughput 1000
-</code></pre>
+<div class="codehilite"><pre><span></span><code>kafka-producer-perf-test<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span>--topic<span class="w"> </span>my_topic<span class="w"> </span>--num-records<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>--record-size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>--throughput<span class="w"> </span><span class="m">1000</span>
+</code></pre></div>
+
 <p>This command benchmarks the throughput of your Kafka cluster, producing 1 million records of size 1024 bytes, at a rate of 1000 records per second.</p>
 <h2 id="pricing-and-cost">Pricing and Cost</h2>
 <p>The cost of using Apache Kafka can vary depending on your specific use case and deployment. Here are some estimated costs:

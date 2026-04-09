@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,74 +169,77 @@
 <h3 id="request-response-pattern">Request-Response Pattern</h3>
 <p>The request-response pattern is one of the most common serverless architecture patterns. This pattern involves using a serverless function to handle incoming requests and return responses. For example, a serverless function can be used to handle incoming HTTP requests and return responses.</p>
 <p>Here is an example of a serverless function written in Node.js that uses the request-response pattern:</p>
-<pre><code class="language-javascript">// Import the required modules
-const express = require('express');
-const app = express();
+<div class="codehilite"><pre><span></span><code><span class="c1">// Import the required modules</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
 
-// Define a serverless function to handle incoming requests
-app.get('/hello', (req, res) =&gt; {
-  res.send('Hello World!');
-});
+<span class="c1">// Define a serverless function to handle incoming requests</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
+<span class="p">});</span>
 
-// Export the serverless function
-module.exports = app;
-</code></pre>
+<span class="c1">// Export the serverless function</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This serverless function can be deployed to a cloud provider such as AWS Lambda or Google Cloud Functions.</p>
 <h3 id="event-driven-pattern">Event-Driven Pattern</h3>
 <p>The event-driven pattern is another common serverless architecture pattern. This pattern involves using a serverless function to respond to specific events or triggers. For example, a serverless function can be used to respond to changes to a database or to process incoming messages from a message queue.</p>
 <p>Here is an example of a serverless function written in Python that uses the event-driven pattern:</p>
-<pre><code class="language-python"># Import the required modules
-import boto3
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the required modules</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
 
-# Define a serverless function to respond to changes to a database
-def lambda_handler(event, context):
-  # Get the database object
-  db = boto3.resource('dynamodb')
+<span class="c1"># Define a serverless function to respond to changes to a database</span>
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+  <span class="c1"># Get the database object</span>
+  <span class="n">db</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;dynamodb&#39;</span><span class="p">)</span>
 
-  # Get the table object
-  table = db.Table('my_table')
+  <span class="c1"># Get the table object</span>
+  <span class="n">table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span>
 
-  # Process the event
-  if event['Records'][0]['eventName'] == 'INSERT':
-    # Process the insert event
-    print('Insert event processed')
-  elif event['Records'][0]['eventName'] == 'UPDATE':
-    # Process the update event
-    print('Update event processed')
-  elif event['Records'][0]['eventName'] == 'DELETE':
-    # Process the delete event
-    print('Delete event processed')
+  <span class="c1"># Process the event</span>
+  <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;eventName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;INSERT&#39;</span><span class="p">:</span>
+    <span class="c1"># Process the insert event</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Insert event processed&#39;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;eventName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;UPDATE&#39;</span><span class="p">:</span>
+    <span class="c1"># Process the update event</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Update event processed&#39;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;eventName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">:</span>
+    <span class="c1"># Process the delete event</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Delete event processed&#39;</span><span class="p">)</span>
 
-  # Return a response
-  return {
-    'statusCode': 200,
-    'statusMessage': 'OK'
-  }
-</code></pre>
+  <span class="c1"># Return a response</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s1">&#39;statusMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span>
+  <span class="p">}</span>
+</code></pre></div>
+
 <p>This serverless function can be deployed to a cloud provider such as AWS Lambda.</p>
 <h3 id="queue-based-pattern">Queue-Based Pattern</h3>
 <p>The queue-based pattern is another common serverless architecture pattern. This pattern involves using a message queue to handle incoming requests and process them asynchronously. For example, a serverless function can be used to process incoming messages from a message queue such as Amazon SQS or Google Cloud Pub/Sub.</p>
 <p>Here is an example of a serverless function written in Java that uses the queue-based pattern:</p>
-<pre><code class="language-java">// Import the required modules
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.SQSEvent;
+<div class="codehilite"><pre><span></span><code><span class="c1">// Import the required modules</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.amazonaws.services.lambda.runtime.Context</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.amazonaws.services.lambda.runtime.RequestHandler</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.amazonaws.services.lambda.runtime.events.SQSEvent</span><span class="p">;</span>
 
-// Define a serverless function to process incoming messages from a message queue
-public class MessageProcessor implements RequestHandler&lt;SQSEvent, Void&gt; {
-  @Override
-  public Void handleRequest(SQSEvent event, Context context) {
-    // Process the incoming messages
-    for (SQSEvent.SQSMessage message : event.getRecords()) {
-      // Process the message
-      System.out.println(message.getBody());
-    }
+<span class="c1">// Define a serverless function to process incoming messages from a message queue</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MessageProcessor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">RequestHandler</span><span class="o">&lt;</span><span class="n">SQSEvent</span><span class="p">,</span><span class="w"> </span><span class="n">Void</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nd">@Override</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">Void</span><span class="w"> </span><span class="nf">handleRequest</span><span class="p">(</span><span class="n">SQSEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Process the incoming messages</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">SQSEvent</span><span class="p">.</span><span class="na">SQSMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">getRecords</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Process the message</span>
+<span class="w">      </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getBody</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 
-    // Return a response
-    return null;
-  }
-}
-</code></pre>
+<span class="w">    </span><span class="c1">// Return a response</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This serverless function can be deployed to a cloud provider such as AWS Lambda.</p>
 <h2 id="performance-and-cost-considerations">Performance and Cost Considerations</h2>
 <p>When building serverless applications, it's essential to consider performance and cost. Serverless functions can be executed in response to a wide range of events, and the cost of execution is typically based on the number of requests processed.</p>

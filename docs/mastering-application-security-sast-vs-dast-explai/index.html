@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -197,21 +196,23 @@
 - <strong>Checkmarx</strong>: A commercial SAST tool that supports multiple languages. Pricing is typically customized based on the number of users and applications.</p>
 <h4 id="practical-code-example">Practical Code Example</h4>
 <p>Let's consider a simple Java application that connects to a database. Here’s a vulnerable code snippet that is susceptible to SQL injection:</p>
-<pre><code class="language-java">public void getUserDetails(String userId) {
-    String query = &quot;SELECT * FROM users WHERE id = '&quot; + userId + &quot;'&quot;;
-    // Execute the query
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">getUserDetails</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE id = &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userId</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Execute the query</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code concatenates user input directly into the SQL query string, making it vulnerable. A SAST tool like Checkmarx would flag this as a vulnerability.</p>
 <p><strong>Fixing the Vulnerability</strong></p>
 <p>You can improve the code by using prepared statements:</p>
-<pre><code class="language-java">public void getUserDetails(String userId) {
-    String query = &quot;SELECT * FROM users WHERE id = ?&quot;;
-    PreparedStatement preparedStatement = connection.prepareStatement(query);
-    preparedStatement.setString(1, userId);
-    // Execute the query
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">getUserDetails</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE id = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">preparedStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">);</span>
+<span class="w">    </span><span class="n">preparedStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Execute the query</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This change prevents SQL injection by ensuring that user input is treated as data, not executable code.</p>
 <h4 id="benefits-of-sast">Benefits of SAST</h4>
 <ol>
@@ -238,16 +239,18 @@
 - <strong>Burp Suite</strong>: A commercial tool that provides a comprehensive solution for web application security testing, with pricing starting at $399 per year for the professional version.</p>
 <h4 id="practical-code-example_1">Practical Code Example</h4>
 <p>Consider a web application that takes a user input for a search query:</p>
-<pre><code class="language-html">&lt;form action=&quot;/search&quot; method=&quot;GET&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;query&quot; /&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Search&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/search&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;query&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Search&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>If the application returns the search result without proper output encoding, it may be vulnerable to XSS attacks. A DAST tool like OWASP ZAP would identify this risk when it interacts with the application.</p>
 <p><strong>Fixing the Vulnerability</strong></p>
 <p>You can mitigate this risk by encoding the output:</p>
-<pre><code class="language-java">response.getWriter().write(escapeHtml(userInput));
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">().</span><span class="na">write</span><span class="p">(</span><span class="n">escapeHtml</span><span class="p">(</span><span class="n">userInput</span><span class="p">));</span>
+</code></pre></div>
+
 <p>This ensures that any user input is properly encoded before being rendered in the HTML.</p>
 <h4 id="benefits-of-dast">Benefits of DAST</h4>
 <ol>

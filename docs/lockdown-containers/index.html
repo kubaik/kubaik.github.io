@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,26 +165,27 @@
 <h3 id="implementing-least-privilege">Implementing Least Privilege</h3>
 <p>One of the most effective ways to secure containers is to implement least privilege. This means running containers with the least privileges necessary to perform their tasks. For example, if a container only needs to read files from a specific directory, it should not have write access to that directory.</p>
 <p>Here is an example of how to implement least privilege using Docker:</p>
-<pre><code class="language-dockerfile"># Create a new user with limited privileges
-RUN groupadd -r mygroup &amp;&amp; useradd -r -g mygroup myuser
+<div class="codehilite"><pre><span></span><code><span class="c"># Create a new user with limited privileges</span>
+<span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>mygroup<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>mygroup<span class="w"> </span>myuser
 
-# Set the user and group for the container
-USER myuser:mygroup
+<span class="c"># Set the user and group for the container</span>
+<span class="k">USER</span><span class="w"> </span><span class="s">myuser:mygroup</span>
 
-# Set the working directory to a specific directory
-WORKDIR /app
+<span class="c"># Set the working directory to a specific directory</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
 
-# Copy files into the container
-COPY . /app
+<span class="c"># Copy files into the container</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>/app
 
-# Run the command with limited privileges
-CMD [&quot;mycommand&quot;]
-</code></pre>
+<span class="c"># Run the command with limited privileges</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mycommand&quot;</span><span class="p">]</span>
+</code></pre></div>
+
 <p>In this example, we create a new user and group with limited privileges, and set the user and group for the container. We then set the working directory to a specific directory, and copy files into the container. Finally, we run the command with limited privileges using the <code>CMD</code> instruction.</p>
 <h2 id="network-policies">Network Policies</h2>
 <p>Network policies are another essential aspect of container security. Network policies control traffic flow between containers, and can help prevent unauthorized access to sensitive data.</p>
 <p>Here is an example of how to implement network policies using Kubernetes:</p>
-<pre><code class="language-yml"># Create a new network policy
+<div class="codehilite"><pre><span></span><code># Create a new network policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -211,17 +211,19 @@ spec:
           app: myapp
     - ports:
       - 80
-</code></pre>
+</code></pre></div>
+
 <p>In this example, we create a new network policy that allows ingress and egress traffic between pods with the label <code>app: myapp</code>. We then specify the ports that are allowed for ingress and egress traffic.</p>
 <h3 id="monitoring-and-logging">Monitoring and Logging</h3>
 <p>Monitoring and logging are essential for detecting and responding to security incidents. There are several tools available for monitoring and logging container activity, including Docker Logging and Prometheus.</p>
 <p>Here is an example of how to use Docker Logging to monitor container activity:</p>
-<pre><code class="language-bash"># Enable Docker Logging
-docker run -d --name mycontainer -v /var/log:/var/log myimage
+<div class="codehilite"><pre><span></span><code><span class="c1"># Enable Docker Logging</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>mycontainer<span class="w"> </span>-v<span class="w"> </span>/var/log:/var/log<span class="w"> </span>myimage
 
-# Configure Docker Logging to write logs to a file
-docker logs -f mycontainer &gt; /var/log/mycontainer.log
-</code></pre>
+<span class="c1"># Configure Docker Logging to write logs to a file</span>
+docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>mycontainer<span class="w"> </span>&gt;<span class="w"> </span>/var/log/mycontainer.log
+</code></pre></div>
+
 <p>In this example, we enable Docker Logging by running a container with the <code>-v</code> flag, which mounts the <code>/var/log</code> directory from the host system into the container. We then configure Docker Logging to write logs to a file using the <code>docker logs</code> command.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to container security:

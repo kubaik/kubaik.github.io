@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,22 +163,23 @@
 * <strong>Low-latency</strong>: Kafka provides low-latency event processing, with average latency rates of less than 10ms.
 * <strong>Fault-tolerance</strong>: Kafka provides fault-tolerant event processing, with features such as replication and redundancy.</p>
 <p>Here is an example of how we can use Kafka to produce and consume events in a Python application:</p>
-<pre><code class="language-python">from kafka import KafkaProducer, KafkaConsumer
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span><span class="p">,</span> <span class="n">KafkaConsumer</span>
 
-# Create a Kafka producer
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+<span class="c1"># Create a Kafka producer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
 
-# Produce an event
-event = {'type': 'order_placed', 'data': {'customer_id': 1, 'order_id': 1}}
-producer.send('orders', value=event)
+<span class="c1"># Produce an event</span>
+<span class="n">event</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;order_placed&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
 
-# Create a Kafka consumer
-consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
+<span class="c1"># Create a Kafka consumer</span>
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
 
-# Consume events
-for event in consumer:
-    print(event.value)
-</code></pre>
+<span class="c1"># Consume events</span>
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we create a Kafka producer and consumer, and use them to produce and consume events. We can then use these events to trigger downstream processes, such as payment processing and inventory updates.</p>
 <h3 id="using-eda-in-real-world-applications">Using EDA in Real-World Applications</h3>
 <p>EDA can be used in a variety of real-world applications, including:
@@ -187,36 +187,37 @@ for event in consumer:
 * <strong>IoT</strong>: EDA can be used to process sensor data, trigger alerts, and control devices in real-time.
 * <strong>Finance</strong>: EDA can be used to process transactions, detect fraud, and update account balances in real-time.</p>
 <p>For example, we can use EDA to build a real-time analytics system for an e-commerce application. We can use Apache Flink to process events in real-time, and Apache Cassandra to store and retrieve event data. Here is an example of how we can use Flink to process events in real-time:</p>
-<pre><code class="language-java">import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="p">;</span>
 
-public class RealTimeAnalytics {
-    public static void main(String[] args) throws Exception {
-        // Create a Flink execution environment
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RealTimeAnalytics</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Create a Flink execution environment</span>
+<span class="w">        </span><span class="n">StreamExecutionEnvironment</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StreamExecutionEnvironment</span><span class="p">.</span><span class="na">getExecutionEnvironment</span><span class="p">();</span>
 
-        // Create a data stream from Kafka
-        DataStream&lt;String&gt; stream = env.addSource(new FlinkKafkaConsumer&lt;&gt;(&quot;orders&quot;, new SimpleStringSchema(), properties));
+<span class="w">        </span><span class="c1">// Create a data stream from Kafka</span>
+<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">addSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FlinkKafkaConsumer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleStringSchema</span><span class="p">(),</span><span class="w"> </span><span class="n">properties</span><span class="p">));</span>
 
-        // Process events in real-time
-        DataStream&lt;Tuple2&lt;String, Long&gt;&gt; processedStream = stream.map(new MapFunction&lt;String, Tuple2&lt;String, Long&gt;&gt;() {
-            @Override
-            public Tuple2&lt;String, Long&gt; map(String event) throws Exception {
-                // Process the event
-                return new Tuple2&lt;&gt;(&quot;order_placed&quot;, 1L);
-            }
-        });
+<span class="w">        </span><span class="c1">// Process events in real-time</span>
+<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">processedStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nd">@Override</span>
+<span class="w">            </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Process the event</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;order_placed&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1L</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">});</span>
 
-        // Print the processed stream
-        processedStream.print();
+<span class="w">        </span><span class="c1">// Print the processed stream</span>
+<span class="w">        </span><span class="n">processedStream</span><span class="p">.</span><span class="na">print</span><span class="p">();</span>
 
-        // Execute the job
-        env.execute();
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="c1">// Execute the job</span>
+<span class="w">        </span><span class="n">env</span><span class="p">.</span><span class="na">execute</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we create a Flink execution environment, and use it to process events from Kafka in real-time. We can then use the processed events to update analytics data, such as order counts and revenue totals.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing EDA, there are several common problems that can arise. Here are some solutions to these problems:
@@ -224,21 +225,22 @@ public class RealTimeAnalytics {
 * <strong>Event ordering</strong>: To ensure event ordering, we can use a timestamp or sequence number to order events, and use a buffer or queue to handle out-of-order events.
 * <strong>Event processing failures</strong>: To handle event processing failures, we can use a retry mechanism or a dead-letter queue to handle failed events.</p>
 <p>For example, we can use Apache ZooKeeper to handle event duplication and ordering. ZooKeeper provides a distributed coordination system that can be used to store and retrieve event metadata, such as event IDs and timestamps. Here is an example of how we can use ZooKeeper to handle event duplication:</p>
-<pre><code class="language-python">from kazoo.client import KazooClient
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kazoo.client</span> <span class="kn">import</span> <span class="n">KazooClient</span>
 
-# Create a ZooKeeper client
-zk = KazooClient(hosts='localhost:2181')
+<span class="c1"># Create a ZooKeeper client</span>
+<span class="n">zk</span> <span class="o">=</span> <span class="n">KazooClient</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="s1">&#39;localhost:2181&#39;</span><span class="p">)</span>
 
-# Create a node for the event
-zk.start()
-zk.create('/events/1', b'event_data')
+<span class="c1"># Create a node for the event</span>
+<span class="n">zk</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">zk</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;/events/1&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;event_data&#39;</span><span class="p">)</span>
 
-# Check if the event has been processed
-if zk.exists('/events/1'):
-    print('Event has been processed')
-else:
-    print('Event has not been processed')
-</code></pre>
+<span class="c1"># Check if the event has been processed</span>
+<span class="k">if</span> <span class="n">zk</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/events/1&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event has been processed&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event has not been processed&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we create a ZooKeeper client, and use it to create a node for the event. We can then use the node to check if the event has been processed, and handle the event accordingly.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To evaluate the performance of an EDA system, we can use a variety of metrics, such as:

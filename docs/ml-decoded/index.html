@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,99 +153,105 @@
 <h3 id="supervised-learning">Supervised Learning</h3>
 <p>Supervised learning algorithms learn from labeled data, where each example is associated with a target output. The goal is to learn a mapping between input data and output labels, so the algorithm can make predictions on new, unseen data. Common supervised learning algorithms include linear regression, decision trees, and support vector machines.</p>
 <p>For example, let's consider a simple linear regression model implemented in Python using the scikit-learn library:</p>
-<pre><code class="language-python">from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Generate sample data
-X = np.array([1, 2, 3, 4, 5]).reshape((-1, 1))
-y = np.array([2, 3, 5, 7, 11])
+<span class="c1"># Generate sample data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
 
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+<span class="c1"># Split data into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Create and train a linear regression model
-model = LinearRegression()
-model.fit(X_train, y_train)
+<span class="c1"># Create and train a linear regression model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Make predictions on the testing set
-y_pred = model.predict(X_test)
-print(y_pred)
-</code></pre>
+<span class="c1"># Make predictions on the testing set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a linear regression model on a sample dataset and makes predictions on a testing set. The <code>LinearRegression</code> class from scikit-learn provides a simple and efficient way to implement linear regression.</p>
 <h3 id="unsupervised-learning">Unsupervised Learning</h3>
 <p>Unsupervised learning algorithms learn from unlabeled data, where the goal is to discover patterns, relationships, or groupings in the data. Common unsupervised learning algorithms include k-means clustering, hierarchical clustering, and principal component analysis.</p>
 <p>For instance, let's consider a k-means clustering model implemented in Python using the scikit-learn library:</p>
-<pre><code class="language-python">from sklearn.cluster import KMeans
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Generate sample data
-X = np.array([[1, 2], [1, 4], [1, 0], [10, 2], [10, 4], [10, 0]])
+<span class="c1"># Generate sample data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 
-# Create and train a k-means clustering model
-model = KMeans(n_clusters=2)
-model.fit(X)
+<span class="c1"># Create and train a k-means clustering model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-# Print the cluster labels
-print(model.labels_)
-</code></pre>
+<span class="c1"># Print the cluster labels</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a k-means clustering model on a sample dataset and prints the cluster labels. The <code>KMeans</code> class from scikit-learn provides a simple and efficient way to implement k-means clustering.</p>
 <h3 id="reinforcement-learning">Reinforcement Learning</h3>
 <p>Reinforcement learning algorithms learn from interactions with an environment, where the goal is to maximize a reward signal. Common reinforcement learning algorithms include Q-learning, SARSA, and deep reinforcement learning.</p>
 <p>For example, let's consider a Q-learning model implemented in Python using the Gym library:</p>
-<pre><code class="language-python">import gym
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Create a CartPole environment
-env = gym.make('CartPole-v1')
+<span class="c1"># Create a CartPole environment</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
 
-# Initialize the Q-table
-q_table = np.zeros((env.observation_space.n, env.action_space.n))
+<span class="c1"># Initialize the Q-table</span>
+<span class="n">q_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
 
-# Define the learning rate and discount factor
-alpha = 0.1
-gamma = 0.9
+<span class="c1"># Define the learning rate and discount factor</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.9</span>
 
-# Train the Q-learning model
-for episode in range(1000):
-    state = env.reset()
-    done = False
-    rewards = 0.0
-    while not done:
-        action = np.argmax(q_table[state])
-        next_state, reward, done, _ = env.step(action)
-        q_table[state, action] += alpha * (reward + gamma * np.max(q_table[next_state]) - q_table[state, action])
-        state = next_state
-        rewards += reward
-    print(f'Episode {episode+1}, rewards: {rewards}')
-</code></pre>
+<span class="c1"># Train the Q-learning model</span>
+<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">])</span>
+        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">+=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">next_state</span><span class="p">])</span> <span class="o">-</span> <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">])</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, rewards: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a Q-learning model on a CartPole environment and prints the rewards for each episode. The <code>gym</code> library provides a simple and efficient way to implement reinforcement learning environments.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Machine learning algorithms can be prone to common problems such as overfitting, underfitting, and imbalanced datasets. Here are some specific solutions to these problems:</p>
 <ul>
 <li><strong>Overfitting</strong>: Regularization techniques such as L1 and L2 regularization can help prevent overfitting. For example, the <code>Ridge</code> class from scikit-learn provides a simple way to implement L2 regularization:</li>
 </ul>
-<pre><code class="language-python">from sklearn.linear_model import Ridge
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 
-# Create a Ridge regression model with L2 regularization
-model = Ridge(alpha=0.1)
-</code></pre>
+<span class="c1"># Create a Ridge regression model with L2 regularization</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div>
+
 <ul>
 <li><strong>Underfitting</strong>: Increasing the model complexity or using ensemble methods can help prevent underfitting. For example, the <code>RandomForestRegressor</code> class from scikit-learn provides a simple way to implement ensemble learning:</li>
 </ul>
-<pre><code class="language-python">from sklearn.ensemble import RandomForestRegressor
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
-# Create a random forest regression model
-model = RandomForestRegressor(n_estimators=100)
-</code></pre>
+<span class="c1"># Create a random forest regression model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
 <ul>
 <li><strong>Imbalanced datasets</strong>: Techniques such as oversampling the minority class, undersampling the majority class, or using class weights can help handle imbalanced datasets. For example, the <code>ClassWeight</code> class from scikit-learn provides a simple way to implement class weights:</li>
 </ul>
-<pre><code class="language-python">from sklearn.utils.class_weight import compute_class_weight
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.utils.class_weight</span> <span class="kn">import</span> <span class="n">compute_class_weight</span>
 
-# Compute the class weights
-class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y), y=y)
-</code></pre>
+<span class="c1"># Compute the class weights</span>
+<span class="n">class_weights</span> <span class="o">=</span> <span class="n">compute_class_weight</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Machine learning algorithms have numerous real-world applications, including:</p>
 <ul>

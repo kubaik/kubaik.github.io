@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,15 +166,16 @@
 4. <strong>Analyze data</strong>: Analyze the data using tools like Apache Spark, Apache Hive, or Databricks, and gain insights from the data.</p>
 <h3 id="example-code-ingesting-data-into-delta-lake">Example Code: Ingesting Data into Delta Lake</h3>
 <p>Here is an example of how to ingest data into Delta Lake using Apache Spark:</p>
-<pre><code class="language-python">from pyspark.sql import SparkSession
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Ingest data from a CSV file into Delta Lake
-df = spark.read.csv(&quot;data.csv&quot;, header=True, inferSchema=True)
-df.write.format(&quot;delta&quot;).save(&quot;delta-lake-path&quot;)
-</code></pre>
+<span class="c1"># Ingest data from a CSV file into Delta Lake</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;delta-lake-path&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code creates a SparkSession, reads data from a CSV file, and writes it to Delta Lake using the <code>delta</code> format.</p>
 <h2 id="performance-and-scalability">Performance and Scalability</h2>
 <p>Delta Lake is designed to handle large-scale data lakes with ease, providing high performance and scalability. According to benchmarks, Delta Lake can achieve the following performance metrics:
@@ -185,15 +185,16 @@ df.write.format(&quot;delta&quot;).save(&quot;delta-lake-path&quot;)
 <p>Delta Lake also provides automatic scaling, which allows users to scale up or down to handle changing workloads. For example, a company like Uber can use Delta Lake to handle large-scale data lakes and scale up or down to handle changing workloads during peak hours.</p>
 <h3 id="example-code-querying-data-in-delta-lake">Example Code: Querying Data in Delta Lake</h3>
 <p>Here is an example of how to query data in Delta Lake using Apache Spark:</p>
-<pre><code class="language-python">from pyspark.sql import SparkSession
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Query data in Delta Lake
-df = spark.read.format(&quot;delta&quot;).load(&quot;delta-lake-path&quot;)
-df.filter(df[&quot;column&quot;] &gt; 10).show()
-</code></pre>
+<span class="c1"># Query data in Delta Lake</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;delta-lake-path&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;column&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code creates a SparkSession, reads data from Delta Lake, and queries the data using the <code>filter</code> method.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem with building a data lakehouse is handling data quality issues. Delta Lake provides a number of features to help handle data quality issues, including:
@@ -204,16 +205,17 @@ df.filter(df[&quot;column&quot;] &gt; 10).show()
 * <strong>Auditing</strong>: Delta Lake provides auditing, which tracks all changes to the data and provides a complete audit trail.</p>
 <h3 id="example-code-handling-data-quality-issues">Example Code: Handling Data Quality Issues</h3>
 <p>Here is an example of how to handle data quality issues in Delta Lake using Apache Spark:</p>
-<pre><code class="language-python">from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Validate data in Delta Lake
-df = spark.read.format(&quot;delta&quot;).load(&quot;delta-lake-path&quot;)
-df.filter(col(&quot;column&quot;).isNull()).show()
-</code></pre>
+<span class="c1"># Validate data in Delta Lake</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;delta-lake-path&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;column&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isNull</span><span class="p">())</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code creates a SparkSession, reads data from Delta Lake, and validates the data using the <code>filter</code> method.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Delta Lake can be used in a wide range of use cases, including:

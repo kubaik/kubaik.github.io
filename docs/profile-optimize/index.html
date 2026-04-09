@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,35 +163,39 @@
 * <strong>Google Benchmark</strong>: A micro-benchmarking framework for C++.</p>
 <h3 id="example-using-gprof-to-profile-a-c-application">Example: Using gprof to Profile a C Application</h3>
 <p>Let's take a look at an example of using gprof to profile a simple C application. Suppose we have a program that calculates the sum of all numbers in an array:</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 
-int sum_array(int* arr, int size) {
-    int sum = 0;
-    for (int i = 0; i &lt; size; i++) {
-        sum += arr[i];
-    }
-    return sum;
-}
+<span class="kt">int</span><span class="w"> </span><span class="nf">sum_array</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
 
-int main() {
-    int arr[1000000];
-    for (int i = 0; i &lt; 1000000; i++) {
-        arr[i] = i;
-    }
-    int sum = sum_array(arr, 1000000);
-    printf(&quot;Sum: %d\n&quot;, sum);
-    return 0;
-}
-</code></pre>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">1000000</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum_array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="mi">1000000</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Sum: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>To profile this application using gprof, we would compile it with the <code>-pg</code> flag:</p>
-<pre><code class="language-bash">gcc -pg -o example example.c
-</code></pre>
+<div class="codehilite"><pre><span></span><code>gcc<span class="w"> </span>-pg<span class="w"> </span>-o<span class="w"> </span>example<span class="w"> </span>example.c
+</code></pre></div>
+
 <p>Then, we would run the application:</p>
-<pre><code class="language-bash">./example
-</code></pre>
+<div class="codehilite"><pre><span></span><code>./example
+</code></pre></div>
+
 <p>Finally, we would use gprof to analyze the profiling data:</p>
-<pre><code class="language-bash">gprof example gmon.out &gt; profile.txt
-</code></pre>
+<div class="codehilite"><pre><span></span><code>gprof<span class="w"> </span>example<span class="w"> </span>gmon.out<span class="w"> </span>&gt;<span class="w"> </span>profile.txt
+</code></pre></div>
+
 <p>The resulting profile.txt file would contain information about the execution time of each function, allowing us to identify performance bottlenecks.</p>
 <h2 id="benchmarking-frameworks-and-tools">Benchmarking Frameworks and Tools</h2>
 <p>Benchmarking frameworks and tools provide a structured way to measure the performance of applications. Some popular benchmarking frameworks include:
@@ -201,36 +204,39 @@ int main() {
 * <strong>Locust</strong>: A modern, Python-based load testing and benchmarking tool.</p>
 <h3 id="example-using-google-benchmark-to-benchmark-a-c-function">Example: Using Google Benchmark to Benchmark a C++ Function</h3>
 <p>Let's take a look at an example of using Google Benchmark to benchmark a simple C++ function. Suppose we have a function that calculates the sum of all numbers in a vector:</p>
-<pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
-#include &lt;vector&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;benchmark/benchmark.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
 
-int sum_vector(const std::vector&lt;int&gt;&amp; vec) {
-    int sum = 0;
-    for (int i = 0; i &lt; vec.size(); i++) {
-        sum += vec[i];
-    }
-    return sum;
-}
+<span class="kt">int</span><span class="w"> </span><span class="nf">sum_vector</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">vec</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
 
-static void BM_SumVector(benchmark::State&amp; state) {
-    std::vector&lt;int&gt; vec(1000000);
-    for (int i = 0; i &lt; 1000000; i++) {
-        vec[i] = i;
-    }
-    for (auto _ : state) {
-        sum_vector(vec);
-    }
-}
-BENCHMARK(BM_SumVector);
-BENCHMARK_MAIN();
-</code></pre>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">BM_SumVector</span><span class="p">(</span><span class="n">benchmark</span><span class="o">::</span><span class="n">State</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sum_vector</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="n">BENCHMARK</span><span class="p">(</span><span class="n">BM_SumVector</span><span class="p">);</span>
+<span class="n">BENCHMARK_MAIN</span><span class="p">();</span>
+</code></pre></div>
+
 <p>To benchmark this function using Google Benchmark, we would compile it with the following command:</p>
-<pre><code class="language-bash">g++ -std=c++11 -isystem ./include -I./ -pthread -c ./benchmark.cc
-g++ -std=c++11 -pthread -O3 ./benchmark.o -o benchmark
-</code></pre>
+<div class="codehilite"><pre><span></span><code>g++<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-isystem<span class="w"> </span>./include<span class="w"> </span>-I./<span class="w"> </span>-pthread<span class="w"> </span>-c<span class="w"> </span>./benchmark.cc
+g++<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-pthread<span class="w"> </span>-O3<span class="w"> </span>./benchmark.o<span class="w"> </span>-o<span class="w"> </span>benchmark
+</code></pre></div>
+
 <p>Then, we would run the benchmark:</p>
-<pre><code class="language-bash">./benchmark
-</code></pre>
+<div class="codehilite"><pre><span></span><code>./benchmark
+</code></pre></div>
+
 <p>The resulting output would contain information about the execution time of the <code>sum_vector</code> function, allowing us to compare its performance to other implementations.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When profiling and benchmarking, developers often encounter common problems that can be solved with specific solutions:

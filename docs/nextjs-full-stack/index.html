@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,44 +158,47 @@
 * <strong>Database Integration</strong>: Next.js can be integrated with various databases, including relational databases like MySQL and PostgreSQL, as well as NoSQL databases like MongoDB.</p>
 <h2 id="setting-up-a-full-stack-nextjs-project">Setting Up a Full-Stack Next.js Project</h2>
 <p>To get started with full-stack development using Next.js, you'll need to set up a new project. Here's an example of how to create a new Next.js project using the <code>create-next-app</code> command:</p>
-<pre><code class="language-bash">npx create-next-app my-next-app
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-next-app
+</code></pre></div>
+
 <p>This will create a new directory called <code>my-next-app</code> with a basic Next.js project setup.</p>
 <h3 id="creating-api-routes">Creating API Routes</h3>
 <p>To create an API route in Next.js, you'll need to create a new file in the <code>pages/api</code> directory. For example, let's create a new file called <code>users.js</code> in the <code>pages/api</code> directory:</p>
-<pre><code class="language-javascript">// pages/api/users.js
-import { NextApiRequest, NextApiResponse } from 'next';
+<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/users.js</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="p">;</span>
 
-const users = [
-  { id: 1, name: 'John Doe' },
-  { id: 2, name: 'Jane Doe' },
-];
+<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
+<span class="p">];</span>
 
-const handler = (req: NextApiRequest, res: NextApiResponse) =&gt; {
-  if (req.method === 'GET') {
-    return res.json(users);
-  } else {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">405</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Method not allowed&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
 
-export default handler;
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">handler</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This API route handles GET requests and returns a JSON response with a list of users.</p>
 <h2 id="integrating-with-databases">Integrating with Databases</h2>
 <p>To integrate your Next.js application with a database, you'll need to install a database driver and import it in your API routes. For example, let's use the <code>mysql2</code> driver to connect to a MySQL database:</p>
-<pre><code class="language-javascript">// pages/api/users.js
-import mysql from 'mysql2/promise';
+<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/users.js</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">mysql</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;mysql2/promise&#39;</span><span class="p">;</span>
 
-const db = await mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'mydatabase',
-});
+<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">mysql</span><span class="p">.</span><span class="nx">createConnection</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;root&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">database</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;mydatabase&#39;</span><span class="p">,</span>
+<span class="p">});</span>
 
-const users = await db.execute('SELECT * FROM users');
-</code></pre>
+<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM users&#39;</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code connects to a MySQL database and executes a query to retrieve a list of users.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>Next.js provides excellent performance out of the box, but you can further optimize your application by using techniques like caching and code splitting. Here are some performance benchmarks for a Next.js application:

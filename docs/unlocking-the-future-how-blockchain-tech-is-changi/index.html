@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -166,19 +165,19 @@
 <li><strong>Addition to Blockchain:</strong> Validated block is added to the chain, becoming a permanent record.</li>
 </ol>
 <p><strong>Sample Code Snippet:</strong></p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-# Simplified example of adding a block to a blockchain
-block = {
-    'index': len(chain) + 1,
-    'timestamp': time(),
-    'transactions': current_transactions,
-    'previous_hash': hash(chain[-1]),
-    'nonce': proof_of_work()
-}
-chain.append(block)
-</code></pre>
+<span class="c1"># Simplified example of adding a block to a blockchain</span>
+<span class="n">block</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">(),</span>
+    <span class="s1">&#39;transactions&#39;</span><span class="p">:</span> <span class="n">current_transactions</span><span class="p">,</span>
+    <span class="s1">&#39;previous_hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">(</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="s1">&#39;nonce&#39;</span><span class="p">:</span> <span class="n">proof_of_work</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</code></pre></div>
+
 <p><em>(Note: This is a simplified illustration; real implementations involve complex cryptography and consensus algorithms.)</em></p>
 <hr />
 <h2 id="practical-applications-of-blockchain-technology">Practical Applications of Blockchain Technology</h2>

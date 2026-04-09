@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -189,102 +188,106 @@
 <p>Now that you have your development environment set up, let’s build a simple Flutter application. This app will display a list of items and allow users to add new items.</p>
 <h3 id="step-1-create-a-new-flutter-project">Step 1: Create a New Flutter Project</h3>
 <p>Run the following command in your terminal:</p>
-<pre><code class="language-bash">flutter create shopping_list
-</code></pre>
+<div class="codehilite"><pre><span></span><code>flutter<span class="w"> </span>create<span class="w"> </span>shopping_list
+</code></pre></div>
+
 <p>Navigate to the project directory:</p>
-<pre><code class="language-bash">cd shopping_list
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>shopping_list
+</code></pre></div>
+
 <h3 id="step-2-update-the-pubspecyaml">Step 2: Update the <code>pubspec.yaml</code></h3>
 <p>Add the <code>provider</code> package for state management. Open <code>pubspec.yaml</code> and add the following under dependencies:</p>
-<pre><code class="language-yaml">dependencies:
-  flutter:
-    sdk: flutter
-  provider: ^6.0.0
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">flutter</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sdk</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flutter</span>
+<span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^6.0.0</span>
+</code></pre></div>
+
 <p>Run <code>flutter pub get</code> to install the new package.</p>
 <h3 id="step-3-building-the-ui">Step 3: Building the UI</h3>
 <p>Open <code>lib/main.dart</code> and replace its contents with the following code:</p>
-<pre><code class="language-dart">import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
 
-void main() {
-  runApp(MyApp());
-}
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+<span class="p">}</span>
 
-class Item {
-  String name;
-  Item(this.name);
-}
+<span class="kd">class</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">  </span><span class="n">Item</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
 
-class ItemProvider with ChangeNotifier {
-  List&lt;Item&gt; _items = [];
+<span class="kd">class</span><span class="w"> </span><span class="nc">ItemProvider</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="n">ChangeNotifier</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
 
-  List&lt;Item&gt; get items =&gt; _items;
+<span class="w">  </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">get</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_items</span><span class="p">;</span>
 
-  void addItem(String name) {
-    _items.add(Item(name));
-    notifyListeners();
-  }
-}
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">addItem</span><span class="p">(</span><span class="kt">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">_items</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+<span class="w">    </span><span class="n">notifyListeners</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) =&gt; ItemProvider(),
-      child: MaterialApp(
-        home: ShoppingListScreen(),
-      ),
-    );
-  }
-}
+<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ChangeNotifierProvider</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">create:</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ItemProvider</span><span class="p">(),</span>
+<span class="w">      </span><span class="nl">child:</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
+<span class="w">        </span><span class="nl">home:</span><span class="w"> </span><span class="n">ShoppingListScreen</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-class ShoppingListScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final itemProvider = Provider.of&lt;ItemProvider&gt;(context);
-    final TextEditingController controller = TextEditingController();
+<span class="kd">class</span><span class="w"> </span><span class="nc">ShoppingListScreen</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">itemProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">ItemProvider</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">TextEditingController</span><span class="w"> </span><span class="n">controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextEditingController</span><span class="p">();</span>
 
-    return Scaffold(
-      appBar: AppBar(title: Text('Shopping List')),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: itemProvider.items.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(itemProvider.items[index].name),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: controller,
-                    decoration: InputDecoration(labelText: 'Add Item'),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    itemProvider.addItem(controller.text);
-                    controller.clear();
-                  },
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-</code></pre>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Shopping List&#39;</span><span class="p">)),</span>
+<span class="w">      </span><span class="nl">body:</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span>
+<span class="w">        </span><span class="nl">children:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="n">Expanded</span><span class="p">(</span>
+<span class="w">            </span><span class="nl">child:</span><span class="w"> </span><span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
+<span class="w">              </span><span class="nl">itemCount:</span><span class="w"> </span><span class="n">itemProvider</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
+<span class="w">              </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">ListTile</span><span class="p">(</span>
+<span class="w">                  </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">itemProvider</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">name</span><span class="p">),</span>
+<span class="w">                </span><span class="p">);</span>
+<span class="w">              </span><span class="p">},</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">          </span><span class="p">),</span>
+<span class="w">          </span><span class="n">Padding</span><span class="p">(</span>
+<span class="w">            </span><span class="nl">padding:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">8.0</span><span class="p">),</span>
+<span class="w">            </span><span class="nl">child:</span><span class="w"> </span><span class="n">Row</span><span class="p">(</span>
+<span class="w">              </span><span class="nl">children:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="n">Expanded</span><span class="p">(</span>
+<span class="w">                  </span><span class="nl">child:</span><span class="w"> </span><span class="n">TextField</span><span class="p">(</span>
+<span class="w">                    </span><span class="nl">controller:</span><span class="w"> </span><span class="n">controller</span><span class="p">,</span>
+<span class="w">                    </span><span class="nl">decoration:</span><span class="w"> </span><span class="n">InputDecoration</span><span class="p">(</span><span class="nl">labelText:</span><span class="w"> </span><span class="s1">&#39;Add Item&#39;</span><span class="p">),</span>
+<span class="w">                  </span><span class="p">),</span>
+<span class="w">                </span><span class="p">),</span>
+<span class="w">                </span><span class="n">IconButton</span><span class="p">(</span>
+<span class="w">                  </span><span class="nl">icon:</span><span class="w"> </span><span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">add</span><span class="p">),</span>
+<span class="w">                  </span><span class="nl">onPressed:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">itemProvider</span><span class="p">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">text</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">controller</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                </span><span class="p">)</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">          </span><span class="p">),</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">      </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="explanation-of-code">Explanation of Code</h3>
 <ul>
 <li><strong>Provider Setup</strong>: We use the <code>provider</code> package to manage the state of the shopping list.</li>
@@ -294,8 +297,9 @@ class ShoppingListScreen extends StatelessWidget {
 </ul>
 <h3 id="step-4-running-the-app">Step 4: Running the App</h3>
 <p>Run the app with the following command:</p>
-<pre><code class="language-bash">flutter run
-</code></pre>
+<div class="codehilite"><pre><span></span><code>flutter<span class="w"> </span>run
+</code></pre></div>
+
 <p>You should now see a functional shopping list app where you can add items dynamically. </p>
 <h2 id="performance-considerations">Performance Considerations</h2>
 <p>When developing with Flutter, performance is often a key concern. Here are a few considerations and metrics:</p>
@@ -314,8 +318,9 @@ class ShoppingListScreen extends StatelessWidget {
 <h3 id="problem-1-app-size-too-large">Problem 1: App Size Too Large</h3>
 <p><strong>Solution</strong>: 
 - Use the <code>--release</code> flag when building your app to reduce the size. This enables AOT compilation and removes unnecessary debug information.</p>
-<pre><code class="language-bash">flutter build apk --release
-</code></pre>
+<div class="codehilite"><pre><span></span><code>flutter<span class="w"> </span>build<span class="w"> </span>apk<span class="w"> </span>--release
+</code></pre></div>
+
 <ul>
 <li>Employ tree shaking to remove unused code.</li>
 </ul>
@@ -331,63 +336,66 @@ class ShoppingListScreen extends StatelessWidget {
 <h2 id="advanced-flutter-features">Advanced Flutter Features</h2>
 <h3 id="custom-animations">Custom Animations</h3>
 <p>Animations can enhance user experience significantly. Flutter provides various animation APIs. Here's a simple example of a fade animation:</p>
-<pre><code class="language-dart">import 'package:flutter/material.dart';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
 
-class FadeInWidget extends StatefulWidget {
-  @override
-  _FadeInWidgetState createState() =&gt; _FadeInWidgetState();
-}
+<span class="kd">class</span><span class="w"> </span><span class="nc">FadeInWidget</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="n">_FadeInWidgetState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_FadeInWidgetState</span><span class="p">();</span>
+<span class="p">}</span>
 
-class _FadeInWidgetState extends State&lt;FadeInWidget&gt; with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation&lt;double&gt; _animation;
+<span class="kd">class</span><span class="w"> </span><span class="nc">_FadeInWidgetState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">FadeInWidget</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="n">SingleTickerProviderStateMixin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">late</span><span class="w"> </span><span class="n">AnimationController</span><span class="w"> </span><span class="n">_controller</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">late</span><span class="w"> </span><span class="n">Animation</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_animation</span><span class="p">;</span>
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..forward();
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">initState</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">.</span><span class="n">initState</span><span class="p">();</span>
+<span class="w">    </span><span class="n">_controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AnimationController</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">duration:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span><span class="w"> </span><span class="m">2</span><span class="p">),</span>
+<span class="w">      </span><span class="nl">vsync:</span><span class="w"> </span><span class="k">this</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)..</span><span class="n">forward</span><span class="p">();</span>
 
-    _animation = Tween&lt;double&gt;(begin: 0, end: 1).animate(_controller);
-  }
+<span class="w">    </span><span class="n">_animation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tween</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">begin:</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nl">end:</span><span class="w"> </span><span class="m">1</span><span class="p">).</span><span class="n">animate</span><span class="p">(</span><span class="n">_controller</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: const Text('Hello Flutter!'),
-    );
-  }
-}
-</code></pre>
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">FadeTransition</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">opacity:</span><span class="w"> </span><span class="n">_animation</span><span class="p">,</span>
+<span class="w">      </span><span class="nl">child:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Hello Flutter!&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="networking-and-apis">Networking and APIs</h3>
 <p>To fetch data from an API, use the <code>http</code> package. Here’s an example of making a GET request:</p>
 <ol>
 <li>Add the <code>http</code> package to your <code>pubspec.yaml</code>:</li>
 </ol>
-<pre><code class="language-yaml">dependencies:
-  http: ^0.13.3
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^0.13.3</span>
+</code></pre></div>
+
 <ol>
 <li>Use the following code to fetch data:</li>
 </ol>
-<pre><code class="language-dart">import 'package:http/http.dart' as http;
-import 'dart:convert';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:http/http.dart&#39;</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">http</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;dart:convert&#39;</span><span class="p">;</span>
 
-class ApiService {
-  Future&lt;List&lt;dynamic&gt;&gt; fetchItems() async {
-    final response = await http.get(Uri.parse('https://api.example.com/items'));
+<span class="kd">class</span><span class="w"> </span><span class="nc">ApiService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Future</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">dynamic</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">fetchItems</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="n">Uri</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/items&#39;</span><span class="p">));</span>
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load items');
-    }
-  }
-}
-</code></pre>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">statusCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="s1">&#39;Failed to load items&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example fetches a list of items from a given API and decodes the JSON response. </p>
 <h3 id="firebase-integration">Firebase Integration</h3>
 <p>Integrating Firebase can add powerful features such as authentication and real-time databases. Here's how to set up Firebase for a Flutter app:</p>
@@ -396,29 +404,32 @@ class ApiService {
 <li>Create a new project and register your app (iOS/Android).</li>
 <li>Add the necessary dependencies to <code>pubspec.yaml</code>:</li>
 </ol>
-<pre><code class="language-yaml">dependencies:
-  firebase_core: ^2.0.0
-  firebase_auth: ^3.0.0
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">firebase_core</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^2.0.0</span>
+<span class="w">  </span><span class="nt">firebase_auth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^3.0.0</span>
+</code></pre></div>
+
 <ol>
 <li>Initialize Firebase in your app:</li>
 </ol>
-<pre><code class="language-dart">import 'package:firebase_core/firebase_core.dart';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:firebase_core/firebase_core.dart&#39;</span><span class="p">;</span>
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-</code></pre>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">await</span><span class="w"> </span><span class="n">Firebase</span><span class="p">.</span><span class="n">initializeApp</span><span class="p">();</span>
+<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <ol>
 <li>Implement authentication:</li>
 </ol>
-<pre><code class="language-dart">final User? user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
-  email: 'test@example.com',
-  password: 'password123',
-)).user;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">final</span><span class="w"> </span><span class="n">User</span><span class="o">?</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kd">await</span><span class="w"> </span><span class="n">FirebaseAuth</span><span class="p">.</span><span class="n">instance</span><span class="p">.</span><span class="n">signInWithEmailAndPassword</span><span class="p">(</span>
+<span class="w">  </span><span class="nl">email:</span><span class="w"> </span><span class="s1">&#39;test@example.com&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nl">password:</span><span class="w"> </span><span class="s1">&#39;password123&#39;</span><span class="p">,</span>
+<span class="p">)).</span><span class="n">user</span><span class="p">;</span>
+</code></pre></div>
+
 <h2 id="conclusion">Conclusion</h2>
 <p>Flutter mobile development offers a powerful and efficient way to build cross-platform applications. By leveraging its features, you can create high-performance apps with a single codebase.</p>
 <h3 id="actionable-next-steps">Actionable Next Steps</h3>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,45 +164,46 @@
 4. The block is then added to the blockchain, which is updated on each node in the network.</p>
 <h3 id="implementing-a-simple-blockchain-in-python">Implementing a Simple Blockchain in Python</h3>
 <p>Here's an example of a basic blockchain implemented in Python:</p>
-<pre><code class="language-python">import hashlib
-import time
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-class Block:
-    def __init__(self, index, previous_hash, timestamp, data):
-        self.index = index
-        self.previous_hash = previous_hash
-        self.timestamp = timestamp
-        self.data = data
-        self.hash = self.calculate_hash()
+<span class="k">class</span> <span class="nc">Block</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="n">previous_hash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
 
-    def calculate_hash(self):
-        data_string = str(self.index) + self.previous_hash + str(self.timestamp) + str(self.data)
-        return hashlib.sha256(data_string.encode()).hexdigest()
+    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-class Blockchain:
-    def __init__(self):
-        self.chain = [self.create_genesis_block()]
+<span class="k">class</span> <span class="nc">Blockchain</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">create_genesis_block</span><span class="p">()]</span>
 
-    def create_genesis_block(self):
-        return Block(0, &quot;0&quot;, int(time.time()), &quot;Genesis Block&quot;)
+    <span class="k">def</span> <span class="nf">create_genesis_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Block</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Genesis Block&quot;</span><span class="p">)</span>
 
-    def get_latest_block(self):
-        return self.chain[-1]
+    <span class="k">def</span> <span class="nf">get_latest_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    def add_block(self, new_block):
-        new_block.previous_hash = self.get_latest_block().hash
-        new_block.hash = new_block.calculate_hash()
-        self.chain.append(new_block)
+    <span class="k">def</span> <span class="nf">add_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_block</span><span class="p">):</span>
+        <span class="n">new_block</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span>
+        <span class="n">new_block</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">new_block</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_block</span><span class="p">)</span>
 
-# Create a new blockchain and add some blocks
-my_blockchain = Blockchain()
-my_blockchain.add_block(Block(1, my_blockchain.get_latest_block().hash, int(time.time()), &quot;Block 1&quot;))
-my_blockchain.add_block(Block(2, my_blockchain.get_latest_block().hash, int(time.time()), &quot;Block 2&quot;))
+<span class="c1"># Create a new blockchain and add some blocks</span>
+<span class="n">my_blockchain</span> <span class="o">=</span> <span class="n">Blockchain</span><span class="p">()</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 1&quot;</span><span class="p">))</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 2&quot;</span><span class="p">))</span>
 
-# Print the blockchain
-for block in my_blockchain.chain:
-    print(f&quot;Block {block.index} - Hash: {block.hash}&quot;)
-</code></pre>
+<span class="c1"># Print the blockchain</span>
+<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">chain</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2"> - Hash: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example demonstrates a basic blockchain with a <code>Block</code> class and a <code>Blockchain</code> class. The <code>Block</code> class represents an individual block, with properties like <code>index</code>, <code>previous_hash</code>, <code>timestamp</code>, and <code>data</code>. The <code>Blockchain</code> class represents the entire blockchain, with methods for creating a genesis block, getting the latest block, and adding new blocks.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Blockchain technology has a wide range of real-world applications, including:
@@ -212,66 +212,68 @@ for block in my_blockchain.chain:
 * <strong>Identity verification</strong>: Estonia, a Baltic country, is using blockchain to secure citizens' identity and healthcare data.</p>
 <h3 id="implementing-a-smart-contract-on-ethereum">Implementing a Smart Contract on Ethereum</h3>
 <p>Here's an example of a simple smart contract implemented in Solidity, the programming language used for Ethereum:</p>
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract SimpleAuction {
-    address public owner;
-    uint public auctionEnd;
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleAuction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">auctionEnd</span><span class="p">;</span>
 
-    constructor() {
-        owner = msg.sender;
-        auctionEnd = block.timestamp + 30 minutes;
-    }
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
+<span class="w">        </span>auctionEnd<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">30</span><span class="w"> </span>minutes<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function bid() public payable {
-        require(msg.value &gt; 0, &quot;Bid must be greater than 0&quot;);
-        require(block.timestamp &lt; auctionEnd, &quot;Auction has ended&quot;);
-    }
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Bid must be greater than 0&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>auctionEnd<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Auction has ended&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function endAuction() public {
-        require(msg.sender == owner, &quot;Only the owner can end the auction&quot;);
-        require(block.timestamp &gt;= auctionEnd, &quot;Auction has not ended&quot;);
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">endAuction</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can end the auction&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>auctionEnd<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Auction has not ended&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This example demonstrates a basic smart contract for an auction, with functions for bidding and ending the auction.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem in blockchain development is <strong>scalability</strong>. As the number of users and transactions increases, the blockchain network can become congested, leading to slow transaction times and high fees. To address this issue, solutions like <strong>sharding</strong> and <strong>off-chain transactions</strong> can be implemented. Sharding involves dividing the blockchain into smaller, parallel chains, while off-chain transactions involve processing transactions outside of the main blockchain and then settling them on the blockchain.</p>
 <h3 id="optimizing-blockchain-performance-with-sharding">Optimizing Blockchain Performance with Sharding</h3>
 <p>Here's an example of how sharding can be implemented in a blockchain:</p>
-<pre><code class="language-python">import hashlib
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
 
-class Shard:
-    def __init__(self, id):
-        self.id = id
-        self.chain = []
+<span class="k">class</span> <span class="nc">Shard</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="p">[]</span>
 
-    def add_block(self, block):
-        self.chain.append(block)
+    <span class="k">def</span> <span class="nf">add_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-class Blockchain:
-    def __init__(self, num_shards):
-        self.shards = [Shard(i) for i in range(num_shards)]
+<span class="k">class</span> <span class="nc">Blockchain</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_shards</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shards</span> <span class="o">=</span> <span class="p">[</span><span class="n">Shard</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_shards</span><span class="p">)]</span>
 
-    def add_block(self, block):
-        shard_id = int(block.data) % len(self.shards)
-        self.shards[shard_id].add_block(block)
+    <span class="k">def</span> <span class="nf">add_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+        <span class="n">shard_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shards</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="n">shard_id</span><span class="p">]</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-# Create a new blockchain with 4 shards
-my_blockchain = Blockchain(4)
+<span class="c1"># Create a new blockchain with 4 shards</span>
+<span class="n">my_blockchain</span> <span class="o">=</span> <span class="n">Blockchain</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-# Add some blocks to the blockchain
-my_blockchain.add_block(Block(1, my_blockchain.shards[0].chain[-1].hash if my_blockchain.shards[0].chain else &quot;0&quot;, int(time.time()), &quot;Block 1&quot;))
-my_blockchain.add_block(Block(2, my_blockchain.shards[1].chain[-1].hash if my_blockchain.shards[1].chain else &quot;0&quot;, int(time.time()), &quot;Block 2&quot;))
-my_blockchain.add_block(Block(3, my_blockchain.shards[2].chain[-1].hash if my_blockchain.shards[2].chain else &quot;0&quot;, int(time.time()), &quot;Block 3&quot;))
-my_blockchain.add_block(Block(4, my_blockchain.shards[3].chain[-1].hash if my_blockchain.shards[3].chain else &quot;0&quot;, int(time.time()), &quot;Block 4&quot;))
+<span class="c1"># Add some blocks to the blockchain</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span> <span class="k">if</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 1&quot;</span><span class="p">))</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span> <span class="k">if</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 2&quot;</span><span class="p">))</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span> <span class="k">if</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 3&quot;</span><span class="p">))</span>
+<span class="n">my_blockchain</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span> <span class="k">if</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">chain</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s2">&quot;Block 4&quot;</span><span class="p">))</span>
 
-# Print the blockchain
-for shard in my_blockchain.shards:
-    print(f&quot;Shard {shard.id}:&quot;)
-    for block in shard.chain:
-        print(f&quot;Block {block.index} - Hash: {block.hash}&quot;)
-</code></pre>
+<span class="c1"># Print the blockchain</span>
+<span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="n">my_blockchain</span><span class="o">.</span><span class="n">shards</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shard </span><span class="si">{</span><span class="n">shard</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">shard</span><span class="o">.</span><span class="n">chain</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2"> - Hash: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example demonstrates a basic sharded blockchain, with multiple parallel chains processing transactions concurrently.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms are available for building and deploying blockchain applications, including:

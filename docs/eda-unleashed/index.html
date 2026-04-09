@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -171,34 +170,36 @@
 | Google Cloud Pub/Sub | $0.40 per 100,000 messages | 10,000+ messages/sec | 10+ GB |</p>
 <h2 id="practical-implementation">Practical Implementation</h2>
 <p>Let's consider a real-world example of an e-commerce platform that uses EDA to process orders. When a user places an order, the web application sends an "order placed" event to the event broker (Apache Kafka). The event contains the order details, such as the user ID, order ID, and product IDs.</p>
-<pre><code class="language-python"># Producer code (Python)
-from kafka import KafkaProducer
+<div class="codehilite"><pre><span></span><code><span class="c1"># Producer code (Python)</span>
+<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
 
-# Create a Kafka producer
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+<span class="c1"># Create a Kafka producer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
 
-# Send an &quot;order placed&quot; event
-event = {
-    'user_id': 123,
-    'order_id': 456,
-    'product_ids': [789, 1011]
-}
-producer.send('orders', value=event)
-</code></pre>
+<span class="c1"># Send an &quot;order placed&quot; event</span>
+<span class="n">event</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">456</span><span class="p">,</span>
+    <span class="s1">&#39;product_ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">789</span><span class="p">,</span> <span class="mi">1011</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
+</code></pre></div>
+
 <p>The event is then consumed by a notification service, which sends a confirmation email to the user.</p>
-<pre><code class="language-python"># Consumer code (Python)
-from kafka import KafkaConsumer
+<div class="codehilite"><pre><span></span><code><span class="c1"># Consumer code (Python)</span>
+<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
 
-# Create a Kafka consumer
-consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
+<span class="c1"># Create a Kafka consumer</span>
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
 
-# Process events
-for event in consumer:
-    user_id = event.value['user_id']
-    order_id = event.value['order_id']
-    # Send a confirmation email
-    print(f'Order {order_id} placed by user {user_id}')
-</code></pre>
+<span class="c1"># Process events</span>
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+    <span class="n">order_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span>
+    <span class="c1"># Send a confirmation email</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Order </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s1"> placed by user </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="challenges-and-solutions">Challenges and Solutions</h2>
 <p>One common challenge in EDA is <strong>event ordering</strong>, where events may be processed out of order. To solve this, we can use a <strong>timestamp</strong> field in the event payload and have the consumer buffer events until they can be processed in the correct order.</p>
 <p>Another challenge is <strong>event duplication</strong>, where the same event is processed multiple times. To solve this, we can use a <strong>unique identifier</strong> field in the event payload and have the consumer keep track of processed events to avoid duplicates.</p>

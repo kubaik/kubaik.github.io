@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,73 +152,78 @@
 <p>Deploying AI models is a complex process that requires careful consideration of several factors, including model architecture, data preprocessing, and infrastructure requirements. A well-designed deployment strategy can significantly impact the performance, scalability, and maintainability of AI applications. In this article, we will explore various AI model deployment strategies, including containerization, serverless computing, and cloud-based services. We will also discuss common problems and solutions, providing concrete use cases and implementation details.</p>
 <h3 id="containerization-with-docker">Containerization with Docker</h3>
 <p>Containerization is a popular approach to deploying AI models, as it provides a lightweight and portable way to package applications and their dependencies. Docker is a widely-used containerization platform that supports a wide range of operating systems and architectures. Here is an example of how to containerize an AI model using Docker:</p>
-<pre><code class="language-python"># requirements.txt
-tensorflow==2.4.1
-numpy==1.20.0
+<div class="codehilite"><pre><span></span><code><span class="c1"># requirements.txt</span>
+<span class="n">tensorflow</span><span class="o">==</span><span class="mf">2.4.1</span>
+<span class="n">numpy</span><span class="o">==</span><span class="mf">1.20.0</span>
 
-# Dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD [&quot;python&quot;, &quot;app.py&quot;]
-</code></pre>
+<span class="c1"># Dockerfile</span>
+<span class="n">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mf">3.9</span><span class="o">-</span><span class="n">slim</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">app</span>
+<span class="n">COPY</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span> <span class="o">.</span>
+<span class="n">RUN</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">COPY</span> <span class="o">.</span> <span class="o">.</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>requirements.txt</code> file that lists the dependencies required by our AI model, including TensorFlow and NumPy. We then create a <code>Dockerfile</code> that installs these dependencies and copies the application code into the container. Finally, we define a command to run the application using <code>python app.py</code>.</p>
 <h3 id="serverless-computing-with-aws-lambda">Serverless Computing with AWS Lambda</h3>
 <p>Serverless computing is another popular approach to deploying AI models, as it provides a scalable and cost-effective way to run applications without managing infrastructure. AWS Lambda is a widely-used serverless computing platform that supports a wide range of programming languages and frameworks. Here is an example of how to deploy an AI model using AWS Lambda:</p>
-<pre><code class="language-python"># lambda_function.py
-import boto3
-import numpy as np
-from tensorflow.keras.models import load_model
+<div class="codehilite"><pre><span></span><code><span class="c1"># lambda_function.py</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
 
-s3 = boto3.client('s3')
-model = load_model('model.h5')
+<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
 
-def lambda_handler(event, context):
-    # Load input data from S3
-    input_data = s3.get_object(Bucket='my-bucket', Key='input.csv')
-    # Preprocess input data
-    input_data = np.array(input_data['Body'].read().decode('utf-8').split(','))
-    # Run AI model
-    output = model.predict(input_data)
-    # Save output to S3
-    s3.put_object(Body=str(output), Bucket='my-bucket', Key='output.csv')
-    return {
-        'statusCode': 200,
-        'statusMessage': 'OK'
-    }
-</code></pre>
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Load input data from S3</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s1">&#39;input.csv&#39;</span><span class="p">)</span>
+    <span class="c1"># Preprocess input data</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;Body&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    <span class="c1"># Run AI model</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="c1"># Save output to S3</span>
+    <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Body</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s1">&#39;output.csv&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;statusMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a Lambda function that loads an AI model from an S3 bucket, loads input data from S3, preprocesses the input data, runs the AI model, and saves the output to S3. We then deploy the Lambda function using the AWS CLI:</p>
-<pre><code class="language-bash">aws lambda create-function --function-name my-lambda-function \
-    --runtime python3.9 --role arn:aws:iam::123456789012:role/lambda-execution-role \
-    --handler lambda_function.lambda_handler --code S3Bucket=my-bucket,S3ObjectKey=lambda_function.py
-</code></pre>
+<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>lambda<span class="w"> </span>create-function<span class="w"> </span>--function-name<span class="w"> </span>my-lambda-function<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--runtime<span class="w"> </span>python3.9<span class="w"> </span>--role<span class="w"> </span>arn:aws:iam::123456789012:role/lambda-execution-role<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--handler<span class="w"> </span>lambda_function.lambda_handler<span class="w"> </span>--code<span class="w"> </span><span class="nv">S3Bucket</span><span class="o">=</span>my-bucket,S3ObjectKey<span class="o">=</span>lambda_function.py
+</code></pre></div>
+
 <p>The cost of deploying an AI model using AWS Lambda depends on the number of invocations, memory usage, and execution time. According to AWS pricing data, the cost of running a Lambda function with 128MB of memory and 100ms of execution time is approximately $0.000004 per invocation.</p>
 <h3 id="cloud-based-services-with-google-cloud-ai-platform">Cloud-Based Services with Google Cloud AI Platform</h3>
 <p>Cloud-based services provide a managed platform for deploying AI models, eliminating the need to manage infrastructure and dependencies. Google Cloud AI Platform is a popular cloud-based service that supports a wide range of AI frameworks and tools. Here is an example of how to deploy an AI model using Google Cloud AI Platform:</p>
-<pre><code class="language-python"># model.py
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+<div class="codehilite"><pre><span></span><code><span class="c1"># model.py</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
 
-model = Sequential()
-model.add(Dense(64, activation='relu', input_shape=(784,)))
-model.add(Dense(10, activation='softmax'))
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-</code></pre>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">784</span><span class="p">,)))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+</code></pre></div>
+
 <p>In this example, we define an AI model using TensorFlow and Keras. We then deploy the model using the Google Cloud AI Platform SDK:</p>
-<pre><code class="language-python"># deploy.py
-from google.cloud import aiplatform
+<div class="codehilite"><pre><span></span><code><span class="c1"># deploy.py</span>
+<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
 
-# Create a new AI Platform project
-project = aiplatform.Project('my-project')
+<span class="c1"># Create a new AI Platform project</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="s1">&#39;my-project&#39;</span><span class="p">)</span>
 
-# Create a new AI Platform model
-model = project.create_model('my-model', model.py)
+<span class="c1"># Create a new AI Platform model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;my-model&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>
 
-# Deploy the model to AI Platform
-model.deploy('my-endpoint', 'my-model', 'my-project')
-</code></pre>
+<span class="c1"># Deploy the model to AI Platform</span>
+<span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="s1">&#39;my-endpoint&#39;</span><span class="p">,</span> <span class="s1">&#39;my-model&#39;</span><span class="p">,</span> <span class="s1">&#39;my-project&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>The cost of deploying an AI model using Google Cloud AI Platform depends on the number of prediction requests, model complexity, and data storage requirements. According to Google Cloud pricing data, the cost of running a model with 100 prediction requests per minute and 1GB of data storage is approximately $0.45 per hour.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Deploying AI models can be challenging, and several common problems can arise during the deployment process. Here are some common problems and solutions:</p>

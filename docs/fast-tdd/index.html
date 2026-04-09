@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,17 +163,18 @@
 * <strong>GitHub Actions</strong>: A continuous integration platform that provides fast and flexible test execution.</p>
 <h3 id="example-1-using-pytest-for-fast-tdd">Example 1: Using Pytest for Fast TDD</h3>
 <p>Pytest is a popular testing framework for Python that provides a lot of flexibility and customization options. Here is an example of how to use Pytest for fast TDD:</p>
-<pre><code class="language-python"># tests/test_example.py
-import pytest
+<div class="codehilite"><pre><span></span><code><span class="c1"># tests/test_example.py</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
 
-def add(x, y):
-    return x + y
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 
-def test_add():
-    assert add(2, 3) == 5
-    assert add(-2, 3) == 1
-    assert add(-2, -3) == -5
-</code></pre>
+<span class="k">def</span> <span class="nf">test_add</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">5</span>
+</code></pre></div>
+
 <p>In this example, we define a simple <code>add</code> function and write a test for it using Pytest. We can run the test using the <code>pytest</code> command, and Pytest will provide a detailed report of the test results.</p>
 <h2 id="best-practices-for-fast-tdd">Best Practices for Fast TDD</h2>
 <p>There are several best practices that can help speed up the TDD process. Some examples include:
@@ -184,15 +184,16 @@ def test_add():
 * <strong>Use continuous integration platforms</strong>: Continuous integration platforms can help automate the testing process and provide fast and reliable test execution.</p>
 <h3 id="example-2-using-jest-for-fast-tdd">Example 2: Using Jest for Fast TDD</h3>
 <p>Jest is a popular testing framework for JavaScript that provides fast and efficient test execution. Here is an example of how to use Jest for fast TDD:</p>
-<pre><code class="language-javascript">// tests/test_example.js
-const add = require('../src/add');
+<div class="codehilite"><pre><span></span><code><span class="c1">// tests/test_example.js</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../src/add&#39;</span><span class="p">);</span>
 
-test('add', () =&gt; {
-  expect(add(2, 3)).toBe(5);
-  expect(add(-2, 3)).toBe(1);
-  expect(add(-2, -3)).toBe(-5);
-});
-</code></pre>
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">expect</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">expect</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">expect</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">3</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mf">5</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, we define a simple <code>add</code> function and write a test for it using Jest. We can run the test using the <code>jest</code> command, and Jest will provide a detailed report of the test results.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of TDD can be measured in several ways, including test execution time and development speed. Here are some performance benchmarks for different testing frameworks and platforms:
@@ -202,7 +203,7 @@ test('add', () =&gt; {
 * <strong>GitHub Actions</strong>: 1-2 minutes per test suite</p>
 <h3 id="example-3-using-circleci-for-fast-tdd">Example 3: Using CircleCI for Fast TDD</h3>
 <p>CircleCI is a continuous integration platform that provides fast and reliable test execution. Here is an example of how to use CircleCI for fast TDD:</p>
-<pre><code class="language-yml"># .circleci/config.yml
+<div class="codehilite"><pre><span></span><code># .circleci/config.yml
 version: 2.1
 jobs:
   build-and-test:
@@ -212,7 +213,8 @@ jobs:
       - checkout
       - run: pip install -r requirements.txt
       - run: pytest
-</code></pre>
+</code></pre></div>
+
 <p>In this example, we define a CircleCI configuration file that installs the dependencies and runs the tests using Pytest. We can trigger the CircleCI workflow using a GitHub push event, and CircleCI will provide a detailed report of the test results.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions for fast TDD:

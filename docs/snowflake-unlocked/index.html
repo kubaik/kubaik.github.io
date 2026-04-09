@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,55 +162,58 @@
 <p>Here are a few practical examples of how to use Snowflake, along with some code snippets to illustrate the concepts.</p>
 <h3 id="example-1-creating-a-table-and-loading-data">Example 1: Creating a Table and Loading Data</h3>
 <p>To create a table in Snowflake and load data into it, you can use the following SQL commands:</p>
-<pre><code class="language-sql">-- Create a new table
-CREATE TABLE customers (
-    id INT,
-    name VARCHAR(255),
-    email VARCHAR(255)
-);
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new table</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
 
--- Load data into the table
-COPY INTO customers (id, name, email)
-FROM '@~/customer_data.csv'
-FILE_FORMAT = (TYPE = 'CSV' FIELD_DELIMITER = ',' SKIP_HEADER = 1);
-</code></pre>
+<span class="c1">-- Load data into the table</span>
+<span class="k">COPY</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;@~/customer_data.csv&#39;</span>
+<span class="n">FILE_FORMAT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CSV&#39;</span><span class="w"> </span><span class="n">FIELD_DELIMITER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="n">SKIP_HEADER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This code creates a new table called <code>customers</code> with three columns: <code>id</code>, <code>name</code>, and <code>email</code>. It then loads data from a CSV file called <code>customer_data.csv</code> into the table, using the <code>COPY INTO</code> command.</p>
 <h3 id="example-2-querying-data-with-sql">Example 2: Querying Data with SQL</h3>
 <p>To query data in Snowflake, you can use standard SQL commands. For example:</p>
-<pre><code class="language-sql">-- Query the customers table
-SELECT * FROM customers
-WHERE country = 'USA'
-AND age &gt; 18;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Query the customers table</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span>
+<span class="k">AND</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This code queries the <code>customers</code> table and returns all columns (<code>*</code>) for rows where the <code>country</code> column is <code>USA</code> and the <code>age</code> column is greater than 18.</p>
 <h3 id="example-3-using-snowflake-with-python">Example 3: Using Snowflake with Python</h3>
 <p>To use Snowflake with Python, you can use the Snowflake Python driver, which is available on PyPI. Here's an example of how to use the driver to connect to Snowflake and execute a query:</p>
-<pre><code class="language-python">import snowflake.connector
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">snowflake.connector</span>
 
-# Connect to Snowflake
-ctx = snowflake.connector.connect(
-    user='your_username',
-    password='your_password',
-    account='your_account_name'
-)
+<span class="c1"># Connect to Snowflake</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">user</span><span class="o">=</span><span class="s1">&#39;your_username&#39;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;your_password&#39;</span><span class="p">,</span>
+    <span class="n">account</span><span class="o">=</span><span class="s1">&#39;your_account_name&#39;</span>
+<span class="p">)</span>
 
-# Create a cursor object
-cs = ctx.cursor()
+<span class="c1"># Create a cursor object</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-# Execute a query
-cs.execute(&quot;SELECT * FROM customers&quot;)
+<span class="c1"># Execute a query</span>
+<span class="n">cs</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM customers&quot;</span><span class="p">)</span>
 
-# Fetch the results
-results = cs.fetchall()
+<span class="c1"># Fetch the results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-# Print the results
-for row in results:
-    print(row)
+<span class="c1"># Print the results</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
-# Close the cursor and connection
-cs.close()
-ctx.close()
-</code></pre>
+<span class="c1"># Close the cursor and connection</span>
+<span class="n">cs</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">ctx</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code connects to Snowflake using the Snowflake Python driver, creates a cursor object, executes a query, fetches the results, and prints them to the console.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that users may encounter when using Snowflake, along with some specific solutions:</p>

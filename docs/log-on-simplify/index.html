@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -252,16 +251,17 @@
 <h4 id="querying-logs-with-elasticsearch">Querying Logs with Elasticsearch</h4>
 <p>Once you have your logs indexed in Elasticsearch, you can query them using Kibana or directly via the Elasticsearch API.</p>
 <p>Here’s a simple example of querying logs:</p>
-<pre><code class="language-bash">curl -X GET &quot;localhost:9200/syslog-*/_search?pretty&quot; -H 'Content-Type: application/json' -d'
-{
-  &quot;query&quot;: {
-    &quot;match&quot;: {
-      &quot;request&quot;: &quot;/api/v1/resource&quot;
-    }
-  }
-}
-'
-</code></pre>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;localhost:9200/syslog-*/_search?pretty&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span>-d<span class="s1">&#39;</span>
+<span class="s1">{</span>
+<span class="s1">  &quot;query&quot;: {</span>
+<span class="s1">    &quot;match&quot;: {</span>
+<span class="s1">      &quot;request&quot;: &quot;/api/v1/resource&quot;</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+
 <p>This query retrieves logs that contain requests to the <code>/api/v1/resource</code> endpoint.</p>
 <h3 id="use-case-monitoring-web-application-logs">Use Case: Monitoring Web Application Logs</h3>
 <p>Let’s consider a practical use case where a company uses the ELK Stack to monitor web application logs.</p>
@@ -386,20 +386,21 @@
 <h4 id="problem-2-inconsistent-log-formats">Problem 2: Inconsistent Log Formats</h4>
 <p><strong>Solution</strong>: Use a logging library like <strong>Winston</strong> (for Node.js) or <strong>Log4j</strong> (for Java) to standardize your log format across applications.</p>
 <p>Example of a simple Winston logger configuration:</p>
-<pre><code class="language-javascript">const winston = require('winston');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">winston</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;winston&#39;</span><span class="p">);</span>
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: 'combined.log' }),
-    new winston.transports.Console(),
-  ],
-});
+<span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">winston</span><span class="p">.</span><span class="nx">createLogger</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;info&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">format</span><span class="o">:</span><span class="w"> </span><span class="nx">winston</span><span class="p">.</span><span class="nx">format</span><span class="p">.</span><span class="nx">json</span><span class="p">(),</span>
+<span class="w">  </span><span class="nx">transports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span><span class="p">({</span><span class="w"> </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;combined.log&#39;</span><span class="w"> </span><span class="p">}),</span>
+<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span><span class="p">(),</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
 
-// Usage
-logger.info('Log message', { userId: 123, action: 'login' });
-</code></pre>
+<span class="c1">// Usage</span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;Log message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userId</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;login&#39;</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+
 <p>This configuration ensures that all logs are in JSON format, making it easier to parse and analyze.</p>
 <h4 id="problem-3-delayed-issue-detection">Problem 3: Delayed Issue Detection</h4>
 <p><strong>Solution</strong>: Set up real-time alerts using your log management tool. For instance, in ELK, you can create alert rules that trigger notifications when specific patterns are detected.</p>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,26 +162,27 @@
 * <strong>Prometheus</strong>: An open-source monitoring system that provides real-time metrics and alerting capabilities.</p>
 <h3 id="example-monitoring-a-nodejs-application-with-new-relic">Example: Monitoring a Node.js Application with New Relic</h3>
 <p>To illustrate the power of APM tools, let's consider an example of monitoring a Node.js application with New Relic. We can use the New Relic Node.js agent to monitor our application's performance, errors, and transactions. Here's an example code snippet:</p>
-<pre><code class="language-javascript">const newrelic = require('newrelic');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">newrelic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;newrelic&#39;</span><span class="p">);</span>
 
-// Create a New Relic agent instance
-const agent = new newrelic.Agent({
-  appId: 'YOUR_APP_ID',
-  licenseKey: 'YOUR_LICENSE_KEY',
-});
+<span class="c1">// Create a New Relic agent instance</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">agent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">newrelic</span><span class="p">.</span><span class="nx">Agent</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">appId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_APP_ID&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">licenseKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_LICENSE_KEY&#39;</span><span class="p">,</span>
+<span class="p">});</span>
 
-// Monitor a transactions
-agent.startTransaction('my-transaction', (transaction) =&gt; {
-  // Monitor a segment
-  transaction.startSegment('my-segment', (segment) =&gt; {
-    // Simulate some work
-    const start = Date.now();
-    while (Date.now() - start &lt; 1000) {}
-    segment.end();
-  });
-  transaction.end();
-});
-</code></pre>
+<span class="c1">// Monitor a transactions</span>
+<span class="nx">agent</span><span class="p">.</span><span class="nx">startTransaction</span><span class="p">(</span><span class="s1">&#39;my-transaction&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">transaction</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Monitor a segment</span>
+<span class="w">  </span><span class="nx">transaction</span><span class="p">.</span><span class="nx">startSegment</span><span class="p">(</span><span class="s1">&#39;my-segment&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">segment</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Simulate some work</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1000</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="nx">segment</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="w">  </span><span class="nx">transaction</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, we create a New Relic agent instance and start a transaction. We then start a segment within the transaction and simulate some work. Finally, we end the segment and transaction. New Relic will collect metrics and data on the transaction and segment, allowing us to analyze and optimize our application's performance.</p>
 <h2 id="implementing-apm-in-real-world-scenarios">Implementing APM in Real-World Scenarios</h2>
 <p>APM is not just about monitoring application performance; it's about using data and insights to drive optimization and improvement. Here are some real-world scenarios where APM can be applied:
@@ -191,34 +191,35 @@ agent.startTransaction('my-transaction', (transaction) =&gt; {
 3. <strong>Gaming platform optimization</strong>: A gaming platform can use APM to monitor and optimize the performance of its game servers, reducing latency and improving the overall gaming experience.</p>
 <h3 id="example-optimizing-a-database-query-with-datadog">Example: Optimizing a Database Query with Datadog</h3>
 <p>To illustrate the power of APM in optimizing database queries, let's consider an example of using Datadog to monitor and optimize a database query. We can use Datadog's database monitoring capabilities to collect metrics on query performance, errors, and latency. Here's an example code snippet:</p>
-<pre><code class="language-python">import psycopg2
-import datadog
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="kn">import</span> <span class="nn">datadog</span>
 
-# Create a Datadog client instance
-client = datadog.Client(api_key='YOUR_API_KEY', app_key='YOUR_APP_KEY')
+<span class="c1"># Create a Datadog client instance</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">datadog</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span> <span class="n">app_key</span><span class="o">=</span><span class="s1">&#39;YOUR_APP_KEY&#39;</span><span class="p">)</span>
 
-# Create a PostgreSQL connection
-conn = psycopg2.connect(
-    host=&quot;YOUR_HOST&quot;,
-    database=&quot;YOUR_DATABASE&quot;,
-    user=&quot;YOUR_USER&quot;,
-    password=&quot;YOUR_PASSWORD&quot;,
-)
+<span class="c1"># Create a PostgreSQL connection</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;YOUR_HOST&quot;</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s2">&quot;YOUR_DATABASE&quot;</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s2">&quot;YOUR_USER&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
-# Monitor a database query
-cur = conn.cursor()
-cur.execute(&quot;SELECT * FROM my_table&quot;)
-client.event(&quot;Database query executed&quot;, alert_type=&quot;info&quot;, aggregation_key=&quot;my_query&quot;)
+<span class="c1"># Monitor a database query</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM my_table&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;Database query executed&quot;</span><span class="p">,</span> <span class="n">alert_type</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="n">aggregation_key</span><span class="o">=</span><span class="s2">&quot;my_query&quot;</span><span class="p">)</span>
 
-# Collect metrics on query performance
-metrics = client.get_metrics(
-    start=1643723400,
-    end=1643724000,
-    metric=&quot;postgresql.query.latency&quot;,
-    tags=[&quot;host:YOUR_HOST&quot;, &quot;database:YOUR_DATABASE&quot;],
-)
-print(metrics)
-</code></pre>
+<span class="c1"># Collect metrics on query performance</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="mi">1643723400</span><span class="p">,</span>
+    <span class="n">end</span><span class="o">=</span><span class="mi">1643724000</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;postgresql.query.latency&quot;</span><span class="p">,</span>
+    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;host:YOUR_HOST&quot;</span><span class="p">,</span> <span class="s2">&quot;database:YOUR_DATABASE&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we create a Datadog client instance and a PostgreSQL connection. We then execute a database query and monitor its performance using Datadog's event and metrics APIs. We can use the collected metrics to optimize the query, reducing latency and improving overall database performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing APM, there are several common problems that can arise. Here are some solutions to these problems:
@@ -227,11 +228,11 @@ print(metrics)
 * <strong>Lack of context</strong>: Use contextual data such as user information, request metadata, and business metrics to provide a more complete picture of application performance.</p>
 <h3 id="example-reducing-noise-with-prometheus">Example: Reducing Noise with Prometheus</h3>
 <p>To illustrate the power of reducing noise in APM data, let's consider an example of using Prometheus to monitor and optimize a web server's performance. We can use Prometheus's alerting capabilities to reduce noise and false positives in our APM data. Here's an example code snippet:</p>
-<pre><code class="language-yml"># Define a Prometheus alert rule
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Define a Prometheus alert rule
 groups:
-- name: web-server-alerts
+<span class="k">-</span> name: web-server-alerts
   rules:
-  - alert: HighRequestLatency
+  <span class="k">-</span> alert: HighRequestLatency
     expr: rate(http_requests_latency_bucket[1m]) &gt; 0.1
     for: 5m
     labels:
@@ -239,7 +240,8 @@ groups:
     annotations:
       summary: High request latency detected
       description: Request latency is higher than expected
-</code></pre>
+</code></pre></div>
+
 <p>In this example, we define a Prometheus alert rule that triggers when the request latency exceeds a certain threshold. We can use this alert rule to reduce noise and false positives in our APM data, ensuring that we only receive notifications when there are real issues with our web server's performance.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>When it comes to APM, pricing and cost considerations are critical. Here are some pricing data and benchmarks to consider:

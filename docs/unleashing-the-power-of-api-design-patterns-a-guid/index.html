@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,15 +161,16 @@
 <li>Supporting various data formats such as JSON or XML</li>
 </ul>
 <p>Example:</p>
-<pre><code class="language-markdown">GET /api/users/123
+<div class="codehilite"><pre><span></span><code>GET /api/users/123
 POST /api/users
 PUT /api/users/123
 DELETE /api/users/123
-</code></pre>
+</code></pre></div>
+
 <h3 id="2-singleton-pattern">2. Singleton Pattern</h3>
 <p>The Singleton pattern ensures that a class has only one instance and provides a global point of access to it. This pattern is useful when there is a need for a single, shared resource across the application.</p>
 <p>Example:</p>
-<pre><code class="language-markdown">class Singleton {
+<div class="codehilite"><pre><span></span><code>class Singleton {
     private static Singleton instance;
 
     private Singleton() {}
@@ -182,11 +182,12 @@ DELETE /api/users/123
         return instance;
     }
 }
-</code></pre>
+</code></pre></div>
+
 <h3 id="3-observer-pattern">3. Observer Pattern</h3>
 <p>The Observer pattern establishes a one-to-many dependency between objects, where changes in one object trigger updates in multiple dependent objects. This pattern is commonly used in event handling systems.</p>
 <p>Example:</p>
-<pre><code class="language-markdown">class Subject {
+<div class="codehilite"><pre><span></span><code>class Subject {
     private List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();
 
     public void attach(Observer observer) {
@@ -199,7 +200,8 @@ DELETE /api/users/123
         }
     }
 }
-</code></pre>
+</code></pre></div>
+
 <h2 id="best-practices-for-implementing-api-design-patterns">Best Practices for Implementing API Design Patterns</h2>
 <p>To effectively leverage API design patterns in your projects, consider the following best practices:</p>
 <ol>

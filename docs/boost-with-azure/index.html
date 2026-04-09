@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -345,8 +344,9 @@ using Microsoft.Extensions.Logging;</p>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }</p>
-<pre><code>public DbSet&lt;User&gt; Users { get; set; }
-</code></pre>
+<div class="codehilite"><pre><span></span><code>public DbSet&lt;User&gt; Users { get; set; }
+</code></pre></div>
+
 <p>}
 ```</p>
 </li>

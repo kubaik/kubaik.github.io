@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,167 +166,170 @@
 * <strong>Actor-Critic Methods</strong>: A type of RL algorithm that combines the benefits of policy gradient methods and value-based methods.</p>
 <h3 id="q-learning-example">Q-Learning Example</h3>
 <p>Here is an example of Q-Learning implemented in Python using the Gym library:</p>
-<pre><code class="language-python">import gym
-import numpy as np
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# Create a Gym environment
-env = gym.make('CartPole-v1')
+<span class="c1"># Create a Gym environment</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
 
-# Initialize the Q-table
-q_table = np.zeros((env.observation_space.n, env.action_space.n))
+<span class="c1"># Initialize the Q-table</span>
+<span class="n">q_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
 
-# Set the learning rate and discount factor
-alpha = 0.1
-gamma = 0.9
+<span class="c1"># Set the learning rate and discount factor</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.9</span>
 
-# Train the agent
-for episode in range(1000):
-    state = env.reset()
-    done = False
-    rewards = 0.0
-    while not done:
-        # Choose an action using epsilon-greedy
-        if np.random.rand() &lt; 0.1:
-            action = env.action_space.sample()
-        else:
-            action = np.argmax(q_table[state])
+<span class="c1"># Train the agent</span>
+<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="c1"># Choose an action using epsilon-greedy</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">])</span>
 
-        # Take the action and get the next state and reward
-        next_state, reward, done, _ = env.step(action)
-        rewards += reward
+        <span class="c1"># Take the action and get the next state and reward</span>
+        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
 
-        # Update the Q-table
-        q_table[state, action] += alpha * (reward + gamma * np.max(q_table[next_state]) - q_table[state, action])
+        <span class="c1"># Update the Q-table</span>
+        <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">+=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">next_state</span><span class="p">])</span> <span class="o">-</span> <span class="n">q_table</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">])</span>
 
-        # Update the state
-        state = next_state
+        <span class="c1"># Update the state</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
 
-    print(f'Episode: {episode+1}, Reward: {rewards}')
-</code></pre>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode: </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Reward: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a Q-Learning agent to play the CartPole game, where the goal is to balance a pole on a cart by applying left or right forces.</p>
 <h2 id="deep-q-networks-dqn">Deep Q-Networks (DQN)</h2>
 <p>DQN is a type of Q-Learning that uses a neural network to approximate the Q-function. This allows DQN to handle high-dimensional state spaces and large action spaces. DQN was first introduced in the paper "Playing Atari with Deep Reinforcement Learning" by Mnih et al. in 2013.</p>
 <h3 id="dqn-example">DQN Example</h3>
 <p>Here is an example of DQN implemented in Python using the PyTorch library:</p>
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.optim as optim
-import gym
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">import</span> <span class="nn">gym</span>
 
-# Create a Gym environment
-env = gym.make('CartPole-v1')
+<span class="c1"># Create a Gym environment</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
 
-# Define the DQN network
-class DQN(nn.Module):
-    def __init__(self):
-        super(DQN, self).__init__()
-        self.fc1 = nn.Linear(env.observation_space.shape[0], 128)
-        self.fc2 = nn.Linear(128, env.action_space.n)
+<span class="c1"># Define the DQN network</span>
+<span class="k">class</span> <span class="nc">DQN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DQN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
 
-    def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = self.fc2(x)
-        return x
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
 
-# Initialize the DQN network and optimizer
-dqn = DQN()
-optimizer = optim.Adam(dqn.parameters(), lr=0.001)
+<span class="c1"># Initialize the DQN network and optimizer</span>
+<span class="n">dqn</span> <span class="o">=</span> <span class="n">DQN</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">dqn</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 
-# Train the DQN agent
-for episode in range(1000):
-    state = env.reset()
-    done = False
-    rewards = 0.0
-    while not done:
-        # Choose an action using epsilon-greedy
-        if np.random.rand() &lt; 0.1:
-            action = env.action_space.sample()
-        else:
-            action = torch.argmax(dqn(torch.tensor(state, dtype=torch.float32)))
+<span class="c1"># Train the DQN agent</span>
+<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="c1"># Choose an action using epsilon-greedy</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dqn</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)))</span>
 
-        # Take the action and get the next state and reward
-        next_state, reward, done, _ = env.step(action)
-        rewards += reward
+        <span class="c1"># Take the action and get the next state and reward</span>
+        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
 
-        # Update the DQN network
-        optimizer.zero_grad()
-        loss = (reward + 0.9 * torch.max(dqn(torch.tensor(next_state, dtype=torch.float32))) - dqn(torch.tensor(state, dtype=torch.float32))[action]) ** 2
-        loss.backward()
-        optimizer.step()
+        <span class="c1"># Update the DQN network</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dqn</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)))</span> <span class="o">-</span> <span class="n">dqn</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))[</span><span class="n">action</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 
-        # Update the state
-        state = next_state
+        <span class="c1"># Update the state</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
 
-    print(f'Episode: {episode+1}, Reward: {rewards}')
-</code></pre>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode: </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Reward: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a DQN agent to play the CartPole game, where the goal is to balance a pole on a cart by applying left or right forces.</p>
 <h2 id="policy-gradient-methods">Policy Gradient Methods</h2>
 <p>Policy gradient methods are a family of RL algorithms that learn to optimize the policy directly. These methods are particularly useful when the action space is large or continuous.</p>
 <h3 id="policy-gradient-example">Policy Gradient Example</h3>
 <p>Here is an example of policy gradient implemented in Python using the PyTorch library:</p>
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.optim as optim
-import gym
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">import</span> <span class="nn">gym</span>
 
-# Create a Gym environment
-env = gym.make('CartPole-v1')
+<span class="c1"># Create a Gym environment</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
 
-# Define the policy network
-class Policy(nn.Module):
-    def __init__(self):
-        super(Policy, self).__init__()
-        self.fc1 = nn.Linear(env.observation_space.shape[0], 128)
-        self.fc2 = nn.Linear(128, env.action_space.n)
+<span class="c1"># Define the policy network</span>
+<span class="k">class</span> <span class="nc">Policy</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Policy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
 
-    def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = torch.softmax(self.fc2(x), dim=0)
-        return x
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
 
-# Initialize the policy network and optimizer
-policy = Policy()
-optimizer = optim.Adam(policy.parameters(), lr=0.001)
+<span class="c1"># Initialize the policy network and optimizer</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">Policy</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">policy</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 
-# Train the policy gradient agent
-for episode in range(1000):
-    state = env.reset()
-    done = False
-    rewards = 0.0
-    actions = []
-    states = []
-    while not done:
-        # Choose an action using the policy
-        action_prob = policy(torch.tensor(state, dtype=torch.float32))
-        action = torch.multinomial(action_prob, num_samples=1)
+<span class="c1"># Train the policy gradient agent</span>
+<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="c1"># Choose an action using the policy</span>
+        <span class="n">action_prob</span> <span class="o">=</span> <span class="n">policy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">action_prob</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-        # Take the action and get the next state and reward
-        next_state, reward, done, _ = env.step(action)
-        rewards += reward
+        <span class="c1"># Take the action and get the next state and reward</span>
+        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
 
-        # Store the state and action
-        states.append(state)
-        actions.append(action)
+        <span class="c1"># Store the state and action</span>
+        <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
-        # Update the state
-        state = next_state
+        <span class="c1"># Update the state</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
 
-    # Compute the policy gradient
-    policy_gradient = []
-    for i in range(len(states)):
-        state = states[i]
-        action = actions[i]
-        reward = rewards - i
-        policy_gradient.append((reward * policy(torch.tensor(state, dtype=torch.float32))[action]))
+    <span class="c1"># Compute the policy gradient</span>
+    <span class="n">policy_gradient</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">)):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">actions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="n">rewards</span> <span class="o">-</span> <span class="n">i</span>
+        <span class="n">policy_gradient</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reward</span> <span class="o">*</span> <span class="n">policy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))[</span><span class="n">action</span><span class="p">]))</span>
 
-    # Update the policy network
-    optimizer.zero_grad()
-    loss = -torch.mean(torch.stack(policy_gradient))
-    loss.backward()
-    optimizer.step()
+    <span class="c1"># Update the policy network</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">policy_gradient</span><span class="p">))</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 
-    print(f'Episode: {episode+1}, Reward: {rewards}')
-</code></pre>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode: </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Reward: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code trains a policy gradient agent to play the CartPole game, where the goal is to balance a pole on a cart by applying left or right forces.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered when implementing RL algorithms include:

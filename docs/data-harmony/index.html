@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -197,27 +196,28 @@
 </ul>
 <h4 id="step-2-create-the-database-tables">Step 2: Create the Database Tables</h4>
 <p>Using SQL, we can create these tables in a relational database management system (RDBMS) such as PostgreSQL or MySQL. Below is the SQL code to create these tables:</p>
-<pre><code class="language-sql">CREATE TABLE Authors (
-    AuthorID SERIAL PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL,
-    Biography TEXT
-);
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Authors</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">AuthorID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Biography</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
 
-CREATE TABLE Books (
-    BookID SERIAL PRIMARY KEY,
-    Title VARCHAR(255) NOT NULL,
-    AuthorID INT REFERENCES Authors(AuthorID),
-    Price DECIMAL(10, 2) NOT NULL,
-    Genre VARCHAR(50)
-);
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Books</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">BookID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">AuthorID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Authors</span><span class="p">(</span><span class="n">AuthorID</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Price</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Genre</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="p">);</span>
 
-CREATE TABLE Orders (
-    OrderID SERIAL PRIMARY KEY,
-    BookID INT REFERENCES Books(BookID),
-    Quantity INT NOT NULL,
-    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-</code></pre>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">OrderID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">BookID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Books</span><span class="p">(</span><span class="n">BookID</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Quantity</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderDate</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <h3 id="step-3-normalization-process">Step 3: Normalization Process</h3>
 <h4 id="first-normal-form-1nf">First Normal Form (1NF)</h4>
 <p>Each column in our tables above contains atomic values, fulfilling the 1NF requirement. For example, the <code>Title</code> column in the <code>Books</code> table contains single titles, and the <code>Biography</code> column in the <code>Authors</code> table contains a single biography per author.</p>
@@ -273,13 +273,15 @@ CREATE TABLE Orders (
 <h4 id="problem-2-poor-performance">Problem 2: Poor Performance</h4>
 <p><strong>Solution</strong>: Indexing can significantly improve query performance. Consider indexing columns that are frequently used in WHERE clauses or as join keys.</p>
 <p><strong>Example</strong>: In our <code>Books</code> table, if we frequently query by <code>AuthorID</code>, adding an index can improve performance:</p>
-<pre><code class="language-sql">CREATE INDEX idx_author ON Books(AuthorID);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_author</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">Books</span><span class="p">(</span><span class="n">AuthorID</span><span class="p">);</span>
+</code></pre></div>
+
 <h4 id="problem-3-inconsistent-data">Problem 3: Inconsistent Data</h4>
 <p><strong>Solution</strong>: Use constraints such as foreign keys and unique constraints to maintain data integrity.</p>
 <p><strong>Example</strong>: In the <code>Orders</code> table, ensuring that <code>BookID</code> must exist in the <code>Books</code> table can prevent orphan records:</p>
-<pre><code class="language-sql">ALTER TABLE Orders ADD CONSTRAINT fk_book FOREIGN KEY (BookID) REFERENCES Books(BookID);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">fk_book</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">BookID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Books</span><span class="p">(</span><span class="n">BookID</span><span class="p">);</span>
+</code></pre></div>
+
 <h3 id="use-cases-for-database-normalization">Use Cases for Database Normalization</h3>
 <ol>
 <li>

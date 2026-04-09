@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -165,39 +164,40 @@
 * <strong>Flutter</strong>: An open-source mobile app development framework created by Google.</p>
 <h3 id="practical-example-implementing-a-bottom-navigation-bar">Practical Example: Implementing a Bottom Navigation Bar</h3>
 <p>To implement a bottom navigation bar in a React Native app, you can use the following code:</p>
-<pre><code class="language-jsx">import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createBottomTabNavigator</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@react-navigation/bottom-tabs&#39;</span><span class="p">;</span>
 
-const TabNavigator = createBottomTabNavigator();
+<span class="kd">const</span><span class="w"> </span><span class="nx">TabNavigator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createBottomTabNavigator</span><span class="p">();</span>
 
-const HomeScreen = () =&gt; {
-  return (
-    &lt;View&gt;
-      &lt;Text&gt;Home Screen&lt;/Text&gt;
-    &lt;/View&gt;
-  );
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">HomeScreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Home</span><span class="w"> </span><span class="nx">Screen</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
 
-const SettingsScreen = () =&gt; {
-  return (
-    &lt;View&gt;
-      &lt;Text&gt;Settings Screen&lt;/Text&gt;
-    &lt;/View&gt;
-  );
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">SettingsScreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Settings</span><span class="w"> </span><span class="nx">Screen</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
 
-const App = () =&gt; {
-  return (
-    &lt;TabNavigator.Navigator&gt;
-      &lt;TabNavigator.Screen name=&quot;Home&quot; component={HomeScreen} /&gt;
-      &lt;TabNavigator.Screen name=&quot;Settings&quot; component={SettingsScreen} /&gt;
-    &lt;/TabNavigator.Navigator&gt;
-  );
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">TabNavigator</span><span class="p">.</span><span class="na">Navigator</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">TabNavigator</span><span class="p">.</span><span class="na">Screen</span><span class="w"> </span><span class="na">name</span><span class="o">=</span><span class="s">&quot;Home&quot;</span><span class="w"> </span><span class="na">component</span><span class="o">=</span><span class="p">{</span><span class="nx">HomeScreen</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">TabNavigator</span><span class="p">.</span><span class="na">Screen</span><span class="w"> </span><span class="na">name</span><span class="o">=</span><span class="s">&quot;Settings&quot;</span><span class="w"> </span><span class="na">component</span><span class="o">=</span><span class="p">{</span><span class="nx">SettingsScreen</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">TabNavigator</span><span class="p">.</span><span class="na">Navigator</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
 
-export default App;
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This code creates a bottom navigation bar with two tabs: Home and Settings. The <code>createBottomTabNavigator</code> function from <code>@react-navigation/bottom-tabs</code> is used to create the tab navigator, and the <code>TabNavigator.Screen</code> component is used to define each tab.</p>
 <h2 id="mobile-performance-optimization">Mobile Performance Optimization</h2>
 <p>Mobile performance optimization is critical to ensuring a seamless user experience. According to a study by Google, 53% of users will abandon a site if it takes more than 3 seconds to load. Some ways to optimize mobile performance include:
@@ -207,29 +207,30 @@ export default App;
 4. <strong>Using a content delivery network (CDN)</strong>: Use a CDN to distribute your app's content across multiple servers and reduce latency.</p>
 <h3 id="practical-example-implementing-caching-with-redis">Practical Example: Implementing Caching with Redis</h3>
 <p>To implement caching with Redis in a Node.js app, you can use the following code:</p>
-<pre><code class="language-javascript">const redis = require('redis');
-const client = redis.createClient();
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
 
-client.on('error', (err) =&gt; {
-  console.log('Redis error: ' + err);
-});
+<span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Redis error: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
+<span class="p">});</span>
 
-client.set('key', 'value', (err, reply) =&gt; {
-  if (err) {
-    console.log('Error setting key: ' + err);
-  } else {
-    console.log('Key set successfully');
-  }
-});
+<span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">reply</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Error setting key: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Key set successfully&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
 
-client.get('key', (err, reply) =&gt; {
-  if (err) {
-    console.log('Error getting key: ' + err);
-  } else {
-    console.log('Key value: ' + reply);
-  }
-});
-</code></pre>
+<span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">reply</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Error getting key: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Key value: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">reply</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code creates a Redis client and sets a key-value pair using the <code>set</code> method. It then retrieves the value using the <code>get</code> method.</p>
 <h2 id="mobile-security-best-practices">Mobile Security Best Practices</h2>
 <p>Mobile security is a critical aspect of mobile app development. Some best practices include:
@@ -239,33 +240,34 @@ client.get('key', (err, reply) =&gt; {
 * <strong>Keeping software up-to-date</strong>: Keep software and dependencies up-to-date to prevent vulnerabilities.</p>
 <h3 id="practical-example-implementing-secure-authentication-with-oauth">Practical Example: Implementing Secure Authentication with OAuth</h3>
 <p>To implement secure authentication with OAuth in a React Native app, you can use the following code:</p>
-<pre><code class="language-jsx">import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { OAuth2Client } from 'react-native-oauth2-client';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">OAuth2Client</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native-oauth2-client&#39;</span><span class="p">;</span>
 
-const clientId = 'your_client_id';
-const clientSecret = 'your_client_secret';
-const redirectUri = 'your_redirect_uri';
+<span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_id&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_secret&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">redirectUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_redirect_uri&#39;</span><span class="p">;</span>
 
-const App = () =&gt; {
-  const [token, setToken] = useState(null);
+<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">setToken</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-  const handleLogin = async () =&gt; {
-    const client = new OAuth2Client(clientId, clientSecret, redirectUri);
-    const token = await client.getToken();
-    setToken(token);
-  };
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">OAuth2Client</span><span class="p">(</span><span class="nx">clientId</span><span class="p">,</span><span class="w"> </span><span class="nx">clientSecret</span><span class="p">,</span><span class="w"> </span><span class="nx">redirectUri</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">getToken</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">setToken</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">  </span><span class="p">};</span>
 
-  return (
-    &lt;View&gt;
-      &lt;TouchableOpacity onPress={handleLogin}&gt;
-        &lt;Text&gt;Login with OAuth&lt;/Text&gt;
-      &lt;/TouchableOpacity&gt;
-      {token &amp;&amp; &lt;Text&gt;Logged in successfully&lt;/Text&gt;}
-    &lt;/View&gt;
-  );
-};
-</code></pre>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handleLogin</span><span class="p">}&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Login</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="nx">OAuth</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">TouchableOpacity</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">{</span><span class="nx">token</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Logged</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">successfully</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <p>This code creates an OAuth2 client and uses it to obtain an access token. The <code>getToken</code> method is used to obtain the token, and the <code>setToken</code> state is updated with the obtained token.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems and solutions in mobile UI/UX design include:

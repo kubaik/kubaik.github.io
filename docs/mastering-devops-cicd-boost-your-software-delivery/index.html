@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -219,28 +218,29 @@
 <li><strong>Feedback:</strong> Provide immediate feedback to developers with build status and test results.</li>
 </ul>
 <p><strong>Example: Basic CI workflow</strong></p>
-<pre><code class="language-yaml"># Example GitHub Actions workflow for CI
-name: CI Pipeline
+<div class="codehilite"><pre><span></span><code><span class="c1"># Example GitHub Actions workflow for CI</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI Pipeline</span>
 
-on:
-  push:
-    branches:
-      - main
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - name: Install dependencies
-        run: npm install
-      - name: Run Tests
-        run: npm test
-</code></pre>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Tests</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+</code></pre></div>
+
 <h3 id="3-automated-testing">3. Automated Testing</h3>
 <p>Implement comprehensive testing strategies:</p>
 <ul>
@@ -258,10 +258,11 @@ jobs:
 <li>Automate promotion to production after successful tests.</li>
 </ul>
 <p><strong>Example: Deployment script snippet</strong></p>
-<pre><code class="language-bash"># Deploy to AWS using AWS CLI
-aws s3 sync ./build s3://your-app-bucket --delete
-aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths &quot;/*&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Deploy to AWS using AWS CLI</span>
+aws<span class="w"> </span>s3<span class="w"> </span>sync<span class="w"> </span>./build<span class="w"> </span>s3://your-app-bucket<span class="w"> </span>--delete
+aws<span class="w"> </span>cloudfront<span class="w"> </span>create-invalidation<span class="w"> </span>--distribution-id<span class="w"> </span>YOUR_DISTRIBUTION_ID<span class="w"> </span>--paths<span class="w"> </span><span class="s2">&quot;/*&quot;</span>
+</code></pre></div>
+
 <h3 id="5-monitoring-and-feedback">5. Monitoring and Feedback</h3>
 <p>Post-deployment, monitor application performance and user experience:</p>
 <ul>

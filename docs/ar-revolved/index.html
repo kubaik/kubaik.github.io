@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -205,56 +204,58 @@
 </ol>
 <h4 id="step-2-configure-your-infoplist">Step 2: Configure Your Info.plist</h4>
 <p>Add the following keys to your <code>Info.plist</code> to allow camera access:</p>
-<pre><code class="language-xml">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;
-&lt;string&gt;Camera access is required for augmented reality.&lt;/string&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;key&gt;</span>NSCameraUsageDescription<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;string&gt;</span>Camera<span class="w"> </span>access<span class="w"> </span>is<span class="w"> </span>required<span class="w"> </span>for<span class="w"> </span>augmented<span class="w"> </span>reality.<span class="nt">&lt;/string&gt;</span>
+</code></pre></div>
+
 <h4 id="step-3-implement-arkit-code">Step 3: Implement ARKit Code</h4>
 <p>Replace the contents of <code>ViewController.swift</code> with the following code:</p>
-<pre><code class="language-swift">import UIKit
-import SceneKit
-import ARKit
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+<span class="kd">import</span> <span class="nc">SceneKit</span>
+<span class="kd">import</span> <span class="nc">ARKit</span>
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-    @IBOutlet var sceneView: ARSCNView!
+<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
+    <span class="kr">@IBOutlet</span> <span class="kd">var</span> <span class="nv">sceneView</span><span class="p">:</span> <span class="bp">ARSCNView</span><span class="p">!</span>
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sceneView.delegate = self
-        sceneView.showsStatistics = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        sceneView.addGestureRecognizer(tapGesture)
-        let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
-    }
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="p">=</span> <span class="kc">self</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">showsStatistics</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="kd">let</span> <span class="nv">tapGesture</span> <span class="p">=</span> <span class="bp">UITapGestureRecognizer</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="kc">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="k">#selector</span><span class="p">(</span><span class="n">handleTap</span><span class="p">(</span><span class="kc">_</span><span class="p">:)))</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">addGestureRecognizer</span><span class="p">(</span><span class="n">tapGesture</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        let location = gestureRecognizer.location(in: sceneView)
-        let hitTestResults = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
-        if let result = hitTestResults.first {
-            let anchor = ARAnchor(transform: result.worldTransform)
-            sceneView.session.add(anchor: anchor)
-            let boxNode = createBox()
-            sceneView.scene.rootNode.addChildNode(boxNode)
-            boxNode.position = SCNVector3(result.worldTransform.columns.3.x,
-                                           result.worldTransform.columns.3.y + 0.5,
-                                           result.worldTransform.columns.3.z)
-        }
-    }
+    <span class="kr">@objc</span> <span class="kd">func</span> <span class="nf">handleTap</span><span class="p">(</span><span class="kc">_</span> <span class="n">gestureRecognizer</span><span class="p">:</span> <span class="bp">UITapGestureRecognizer</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">location</span> <span class="p">=</span> <span class="n">gestureRecognizer</span><span class="p">.</span><span class="n">location</span><span class="p">(</span><span class="k">in</span><span class="p">:</span> <span class="n">sceneView</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">hitTestResults</span> <span class="p">=</span> <span class="n">sceneView</span><span class="p">.</span><span class="n">hitTest</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="p">.</span><span class="n">existingPlaneUsingExtent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="kd">let</span> <span class="nv">result</span> <span class="p">=</span> <span class="n">hitTestResults</span><span class="p">.</span><span class="bp">first</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nv">anchor</span> <span class="p">=</span> <span class="bp">ARAnchor</span><span class="p">(</span><span class="n">transform</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">worldTransform</span><span class="p">)</span>
+            <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">anchor</span><span class="p">:</span> <span class="n">anchor</span><span class="p">)</span>
+            <span class="kd">let</span> <span class="nv">boxNode</span> <span class="p">=</span> <span class="n">createBox</span><span class="p">()</span>
+            <span class="n">sceneView</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">boxNode</span><span class="p">)</span>
+            <span class="n">boxNode</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="bp">SCNVector3</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">worldTransform</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="mf">3.</span><span class="n">x</span><span class="p">,</span>
+                                           <span class="n">result</span><span class="p">.</span><span class="n">worldTransform</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="mf">3.</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+                                           <span class="n">result</span><span class="p">.</span><span class="n">worldTransform</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="mf">3.</span><span class="n">z</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    func createBox() -&gt; SCNNode {
-        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.red
-        box.materials = [material]
-        return SCNNode(geometry: box)
-    }
+    <span class="kd">func</span> <span class="nf">createBox</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="bp">SCNNode</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">box</span> <span class="p">=</span> <span class="bp">SCNBox</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">chamferRadius</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">material</span> <span class="p">=</span> <span class="bp">SCNMaterial</span><span class="p">()</span>
+        <span class="n">material</span><span class="p">.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="p">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">red</span>
+        <span class="n">box</span><span class="p">.</span><span class="n">materials</span> <span class="p">=</span> <span class="p">[</span><span class="n">material</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="n">box</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        sceneView.session.pause()
-    }
-}
-</code></pre>
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewWillDisappear</span><span class="p">(</span><span class="kc">_</span> <span class="n">animated</span><span class="p">:</span> <span class="nb">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewWillDisappear</span><span class="p">(</span><span class="n">animated</span><span class="p">)</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">pause</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="step-4-test-your-app">Step 4: Test Your App</h4>
 <ul>
 <li>Connect your iOS device and run the app through Xcode.</li>
@@ -281,14 +282,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 </ul>
 <h4 id="step-4-implement-interaction">Step 4: Implement Interaction</h4>
 <p>You can add interaction by creating a script to enable the 3D model to respond to user input:</p>
-<pre><code class="language-csharp">using UnityEngine;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
 
-public class ModelInteraction : MonoBehaviour {
-    void OnMouseDown() {
-        transform.localScale *= 1.2f; // Scale up the model when clicked
-    }
-}
-</code></pre>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ModelInteraction</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnMouseDown</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="m">1.2f</span><span class="p">;</span><span class="w"> </span><span class="c1">// Scale up the model when clicked</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <ul>
 <li>Attach this script to the 3D model in Unity.</li>
 </ul>

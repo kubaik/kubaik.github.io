@@ -106,7 +106,7 @@ class StaticSiteGenerator:
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
             markdown_converter = md.Markdown(
-                extensions=['extra', 'fenced_code', 'toc'])
+                extensions=['extra', 'codehilite', 'toc'])
             content_html = markdown_converter.convert(post.content)
             post_dict = post.to_dict()
             post_dict['content_html'] = content_html
@@ -240,7 +240,6 @@ class StaticSiteGenerator:
     {{ structured_data | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
-    <script defer src="{{ base_path }}/static/code_runner.js"></script>
 </head>
 <body>
     {{ header_ad | safe }}
@@ -356,7 +355,7 @@ class StaticSiteGenerator:
             <p>{{ site_description }}</p>
         </div>
 
-        <!-- Search Bars -->
+        <!-- Search Bar -->
         <div class="search-container">
             <div class="search-wrapper">
                 <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
@@ -364,7 +363,7 @@ class StaticSiteGenerator:
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <input type="text" id="search-input" class="search-input"
-                    placeholder="Search"
+                    placeholder="Search by title, description, or tags....."
                     autocomplete="off" autocorrect="off" autocapitalize="off"
                     spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
@@ -381,7 +380,7 @@ class StaticSiteGenerator:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                     <article class="post-card"> 
+                    <article class="post-card"> 
                         <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3> 
                         <p class="post-excerpt">{{ post.meta_description }}</p> 
                         {% if post.tags %}

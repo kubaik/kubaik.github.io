@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,14 +158,15 @@
 <li>Load balancing: distributing read traffic across multiple replicas to improve performance</li>
 </ul>
 <p>For example, using MySQL replication, you can set up a master-slave replication topology, where the master instance accepts writes and the slave instances replicate the data. Here's an example of how to configure MySQL replication:</p>
-<pre><code class="language-sql">-- Master instance
-CREATE USER 'replication_user'@'%' IDENTIFIED BY 'replication_password';
-GRANT REPLICATION SLAVE ON *.* TO 'replication_user'@'%';
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Master instance</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
--- Slave instance
-CHANGE MASTER TO MASTER_HOST='master_instance', MASTER_PORT=3306, MASTER_USER='replication_user', MASTER_PASSWORD='replication_password';
-START SLAVE;
-</code></pre>
+<span class="c1">-- Slave instance</span>
+<span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;master_instance&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PORT</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;replication_user&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
+<span class="k">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
+</code></pre></div>
+
 <h3 id="database-sharding">Database Sharding</h3>
 <p>Database sharding involves splitting the data into smaller, independent pieces called shards, each containing a subset of the overall data. Sharding can be done based on various criteria, such as:</p>
 <ul>
@@ -181,13 +181,14 @@ START SLAVE;
 <li>Enhance scalability: by allowing new shards to be added as the system grows</li>
 </ul>
 <p>For example, using MongoDB, you can shard a collection based on a specific field, such as the <code>userId</code> field. Here's an example of how to shard a collection in MongoDB:</p>
-<pre><code class="language-javascript">// Enable sharding on the collection
-db.runCommand({ enableSharding: &quot;mydatabase&quot; });
-db.runCommand({ shardCollection: &quot;mydatabase.mycollection&quot;, key: { userId: 1 } });
+<div class="codehilite"><pre><span></span><code><span class="c1">// Enable sharding on the collection</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">runCommand</span><span class="p">({</span><span class="w"> </span><span class="nx">enableSharding</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;mydatabase&quot;</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">runCommand</span><span class="p">({</span><span class="w"> </span><span class="nx">shardCollection</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;mydatabase.mycollection&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userId</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span>
 
-// Add a shard to the cluster
-db.runCommand({ addShard: &quot;shard1:27017&quot; });
-</code></pre>
+<span class="c1">// Add a shard to the cluster</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">runCommand</span><span class="p">({</span><span class="w"> </span><span class="nx">addShard</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;shard1:27017&quot;</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+
 <h2 id="choosing-the-right-sharding-strategy">Choosing the Right Sharding Strategy</h2>
 <p>When choosing a sharding strategy, there are several factors to consider, including:</p>
 <ul>
@@ -202,23 +203,24 @@ db.runCommand({ addShard: &quot;shard1:27017&quot; });
 <li><strong>List-based sharding</strong>: splitting the data based on a list of specific values</li>
 </ol>
 <p>For example, using Amazon DynamoDB, you can use the <code>HASH</code> and <code>RANGE</code> keywords to define a sharding strategy. Here's an example of how to define a sharding strategy in DynamoDB:</p>
-<pre><code class="language-python"># Define the sharding strategy
-table = dynamodb.create_table(
-    TableName='mytable',
-    KeySchema=[
-        {'AttributeName': 'userId', 'KeyType': 'HASH'},
-        {'AttributeName': 'sortKey', 'KeyType': 'RANGE'}
-    ],
-    AttributeDefinitions=[
-        {'AttributeName': 'userId', 'AttributeType': 'S'},
-        {'AttributeName': 'sortKey', 'AttributeType': 'S'}
-    ],
-    ProvisionedThroughput={
-        'ReadCapacityUnits': 10,
-        'WriteCapacityUnits': 10
-    }
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Define the sharding strategy</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">dynamodb</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+    <span class="n">TableName</span><span class="o">=</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span>
+    <span class="n">KeySchema</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;AttributeName&#39;</span><span class="p">:</span> <span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;KeyType&#39;</span><span class="p">:</span> <span class="s1">&#39;HASH&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;AttributeName&#39;</span><span class="p">:</span> <span class="s1">&#39;sortKey&#39;</span><span class="p">,</span> <span class="s1">&#39;KeyType&#39;</span><span class="p">:</span> <span class="s1">&#39;RANGE&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">AttributeDefinitions</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;AttributeName&#39;</span><span class="p">:</span> <span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;AttributeType&#39;</span><span class="p">:</span> <span class="s1">&#39;S&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;AttributeName&#39;</span><span class="p">:</span> <span class="s1">&#39;sortKey&#39;</span><span class="p">,</span> <span class="s1">&#39;AttributeType&#39;</span><span class="p">:</span> <span class="s1">&#39;S&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">ProvisionedThroughput</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;ReadCapacityUnits&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s1">&#39;WriteCapacityUnits&#39;</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing database replication and sharding, there are several common problems to watch out for, including:</p>
 <ul>
@@ -233,19 +235,20 @@ table = dynamodb.create_table(
 <li><strong>Monitoring and analytics</strong>: to identify bottlenecks and optimize the system</li>
 </ul>
 <p>For example, using New Relic, you can monitor the performance of your database and identify areas for optimization. Here's an example of how to use New Relic to monitor database performance:</p>
-<pre><code class="language-python"># Import the New Relic library
-import newrelic
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the New Relic library</span>
+<span class="kn">import</span> <span class="nn">newrelic</span>
 
-# Create a New Relic agent
-agent = newrelic.Agent()
+<span class="c1"># Create a New Relic agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">newrelic</span><span class="o">.</span><span class="n">Agent</span><span class="p">()</span>
 
-# Monitor the database performance
-@agent.trace('database', 'query')
-def query_database(query):
-    # Execute the query
-    cursor.execute(query)
-    return cursor.fetchall()
-</code></pre>
+<span class="c1"># Monitor the database performance</span>
+<span class="nd">@agent</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;database&#39;</span><span class="p">,</span> <span class="s1">&#39;query&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">query_database</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+    <span class="c1"># Execute the query</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div>
+
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Database replication and sharding are used in a variety of real-world applications, including:</p>
 <ul>
@@ -254,19 +257,20 @@ def query_database(query):
 <li><strong>Gaming platforms</strong>: to handle large amounts of player data and game state</li>
 </ul>
 <p>For example, using Google Cloud Spanner, you can build a scalable and performant database for a social media platform. Here's an example of how to use Cloud Spanner to build a social media database:</p>
-<pre><code class="language-sql">-- Create a Cloud Spanner instance
-CREATE INSTANCE myinstance;
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a Cloud Spanner instance</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">INSTANCE</span><span class="w"> </span><span class="n">myinstance</span><span class="p">;</span>
 
--- Create a database
-CREATE DATABASE mydatabase;
+<span class="c1">-- Create a database</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydatabase</span><span class="p">;</span>
 
--- Create a table
-CREATE TABLE users (
-    userId INT64 NOT NULL,
-    username STRING(255) NOT NULL,
-    email STRING(255) NOT NULL
-);
-</code></pre>
+<span class="c1">-- Create a table</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">userId</span><span class="w"> </span><span class="n">INT64</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="n">STRING</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="n">STRING</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="p">);</span>
+</code></pre></div>
+
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Database replication and sharding can significantly improve the performance of a database. Here are some real-world performance benchmarks:</p>
 <ul>
@@ -275,9 +279,10 @@ CREATE TABLE users (
 <li><strong>Amazon DynamoDB</strong>: can handle up to 100,000 reads per second and 100,000 writes per second</li>
 </ul>
 <p>For example, using AWS, you can benchmark the performance of a database using the <code>aws benchmarks</code> command. Here's an example of how to benchmark the performance of a DynamoDB database:</p>
-<pre><code class="language-bash"># Benchmark the performance of a DynamoDB database
-aws benchmarks dynamodb --table-name mytable --read-capacity 10 --write-capacity 10
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Benchmark the performance of a DynamoDB database</span>
+aws<span class="w"> </span>benchmarks<span class="w"> </span>dynamodb<span class="w"> </span>--table-name<span class="w"> </span>mytable<span class="w"> </span>--read-capacity<span class="w"> </span><span class="m">10</span><span class="w"> </span>--write-capacity<span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+
 <h2 id="pricing-and-cost">Pricing and Cost</h2>
 <p>Database replication and sharding can also have a significant impact on the cost of a database. Here are some real-world pricing examples:</p>
 <ul>
@@ -286,9 +291,10 @@ aws benchmarks dynamodb --table-name mytable --read-capacity 10 --write-capacity
 <li><strong>Amazon DynamoDB</strong>: can cost up to $100 per month per 100,000 reads and $100 per month per 100,000 writes</li>
 </ul>
 <p>For example, using AWS, you can estimate the cost of a DynamoDB database using the <code>aws pricing</code> command. Here's an example of how to estimate the cost of a DynamoDB database:</p>
-<pre><code class="language-bash"># Estimate the cost of a DynamoDB database
-aws pricing dynamodb --table-name mytable --read-capacity 10 --write-capacity 10
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Estimate the cost of a DynamoDB database</span>
+aws<span class="w"> </span>pricing<span class="w"> </span>dynamodb<span class="w"> </span>--table-name<span class="w"> </span>mytable<span class="w"> </span>--read-capacity<span class="w"> </span><span class="m">10</span><span class="w"> </span>--write-capacity<span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+
 <h2 id="conclusion">Conclusion</h2>
 <p>Database replication and sharding are essential techniques for scaling a database horizontally. By understanding the different replication and sharding strategies, you can choose the best approach for your use case and improve the performance and availability of your database. Some key takeaways include:</p>
 <ul>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -176,84 +175,87 @@
 <h3 id="code-examples">Code Examples</h3>
 <p>Here are a few code examples that demonstrate how to implement a WAF:</p>
 <h4 id="example-1-configuring-aws-waf">Example 1: Configuring AWS WAF</h4>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-# Create an AWS WAF client
-waf = boto3.client('waf')
+<span class="c1"># Create an AWS WAF client</span>
+<span class="n">waf</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;waf&#39;</span><span class="p">)</span>
 
-# Create a new WAF rule
-rule = waf.create_rule(
-    Name='MyRule',
-    MetricName='MyRuleMetric'
-)
+<span class="c1"># Create a new WAF rule</span>
+<span class="n">rule</span> <span class="o">=</span> <span class="n">waf</span><span class="o">.</span><span class="n">create_rule</span><span class="p">(</span>
+    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;MyRule&#39;</span><span class="p">,</span>
+    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;MyRuleMetric&#39;</span>
+<span class="p">)</span>
 
-# Add a condition to the rule
-condition = waf.create_byte_match_set(
-    Name='MyCondition',
-    ByteMatchTuples=[
-        {
-            'FieldToMatch': 'USER_AGENT',
-            'PositionalConstraint': 'CONTAINS',
-            'TargetString': 'bot'
-        }
-    ]
-)
+<span class="c1"># Add a condition to the rule</span>
+<span class="n">condition</span> <span class="o">=</span> <span class="n">waf</span><span class="o">.</span><span class="n">create_byte_match_set</span><span class="p">(</span>
+    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;MyCondition&#39;</span><span class="p">,</span>
+    <span class="n">ByteMatchTuples</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;FieldToMatch&#39;</span><span class="p">:</span> <span class="s1">&#39;USER_AGENT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PositionalConstraint&#39;</span><span class="p">:</span> <span class="s1">&#39;CONTAINS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TargetString&#39;</span><span class="p">:</span> <span class="s1">&#39;bot&#39;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
-# Add the condition to the rule
-waf.update_rule(
-    RuleId=rule['Rule']['RuleId'],
-    ChangeToken=waf.get_change_token()['ChangeToken'],
-    Updates=[
-        {
-            'Action': 'INSERT',
-            'RuleId': rule['Rule']['RuleId'],
-            'Condition': condition['ByteMatchSet']['ByteMatchSetId']
-        }
-    ]
-)
-</code></pre>
+<span class="c1"># Add the condition to the rule</span>
+<span class="n">waf</span><span class="o">.</span><span class="n">update_rule</span><span class="p">(</span>
+    <span class="n">RuleId</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Rule&#39;</span><span class="p">][</span><span class="s1">&#39;RuleId&#39;</span><span class="p">],</span>
+    <span class="n">ChangeToken</span><span class="o">=</span><span class="n">waf</span><span class="o">.</span><span class="n">get_change_token</span><span class="p">()[</span><span class="s1">&#39;ChangeToken&#39;</span><span class="p">],</span>
+    <span class="n">Updates</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;INSERT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;RuleId&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Rule&#39;</span><span class="p">][</span><span class="s1">&#39;RuleId&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Condition&#39;</span><span class="p">:</span> <span class="n">condition</span><span class="p">[</span><span class="s1">&#39;ByteMatchSet&#39;</span><span class="p">][</span><span class="s1">&#39;ByteMatchSetId&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to create a new WAF rule and condition using the AWS WAF API.</p>
 <h4 id="example-2-implementing-owasp-modsecurity-core-rule-set">Example 2: Implementing OWASP ModSecurity Core Rule Set</h4>
-<pre><code class="language-bash"># Install ModSecurity
-sudo apt-get install modsecurity
+<div class="codehilite"><pre><span></span><code><span class="c1"># Install ModSecurity</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>modsecurity
 
-# Configure ModSecurity
-sudo nano /etc/apache2/conf.d/modsecurity.conf
+<span class="c1"># Configure ModSecurity</span>
+sudo<span class="w"> </span>nano<span class="w"> </span>/etc/apache2/conf.d/modsecurity.conf
 
-# Add the following configuration
-&lt;IfModule mod_security2.c&gt;
-    SecRuleEngine On
-    SecRequestBodyAccess On
-    SecRule &amp;REQUEST_HEADERS:Host &quot;@eq 0&quot; &quot;id:1000000,phase:1,t:none,log,deny,status:403&quot;
+<span class="c1"># Add the following configuration</span>
+&lt;IfModule<span class="w"> </span>mod_security2.c&gt;
+<span class="w">    </span>SecRuleEngine<span class="w"> </span>On
+<span class="w">    </span>SecRequestBodyAccess<span class="w"> </span>On
+<span class="w">    </span>SecRule<span class="w"> </span><span class="p">&amp;</span>REQUEST_HEADERS:Host<span class="w"> </span><span class="s2">&quot;@eq 0&quot;</span><span class="w"> </span><span class="s2">&quot;id:1000000,phase:1,t:none,log,deny,status:403&quot;</span>
 &lt;/IfModule&gt;
-</code></pre>
+</code></pre></div>
+
 <p>This code example demonstrates how to install and configure OWASP ModSecurity Core Rule Set on an Apache web server.</p>
 <h4 id="example-3-integrating-cloudflare-waf">Example 3: Integrating Cloudflare WAF</h4>
-<pre><code class="language-javascript">// Import the Cloudflare API library
-const cloudflare = require('cloudflare');
+<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Cloudflare API library</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cloudflare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cloudflare&#39;</span><span class="p">);</span>
 
-// Create a new Cloudflare API client
-const api = cloudflare({
-  email: 'your_email@example.com',
-  key: 'your_api_key'
-});
+<span class="c1">// Create a new Cloudflare API client</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cloudflare</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your_email@example.com&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your_api_key&#39;</span>
+<span class="p">});</span>
 
-// Create a new WAF rule
-api.zoneWafRules.create({
-  zoneId: 'your_zone_id',
-  rule: {
-    action: 'block',
-    expression: '(http.request.uri.path == &quot;/admin&quot;)',
-    description: 'Block access to admin panel'
-  }
-})
-  .then((response) =&gt; {
-    console.log(response);
-  })
-  .catch((error) =&gt; {
-    console.error(error);
-  });
-</code></pre>
+<span class="c1">// Create a new WAF rule</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">zoneWafRules</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">zoneId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your_zone_id&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">rule</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">expression</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;(http.request.uri.path == &quot;/admin&quot;)&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Block access to admin panel&#39;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">})</span>
+<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
+</code></pre></div>
+
 <p>This code example demonstrates how to create a new WAF rule using the Cloudflare API.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems and solutions related to WAF implementation:</p>

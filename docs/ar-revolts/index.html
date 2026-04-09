@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,33 +158,34 @@
 * Unreal Engine: A powerful game engine that supports AR development, with features like 3D modeling, physics, and graphics rendering.</p>
 <h3 id="practical-example-building-an-ar-app-with-arkit">Practical Example: Building an AR App with ARKit</h3>
 <p>Let's take a look at a practical example of building an AR app using ARKit. In this example, we'll create a simple app that displays a 3D model of a cat on a surface.</p>
-<pre><code class="language-swift">import UIKit
-import ARKit
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+<span class="kd">import</span> <span class="nc">ARKit</span>
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-    let sceneView = ARSCNView()
+<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">sceneView</span> <span class="p">=</span> <span class="bp">ARSCNView</span><span class="p">()</span>
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sceneView.delegate = self
-        sceneView.showsStatistics = true
-        sceneView.debugOptions = .showFeaturePoints
-        view.addSubview(sceneView)
-    }
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="p">=</span> <span class="kc">self</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">showsStatistics</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">debugOptions</span> <span class="p">=</span> <span class="p">.</span><span class="n">showFeaturePoints</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">sceneView</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
-    }
+    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewWillAppear</span><span class="p">(</span><span class="kc">_</span> <span class="n">animated</span><span class="p">:</span> <span class="nb">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">super</span><span class="p">.</span><span class="n">viewWillAppear</span><span class="p">(</span><span class="n">animated</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
+        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        let catNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
-        catNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        node.addChildNode(catNode)
-    }
-}
-</code></pre>
+    <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="kc">_</span> <span class="n">renderer</span><span class="p">:</span> <span class="bp">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="n">node</span><span class="p">:</span> <span class="bp">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="n">anchor</span><span class="p">:</span> <span class="bp">ARAnchor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">catNode</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="bp">SCNBox</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">chamferRadius</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">catNode</span><span class="p">.</span><span class="n">geometry</span><span class="p">?.</span><span class="n">firstMaterial</span><span class="p">?.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="p">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">red</span>
+        <span class="n">node</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">catNode</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code creates a simple AR app that displays a 3D model of a cat on a surface. The <code>renderer</code> function is called whenever a new anchor is detected, and it adds a 3D node to the scene.</p>
 <h3 id="common-problems-in-ar-development">Common Problems in AR Development</h3>
 <p>Despite the many advances in AR technology, there are still several common problems that developers face. Some of these include:
@@ -204,30 +204,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 * <strong>Retail</strong>: AR can be used to create interactive retail experiences, with customers interacting with virtual products and environments.</p>
 <h3 id="implementation-details">Implementation Details</h3>
 <p>Let's take a look at some implementation details for these use cases. For example, in gaming, we might use a combination of ARKit and Unity to create an immersive AR experience.</p>
-<pre><code class="language-csharp">using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARFoundation</span><span class="p">;</span>
 
-public class ARGame : MonoBehaviour {
-    private ARSession session;
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ARGame</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ARSession</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
 
-    void Start() {
-        session = new ARSession();
-        session.Run();
-    }
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ARSession</span><span class="p">();</span>
+<span class="w">        </span><span class="n">session</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    void Update() {
-        if (session.state == ARSessionState.Running) {
-            // Render the AR scene
-            RenderARScene();
-        }
-    }
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ARSessionState</span><span class="p">.</span><span class="n">Running</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Render the AR scene</span>
+<span class="w">            </span><span class="n">RenderARScene</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    void RenderARScene() {
-        // Render the AR scene using Unity's graphics pipeline
-        Graphics.Render();
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">RenderARScene</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Render the AR scene using Unity&#39;s graphics pipeline</span>
+<span class="w">        </span><span class="n">Graphics</span><span class="p">.</span><span class="n">Render</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code creates a simple AR game using Unity and ARKit. The <code>RenderARScene</code> function is called whenever the AR session is running, and it renders the AR scene using Unity's graphics pipeline.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>When it comes to AR development, performance is critical. Here are some performance benchmarks for different AR platforms:

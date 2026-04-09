@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -176,17 +175,18 @@
 </ul>
 <h4 id="example-choosing-the-right-chart">Example: Choosing the Right Chart</h4>
 <p>If you want to compare sales figures of different products, a bar chart is more effective than a pie chart. Here’s a simple example:</p>
-<pre><code class="language-python">import matplotlib.pyplot as plt
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-products = ['Product A', 'Product B', 'Product C']
-sales = [150, 200, 120]
+<span class="n">products</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Product A&#39;</span><span class="p">,</span> <span class="s1">&#39;Product B&#39;</span><span class="p">,</span> <span class="s1">&#39;Product C&#39;</span><span class="p">]</span>
+<span class="n">sales</span> <span class="o">=</span> <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
 
-plt.bar(products, sales, color='skyblue')
-plt.title('Sales Comparison')
-plt.xlabel('Products')
-plt.ylabel('Sales')
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">sales</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sales Comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Products&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Sales&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
 <h3 id="3-use-color-wisely">3. Use Color Wisely</h3>
 <p>Color can significantly impact the readability and comprehension of visualizations. Here are some guidelines:</p>
 <ul>
@@ -203,19 +203,20 @@ plt.show()
 </ul>
 <h4 id="example-adding-context">Example: Adding Context</h4>
 <p>Using Plotly, you can create an interactive chart with annotations:</p>
-<pre><code class="language-python">import plotly.express as px
-import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-df = pd.DataFrame({
-    &quot;Fruits&quot;: [&quot;Apples&quot;, &quot;Oranges&quot;, &quot;Pears&quot;],
-    &quot;Sales&quot;: [300, 150, 250]
-})
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Fruits&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Apples&quot;</span><span class="p">,</span> <span class="s2">&quot;Oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;Pears&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Sales&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">]</span>
+<span class="p">})</span>
 
-fig = px.bar(df, x='Fruits', y='Sales', title='Fruits Sales Comparison',
-             text='Sales', template='plotly_white')
-fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
-fig.show()
-</code></pre>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Fruits&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Sales&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Fruits Sales Comparison&#39;</span><span class="p">,</span>
+             <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Sales&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly_white&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">texttemplate</span><span class="o">=</span><span class="s1">&#39;%</span><span class="si">{text:.2s}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">textposition</span><span class="o">=</span><span class="s1">&#39;outside&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
 <h3 id="5-avoid-overcomplication">5. Avoid Overcomplication</h3>
 <p>Simplicity is key in data visualization. Avoid cluttering graphs with unnecessary elements.</p>
 <ul>

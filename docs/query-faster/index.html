@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -154,9 +153,10 @@
 <h3 id="understanding-query-optimization">Understanding Query Optimization</h3>
 <p>Query optimization involves identifying and addressing performance bottlenecks in database queries. This can include optimizing SQL code, indexing, and configuring database settings. The goal of query optimization is to reduce the time it takes to execute queries, improve system responsiveness, and increase overall throughput.</p>
 <p>To understand the importance of query optimization, consider the following example:</p>
-<pre><code class="language-sql">SELECT * FROM customers
-WHERE country='USA' AND age&gt;18;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This query may take a long time to execute if the <code>customers</code> table is very large and there are no indexes on the <code>country</code> and <code>age</code> columns. By adding indexes on these columns, we can significantly improve the query performance.</p>
 <h2 id="indexing-and-query-optimization">Indexing and Query Optimization</h2>
 <p>Indexing is a critical component of query optimization. An index is a data structure that improves the speed of data retrieval by providing a quick way to locate specific data. There are several types of indexes, including:</p>
@@ -166,19 +166,22 @@ WHERE country='USA' AND age&gt;18;
 <li>Full-text indexes: These are specialized indexes designed for full-text search queries.</li>
 </ul>
 <p>To create an index on the <code>country</code> and <code>age</code> columns in the <code>customers</code> table, we can use the following SQL command:</p>
-<pre><code class="language-sql">CREATE INDEX idx_country_age ON customers (country, age);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_country_age</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This will create a composite index on the <code>country</code> and <code>age</code> columns, which can significantly improve the performance of the query.</p>
 <h3 id="using-explain-to-analyze-query-performance">Using EXPLAIN to Analyze Query Performance</h3>
 <p>The <code>EXPLAIN</code> statement is a powerful tool for analyzing query performance. It provides detailed information about the query execution plan, including the indexes used, the number of rows scanned, and the estimated execution time.</p>
 <p>For example, to analyze the query performance of the following query:</p>
-<pre><code class="language-sql">SELECT * FROM customers
-WHERE country='USA' AND age&gt;18;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span><span class="p">;</span>
+</code></pre></div>
+
 <p>We can use the <code>EXPLAIN</code> statement as follows:</p>
-<pre><code class="language-sql">EXPLAIN SELECT * FROM customers
-WHERE country='USA' AND age&gt;18;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span><span class="p">;</span>
+</code></pre></div>
+
 <p>This will provide a detailed execution plan, including the indexes used, the number of rows scanned, and the estimated execution time.</p>
 <h2 id="query-optimization-tools-and-platforms">Query Optimization Tools and Platforms</h2>
 <p>There are several tools and platforms available for query optimization, including:</p>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -169,7 +168,7 @@
 <p>For example, consider a simple e-commerce application that uses a load balancer to distribute incoming traffic across multiple web servers. Each web server might use a caching layer to store frequently accessed product data, and a relational database to store user information and order data. The system might also use a message queue, such as Apache Kafka, to handle asynchronous tasks, such as sending confirmation emails.</p>
 <h3 id="example-code-load-balancing-with-haproxy">Example Code: Load Balancing with HAProxy</h3>
 <p>Here is an example of how to configure HAProxy to distribute incoming traffic across multiple web servers:</p>
-<pre><code class="language-haproxy">frontend http
+<div class="codehilite"><pre><span></span><code>frontend http
     bind *:80
     mode http
     default_backend web_servers
@@ -180,7 +179,8 @@ backend web_servers
     server web1 192.168.1.100:80 check
     server web2 192.168.1.101:80 check
     server web3 192.168.1.102:80 check
-</code></pre>
+</code></pre></div>
+
 <p>This configuration defines a frontend that listens on port 80 and distributes incoming traffic to a backend consisting of three web servers. The <code>balance roundrobin</code> directive tells HAProxy to use a round-robin algorithm to distribute traffic across the available servers.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of distributed systems, there are also several common problems that can arise. These include:
@@ -194,36 +194,37 @@ backend web_servers
 <p>For example, consider a distributed database that uses a heartbeating mechanism to detect when a network partition has occurred. When a partition is detected, the system can automatically failover to a backup server, ensuring that data remains available and consistent.</p>
 <h3 id="example-code-conflict-resolution-with-last-writer-wins">Example Code: Conflict Resolution with Last-Writer-Wins</h3>
 <p>Here is an example of how to implement a last-writer-wins conflict resolution mechanism in a distributed database using Python:</p>
-<pre><code class="language-python">import datetime
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
 
-class Database:
-    def __init__(self):
-        self.data = {}
+<span class="k">class</span> <span class="nc">Database</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
 
-    def update(self, key, value):
-        self.data[key] = (value, datetime.datetime.now())
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
-    def get(self, key):
-        if key in self.data:
-            return self.data[key][0]
-        else:
-            return None
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-    def resolve_conflict(self, key, value1, value2):
-        if value1[1] &gt; value2[1]:
-            return value1[0]
-        else:
-            return value2[0]
+    <span class="k">def</span> <span class="nf">resolve_conflict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">value2</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">value1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-db1 = Database()
-db2 = Database()
+<span class="n">db1</span> <span class="o">=</span> <span class="n">Database</span><span class="p">()</span>
+<span class="n">db2</span> <span class="o">=</span> <span class="n">Database</span><span class="p">()</span>
 
-db1.update(&quot;key&quot;, &quot;value1&quot;)
-db2.update(&quot;key&quot;, &quot;value2&quot;)
+<span class="n">db1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;value1&quot;</span><span class="p">)</span>
+<span class="n">db2</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;value2&quot;</span><span class="p">)</span>
 
-conflict_value = db1.resolve_conflict(&quot;key&quot;, db1.get(&quot;key&quot;), db2.get(&quot;key&quot;))
-print(conflict_value)  # Output: &quot;value2&quot;
-</code></pre>
+<span class="n">conflict_value</span> <span class="o">=</span> <span class="n">db1</span><span class="o">.</span><span class="n">resolve_conflict</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="n">db1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">),</span> <span class="n">db2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conflict_value</span><span class="p">)</span>  <span class="c1"># Output: &quot;value2&quot;</span>
+</code></pre></div>
+
 <p>This code defines a simple database class that stores data with a timestamp. The <code>resolve_conflict</code> method is used to resolve conflicts between different values for the same key, by choosing the value with the most recent timestamp.</p>
 <h2 id="real-world-use-cases-and-implementation-details">Real-World Use Cases and Implementation Details</h2>
 <p>Distributed systems are used in a wide range of real-world applications, including:
@@ -241,16 +242,17 @@ print(conflict_value)  # Output: &quot;value2&quot;
 * <strong>NoSQL databases</strong>: Such as MongoDB or Cassandra, to store and manage large amounts of user data.</p>
 <h3 id="example-code-using-apache-kafka-for-asynchronous-tasks">Example Code: Using Apache Kafka for Asynchronous Tasks</h3>
 <p>Here is an example of how to use Apache Kafka to handle asynchronous tasks in a distributed system using Python:</p>
-<pre><code class="language-python">from kafka import KafkaProducer
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
 
-producer = KafkaProducer(bootstrap_servers=&quot;localhost:9092&quot;)
+<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s2">&quot;localhost:9092&quot;</span><span class="p">)</span>
 
-def send_task(task_data):
-    producer.send(&quot;tasks&quot;, value=task_data)
+<span class="k">def</span> <span class="nf">send_task</span><span class="p">(</span><span class="n">task_data</span><span class="p">):</span>
+    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;tasks&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">task_data</span><span class="p">)</span>
 
-task_data = {&quot;task_id&quot;: 1, &quot;task_name&quot;: &quot;example_task&quot;}
-send_task(task_data)
-</code></pre>
+<span class="n">task_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;task_name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_task&quot;</span><span class="p">}</span>
+<span class="n">send_task</span><span class="p">(</span><span class="n">task_data</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code defines a simple function that sends a task to a Kafka topic using the <code>KafkaProducer</code> class. The <code>bootstrap_servers</code> parameter specifies the address of the Kafka broker.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>When designing a distributed system, it's essential to consider performance benchmarks and pricing data to ensure that the system is scalable and cost-effective. For example:

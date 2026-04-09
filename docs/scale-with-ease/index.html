@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,42 +166,45 @@
 <p>To illustrate the concepts of database replication and sharding, let's consider a real-world example using MySQL and MongoDB.</p>
 <h3 id="example-1-master-slave-replication-with-mysql">Example 1: Master-Slave Replication with MySQL</h3>
 <p>In this example, we will set up a master-slave replication using MySQL. We will use two MySQL instances: one as the master and one as the slave.</p>
-<pre><code class="language-sql">-- Create a new user for replication on the master
-CREATE USER 'replication_user'@'%' IDENTIFIED BY 'replication_password';
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new user for replication on the master</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
 
--- Grant replication privileges to the new user on the master
-GRANT REPLICATION SLAVE ON *.* TO 'replication_user'@'%';
+<span class="c1">-- Grant replication privileges to the new user on the master</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
--- Configure the master to allow replication
-SET GLOBAL SERVER_ID = 1;
-SET GLOBAL BINLOG_FORMAT = 'ROW';
-SET GLOBAL BINLOG_checksum = 'CRC32';
+<span class="c1">-- Configure the master to allow replication</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">SERVER_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">BINLOG_FORMAT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ROW&#39;</span><span class="p">;</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">BINLOG_checksum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CRC32&#39;</span><span class="p">;</span>
 
--- Configure the slave to connect to the master
-CHANGE MASTER TO MASTER_HOST = 'master_host', MASTER_PORT = 3306, MASTER_USER = 'replication_user', MASTER_PASSWORD = 'replication_password';
+<span class="c1">-- Configure the slave to connect to the master</span>
+<span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MASTER_HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;master_host&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3306</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
 
--- Start the replication on the slave
-START SLAVE;
-</code></pre>
+<span class="c1">-- Start the replication on the slave</span>
+<span class="k">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
+</code></pre></div>
+
 <h3 id="example-2-horizontal-sharding-with-mongodb">Example 2: Horizontal Sharding with MongoDB</h3>
 <p>In this example, we will set up a horizontal sharding using MongoDB. We will use three MongoDB instances: one as the config server, one as the shard server, and one as the mongos (router) server.</p>
-<pre><code class="language-javascript">// Create a new shard on the shard server
-sh.addShard(&quot;shard1:27018&quot;);
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new shard on the shard server</span>
+<span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shard1:27018&quot;</span><span class="p">);</span>
 
-// Enable sharding on the database
-sh.enableSharding(&quot;mydatabase&quot;);
+<span class="c1">// Enable sharding on the database</span>
+<span class="nx">sh</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">&quot;mydatabase&quot;</span><span class="p">);</span>
 
-// Shard a collection based on a specific key
-sh.shardCollection(&quot;mydatabase.mycollection&quot;, { _id: &quot;hashed&quot; });
-</code></pre>
+<span class="c1">// Shard a collection based on a specific key</span>
+<span class="nx">sh</span><span class="p">.</span><span class="nx">shardCollection</span><span class="p">(</span><span class="s2">&quot;mydatabase.mycollection&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">_id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;hashed&quot;</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+
 <h3 id="example-3-multi-master-replication-with-postgresql">Example 3: Multi-Master Replication with PostgreSQL</h3>
 <p>In this example, we will set up a multi-master replication using PostgreSQL. We will use two PostgreSQL instances: one as the primary master and one as the secondary master.</p>
-<pre><code class="language-sql">-- Create a new publication on the primary master
-CREATE PUBLICATION mypublication FOR ALL TABLES;
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new publication on the primary master</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">PUBLICATION</span><span class="w"> </span><span class="n">mypublication</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">TABLES</span><span class="p">;</span>
 
--- Create a new subscription on the secondary master
-CREATE SUBSCRIPTION mysubscription CONNECTION 'host=primary_master port=5432 user=myuser password=mypassword' PUBLICATION mypublication;
-</code></pre>
+<span class="c1">-- Create a new subscription on the secondary master</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">SUBSCRIPTION</span><span class="w"> </span><span class="n">mysubscription</span><span class="w"> </span><span class="k">CONNECTION</span><span class="w"> </span><span class="s1">&#39;host=primary_master port=5432 user=myuser password=mypassword&#39;</span><span class="w"> </span><span class="n">PUBLICATION</span><span class="w"> </span><span class="n">mypublication</span><span class="p">;</span>
+</code></pre></div>
+
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>To illustrate the performance benefits of database replication and sharding, let's consider some real-world metrics.</p>
 <ul>

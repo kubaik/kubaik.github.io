@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -228,12 +227,13 @@
 <h3 id="3-responsive-images">3. Responsive Images</h3>
 <p>Using responsive images ensures that users download appropriately sized images based on their device. This technique employs the <code>srcset</code> attribute in HTML.</p>
 <h4 id="example-responsive-images">Example: Responsive Images</h4>
-<pre><code class="language-html">&lt;img 
-  src=&quot;small.jpg&quot; 
-  srcset=&quot;medium.jpg 768w, large.jpg 1200w&quot; 
-  sizes=&quot;(max-width: 768px) 100vw, 50vw&quot; 
-  alt=&quot;A descriptive alt text&quot;&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> 
+  <span class="na">src</span><span class="o">=</span><span class="s">&quot;small.jpg&quot;</span> 
+  <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;medium.jpg 768w, large.jpg 1200w&quot;</span> 
+  <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 768px) 100vw, 50vw&quot;</span> 
+  <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A descriptive alt text&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example:
 - The <code>srcset</code> attribute specifies different image sizes for various viewport widths.
 - The <code>sizes</code> attribute allows browsers to choose the best image based on the current viewport size.</p>
@@ -241,8 +241,9 @@
 <p>Lazy loading defers the loading of images until they are about to enter the viewport. This technique reduces initial load time and saves bandwidth for users who don’t scroll down.</p>
 <h4 id="implementation-example">Implementation Example</h4>
 <p>Using native lazy loading is straightforward:</p>
-<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; loading=&quot;lazy&quot; alt=&quot;A descriptive alt text&quot;&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A descriptive alt text&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <h3 id="5-implementing-image-cdns">5. Implementing Image CDNs</h3>
 <p>Content Delivery Networks (CDNs) can dramatically improve your website’s performance when it comes to serving images.</p>
 <h4 id="benefits-of-image-cdns">Benefits of Image CDNs</h4>
@@ -259,8 +260,9 @@
 <p>Converting images to more efficient formats can lead to size reductions. For instance, converting a PNG to WebP can cut the file size drastically.</p>
 <h4 id="conversion-example">Conversion Example</h4>
 <p>Using ImageMagick to convert a PNG to WebP:</p>
-<pre><code class="language-bash">convert input.png -quality 80 output.webp
-</code></pre>
+<div class="codehilite"><pre><span></span><code>convert<span class="w"> </span>input.png<span class="w"> </span>-quality<span class="w"> </span><span class="m">80</span><span class="w"> </span>output.webp
+</code></pre></div>
+
 <h3 id="7-automated-workflows">7. Automated Workflows</h3>
 <p>Automating your image optimization process can save time and ensure consistency. You can use build tools like Webpack, Gulp, or Grunt.</p>
 <h4 id="example-using-gulp-for-image-optimization">Example: Using Gulp for Image Optimization</h4>
@@ -290,14 +292,15 @@
 <h3 id="8-image-sitemaps">8. Image Sitemaps</h3>
 <p>Including images in your XML sitemaps can help search engines index your images effectively.</p>
 <h4 id="example-of-an-image-sitemap-entry">Example of an Image Sitemap Entry</h4>
-<pre><code class="language-xml">&lt;url&gt;
-  &lt;loc&gt;http://www.example.com/&lt;/loc&gt;
-  &lt;image:image&gt;
-    &lt;image:loc&gt;http://www.example.com/images/example.jpg&lt;/image:loc&gt;
-    &lt;image:caption&gt;Example Image&lt;/image:caption&gt;
-  &lt;/image:image&gt;
-&lt;/url&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;url&gt;</span>
+<span class="w">  </span><span class="nt">&lt;loc&gt;</span>http://www.example.com/<span class="nt">&lt;/loc&gt;</span>
+<span class="w">  </span><span class="nt">&lt;image:image&gt;</span>
+<span class="w">    </span><span class="nt">&lt;image:loc&gt;</span>http://www.example.com/images/example.jpg<span class="nt">&lt;/image:loc&gt;</span>
+<span class="w">    </span><span class="nt">&lt;image:caption&gt;</span>Example<span class="w"> </span>Image<span class="nt">&lt;/image:caption&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/image:image&gt;</span>
+<span class="nt">&lt;/url&gt;</span>
+</code></pre></div>
+
 <h3 id="9-analyzing-image-performance">9. Analyzing Image Performance</h3>
 <p>Monitoring image performance is crucial for understanding the impact of your optimizations.</p>
 <h4 id="tools-for-analysis">Tools for Analysis</h4>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -243,36 +242,37 @@
 </ol>
 <h3 id="practical-code-example-data-governance-with-python">Practical Code Example: Data Governance with Python</h3>
 <p>Here’s a simple example of how to implement data governance principles using Python to ensure data quality through validation checks.</p>
-<pre><code class="language-python">import pandas as pd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-def validate_data(df):
-    &quot;&quot;&quot;
-    Validates a DataFrame to check for missing values and duplicates.
+<span class="k">def</span> <span class="nf">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates a DataFrame to check for missing values and duplicates.</span>
 
-    Parameters:
-    df (pd.DataFrame): The DataFrame to validate.
+<span class="sd">    Parameters:</span>
+<span class="sd">    df (pd.DataFrame): The DataFrame to validate.</span>
 
-    Returns:
-    dict: A dictionary with validation results.
-    &quot;&quot;&quot;
-    missing_values = df.isnull().sum()
-    duplicates = df.duplicated().sum()
+<span class="sd">    Returns:</span>
+<span class="sd">    dict: A dictionary with validation results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">missing_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">duplicates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-    return {
-        &quot;missing_values&quot;: missing_values[missing_values &gt; 0],
-        &quot;duplicates&quot;: duplicates
-    }
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;missing_values&quot;</span><span class="p">:</span> <span class="n">missing_values</span><span class="p">[</span><span class="n">missing_values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="s2">&quot;duplicates&quot;</span><span class="p">:</span> <span class="n">duplicates</span>
+    <span class="p">}</span>
 
-# Example usage
-data = {
-    'Name': ['Alice', 'Bob', 'Charlie', None, 'Alice'],
-    'Age': [25, None, 30, 35, 25]
-}
-df = pd.DataFrame(data)
+<span class="c1"># Example usage</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Alice&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-validation_results = validate_data(df)
-print(validation_results)
-</code></pre>
+<span class="n">validation_results</span> <span class="o">=</span> <span class="n">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">validation_results</span><span class="p">)</span>
+</code></pre></div>
+
 <h4 id="explanation-of-code">Explanation of Code:</h4>
 <ul>
 <li>The <code>validate_data</code> function checks a DataFrame for missing values and duplicate entries.</li>

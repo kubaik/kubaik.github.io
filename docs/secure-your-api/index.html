@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -153,49 +152,52 @@
 <p>API security is a multifaceted challenge that requires a combination of technical, operational, and organizational measures to protect against unauthorized access, data breaches, and other malicious activities. According to a recent survey by OWASP, 71% of organizations reported experiencing an API-related security incident in the past year, with an average cost of $1.1 million per incident. In this article, we will delve into the best practices for securing APIs, including authentication, authorization, encryption, and monitoring, with a focus on practical examples and concrete use cases.</p>
 <h3 id="authentication-and-authorization">Authentication and Authorization</h3>
 <p>Authentication and authorization are the foundation of API security. Authentication verifies the identity of users, while authorization determines what actions they can perform. One common approach is to use JSON Web Tokens (JWT) for authentication, which can be implemented using libraries such as Auth0 or Okta. For example, in a Node.js application using Express.js, you can use the <code>jsonwebtoken</code> library to generate and verify JWT tokens:</p>
-<pre><code class="language-javascript">const express = require('express');
-const jwt = require('jsonwebtoken');
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
 
-const app = express();
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
 
-app.post('/login', (req, res) =&gt; {
-  const username = req.body.username;
-  const password = req.body.password;
-  if (username === 'admin' &amp;&amp; password === 'password') {
-    const token = jwt.sign({ username: username }, 'secretkey', { expiresIn: '1h' });
-    res.json({ token: token });
-  } else {
-    res.status(401).json({ error: 'Invalid credentials' });
-  }
-});
-</code></pre>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">username</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">({</span><span class="w"> </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">username</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s1">&#39;secretkey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid credentials&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, the <code>login</code> endpoint generates a JWT token that expires in 1 hour, which can be used to authenticate subsequent requests.</p>
 <h3 id="encryption-and-data-protection">Encryption and Data Protection</h3>
 <p>Encryption is essential for protecting sensitive data in transit and at rest. One common approach is to use Transport Layer Security (TLS) to encrypt data in transit, which can be implemented using libraries such as OpenSSL or Let's Encrypt. For example, in a Python application using Flask, you can use the <code>ssl</code> library to enable TLS encryption:</p>
-<pre><code class="language-python">from flask import Flask
-import ssl
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
 
-app = Flask(__name__)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('path/to/cert.pem', 'path/to/key.pem')
+<span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">SSLContext</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLSv1_2</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">load_cert_chain</span><span class="p">(</span><span class="s1">&#39;path/to/cert.pem&#39;</span><span class="p">,</span> <span class="s1">&#39;path/to/key.pem&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-  app.run(host='localhost', port=443, ssl_context=context)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">443</span><span class="p">,</span> <span class="n">ssl_context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, the <code>ssl</code> library is used to enable TLS encryption using a certificate and private key.</p>
 <h3 id="monitoring-and-logging">Monitoring and Logging</h3>
 <p>Monitoring and logging are critical for detecting and responding to security incidents. One common approach is to use tools such as Splunk or ELK (Elasticsearch, Logstash, Kibana) to collect and analyze log data. For example, in a Java application using Spring Boot, you can use the <code>spring-boot-starter-logging</code> library to enable logging:</p>
-<pre><code class="language-java">import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
 
-@SpringBootApplication
-public class MyApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(MyApplication.class, args);
-  }
-}
-</code></pre>
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyApplication</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MyApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, the <code>spring-boot-starter-logging</code> library is used to enable logging, which can be configured to write log data to a file or send it to a logging service.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to API security:</p>

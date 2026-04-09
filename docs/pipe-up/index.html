@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,60 +158,63 @@
 * <strong>Data Analysis</strong>: This final step involves analyzing the stored data to extract insights, create reports, or train machine learning models.</p>
 <h2 id="implementing-a-data-pipeline-with-apache-beam">Implementing a Data Pipeline with Apache Beam</h2>
 <p>Apache Beam is a popular open-source framework for building data pipelines. It provides a unified programming model for both batch and streaming data processing. Here is an example of a simple data pipeline implemented using Apache Beam:</p>
-<pre><code class="language-python">import apache_beam as beam
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
 
-# Define a pipeline that reads data from a text file, transforms it, and writes to a new file
-with beam.Pipeline() as pipeline:
-    lines = pipeline | beam.ReadFromText('input.txt')
-    transformed_lines = lines | beam.Map(lambda x: x.upper())
-    transformed_lines | beam.WriteToText('output.txt')
-</code></pre>
+<span class="c1"># Define a pipeline that reads data from a text file, transforms it, and writes to a new file</span>
+<span class="k">with</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span> <span class="k">as</span> <span class="n">pipeline</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span>
+    <span class="n">transformed_lines</span> <span class="o">=</span> <span class="n">lines</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="n">transformed_lines</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">WriteToText</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we define a pipeline that reads data from a text file, transforms each line by converting it to uppercase, and writes the transformed data to a new file.</p>
 <h3 id="using-apache-spark-for-data-processing">Using Apache Spark for Data Processing</h3>
 <p>Apache Spark is another popular tool for data processing. It provides a high-level API for building data pipelines and supports a wide range of data sources and sinks. Here is an example of a data pipeline implemented using Apache Spark:</p>
-<pre><code class="language-python">from pyspark.sql import SparkSession
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-# Create a SparkSession
-spark = SparkSession.builder.appName('Data Pipeline').getOrCreate()
+<span class="c1"># Create a SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s1">&#39;Data Pipeline&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-# Read data from a CSV file
-df = spark.read.csv('input.csv', header=True, inferSchema=True)
+<span class="c1"># Read data from a CSV file</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;input.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Transform the data by filtering out rows with missing values
-transformed_df = df.dropna()
+<span class="c1"># Transform the data by filtering out rows with missing values</span>
+<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
-# Write the transformed data to a new CSV file
-transformed_df.write.csv('output.csv', header=True)
-</code></pre>
+<span class="c1"># Write the transformed data to a new CSV file</span>
+<span class="n">transformed_df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;output.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we create a SparkSession, read data from a CSV file, transform the data by filtering out rows with missing values, and write the transformed data to a new CSV file.</p>
 <h2 id="performance-benchmarking-with-apache-airflow">Performance Benchmarking with Apache Airflow</h2>
 <p>Apache Airflow is a popular platform for managing and scheduling data pipelines. It provides a web-based interface for defining, scheduling, and monitoring workflows. Here is an example of a data pipeline implemented using Apache Airflow:</p>
-<pre><code class="language-python">from datetime import datetime, timedelta
-from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="nn">airflow.operators.bash_operator</span> <span class="kn">import</span> <span class="n">BashOperator</span>
 
-# Define a DAG that runs a data pipeline every day
-default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2022, 1, 1),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-}
+<span class="c1"># Define a DAG that runs a data pipeline every day</span>
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;depends_on_past&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;retry_delay&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+<span class="p">}</span>
 
-dag = DAG(
-    'data_pipeline',
-    default_args=default_args,
-    schedule_interval=timedelta(days=1),
-)
+<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
+    <span class="s1">&#39;data_pipeline&#39;</span><span class="p">,</span>
+    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+    <span class="n">schedule_interval</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
 
-# Define a task that runs a Bash command to execute the data pipeline
-task = BashOperator(
-    task_id='run_data_pipeline',
-    bash_command='python data_pipeline.py',
-    dag=dag,
-)
-</code></pre>
+<span class="c1"># Define a task that runs a Bash command to execute the data pipeline</span>
+<span class="n">task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;run_data_pipeline&#39;</span><span class="p">,</span>
+    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python data_pipeline.py&#39;</span><span class="p">,</span>
+    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we define a DAG that runs a data pipeline every day, using a BashOperator to execute a Python script that implements the data pipeline.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Here are some real-world use cases for data engineering pipelines:

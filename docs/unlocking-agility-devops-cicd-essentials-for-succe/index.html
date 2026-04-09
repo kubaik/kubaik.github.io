@@ -92,7 +92,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -170,100 +169,106 @@
 <h2 id="how-to-set-up-a-cicd-pipeline-a-practical-example">How to Set Up a CI/CD Pipeline: A Practical Example</h2>
 <h3 id="step-1-version-control-with-github">Step 1: Version Control with GitHub</h3>
 <p>Start by creating a repository on GitHub. Here’s a simple command to initialize a Git repository on your local machine:</p>
-<pre><code class="language-bash">git init my-project
-cd my-project
-echo &quot;# My Project&quot; &gt;&gt; README.md
-git add README.md
-git commit -m &quot;Initial commit&quot;
-git remote add origin https://github.com/username/my-project.git
-git push -u origin master
-</code></pre>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>init<span class="w"> </span>my-project
+<span class="nb">cd</span><span class="w"> </span>my-project
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;# My Project&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>README.md
+git<span class="w"> </span>add<span class="w"> </span>README.md
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>https://github.com/username/my-project.git
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>master
+</code></pre></div>
+
 <h3 id="step-2-set-up-continuous-integration-with-github-actions">Step 2: Set Up Continuous Integration with GitHub Actions</h3>
 <p>GitHub Actions allows you to automate your workflow directly from your GitHub repository. Below is a sample YAML file that runs tests every time you push changes to the <code>master</code> branch:</p>
-<pre><code class="language-yaml">name: CI
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
 
-on:
-  push:
-    branches: [ master ]
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">master</span><span class="w"> </span><span class="p p-Indicator">]</span>
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
+<span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
+<span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
+<span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
 
-    - name: Install dependencies
-      run: npm install
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+<span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
 
-    - name: Run tests
-      run: npm test
-</code></pre>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+</code></pre></div>
+
 <h3 id="step-3-continuous-delivery-with-docker-and-kubernetes">Step 3: Continuous Delivery with Docker and Kubernetes</h3>
 <p>Once your code is tested, you can package it into a Docker container and deploy it to a Kubernetes cluster. Here’s how:</p>
 <ol>
 <li><strong>Dockerfile</strong>: Create a <code>Dockerfile</code> in your project directory.</li>
 </ol>
-<pre><code class="language-dockerfile"># Use a base image
-FROM node:14
+<div class="codehilite"><pre><span></span><code><span class="c"># Use a base image</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
 
-# Set the working directory
-WORKDIR /usr/src/app
+<span class="c"># Set the working directory</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/usr/src/app</span>
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+<span class="c"># Copy package.json and install dependencies</span>
+<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
 
-# Copy the rest of your application 
-COPY . .
+<span class="c"># Copy the rest of your application </span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
 
-# Expose the application port
-EXPOSE 8080
+<span class="c"># Expose the application port</span>
+<span class="k">EXPOSE</span><span class="w"> </span><span class="s">8080</span>
 
-# Command to run your app
-CMD [ &quot;npm&quot;, &quot;start&quot; ]
-</code></pre>
+<span class="c"># Command to run your app</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;npm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+
 <ol>
 <li><strong>Build and Deploy</strong>: Use the following command to build and run your Docker container:</li>
 </ol>
-<pre><code class="language-bash">docker build -t my-node-app .
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-node-app<span class="w"> </span>.
 
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*
+*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Docker<span class="w"> </span>Deep<span class="w"> </span>Dive<span class="w"> </span>by<span class="w"> </span>Nigel<span class="w"> </span>Poulton&lt;/a&gt;*
 
-docker run -p 8080:8080 my-node-app
-</code></pre>
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span>my-node-app
+</code></pre></div>
+
 <ol>
 <li><strong>Deploy to Kubernetes</strong>: Create a deployment YAML file (e.g., <code>deployment.yaml</code>) to manage your application in Kubernetes.</li>
 </ol>
-<pre><code class="language-yaml">apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-node-app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: my-node-app
-  template:
-    metadata:
-      labels:
-        app: my-node-app
-    spec:
-      containers:
-      - name: my-node-app
-        image: my-node-app:latest
-        ports:
-        - containerPort: 8080
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-node-app</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-node-app</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-node-app</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-node-app</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-node-app:latest</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</code></pre></div>
+
 <p>Deploy it using:</p>
-<pre><code class="language-bash">kubectl apply -f deployment.yaml
-</code></pre>
+<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml
+</code></pre></div>
+
 <h3 id="real-world-example-implementing-cicd-at-company-xyz">Real-World Example: Implementing CI/CD at Company XYZ</h3>
 <p><strong>Context</strong>: Company XYZ was experiencing long lead times from development to deployment, often taking several weeks to release new features.</p>
 <p><strong>Solution</strong>:

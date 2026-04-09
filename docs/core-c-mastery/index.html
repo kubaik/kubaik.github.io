@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -160,115 +159,117 @@
 * Create a new .NET Core project using the <code>dotnet new</code> command</p>
 <h2 id="building-a-simple-web-application">Building a Simple Web Application</h2>
 <p>Let's build a simple web application using C# .NET Core. We will use the ASP.NET Core framework to build a RESTful API that returns a list of books.</p>
-<pre><code class="language-csharp">using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
 
-namespace BookApi
-{
-    public class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
-        }
+<span class="k">namespace</span><span class="w"> </span><span class="nn">BookApi</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Startup</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span><span class="w"> </span><span class="n">services</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">services</span><span class="p">.</span><span class="n">AddMvc</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseRouting();
-            app.UseEndpoints(endpoints =&gt;
-            {
-                endpoints.MapControllers();
-            });
-        }
-    }
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IWebHostEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseRouting</span><span class="p">();</span>
+<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">endpoints</span><span class="p">.</span><span class="n">MapControllers</span><span class="p">();</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    [ApiController]
-    [Route(&quot;api/[controller]&quot;)]
-    public class BooksController : ControllerBase
-    {
-        private readonly IBookService _bookService;
+<span class="w">    </span><span class="na">[ApiController]</span>
+<span class="w">    </span><span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BooksController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">IBookService</span><span class="w"> </span><span class="n">_bookService</span><span class="p">;</span>
 
-        public BooksController(IBookService bookService)
-        {
-            _bookService = bookService;
-        }
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="nf">BooksController</span><span class="p">(</span><span class="n">IBookService</span><span class="w"> </span><span class="n">bookService</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_bookService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookService</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
-        [HttpGet]
-        public async Task&lt;ActionResult&lt;IEnumerable&lt;Book&gt;&gt;&gt; GetBooks()
-        {
-            return await _bookService.GetBooksAsync();
-        }
-    }
+<span class="w">        </span><span class="na">[HttpGet]</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">ActionResult</span><span class="o">&lt;</span><span class="n">IEnumerable</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">GetBooks</span><span class="p">()</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_bookService</span><span class="p">.</span><span class="n">GetBooksAsync</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public class Book
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Book</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Author</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>Startup</code> class that configures the ASP.NET Core pipeline and adds the MVC services. We also define a <code>BooksController</code> class that handles HTTP requests and returns a list of books. The <code>Book</code> class represents a book entity with properties for ID, title, and author.</p>
 <h3 id="using-entity-framework-core-for-database-operations">Using Entity Framework Core for Database Operations</h3>
 <p>Entity Framework Core is a popular ORM (Object-Relational Mapping) framework for .NET Core applications. It provides a set of tools and libraries for interacting with databases and performing CRUD (Create, Read, Update, Delete) operations.</p>
 <p>Here's an example of using Entity Framework Core to perform database operations:</p>
-<pre><code class="language-csharp">using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Threading.Tasks</span><span class="p">;</span>
 
-public class BookContext : DbContext
-{
-    public BookContext(DbContextOptions&lt;BookContext&gt; options) : base(options)
-    {
-    }
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BookContext</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DbContext</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">BookContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="o">&lt;</span><span class="n">BookContext</span><span class="o">&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public DbSet&lt;Book&gt; Books { get; set; }
-}
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DbSet</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Books</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 
-public class BookService
-{
-    private readonly BookContext _context;
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BookService</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">BookContext</span><span class="w"> </span><span class="n">_context</span><span class="p">;</span>
 
-    public BookService(BookContext context)
-    {
-        _context = context;
-    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">BookService</span><span class="p">(</span><span class="n">BookContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public async Task&lt;IEnumerable&lt;Book&gt;&gt; GetBooksAsync()
-    {
-        return await _context.Books.ToListAsync();
-    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">IEnumerable</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">GetBooksAsync</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">ToListAsync</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public async Task&lt;Book&gt; GetBookAsync(int id)
-    {
-        return await _context.Books.FindAsync(id);
-    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetBookAsync</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public async Task CreateBookAsync(Book book)
-    {
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
-    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">CreateBookAsync</span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">SaveChangesAsync</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public async Task UpdateBookAsync(Book book)
-    {
-        _context.Books.Update(book);
-        await _context.SaveChangesAsync();
-    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">UpdateBookAsync</span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">SaveChangesAsync</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    public async Task DeleteBookAsync(int id)
-    {
-        var book = await _context.Books.FindAsync(id);
-        if (book != null)
-        {
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-        }
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">DeleteBookAsync</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">book</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_context</span><span class="p">.</span><span class="n">Books</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">SaveChangesAsync</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>BookContext</code> class that inherits from <code>DbContext</code> and provides a <code>DbSet</code> property for books. We also define a <code>BookService</code> class that provides methods for performing CRUD operations on books.</p>
 <h3 id="performance-optimization-techniques">Performance Optimization Techniques</h3>
 <p>Performance optimization is a critical aspect of building scalable and efficient .NET Core applications. Here are some performance optimization techniques to keep in mind:

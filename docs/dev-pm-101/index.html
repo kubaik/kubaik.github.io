@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -197,33 +196,34 @@
 </ul>
 <h3 id="code-example-estimation-and-tracking">Code Example: Estimation and Tracking</h3>
 <p>Here's an example of how you might use <a href="https://www.python.org/">Python</a> and <a href="https://github.com/">GitHub</a> to estimate and track a project:</p>
-<pre><code class="language-python">import github
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">github</span>
 
-# Set up GitHub API credentials
-gh = github.Github(&quot;your-username&quot;, &quot;your-password&quot;)
+<span class="c1"># Set up GitHub API credentials</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">Github</span><span class="p">(</span><span class="s2">&quot;your-username&quot;</span><span class="p">,</span> <span class="s2">&quot;your-password&quot;</span><span class="p">)</span>
 
-# Set up project repository
-repo = gh.get_repo(&quot;your-repo-name&quot;)
+<span class="c1"># Set up project repository</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="n">gh</span><span class="o">.</span><span class="n">get_repo</span><span class="p">(</span><span class="s2">&quot;your-repo-name&quot;</span><span class="p">)</span>
 
-# Define tasks and estimation
-tasks = [
-    {&quot;name&quot;: &quot;Task 1&quot;, &quot;duration&quot;: 2},
-    {&quot;name&quot;: &quot;Task 2&quot;, &quot;duration&quot;: 8},
-    {&quot;name&quot;: &quot;Task 3&quot;, &quot;duration&quot;: 4},
-    {&quot;name&quot;: &quot;Task 4&quot;, &quot;duration&quot;: 12}
-]
+<span class="c1"># Define tasks and estimation</span>
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Task 1&quot;</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Task 2&quot;</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Task 3&quot;</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Task 4&quot;</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="p">]</span>
 
-# Create GitHub issues for each task
-for task in tasks:
-    issue = repo.create_issue(title=task[&quot;name&quot;], body=&quot;Estimated duration: {} hours&quot;.format(task[&quot;duration&quot;]))
+<span class="c1"># Create GitHub issues for each task</span>
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+    <span class="n">issue</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">create_issue</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;Estimated duration: </span><span class="si">{}</span><span class="s2"> hours&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">]))</span>
 
-# Track progress and update issues
-for issue in repo.get_issues(state=&quot;open&quot;):
-    # Update issue with progress
-    issue.edit(state=&quot;in_progress&quot;)
-    # Update issue with estimated completion date
-    issue.edit(body=&quot;Estimated completion date: {} days from now&quot;.format(task[&quot;duration&quot;] / 2))
-</code></pre>
+<span class="c1"># Track progress and update issues</span>
+<span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_issues</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+    <span class="c1"># Update issue with progress</span>
+    <span class="n">issue</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;in_progress&quot;</span><span class="p">)</span>
+    <span class="c1"># Update issue with estimated completion date</span>
+    <span class="n">issue</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="s2">&quot;Estimated completion date: </span><span class="si">{}</span><span class="s2"> days from now&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+
 <p>This code example uses the GitHub API to create issues for each task, and then tracks progress by updating the issues with estimated completion dates.</p>
 <h3 id="delivery-and-deployment">Delivery and Deployment</h3>
 <p>Delivery and deployment are the final stages of the project management lifecycle. Delivery involves completing the project and meeting the requirements, while deployment involves releasing the project to production.</p>
@@ -243,26 +243,27 @@ for issue in repo.get_issues(state=&quot;open&quot;):
 </ol>
 <h3 id="code-example-delivery-and-deployment">Code Example: Delivery and Deployment</h3>
 <p>Here's an example of how you might use <a href="https://www.docker.com/">Docker</a> and <a href="https://kubernetes.io/">Kubernetes</a> to deliver and deploy a project:</p>
-<pre><code class="language-python">import os
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
 
-# Set up Docker and Kubernetes credentials
-os.environ[&quot;DOCKER_HOST&quot;] = &quot;your-docker-host&quot;
-os.environ[&quot;KUBECONFIG&quot;] = &quot;your-kubeconfig&quot;
+<span class="c1"># Set up Docker and Kubernetes credentials</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DOCKER_HOST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;your-docker-host&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;KUBECONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;your-kubeconfig&quot;</span>
 
-# Define Docker image and Kubernetes deployment
-docker_image = &quot;your-docker-image&quot;
-kubernetes_deployment = &quot;your-kubernetes-deployment&quot;
+<span class="c1"># Define Docker image and Kubernetes deployment</span>
+<span class="n">docker_image</span> <span class="o">=</span> <span class="s2">&quot;your-docker-image&quot;</span>
+<span class="n">kubernetes_deployment</span> <span class="o">=</span> <span class="s2">&quot;your-kubernetes-deployment&quot;</span>
 
-# Build and push Docker image
-docker build -t {} .format(docker_image)
-docker push {} .format(docker_image)
+<span class="c1"># Build and push Docker image</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="p">{}</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">docker_image</span><span class="p">)</span>
+<span class="n">docker</span> <span class="n">push</span> <span class="p">{}</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">docker_image</span><span class="p">)</span>
 
-# Create Kubernetes deployment
-kubectl create deployment {} --image={} .format(kubernetes_deployment, docker_image)
+<span class="c1"># Create Kubernetes deployment</span>
+<span class="n">kubectl</span> <span class="n">create</span> <span class="n">deployment</span> <span class="p">{}</span> <span class="o">--</span><span class="n">image</span><span class="o">=</span><span class="p">{}</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kubernetes_deployment</span><span class="p">,</span> <span class="n">docker_image</span><span class="p">)</span>
 
-# Expose Kubernetes deployment as a service
-kubectl expose deployment {} --type=LoadBalancer --port=80 .format(kubernetes_deployment)
-</code></pre>
+<span class="c1"># Expose Kubernetes deployment as a service</span>
+<span class="n">kubectl</span> <span class="n">expose</span> <span class="n">deployment</span> <span class="p">{}</span> <span class="o">--</span><span class="nb">type</span><span class="o">=</span><span class="n">LoadBalancer</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">80</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kubernetes_deployment</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code example uses Docker and Kubernetes to build, push, and deploy a Docker image, and then exposes the deployment as a service using a load balancer.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems and solutions that you might encounter when managing a project:</p>

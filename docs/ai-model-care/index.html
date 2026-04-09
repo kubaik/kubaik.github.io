@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -178,24 +177,25 @@
 * Automated retraining and redeployment</p>
 <h3 id="example-using-tensorflow-model-analysis">Example: Using TensorFlow Model Analysis</h3>
 <p>The following code example demonstrates how to use TensorFlow Model Analysis to visualize the performance of a TensorFlow model:</p>
-<pre><code class="language-python">import tensorflow as tf
-from tensorflow_model_analysis import tfma
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow_model_analysis</span> <span class="kn">import</span> <span class="n">tfma</span>
 
-# Load the model and data
-model = tf.keras.models.load_model('model.h5')
-data = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+<span class="c1"># Load the model and data</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
 
-# Create a TFMA evaluator
-evaluator = tfma.Evaluator(
-    model,
-    data,
-    metrics=['accuracy', 'precision', 'recall']
-)
+<span class="c1"># Create a TFMA evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">tfma</span><span class="o">.</span><span class="n">Evaluator</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;precision&#39;</span><span class="p">,</span> <span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="p">)</span>
 
-# Evaluate the model and visualize the results
-results = evaluator.evaluate()
-tfma.view.render_slicing_metrics(results)
-</code></pre>
+<span class="c1"># Evaluate the model and visualize the results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+<span class="n">tfma</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">render_slicing_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code loads a TensorFlow model and dataset, creates a TFMA evaluator, and evaluates the model's performance using various metrics. The results are then visualized using TFMA's slicing metrics.</p>
 <h2 id="best-practices-for-ai-model-monitoring-and-maintenance">Best Practices for AI Model Monitoring and Maintenance</h2>
 <p>To ensure the reliability and accuracy of AI models, it is essential to follow best practices for monitoring and maintenance, including:
@@ -205,33 +205,33 @@ tfma.view.render_slicing_metrics(results)
 * <strong>Model ensemble</strong>: combine the predictions of multiple models to improve overall performance</p>
 <h3 id="example-implementing-regular-model-retraining">Example: Implementing Regular Model Retraining</h3>
 <p>The following code example demonstrates how to implement regular model retraining using MLflow:</p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
 
-import mlflow
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-# Load the data and split it into training and testing sets
-data = pd.read_csv('data.csv')
-x_train, x_test, y_train, y_test = train_test_split(data.drop('target', axis=1), data['target'], test_size=0.2)
+<span class="c1"># Load the data and split it into training and testing sets</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
-# Define the model and hyperparameters
-model = RandomForestClassifier(n_estimators=100)
-hyperparams = {'n_estimators': 100, 'max_depth': 5}
+<span class="c1"># Define the model and hyperparameters</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">hyperparams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 
-# Create an MLflow experiment and start a run
-experiment = mlflow.create_experiment('Model Retraining')
-with mlflow.start_run(experiment_id=experiment.experiment_id) as run:
-    # Train the model and log the hyperparameters and metrics
-    model.fit(x_train, y_train)
-    mlflow.log_params(hyperparams)
-    mlflow.log_metric('accuracy', model.score(x_test, y_test))
+<span class="c1"># Create an MLflow experiment and start a run</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">create_experiment</span><span class="p">(</span><span class="s1">&#39;Model Retraining&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="c1"># Train the model and log the hyperparameters and metrics</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">hyperparams</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
 
-    # Schedule the model to be retrained every week
-    schedule = mlflow.schedules.schedule('0 0 * * 0', 'Model Retraining')
-    mlflow.schedules.add_schedule(schedule)
-</code></pre>
+    <span class="c1"># Schedule the model to be retrained every week</span>
+    <span class="n">schedule</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;0 0 * * 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Model Retraining&#39;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">add_schedule</span><span class="p">(</span><span class="n">schedule</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code defines a model and hyperparameters, creates an MLflow experiment, and starts a run to train the model and log the hyperparameters and metrics. The model is then scheduled to be retrained every week using MLflow's scheduling feature.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Several common problems can arise during AI model monitoring and maintenance, including:
@@ -244,27 +244,28 @@ with mlflow.start_run(experiment_id=experiment.experiment_id) as run:
 * <strong>Perform hyperparameter tuning</strong>: adjust the model's hyperparameters to optimize performance</p>
 <h3 id="example-detecting-data-drift">Example: Detecting Data Drift</h3>
 <p>The following code example demonstrates how to detect data drift using Amazon SageMaker Model Monitor:</p>
-<pre><code class="language-python">import sagemaker
-from sagemaker.model_monitor import ModelMonitor
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">sagemaker</span>
+<span class="kn">from</span> <span class="nn">sagemaker.model_monitor</span> <span class="kn">import</span> <span class="n">ModelMonitor</span>
 
-# Create a SageMaker model and deploy it to an endpoint
-model = sagemaker.Model(
-    image_uri='model_image',
-    role='sagemaker_execution_role',
-    s3_bucket='sagemaker_bucket'
-)
-endpoint = model.deploy(
-    instance_type='ml.m5.xlarge',
-    initial_instance_count=1
-)
+<span class="c1"># Create a SageMaker model and deploy it to an endpoint</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span>
+    <span class="n">image_uri</span><span class="o">=</span><span class="s1">&#39;model_image&#39;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s1">&#39;sagemaker_execution_role&#39;</span><span class="p">,</span>
+    <span class="n">s3_bucket</span><span class="o">=</span><span class="s1">&#39;sagemaker_bucket&#39;</span>
+<span class="p">)</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span><span class="p">,</span>
+    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
 
-# Create a Model Monitor and schedule it to run every hour
-monitor = ModelMonitor(
-    endpoint_name=endpoint.name,
-    schedule='0 * * * *'
-)
-monitor.create()
-</code></pre>
+<span class="c1"># Create a Model Monitor and schedule it to run every hour</span>
+<span class="n">monitor</span> <span class="o">=</span> <span class="n">ModelMonitor</span><span class="p">(</span>
+    <span class="n">endpoint_name</span><span class="o">=</span><span class="n">endpoint</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="n">schedule</span><span class="o">=</span><span class="s1">&#39;0 * * * *&#39;</span>
+<span class="p">)</span>
+<span class="n">monitor</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code creates a SageMaker model and deploys it to an endpoint. A Model Monitor is then created and scheduled to run every hour to detect data drift and alert the user if any issues are found.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>AI model monitoring and maintenance are critical components of the machine learning lifecycle. By implementing a robust monitoring and maintenance strategy, you can ensure the reliability and accuracy of your AI models and improve overall performance. To get started, follow these steps:

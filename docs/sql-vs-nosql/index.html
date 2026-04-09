@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,17 +161,18 @@
 * Social media platforms (e.g., Facebook, which uses a custom MySQL variant)
 * Online banking systems (e.g., Bank of America, which uses Oracle Database)</p>
 <p>Here is an example of a simple SQL query to create a table and insert data:</p>
-<pre><code class="language-sql">-- Create a table
-CREATE TABLE customers (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  email VARCHAR(255)
-);
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a table</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
 
--- Insert data into the table
-INSERT INTO customers (id, name, email)
-VALUES (1, 'John Doe', 'john@example.com');
-</code></pre>
+<span class="c1">-- Insert data into the table</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;john@example.com&#39;</span><span class="p">);</span>
+</code></pre></div>
+
 <p>This query creates a table named <code>customers</code> with three columns: <code>id</code>, <code>name</code>, and <code>email</code>. It then inserts a new row into the table with the specified values.</p>
 <h3 id="nosql-databases">NoSQL Databases</h3>
 <p>NoSQL databases, also known as non-relational databases, are designed to store unstructured or semi-structured data. They do not use SQL language and do not support transactions or atomicity. Some of the key features of NoSQL databases include:
@@ -185,15 +185,16 @@ VALUES (1, 'John Doe', 'john@example.com');
 * Social media platforms (e.g., Twitter, which uses a combination of MySQL and NoSQL databases)
 * IoT (Internet of Things) applications (e.g., sensor data storage, which uses Cassandra)</p>
 <p>Here is an example of a simple NoSQL query using MongoDB to create a collection and insert data:</p>
-<pre><code class="language-javascript">// Create a collection
-db.createCollection(&quot;customers&quot;);
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a collection</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">&quot;customers&quot;</span><span class="p">);</span>
 
-// Insert data into the collection
-db.customers.insertOne({
-  name: &quot;John Doe&quot;,
-  email: &quot;john@example.com&quot;
-});
-</code></pre>
+<span class="c1">// Insert data into the collection</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">customers</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;john@example.com&quot;</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This query creates a collection named <code>customers</code> and inserts a new document into the collection with the specified values.</p>
 <h3 id="comparison-of-sql-and-nosql-databases">Comparison of SQL and NoSQL Databases</h3>
 <p>When it comes to choosing between SQL and NoSQL databases, there are several factors to consider. Here are some key differences:

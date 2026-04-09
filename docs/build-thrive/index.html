@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -181,146 +180,149 @@
 * Experience: A summary of work experience, including job titles, company names, and dates of employment</p>
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>To demonstrate the concept of building a portfolio, let's consider a simple example using HTML, CSS, and JavaScript. The following code snippet creates a basic portfolio layout:</p>
-<pre><code class="language-html">&lt;!-- index.html --&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;title&gt;Portfolio&lt;/title&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;header&gt;
-        &lt;nav&gt;
-            &lt;ul&gt;
-                &lt;li&gt;&lt;a href=&quot;#projects&quot;&gt;Projects&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href=&quot;#skills&quot;&gt;Skills&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href=&quot;#experience&quot;&gt;Experience&lt;/a&gt;&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/nav&gt;
-    &lt;/header&gt;
-    &lt;main&gt;
-        &lt;section id=&quot;projects&quot;&gt;
-            &lt;h2&gt;Projects&lt;/h2&gt;
-            &lt;ul&gt;
-                &lt;li&gt;
-                    &lt;h3&gt;Project 1&lt;/h3&gt;
-                    &lt;p&gt;Description of Project 1&lt;/p&gt;
-                    &lt;a href=&quot;https://example.com/project1&quot;&gt;Live Demo&lt;/a&gt;
-                &lt;/li&gt;
-                &lt;li&gt;
-                    &lt;h3&gt;Project 2&lt;/h3&gt;
-                    &lt;p&gt;Description of Project 2&lt;/p&gt;
-                    &lt;a href=&quot;https://example.com/project2&quot;&gt;Live Demo&lt;/a&gt;
-                &lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/section&gt;
-        &lt;section id=&quot;skills&quot;&gt;
-            &lt;h2&gt;Skills&lt;/h2&gt;
-            &lt;ul&gt;
-                &lt;li&gt;HTML&lt;/li&gt;
-                &lt;li&gt;CSS&lt;/li&gt;
-                &lt;li&gt;JavaScript&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/section&gt;
-        &lt;section id=&quot;experience&quot;&gt;
-            &lt;h2&gt;Experience&lt;/h2&gt;
-            &lt;ul&gt;
-                &lt;li&gt;
-                    &lt;h3&gt;Job Title 1&lt;/h3&gt;
-                    &lt;p&gt;Company Name 1, Dates of Employment&lt;/p&gt;
-                &lt;/li&gt;
-                &lt;li&gt;
-                    &lt;h3&gt;Job Title 2&lt;/h3&gt;
-                    &lt;p&gt;Company Name 2, Dates of Employment&lt;/p&gt;
-                &lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/section&gt;
-    &lt;/main&gt;
-    &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-css">/* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- index.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Portfolio<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#projects&quot;</span><span class="p">&gt;</span>Projects<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#skills&quot;</span><span class="p">&gt;</span>Skills<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#experience&quot;</span><span class="p">&gt;</span>Experience<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;projects&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Projects<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Project 1<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Description of Project 1<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com/project1&quot;</span><span class="p">&gt;</span>Live Demo<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Project 2<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Description of Project 2<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com/project2&quot;</span><span class="p">&gt;</span>Live Demo<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;skills&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Skills<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>HTML<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>CSS<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>JavaScript<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;experience&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Experience<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Job Title 1<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Company Name 1, Dates of Employment<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Job Title 2<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Company Name 2, Dates of Employment<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-}
+<div class="codehilite"><pre><span></span><code><span class="c">/* styles.css */</span>
+<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="n">Arial</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-}
+<span class="nt">header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#fff</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
 
-nav li {
-    margin-right: 20px;
-}
+<span class="nt">nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">    </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-between</span><span class="p">;</span>
+<span class="p">}</span>
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-}
+<span class="nt">nav</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-}
+<span class="nt">nav</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#fff</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
 
-section {
-    background-color: #f7f7f7;
-    padding: 1em;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+<span class="nt">main</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">    </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">    </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">em</span><span class="p">;</span>
+<span class="p">}</span>
 
-h2 {
-    margin-top: 0;
-}
+<span class="nt">section</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f7f7f7</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
+<span class="p">}</span>
 
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+<span class="nt">h2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-li {
-    margin-bottom: 10px;
-}
+<span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-a {
-    text-decoration: none;
-    color: #337ab7;
-}
+<span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
 
-a:hover {
-    color: #23527c;
-}
-</code></pre>
-<pre><code class="language-javascript">// script.js
-// Add event listener to navigation links
-document.querySelectorAll('nav a').forEach((link) =&gt; {
-    link.addEventListener('click', (e) =&gt; {
-        e.preventDefault();
-        const sectionId = link.getAttribute('href');
-        const section = document.querySelector(sectionId);
-        section.scrollIntoView({ behavior: 'smooth' });
-    });
-});
-</code></pre>
+<span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#337ab7</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">a</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#23527c</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">// script.js</span>
+<span class="c1">// Add event listener to navigation links</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;nav a&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">link</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">link</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">sectionId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">section</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="nx">sectionId</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">section</span><span class="p">.</span><span class="nx">scrollIntoView</span><span class="p">({</span><span class="w"> </span><span class="nx">behavior</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;smooth&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>This code creates a basic portfolio layout with navigation links, project showcases, and skill lists. The JavaScript code adds an event listener to the navigation links, smoothing the scrolling effect when navigating between sections.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building a tech portfolio, common problems may arise, such as:

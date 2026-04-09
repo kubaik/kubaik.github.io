@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,28 +161,29 @@
 <p>For example, let's consider a scenario where a company's website is experiencing a denial-of-service (DoS) attack. The incident response team would classify the incident as a high-priority security incident and activate the incident response plan. The team would then follow the communication plan to notify stakeholders, including customers, employees, and law enforcement.</p>
 <h2 id="practical-example-implementing-an-incident-response-plan-using-pagerduty">Practical Example: Implementing an Incident Response Plan using PagerDuty</h2>
 <p>PagerDuty is a popular incident response platform that provides a robust set of tools for creating and managing incident response plans. Here's an example of how to implement an incident response plan using PagerDuty:</p>
-<pre><code class="language-python">import pypd
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pypd</span>
 
-# Create a PagerDuty API client
-pd = pypd.Client(api_token='your_api_token')
+<span class="c1"># Create a PagerDuty API client</span>
+<span class="n">pd</span> <span class="o">=</span> <span class="n">pypd</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="s1">&#39;your_api_token&#39;</span><span class="p">)</span>
 
-# Define an incident response plan
-plan = {
-    'name': 'Website DoS Attack',
-    'description': 'Response plan for a DoS attack on the company website',
-    'triggers': [
-        {'type': 'threshold', 'value': 1000, 'metric': 'requests_per_minute'}
-    ],
-    'actions': [
-        {'type': 'notify', 'targets': ['incident_response_team']},
-        {'type': 'run_script', 'script': 'contain_dos_attack.py'}
-    ]
-}
+<span class="c1"># Define an incident response plan</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Website DoS Attack&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Response plan for a DoS attack on the company website&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;triggers&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="s1">&#39;requests_per_minute&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;actions&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;notify&#39;</span><span class="p">,</span> <span class="s1">&#39;targets&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;incident_response_team&#39;</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;run_script&#39;</span><span class="p">,</span> <span class="s1">&#39;script&#39;</span><span class="p">:</span> <span class="s1">&#39;contain_dos_attack.py&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 
-# Create the incident response plan in PagerDuty
-response = pd.incident_response_plans.create(plan)
-print(response)
-</code></pre>
+<span class="c1"># Create the incident response plan in PagerDuty</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">incident_response_plans</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></div>
+
 <p>In this example, we define an incident response plan using the PagerDuty API client. The plan is triggered when the number of requests per minute exceeds 1000, and it notifies the incident response team and runs a script to contain the DoS attack.</p>
 <h3 id="incident-response-team-structure-and-roles">Incident Response Team Structure and Roles</h3>
 <p>The incident response team should include representatives from various departments, including IT, security, communications, and management. Each team member should have a clearly defined role and responsibility. Here are some common roles and responsibilities:
@@ -194,30 +194,31 @@ print(response)
 <p>For example, let's consider a scenario where a company's database is compromised due to a SQL injection attack. The incident response team would assemble to respond to the incident, with each member playing their designated role. The incident commander would oversee the response effort, while the technical lead would work to contain and eradicate the attack.</p>
 <h2 id="code-example-automating-incident-response-using-aws-lambda">Code Example: Automating Incident Response using AWS Lambda</h2>
 <p>AWS Lambda is a serverless compute service that can be used to automate incident response tasks. Here's an example of how to use AWS Lambda to automate incident response:</p>
-<pre><code class="language-python">import boto3
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
 
-# Define an AWS Lambda function to respond to incidents
-def lambda_handler(event, context):
-    # Get the incident details from the event
-    incident_id = event['incident_id']
-    incident_type = event['incident_type']
+<span class="c1"># Define an AWS Lambda function to respond to incidents</span>
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Get the incident details from the event</span>
+    <span class="n">incident_id</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;incident_id&#39;</span><span class="p">]</span>
+    <span class="n">incident_type</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;incident_type&#39;</span><span class="p">]</span>
 
-    # Trigger the incident response plan based on the incident type
-    if incident_type == 'security':
-        # Notify the security team
-        sns = boto3.client('sns')
-        sns.publish(TopicArn='arn:aws:sns:REGION:ACCOUNT_ID:security_topic', Message='Security incident detected')
-    elif incident_type == 'availability':
-        # Notify the availability team
-        sns = boto3.client('sns')
-        sns.publish(TopicArn='arn:aws:sns:REGION:ACCOUNT_ID:availability_topic', Message='Availability incident detected')
+    <span class="c1"># Trigger the incident response plan based on the incident type</span>
+    <span class="k">if</span> <span class="n">incident_type</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">:</span>
+        <span class="c1"># Notify the security team</span>
+        <span class="n">sns</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sns&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TopicArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:sns:REGION:ACCOUNT_ID:security_topic&#39;</span><span class="p">,</span> <span class="n">Message</span><span class="o">=</span><span class="s1">&#39;Security incident detected&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">incident_type</span> <span class="o">==</span> <span class="s1">&#39;availability&#39;</span><span class="p">:</span>
+        <span class="c1"># Notify the availability team</span>
+        <span class="n">sns</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sns&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TopicArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:sns:REGION:ACCOUNT_ID:availability_topic&#39;</span><span class="p">,</span> <span class="n">Message</span><span class="o">=</span><span class="s1">&#39;Availability incident detected&#39;</span><span class="p">)</span>
 
-    # Return a success response
-    return {
-        'statusCode': 200,
-        'body': 'Incident response triggered successfully'
-    }
-</code></pre>
+    <span class="c1"># Return a success response</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Incident response triggered successfully&#39;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
 <p>In this example, we define an AWS Lambda function that triggers an incident response plan based on the incident type. The function uses Amazon SNS to notify the security or availability team, depending on the incident type.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems that organizations face when implementing incident response plans, along with specific solutions:

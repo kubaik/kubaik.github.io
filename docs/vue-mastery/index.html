@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,31 +157,32 @@
 * Script: The JavaScript code that defines the component's behavior
 * Style: The CSS styles that define the component's appearance</p>
 <p>Here's an example of a simple Vue component:</p>
-<pre><code class="language-javascript">// MyComponent.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;h1&gt;{{ title }}&lt;/h1&gt;
-    &lt;p&gt;{{ message }}&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// MyComponent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      title: 'Hello World',
-      message: 'This is a sample message'
-    }
-  }
-}
-&lt;/script&gt;
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a sample message&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
 
-&lt;style&gt;
-h1 {
-  color: #00698f;
-}
-&lt;/style&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+<span class="nx">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="mo">006</span><span class="mf">98</span><span class="nx">f</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/style&gt;</span>
+</code></pre></div>
+
 <p>In this example, we define a component called <code>MyComponent</code> that displays a heading and a paragraph of text. The <code>template</code> section defines the HTML structure, the <code>script</code> section defines the JavaScript code, and the <code>style</code> section defines the CSS styles.</p>
 <h2 id="component-lifecycle">Component Lifecycle</h2>
 <p>The component lifecycle refers to the series of events that occur during a component's lifetime. Understanding the component lifecycle is crucial for building robust and efficient applications.</p>
@@ -193,32 +193,33 @@ h1 {
 4. <strong>Unmounting</strong>: The component is removed from the DOM.</p>
 <p>Each lifecycle event has a corresponding hook that can be used to execute code at that point in the component's life. For example, the <code>mounted</code> hook is called after the component has been mounted to the DOM.</p>
 <p>Here's an example of a component that uses the <code>mounted</code> hook to fetch data from an API:</p>
-<pre><code class="language-javascript">// MyComponent.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;ul&gt;
-      &lt;li v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;{{ item.name }}&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// MyComponent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+<span class="w">      </span><span class="o">&lt;</span><span class="nx">li</span><span class="w"> </span><span class="nx">v</span><span class="o">-</span><span class="k">for</span><span class="o">=</span><span class="s2">&quot;item in items&quot;</span><span class="w"> </span><span class="o">:</span><span class="nx">key</span><span class="o">=</span><span class="s2">&quot;item.id&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="err">/ul&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      items: []
-    }
-  },
-  mounted() {
-    fetch('https://api.example.com/items')
-      .then(response =&gt; response.json())
-      .then(data =&gt; {
-        this.items = data;
-      });
-  }
-}
-&lt;/script&gt;
-</code></pre>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">mounted</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/items&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <p>In this example, we use the <code>mounted</code> hook to fetch a list of items from an API and store them in the component's <code>items</code> array.</p>
 <h3 id="component-communication">Component Communication</h3>
 <p>Components can communicate with each other using props, events, and slots.</p>
@@ -228,43 +229,45 @@ export default {
 <li><strong>Slots</strong>: Slots are used to pass HTML content from a parent component to a child component.</li>
 </ul>
 <p>Here's an example of a parent component that passes a prop to a child component:</p>
-<pre><code class="language-javascript">// ParentComponent.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;ChildComponent :title=&quot;title&quot; /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+<div class="codehilite"><pre><span></span><code><span class="c1">// ParentComponent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">ChildComponent</span><span class="w"> </span><span class="o">:</span><span class="nx">title</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="w"> </span><span class="o">/&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
 
-&lt;script&gt;
-import ChildComponent from './ChildComponent.vue';
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">ChildComponent</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./ChildComponent.vue&#39;</span><span class="p">;</span>
 
-export default {
-  data() {
-    return {
-      title: 'Hello World'
-    }
-  },
-  components: {
-    ChildComponent
-  }
-}
-&lt;/script&gt;
-</code></pre>
-<pre><code class="language-javascript">// ChildComponent.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;h1&gt;{{ title }}&lt;/h1&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello World&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ChildComponent</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
 
-&lt;script&gt;
-export default {
-  props: {
-    title: String
-  }
-}
-&lt;/script&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// ChildComponent.vue</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/template&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+
 <p>In this example, the parent component passes a <code>title</code> prop to the child component, which displays it as a heading.</p>
 <h2 id="best-practices-for-building-scalable-applications">Best Practices for Building Scalable Applications</h2>
 <p>Building scalable applications with Vue requires careful planning and attention to detail. Here are some best practices to keep in mind:</p>

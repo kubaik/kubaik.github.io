@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,31 +162,32 @@
 </ul>
 <h3 id="implementing-cloud-security-using-code">Implementing Cloud Security Using Code</h3>
 <p>One of the most effective ways to implement cloud security is by using code. Here's an example of how you can use AWS CloudFormation to create a secure Amazon Virtual Private Cloud (VPC):</p>
-<pre><code class="language-yml">Resources:
-  MyVPC:
-    Type: 'AWS::EC2::VPC'
-    Properties:
-      CidrBlock: '10.0.0.0/16'
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-      Tags:
-        - Key: Name
-          Value: MyVPC
+<div class="codehilite"><pre><span></span><code><span class="n">Resources</span><span class="o">:</span>
+<span class="w">  </span><span class="n">MyVPC</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::EC2::VPC&#39;</span>
+<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
+<span class="w">      </span><span class="n">CidrBlock</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;10.0.0.0/16&#39;</span>
+<span class="w">      </span><span class="n">EnableDnsSupport</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="n">EnableDnsHostnames</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="n">Tags</span><span class="o">:</span>
+<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">Key</span><span class="o">:</span><span class="w"> </span><span class="n">Name</span>
+<span class="w">          </span><span class="n">Value</span><span class="o">:</span><span class="w"> </span><span class="n">MyVPC</span>
 
-  MySecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: My security group
-      VpcId: !Ref MyVPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
-      Tags:
-        - Key: Name
-          Value: MySecurityGroup
-</code></pre>
+<span class="w">  </span><span class="n">MySecurityGroup</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::EC2::SecurityGroup&#39;</span>
+<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
+<span class="w">      </span><span class="n">GroupDescription</span><span class="o">:</span><span class="w"> </span><span class="n">My</span><span class="w"> </span><span class="n">security</span><span class="w"> </span><span class="n">group</span>
+<span class="w">      </span><span class="n">VpcId</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="n">MyVPC</span>
+<span class="w">      </span><span class="n">SecurityGroupIngress</span><span class="o">:</span>
+<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">IpProtocol</span><span class="o">:</span><span class="w"> </span><span class="n">tcp</span>
+<span class="w">          </span><span class="n">FromPort</span><span class="o">:</span><span class="w"> </span><span class="mi">22</span>
+<span class="w">          </span><span class="n">ToPort</span><span class="o">:</span><span class="w"> </span><span class="mi">22</span>
+<span class="w">          </span><span class="n">CidrIp</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>
+<span class="w">      </span><span class="n">Tags</span><span class="o">:</span>
+<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">Key</span><span class="o">:</span><span class="w"> </span><span class="n">Name</span>
+<span class="w">          </span><span class="n">Value</span><span class="o">:</span><span class="w"> </span><span class="n">MySecurityGroup</span>
+</code></pre></div>
+
 <p>This code creates a new VPC with a CIDR block of <code>10.0.0.0/16</code> and a security group that allows inbound traffic on port 22 (SSH).</p>
 <h3 id="using-cloud-security-platforms">Using Cloud Security Platforms</h3>
 <p>Cloud security platforms can provide a comprehensive set of security features and tools to help you protect your cloud-based assets. Here are some examples of cloud security platforms:</p>
@@ -220,36 +220,37 @@
 <p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
 <h2 id="implementing-cloud-security-using-terraform">Implementing Cloud Security Using Terraform</h2>
 <p>Terraform is a popular infrastructure-as-code (IaC) tool that can be used to implement cloud security. Here's an example of how you can use Terraform to create a secure AWS VPC:</p>
-<pre><code class="language-terraform">provider &quot;aws&quot; {
-  region = &quot;us-west-2&quot;
-}
+<div class="codehilite"><pre><span></span><code><span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
+<span class="p">}</span>
 
-resource &quot;aws_vpc&quot; &quot;my_vpc&quot; {
-  cidr_block = &quot;10.0.0.0/16&quot;
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  tags = {
-    Name = &quot;MyVPC&quot;
-  }
-}
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_vpc&quot;</span><span class="w"> </span><span class="nv">&quot;my_vpc&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">cidr_block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.0.0/16&quot;</span>
+<span class="w">  </span><span class="na">enable_dns_support</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">enable_dns_hostnames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MyVPC&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-resource &quot;aws_security_group&quot; &quot;my_security_group&quot; {
-  name        = &quot;MySecurityGroup&quot;
-  description = &quot;My security group&quot;
-  vpc_id      = aws_vpc.my_vpc.id
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;my_security_group&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MySecurityGroup&quot;</span>
+<span class="w">  </span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;My security group&quot;</span>
+<span class="w">  </span><span class="na">vpc_id</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_vpc.my_vpc.id</span>
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = &quot;tcp&quot;
-    cidr_blocks = [&quot;0.0.0.0/0&quot;]
-  }
+<span class="w">  </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
+<span class="w">    </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
+<span class="w">    </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+<span class="w">    </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
 
-  tags = {
-    Name = &quot;MySecurityGroup&quot;
-  }
-}
-</code></pre>
+<span class="w">  </span><span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MySecurityGroup&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>This code creates a new VPC with a CIDR block of <code>10.0.0.0/16</code> and a security group that allows inbound traffic on port 22 (SSH).</p>
 <h2 id="cloud-security-and-compliance">Cloud Security and Compliance</h2>
 <p>Cloud security and compliance are essential considerations for any organization. Here are some key compliance frameworks and regulations to keep in mind:</p>

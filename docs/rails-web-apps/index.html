@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -159,34 +158,40 @@
 * <strong>Scaffolding</strong>: Rails provides a scaffolding system that generates boilerplate code for common tasks such as creating, reading, updating, and deleting (CRUD) operations.</p>
 <h2 id="building-a-rails-web-app">Building a Rails Web App</h2>
 <p>To build a Rails web app, you'll need to have Ruby and Rails installed on your system. You can install Rails using the following command:</p>
-<pre><code class="language-ruby">gem install rails
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">gem</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">rails</span>
+</code></pre></div>
+
 <p>Once you have Rails installed, you can create a new Rails application using the following command:</p>
-<pre><code class="language-ruby">rails new myapp
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">rails</span><span class="w"> </span><span class="kp">new</span><span class="w"> </span><span class="n">myapp</span>
+</code></pre></div>
+
 <p>This will create a new directory called <code>myapp</code> with the basic structure for a Rails application.</p>
 <h3 id="configuring-the-database">Configuring the Database</h3>
 <p>By default, Rails uses SQLite as the database for development and test environments. However, for production environments, you may want to use a more robust database such as PostgreSQL or MySQL. To configure the database, you'll need to update the <code>config/database.yml</code> file.</p>
 <p>For example, to use PostgreSQL, you can update the <code>config/database.yml</code> file as follows:</p>
-<pre><code class="language-yml">production:
-  adapter: postgresql
-  encoding: unicode
-  database: myapp_production
-  pool: 5
-  username: myapp
-  password: &lt;%= ENV['MYAPP_DATABASE_PASSWORD'] %&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="x">production:</span>
+<span class="x">  adapter: postgresql</span>
+<span class="x">  encoding: unicode</span>
+<span class="x">  database: myapp_production</span>
+<span class="x">  pool: 5</span>
+<span class="x">  username: myapp</span>
+<span class="x">  password: </span><span class="cp">&lt;%=</span><span class="w"> </span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;MYAPP_DATABASE_PASSWORD&#39;</span><span class="o">]</span><span class="w"> </span><span class="cp">%&gt;</span>
+</code></pre></div>
+
 <h3 id="implementing-authentication">Implementing Authentication</h3>
 <p>One of the common features of web applications is user authentication. Rails provides a gem called <code>devise</code> that simplifies the implementation of authentication.</p>
 <p>To implement authentication using <code>devise</code>, you can add the following line to your <code>Gemfile</code>:</p>
-<pre><code class="language-ruby">gem 'devise'
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;devise&#39;</span>
+</code></pre></div>
+
 <p>Then, run the following command to install the gem:</p>
-<pre><code class="language-ruby">bundle install
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">bundle</span><span class="w"> </span><span class="n">install</span>
+</code></pre></div>
+
 <p>Next, run the following command to generate the <code>devise</code> configuration files:</p>
-<pre><code class="language-ruby">rails generate devise:install
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">rails</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="ss">devise</span><span class="p">:</span><span class="n">install</span>
+</code></pre></div>
+
 <p>This will create a new file called <code>config/initializers/devise.rb</code> that contains the configuration settings for <code>devise</code>.</p>
 <h2 id="deploying-a-rails-web-app">Deploying a Rails Web App</h2>
 <p>Once you've built and tested your Rails web app, you'll need to deploy it to a production environment. There are several options available for deploying a Rails web app, including:</p>
@@ -203,8 +208,9 @@
 <ol>
 <li><strong>Caching</strong>: Caching involves storing frequently accessed data in memory to reduce the number of database queries. Rails provides a built-in caching system that can be enabled using the following line of code:</li>
 </ol>
-<pre><code class="language-ruby">config.cache_classes = true
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">cache_classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">true</span>
+</code></pre></div>
+
 <ol>
 <li><strong>Code splitting</strong>: Code splitting involves splitting your application code into smaller chunks to reduce the amount of code that needs to be loaded on each request. Rails provides a gem called <code>webpacker</code> that simplifies the implementation of code splitting.</li>
 <li><strong>Database indexing</strong>: Database indexing involves creating indexes on columns that are frequently used in WHERE and JOIN clauses. This can significantly improve the performance of database queries.</li>

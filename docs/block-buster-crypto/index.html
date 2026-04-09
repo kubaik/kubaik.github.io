@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -178,19 +177,20 @@
 <p>To understand cryptocurrency better, let’s create a simple wallet using Python. We will use the <code>bitcoinlib</code> library, which simplifies Bitcoin wallet creation and management.</p>
 <h4 id="step-1-install-bitcoinlib">Step 1: Install Bitcoinlib</h4>
 <p>First, ensure you have Python installed. Then, install the <code>bitcoinlib</code> library:</p>
-<pre><code class="language-bash">pip install bitcoinlib
-</code></pre>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>bitcoinlib
+</code></pre></div>
+
 <h4 id="step-2-create-a-new-wallet">Step 2: Create a New Wallet</h4>
 <p>Here’s a code snippet to create a new wallet:</p>
-<pre><code class="language-python">
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-from bitcoinlib.wallets import Wallet
+<span class="kn">from</span> <span class="nn">bitcoinlib.wallets</span> <span class="kn">import</span> <span class="n">Wallet</span>
 
-# Create a new wallet
-wallet = Wallet.create('MyNewWallet')
-print(f&quot;Wallet {wallet.name} created with address: {wallet.get_key().address}&quot;)
-</code></pre>
+<span class="c1"># Create a new wallet</span>
+<span class="n">wallet</span> <span class="o">=</span> <span class="n">Wallet</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;MyNewWallet&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wallet </span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> created with address: </span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span><span class="o">.</span><span class="n">address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet does the following:</p>
 <ul>
 <li>Imports the Wallet class from <code>bitcoinlib</code>.</li>
@@ -273,8 +273,9 @@ print(f&quot;Wallet {wallet.name} created with address: {wallet.get_key().addres
 <p>Let’s create a simple smart contract on Ethereum using Solidity. This contract will allow users to store and retrieve a value.</p>
 <h4 id="step-1-install-the-required-tools">Step 1: Install the Required Tools</h4>
 <p>Make sure you have Node.js and npm installed. Then, install Truffle and Ganache:</p>
-<pre><code class="language-bash">npm install -g truffle
-</code></pre>
+<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>truffle
+</code></pre></div>
+
 <h4 id="step-2-create-a-new-truffle-project">Step 2: Create a New Truffle Project</h4>
 <ol>
 <li>
@@ -288,21 +289,22 @@ print(f&quot;Wallet {wallet.name} created with address: {wallet.get_key().addres
 <p>Create a new Solidity file in the <code>contracts</code> directory named <code>SimpleStorage.sol</code>:</p>
 </li>
 </ol>
-<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+<div class="codehilite"><pre><span></span><code><span class="c1">// SPDX-License-Identifier: MIT</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
-contract SimpleStorage {
-    uint256 storedData;
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">storedData</span><span class="p">;</span>
 
-    function set(uint256 x) public {
-        storedData = x;
-    }
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span>storedData<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    function get() public view returns (uint256) {
-        return storedData;
-    }
-}
-</code></pre>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">get</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>storedData<span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h4 id="step-3-compile-and-deploy-the-contract">Step 3: Compile and Deploy the Contract</h4>
 <ol>
 <li>
@@ -314,12 +316,13 @@ contract SimpleStorage {
 <p>Deploy the contract to your local Ganache blockchain. Create a migration file in the <code>migrations</code> directory:</p>
 </li>
 </ol>
-<pre><code class="language-javascript">const SimpleStorage = artifacts.require(&quot;SimpleStorage&quot;);
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">SimpleStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">artifacts</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;SimpleStorage&quot;</span><span class="p">);</span>
 
-module.exports = function(deployer) {
-    deployer.deploy(SimpleStorage);
-};
-</code></pre>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">deployer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">deployer</span><span class="p">.</span><span class="nx">deploy</span><span class="p">(</span><span class="nx">SimpleStorage</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <ol>
 <li>Deploy using:
    <code>bash
@@ -327,22 +330,23 @@ module.exports = function(deployer) {
 </ol>
 <h3 id="interaction-with-smart-contracts">Interaction with Smart Contracts</h3>
 <p>You can interact with the deployed contract using JavaScript. Here’s how to set and get the stored value:</p>
-<pre><code class="language-javascript">const SimpleStorage = artifacts.require(&quot;SimpleStorage&quot;);
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">SimpleStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">artifacts</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;SimpleStorage&quot;</span><span class="p">);</span>
 
-module.exports = async function(callback) {
-    const instance = await SimpleStorage.deployed();
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">SimpleStorage</span><span class="p">.</span><span class="nx">deployed</span><span class="p">();</span>
 
-    // Set a value
-    await instance.set(42);
-    console.log(&quot;Value set to 42&quot;);
+<span class="w">    </span><span class="c1">// Set a value</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">instance</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">42</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Value set to 42&quot;</span><span class="p">);</span>
 
-    // Get the value
-    const value = await instance.get();
-    console.log(&quot;Stored value is: &quot; + value);
+<span class="w">    </span><span class="c1">// Get the value</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">instance</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Stored value is: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
 
-    callback();
-};
-</code></pre>
+<span class="w">    </span><span class="nx">callback</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div>
+
 <h3 id="conclusion">Conclusion</h3>
 <p>Cryptocurrency and blockchain technology present vast opportunities and challenges. By understanding the underlying mechanics and practical applications, you can better navigate this evolving landscape.</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>

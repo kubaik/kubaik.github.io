@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,17 +166,18 @@
 <p>When choosing a documentation tool or platform, consider factors like ease of use, customization options, and integration with other tools and services. For instance, if you're already using a project management tool like Jira or Trello, you may want to choose a documentation platform that integrates seamlessly with these tools.</p>
 <h3 id="code-examples-and-snippets">Code Examples and Snippets</h3>
 <p>Technical writers often need to include code examples and snippets in their documentation to illustrate complex concepts or provide step-by-step instructions. Here's an example of a Python code snippet that demonstrates how to use the <code>requests</code> library to send a GET request:</p>
-<pre><code class="language-python">import requests
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
 
-url = &quot;https://api.example.com/data&quot;
-response = requests.get(url)
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.example.com/data&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
-if response.status_code == 200:
-    print(&quot;Success!&quot;)
-    print(response.json())
-else:
-    print(&quot;Error:&quot;, response.status_code)
-</code></pre>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Success!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet includes a brief explanation, a clear and concise code example, and a relevant use case. When including code snippets in your documentation, make sure to follow best practices like using clear and descriptive variable names, providing context and explanations, and testing the code to ensure it works as expected.</p>
 <h2 id="best-practices-for-technical-writing">Best Practices for Technical Writing</h2>
 <p>To create high-quality documentation, technical writers should follow best practices like:

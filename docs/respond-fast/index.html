@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,16 +166,17 @@
 * Endpoint Detection and Response (EDR) tools
 * Network Traffic Analysis (NTA) tools</p>
 <p>For example, the following code snippet shows how to use the <code>pyshark</code> library in Python to capture and analyze network traffic:</p>
-<pre><code class="language-python">import pyshark
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyshark</span>
 
-# Capture network traffic
-capture = pyshark.LiveCapture(interface='eth0')
+<span class="c1"># Capture network traffic</span>
+<span class="n">capture</span> <span class="o">=</span> <span class="n">pyshark</span><span class="o">.</span><span class="n">LiveCapture</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="s1">&#39;eth0&#39;</span><span class="p">)</span>
 
-# Analyze network traffic
-for packet in capture:
-    if packet.tcp:
-        print(packet.tcp.srcport, packet.tcp.dstport)
-</code></pre>
+<span class="c1"># Analyze network traffic</span>
+<span class="k">for</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">capture</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">packet</span><span class="o">.</span><span class="n">tcp</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">packet</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">srcport</span><span class="p">,</span> <span class="n">packet</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">dstport</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet captures network traffic on the <code>eth0</code> interface and analyzes the TCP packets to identify potential security threats.</p>
 <h2 id="incident-containment-and-eradication">Incident Containment and Eradication</h2>
 <p>Incident containment and eradication involve taking steps to prevent the incident from spreading and eliminating the root cause of the incident. This can include:
@@ -190,17 +190,18 @@ for packet in capture:
 * Endpoint security software
 * Incident response platforms, such as Demisto or Phantom</p>
 <p>For example, the following code snippet shows how to use the <code>paramiko</code> library in Python to remotely connect to a server and apply a security patch:</p>
-<pre><code class="language-python">import paramiko
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paramiko</span>
 
-# Establish a remote connection to the server
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect('server.example.com', username='username', password='password')
+<span class="c1"># Establish a remote connection to the server</span>
+<span class="n">ssh</span> <span class="o">=</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;server.example.com&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
 
-# Apply the security patch
-stdin, stdout, stderr = ssh.exec_command('apt-get update &amp;&amp; apt-get install -y security-patch')
-print(stdout.read())
-</code></pre>
+<span class="c1"># Apply the security patch</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;apt-get update &amp;&amp; apt-get install -y security-patch&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</code></pre></div>
+
 <p>This code snippet establishes a remote connection to a server using SSH and applies a security patch using the <code>apt-get</code> command.</p>
 <h2 id="post-incident-activities">Post-Incident Activities</h2>
 <p>Post-incident activities involve conducting a root cause analysis, documenting lessons learned, and implementing changes to prevent similar incidents from occurring in the future. This can include:
@@ -213,26 +214,27 @@ print(stdout.read())
 * Collaboration and communication tools, such as Slack or Microsoft Teams
 * Documentation and knowledge management tools, such as Confluence or SharePoint</p>
 <p>For example, the following code snippet shows how to use the <code>python-docx</code> library in Python to generate a post-incident report:</p>
-<pre><code class="language-python">import docx
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">docx</span>
 
-# Create a new document
-document = docx.Document()
+<span class="c1"># Create a new document</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">docx</span><span class="o">.</span><span class="n">Document</span><span class="p">()</span>
 
-# Add a title and introduction
-document.add_heading('Post-Incident Report', 0)
-document.add_paragraph('This report summarizes the incident, including the root cause and impact.')
+<span class="c1"># Add a title and introduction</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Post-Incident Report&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;This report summarizes the incident, including the root cause and impact.&#39;</span><span class="p">)</span>
 
-# Add sections for root cause analysis, lessons learned, and recommendations
-document.add_heading('Root Cause Analysis', 1)
-document.add_paragraph('The root cause of the incident was a vulnerability in the software.')
-document.add_heading('Lessons Learned', 1)
-document.add_paragraph('The incident highlighted the importance of regular security updates and patches.')
-document.add_heading('Recommendations', 1)
-document.add_paragraph('Recommendations for preventing similar incidents include implementing regular security updates and patches.')
+<span class="c1"># Add sections for root cause analysis, lessons learned, and recommendations</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Root Cause Analysis&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;The root cause of the incident was a vulnerability in the software.&#39;</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Lessons Learned&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;The incident highlighted the importance of regular security updates and patches.&#39;</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Recommendations&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;Recommendations for preventing similar incidents include implementing regular security updates and patches.&#39;</span><span class="p">)</span>
 
-# Save the document
-document.save('post-incident-report.docx')
-</code></pre>
+<span class="c1"># Save the document</span>
+<span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;post-incident-report.docx&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code snippet generates a post-incident report using the <code>python-docx</code> library, including sections for root cause analysis, lessons learned, and recommendations.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Incident response planning can be challenging, and organizations often encounter common problems, such as:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -167,7 +166,7 @@
 4. <strong>Implement a unified monitoring and logging system</strong>: Implement a unified monitoring and logging system to monitor and troubleshoot your applications and workloads across multiple cloud providers.</p>
 <h3 id="example-deploying-a-containerized-application-across-multiple-cloud-providers">Example: Deploying a Containerized Application Across Multiple Cloud Providers</h3>
 <p>Here is an example of deploying a containerized application across multiple cloud providers using Kubernetes and Docker:</p>
-<pre><code class="language-yml"># Deploy a containerized application to AWS
+<div class="codehilite"><pre><span></span><code># Deploy a containerized application to AWS
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -229,7 +228,8 @@ spec:
         image: my-app:latest
         ports:
         - containerPort: 80
-</code></pre>
+</code></pre></div>
+
 <p>This example demonstrates how to deploy a containerized application across multiple cloud providers using Kubernetes and Docker.</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
 <h2 id="managing-and-monitoring-a-multi-cloud-architecture">Managing and Monitoring a Multi-Cloud Architecture</h2>
@@ -240,29 +240,30 @@ spec:
 * <strong>Splunk</strong>: A popular commercial logging platform that can be used to monitor and troubleshoot logs from multiple cloud providers.</p>
 <h3 id="example-monitoring-a-multi-cloud-architecture-with-prometheus-and-grafana">Example: Monitoring a Multi-Cloud Architecture with Prometheus and Grafana</h3>
 <p>Here is an example of monitoring a multi-cloud architecture with Prometheus and Grafana:</p>
-<pre><code class="language-yml"># Configure Prometheus to scrape metrics from AWS
-scrape_configs:
-  - job_name: 'aws-metrics'
-    scrape_interval: 10s
-    metrics_path: /metrics
-    static_configs:
-      - targets: ['aws-metrics:9090']
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">Configure</span><span class="w"> </span><span class="nx">Prometheus</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">scrape</span><span class="w"> </span><span class="nx">metrics</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">AWS</span>
+<span class="nx">scrape_configs</span><span class="p">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">job_name</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">aws</span><span class="o">-</span><span class="nx">metrics</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="nx">s</span>
+<span class="w">    </span><span class="nx">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="nx">metrics</span>
+<span class="w">    </span><span class="nx">static_configs</span><span class="p">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">targets</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">&#39;</span><span class="nx">aws</span><span class="o">-</span><span class="nx">metrics</span><span class="p">:</span><span class="mi">9090</span><span class="err">&#39;</span><span class="p">]</span>
 
-# Configure Prometheus to scrape metrics from Azure
-scrape_configs:
-  - job_name: 'azure-metrics'
-    scrape_interval: 10s
-    metrics_path: /metrics
-    static_configs:
-      - targets: ['azure-metrics:9090']
+<span class="err">#</span><span class="w"> </span><span class="nx">Configure</span><span class="w"> </span><span class="nx">Prometheus</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">scrape</span><span class="w"> </span><span class="nx">metrics</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">Azure</span>
+<span class="nx">scrape_configs</span><span class="p">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">job_name</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">azure</span><span class="o">-</span><span class="nx">metrics</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="nx">s</span>
+<span class="w">    </span><span class="nx">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="nx">metrics</span>
+<span class="w">    </span><span class="nx">static_configs</span><span class="p">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">targets</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">&#39;</span><span class="nx">azure</span><span class="o">-</span><span class="nx">metrics</span><span class="p">:</span><span class="mi">9090</span><span class="err">&#39;</span><span class="p">]</span>
 
-# Configure Grafana to visualize metrics from Prometheus
-datasource:
-  name: Prometheus
-  type: prometheus
-  url: http://prometheus:9090
-  access: proxy
-</code></pre>
+<span class="err">#</span><span class="w"> </span><span class="nx">Configure</span><span class="w"> </span><span class="nx">Grafana</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">visualize</span><span class="w"> </span><span class="nx">metrics</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">Prometheus</span>
+<span class="nx">datasource</span><span class="p">:</span>
+<span class="w">  </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Prometheus</span>
+<span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nx">prometheus</span>
+<span class="w">  </span><span class="nx">url</span><span class="p">:</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//prometheus:9090</span>
+<span class="w">  </span><span class="nx">access</span><span class="p">:</span><span class="w"> </span><span class="nx">proxy</span>
+</code></pre></div>
+
 <p>This example demonstrates how to configure Prometheus to scrape metrics from multiple cloud providers and Grafana to visualize those metrics.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when implementing a multi-cloud architecture:
@@ -274,27 +275,28 @@ datasource:
     + Solution: Use cost optimization tools and platforms, such as AWS Cost Explorer, Azure Cost Estimator, and GCP Cloud Cost Estimator, to optimize costs across multiple cloud providers.</p>
 <h3 id="example-implementing-a-unified-security-and-compliance-framework">Example: Implementing a Unified Security and Compliance Framework</h3>
 <p>Here is an example of implementing a unified security and compliance framework across multiple cloud providers:</p>
-<pre><code class="language-python"># Import the necessary libraries
-import boto3
-import azure.identity
-import google.auth
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">azure.identity</span>
+<span class="kn">import</span> <span class="nn">google.auth</span>
 
-# Define a function to create an IAM user
-def create_iam_user(username, password):
-  # Create an IAM user on AWS
-  iam = boto3.client('iam')
-  iam.create_user(UserName=username, Password=password)
+<span class="c1"># Define a function to create an IAM user</span>
+<span class="k">def</span> <span class="nf">create_iam_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+  <span class="c1"># Create an IAM user on AWS</span>
+  <span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+  <span class="n">iam</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">UserName</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">Password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
 
-  # Create an Azure Active Directory user
-  credentials = azure.identity.DefaultAzureCredential()
-  client = azure.graphrbac.GraphRbacManagementClient(credentials, 'tenant_id')
-  client.users.create_or_update('username', {'password': password})
+  <span class="c1"># Create an Azure Active Directory user</span>
+  <span class="n">credentials</span> <span class="o">=</span> <span class="n">azure</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">DefaultAzureCredential</span><span class="p">()</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="n">azure</span><span class="o">.</span><span class="n">graphrbac</span><span class="o">.</span><span class="n">GraphRbacManagementClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="s1">&#39;tenant_id&#39;</span><span class="p">)</span>
+  <span class="n">client</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
 
-  # Create a GCP Cloud Identity and Access Management user
-  credentials = google.auth.default()
-  client = googleapiclient.discovery.build('iam', 'v1', credentials=credentials)
-  client.users().create(body={'username': username, 'password': password}).execute()
-</code></pre>
+  <span class="c1"># Create a GCP Cloud Identity and Access Management user</span>
+  <span class="n">credentials</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="n">googleapiclient</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="n">credentials</span><span class="p">)</span>
+  <span class="n">client</span><span class="o">.</span><span class="n">users</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This example demonstrates how to implement a unified security and compliance framework across multiple cloud providers using Python and the respective cloud provider SDKs.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for multi-cloud architecture:
@@ -312,27 +314,28 @@ def create_iam_user(username, password):
     + Description: Airbnb uses a multi-cloud architecture to deploy its data analytics workloads across multiple cloud providers, leveraging the strengths of each provider.</p>
 <h3 id="example-deploying-a-machine-learning-model-across-multiple-cloud-providers">Example: Deploying a Machine Learning Model Across Multiple Cloud Providers</h3>
 <p>Here is an example of deploying a machine learning model across multiple cloud providers using TensorFlow and scikit-learn:</p>
-<pre><code class="language-python"># Import the necessary libraries
-import tensorflow as tf
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-# Load the dataset
-dataset = tf.data.Dataset.from_tensor_slices((X, y))
+<span class="c1"># Load the dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 
-# Split the dataset into training and testing sets
-train_dataset, test_dataset = train_test_split(dataset, test_size=0.2)
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
-# Train a machine learning model on AWS
-model = RandomForestClassifier(n_estimators=100)
-model.fit(train_dataset)
+<span class="c1"># Train a machine learning model on AWS</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 
-# Deploy the model to Azure
-model.azureml.deploy('model', 'azureml')
+<span class="c1"># Deploy the model to Azure</span>
+<span class="n">model</span><span class="o">.</span><span class="n">azureml</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;azureml&#39;</span><span class="p">)</span>
 
-# Deploy the model to GCP
-model.gcpml.deploy('model', 'gcpml')
-</code></pre>
+<span class="c1"># Deploy the model to GCP</span>
+<span class="n">model</span><span class="o">.</span><span class="n">gcpml</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;gcpml&#39;</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This example demonstrates how to deploy a machine learning model across multiple cloud providers using TensorFlow and scikit-learn.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for multi-cloud architecture:
@@ -350,25 +353,26 @@ model.gcpml.deploy('model', 'gcpml')
     + Performance: 16 TB</p>
 <h3 id="example-optimizing-cpu-performance-across-multiple-cloud-providers">Example: Optimizing CPU Performance Across Multiple Cloud Providers</h3>
 <p>Here is an example of optimizing CPU performance across multiple cloud providers using AWS, Azure, and GCP:</p>
-<pre><code class="language-python"># Import the necessary libraries
-import boto3
-import azure.mgmt.compute
-import googleapiclient.discovery
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">azure.mgmt.compute</span>
+<span class="kn">import</span> <span class="nn">googleapiclient.discovery</span>
 
-# Define a function to optimize CPU performance
-def optimize_cpu_performance(instance_type):
-  # Optimize CPU performance on AWS
-  ec2 = boto3.client('ec2')
-  ec2.modify_instance_attribute(InstanceId='instance_id', Attribute='instanceType', Value=instance_type)
+<span class="c1"># Define a function to optimize CPU performance</span>
+<span class="k">def</span> <span class="nf">optimize_cpu_performance</span><span class="p">(</span><span class="n">instance_type</span><span class="p">):</span>
+  <span class="c1"># Optimize CPU performance on AWS</span>
+  <span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+  <span class="n">ec2</span><span class="o">.</span><span class="n">modify_instance_attribute</span><span class="p">(</span><span class="n">InstanceId</span><span class="o">=</span><span class="s1">&#39;instance_id&#39;</span><span class="p">,</span> <span class="n">Attribute</span><span class="o">=</span><span class="s1">&#39;instanceType&#39;</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="n">instance_type</span><span class="p">)</span>
 
-  # Optimize CPU performance on Azure
-  compute = azure.mgmt.compute.ComputeManagementClient(credentials, 'subscription_id')
-  compute.virtual_machines.begin_update('resource_group', 'vm_name', {'hardware_profile': {'vm_size': instance_type}})
+  <span class="c1"># Optimize CPU performance on Azure</span>
+  <span class="n">compute</span> <span class="o">=</span> <span class="n">azure</span><span class="o">.</span><span class="n">mgmt</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">ComputeManagementClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="s1">&#39;subscription_id&#39;</span><span class="p">)</span>
+  <span class="n">compute</span><span class="o">.</span><span class="n">virtual_machines</span><span class="o">.</span><span class="n">begin_update</span><span class="p">(</span><span class="s1">&#39;resource_group&#39;</span><span class="p">,</span> <span class="s1">&#39;vm_name&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hardware_profile&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;vm_size&#39;</span><span class="p">:</span> <span class="n">instance_type</span><span class="p">}})</span>
 
-  # Optimize CPU performance on GCP
-  compute = googleapiclient.discovery.build('compute', 'v1')
-  compute.instances().patch(project='project_id', zone='zone', instance='instance_id', body={'machineType': instance_type}).execute()
-</code></pre>
+  <span class="c1"># Optimize CPU performance on GCP</span>
+  <span class="n">compute</span> <span class="o">=</span> <span class="n">googleapiclient</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;compute&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+  <span class="n">compute</span><span class="o">.</span><span class="n">instances</span><span class="p">()</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;project_id&#39;</span><span class="p">,</span> <span class="n">zone</span><span class="o">=</span><span class="s1">&#39;zone&#39;</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="s1">&#39;instance_id&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;machineType&#39;</span><span class="p">:</span> <span class="n">instance_type</span><span class="p">})</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This example demonstrates how to optimize CPU performance across multiple cloud providers using AWS, Azure, and GCP.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>Here are some pricing and cost optimization strategies for multi-cloud architecture:
@@ -383,25 +387,26 @@ def optimize_cpu_performance(instance_type):
     + Discount: up to 80%</p>
 <h3 id="example-optimizing-costs-across-multiple-cloud-providers">Example: Optimizing Costs Across Multiple Cloud Providers</h3>
 <p>Here is an example of optimizing costs across multiple cloud providers using AWS, Azure, and GCP:</p>
-<pre><code class="language-python"># Import the necessary libraries
-import boto3
-import azure.mgmt.cost
-import googleapiclient.discovery
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">azure.mgmt.cost</span>
+<span class="kn">import</span> <span class="nn">googleapiclient.discovery</span>
 
-# Define a function to optimize costs
-def optimize_costs():
-  # Optimize costs on AWS
-  cost_explorer = boto3.client('ce')
-  cost_explorer.get_cost_and_usage(TimePeriod={'Start': '2022-01-01', 'End': '2022-01-31'}, Granularity='DAILY')
+<span class="c1"># Define a function to optimize costs</span>
+<span class="k">def</span> <span class="nf">optimize_costs</span><span class="p">():</span>
+  <span class="c1"># Optimize costs on AWS</span>
+  <span class="n">cost_explorer</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ce&#39;</span><span class="p">)</span>
+  <span class="n">cost_explorer</span><span class="o">.</span><span class="n">get_cost_and_usage</span><span class="p">(</span><span class="n">TimePeriod</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-31&#39;</span><span class="p">},</span> <span class="n">Granularity</span><span class="o">=</span><span class="s1">&#39;DAILY&#39;</span><span class="p">)</span>
 
-  # Optimize costs on Azure
-  cost = azure.mgmt.cost.CostManagementClient(credentials, 'subscription_id')
-  cost.query_usage(Start='2022-01-01', End='2022-01-31', Granularity='DAILY')
+  <span class="c1"># Optimize costs on Azure</span>
+  <span class="n">cost</span> <span class="o">=</span> <span class="n">azure</span><span class="o">.</span><span class="n">mgmt</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">CostManagementClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="s1">&#39;subscription_id&#39;</span><span class="p">)</span>
+  <span class="n">cost</span><span class="o">.</span><span class="n">query_usage</span><span class="p">(</span><span class="n">Start</span><span class="o">=</span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span> <span class="n">End</span><span class="o">=</span><span class="s1">&#39;2022-01-31&#39;</span><span class="p">,</span> <span class="n">Granularity</span><span class="o">=</span><span class="s1">&#39;DAILY&#39;</span><span class="p">)</span>
 
-  # Optimize costs on GCP
-  cost = googleapiclient.discovery.build('cloudcostmanagement', 'v1')
-  cost.projects().getCost('project_id', '2022-01-01', '2022-01-31', 'DAILY').execute()
-</code></pre>
+  <span class="c1"># Optimize costs on GCP</span>
+  <span class="n">cost</span> <span class="o">=</span> <span class="n">googleapiclient</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;cloudcostmanagement&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+  <span class="n">cost</span><span class="o">.</span><span class="n">projects</span><span class="p">()</span><span class="o">.</span><span class="n">getCost</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-01-31&#39;</span><span class="p">,</span> <span class="s1">&#39;DAILY&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This example demonstrates how to optimize costs across multiple cloud providers using AWS, Azure, and GCP.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, a multi-cloud architecture offers numerous benefits, including improved fault tolerance, enhanced security, and increased flexibility. However, implementing and managing a multi-cloud architecture can be complex and challenging. By using cloud-agnostic tools and platforms, such as Kubernetes and Docker, and implementing a unified monitoring and logging system, companies can simplify the management of their multi-cloud architecture.</p>

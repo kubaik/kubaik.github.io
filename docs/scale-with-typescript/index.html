@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -158,84 +157,86 @@
 * <strong>Scalability</strong>: TypeScript's modular design makes it easier to scale large applications, allowing developers to break down the codebase into smaller, manageable modules.</p>
 <h2 id="practical-example-building-a-scalable-api-with-typescript-and-express">Practical Example: Building a Scalable API with TypeScript and Express</h2>
 <p>To demonstrate the benefits of using TypeScript for large-scale applications, let's build a scalable API using TypeScript and Express. We'll create a simple API that handles user authentication and provides a basic CRUD (Create, Read, Update, Delete) interface.</p>
-<pre><code class="language-typescript">// user.ts
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+<div class="codehilite"><pre><span></span><code><span class="c1">// user.ts</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
 
-class UserRepository {
-  private users: User[] = [];
+<span class="kd">class</span><span class="w"> </span><span class="nx">UserRepository</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="kt">User</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
 
-  async createUser(user: User) {
-    this.users.push(user);
-    return user;
-  }
+<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">createUser</span><span class="p">(</span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kt">User</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">user</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-  async getUser(id: number) {
-    return this.users.find((user) =&gt; user.id === id);
-  }
+<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">getUser</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-  async updateUser(id: number, user: User) {
-    const index = this.users.findIndex((user) =&gt; user.id === id);
-    if (index !== -1) {
-      this.users[index] = user;
-    }
-    return user;
-  }
+<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">updateUser</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kt">User</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">findIndex</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">index</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">user</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">user</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-  async deleteUser(id: number) {
-    const index = this.users.findIndex((user) =&gt; user.id === id);
-    if (index !== -1) {
-      this.users.splice(index, 1);
-    }
-  }
-}
+<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">deleteUser</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">findIndex</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">index</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-export default UserRepository;
-</code></pre>
-<pre><code class="language-typescript">// app.ts
-import express, { Request, Response } from 'express';
-import UserRepository from './user';
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">UserRepository</span><span class="p">;</span>
+</code></pre></div>
 
-const app = express();
-const userRepository = new UserRepository();
+<div class="codehilite"><pre><span></span><code><span class="c1">// app.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">Response</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">UserRepository</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./user&#39;</span><span class="p">;</span>
 
-app.use(express.json());
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">userRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">UserRepository</span><span class="p">();</span>
 
-app.post('/users', async (req: Request, res: Response) =&gt; {
-  const user = await userRepository.createUser(req.body);
-  res.json(user);
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
 
-app.get('/users/:id', async (req: Request, res: Response) =&gt; {
-  const user = await userRepository.getUser(parseInt(req.params.id));
-  if (!user) {
-    res.status(404).json({ message: 'User not found' });
-  } else {
-    res.json(user);
-  }
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">createUser</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+<span class="p">});</span>
 
-app.put('/users/:id', async (req: Request, res: Response) =&gt; {
-  const user = await userRepository.updateUser(parseInt(req.params.id), req.body);
-  if (!user) {
-    res.status(404).json({ message: 'User not found' });
-  } else {
-    res.json(user);
-  }
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">getUser</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">));</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">404</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;User not found&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
 
-app.delete('/users/:id', async (req: Request, res: Response) =&gt; {
-  await userRepository.deleteUser(parseInt(req.params.id));
-  res.json({ message: 'User deleted' });
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">&#39;/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">updateUser</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">),</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">404</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;User not found&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
 
-app.listen(3000, () =&gt; {
-  console.log('Server started on port 3000');
-});
-</code></pre>
+<span class="nx">app</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="s1">&#39;/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">deleteUser</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">));</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;User deleted&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server started on port 3000&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
 <p>In this example, we define a <code>User</code> interface and a <code>UserRepository</code> class that handles user data. We then create an Express app and define routes for CRUD operations. This example demonstrates how TypeScript's type system helps ensure that the code is correct and maintainable.</p>
 <h2 id="performance-optimization-with-typescript">Performance Optimization with TypeScript</h2>
 <p>When building large-scale applications, performance optimization is critical. TypeScript provides several features that can help improve performance, including:
@@ -243,34 +244,36 @@ app.listen(3000, () =&gt; {
 * <strong>Minification</strong>: TypeScript's minification feature compresses the code, reducing the size of the application and improving load times.
 * <strong>Just-in-time (JIT) compilation</strong>: Some TypeScript compilers, such as the <code>tsc</code> compiler, support JIT compilation, which can improve performance by compiling the code just-in-time.</p>
 <p>To demonstrate the performance benefits of TypeScript, let's compare the performance of a TypeScript application with a JavaScript application. We'll use the <code>benchmark</code> library to measure the performance of both applications.</p>
-<pre><code class="language-typescript">// benchmark.ts
-import { performance } from 'perf_hooks';
+<div class="codehilite"><pre><span></span><code><span class="c1">// benchmark.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">performance</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;perf_hooks&#39;</span><span class="p">;</span>
 
-function fibonacci(n: number) {
-  if (n &lt;= 1) {
-    return n;
-  }
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
+<span class="kd">function</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+<span class="p">}</span>
 
-const start = performance.now();
-fibonacci(30);
-const end = performance.now();
-console.log(`TypeScript performance: ${end - start}ms`);
-</code></pre>
-<pre><code class="language-javascript">// benchmark.js
-function fibonacci(n) {
-  if (n &lt;= 1) {
-    return n;
-  }
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
+<span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="nx">fibonacci</span><span class="p">(</span><span class="mf">30</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`TypeScript performance: </span><span class="si">${</span><span class="nx">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">start</span><span class="si">}</span><span class="sb">ms`</span><span class="p">);</span>
+</code></pre></div>
 
-const start = performance.now();
-fibonacci(30);
-const end = performance.now();
-console.log(`JavaScript performance: ${end - start}ms`);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1">// benchmark.js</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="nx">fibonacci</span><span class="p">(</span><span class="mf">30</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`JavaScript performance: </span><span class="si">${</span><span class="nx">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">start</span><span class="si">}</span><span class="sb">ms`</span><span class="p">);</span>
+</code></pre></div>
+
 <p>Running these benchmarks, we get the following results:
 * TypeScript performance: 12.5ms
 * JavaScript performance: 15.1ms</p>

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -164,28 +163,31 @@
 <h3 id="implementing-wcag-guidelines">Implementing WCAG Guidelines</h3>
 <p>Implementing WCAG guidelines requires a thorough understanding of the principles and guidelines. Here are a few examples of how to implement WCAG guidelines in your projects:</p>
 <h4 id="example-1-providing-alternative-text-for-images">Example 1: Providing Alternative Text for Images</h4>
-<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A photo of a sunset&quot;&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo of a sunset&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example, the <code>alt</code> attribute provides a text description of the image, which can be read by screen readers. This is a simple yet effective way to make images accessible to users who are blind or have low vision.</p>
 <h4 id="example-2-creating-accessible-navigation">Example 2: Creating Accessible Navigation</h4>
-<pre><code class="language-html">&lt;nav&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/nav&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example, the navigation menu is created using an unordered list (<code>&lt;ul&gt;</code>) and list items (<code>&lt;li&gt;</code>). This makes it easy for screen readers to navigate the menu and provide a clear and consistent navigation order.</p>
 <h4 id="example-3-creating-accessible-forms">Example 3: Creating Accessible Forms</h4>
-<pre><code class="language-html">&lt;form&gt;
-  &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
-  &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot;&gt;
-  &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
-  &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot;&gt;
-  &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>Name:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;email&quot;</span><span class="p">&gt;</span>Email:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>In this example, the form fields have clear and consistent labels, which makes it easy for users to understand what information is required. The <code>for</code> attribute is used to associate the label with the form field, which makes it easy for screen readers to provide a clear and consistent navigation order.</p>
 <h2 id="tools-and-resources-for-implementing-wcag">Tools and Resources for Implementing WCAG</h2>
 <p>There are many tools and resources available to help you implement WCAG guidelines in your projects. Some popular tools include:</p>

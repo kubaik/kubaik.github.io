@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -163,40 +162,46 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples that demonstrate how to use NLP techniques in Python:</p>
 <h3 id="example-1-tokenization-using-nltk">Example 1: Tokenization using NLTK</h3>
-<pre><code class="language-python">import nltk
-from nltk.tokenize import word_tokenize
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
 
-text = &quot;This is an example sentence.&quot;
-tokens = word_tokenize(text)
-print(tokens)
-</code></pre>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is an example sentence.&quot;</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code uses the NLTK library to tokenize a sentence into individual words. The output will be:</p>
-<pre><code class="language-python">['This', 'is', 'an', 'example', 'sentence', '.']
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="s1">&#39;This&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;an&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">,</span> <span class="s1">&#39;sentence&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]</span>
+</code></pre></div>
+
 <h3 id="example-2-sentiment-analysis-using-textblob">Example 2: Sentiment Analysis using TextBlob</h3>
-<pre><code class="language-python">from textblob import TextBlob
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
 
-text = &quot;I love this product!&quot;
-blob = TextBlob(text)
-print(blob.sentiment.polarity)
-</code></pre>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love this product!&quot;</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code uses the TextBlob library to analyze the sentiment of a sentence. The output will be a polarity score between -1.0 and 1.0, where 1.0 is very positive and -1.0 is very negative. In this case, the output will be:</p>
-<pre><code>0.75
-</code></pre>
-<h3 id="example-3-named-entity-recognition-using-spacy">Example 3: Named Entity Recognition using spaCy</h3>
-<pre><code class="language-python">import spacy
+<div class="codehilite"><pre><span></span><code><span class="mf">0.75</span>
+</code></pre></div>
 
-nlp = spacy.load(&quot;en_core_web_sm&quot;)
-text = &quot;Apple is a technology company based in Cupertino, California.&quot;
-doc = nlp(text)
-for entity in doc.ents:
-    print(entity.text, entity.label_)
-</code></pre>
+<h3 id="example-3-named-entity-recognition-using-spacy">Example 3: Named Entity Recognition using spaCy</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
+
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is a technology company based in Cupertino, California.&quot;</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
+</code></pre></div>
+
 <p>This code uses the spaCy library to identify named entities in a sentence. The output will be:</p>
-<pre><code>Apple ORG
+<div class="codehilite"><pre><span></span><code>Apple ORG
 Cupertino GPE
 California GPE
-</code></pre>
+</code></pre></div>
+
 <h2 id="nlp-tools-and-platforms">NLP Tools and Platforms</h2>
 <p>There are many NLP tools and platforms available, including:</p>
 <ul>
@@ -253,34 +258,37 @@ California GPE
 <ul>
 <li><strong>Subwording</strong>: use a library such as WordPiece to subword out-of-vocabulary words.</li>
 </ul>
-<pre><code class="language-python">import wordpiece
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">wordpiece</span>
 
-text = &quot;This is an example sentence with out-of-vocabulary words.&quot;
-subwords = wordpiece.tokenize(text)
-print(subwords)
-</code></pre>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is an example sentence with out-of-vocabulary words.&quot;</span>
+<span class="n">subwords</span> <span class="o">=</span> <span class="n">wordpiece</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subwords</span><span class="p">)</span>
+</code></pre></div>
+
 <ul>
 <li><strong>Oversampling the minority class</strong>: use a library such as imbalanced-learn to oversample the minority class.</li>
 </ul>
-<pre><code class="language-python">from imblearn.over_sampling import RandomOverSampler
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">RandomOverSampler</span>
 
-X = [...]  # feature data
-y = [...]  # target data
-ros = RandomOverSampler()
-X_res, y_res = ros.fit_resample(X, y)
-print(X_res, y_res)
-</code></pre>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># feature data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># target data</span>
+<span class="n">ros</span> <span class="o">=</span> <span class="n">RandomOverSampler</span><span class="p">()</span>
+<span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">ros</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span><span class="p">)</span>
+</code></pre></div>
+
 <ul>
 <li><strong>Regularization</strong>: use a technique such as L1 or L2 regularization to prevent overfitting.</li>
 </ul>
-<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-X = [...]  # feature data
-y = [...]  # target data
-lr = LogisticRegression(penalty='l1', C=0.1)
-lr.fit(X, y)
-print(lr.coef_)
-</code></pre>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># feature data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># target data</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, NLP is a powerful tool for analyzing and understanding human language. With the right techniques, tools, and platforms, you can build a wide range of NLP applications, from customer service chatbots to sentiment analysis and text summarization. However, NLP also presents a number of challenges, including out-of-vocabulary words, class imbalance, overfitting, and underfitting. By using the right solutions and techniques, you can overcome these challenges and build effective NLP models.</p>
 <h3 id="actionable-next-steps">Actionable Next Steps</h3>

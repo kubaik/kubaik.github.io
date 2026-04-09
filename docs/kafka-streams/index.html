@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -162,70 +161,73 @@
 <p>Here are a few practical code examples that demonstrate how to use Kafka Streams:</p>
 <h3 id="example-1-simple-stream-processing">Example 1: Simple Stream Processing</h3>
 <p>This example demonstrates how to create a simple stream processing application that reads data from a Kafka topic, filters out any null values, and writes the resulting data to a new Kafka topic.</p>
-<pre><code class="language-java">// Create a Kafka Streams builder
-StreamsBuilder builder = new StreamsBuilder();
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a Kafka Streams builder</span>
+<span class="n">StreamsBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StreamsBuilder</span><span class="p">();</span>
 
-// Create a stream from a Kafka topic
-KStream&lt;String, String&gt; stream = builder.stream(&quot;input-topic&quot;);
+<span class="c1">// Create a stream from a Kafka topic</span>
+<span class="n">KStream</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="s">&quot;input-topic&quot;</span><span class="p">);</span>
 
-// Filter out any null values
-KStream&lt;String, String&gt; filteredStream = stream.filter((key, value) -&gt; value != null);
+<span class="c1">// Filter out any null values</span>
+<span class="n">KStream</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">filteredStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="na">filter</span><span class="p">((</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
 
-// Write the filtered stream to a new Kafka topic
-filteredStream.to(&quot;output-topic&quot;);
+<span class="c1">// Write the filtered stream to a new Kafka topic</span>
+<span class="n">filteredStream</span><span class="p">.</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;output-topic&quot;</span><span class="p">);</span>
 
-// Create a Kafka Streams instance
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
+<span class="c1">// Create a Kafka Streams instance</span>
+<span class="n">KafkaStreams</span><span class="w"> </span><span class="n">streams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaStreams</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(),</span><span class="w"> </span><span class="n">props</span><span class="p">);</span>
 
-// Start the Kafka Streams instance
-streams.start();
-</code></pre>
+<span class="c1">// Start the Kafka Streams instance</span>
+<span class="n">streams</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+</code></pre></div>
+
 <p>This example uses the <code>StreamsBuilder</code> class to create a Kafka Streams instance, and the <code>KStream</code> class to create a stream from a Kafka topic. It then uses the <code>filter</code> method to filter out any null values, and the <code>to</code> method to write the filtered stream to a new Kafka topic.</p>
 <h3 id="example-2-windowing-and-aggregation">Example 2: Windowing and Aggregation</h3>
 <p>This example demonstrates how to create a stream processing application that uses windowing and aggregation to calculate the average value of a stream of data.</p>
-<pre><code class="language-java">// Create a Kafka Streams builder
-StreamsBuilder builder = new StreamsBuilder();
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a Kafka Streams builder</span>
+<span class="n">StreamsBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StreamsBuilder</span><span class="p">();</span>
 
-// Create a stream from a Kafka topic
-KStream&lt;String, Double&gt; stream = builder.stream(&quot;input-topic&quot;);
+<span class="c1">// Create a stream from a Kafka topic</span>
+<span class="n">KStream</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="s">&quot;input-topic&quot;</span><span class="p">);</span>
 
-// Divide the stream into 1-minute windows
-KGroupedStream&lt;String, Double&gt; windowedStream = stream.groupByKey().windowedBy(TimeWindows.of(Duration.ofMinutes(1)));
+<span class="c1">// Divide the stream into 1-minute windows</span>
+<span class="n">KGroupedStream</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">windowedStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="na">groupByKey</span><span class="p">().</span><span class="na">windowedBy</span><span class="p">(</span><span class="n">TimeWindows</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMinutes</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
 
-// Calculate the average value of each window
-KTable&lt;Windowed&lt;String&gt;, Double&gt; aggregatedStream = windowedStream.aggregate(
-    () -&gt; 0.0,
-    (key, value, aggregate) -&gt; aggregate + value,
-    Materialized.with(Serdes.String(), Serdes.Double())
-);
+<span class="c1">// Calculate the average value of each window</span>
+<span class="n">KTable</span><span class="o">&lt;</span><span class="n">Windowed</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">aggregatedStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">windowedStream</span><span class="p">.</span><span class="na">aggregate</span><span class="p">(</span>
+<span class="w">    </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">aggregate</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">aggregate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Materialized</span><span class="p">.</span><span class="na">with</span><span class="p">(</span><span class="n">Serdes</span><span class="p">.</span><span class="na">String</span><span class="p">(),</span><span class="w"> </span><span class="n">Serdes</span><span class="p">.</span><span class="na">Double</span><span class="p">())</span>
+<span class="p">);</span>
 
-// Write the aggregated stream to a new Kafka topic
-aggregatedStream.toStream().to(&quot;output-topic&quot;);
+<span class="c1">// Write the aggregated stream to a new Kafka topic</span>
+<span class="n">aggregatedStream</span><span class="p">.</span><span class="na">toStream</span><span class="p">().</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;output-topic&quot;</span><span class="p">);</span>
 
-// Create a Kafka Streams instance
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
+<span class="c1">// Create a Kafka Streams instance</span>
+<span class="n">KafkaStreams</span><span class="w"> </span><span class="n">streams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaStreams</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(),</span><span class="w"> </span><span class="n">props</span><span class="p">);</span>
 
-// Start the Kafka Streams instance
-streams.start();
-</code></pre>
+<span class="c1">// Start the Kafka Streams instance</span>
+<span class="n">streams</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+</code></pre></div>
+
 <p>This example uses the <code>StreamsBuilder</code> class to create a Kafka Streams instance, and the <code>KStream</code> class to create a stream from a Kafka topic. It then uses the <code>groupBy</code> and <code>windowedBy</code> methods to divide the stream into 1-minute windows, and the <code>aggregate</code> method to calculate the average value of each window.</p>
 <h3 id="example-3-integration-with-external-systems">Example 3: Integration with External Systems</h3>
 <p>This example demonstrates how to integrate a Kafka Streams application with an external system, such as a database or a messaging system.</p>
-<pre><code class="language-java">// Create a Kafka Streams builder
-StreamsBuilder builder = new StreamsBuilder();
+<div class="codehilite"><pre><span></span><code><span class="c1">// Create a Kafka Streams builder</span>
+<span class="n">StreamsBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StreamsBuilder</span><span class="p">();</span>
 
-// Create a stream from a Kafka topic
-KStream&lt;String, String&gt; stream = builder.stream(&quot;input-topic&quot;);
+<span class="c1">// Create a stream from a Kafka topic</span>
+<span class="n">KStream</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="s">&quot;input-topic&quot;</span><span class="p">);</span>
 
-// Process the stream and write the results to a database
-stream.process(() -&gt; new DatabaseProcessor());
+<span class="c1">// Process the stream and write the results to a database</span>
+<span class="n">stream</span><span class="p">.</span><span class="na">process</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DatabaseProcessor</span><span class="p">());</span>
 
-// Create a Kafka Streams instance
-KafkaStreams streams = new KafkaStreams(builder.build(), props);
+<span class="c1">// Create a Kafka Streams instance</span>
+<span class="n">KafkaStreams</span><span class="w"> </span><span class="n">streams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaStreams</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(),</span><span class="w"> </span><span class="n">props</span><span class="p">);</span>
 
-// Start the Kafka Streams instance
-streams.start();
-</code></pre>
+<span class="c1">// Start the Kafka Streams instance</span>
+<span class="n">streams</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+</code></pre></div>
+
 <p>This example uses the <code>StreamsBuilder</code> class to create a Kafka Streams instance, and the <code>KStream</code> class to create a stream from a Kafka topic. It then uses the <code>process</code> method to process the stream and write the results to a database using a custom <code>DatabaseProcessor</code> class.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Kafka Streams can be used with a variety of tools and platforms, including:

@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -161,101 +160,103 @@
 <h2 id="developing-ai-agents-with-python">Developing AI Agents with Python</h2>
 <p>Python is a popular language for developing AI agents due to its simplicity, flexibility, and extensive libraries. One such library is the <strong>Python Agent Framework (PAF)</strong>, which provides a basic structure for building AI agents.</p>
 <p>Here's an example code snippet that demonstrates how to create a simple AI agent using PAF:</p>
-<pre><code class="language-python">import paf
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paf</span>
 
-class MyAgent(paf.Agent):
-    def __init__(self):
-        super().__init__()
-        self.perception = paf.Perception()
-        self.reasoning = paf.Reasoning()
-        self.action = paf.Action()
+<span class="k">class</span> <span class="nc">MyAgent</span><span class="p">(</span><span class="n">paf</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perception</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Perception</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Reasoning</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Action</span><span class="p">()</span>
 
-    def perceive(self, data):
-        # Process the data using NLP or other techniques
-        self.perception.process(data)
+    <span class="k">def</span> <span class="nf">perceive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># Process the data using NLP or other techniques</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perception</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    def reason(self):
-        # Make decisions based on the perceived data
-        self.reasoning.make_decision()
+    <span class="k">def</span> <span class="nf">reason</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Make decisions based on the perceived data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning</span><span class="o">.</span><span class="n">make_decision</span><span class="p">()</span>
 
-    def act(self):
-        # Take actions based on the reasoning
-        self.action.take_action()
+    <span class="k">def</span> <span class="nf">act</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Take actions based on the reasoning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
 
-# Create an instance of the agent
-agent = MyAgent()
+<span class="c1"># Create an instance of the agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">MyAgent</span><span class="p">()</span>
 
-# Simulate user input
-user_input = &quot;Hello, how are you?&quot;
+<span class="c1"># Simulate user input</span>
+<span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
 
-# Perceive the user input
-agent.perceive(user_input)
+<span class="c1"># Perceive the user input</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">perceive</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
 
-# Reason about the user's intent
-agent.reason()
+<span class="c1"># Reason about the user&#39;s intent</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">reason</span><span class="p">()</span>
 
-# Respond to the user
-agent.act()
-</code></pre>
+<span class="c1"># Respond to the user</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to create a basic AI agent using PAF. However, in real-world applications, you would need to integrate more advanced technologies like machine learning, NLP, and computer vision.</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h2 id="integrating-machine-learning-with-ai-agents">Integrating Machine Learning with AI Agents</h2>
 <p>Machine learning is a key component of AI agents, as it enables them to learn from their experiences and adapt to new situations. Popular machine learning libraries like <strong>scikit-learn</strong> and <strong>TensorFlow</strong> can be used to integrate machine learning with AI agents.</p>
 <p>For example, you can use scikit-learn to train a machine learning model that classifies user input into different categories, such as intent or sentiment. Here's an example code snippet that demonstrates how to integrate scikit-learn with an AI agent:</p>
-<pre><code class="language-python">import paf
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.feature_extraction.text import TfidfVectorizer
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paf</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 
-class MyAgent(paf.Agent):
-    def __init__(self):
-        super().__init__()
-        self.perception = paf.Perception()
-        self.reasoning = paf.Reasoning()
-        self.action = paf.Action()
-        self.classifier = MultinomialNB()
+<span class="k">class</span> <span class="nc">MyAgent</span><span class="p">(</span><span class="n">paf</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perception</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Perception</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Reasoning</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">paf</span><span class="o">.</span><span class="n">Action</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
 
-    def perceive(self, data):
-        # Process the data using NLP or other techniques
-        self.perception.process(data)
+    <span class="k">def</span> <span class="nf">perceive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># Process the data using NLP or other techniques</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perception</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    def reason(self):
-        # Make decisions based on the perceived data
-        self.reasoning.make_decision()
+    <span class="k">def</span> <span class="nf">reason</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Make decisions based on the perceived data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning</span><span class="o">.</span><span class="n">make_decision</span><span class="p">()</span>
 
-        # Train a machine learning model to classify user input
-        vectorizer = TfidfVectorizer()
-        X = vectorizer.fit_transform([self.perception.data])
-        y = [self.reasoning.decision]
-        self.classifier.fit(X, y)
+        <span class="c1"># Train a machine learning model to classify user input</span>
+        <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">perception</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">reasoning</span><span class="o">.</span><span class="n">decision</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-    def act(self):
-        # Take actions based on the reasoning
-        self.action.take_action()
+    <span class="k">def</span> <span class="nf">act</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Take actions based on the reasoning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
 
-        # Use the trained machine learning model to classify new user input
+        <span class="c1"># Use the trained machine learning model to classify new user input</span>
 
-*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
+<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
 
-        new_input = &quot;Hello, how are you?&quot;
-        new_X = vectorizer.transform([new_input])
-        prediction = self.classifier.predict(new_X)
-        print(&quot;Predicted category:&quot;, prediction)
+        <span class="n">new_input</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
+        <span class="n">new_X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">new_input</span><span class="p">])</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_X</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predicted category:&quot;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
 
-# Create an instance of the agent
-agent = MyAgent()
+<span class="c1"># Create an instance of the agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">MyAgent</span><span class="p">()</span>
 
-# Simulate user input
-user_input = &quot;Hello, how are you?&quot;
+<span class="c1"># Simulate user input</span>
+<span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
 
-# Perceive the user input
-agent.perceive(user_input)
+<span class="c1"># Perceive the user input</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">perceive</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
 
-# Reason about the user's intent
-agent.reason()
+<span class="c1"># Reason about the user&#39;s intent</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">reason</span><span class="p">()</span>
 
-# Respond to the user
-agent.act()
-</code></pre>
+<span class="c1"># Respond to the user</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">()</span>
+</code></pre></div>
+
 <p>This code snippet demonstrates how to integrate machine learning with an AI agent using scikit-learn. However, in real-world applications, you would need to handle more complex scenarios, such as handling multiple user inputs, integrating with other systems, and ensuring the agent's performance and scalability.</p>
 <h2 id="performance-and-scalability-considerations">Performance and Scalability Considerations</h2>
 <p>When developing AI agents, it's essential to consider performance and scalability. AI agents can be computationally intensive, and their performance can degrade rapidly as the number of users or data increases.</p>

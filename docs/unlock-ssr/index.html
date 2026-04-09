@@ -97,7 +97,6 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    <script defer src="/static/code_runner.js"></script>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -196,12 +195,13 @@
 <p>export async function getServerSideProps() {
      const res = await fetch('https://api.example.com/data');
      const data = await res.json();</p>
-<pre><code> return {
-   props: {
-     data: data.message, // Assuming the API returns { message: "Hello, SSR!" }
-   },
- };
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nt">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">     </span><span class="n">data</span><span class="o">:</span><span class="w"> </span><span class="n">data</span><span class="o">.</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">Assuming</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="n">message</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Hello, SSR!&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">   </span><span class="err">}</span><span class="o">,</span>
+<span class="w"> </span><span class="err">}</span><span class="o">;</span>
+</code></pre></div>
+
 <p>}</p>
 <p>export default Example;
    ```</p>
