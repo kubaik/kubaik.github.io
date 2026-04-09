@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 22:11:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 22:35:44 +0000</lastBuildDate>
+    <item>
+      <title>Auth Revamp</title>
+      <link>https://kubaik.github.io/auth-revamp/</link>
+      <description>Discover modern authentication patterns for web apps in our &apos;Auth Revamp&apos; blog post. Enhance security and user experience with the latest strategies!</description>
+      <pubDate>Thu, 09 Apr 2026 22:35:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/auth-revamp/</guid>
+    </item>
     <item>
       <title>Human Hack</title>
       <link>https://kubaik.github.io/human-hack/</link>
@@ -138,13 +145,6 @@
       <description>Build real-time apps with WebSockets. Learn how to create interactive experiences with instant updates.</description>
       <pubDate>Thu, 09 Apr 2026 16:51:31 +0000</pubDate>
       <guid>https://kubaik.github.io/socket-to-me/</guid>
-    </item>
-    <item>
-      <title>Build WhatsApp</title>
-      <link>https://kubaik.github.io/build-whatsapp/</link>
-      <description>Learn to design a chat system like WhatsApp. Discover key features &amp; architecture.</description>
-      <pubDate>Thu, 09 Apr 2026 16:02:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-whatsapp/</guid>
     </item>
   </channel>
 </rss>
