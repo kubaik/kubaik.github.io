@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 06:20:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 06:30:39 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate Your Worth</title>
+      <link>https://kubaik.github.io/negotiate-your-worth/</link>
+      <description>Boost your tech salary with proven negotiation scripts and strategies.</description>
+      <pubDate>Fri, 10 Apr 2026 06:30:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-your-worth/</guid>
+    </item>
     <item>
       <title>AI in Ed: Future Learning</title>
       <link>https://kubaik.github.io/ai-in-ed-future-learning/</link>
@@ -138,13 +145,6 @@
       <description>Discover the pros and cons of Blue-Green vs. Canary deployments. Learn when to use each strategy for seamless software releases and reduced downtime.</description>
       <pubDate>Thu, 09 Apr 2026 19:44:12 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-vs-canary/</guid>
-    </item>
-    <item>
-      <title>Debug Like Pros</title>
-      <link>https://kubaik.github.io/debug-like-pros/</link>
-      <description>Learn expert debugging techniques to find bugs efficiently.</description>
-      <pubDate>Thu, 09 Apr 2026 18:36:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-like-pros/</guid>
     </item>
   </channel>
 </rss>
