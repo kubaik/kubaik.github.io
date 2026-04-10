@@ -92,11 +92,11 @@ class StaticSiteGenerator:
     def _format_display_date(self, iso_date: str) -> str:
         try:
             dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-            return dt.strftime('%-d %b %Y')
+            return dt.strftime('%-d %B %Y')
         except:
             try:
                 dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-                return dt.strftime('%d %b %Y').lstrip('0')
+                return dt.strftime('%d %B %Y').lstrip('0')
             except:
                 return iso_date.split('T')[0]
 
