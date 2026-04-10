@@ -3280,5 +3280,19 @@
       "AIpoweredProductivity"
     ],
     "topic": "The AI Workflow That Saves 10 Hours a Week"
+  },
+  "designing_a_url_shortener_that_handles_billions_of_requests": {
+    "timestamp": "2026-04-10T03:44:20.085689",
+    "hashtags": [
+      "CloudComputing",
+      "DevOps",
+      "URLShortener",
+      "ScalableTech",
+      "Microservices",
+      "APIDesign",
+      "ServerlessArchitecture",
+      "BigDataEngineering"
+    ],
+    "topic": "Designing a URL Shortener That Handles Billions of Requests"
   }
 }

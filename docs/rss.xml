@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 01:53:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 03:44:24 +0000</lastBuildDate>
+    <item>
+      <title>Scaling URL Shorteners</title>
+      <link>https://kubaik.github.io/scaling-url-shorteners/</link>
+      <description>Learn to design a scalable URL shortener handling billions of requests.</description>
+      <pubDate>Fri, 10 Apr 2026 03:44:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaling-url-shorteners/</guid>
+    </item>
     <item>
       <title>10hrs Saved</title>
       <link>https://kubaik.github.io/10hrs-saved/</link>
@@ -138,13 +145,6 @@
       <description>Discover why most tech companies fail to turn a profit and what sets the successful ones apart.</description>
       <pubDate>Thu, 09 Apr 2026 17:49:26 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-bust-why-most-fail/</guid>
-    </item>
-    <item>
-      <title>Stripe: Internet&apos;s Pay Hub</title>
-      <link>https://kubaik.github.io/stripe-internets-pay-hub/</link>
-      <description>Discover how Stripe became the internet&apos;s go-to payment system</description>
-      <pubDate>Thu, 09 Apr 2026 17:44:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/stripe-internets-pay-hub/</guid>
     </item>
   </channel>
 </rss>
