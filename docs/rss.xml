@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 18:32:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 18:34:56 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Code Reviews: Feedback That Elevates Quality</title>
+      <link>https://kubaik.github.io/mastering-code-reviews-feedback-that-elevates-qual/</link>
+      <description>Elevate your coding skills with our guide on effective code reviews. Learn how to give feedback that enhances quality and fosters collaboration.</description>
+      <pubDate>Fri, 10 Apr 2026 18:34:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-code-reviews-feedback-that-elevates-qual/</guid>
+    </item>
     <item>
       <title>Dev Prod Insights</title>
       <link>https://kubaik.github.io/dev-prod-insights/</link>
@@ -138,13 +145,6 @@
       <description>Is Jamstack still relevant in 2026? Discover its current state &amp; future prospects.</description>
       <pubDate>Fri, 10 Apr 2026 09:12:25 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-2026-still-relevant/</guid>
-    </item>
-    <item>
-      <title>Cut AWS Bill 50%</title>
-      <link>https://kubaik.github.io/cut-aws-bill-50/</link>
-      <description>Cut AWS costs by 50% with expert cloud optimization strategies.</description>
-      <pubDate>Fri, 10 Apr 2026 08:19:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-bill-50/</guid>
     </item>
   </channel>
 </rss>
