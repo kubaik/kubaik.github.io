@@ -153,17 +153,33 @@
             
             <div id="posts-container" class="post-grid">
                 
+                <a class="post-card" href="/dev-influence/">
+                    <h3>Dev Influence</h3>
+                    <p class="post-excerpt">Learn how devs build influence & drive change in their orgs with expert tips on managing up.</p>
+                    
+                    <div class="tags">
+                        
+                        <span class="tag">AI</span>
+                        
+                        <span class="tag">IoT</span>
+                        
+                        <span class="tag">DevOps</span>
+                        
+                    </div>
+                    
+                </a>
+                
                 <a class="post-card" href="/2026s-top-stack/">
                     <h3>2026's Top Stack</h3>
                     <p class="post-excerpt">Discover 2026's top full-stack development tools and technologies.</p>
                     
                     <div class="tags">
                         
-                        <span class="tag">DataScience</span>
+                        <span class="tag">Cloud</span>
                         
-                        <span class="tag">full-stack development</span>
+                        <span class="tag">WebDev</span>
                         
-                        <span class="tag">FullStackDev</span>
+                        <span class="tag">JavaScript</span>
                         
                     </div>
                     
@@ -175,11 +191,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">programming</span>
+                        <span class="tag">IoT</span>
                         
-                        <span class="tag">TS pro tips</span>
+                        <span class="tag">Rust</span>
                         
-                        <span class="tag">GitLab</span>
+                        <span class="tag">Cloud</span>
                         
                     </div>
                     
@@ -191,11 +207,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">DevOps</span>
+                        <span class="tag">IoT</span>
                         
                         <span class="tag">Optix</span>
                         
-                        <span class="tag">RemoteWork</span>
+                        <span class="tag">DevOps</span>
                         
                     </div>
                     
@@ -207,11 +223,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">API turbo</span>
+                        <span class="tag">API</span>
                         
-                        <span class="tag">CloudNative</span>
+                        <span class="tag">WebDev</span>
                         
-                        <span class="tag">APIDesign</span>
+                        <span class="tag">GraphQL</span>
                         
                     </div>
                     
@@ -223,11 +239,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">techtrends</span>
+                        <span class="tag">Cloud</span>
                         
                         <span class="tag">GitHub</span>
                         
-                        <span class="tag">developer</span>
+                        <span class="tag">DevOps</span>
                         
                     </div>
                     
@@ -239,11 +255,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">cloud computing costs</span>
+                        <span class="tag">FaaS</span>
                         
-                        <span class="tag">ServerlessTech</span>
+                        <span class="tag">VSCode</span>
                         
-                        <span class="tag">serverless limits</span>
+                        <span class="tag">Docker</span>
                         
                     </div>
                     
@@ -257,9 +273,9 @@
                         
                         <span class="tag">AI</span>
                         
-                        <span class="tag">Jamstack</span>
+                        <span class="tag">Go</span>
                         
-                        <span class="tag">Serverless</span>
+                        <span class="tag">tech</span>
                         
                     </div>
                     
@@ -271,11 +287,11 @@
                     
                     <div class="tags">
                         
-                        <span class="tag">cloud cost management</span>
-                        
                         <span class="tag">Cloud</span>
                         
-                        <span class="tag">MachineLearning</span>
+                        <span class="tag">coding</span>
+                        
+                        <span class="tag">TechNews</span>
                         
                     </div>
                     
@@ -289,25 +305,9 @@
                         
                         <span class="tag">IoT</span>
                         
+                        <span class="tag">GitOps</span>
+                        
                         <span class="tag">CleanCode</span>
-                        
-                        <span class="tag">CloudOutages</span>
-                        
-                    </div>
-                    
-                </a>
-                
-                <a class="post-card" href="/shard-smart/">
-                    <h3>Shard Smart</h3>
-                    <p class="post-excerpt">Scale your database with sharding. Learn when and how to implement shard smart strategies.</p>
-                    
-                    <div class="tags">
-                        
-                        <span class="tag">DataScience</span>
-                        
-                        <span class="tag">TechTips</span>
-                        
-                        <span class="tag">Swift</span>
                         
                     </div>
                     
@@ -439,7 +439,7 @@
             if (post.tags && post.tags.length > 0) {
                 var tagsDiv       = document.createElement('div');
                 tagsDiv.className = 'tags';
-                post.tags.slice(0, 3).forEach(function(t) {
+                post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
                     var span         = document.createElement('span');
                     span.className   = 'tag';
                     span.textContent = t;
