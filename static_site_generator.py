@@ -30,7 +30,7 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
-        self._generate_ads_txt()
+        # self._generate_ads_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
