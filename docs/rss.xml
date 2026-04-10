@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 20:07:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 20:28:50 +0000</lastBuildDate>
+    <item>
+      <title>Mobile CI/CD</title>
+      <link>https://kubaik.github.io/mobile-cicd/</link>
+      <description>Streamline mobile app development with CI/CD automation. Learn how to implement efficient pipelines.</description>
+      <pubDate>Fri, 10 Apr 2026 20:28:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-cicd/</guid>
+    </item>
     <item>
       <title>DB Boost...</title>
       <link>https://kubaik.github.io/db-boost/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with expert TypeScript tips and advanced patterns.</description>
       <pubDate>Fri, 10 Apr 2026 11:43:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Optix</title>
-      <link>https://kubaik.github.io/optix/</link>
-      <description>Boost site speed with expert image optimization tips for 2026.</description>
-      <pubDate>Fri, 10 Apr 2026 11:29:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/optix/</guid>
     </item>
   </channel>
 </rss>
