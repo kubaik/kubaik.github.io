@@ -3667,5 +3667,18 @@
       "DataEngineering"
     ],
     "topic": "Database Tools Worth Having in 2026"
+  },
+  "mobile_ci/cd_automation_in_practice": {
+    "timestamp": "2026-04-10T20:28:46.598675",
+    "hashtags": [
+      "MobileDevOps",
+      "CloudNativeTech",
+      "AutomatedTesting",
+      "DevSecOps",
+      "ContinuousIntegration",
+      "MobileAppDev",
+      "ArtificialIntelligence"
+    ],
+    "topic": "Mobile CI/CD Automation in Practice"
   }
 }
