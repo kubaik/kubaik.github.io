@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 17:30:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 17:43:29 +0000</lastBuildDate>
+    <item>
+      <title>Figma&apos;s Rise</title>
+      <link>https://kubaik.github.io/figmas-rise/</link>
+      <description>Discover Figma&apos;s journey &amp; Adobe&apos;s acquisition bid</description>
+      <pubDate>Fri, 10 Apr 2026 17:43:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/figmas-rise/</guid>
+    </item>
     <item>
       <title>Low-Code: Friend or Foe?</title>
       <link>https://kubaik.github.io/low-code-friend-or-foe/</link>
@@ -138,13 +145,6 @@
       <description>Learn common DevOps mistakes that cause outages and how to prevent them.</description>
       <pubDate>Fri, 10 Apr 2026 08:11:20 +0000</pubDate>
       <guid>https://kubaik.github.io/outage-alerts/</guid>
-    </item>
-    <item>
-      <title>Shard Smart</title>
-      <link>https://kubaik.github.io/shard-smart/</link>
-      <description>Scale your database with sharding. Learn when and how to implement shard smart strategies.</description>
-      <pubDate>Fri, 10 Apr 2026 08:02:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/shard-smart/</guid>
     </item>
   </channel>
 </rss>
