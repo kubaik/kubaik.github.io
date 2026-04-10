@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 15:44:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 16:32:00 +0000</lastBuildDate>
+    <item>
+      <title>AI Winners</title>
+      <link>https://kubaik.github.io/ai-winners/</link>
+      <description>Discover top countries leading the AI revolution and dominating innovation.</description>
+      <pubDate>Fri, 10 Apr 2026 16:31:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-winners/</guid>
+    </item>
     <item>
       <title>SQL Hacks</title>
       <link>https://kubaik.github.io/sql-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Discover how AI is revolutionizing education and shaping the future of learning.</description>
       <pubDate>Fri, 10 Apr 2026 06:20:17 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-in-ed-future-learning/</guid>
-    </item>
-    <item>
-      <title>Scaling Redis</title>
-      <link>https://kubaik.github.io/scaling-redis/</link>
-      <description>Learn patterns for scaling Redis in production, ensuring high performance &amp; reliability.</description>
-      <pubDate>Fri, 10 Apr 2026 06:11:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaling-redis/</guid>
     </item>
   </channel>
 </rss>
