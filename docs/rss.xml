@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 03:52:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 04:43:35 +0000</lastBuildDate>
+    <item>
+      <title>Tech &amp; Love</title>
+      <link>https://kubaik.github.io/tech-love/</link>
+      <description>Explore how tech is redefining love, relationships &amp; connections in the digital age.</description>
+      <pubDate>Fri, 10 Apr 2026 04:43:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-love/</guid>
+    </item>
     <item>
       <title>AI Unmasked</title>
       <link>https://kubaik.github.io/ai-unmasked/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips.</description>
       <pubDate>Thu, 09 Apr 2026 18:17:56 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up-sql/</guid>
-    </item>
-    <item>
-      <title>AI&apos;s Dark Side</title>
-      <link>https://kubaik.github.io/ais-dark-side/</link>
-      <description>Exposing AI&apos;s dark side: the hidden ethics issues Big Tech doesn&apos;t want you to know.</description>
-      <pubDate>Thu, 09 Apr 2026 17:59:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ais-dark-side/</guid>
     </item>
   </channel>
 </rss>
