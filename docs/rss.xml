@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 21:32:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 22:07:00 +0000</lastBuildDate>
+    <item>
+      <title>Slack vs Teams</title>
+      <link>https://kubaik.github.io/slack-vs-teams/</link>
+      <description>Slack vs Teams: Why Microsoft won the battle for team collaboration</description>
+      <pubDate>Fri, 10 Apr 2026 22:06:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/slack-vs-teams/</guid>
+    </item>
     <item>
       <title>AI Faceoff</title>
       <link>https://kubaik.github.io/ai-faceoff/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with Git pro tips &amp; expert commands used by senior devs daily.</description>
       <pubDate>Fri, 10 Apr 2026 12:54:48 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Dev Influence</title>
-      <link>https://kubaik.github.io/dev-influence/</link>
-      <description>Learn how devs build influence &amp; drive change in their orgs with expert tips on managing up.</description>
-      <pubDate>Fri, 10 Apr 2026 12:52:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-influence/</guid>
     </item>
   </channel>
 </rss>
