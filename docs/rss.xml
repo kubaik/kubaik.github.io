@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 14:15:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 15:10:16 +0000</lastBuildDate>
+    <item>
+      <title>$19B: Why WhatsApp</title>
+      <link>https://kubaik.github.io/19b-why-whatsapp/</link>
+      <description>Unlock the $19B secret: Why Facebook acquired WhatsApp</description>
+      <pubDate>Fri, 10 Apr 2026 15:10:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/19b-why-whatsapp/</guid>
+    </item>
     <item>
       <title>AI at Your Command</title>
       <link>https://kubaik.github.io/ai-at-your-command/</link>
@@ -138,13 +145,6 @@
       <description>Explore how tech is redefining love, relationships &amp; connections in the digital age.</description>
       <pubDate>Fri, 10 Apr 2026 04:43:30 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-love/</guid>
-    </item>
-    <item>
-      <title>AI Unmasked</title>
-      <link>https://kubaik.github.io/ai-unmasked/</link>
-      <description>Unlock AI secrets with Explainable AI. Learn how to make black boxes transparent.</description>
-      <pubDate>Fri, 10 Apr 2026 03:52:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-unmasked/</guid>
     </item>
   </channel>
 </rss>
