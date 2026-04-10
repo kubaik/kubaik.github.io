@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 12:54:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 13:52:55 +0000</lastBuildDate>
+    <item>
+      <title>Data for Sale</title>
+      <link>https://kubaik.github.io/data-for-sale/</link>
+      <description>Discover how Big Tech profits from your personal data &amp; what you can do about it.</description>
+      <pubDate>Fri, 10 Apr 2026 13:52:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-for-sale/</guid>
+    </item>
     <item>
       <title>Git Pro Tips...</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with our AI workflow, saving 10 hours/week. Learn how</description>
       <pubDate>Fri, 10 Apr 2026 01:53:00 +0000</pubDate>
       <guid>https://kubaik.github.io/10hrs-saved/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; JWT</title>
-      <link>https://kubaik.github.io/oauth-20-jwt/</link>
-      <description>Unlock the secrets of OAuth 2.0 and JWT authentication! Explore their roles, benefits, and implementation tips in this comprehensive deep dive.</description>
-      <pubDate>Fri, 10 Apr 2026 00:06:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-jwt/</guid>
     </item>
   </channel>
 </rss>
