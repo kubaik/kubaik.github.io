@@ -3334,5 +3334,19 @@
       "CloudComputing"
     ],
     "topic": "Redis in Production: Patterns That Scale"
+  },
+  "database_sharding:_when_and_how_to_do_it": {
+    "timestamp": "2026-04-10T08:02:31.665759",
+    "hashtags": [
+      "DatabaseSharding",
+      "CloudComputing",
+      "ScalabilityMatters",
+      "DataArchitecture",
+      "TechInnovation",
+      "DatabaseManagement",
+      "MicroservicesArchitecture",
+      "DevOpsTools"
+    ],
+    "topic": "Database Sharding: When and How to Do It"
   }
 }

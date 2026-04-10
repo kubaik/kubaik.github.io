@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 06:30:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 08:02:35 +0000</lastBuildDate>
+    <item>
+      <title>Shard Smart</title>
+      <link>https://kubaik.github.io/shard-smart/</link>
+      <description>Scale your database with sharding. Learn when and how to implement shard smart strategies.</description>
+      <pubDate>Fri, 10 Apr 2026 08:02:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/shard-smart/</guid>
+    </item>
     <item>
       <title>Negotiate Your Worth</title>
       <link>https://kubaik.github.io/negotiate-your-worth/</link>
@@ -138,13 +145,6 @@
       <description>Learn from common startup mistakes to avoid costly errors and boost success.</description>
       <pubDate>Thu, 09 Apr 2026 19:49:29 +0000</pubDate>
       <guid>https://kubaik.github.io/startup-mistakes/</guid>
-    </item>
-    <item>
-      <title>Blue vs Canary</title>
-      <link>https://kubaik.github.io/blue-vs-canary/</link>
-      <description>Discover the pros and cons of Blue-Green vs. Canary deployments. Learn when to use each strategy for seamless software releases and reduced downtime.</description>
-      <pubDate>Thu, 09 Apr 2026 19:44:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-vs-canary/</guid>
     </item>
   </channel>
 </rss>
