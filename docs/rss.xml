@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 06:11:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 06:20:22 +0000</lastBuildDate>
+    <item>
+      <title>AI in Ed: Future Learning</title>
+      <link>https://kubaik.github.io/ai-in-ed-future-learning/</link>
+      <description>Discover how AI is revolutionizing education and shaping the future of learning.</description>
+      <pubDate>Fri, 10 Apr 2026 06:20:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-ed-future-learning/</guid>
+    </item>
     <item>
       <title>Scaling Redis</title>
       <link>https://kubaik.github.io/scaling-redis/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert debugging techniques to find bugs efficiently.</description>
       <pubDate>Thu, 09 Apr 2026 18:36:56 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-like-pros/</guid>
-    </item>
-    <item>
-      <title>Code to Wealth</title>
-      <link>https://kubaik.github.io/code-to-wealth/</link>
-      <description>Learn to code your way to wealth with passive income strategies for developers.</description>
-      <pubDate>Thu, 09 Apr 2026 18:27:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-to-wealth/</guid>
     </item>
   </channel>
 </rss>
