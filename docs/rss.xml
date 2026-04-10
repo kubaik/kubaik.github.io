@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 21:07:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 21:32:00 +0000</lastBuildDate>
+    <item>
+      <title>AI Faceoff</title>
+      <link>https://kubaik.github.io/ai-faceoff/</link>
+      <description>ChatGPT vs Claude vs Gemini: Find out which AI reigns supreme</description>
+      <pubDate>Fri, 10 Apr 2026 21:31:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-faceoff/</guid>
+    </item>
     <item>
       <title>Shield Your Data</title>
       <link>https://kubaik.github.io/shield-your-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn how devs build influence &amp; drive change in their orgs with expert tips on managing up.</description>
       <pubDate>Fri, 10 Apr 2026 12:52:01 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-influence/</guid>
-    </item>
-    <item>
-      <title>2026&apos;s Top Stack</title>
-      <link>https://kubaik.github.io/2026s-top-stack/</link>
-      <description>Discover 2026&apos;s top full-stack development tools and technologies.</description>
-      <pubDate>Fri, 10 Apr 2026 12:11:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-top-stack/</guid>
     </item>
   </channel>
 </rss>
