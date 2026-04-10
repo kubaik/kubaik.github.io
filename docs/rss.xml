@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 16:43:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 17:30:38 +0000</lastBuildDate>
+    <item>
+      <title>Low-Code: Friend or Foe?</title>
+      <link>https://kubaik.github.io/low-code-friend-or-foe/</link>
+      <description>Discover if low-code platforms are a threat or a tool for developers, and how they&apos;re changing the coding landscape.</description>
+      <pubDate>Fri, 10 Apr 2026 17:30:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/low-code-friend-or-foe/</guid>
+    </item>
     <item>
       <title>SafeKeep</title>
       <link>https://kubaik.github.io/safekeep/</link>
@@ -138,13 +145,6 @@
       <description>Scale your database with sharding. Learn when and how to implement shard smart strategies.</description>
       <pubDate>Fri, 10 Apr 2026 08:02:31 +0000</pubDate>
       <guid>https://kubaik.github.io/shard-smart/</guid>
-    </item>
-    <item>
-      <title>Negotiate Your Worth</title>
-      <link>https://kubaik.github.io/negotiate-your-worth/</link>
-      <description>Boost your tech salary with proven negotiation scripts and strategies.</description>
-      <pubDate>Fri, 10 Apr 2026 06:30:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-your-worth/</guid>
     </item>
   </channel>
 </rss>
