@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 12:10:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 09:12:30 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack 2026: Still Relevant?</title>
+      <link>https://kubaik.github.io/jamstack-2026-still-relevant/</link>
+      <description>Is Jamstack still relevant in 2026? Discover its current state &amp; future prospects.</description>
+      <pubDate>Fri, 10 Apr 2026 09:12:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-2026-still-relevant/</guid>
+    </item>
     <item>
       <title>Cut AWS Bill 50%</title>
       <link>https://kubaik.github.io/cut-aws-bill-50/</link>
@@ -138,13 +145,6 @@
       <description>Master quick debugging techniques with &apos;Debug Fast&apos;! Discover strategies to uncover and fix bugs in minutes, boosting your coding efficiency. Read more!</description>
       <pubDate>Thu, 09 Apr 2026 20:01:26 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-fast/</guid>
-    </item>
-    <item>
-      <title>30-Day MVP</title>
-      <link>https://kubaik.github.io/30-day-mvp/</link>
-      <description>Launch your MVP in 30 days. Learn how to go from idea to launch quickly &amp; effectively.</description>
-      <pubDate>Thu, 09 Apr 2026 19:57:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/30-day-mvp/</guid>
     </item>
   </channel>
 </rss>
