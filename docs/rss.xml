@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 14:00:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 14:15:02 +0000</lastBuildDate>
+    <item>
+      <title>AI at Your Command</title>
+      <link>https://kubaik.github.io/ai-at-your-command/</link>
+      <description>Learn to build your own AI assistant and revolutionize your daily routine with personalized automation.</description>
+      <pubDate>Fri, 10 Apr 2026 14:14:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-at-your-command/</guid>
+    </item>
     <item>
       <title>Top Paying Codes</title>
       <link>https://kubaik.github.io/top-paying-codes/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI secrets with Explainable AI. Learn how to make black boxes transparent.</description>
       <pubDate>Fri, 10 Apr 2026 03:52:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-unmasked/</guid>
-    </item>
-    <item>
-      <title>Scaling URL Shorteners</title>
-      <link>https://kubaik.github.io/scaling-url-shorteners/</link>
-      <description>Learn to design a scalable URL shortener handling billions of requests.</description>
-      <pubDate>Fri, 10 Apr 2026 03:44:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaling-url-shorteners/</guid>
     </item>
   </channel>
 </rss>
