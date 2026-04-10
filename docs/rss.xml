@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 17:43:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 18:32:01 +0000</lastBuildDate>
+    <item>
+      <title>Dev Prod Insights</title>
+      <link>https://kubaik.github.io/dev-prod-insights/</link>
+      <description>Discover key insights on developer productivity! Explore research-backed strategies to enhance efficiency and drive success in your dev team.</description>
+      <pubDate>Fri, 10 Apr 2026 18:31:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-prod-insights/</guid>
+    </item>
     <item>
       <title>Figma&apos;s Rise</title>
       <link>https://kubaik.github.io/figmas-rise/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs by 50% with expert cloud optimization strategies.</description>
       <pubDate>Fri, 10 Apr 2026 08:19:47 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-aws-bill-50/</guid>
-    </item>
-    <item>
-      <title>Outage Alerts</title>
-      <link>https://kubaik.github.io/outage-alerts/</link>
-      <description>Learn common DevOps mistakes that cause outages and how to prevent them.</description>
-      <pubDate>Fri, 10 Apr 2026 08:11:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/outage-alerts/</guid>
     </item>
   </channel>
 </rss>
