@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 11:30:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 11:43:13 +0000</lastBuildDate>
+    <item>
+      <title>TS Pro Tips...</title>
+      <link>https://kubaik.github.io/ts-pro-tips/</link>
+      <description>Boost coding skills with expert TypeScript tips and advanced patterns.</description>
+      <pubDate>Fri, 10 Apr 2026 11:43:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-pro-tips/</guid>
+    </item>
     <item>
       <title>Optix</title>
       <link>https://kubaik.github.io/optix/</link>
@@ -138,13 +145,6 @@
       <description>Discover modern authentication patterns for web apps in our &apos;Auth Revamp&apos; blog post. Enhance security and user experience with the latest strategies!</description>
       <pubDate>Thu, 09 Apr 2026 22:35:39 +0000</pubDate>
       <guid>https://kubaik.github.io/auth-revamp/</guid>
-    </item>
-    <item>
-      <title>Human Hack</title>
-      <link>https://kubaik.github.io/human-hack/</link>
-      <description>Outsmart social engineers with insider tips on human psychology in cybersecurity.</description>
-      <pubDate>Thu, 09 Apr 2026 22:11:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/human-hack/</guid>
     </item>
   </channel>
 </rss>
