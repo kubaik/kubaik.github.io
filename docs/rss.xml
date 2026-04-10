@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 19:42:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 20:07:06 +0000</lastBuildDate>
+    <item>
+      <title>DB Boost...</title>
+      <link>https://kubaik.github.io/db-boost/</link>
+      <description>Discover top database tools for 2026. Boost performance &amp; productivity with these essential DB solutions.</description>
+      <pubDate>Fri, 10 Apr 2026 20:07:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-boost/</guid>
+    </item>
     <item>
       <title>Forecast Smarter</title>
       <link>https://kubaik.github.io/forecast-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with expert image optimization tips for 2026.</description>
       <pubDate>Fri, 10 Apr 2026 11:29:59 +0000</pubDate>
       <guid>https://kubaik.github.io/optix/</guid>
-    </item>
-    <item>
-      <title>API Turbo</title>
-      <link>https://kubaik.github.io/api-turbo/</link>
-      <description>Boost API speed with Network Performance Optimization techniques.</description>
-      <pubDate>Fri, 10 Apr 2026 11:15:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-turbo/</guid>
     </item>
   </channel>
 </rss>
