@@ -3586,5 +3586,18 @@
       "DigitalTransformation"
     ],
     "topic": "The Countries Winning the AI Race"
+  },
+  "secrets_management:_keeping_credentials_safe": {
+    "timestamp": "2026-04-10T16:43:38.530621",
+    "hashtags": [
+      "CyberSecurity",
+      "CloudSecurity",
+      "DevSecOps",
+      "ZeroTrust",
+      "APIsecurity",
+      "InfoSec",
+      "CredentialProtection"
+    ],
+    "topic": "Secrets Management: Keeping Credentials Safe"
   }
 }

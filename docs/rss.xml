@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 16:32:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 16:43:42 +0000</lastBuildDate>
+    <item>
+      <title>SafeKeep</title>
+      <link>https://kubaik.github.io/safekeep/</link>
+      <description>Protect sensitive credentials with SafeKeep, expert secrets management solutions.</description>
+      <pubDate>Fri, 10 Apr 2026 16:43:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/safekeep/</guid>
+    </item>
     <item>
       <title>AI Winners</title>
       <link>https://kubaik.github.io/ai-winners/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with proven negotiation scripts and strategies.</description>
       <pubDate>Fri, 10 Apr 2026 06:30:34 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-your-worth/</guid>
-    </item>
-    <item>
-      <title>AI in Ed: Future Learning</title>
-      <link>https://kubaik.github.io/ai-in-ed-future-learning/</link>
-      <description>Discover how AI is revolutionizing education and shaping the future of learning.</description>
-      <pubDate>Fri, 10 Apr 2026 06:20:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-in-ed-future-learning/</guid>
     </item>
   </channel>
 </rss>
