@@ -3362,5 +3362,19 @@
       "OutagePrevention"
     ],
     "topic": "The DevOps Mistakes That Cause Outages"
+  },
+  "cloud_cost_optimization:_cutting_your_aws_bill_in_half": {
+    "timestamp": "2026-04-10T08:19:47.926733",
+    "hashtags": [
+      "CloudCosts",
+      "AWSOptimization",
+      "TechOnABudget",
+      "CloudSavings",
+      "ServerlessFirst",
+      "FinOps",
+      "DevOpsTools",
+      "CostEfficiency"
+    ],
+    "topic": "Cloud Cost Optimization: Cutting Your AWS Bill in Half"
   }
 }
