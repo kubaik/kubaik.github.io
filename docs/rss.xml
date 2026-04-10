@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 18:34:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 18:46:52 +0000</lastBuildDate>
+    <item>
+      <title>Dev Jobs Vanish</title>
+      <link>https://kubaik.github.io/dev-jobs-vanish/</link>
+      <description>Junior dev jobs disappearing: Find out why &amp; what&apos;s next for coding careers</description>
+      <pubDate>Fri, 10 Apr 2026 18:46:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-jobs-vanish/</guid>
+    </item>
     <item>
       <title>Mastering Code Reviews: Feedback That Elevates Quality</title>
       <link>https://kubaik.github.io/mastering-code-reviews-feedback-that-elevates-qual/</link>
@@ -138,13 +145,6 @@
       <description>Discover the real costs and limits of serverless architecture.</description>
       <pubDate>Fri, 10 Apr 2026 09:51:01 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-costs-limits/</guid>
-    </item>
-    <item>
-      <title>Jamstack 2026: Still Relevant?</title>
-      <link>https://kubaik.github.io/jamstack-2026-still-relevant/</link>
-      <description>Is Jamstack still relevant in 2026? Discover its current state &amp; future prospects.</description>
-      <pubDate>Fri, 10 Apr 2026 09:12:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-2026-still-relevant/</guid>
     </item>
   </channel>
 </rss>
