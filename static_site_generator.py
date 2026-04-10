@@ -68,6 +68,8 @@ class StaticSiteGenerator:
         for p in posts:
             post_dict = p.to_dict()
             post_dict['display_date'] = self._format_display_date(p.created_at)
+            post_dict['short_tags'] = sorted(p.tags, key=len)[
+                :3]  # shortest 3 tags
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -405,7 +407,7 @@ def _build_templates() -> dict:
                     <p class="post-excerpt">{{ post.meta_description }}</p>
                     {% if post.tags %}
                     <div class="tags">
-                        {% for tag in post.tags[:3] %}
+                        {% for tag in post.short_tags %}
                         <span class="tag">{{ tag }}</span>
                         {% endfor %}
                     </div>
@@ -536,7 +538,7 @@ def _build_templates() -> dict:
             if (post.tags && post.tags.length > 0) {
                 var tagsDiv       = document.createElement('div');
                 tagsDiv.className = 'tags';
-                post.tags.slice(0, 3).forEach(function(t) {
+                post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
                     var span         = document.createElement('span');
                     span.className   = 'tag';
                     span.textContent = t;
