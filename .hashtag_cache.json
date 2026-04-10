@@ -3348,5 +3348,19 @@
       "DevOpsTools"
     ],
     "topic": "Database Sharding: When and How to Do It"
+  },
+  "the_devops_mistakes_that_cause_outages": {
+    "timestamp": "2026-04-10T08:11:20.726089",
+    "hashtags": [
+      "DevOpsMistakes",
+      "CloudOutages",
+      "AIforOps",
+      "DevOpsFailures",
+      "DigitalTransformation",
+      "SiteReliability",
+      "CloudComputingFailures",
+      "OutagePrevention"
+    ],
+    "topic": "The DevOps Mistakes That Cause Outages"
   }
 }
