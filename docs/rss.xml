@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 04:43:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 06:11:30 +0000</lastBuildDate>
+    <item>
+      <title>Scaling Redis</title>
+      <link>https://kubaik.github.io/scaling-redis/</link>
+      <description>Learn patterns for scaling Redis in production, ensuring high performance &amp; reliability.</description>
+      <pubDate>Fri, 10 Apr 2026 06:11:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaling-redis/</guid>
+    </item>
     <item>
       <title>Tech &amp; Love</title>
       <link>https://kubaik.github.io/tech-love/</link>
@@ -138,13 +145,6 @@
       <description>Learn to code your way to wealth with passive income strategies for developers.</description>
       <pubDate>Thu, 09 Apr 2026 18:27:45 +0000</pubDate>
       <guid>https://kubaik.github.io/code-to-wealth/</guid>
-    </item>
-    <item>
-      <title>Speed Up SQL...</title>
-      <link>https://kubaik.github.io/speed-up-sql/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Thu, 09 Apr 2026 18:17:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up-sql/</guid>
     </item>
   </channel>
 </rss>
