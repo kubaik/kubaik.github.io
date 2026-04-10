@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 11:15:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 11:30:03 +0000</lastBuildDate>
+    <item>
+      <title>Optix</title>
+      <link>https://kubaik.github.io/optix/</link>
+      <description>Boost site speed with expert image optimization tips for 2026.</description>
+      <pubDate>Fri, 10 Apr 2026 11:29:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/optix/</guid>
+    </item>
     <item>
       <title>API Turbo</title>
       <link>https://kubaik.github.io/api-turbo/</link>
@@ -138,13 +145,6 @@
       <description>Outsmart social engineers with insider tips on human psychology in cybersecurity.</description>
       <pubDate>Thu, 09 Apr 2026 22:11:49 +0000</pubDate>
       <guid>https://kubaik.github.io/human-hack/</guid>
-    </item>
-    <item>
-      <title>5G: App Dev Game Changer</title>
-      <link>https://kubaik.github.io/5g-app-dev-game-changer/</link>
-      <description>Discover how 5G revolutionizes app development with faster speeds &amp; lower latency.</description>
-      <pubDate>Thu, 09 Apr 2026 21:45:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-app-dev-game-changer/</guid>
     </item>
   </channel>
 </rss>
