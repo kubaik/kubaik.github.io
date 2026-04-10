@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 15:08:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 12:11:18 +0000</lastBuildDate>
+    <item>
+      <title>2026&apos;s Top Stack</title>
+      <link>https://kubaik.github.io/2026s-top-stack/</link>
+      <description>Discover 2026&apos;s top full-stack development tools and technologies.</description>
+      <pubDate>Fri, 10 Apr 2026 12:11:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026s-top-stack/</guid>
+    </item>
     <item>
       <title>TS Pro Tips...</title>
       <link>https://kubaik.github.io/ts-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Discover 2026 tech salary trends: who earns what and why.</description>
       <pubDate>Thu, 09 Apr 2026 23:24:32 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-tech-salaries/</guid>
-    </item>
-    <item>
-      <title>Auth Revamp</title>
-      <link>https://kubaik.github.io/auth-revamp/</link>
-      <description>Discover modern authentication patterns for web apps in our &apos;Auth Revamp&apos; blog post. Enhance security and user experience with the latest strategies!</description>
-      <pubDate>Thu, 09 Apr 2026 22:35:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/auth-revamp/</guid>
     </item>
   </channel>
 </rss>
