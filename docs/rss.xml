@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 15:10:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 15:30:05 +0000</lastBuildDate>
+    <item>
+      <title>Hacked: Insider Secrets</title>
+      <link>https://kubaik.github.io/hacked-insider-secrets/</link>
+      <description>Unlock the secrets hackers use to break in. Learn how to protect yourself from cyber threats.</description>
+      <pubDate>Fri, 10 Apr 2026 15:30:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/hacked-insider-secrets/</guid>
+    </item>
     <item>
       <title>$19B: Why WhatsApp</title>
       <link>https://kubaik.github.io/19b-why-whatsapp/</link>
@@ -138,13 +145,6 @@
       <description>Learn patterns for scaling Redis in production, ensuring high performance &amp; reliability.</description>
       <pubDate>Fri, 10 Apr 2026 06:11:25 +0000</pubDate>
       <guid>https://kubaik.github.io/scaling-redis/</guid>
-    </item>
-    <item>
-      <title>Tech &amp; Love</title>
-      <link>https://kubaik.github.io/tech-love/</link>
-      <description>Explore how tech is redefining love, relationships &amp; connections in the digital age.</description>
-      <pubDate>Fri, 10 Apr 2026 04:43:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-love/</guid>
     </item>
   </channel>
 </rss>
