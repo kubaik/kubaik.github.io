@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Networks 101 - Tech Blog</title>
+    <meta name="description" content="Unlock the basics of neural networks & discover how they learn.">
+    <meta name="keywords" content="TechNews, ArtificialIntelligence, Neural Network Training, technology, Neural Networks 101, Backpropagation, AIforAll, How Neural Networks Learn, Artificial Intelligence, DeepLearning, Machine Learning, Cloud, Docker, Cybersecurity, Neural Network Architecture">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Unlock the basics of neural networks & discover how they learn.">
+    <meta property="og:title" content="Neural Networks 101">
+    <meta property="og:description" content="Unlock the basics of neural networks & discover how they learn.">
+    <meta property="og:url" content="https://kubaik.github.io/neural-networks-101/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-11T20:26:06.589237">
+    <meta property="article:modified_time" content="2026-04-11T20:26:06.589244">
+    <meta property="og:image" content="/static/images/neural-networks-101.jpg">
+    <meta property="og:image:alt" content="Neural Networks 101">
+    <meta name="twitter:image" content="/static/images/neural-networks-101.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Neural Networks 101">
+    <meta name="twitter:description" content="Unlock the basics of neural networks & discover how they learn.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/neural-networks-101/">
+    <meta name="keywords" content="TechNews, ArtificialIntelligence, Neural Network Training, technology, Neural Networks 101, Backpropagation, AIforAll, How Neural Networks Learn, Artificial Intelligence, DeepLearning, Machine Learning, Cloud, Docker, Cybersecurity, Neural Network Architecture">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Neural Networks 101",
+  "description": "Unlock the basics of neural networks & discover how they learn.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-11T20:26:06.589237",
+  "dateModified": "2026-04-11T20:26:06.589244",
+  "url": "https://kubaik.github.io/neural-networks-101/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/neural-networks-101/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/neural-networks-101.jpg"
+  },
+  "keywords": [
+    "TechNews",
+    "ArtificialIntelligence",
+    "Neural Network Training",
+    "technology",
+    "Neural Networks 101",
+    "Backpropagation",
+    "AIforAll",
+    "How Neural Networks Learn",
+    "Artificial Intelligence",
+    "DeepLearning",
+    "Machine Learning",
+    "Cloud",
+    "Docker",
+    "Cybersecurity",
+    "Neural Network Architecture"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <h1>Neural Networks 101</h1>
+                
+                <div class="tags">
+                    
+                    <span class="tag">TechNews</span>
+                    
+                    <span class="tag">Docker</span>
+                    
+                    <span class="tag">ArtificialIntelligence</span>
+                    
+                    <span class="tag">How Neural Networks Learn</span>
+                    
+                    <span class="tag">AIforAll</span>
+                    
+                    <span class="tag">Artificial Intelligence</span>
+                    
+                </div>
+                
+                <div class="post-meta">
+                    <time datetime="2026-04-11T20:26:06.589237">11 April 2026</time>
+                </div>
+            </header>
+            <div class="post-content">
+                <h2 id="introduction-to-neural-networks">Introduction to Neural Networks</h2>
+<p>Neural networks are a subset of machine learning algorithms inspired by the brain's structure and functionality. They are particularly powerful for tasks involving large amounts of data, such as image recognition, natural language processing, and more. In this article, we will delve into how neural networks learn, the underlying mathematics, practical examples, and common challenges along with their solutions.</p>
+<h3 id="understanding-the-basics">Understanding the Basics</h3>
+<h4 id="what-is-a-neural-network">What is a Neural Network?</h4>
+<p>At its core, a neural network consists of interconnected nodes (or neurons) organized in layers:</p>
+<ul>
+<li><strong>Input Layer</strong>: This layer receives the initial data.</li>
+<li><strong>Hidden Layers</strong>: These layers perform computations and transformations on the input.</li>
+<li><strong>Output Layer</strong>: This layer produces the final output.</li>
+</ul>
+<p>The connections between the neurons are weighted, and these weights are adjusted during training to minimize errors in predictions.</p>
+<h4 id="key-terminology">Key Terminology</h4>
+<ul>
+<li><strong>Neuron</strong>: The basic unit that processes input and produces output.</li>
+<li><strong>Weight</strong>: A parameter that determines the strength of the connection between neurons.</li>
+<li><strong>Activation Function</strong>: A function that introduces non-linearity into the model, enabling it to learn complex patterns (e.g., ReLU, sigmoid).</li>
+<li><strong>Loss Function</strong>: A metric used to measure how well the neural network's predictions match the actual outcomes (e.g., Mean Squared Error, Cross-Entropy).</li>
+<li><strong>Backpropagation</strong>: The algorithm used to minimize the loss function by adjusting the weights.</li>
+</ul>
+<h3 id="how-neural-networks-learn">How Neural Networks Learn</h3>
+<h4 id="the-learning-process">The Learning Process</h4>
+<ol>
+<li><strong>Initialization</strong>: Weights are typically initialized randomly.</li>
+<li><strong>Forward Pass</strong>: Input data passes through the network, computing outputs at each layer.</li>
+<li><strong>Loss Calculation</strong>: The output is compared to the true labels using a loss function, which quantifies the error.</li>
+<li><strong>Backward Pass</strong>: The gradient of the loss function is calculated with respect to each weight, and weights are adjusted using an optimization algorithm (like Stochastic Gradient Descent).</li>
+<li><strong>Iteration</strong>: Steps 2-4 are repeated for multiple epochs until the loss stabilizes.</li>
+</ol>
+<h3 id="practical-example-building-a-simple-neural-network-with-tensorflow">Practical Example: Building a Simple Neural Network with TensorFlow</h3>
+<p>We’ll create a neural network using TensorFlow to classify handwritten digits from the MNIST dataset.</p>
+<h4 id="prerequisites">Prerequisites</h4>
+<p>Make sure you have TensorFlow installed. You can install it via pip:</p>
+<pre><code class="language-bash">pip install tensorflow
+</code></pre>
+<h4 id="code-example">Code Example</h4>
+<p>Here's a simple implementation of a neural network using TensorFlow:</p>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow.keras import layers, models
+from tensorflow.keras.datasets import mnist
+import matplotlib.pyplot as plt
+
+# Load data
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Preprocessing
+x_train = x_train.reshape((60000, 28, 28, 1)).astype('float32') / 255
+x_test = x_test.reshape((10000, 28, 28, 1)).astype('float32') / 255
+y_train = tf.keras.utils.to_categorical(y_train, 10)
+y_test = tf.keras.utils.to_categorical(y_test, 10)
+
+# Build the model
+model = models.Sequential()
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.MaxPooling2D((2, 2)))
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D((2, 2)))
+model.add(layers.Flatten())
+model.add(layers.Dense(64, activation='relu'))
+model.add(layers.Dense(10, activation='softmax'))
+
+# Compile the model
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Train the model
+history = model.fit(x_train, y_train, epochs=5, batch_size=64, validation_split=0.1)
+
+# Evaluate the model
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print(f'Test accuracy: {test_acc:.4f}')
+
+# Plot training history
+plt.plot(history.history['accuracy'], label='accuracy')
+plt.plot(history.history['val_accuracy'], label='val_accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
+</code></pre>
+<h4 id="explanation-of-the-code">Explanation of the Code</h4>
+<ul>
+<li><strong>Data Loading</strong>: The MNIST dataset consists of 60,000 training images and 10,000 test images of handwritten digits.</li>
+<li><strong>Preprocessing</strong>: Images are reshaped and normalized to the range [0, 1], and the labels are one-hot encoded.</li>
+<li><strong>Model Architecture</strong>: </li>
+<li>Two convolutional layers followed by max-pooling layers extract features from the images.</li>
+<li>The output is flattened and passed through two dense layers, with the final layer using softmax for multi-class classification.</li>
+<li><strong>Compilation</strong>: The model uses Adam optimizer and categorical cross-entropy loss function.</li>
+<li><strong>Training and Evaluation</strong>: The model is trained for 5 epochs with a batch size of 64, and the test accuracy is printed out.</li>
+</ul>
+<h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
+<h4 id="overfitting">Overfitting</h4>
+<p><strong>Problem</strong>: When a model performs well on training data but poorly on unseen data.</p>
+<p><strong>Solution</strong>: 
+- <strong>Regularization</strong>: Techniques such as L1 and L2 regularization can help reduce overfitting by adding a penalty to large weights.
+- <strong>Dropout</strong>: Randomly disabling a fraction of neurons during training can improve generalization.</p>
+<pre><code class="language-python">model.add(layers.Dropout(0.5))  # Add after dense layers
+</code></pre>
+<ul>
+<li><strong>Data Augmentation</strong>: Generate variations of training data. For example, rotate or flip images to increase the dataset size.</li>
+</ul>
+<h4 id="underfitting">Underfitting</h4>
+<p><strong>Problem</strong>: When a model is too simple or has insufficient capacity to learn the underlying patterns.</p>
+<p><strong>Solution</strong>:
+- <strong>Increase Model Complexity</strong>: Add more layers or increase the number of neurons in each layer.
+- <strong>Feature Engineering</strong>: Create additional input features that can help the model learn better.</p>
+<h3 id="tools-and-platforms-for-building-neural-networks">Tools and Platforms for Building Neural Networks</h3>
+<ol>
+<li><strong>TensorFlow</strong>: An open-source library for machine learning and deep learning. It provides a flexible architecture and supports both CPU and GPU computation.</li>
+<li>
+<p><strong>Pricing</strong>: Free to use, but Google Cloud Platform offers TensorFlow-based services with costs based on usage.</p>
+</li>
+<li>
+<p><strong>PyTorch</strong>: Another powerful deep learning library that is user-friendly and widely adopted in academia and industry.</p>
+</li>
+<li>
+<p><strong>Pricing</strong>: Free, with cloud services available for deployment.</p>
+</li>
+<li>
+<p><strong>Keras</strong>: A high-level neural networks API that runs on top of TensorFlow. It simplifies model building and experimentation.</p>
+</li>
+<li>
+<p><strong>Pricing</strong>: Free as part of TensorFlow.</p>
+</li>
+<li>
+<p><strong>Google Colab</strong>: A cloud-based Jupyter notebook environment that allows you to write and execute Python code in your browser.</p>
+</li>
+<li><strong>Pricing</strong>: Free for basic usage, with a Pro version at $9.99/month for additional resources.</li>
+</ol>
+<h3 id="real-world-use-cases">Real-World Use Cases</h3>
+<h4 id="use-case-1-image-recognition">Use Case 1: Image Recognition</h4>
+<p><strong>Application</strong>: Classifying images of various objects (e.g., vehicles, animals).</p>
+<p><strong>Implementation</strong>: You can utilize pre-trained models like ResNet50 or Inception using TensorFlow or PyTorch to fine-tune them on your dataset. This approach saves training time and improves accuracy.</p>
+<pre><code class="language-python">from tensorflow.keras.applications import ResNet50
+
+base_model = ResNet50(weights='imagenet', include_top=False)
+# Add custom layers for your specific task
+</code></pre>
+<h4 id="use-case-2-natural-language-processing-nlp">Use Case 2: Natural Language Processing (NLP)</h4>
+<p><strong>Application</strong>: Sentiment analysis of product reviews.</p>
+<p><strong>Implementation</strong>: Use recurrent neural networks (RNN) or transformers. For example, the BERT model can be fine-tuned on a labeled dataset to classify sentiment.</p>
+<pre><code class="language-python">from transformers import BertTokenizer, TFBertForSequenceClassification
+
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = TFBertForSequenceClassification.from_pretrained('bert-base-uncased')
+</code></pre>
+<h3 id="performance-metrics">Performance Metrics</h3>
+<p>When evaluating neural networks, consider the following metrics based on your specific task:</p>
+<ul>
+<li><strong>Accuracy</strong>: Overall correctness of the model.</li>
+<li><strong>Precision</strong>: The ratio of true positive predictions to the total predicted positives.</li>
+<li><strong>Recall</strong>: The ratio of true positive predictions to the total actual positives.</li>
+<li><strong>F1 Score</strong>: The harmonic mean of precision and recall, useful for imbalanced datasets.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>Neural networks have revolutionized the way we handle complex tasks in various domains. By understanding how they learn, and the common challenges they face, practitioners can leverage these powerful tools effectively.</p>
+<h4 id="actionable-next-steps">Actionable Next Steps</h4>
+<ol>
+<li><strong>Experiment with Different Architectures</strong>: Try varying the number of layers and neurons in your models to observe their impact on performance.</li>
+<li><strong>Utilize Transfer Learning</strong>: Implement pre-trained models to save time and improve accuracy, especially for image and text data.</li>
+<li><strong>Engage with the Community</strong>: Participate in forums like Stack Overflow or GitHub discussions to exchange insights and solutions.</li>
+<li><strong>Stay Updated</strong>: Follow reputable machine learning and AI blogs, research papers, and courses to keep up with the latest advancements.</li>
+</ol>
+<p>By taking these steps, you can deepen your understanding of neural networks and enhance your skills in building and deploying machine learning models.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 20:00:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 20:26:11 +0000</lastBuildDate>
+    <item>
+      <title>Neural Networks 101</title>
+      <link>https://kubaik.github.io/neural-networks-101/</link>
+      <description>Unlock the basics of neural networks &amp; discover how they learn.</description>
+      <pubDate>Sat, 11 Apr 2026 20:26:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/neural-networks-101/</guid>
+    </item>
     <item>
       <title>Build SaaS Solo</title>
       <link>https://kubaik.github.io/build-saas-solo/</link>
@@ -138,13 +145,6 @@
       <description>Create apps users love, not delete. Learn how to build engaging mobile apps that stick.</description>
       <pubDate>Sat, 11 Apr 2026 11:25:46 +0000</pubDate>
       <guid>https://kubaik.github.io/stick-build-apps-users-keep/</guid>
-    </item>
-    <item>
-      <title>Kotlin Boost...</title>
-      <link>https://kubaik.github.io/kotlin-boost/</link>
-      <description>Boost Android dev with Kotlin. Learn modern development best practices.</description>
-      <pubDate>Sat, 11 Apr 2026 11:05:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-boost/</guid>
     </item>
   </channel>
 </rss>
