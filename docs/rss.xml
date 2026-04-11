@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 12:41:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 13:36:57 +0000</lastBuildDate>
+    <item>
+      <title>AI Done Right...</title>
+      <link>https://kubaik.github.io/ai-done-right/</link>
+      <description>Learn to build effective AI agents with our expert guide.</description>
+      <pubDate>Sat, 11 Apr 2026 13:36:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-done-right/</guid>
+    </item>
     <item>
       <title>Scale Solo</title>
       <link>https://kubaik.github.io/scale-solo/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID principles in action, applied to real-world projects.</description>
       <pubDate>Sat, 11 Apr 2026 01:31:01 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-in-action/</guid>
-    </item>
-    <item>
-      <title>RPA in Biz</title>
-      <link>https://kubaik.github.io/rpa-in-biz/</link>
-      <description>Boost efficiency with RPA in business. Learn how robotics process automation transforms enterprises.</description>
-      <pubDate>Sat, 11 Apr 2026 00:03:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-in-biz/</guid>
     </item>
   </channel>
 </rss>
