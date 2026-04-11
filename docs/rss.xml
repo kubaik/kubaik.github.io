@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 14:32:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 15:07:29 +0000</lastBuildDate>
+    <item>
+      <title>Building in Public</title>
+      <link>https://kubaik.github.io/building-in-public/</link>
+      <description>Learn the pros &amp; cons of building in public, a transparent approach to product development &amp; marketing.</description>
+      <pubDate>Sat, 11 Apr 2026 15:07:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-in-public/</guid>
+    </item>
     <item>
       <title>Python: Speed Up...</title>
       <link>https://kubaik.github.io/python-speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top paid tech skills in demand now and boost your career.</description>
       <pubDate>Sat, 11 Apr 2026 05:57:20 +0000</pubDate>
       <guid>https://kubaik.github.io/top-paid-tech-skills/</guid>
-    </item>
-    <item>
-      <title>AI-Powered Learning</title>
-      <link>https://kubaik.github.io/ai-powered-learning/</link>
-      <description>Unlock rapid skill acquisition with AI-powered learning. Discover how to learn faster and smarter.</description>
-      <pubDate>Sat, 11 Apr 2026 05:15:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-powered-learning/</guid>
     </item>
   </channel>
 </rss>

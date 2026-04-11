@@ -4113,5 +4113,19 @@
       "SoftwareEngineering"
     ],
     "topic": "Profiling Python Applications for Speed"
+  },
+  "building_in_public:_what_works_and_what_doesn't": {
+    "timestamp": "2026-04-11T15:07:24.631958",
+    "hashtags": [
+      "BuildingInPublic",
+      "OpenSourceDevelopment",
+      "TechLessonsLearned",
+      "StartupStories",
+      "TransparentProductDev",
+      "DevCommunity",
+      "FounderDiaries",
+      "PublicProductRoadmap"
+    ],
+    "topic": "Building in Public: What Works and What Doesn't"
   }
 }
