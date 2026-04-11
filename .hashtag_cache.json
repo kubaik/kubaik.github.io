@@ -4248,5 +4248,18 @@
       "DevTools"
     ],
     "topic": "CSS Tricks That Senior Developers Actually Use"
+  },
+  "building_an_api_that_can_handle_a_million_requests": {
+    "timestamp": "2026-04-11T22:01:23.533708",
+    "hashtags": [
+      "ApiDesign",
+      "CloudNative",
+      "Serverless",
+      "Microservices",
+      "ScalableTech",
+      "ArtificialIntelligence",
+      "DevOps"
+    ],
+    "topic": "Building an API That Can Handle a Million Requests"
   }
 }
