@@ -4261,5 +4261,18 @@
       "DevOps"
     ],
     "topic": "Building an API That Can Handle a Million Requests"
+  },
+  "building_a_micro-frontend_architecture": {
+    "timestamp": "2026-04-11T22:25:33.365159",
+    "hashtags": [
+      "MicroFrontends",
+      "CloudNative",
+      "Jamstack",
+      "ServerlessArch",
+      "FrontendDev",
+      "ModularDesign",
+      "TechArchitecture"
+    ],
+    "topic": "Building a Micro-Frontend Architecture"
   }
 }
