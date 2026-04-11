@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 01:31:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 03:19:45 +0000</lastBuildDate>
+    <item>
+      <title>VC Secrets</title>
+      <link>https://kubaik.github.io/vc-secrets/</link>
+      <description>Unlock VC secrets: What top investors look for in tech startups</description>
+      <pubDate>Sat, 11 Apr 2026 03:19:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/vc-secrets/</guid>
+    </item>
     <item>
       <title>SOLID in Action</title>
       <link>https://kubaik.github.io/solid-in-action/</link>
@@ -138,13 +145,6 @@
       <description>Discover top countries leading the AI revolution and dominating innovation.</description>
       <pubDate>Fri, 10 Apr 2026 16:31:55 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-winners/</guid>
-    </item>
-    <item>
-      <title>SQL Hacks</title>
-      <link>https://kubaik.github.io/sql-hacks/</link>
-      <description>Boost efficiency with SQL hacks that simplify complex code</description>
-      <pubDate>Fri, 10 Apr 2026 15:44:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-hacks/</guid>
     </item>
   </channel>
 </rss>
