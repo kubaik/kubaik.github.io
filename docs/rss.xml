@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 19:23:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 19:31:43 +0000</lastBuildDate>
+    <item>
+      <title>Crack the Feed</title>
+      <link>https://kubaik.github.io/crack-the-feed/</link>
+      <description>Unlock social media secrets: learn how algorithms work &amp; boost your online presence</description>
+      <pubDate>Sat, 11 Apr 2026 19:31:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-the-feed/</guid>
+    </item>
     <item>
       <title>GitOps 101</title>
       <link>https://kubaik.github.io/gitops-101/</link>
@@ -138,13 +145,6 @@
       <description>Discover Apple&apos;s secret to premium pricing in a crowded market.</description>
       <pubDate>Sat, 11 Apr 2026 10:27:58 +0000</pubDate>
       <guid>https://kubaik.github.io/apples-premium-edge/</guid>
-    </item>
-    <item>
-      <title>Code to Content</title>
-      <link>https://kubaik.github.io/code-to-content/</link>
-      <description>Learn technical writing for devs: transform code into clear content.</description>
-      <pubDate>Sat, 11 Apr 2026 10:07:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-to-content/</guid>
     </item>
   </channel>
 </rss>
