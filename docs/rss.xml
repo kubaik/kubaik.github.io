@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 14:22:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 14:32:11 +0000</lastBuildDate>
+    <item>
+      <title>Python: Speed Up...</title>
+      <link>https://kubaik.github.io/python-speed-up/</link>
+      <description>Boost Python app performance with expert profiling tips.</description>
+      <pubDate>Sat, 11 Apr 2026 14:32:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-speed-up/</guid>
+    </item>
     <item>
       <title>ASO: What Works</title>
       <link>https://kubaik.github.io/aso-what-works/</link>
@@ -138,13 +145,6 @@
       <description>Unlock rapid skill acquisition with AI-powered learning. Discover how to learn faster and smarter.</description>
       <pubDate>Sat, 11 Apr 2026 05:15:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-powered-learning/</guid>
-    </item>
-    <item>
-      <title>CAP Theorem Simplified</title>
-      <link>https://kubaik.github.io/cap-theorem-simplified/</link>
-      <description>Learn the CAP Theorem in simple terms. Understand tradeoffs in distributed systems.</description>
-      <pubDate>Sat, 11 Apr 2026 05:12:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/cap-theorem-simplified/</guid>
     </item>
   </channel>
 </rss>
