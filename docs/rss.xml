@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2026 23:30:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 00:04:04 +0000</lastBuildDate>
+    <item>
+      <title>RPA in Biz</title>
+      <link>https://kubaik.github.io/rpa-in-biz/</link>
+      <description>Boost efficiency with RPA in business. Learn how robotics process automation transforms enterprises.</description>
+      <pubDate>Sat, 11 Apr 2026 00:03:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-in-biz/</guid>
+    </item>
     <item>
       <title>TS Time-Savers</title>
       <link>https://kubaik.github.io/ts-time-savers/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the $19B secret: Why Facebook acquired WhatsApp</description>
       <pubDate>Fri, 10 Apr 2026 15:10:11 +0000</pubDate>
       <guid>https://kubaik.github.io/19b-why-whatsapp/</guid>
-    </item>
-    <item>
-      <title>AI at Your Command</title>
-      <link>https://kubaik.github.io/ai-at-your-command/</link>
-      <description>Learn to build your own AI assistant and revolutionize your daily routine with personalized automation.</description>
-      <pubDate>Fri, 10 Apr 2026 14:14:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-at-your-command/</guid>
     </item>
   </channel>
 </rss>
