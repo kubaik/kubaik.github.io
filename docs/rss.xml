@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 10:28:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 11:05:45 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Boost...</title>
+      <link>https://kubaik.github.io/kotlin-boost/</link>
+      <description>Boost Android dev with Kotlin. Learn modern development best practices.</description>
+      <pubDate>Sat, 11 Apr 2026 11:05:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-boost/</guid>
+    </item>
     <item>
       <title>Apple&apos;s Premium Edge</title>
       <link>https://kubaik.github.io/apples-premium-edge/</link>
@@ -138,13 +145,6 @@
       <description>Explore the hidden toll of tech on mental health, revealing the darker side of innovation.</description>
       <pubDate>Fri, 10 Apr 2026 22:30:23 +0000</pubDate>
       <guid>https://kubaik.github.io/techs-dark-side/</guid>
-    </item>
-    <item>
-      <title>Slack vs Teams</title>
-      <link>https://kubaik.github.io/slack-vs-teams/</link>
-      <description>Slack vs Teams: Why Microsoft won the battle for team collaboration</description>
-      <pubDate>Fri, 10 Apr 2026 22:06:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/slack-vs-teams/</guid>
     </item>
   </channel>
 </rss>
