@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 10:07:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 10:28:03 +0000</lastBuildDate>
+    <item>
+      <title>Apple&apos;s Premium Edge</title>
+      <link>https://kubaik.github.io/apples-premium-edge/</link>
+      <description>Discover Apple&apos;s secret to premium pricing in a crowded market.</description>
+      <pubDate>Sat, 11 Apr 2026 10:27:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/apples-premium-edge/</guid>
+    </item>
     <item>
       <title>Code to Content</title>
       <link>https://kubaik.github.io/code-to-content/</link>
@@ -138,13 +145,6 @@
       <description>Slack vs Teams: Why Microsoft won the battle for team collaboration</description>
       <pubDate>Fri, 10 Apr 2026 22:06:55 +0000</pubDate>
       <guid>https://kubaik.github.io/slack-vs-teams/</guid>
-    </item>
-    <item>
-      <title>AI Faceoff</title>
-      <link>https://kubaik.github.io/ai-faceoff/</link>
-      <description>ChatGPT vs Claude vs Gemini: Find out which AI reigns supreme</description>
-      <pubDate>Fri, 10 Apr 2026 21:31:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-faceoff/</guid>
     </item>
   </channel>
 </rss>
