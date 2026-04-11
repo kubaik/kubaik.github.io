@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 07:47:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 08:07:38 +0000</lastBuildDate>
+    <item>
+      <title>Embed Smart</title>
+      <link>https://kubaik.github.io/embed-smart/</link>
+      <description>Unlock vector databases &amp; embeddings. Learn practical guide to Embed Smart.</description>
+      <pubDate>Sat, 11 Apr 2026 08:07:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/embed-smart/</guid>
+    </item>
     <item>
       <title>Remote vs Office: The Verdict</title>
       <link>https://kubaik.github.io/remote-vs-office-the-verdict/</link>
@@ -138,13 +145,6 @@
       <description>Boost forecasting accuracy with AI. Learn how to apply AI for time series forecasting in real-world scenarios.</description>
       <pubDate>Fri, 10 Apr 2026 19:42:17 +0000</pubDate>
       <guid>https://kubaik.github.io/forecast-smarter/</guid>
-    </item>
-    <item>
-      <title>Bash in a Snap</title>
-      <link>https://kubaik.github.io/bash-in-a-snap/</link>
-      <description>Learn Bash scripting without the terminal intimidation. Start coding with ease.</description>
-      <pubDate>Fri, 10 Apr 2026 19:30:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/bash-in-a-snap/</guid>
     </item>
   </channel>
 </rss>
