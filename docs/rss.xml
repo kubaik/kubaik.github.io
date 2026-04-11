@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 04:15:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 05:12:31 +0000</lastBuildDate>
+    <item>
+      <title>CAP Theorem Simplified</title>
+      <link>https://kubaik.github.io/cap-theorem-simplified/</link>
+      <description>Learn the CAP Theorem in simple terms. Understand tradeoffs in distributed systems.</description>
+      <pubDate>Sat, 11 Apr 2026 05:12:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/cap-theorem-simplified/</guid>
+    </item>
     <item>
       <title>Test Before Build</title>
       <link>https://kubaik.github.io/test-before-build/</link>
@@ -138,13 +145,6 @@
       <description>Discover if low-code platforms are a threat or a tool for developers, and how they&apos;re changing the coding landscape.</description>
       <pubDate>Fri, 10 Apr 2026 17:30:33 +0000</pubDate>
       <guid>https://kubaik.github.io/low-code-friend-or-foe/</guid>
-    </item>
-    <item>
-      <title>SafeKeep</title>
-      <link>https://kubaik.github.io/safekeep/</link>
-      <description>Protect sensitive credentials with SafeKeep, expert secrets management solutions.</description>
-      <pubDate>Fri, 10 Apr 2026 16:43:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/safekeep/</guid>
     </item>
   </channel>
 </rss>
