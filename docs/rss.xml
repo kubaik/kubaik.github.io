@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 18:35:07 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 19:23:51 +0000</lastBuildDate>
+    <item>
+      <title>GitOps 101</title>
+      <link>https://kubaik.github.io/gitops-101/</link>
+      <description>Learn GitOps basics &amp; improve deployment efficiency with this beginner&apos;s guide.</description>
+      <pubDate>Sat, 11 Apr 2026 19:23:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-101/</guid>
+    </item>
     <item>
       <title>Web App Shield</title>
       <link>https://kubaik.github.io/web-app-shield/</link>
@@ -138,13 +145,6 @@
       <description>Learn technical writing for devs: transform code into clear content.</description>
       <pubDate>Sat, 11 Apr 2026 10:07:22 +0000</pubDate>
       <guid>https://kubaik.github.io/code-to-content/</guid>
-    </item>
-    <item>
-      <title>Cross vs Native</title>
-      <link>https://kubaik.github.io/cross-vs-native/</link>
-      <description>Cross-platform or native? Learn the real trade-offs and make an informed decision for your app development needs.</description>
-      <pubDate>Sat, 11 Apr 2026 09:35:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/cross-vs-native/</guid>
     </item>
   </channel>
 </rss>
