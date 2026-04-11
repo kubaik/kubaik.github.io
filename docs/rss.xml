@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 05:12:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 05:15:52 +0000</lastBuildDate>
+    <item>
+      <title>AI-Powered Learning</title>
+      <link>https://kubaik.github.io/ai-powered-learning/</link>
+      <description>Unlock rapid skill acquisition with AI-powered learning. Discover how to learn faster and smarter.</description>
+      <pubDate>Sat, 11 Apr 2026 05:15:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-powered-learning/</guid>
+    </item>
     <item>
       <title>CAP Theorem Simplified</title>
       <link>https://kubaik.github.io/cap-theorem-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Discover Figma&apos;s journey &amp; Adobe&apos;s acquisition bid</description>
       <pubDate>Fri, 10 Apr 2026 17:43:24 +0000</pubDate>
       <guid>https://kubaik.github.io/figmas-rise/</guid>
-    </item>
-    <item>
-      <title>Low-Code: Friend or Foe?</title>
-      <link>https://kubaik.github.io/low-code-friend-or-foe/</link>
-      <description>Discover if low-code platforms are a threat or a tool for developers, and how they&apos;re changing the coding landscape.</description>
-      <pubDate>Fri, 10 Apr 2026 17:30:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/low-code-friend-or-foe/</guid>
     </item>
   </channel>
 </rss>
