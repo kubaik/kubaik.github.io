@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 03:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 04:15:43 +0000</lastBuildDate>
+    <item>
+      <title>Test Before Build</title>
+      <link>https://kubaik.github.io/test-before-build/</link>
+      <description>Validate your startup idea before building with these proven strategies.</description>
+      <pubDate>Sat, 11 Apr 2026 04:15:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-before-build/</guid>
+    </item>
     <item>
       <title>Painless Spark</title>
       <link>https://kubaik.github.io/painless-spark/</link>
@@ -138,13 +145,6 @@
       <description>Protect sensitive credentials with SafeKeep, expert secrets management solutions.</description>
       <pubDate>Fri, 10 Apr 2026 16:43:38 +0000</pubDate>
       <guid>https://kubaik.github.io/safekeep/</guid>
-    </item>
-    <item>
-      <title>AI Winners</title>
-      <link>https://kubaik.github.io/ai-winners/</link>
-      <description>Discover top countries leading the AI revolution and dominating innovation.</description>
-      <pubDate>Fri, 10 Apr 2026 16:31:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-winners/</guid>
     </item>
   </channel>
 </rss>
