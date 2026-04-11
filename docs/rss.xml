@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 11:05:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 11:25:51 +0000</lastBuildDate>
+    <item>
+      <title>Stick: Build Apps Users Keep</title>
+      <link>https://kubaik.github.io/stick-build-apps-users-keep/</link>
+      <description>Create apps users love, not delete. Learn how to build engaging mobile apps that stick.</description>
+      <pubDate>Sat, 11 Apr 2026 11:25:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/stick-build-apps-users-keep/</guid>
+    </item>
     <item>
       <title>Kotlin Boost...</title>
       <link>https://kubaik.github.io/kotlin-boost/</link>
@@ -138,13 +145,6 @@
       <description>Learn Swift patterns to scale iOS apps efficiently.</description>
       <pubDate>Fri, 10 Apr 2026 23:08:13 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-ios-apps/</guid>
-    </item>
-    <item>
-      <title>Tech&apos;s Dark Side...</title>
-      <link>https://kubaik.github.io/techs-dark-side/</link>
-      <description>Explore the hidden toll of tech on mental health, revealing the darker side of innovation.</description>
-      <pubDate>Fri, 10 Apr 2026 22:30:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/techs-dark-side/</guid>
     </item>
   </channel>
 </rss>
