@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 05:15:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 05:57:25 +0000</lastBuildDate>
+    <item>
+      <title>Top Paid Tech Skills</title>
+      <link>https://kubaik.github.io/top-paid-tech-skills/</link>
+      <description>Discover the top paid tech skills in demand now and boost your career.</description>
+      <pubDate>Sat, 11 Apr 2026 05:57:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-paid-tech-skills/</guid>
+    </item>
     <item>
       <title>AI-Powered Learning</title>
       <link>https://kubaik.github.io/ai-powered-learning/</link>
@@ -138,13 +145,6 @@
       <description>Discover key insights on developer productivity! Explore research-backed strategies to enhance efficiency and drive success in your dev team.</description>
       <pubDate>Fri, 10 Apr 2026 18:31:56 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-prod-insights/</guid>
-    </item>
-    <item>
-      <title>Figma&apos;s Rise</title>
-      <link>https://kubaik.github.io/figmas-rise/</link>
-      <description>Discover Figma&apos;s journey &amp; Adobe&apos;s acquisition bid</description>
-      <pubDate>Fri, 10 Apr 2026 17:43:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/figmas-rise/</guid>
     </item>
   </channel>
 </rss>
