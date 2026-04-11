@@ -4032,5 +4032,19 @@
       "SoftwareReliability"
     ],
     "topic": "CI/CD Pipelines That Actually Prevent Bugs"
+  },
+  "the_solo_developer's_guide_to_scaling": {
+    "timestamp": "2026-04-11T12:41:30.398080",
+    "hashtags": [
+      "SoloDev",
+      "ScalingTech",
+      "DevOps",
+      "CloudNative",
+      "AIforDev",
+      "TechScaling",
+      "DevLife",
+      "Serverless"
+    ],
+    "topic": "The Solo Developer's Guide to Scaling"
   }
 }
