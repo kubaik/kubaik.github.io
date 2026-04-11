@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 17:27:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 18:02:46 +0000</lastBuildDate>
+    <item>
+      <title>Func Code</title>
+      <link>https://kubaik.github.io/func-code/</link>
+      <description>Learn functional programming concepts with practical code examples.</description>
+      <pubDate>Sat, 11 Apr 2026 18:02:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/func-code/</guid>
+    </item>
     <item>
       <title>AI Analyzes</title>
       <link>https://kubaik.github.io/ai-analyzes/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert time management tips for developers.</description>
       <pubDate>Sat, 11 Apr 2026 09:24:38 +0000</pubDate>
       <guid>https://kubaik.github.io/code-smarter/</guid>
-    </item>
-    <item>
-      <title>MLOps: Deploy AI</title>
-      <link>https://kubaik.github.io/mlops-deploy-ai/</link>
-      <description>Streamline AI deployment with MLOps. Learn to deploy models without breaking everything.</description>
-      <pubDate>Sat, 11 Apr 2026 08:36:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-deploy-ai/</guid>
     </item>
   </channel>
 </rss>
