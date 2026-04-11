@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 13:36:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 13:41:08 +0000</lastBuildDate>
+    <item>
+      <title>Py, Go, Rust: Which?</title>
+      <link>https://kubaik.github.io/py-go-rust-which/</link>
+      <description>Compare Py, Go &amp; Rust. Choose the best fit for your project.</description>
+      <pubDate>Sat, 11 Apr 2026 13:41:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/py-go-rust-which/</guid>
+    </item>
     <item>
       <title>AI Done Right...</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Tame Apache Spark&apos;s complexity with expert tips and tricks for a seamless experience.</description>
       <pubDate>Sat, 11 Apr 2026 03:29:15 +0000</pubDate>
       <guid>https://kubaik.github.io/painless-spark/</guid>
-    </item>
-    <item>
-      <title>SOLID in Action</title>
-      <link>https://kubaik.github.io/solid-in-action/</link>
-      <description>Learn SOLID principles in action, applied to real-world projects.</description>
-      <pubDate>Sat, 11 Apr 2026 01:31:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-in-action/</guid>
     </item>
   </channel>
 </rss>
