@@ -3926,5 +3926,18 @@
       "NaturalLanguageProcessing"
     ],
     "topic": "Vector Databases and Embeddings: A Practical Guide"
+  },
+  "mlops:_deploying_ai_models_without_breaking_everything": {
+    "timestamp": "2026-04-11T08:36:19.190038",
+    "hashtags": [
+      "MLOps",
+      "AIEngineering",
+      "ModelDeployment",
+      "ResponsibleAI",
+      "DevOpsForAI",
+      "AIDeployment",
+      "MachineLearningEngineering"
+    ],
+    "topic": "MLOps: Deploying AI Models Without Breaking Everything"
   }
 }
