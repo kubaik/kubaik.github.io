@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 05:57:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 06:42:00 +0000</lastBuildDate>
+    <item>
+      <title>Skills to Ditch</title>
+      <link>https://kubaik.github.io/skills-to-ditch/</link>
+      <description>Discover skills to ditch in 5 years. Stay ahead with our expert insights.</description>
+      <pubDate>Sat, 11 Apr 2026 06:41:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/skills-to-ditch/</guid>
+    </item>
     <item>
       <title>Top Paid Tech Skills</title>
       <link>https://kubaik.github.io/top-paid-tech-skills/</link>
@@ -138,13 +145,6 @@
       <description>Elevate your coding skills with our guide on effective code reviews. Learn how to give feedback that enhances quality and fosters collaboration.</description>
       <pubDate>Fri, 10 Apr 2026 18:34:51 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-code-reviews-feedback-that-elevates-qual/</guid>
-    </item>
-    <item>
-      <title>Dev Prod Insights</title>
-      <link>https://kubaik.github.io/dev-prod-insights/</link>
-      <description>Discover key insights on developer productivity! Explore research-backed strategies to enhance efficiency and drive success in your dev team.</description>
-      <pubDate>Fri, 10 Apr 2026 18:31:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-prod-insights/</guid>
     </item>
   </channel>
 </rss>
