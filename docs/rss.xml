@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 08:07:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 08:36:23 +0000</lastBuildDate>
+    <item>
+      <title>MLOps: Deploy AI</title>
+      <link>https://kubaik.github.io/mlops-deploy-ai/</link>
+      <description>Streamline AI deployment with MLOps. Learn to deploy models without breaking everything.</description>
+      <pubDate>Sat, 11 Apr 2026 08:36:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-deploy-ai/</guid>
+    </item>
     <item>
       <title>Embed Smart</title>
       <link>https://kubaik.github.io/embed-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover top database tools for 2026. Boost performance &amp; productivity with these essential DB solutions.</description>
       <pubDate>Fri, 10 Apr 2026 20:07:01 +0000</pubDate>
       <guid>https://kubaik.github.io/db-boost/</guid>
-    </item>
-    <item>
-      <title>Forecast Smarter</title>
-      <link>https://kubaik.github.io/forecast-smarter/</link>
-      <description>Boost forecasting accuracy with AI. Learn how to apply AI for time series forecasting in real-world scenarios.</description>
-      <pubDate>Fri, 10 Apr 2026 19:42:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/forecast-smarter/</guid>
     </item>
   </channel>
 </rss>
