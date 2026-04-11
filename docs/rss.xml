@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 06:57:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 07:47:58 +0000</lastBuildDate>
+    <item>
+      <title>Remote vs Office: The Verdict</title>
+      <link>https://kubaik.github.io/remote-vs-office-the-verdict/</link>
+      <description>Remote or office: which wins? Discover the data-driven truth about productivity and performance.</description>
+      <pubDate>Sat, 11 Apr 2026 07:47:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-vs-office-the-verdict/</guid>
+    </item>
     <item>
       <title>Scale Fast</title>
       <link>https://kubaik.github.io/scale-fast/</link>
@@ -138,13 +145,6 @@
       <description>Learn Bash scripting without the terminal intimidation. Start coding with ease.</description>
       <pubDate>Fri, 10 Apr 2026 19:30:51 +0000</pubDate>
       <guid>https://kubaik.github.io/bash-in-a-snap/</guid>
-    </item>
-    <item>
-      <title>Dev Jobs Vanish</title>
-      <link>https://kubaik.github.io/dev-jobs-vanish/</link>
-      <description>Junior dev jobs disappearing: Find out why &amp; what&apos;s next for coding careers</description>
-      <pubDate>Fri, 10 Apr 2026 18:46:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-jobs-vanish/</guid>
     </item>
   </channel>
 </rss>
