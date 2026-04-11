@@ -4059,5 +4059,19 @@
       "ResponsibleAI"
     ],
     "topic": "Building AI Agents That Actually Work"
+  },
+  "python_vs_go_vs_rust:_choosing_for_your_use_case": {
+    "timestamp": "2026-04-11T13:41:03.868362",
+    "hashtags": [
+      "ProgrammingLanguages",
+      "CloudNative",
+      "DevOpsTools",
+      "PythonVsGo",
+      "RustProgramming",
+      "SystemDesign",
+      "CodingWars",
+      "TechCompare"
+    ],
+    "topic": "Python vs Go vs Rust: Choosing for Your Use Case"
   }
 }
