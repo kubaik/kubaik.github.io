@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 11:25:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 11:58:13 +0000</lastBuildDate>
+    <item>
+      <title>Bug-Proof CI/CD</title>
+      <link>https://kubaik.github.io/bug-proof-cicd/</link>
+      <description>Learn how to create bug-proof CI/CD pipelines that prevent errors and ensure smooth deployments.</description>
+      <pubDate>Sat, 11 Apr 2026 11:58:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/bug-proof-cicd/</guid>
+    </item>
     <item>
       <title>Stick: Build Apps Users Keep</title>
       <link>https://kubaik.github.io/stick-build-apps-users-keep/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with TypeScript patterns that save time and simplify coding.</description>
       <pubDate>Fri, 10 Apr 2026 23:30:15 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-time-savers/</guid>
-    </item>
-    <item>
-      <title>Scale iOS Apps</title>
-      <link>https://kubaik.github.io/scale-ios-apps/</link>
-      <description>Learn Swift patterns to scale iOS apps efficiently.</description>
-      <pubDate>Fri, 10 Apr 2026 23:08:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-ios-apps/</guid>
     </item>
   </channel>
 </rss>
