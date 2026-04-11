@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLID in Action - Tech Blog</title>
+    <meta name="description" content="Learn SOLID principles in action, applied to real-world projects.">
+    <meta name="keywords" content="software engineering, coding best practices, real-world project examples, VR, SoftwareDesign, developer, Cloud, agile development, CloudNativeApps, clean code, DevOpsTools, design principles in software development., CleanCodeMatters, DataScience, SOLID in action">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn SOLID principles in action, applied to real-world projects.">
+    <meta property="og:title" content="SOLID in Action">
+    <meta property="og:description" content="Learn SOLID principles in action, applied to real-world projects.">
+    <meta property="og:url" content="https://kubaik.github.io/solid-in-action/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-11T01:31:01.727901">
+    <meta property="article:modified_time" content="2026-04-11T01:31:01.727908">
+    <meta property="og:image" content="/static/images/solid-in-action.jpg">
+    <meta property="og:image:alt" content="SOLID in Action">
+    <meta name="twitter:image" content="/static/images/solid-in-action.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SOLID in Action">
+    <meta name="twitter:description" content="Learn SOLID principles in action, applied to real-world projects.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/solid-in-action/">
+    <meta name="keywords" content="software engineering, coding best practices, real-world project examples, VR, SoftwareDesign, developer, Cloud, agile development, CloudNativeApps, clean code, DevOpsTools, design principles in software development., CleanCodeMatters, DataScience, SOLID in action">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SOLID in Action",
+  "description": "Learn SOLID principles in action, applied to real-world projects.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-11T01:31:01.727901",
+  "dateModified": "2026-04-11T01:31:01.727908",
+  "url": "https://kubaik.github.io/solid-in-action/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/solid-in-action/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/solid-in-action.jpg"
+  },
+  "keywords": [
+    "software engineering",
+    "coding best practices",
+    "real-world project examples",
+    "VR",
+    "SoftwareDesign",
+    "developer",
+    "Cloud",
+    "agile development",
+    "CloudNativeApps",
+    "clean code",
+    "DevOpsTools",
+    "design principles in software development.",
+    "CleanCodeMatters",
+    "DataScience",
+    "SOLID in action"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <h1>SOLID in Action</h1>
+                
+                <div class="tags">
+                    
+                    <span class="tag">agile development</span>
+                    
+                    <span class="tag">SoftwareDesign</span>
+                    
+                    <span class="tag">CloudNativeApps</span>
+                    
+                    <span class="tag">software design patterns</span>
+                    
+                    <span class="tag">SOLID principles</span>
+                    
+                    <span class="tag">clean code</span>
+                    
+                </div>
+                
+                <div class="post-meta">
+                    <time datetime="2026-04-11T01:31:01.727901">11 April 2026</time>
+                </div>
+            </header>
+            <div class="post-content">
+                <h2 id="introduction-to-solid-principles">Introduction to SOLID Principles</h2>
+<p>The SOLID principles are a set of guidelines for software development that aim to promote simpler, more robust, and updatable code for software development in object-oriented languages. Each letter in SOLID represents a principle for development: Single responsibility, Open/closed, Liskov substitution, Interface segregation, and Dependency inversion. These principles help developers create more maintainable and scalable software systems. In this article, we will explore how to apply these principles to real-world projects, using specific examples and code snippets.</p>
+<h3 id="single-responsibility-principle-srp">Single Responsibility Principle (SRP)</h3>
+<p>The Single Responsibility Principle states that a class should have only one reason to change. This means that a class should have a single responsibility or functionality. For example, consider a <code>User</code> class that has methods for authentication, data storage, and logging. This class has multiple responsibilities, which makes it difficult to maintain and update.</p>
+<p>To apply the SRP, we can split the <code>User</code> class into separate classes, each with its own responsibility. For example:</p>
+<pre><code class="language-python"># Before SRP
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def authenticate(self):
+        # Authentication logic
+        pass
+
+    def save_to_database(self):
+        # Data storage logic
+        pass
+
+    def log_activity(self):
+        # Logging logic
+        pass
+
+# After SRP
+class Authenticator:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def authenticate(self):
+        # Authentication logic
+        pass
+
+class UserRepository:
+    def save_to_database(self, user):
+        # Data storage logic
+        pass
+
+class Logger:
+    def log_activity(self, user):
+        # Logging logic
+        pass
+</code></pre>
+<p>By applying the SRP, we have separated the responsibilities of the <code>User</code> class into separate classes, making it easier to maintain and update.</p>
+<h2 id="openclosed-principle-ocp">Open/Closed Principle (OCP)</h2>
+<p>The Open/Closed Principle states that a class should be open for extension but closed for modification. This means that we should be able to add new functionality to a class without modifying its existing code. For example, consider a <code>PaymentGateway</code> class that supports only one payment method, such as credit cards.</p>
+<pre><code class="language-python"># Before OCP
+class PaymentGateway:
+    def process_payment(self, payment_method):
+        if payment_method == &quot;credit_card&quot;:
+            # Credit card payment logic
+            pass
+        else:
+            raise ValueError(&quot;Unsupported payment method&quot;)
+</code></pre>
+<p>To apply the OCP, we can use inheritance or polymorphism to add new payment methods without modifying the existing code. For example:</p>
+<pre><code class="language-python"># After OCP
+from abc import ABC, abstractmethod
+
+class PaymentMethod(ABC):
+    @abstractmethod
+    def process_payment(self):
+        pass
+
+class CreditCardPayment(PaymentMethod):
+    def process_payment(self):
+        # Credit card payment logic
+        pass
+
+class PayPalPayment(PaymentMethod):
+    def process_payment(self):
+        # PayPal payment logic
+        pass
+
+class PaymentGateway:
+    def process_payment(self, payment_method: PaymentMethod):
+        payment_method.process_payment()
+</code></pre>
+<p>By applying the OCP, we have made the <code>PaymentGateway</code> class open for extension by adding new payment methods without modifying its existing code.</p>
+<h3 id="liskov-substitution-principle-lsp">Liskov Substitution Principle (LSP)</h3>
+<p>The Liskov Substitution Principle states that subtypes should be substitutable for their base types. This means that any code that uses a base type should be able to work with a subtype without knowing the difference. For example, consider a <code>Rectangle</code> class and a <code>Square</code> class that inherits from <code>Rectangle</code>.</p>
+<pre><code class="language-python"># Before LSP
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+class Square(Rectangle):
+    def __init__(self, side_length):
+        super().__init__(side_length, side_length)
+
+    def set_width(self, width):
+        self.width = width
+        self.height = width
+
+# After LSP
+class Shape:
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+class Square(Shape):
+    def __init__(self, side_length):
+        self.side_length = side_length
+
+    def area(self):
+        return self.side_length ** 2
+</code></pre>
+<p>By applying the LSP, we have made the <code>Square</code> class substitutable for the <code>Shape</code> class, without violating the principles of inheritance.</p>
+<h2 id="interface-segregation-principle-isp">Interface Segregation Principle (ISP)</h2>
+<p>The Interface Segregation Principle states that clients should not be forced to depend on interfaces they do not use. This means that we should break down large interfaces into smaller, more specific interfaces. For example, consider a <code>Printer</code> interface that has methods for printing, scanning, and faxing.</p>
+<pre><code class="language-python"># Before ISP
+from abc import ABC, abstractmethod
+
+class Printer(ABC):
+    @abstractmethod
+    def print(self):
+        pass
+
+    @abstractmethod
+    def scan(self):
+        pass
+
+    @abstractmethod
+    def fax(self):
+        pass
+
+class BasicPrinter(Printer):
+    def print(self):
+        # Printing logic
+        pass
+
+    def scan(self):
+        raise NotImplementedError(&quot;Scanning not supported&quot;)
+
+    def fax(self):
+        raise NotImplementedError(&quot;Faxing not supported&quot;)
+</code></pre>
+<p>To apply the ISP, we can break down the <code>Printer</code> interface into smaller interfaces, such as <code>Printable</code>, <code>Scannable</code>, and <code>Faxable</code>.</p>
+<pre><code class="language-python"># After ISP
+from abc import ABC, abstractmethod
+
+class Printable(ABC):
+    @abstractmethod
+    def print(self):
+        pass
+
+class Scannable(ABC):
+    @abstractmethod
+    def scan(self):
+        pass
+
+class Faxable(ABC):
+    @abstractmethod
+    def fax(self):
+        pass
+
+class BasicPrinter(Printable):
+    def print(self):
+        # Printing logic
+        pass
+
+class AdvancedPrinter(Printable, Scannable, Faxable):
+    def print(self):
+        # Printing logic
+        pass
+
+    def scan(self):
+        # Scanning logic
+        pass
+
+    def fax(self):
+        # Faxing logic
+        pass
+</code></pre>
+<p>By applying the ISP, we have broken down the <code>Printer</code> interface into smaller, more specific interfaces, making it easier for clients to depend on only the interfaces they need.</p>
+<h3 id="dependency-inversion-principle-dip">Dependency Inversion Principle (DIP)</h3>
+<p>The Dependency Inversion Principle states that high-level modules should not depend on low-level modules, but both should depend on abstractions. This means that we should decouple high-level modules from low-level modules using abstractions. For example, consider a <code>NotificationService</code> class that depends on a <code>SMSGateway</code> class.</p>
+<pre><code class="language-python"># Before DIP
+class SMSGateway:
+    def send_sms(self, message):
+        # SMS sending logic
+        pass
+
+class NotificationService:
+    def __init__(self):
+        self.sms_gateway = SMSGateway()
+
+    def send_notification(self, message):
+        self.sms_gateway.send_sms(message)
+</code></pre>
+<p>To apply the DIP, we can introduce an abstraction, such as a <code>NotificationGateway</code> interface, that both the <code>NotificationService</code> and <code>SMSGateway</code> classes depend on.</p>
+<pre><code class="language-python"># After DIP
+from abc import ABC, abstractmethod
+
+class NotificationGateway(ABC):
+    @abstractmethod
+    def send_notification(self, message):
+        pass
+
+class SMSGateway(NotificationGateway):
+    def send_notification(self, message):
+        # SMS sending logic
+        pass
+
+class NotificationService:
+    def __init__(self, notification_gateway: NotificationGateway):
+        self.notification_gateway = notification_gateway
+
+    def send_notification(self, message):
+        self.notification_gateway.send_notification(message)
+</code></pre>
+<p>By applying the DIP, we have decoupled the <code>NotificationService</code> class from the <code>SMSGateway</code> class, making it easier to switch to a different notification gateway, such as an <code>EmailGateway</code>.</p>
+<h2 id="real-world-use-cases">Real-World Use Cases</h2>
+<p>The SOLID principles can be applied to a wide range of real-world use cases, including:</p>
+<ul>
+<li><strong>E-commerce platforms</strong>: By applying the SRP, we can separate the responsibilities of an e-commerce platform into separate classes, such as <code>ProductRepository</code>, <code>OrderService</code>, and <code>PaymentGateway</code>.</li>
+<li><strong>Social media platforms</strong>: By applying the OCP, we can add new features to a social media platform without modifying its existing code, such as adding a new payment method or integrating with a new third-party service.</li>
+<li><strong>Content management systems</strong>: By applying the LSP, we can create a content management system that supports multiple content types, such as articles, images, and videos, without violating the principles of inheritance.</li>
+<li><strong>API gateways</strong>: By applying the ISP, we can break down a large API gateway into smaller, more specific interfaces, making it easier for clients to depend on only the interfaces they need.</li>
+<li><strong>Microservices architecture</strong>: By applying the DIP, we can decouple microservices from each other, making it easier to develop, test, and deploy them independently.</li>
+</ul>
+<h2 id="tools-and-platforms">Tools and Platforms</h2>
+<p>The SOLID principles can be applied using a wide range of tools and platforms, including:</p>
+<ul>
+<li><strong>Programming languages</strong>: Such as Java, Python, C#, and JavaScript.</li>
+<li><strong>Frameworks</strong>: Such as Spring, Django, ASP.NET, and React.</li>
+<li><strong>Libraries</strong>: Such as Apache Commons, Google Guava, and Lodash.</li>
+<li><strong>Cloud platforms</strong>: Such as Amazon Web Services, Microsoft Azure, and Google Cloud Platform.</li>
+<li><strong>Containerization platforms</strong>: Such as Docker, Kubernetes, and Containerd.</li>
+</ul>
+<h2 id="performance-benchmarks">Performance Benchmarks</h2>
+<p>The SOLID principles can have a significant impact on the performance of a software system. For example:</p>
+<ul>
+<li><strong>Reducing coupling</strong>: By applying the SRP, we can reduce coupling between classes, making it easier to maintain and update the system.</li>
+<li><strong>Improving modularity</strong>: By applying the OCP, we can improve the modularity of a system, making it easier to add new features without modifying existing code.</li>
+<li><strong>Increasing scalability</strong>: By applying the LSP, we can increase the scalability of a system, making it easier to support multiple content types or payment methods.</li>
+<li><strong>Reducing dependencies</strong>: By applying the ISP, we can reduce the number of dependencies between classes, making it easier to maintain and update the system.</li>
+<li><strong>Improving testability</strong>: By applying the DIP, we can improve the testability of a system, making it easier to write unit tests and integration tests.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, the SOLID principles are a set of guidelines for software development that can help promote simpler, more robust, and updatable code. By applying these principles, we can create more maintainable and scalable software systems that are easier to develop, test, and deploy. Some actionable next steps include:</p>
+<ol>
+<li><strong>Refactor existing code</strong>: Identify areas of existing code that can be improved by applying the SOLID principles.</li>
+<li><strong>Use design patterns</strong>: Use design patterns, such as the Factory pattern or the Observer pattern, to apply the SOLID principles.</li>
+<li><strong>Write unit tests</strong>: Write unit tests to ensure that the code is testable and maintainable.</li>
+<li><strong>Use continuous integration</strong>: Use continuous integration tools, such as Jenkins or Travis CI, to automate the build and deployment process.</li>
+<li><strong>Monitor performance</strong>: Monitor the performance of the system and identify areas for improvement.</li>
+</ol>
+<p>By following these steps, we can create software systems that are more maintainable, scalable, and efficient, and that provide a better user experience. Some recommended readings include:</p>
+<ul>
+<li><strong>"Clean Code" by Robert C. Martin</strong>: A book that provides a comprehensive guide to writing clean, maintainable code.</li>
+<li><strong>"The Pragmatic Programmer" by Andrew Hunt and David Thomas</strong>: A book that provides a comprehensive guide to software development best practices.</li>
+<li><strong>"Design Patterns: Elements of Reusable Object-Oriented Software" by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides</strong>: A book that provides a comprehensive guide to design patterns.</li>
+<li><strong>"Refactoring: Improving the Design of Existing Code" by Martin Fowler</strong>: A book that provides a comprehensive guide to refactoring existing code.</li>
+</ul>
+<p>Some recommended tools and platforms include:</p>
+<ul>
+<li><strong>Visual Studio Code</strong>: A code editor that provides a wide range of features, including code completion, debugging, and version control.</li>
+<li><strong>IntelliJ IDEA</strong>: A code editor that provides a wide range of features, including code completion, debugging, and version control.</li>
+<li><strong>Eclipse</strong>: A code editor that provides a wide range of features, including code completion, debugging, and version control.</li>
+<li><strong>Jenkins</strong>: A continuous integration tool that provides a wide range of features, including automated builds, testing, and deployment.</li>
+<li><strong>Docker</strong>: A containerization platform that provides a wide range of features, including container creation, management, and deployment.</li>
+</ul>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2026 00:04:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 01:31:05 +0000</lastBuildDate>
+    <item>
+      <title>SOLID in Action</title>
+      <link>https://kubaik.github.io/solid-in-action/</link>
+      <description>Learn SOLID principles in action, applied to real-world projects.</description>
+      <pubDate>Sat, 11 Apr 2026 01:31:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-in-action/</guid>
+    </item>
     <item>
       <title>RPA in Biz</title>
       <link>https://kubaik.github.io/rpa-in-biz/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with SQL hacks that simplify complex code</description>
       <pubDate>Fri, 10 Apr 2026 15:44:35 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-hacks/</guid>
-    </item>
-    <item>
-      <title>$19B: Why WhatsApp</title>
-      <link>https://kubaik.github.io/19b-why-whatsapp/</link>
-      <description>Unlock the $19B secret: Why Facebook acquired WhatsApp</description>
-      <pubDate>Fri, 10 Apr 2026 15:10:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/19b-why-whatsapp/</guid>
     </item>
   </channel>
 </rss>
