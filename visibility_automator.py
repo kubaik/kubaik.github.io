@@ -162,24 +162,23 @@ class VisibilityAutomator:
 
     def _build_thread_tweets(self, post) -> List[str]:
         """
-        Build the list of tweet strings that form the thread.
-        Each tweet is kept under 270 chars to leave room for numbering.
+        Build a 4-tweet thread (cost optimised — was 7).
+        Keeps impression value while halving API write calls.
         """
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
-
-        # Derive short title (max 60 chars)
         short_title = post.title if len(
             post.title) <= 60 else post.title[:57] + "..."
 
-        # Pull up to 3 hashtags from the post
+        # Pull up to 3 shortest hashtags
         hashtags = ""
         if hasattr(post, 'tags') and post.tags:
             sorted_tags = sorted(post.tags, key=len)[:3]
             hashtags = " ".join(
-                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags)
+                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags
+            )
 
-        # Extract a few key topics from the title for talking points
+        # Derive talking points from title words
         title_words = [w for w in post.title.split() if len(w) > 4]
         topic_a = title_words[0] if len(title_words) > 0 else "this topic"
         topic_b = title_words[1] if len(title_words) > 1 else "best practices"
@@ -187,61 +186,36 @@ class VisibilityAutomator:
 
         tweets = [
             # 1. Hook
-            f"🧵 {short_title}\n\nA thread breaking down everything that actually matters 👇",
+            (
+                f"🧵 {short_title}\n\n"
+                f"A thread breaking down everything that actually matters 👇"
+            ),
 
-            # 2. Problem
+            # 2. Problem + key insight (merged to save one API call)
             (
                 f"1/ Most people get this wrong:\n\n"
-                f"{post.meta_description[:200]}"
+                f"{post.meta_description[:180]}\n\n"
+                f"The fix starts with understanding {topic_a} properly."
             ),
 
-            # 3. Key insight
+            # 3. Top tips (merged to save one API call)
             (
-                f"2/ The core insight:\n\n"
-                f"Understanding {topic_a} properly changes how you approach the whole problem.\n\n"
-                f"Here's what the best practitioners do differently 👇"
+                f"2/ What the best practitioners do differently:\n\n"
+                f"✅ Nail {topic_a} fundamentals first\n"
+                f"✅ Apply {topic_b} discipline early\n"
+                f"✅ Optimise {topic_c} before it becomes expensive to fix"
             ),
 
-            # 4. Tip 1
+            # 4. CTA with link
             (
-                f"3/ Tip #1 — Start with {topic_a}\n\n"
-                f"Don't skip the fundamentals. Most issues come from rushing past the basics "
-                f"and hitting walls later that take 10× longer to fix."
-            ),
-
-            # 5. Tip 2
-            (
-                f"4/ Tip #2 — {topic_b} matters more than you think\n\n"
-                f"The teams that get this right ship faster, break less, and scale without drama. "
-                f"It's not magic — it's discipline applied early."
-            ),
-
-            # 6. Tip 3
-            (
-                f"5/ Tip #3 — Optimise for {topic_c} from day one\n\n"
-                f"Retrofitting performance or quality after the fact is painful and expensive. "
-                f"Build the right habits into your workflow now."
-            ),
-
-            # 7. CTA
-            (
-                f"6/ TL;DR:\n\n"
-                f"✅ Nail the fundamentals\n"
-                f"✅ Apply {topic_b} discipline\n"
-                f"✅ Optimise {topic_c} early\n\n"
-                f"Full breakdown (with examples + code): {post_url}\n\n"
+                f"3/ TL;DR — stop guessing, start with a clear system.\n\n"
+                f"Full breakdown with examples + code: {post_url}\n\n"
                 f"{hashtags}"
             ),
         ]
 
-        # Safety: trim any tweet over 280 chars
-        trimmed = []
-        for t in tweets:
-            if len(t) <= 280:
-                trimmed.append(t)
-            else:
-                trimmed.append(t[:277] + "...")
-        return trimmed
+        # Safety trim — no tweet over 280 chars
+        return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
 
     # ─────────────────────────────────────────────────────────────
     # REPLY TO TRENDING
