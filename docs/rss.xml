@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 09:19:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 09:29:10 +0000</lastBuildDate>
+    <item>
+      <title>FastTrack Tech</title>
+      <link>https://kubaik.github.io/fasttrack-tech/</link>
+      <description>Unlock rapid career growth in tech: Get actionable tips to boost visibility, skills and promotions in record time.</description>
+      <pubDate>Sun, 12 Apr 2026 09:29:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/fasttrack-tech/</guid>
+    </item>
     <item>
       <title>Goroutines Unleashed</title>
       <link>https://kubaik.github.io/goroutines-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Discover how quantum coding transforms software engineering! Explore essential concepts and practical tips to harness quantum computing in your projects.</description>
       <pubDate>Sat, 11 Apr 2026 23:05:15 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-coding/</guid>
-    </item>
-    <item>
-      <title>Micro-Frontends</title>
-      <link>https://kubaik.github.io/micro-frontends/</link>
-      <description>Learn to build scalable apps with micro-frontends architecture.</description>
-      <pubDate>Sat, 11 Apr 2026 22:25:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-frontends/</guid>
     </item>
   </channel>
 </rss>
