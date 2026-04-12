@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 06:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 09:47:09 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Algorithm Optimization: Practical Big O Analysis: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-algorithm-optimization-practical-big/</link>
+      <description>A comprehensive guide to Algorithm Optimization: Practical Big O Analysis covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Sun, 12 Apr 2026 09:47:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-algorithm-optimization-practical-big/</guid>
+    </item>
     <item>
       <title>Dirty Data?</title>
       <link>https://kubaik.github.io/dirty-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn functional programming concepts with practical code examples.</description>
       <pubDate>Sat, 11 Apr 2026 18:02:42 +0000</pubDate>
       <guid>https://kubaik.github.io/func-code/</guid>
-    </item>
-    <item>
-      <title>AI Analyzes</title>
-      <link>https://kubaik.github.io/ai-analyzes/</link>
-      <description>Unlock AI-powered data analysis without coding. Discover insights faster and easier.</description>
-      <pubDate>Sat, 11 Apr 2026 17:26:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-analyzes/</guid>
     </item>
   </channel>
 </rss>

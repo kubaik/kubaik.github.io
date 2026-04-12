@@ -1,32 +1,72 @@
 """
 Enhanced Visibility Automator with Multiple Tweet Strategies
 Integrates with EnhancedTweetGenerator for maximum engagement
+
+New features:
+  - post_thread()           : Converts a blog post into a multi-tweet thread
+  - reply_to_trending()     : Finds trending tech tweets and replies with value-add content
+  - schedule_peak_post()    : Posts at optimal EAT timezone hours
 """
 
+import asyncio
+import datetime
 import tweepy
-from typing import Dict
+from typing import Dict, List, Optional
 from enhanced_tweet_generator import EnhancedTweetGenerator
 
+
+# ─────────────────────────────────────────────────────────────────
+# Constants
+# ─────────────────────────────────────────────────────────────────
+
+# Peak engagement hours in East Africa Time (UTC+3)
+PEAK_HOURS_EAT = [8, 9, 12, 17, 19, 21]
+
+# Tech keywords used to find trending tweets to reply to
+TRENDING_TECH_KEYWORDS = [
+    "AI tools", "machine learning", "Python tips", "software engineering",
+    "web development", "cloud computing", "cybersecurity", "DevOps",
+    "TypeScript", "React", "API development", "data engineering",
+    "LLM", "GPT", "open source", "startup tech", "system design",
+]
+
+# Minimum follower count on a tweet author before we bother replying
+MIN_AUTHOR_FOLLOWERS = 500
+
+# Max replies per run (avoid spamming)
+MAX_REPLIES_PER_RUN = 3
+
+# Max tweets to scan when looking for reply targets
+SEARCH_RESULT_LIMIT = 20
+
+
+# ─────────────────────────────────────────────────────────────────
+# VisibilityAutomator
+# ─────────────────────────────────────────────────────────────────
 
 class VisibilityAutomator:
     def __init__(self, config):
         self.config = config
         self.twitter_client = None
         self.tweet_generator = EnhancedTweetGenerator()
+        self._username = None
         self._init_twitter()
-    
+
+    # ─────────────────────────────────────────────────────────────
+    # INIT
+    # ─────────────────────────────────────────────────────────────
+
     def _init_twitter(self):
         import os
         """Initialize Twitter API v2 client"""
-        
-        api_key             = os.getenv('TWITTER_API_KEY')  
-        api_secret          = os.getenv('TWITTER_API_SECRET')          
-        access_token        = os.getenv('TWITTER_ACCESS_TOKEN')        
-        access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET') 
-        bearer_token        = os.getenv('TWITTER_BEARER_TOKEN')        
+
+        api_key = os.getenv('TWITTER_API_KEY')
+        api_secret = os.getenv('TWITTER_API_SECRET')
+        access_token = os.getenv('TWITTER_ACCESS_TOKEN')
+        access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+        bearer_token = os.getenv('TWITTER_BEARER_TOKEN')
 
         missing = []
-
         if not api_key:
             missing.append("TWITTER_API_KEY")
         if not api_secret:
@@ -39,8 +79,9 @@ class VisibilityAutomator:
             missing.append("TWITTER_BEARER_TOKEN")
 
         if missing:
-            print(f"⚠️ Missing Twitter credentials: {', '.join(missing)}")
+            print(f"⚠️  Missing Twitter credentials: {', '.join(missing)}")
             return
+
         try:
             self.twitter_client = tweepy.Client(
                 bearer_token=bearer_token,
@@ -53,159 +94,461 @@ class VisibilityAutomator:
             me = self.twitter_client.get_me()
             self._username = me.data.username
             print(f"✅ Twitter API initialized as @{self._username}")
-
         except Exception as e:
             print(f"❌ Twitter initialization failed: {e}")
             self.twitter_client = None
-    
-    def post_to_twitter(self, tweet_text: str = None, post = None, strategy: str = "auto") -> Dict:
+
+    # ─────────────────────────────────────────────────────────────
+    # THREAD POSTING
+    # ─────────────────────────────────────────────────────────────
+
+    def post_thread(self, post) -> Dict:
         """
-        Post to Twitter with enhanced engagement strategies
-        
-        Args:
-            tweet_text: Custom tweet text (if provided, ignores post and strategy)
-            post: Blog post object to generate tweet from
-            strategy: Tweet strategy (hook, stat, problem, list, question, thread, auto)
-        
-        Returns:
-            Dict with success status and tweet URL or error
+        Convert a blog post into a tweet thread and post it.
+
+        Thread structure (7 tweets):
+          1. Hook  — grab attention
+          2. Problem  — pain point the post addresses
+          3. Key insight — the core idea
+          4. Tip 1  — first actionable point
+          5. Tip 2  — second actionable point
+          6. Tip 3  — third actionable point
+          7. CTA  — link back to the full post
+
+        Returns a dict with success status, thread_ids, and URLs.
         """
         if not self.twitter_client:
-            return {
-                'success': False,
-                'error': 'Twitter client not initialized. Check API credentials.'
-            }
-        
+            return {'success': False, 'error': 'Twitter client not initialized. Check API credentials.'}
+
         try:
-            # Use custom text or generate engaging tweet
+            tweets = self._build_thread_tweets(post)
+            thread_ids = []
+            thread_urls = []
+            previous_id = None
+
+            print(f"🧵 Posting thread ({len(tweets)} tweets) for: {post.title}")
+
+            for i, tweet_text in enumerate(tweets, 1):
+                kwargs = {'text': tweet_text}
+                if previous_id:
+                    kwargs['in_reply_to_tweet_id'] = previous_id
+
+                response = self.twitter_client.create_tweet(**kwargs)
+                tweet_id = response.data['id']
+                username = self._username or "i"
+                tweet_url = f"https://twitter.com/{username}/status/{tweet_id}"
+
+                thread_ids.append(tweet_id)
+                thread_urls.append(tweet_url)
+                previous_id = tweet_id
+
+                print(f"  ✅ Tweet {i}/{len(tweets)} posted: {tweet_url}")
+
+                # Small pause between tweets to avoid rate limits
+                if i < len(tweets):
+                    import time
+                    time.sleep(2)
+
+            return {
+                'success':     True,
+                'thread_ids':  thread_ids,
+                'thread_urls': thread_urls,
+                'first_tweet': thread_urls[0] if thread_urls else None,
+                'tweet_count': len(thread_ids),
+            }
+
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+
+    def _build_thread_tweets(self, post) -> List[str]:
+        """
+        Build the list of tweet strings that form the thread.
+        Each tweet is kept under 270 chars to leave room for numbering.
+        """
+        base_url = self.config.get('base_url', 'https://kubaik.github.io')
+        post_url = f"{base_url}/{post.slug}"
+
+        # Derive short title (max 60 chars)
+        short_title = post.title if len(
+            post.title) <= 60 else post.title[:57] + "..."
+
+        # Pull up to 3 hashtags from the post
+        hashtags = ""
+        if hasattr(post, 'tags') and post.tags:
+            sorted_tags = sorted(post.tags, key=len)[:3]
+            hashtags = " ".join(
+                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags)
+
+        # Extract a few key topics from the title for talking points
+        title_words = [w for w in post.title.split() if len(w) > 4]
+        topic_a = title_words[0] if len(title_words) > 0 else "this topic"
+        topic_b = title_words[1] if len(title_words) > 1 else "best practices"
+        topic_c = title_words[-1] if len(title_words) > 2 else "performance"
+
+        tweets = [
+            # 1. Hook
+            f"🧵 {short_title}\n\nA thread breaking down everything that actually matters 👇",
+
+            # 2. Problem
+            (
+                f"1/ Most people get this wrong:\n\n"
+                f"{post.meta_description[:200]}"
+            ),
+
+            # 3. Key insight
+            (
+                f"2/ The core insight:\n\n"
+                f"Understanding {topic_a} properly changes how you approach the whole problem.\n\n"
+                f"Here's what the best practitioners do differently 👇"
+            ),
+
+            # 4. Tip 1
+            (
+                f"3/ Tip #1 — Start with {topic_a}\n\n"
+                f"Don't skip the fundamentals. Most issues come from rushing past the basics "
+                f"and hitting walls later that take 10× longer to fix."
+            ),
+
+            # 5. Tip 2
+            (
+                f"4/ Tip #2 — {topic_b} matters more than you think\n\n"
+                f"The teams that get this right ship faster, break less, and scale without drama. "
+                f"It's not magic — it's discipline applied early."
+            ),
+
+            # 6. Tip 3
+            (
+                f"5/ Tip #3 — Optimise for {topic_c} from day one\n\n"
+                f"Retrofitting performance or quality after the fact is painful and expensive. "
+                f"Build the right habits into your workflow now."
+            ),
+
+            # 7. CTA
+            (
+                f"6/ TL;DR:\n\n"
+                f"✅ Nail the fundamentals\n"
+                f"✅ Apply {topic_b} discipline\n"
+                f"✅ Optimise {topic_c} early\n\n"
+                f"Full breakdown (with examples + code): {post_url}\n\n"
+                f"{hashtags}"
+            ),
+        ]
+
+        # Safety: trim any tweet over 280 chars
+        trimmed = []
+        for t in tweets:
+            if len(t) <= 280:
+                trimmed.append(t)
+            else:
+                trimmed.append(t[:277] + "...")
+        return trimmed
+
+    # ─────────────────────────────────────────────────────────────
+    # REPLY TO TRENDING
+    # ─────────────────────────────────────────────────────────────
+
+    def reply_to_trending(self, post=None, keywords: Optional[List[str]] = None,
+                          max_replies: int = MAX_REPLIES_PER_RUN) -> Dict:
+        """
+        Search for recent high-engagement tweets on tech topics and reply
+        with a value-add comment that naturally references the blog post.
+
+        Args:
+            post:        Blog post object (used to craft contextual replies).
+                         Pass None to use generic replies.
+            keywords:    List of search keywords. Defaults to TRENDING_TECH_KEYWORDS.
+            max_replies: Maximum number of replies to post in one run.
+
+        Returns:
+            Dict with success status and list of replies posted.
+        """
+        if not self.twitter_client:
+            return {'success': False, 'error': 'Twitter client not initialized. Check API credentials.'}
+
+        if not keywords:
+            keywords = TRENDING_TECH_KEYWORDS
+
+        replies_posted = []
+        errors = []
+
+        # Cycle through keywords until we hit max_replies
+        for keyword in keywords:
+            if len(replies_posted) >= max_replies:
+                break
+
+            try:
+                targets = self._find_reply_targets(keyword)
+                if not targets:
+                    continue
+
+                for tweet in targets:
+                    if len(replies_posted) >= max_replies:
+                        break
+
+                    # Don't reply to ourselves
+                    if tweet.author_id and str(tweet.author_id) == str(self._get_my_id()):
+                        continue
+
+                    reply_text = self._craft_reply(tweet, keyword, post)
+                    if not reply_text:
+                        continue
+
+                    response = self.twitter_client.create_tweet(
+                        text=reply_text,
+                        in_reply_to_tweet_id=tweet.id
+                    )
+
+                    reply_id = response.data['id']
+                    username = self._username or "i"
+                    reply_url = f"https://twitter.com/{username}/status/{reply_id}"
+
+                    replies_posted.append({
+                        'keyword':       keyword,
+                        'target_id':     tweet.id,
+                        'reply_id':      reply_id,
+                        'reply_url':     reply_url,
+                        'reply_preview': reply_text[:80] + "...",
+                    })
+
+                    print(
+                        f"  💬 Replied to tweet {tweet.id} with keyword '{keyword}'")
+                    print(f"     Reply URL: {reply_url}")
+
+                    # Pause between replies to look human
+                    import time
+                    time.sleep(5)
+
+            except Exception as e:
+                error_msg = f"Error processing keyword '{keyword}': {e}"
+                errors.append(error_msg)
+                print(f"  ⚠️  {error_msg}")
+                continue
+
+        return {
+            'success':       len(replies_posted) > 0,
+            'replies_posted': replies_posted,
+            'reply_count':   len(replies_posted),
+            'errors':        errors,
+        }
+
+    def _find_reply_targets(self, keyword: str) -> List:
+        """
+        Search for recent tweets matching the keyword.
+        Filters out retweets and replies; prefers tweets with some engagement.
+        """
+        try:
+            query = (
+                f'"{keyword}" lang:en '
+                f'-is:retweet -is:reply '
+                f'has:mentions OR min_faves:10'
+            )
+            response = self.twitter_client.search_recent_tweets(
+                query=query,
+                max_results=SEARCH_RESULT_LIMIT,
+                tweet_fields=['public_metrics',
+                              'author_id', 'created_at', 'text'],
+                expansions=['author_id'],
+                user_fields=['public_metrics'],
+            )
+
+            if not response.data:
+                return []
+
+            # Build author follower map from includes
+            author_followers = {}
+            if response.includes and 'users' in response.includes:
+                for user in response.includes['users']:
+                    if hasattr(user, 'public_metrics') and user.public_metrics:
+                        author_followers[user.id] = user.public_metrics.get(
+                            'followers_count', 0)
+
+            # Filter: author must have MIN_AUTHOR_FOLLOWERS followers
+            filtered = []
+            for tweet in response.data:
+                followers = author_followers.get(tweet.author_id, 0)
+                if followers >= MIN_AUTHOR_FOLLOWERS:
+                    filtered.append(tweet)
+
+            # Sort by like count descending to target most visible tweets
+            filtered.sort(
+                key=lambda t: t.public_metrics.get(
+                    'like_count', 0) if t.public_metrics else 0,
+                reverse=True
+            )
+            return filtered[:5]  # Top 5 candidates per keyword
+
+        except Exception as e:
+            print(f"  ⚠️  Search failed for '{keyword}': {e}")
+            return []
+
+    def _craft_reply(self, tweet, keyword: str, post=None) -> Optional[str]:
+        """
+        Craft a value-add reply to a tweet.
+        If a post is provided, naturally weave in the blog link.
+        Replies are kept under 270 chars to be safe.
+        """
+        base_url = self.config.get('base_url', 'https://kubaik.github.io')
+
+        # Generic value-add replies (rotate based on tweet id to vary tone)
+        generic_replies = [
+            f"Great point on {keyword}! One thing I'd add — consistency in the fundamentals beats chasing every new tool. Wrote a deep dive on this recently if helpful 👇",
+            f"This is spot on. The teams that get {keyword} right share one trait: they treat it as a system, not a checklist. My full breakdown: {{url}}",
+            f"Agreed. The biggest mistake I see with {keyword} is skipping the boring parts early. Costs 10× later. Wrote about the patterns that actually work: {{url}}",
+            f"Solid take. Would add: the 'why' behind {keyword} matters as much as the 'how'. Unpacked this with examples here: {{url}}",
+        ]
+
+        if post:
+            post_url = f"{base_url}/{post.slug}"
+            idx = int(str(tweet.id)[-1]) % len(generic_replies)
+            reply = generic_replies[idx].replace("{url}", post_url)
+
+            # Add a relevant hashtag from the post
+            tag = ""
+            if hasattr(post, 'tags') and post.tags:
+                clean = post.tags[0].replace(' ', '').replace('-', '')
+                tag = f" #{clean}"
+
+            reply = reply + tag
+        else:
+            idx = int(str(tweet.id)[-1]) % len(generic_replies)
+            reply = generic_replies[idx].replace(
+                " My full breakdown: {url}", "").replace(": {{url}}", ".")
+
+        # Safety trim
+        if len(reply) > 270:
+            reply = reply[:267] + "..."
+
+        return reply
+
+    def _get_my_id(self) -> Optional[str]:
+        """Return the authenticated user's numeric ID (cached after first call)."""
+        if not hasattr(self, '_my_id'):
+            try:
+                me = self.twitter_client.get_me()
+                self._my_id = str(me.data.id)
+            except Exception:
+                self._my_id = None
+        return self._my_id
+
+    # ─────────────────────────────────────────────────────────────
+    # PEAK-TIME POSTING HELPER
+    # ─────────────────────────────────────────────────────────────
+
+    def is_peak_time(self) -> bool:
+        """Return True if the current EAT hour is a peak engagement hour."""
+        eat_hour = (datetime.datetime.utcnow().hour + 3) % 24
+        return eat_hour in PEAK_HOURS_EAT
+
+    def post_at_peak_or_now(self, post, use_thread: bool = False) -> Dict:
+        """
+        Post immediately if it's a peak hour, otherwise post anyway but log the warning.
+        Set use_thread=True to post as a thread instead of a single tweet.
+        """
+        if not self.is_peak_time():
+            eat_hour = (datetime.datetime.utcnow().hour + 3) % 24
+            print(
+                f"⏰ Current EAT hour ({eat_hour}:00) is outside peak hours {PEAK_HOURS_EAT}.")
+            print(
+                "   Posting anyway — consider scheduling with a cron job for peak times.")
+
+        if use_thread:
+            return self.post_thread(post)
+        else:
+            return self.post_with_best_strategy(post)
+
+    # ─────────────────────────────────────────────────────────────
+    # EXISTING METHODS (unchanged)
+    # ─────────────────────────────────────────────────────────────
+
+    def post_to_twitter(self, tweet_text: str = None, post=None, strategy: str = "auto") -> Dict:
+        if not self.twitter_client:
+            return {'success': False, 'error': 'Twitter client not initialized. Check API credentials.'}
+
+        try:
             if tweet_text:
                 final_tweet = tweet_text
             elif post:
-                final_tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
+                final_tweet = self.tweet_generator.create_engaging_tweet(
+                    post, strategy)
             else:
-                return {
-                    'success': False,
-                    'error': 'Either tweet_text or post must be provided'
-                }
-            
-            # Analyze tweet quality before posting
+                return {'success': False, 'error': 'Either tweet_text or post must be provided'}
+
             analysis = self.tweet_generator.analyze_tweet_quality(final_tweet)
-            print(f"📊 Tweet Quality Score: {analysis['score']}/100 (Grade: {analysis['grade']})")
-            
-            # Post tweet
+            print(
+                f"📊 Tweet Quality Score: {analysis['score']}/100 (Grade: {analysis['grade']})")
+
             response = self.twitter_client.create_tweet(text=final_tweet)
             tweet_id = response.data['id']
-            
-            # Get authenticated user info for URL
             username = self._username or "i"
-            
-            tweet_url = f"https://twitter.com/{username}/status/{tweet_id}"
-            
+
             return {
-                'success': True,
-                'tweet_id': tweet_id,
-                'url': tweet_url,
-                'tweet_text': final_tweet,
+                'success':       True,
+                'tweet_id':      tweet_id,
+                'url':           f"https://twitter.com/{username}/status/{tweet_id}",
+                'tweet_text':    final_tweet,
                 'quality_score': analysis['score'],
-                'strategy': strategy
+                'strategy':      strategy,
             }
-            
         except Exception as e:
-            return {
-                'success': False,
-                'error': str(e)
-            }
-    
+            return {'success': False, 'error': str(e)}
+
     def post_with_best_strategy(self, post) -> Dict:
-        """
-        Generate multiple variations and post the best one
-        """
         if not self.twitter_client:
-            return {
-                'success': False,
-                'error': 'Twitter client not initialized'
-            }
-        
-        # Generate variations
-        variations = self.tweet_generator.create_multiple_variations(post, count=5)
-        
-        # Analyze and pick best
-        best_variation = max(variations, 
-                           key=lambda v: self.tweet_generator.analyze_tweet_quality(v['tweet'])['score'])
-        
-        print(f"🎯 Selected strategy: {best_variation['strategy']}")
-        print(f"📊 Quality score: {self.tweet_generator.analyze_tweet_quality(best_variation['tweet'])['score']}")
-        
-        # Post the best one
-        return self.post_to_twitter(tweet_text=best_variation['tweet'], strategy=best_variation['strategy'])
-    
+            return {'success': False, 'error': 'Twitter client not initialized'}
+
+        variations = self.tweet_generator.create_multiple_variations(
+            post, count=5)
+        best = max(variations,
+                   key=lambda v: self.tweet_generator.analyze_tweet_quality(v['tweet'])['score'])
+
+        print(f"🎯 Selected strategy: {best['strategy']}")
+        print(
+            f"📊 Quality score: {self.tweet_generator.analyze_tweet_quality(best['tweet'])['score']}")
+
+        return self.post_to_twitter(tweet_text=best['tweet'], strategy=best['strategy'])
+
     def generate_tweet_preview(self, post, strategy: str = "auto") -> Dict:
-        """
-        Generate tweet preview without posting
-        Useful for review before posting
-        """
         tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
         analysis = self.tweet_generator.analyze_tweet_quality(tweet)
-        
         return {
-            'tweet': tweet,
-            'length': len(tweet),
-            'strategy': strategy,
+            'tweet':         tweet,
+            'length':        len(tweet),
+            'strategy':      strategy,
             'quality_score': analysis['score'],
-            'grade': analysis['grade'],
-            'feedback': analysis['feedback']
+            'grade':         analysis['grade'],
+            'feedback':      analysis['feedback'],
         }
-    
+
     def generate_all_variations(self, post) -> list:
-        """
-        Generate all tweet variations for manual selection
-        """
-        variations = self.tweet_generator.create_multiple_variations(post, count=6)
-        
+        variations = self.tweet_generator.create_multiple_variations(
+            post, count=6)
         results = []
         for var in variations:
             analysis = self.tweet_generator.analyze_tweet_quality(var['tweet'])
             results.append({
-                'strategy': var['strategy'],
-                'tweet': var['tweet'],
-                'length': var['length'],
+                'strategy':      var['strategy'],
+                'tweet':         var['tweet'],
+                'length':        var['length'],
                 'quality_score': analysis['score'],
-                'grade': analysis['grade'],
-                'feedback': analysis['feedback']
+                'grade':         analysis['grade'],
+                'feedback':      analysis['feedback'],
             })
-        
         return sorted(results, key=lambda x: x['quality_score'], reverse=True)
-    
+
     def test_twitter_connection(self) -> Dict:
-        """Test Twitter API connection"""
         if not self.twitter_client:
-            return {
-                'success': False,
-                'error': 'Twitter client not initialized'
-            }
-        
+            return {'success': False, 'error': 'Twitter client not initialized'}
         try:
             me = self.twitter_client.get_me()
-            return {
-                'success': True,
-                'username': me.data.username,
-                'name': me.data.name,
-                'id': me.data.id
-            }
+            return {'success': True, 'username': me.data.username,
+                    'name': me.data.name, 'id': me.data.id}
         except Exception as e:
-            return {
-                'success': False,
-                'error': str(e)
-            }
-    
+            return {'success': False, 'error': str(e)}
+
     def generate_social_posts(self, post) -> Dict:
-        """
-        Generate optimized social media posts for multiple platforms
-        """
-        # Twitter - use enhanced generator
-        twitter_post = self.tweet_generator.create_engaging_tweet(post, strategy="auto")
-        
-        # LinkedIn - more professional
+        twitter_post = self.tweet_generator.create_engaging_tweet(
+            post, strategy="auto")
+
         linkedin_post = f"""🚀 New Article: {post.title}
 
 {post.meta_description}
@@ -222,16 +565,14 @@ Read the full article: https://kubaik.github.io/{post.slug}
 
 {self._format_hashtags_linkedin(post)}
 """
-        
-        # Reddit - more casual, value-focused
         reddit_title = f"[Guide] {post.title}"
         reddit_post = f"""{post.meta_description}
 
-I just published a detailed guide covering everything you need to know about this topic. 
+I just published a detailed guide covering everything you need to know about this topic.
 
 The article includes:
 - Step-by-step explanations
-- Code examples and snippets  
+- Code examples and snippets
 - Performance benchmarks
 - Best practices
 
@@ -239,8 +580,6 @@ Check it out if you're interested: https://kubaik.github.io/{post.slug}
 
 Happy to answer any questions!
 """
-        
-        # Facebook - more casual and personal
         facebook_post = f"""Hey everyone! 👋
 
 Just published a new article on {post.title}.
@@ -253,103 +592,114 @@ Read it here: https://kubaik.github.io/{post.slug}
 
 Let me know what you think! 💬
 """
-        
         return {
-            'twitter': twitter_post,
-            'linkedin': linkedin_post,
+            'twitter':      twitter_post,
+            'linkedin':     linkedin_post,
             'reddit_title': reddit_title,
-            'reddit': reddit_post,
-            'facebook': facebook_post
+            'reddit':       reddit_post,
+            'facebook':     facebook_post,
         }
-    
+
     def _format_hashtags_linkedin(self, post) -> str:
-        """Format hashtags for LinkedIn (different style)"""
         if hasattr(post, 'tags') and post.tags:
             tags = post.tags[:5]
-            hashtags = []
-            for tag in tags:
-                clean_tag = tag.replace(' ', '').replace('-', '')
-                if clean_tag:
-                    hashtags.append(f"#{clean_tag}")
-            return ' '.join(hashtags)
+            return ' '.join(f"#{t.replace(' ', '').replace('-', '')}" for t in tags if t)
         return ""
 
 
-# CLI for testing
+# ─────────────────────────────────────────────────────────────────
+# CLI entry point
+# ─────────────────────────────────────────────────────────────────
+
 if __name__ == "__main__":
     import yaml
     import sys
-    
+
     print("=" * 70)
-    print("ENHANCED TWEET GENERATOR - TESTING")
+    print("ENHANCED VISIBILITY AUTOMATOR — TESTING")
     print("=" * 70)
-    
-    # Mock post for testing
+
     class MockPost:
         def __init__(self):
             self.title = "Secure APIs: Best Practices for Protection"
             self.slug = "secure-apis"
-            self.meta_description = "Learn API security best practices to protect your data and prevent breaches."
-            self.tags = ["coding", "innovation", "CloudNative", "OpenAPI", "5G"]
+            self.meta_description = ("Learn API security best practices to protect "
+                                     "your data and prevent breaches.")
+            self.tags = ["coding", "innovation",
+                         "CloudNative", "OpenAPI", "5G"]
             self.twitter_hashtags = "#coding #innovation #CloudNative"
-    
+
     post = MockPost()
-    
-    # Load config if available
+
     try:
         with open("config.yaml", "r") as f:
             config = yaml.safe_load(f)
-    except:
+    except Exception:
         config = {}
-    
+
     visibility = VisibilityAutomator(config)
-    
-    # Generate all variations
-    print("\n🎨 Generating all tweet variations...")
+
+    # ── Thread preview ────────────────────────────────────────────
+    print("\n🧵 THREAD PREVIEW")
     print("=" * 70)
-    
+    thread_tweets = visibility._build_thread_tweets(post)
+    for i, t in enumerate(thread_tweets, 1):
+        print(f"\nTweet {i} ({len(t)} chars):")
+        print("-" * 50)
+        print(t)
+
+    # ── All single-tweet variations ───────────────────────────────
+    print("\n\n🎨 SINGLE-TWEET VARIATIONS")
+    print("=" * 70)
     variations = visibility.generate_all_variations(post)
-    
     for i, var in enumerate(variations, 1):
         print(f"\n📱 VARIATION {i}: {var['strategy'].upper()}")
         print(f"   Score: {var['quality_score']}/100 (Grade: {var['grade']})")
-        print(f"   Length: {var['length']} characters")
-        print("-" * 70)
+        print(f"   Length: {var['length']} chars")
+        print("-" * 50)
         print(var['tweet'])
-        print("-" * 70)
-        print("Feedback:")
-        for feedback in var['feedback']:
-            print(f"   {feedback}")
-    
-    # Show best variation
-    best = variations[0]
-    print("\n" + "=" * 70)
-    print("🏆 RECOMMENDED TWEET (Highest Score)")
-    print("=" * 70)
-    print(f"Strategy: {best['strategy'].upper()}")
-    print(f"Score: {best['quality_score']}/100 (Grade: {best['grade']})")
-    print(f"Length: {best['length']} characters")
-    print("-" * 70)
-    print(best['tweet'])
-    print("=" * 70)
-    
-    # Test connection if credentials available
-    if config.get('twitter_api'):
-        print("\n🔍 Testing Twitter connection...")
-        connection = visibility.test_twitter_connection()
-        if connection['success']:
-            print(f"✅ Connected as @{connection['username']}")
-            
-            response = input("\n❓ Do you want to post the best tweet? (y/N): ")
-            if response.lower() == 'y':
-                result = visibility.post_to_twitter(tweet_text=best['tweet'])
-                if result['success']:
-                    print(f"\n✅ Tweet posted successfully!")
-                    print(f"🔗 URL: {result['url']}")
-                else:
-                    print(f"\n❌ Failed to post: {result['error']}")
+
+    # ── Live posting (only if credentials are configured) ─────────
+    if visibility.twitter_client:
+        print("\n\n🔍 Twitter connection active.")
+
+        choice = input(
+            "\nWhat would you like to post?\n"
+            "  1. Best single tweet\n"
+            "  2. Thread\n"
+            "  3. Reply to trending (dry-run search only)\n"
+            "  4. Skip\n"
+            "Choice: "
+        ).strip()
+
+        if choice == "1":
+            result = visibility.post_with_best_strategy(post)
+            if result['success']:
+                print(f"✅ Tweet posted: {result['url']}")
+            else:
+                print(f"❌ Failed: {result['error']}")
+
+        elif choice == "2":
+            result = visibility.post_thread(post)
+            if result['success']:
+                print(f"✅ Thread posted ({result['tweet_count']} tweets)")
+                print(f"   First tweet: {result['first_tweet']}")
+            else:
+                print(f"❌ Failed: {result['error']}")
+
+        elif choice == "3":
+            print("\n🔍 Searching for reply targets (no replies will be posted)...")
+            for kw in TRENDING_TECH_KEYWORDS[:3]:
+                targets = visibility._find_reply_targets(kw)
+                print(f"\nKeyword: '{kw}' → {len(targets)} candidates")
+                for t in targets[:2]:
+                    preview = t.text[:80].replace('\n', ' ')
+                    likes = t.public_metrics.get(
+                        'like_count', 0) if t.public_metrics else 0
+                    print(f"  [{likes} ❤️] {preview}...")
+                    print(
+                        f"  Reply would be: {visibility._craft_reply(t, kw, post)[:100]}...")
         else:
-            print(f"❌ Connection failed: {connection['error']}")
+            print("Skipped.")
     else:
-        print("\n⚠️ No Twitter credentials in config.yaml")
-        print("Add your Twitter API credentials to test posting.")
+        print("\n⚠️  No live Twitter client. Set credentials in environment variables to test posting.")
