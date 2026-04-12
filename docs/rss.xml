@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 01:55:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 03:46:09 +0000</lastBuildDate>
+    <item>
+      <title>Million $ Code</title>
+      <link>https://kubaik.github.io/million-code/</link>
+      <description>Discover open source projects that raked in millions. Learn their secrets to success.</description>
+      <pubDate>Sun, 12 Apr 2026 03:46:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/million-code/</guid>
+    </item>
     <item>
       <title>Code Clarity</title>
       <link>https://kubaik.github.io/code-clarity/</link>
@@ -138,13 +145,6 @@
       <description>Learn the pros &amp; cons of building in public, a transparent approach to product development &amp; marketing.</description>
       <pubDate>Sat, 11 Apr 2026 15:07:24 +0000</pubDate>
       <guid>https://kubaik.github.io/building-in-public/</guid>
-    </item>
-    <item>
-      <title>Python: Speed Up...</title>
-      <link>https://kubaik.github.io/python-speed-up/</link>
-      <description>Boost Python app performance with expert profiling tips.</description>
-      <pubDate>Sat, 11 Apr 2026 14:32:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-speed-up/</guid>
     </item>
   </channel>
 </rss>
