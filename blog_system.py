@@ -47,7 +47,7 @@ def _jaccard(a: set, b: set) -> float:
 
 
 def _is_duplicate_title(new_title: str, existing_titles: List[str],
-                         threshold: float = DUPLICATE_TITLE_THRESHOLD) -> tuple:
+                        threshold: float = DUPLICATE_TITLE_THRESHOLD) -> tuple:
     """
     Return (is_duplicate, best_match_title, score).
     is_duplicate is True when the new title is too close to any existing title.
@@ -95,7 +95,7 @@ class BlogSystem:
         self.output_dir.mkdir(exist_ok=True)
 
         # API keys
-        self.groq_key       = os.getenv("GROQ_API_KEY")
+        self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
 
         # Log key status at startup so CI logs are easy to diagnose
@@ -105,13 +105,15 @@ class BlogSystem:
         self.api_key = self.groq_key or self.openrouter_key
 
         # Initialize managers
-        self.monetization    = MonetizationManager(config)
+        self.monetization = MonetizationManager(config)
         self.hashtag_manager = HashtagManager(config)
 
     def _log_key_status(self):
         print("=== API Key Status ===")
-        print(f"  Groq:        {'configured' if self.groq_key       else 'NOT SET'}")
-        print(f"  OpenRouter:  {'configured' if self.openrouter_key else 'NOT SET'}")
+        print(
+            f"  Groq:        {'configured' if self.groq_key       else 'NOT SET'}")
+        print(
+            f"  OpenRouter:  {'configured' if self.openrouter_key else 'NOT SET'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -126,7 +128,7 @@ class BlogSystem:
             print("No docs directory found.")
             return
 
-        fixed_count   = 0
+        fixed_count = 0
         removed_count = 0
 
         for post_dir in self.output_dir.iterdir():
@@ -134,12 +136,13 @@ class BlogSystem:
                 continue
 
             post_json_path = post_dir / "post.json"
-            markdown_path  = post_dir / "index.md"
+            markdown_path = post_dir / "index.md"
 
             if not post_json_path.exists() and markdown_path.exists():
                 try:
                     print(f"Recovering {post_dir.name}...")
-                    post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
+                    post = BlogPost.from_markdown_file(
+                        markdown_path, post_dir.name)
                     self.save_post(post)
                     fixed_count += 1
                     print(f"Recovered: {post.title}")
@@ -154,7 +157,8 @@ class BlogSystem:
                 except OSError:
                     print(f"Directory not empty: {list(post_dir.iterdir())}")
 
-        print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
+        print(
+            f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN: Groq → OpenRouter
@@ -272,26 +276,31 @@ class BlogSystem:
                             raise Exception(f"OpenRouter {response.status}: {await response.text()}")
                         result = await response.json()
                         if "error" in result:
-                            raise Exception(f"OpenRouter error payload: {result['error']}")
+                            raise Exception(
+                                f"OpenRouter error payload: {result['error']}")
                         return result["choices"][0]["message"]["content"]
 
             except aiohttp.ClientConnectionError as e:
                 # Connection reset, DNS failure, etc. — worth retrying
                 if attempt < max_attempts:
                     wait = wait_seconds[attempt - 1]
-                    print(f"OpenRouter connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(
+                        f"OpenRouter connection error (attempt {attempt}/{max_attempts}): {e}")
                     print(f"Retrying in {wait}s...")
                     await asyncio.sleep(wait)
                 else:
-                    raise Exception(f"OpenRouter connection failed after {max_attempts} attempts: {e}")
+                    raise Exception(
+                        f"OpenRouter connection failed after {max_attempts} attempts: {e}")
 
             except asyncio.TimeoutError:
                 if attempt < max_attempts:
                     wait = wait_seconds[attempt - 1]
-                    print(f"OpenRouter timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                    print(
+                        f"OpenRouter timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
                     await asyncio.sleep(wait)
                 else:
-                    raise Exception(f"OpenRouter timed out after {max_attempts} attempts.")
+                    raise Exception(
+                        f"OpenRouter timed out after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
@@ -307,12 +316,12 @@ class BlogSystem:
 
             # ── Duplicate-title guard ──────────────────────────────
             existing_titles = _load_existing_titles(self.output_dir)
-            title           = await self._generate_unique_title(topic, keywords, existing_titles)
+            title = await self._generate_unique_title(topic, keywords, existing_titles)
             # ──────────────────────────────────────────────────────
 
-            content          = await self._generate_content(title, topic, keywords)
+            content = await self._generate_content(title, topic, keywords)
             meta_description = await self._generate_meta_description(topic, title)
-            slug             = self._create_slug(title)
+            slug = self._create_slug(title)
 
             if not keywords:
                 keywords = await self._generate_keywords(topic, title)
@@ -335,22 +344,25 @@ class BlogSystem:
             enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
                 post.content, topic
             )
-            post.content           = enhanced_content
-            post.affiliate_links   = affiliate_links
-            post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+            post.content = enhanced_content
+            post.affiliate_links = affiliate_links
+            post.monetization_data = self.monetization.generate_ad_slots(
+                enhanced_content)
 
             # Trending hashtags
             print("Generating trending hashtags...")
             hashtags = await self.hashtag_manager.get_daily_hashtags(topic, max_hashtags=10)
-            post.tags             = list(set(post.tags + hashtags))[:15]
-            post.seo_keywords     = list(set(post.seo_keywords + hashtags))[:15]
-            post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(hashtags[:5])
+            post.tags = list(set(post.tags + hashtags))[:15]
+            post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
+            post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(
+                hashtags[:5])
             print(f"Hashtags: {', '.join(hashtags[:5])}")
 
             return post
 
         except Exception as e:
-            print(f"All API providers exhausted ({e}). Using local template content.")
+            print(
+                f"All API providers exhausted ({e}). Using local template content.")
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
@@ -385,7 +397,8 @@ class BlogSystem:
 
             is_dup, match, score = _is_duplicate_title(title, existing_titles)
             if not is_dup:
-                print(f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
+                print(
+                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
                 return title
 
             print(
@@ -401,7 +414,7 @@ class BlogSystem:
         return f"{title}{suffix}"
 
     async def _generate_title(self, topic: str, keywords: List[str] = None,
-                               extra_instruction: str = "") -> str:
+                              extra_instruction: str = "") -> str:
         keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
         messages = [
             {"role": "system", "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles."},
@@ -484,7 +497,7 @@ Do not include the main title (# {title}) as it will be added automatically."""
     def _generate_fallback_post(self, topic: str) -> BlogPost:
         """Generate a template post when all APIs are unavailable."""
         title = f"Understanding {topic}: A Complete Guide"
-        slug  = self._create_slug(title)
+        slug = self._create_slug(title)
 
         content = f"""## Introduction
 
@@ -533,12 +546,14 @@ Remember to stay updated with the latest developments in {topic} as the field co
             title=title,
             content=content,
             slug=slug,
-            tags=[topic.replace(' ', '-').lower(), 'technology', 'development', 'guide'],
+            tags=[topic.replace(' ', '-').lower(),
+                  'technology', 'development', 'guide'],
             meta_description=f"A comprehensive guide to {topic} covering key concepts, benefits, and best practices for developers.",
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(),
             updated_at=datetime.now().isoformat(),
-            seo_keywords=[topic.lower(), 'guide', 'tutorial', 'best practices'],
+            seo_keywords=[topic.lower(), 'guide', 'tutorial',
+                          'best practices'],
             affiliate_links=[],
             monetization_data={}
         )
@@ -546,9 +561,10 @@ Remember to stay updated with the latest developments in {topic} as the field co
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
             post.content, topic
         )
-        post.content           = enhanced_content
-        post.affiliate_links   = affiliate_links
-        post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+        post.content = enhanced_content
+        post.affiliate_links = affiliate_links
+        post.monetization_data = self.monetization.generate_ad_slots(
+            enhanced_content)
 
         return post
 
@@ -576,7 +592,8 @@ Remember to stay updated with the latest developments in {topic} as the field co
         print(f"Saved post: {post.title} ({post.slug})")
         if post.affiliate_links:
             print(f"  - {len(post.affiliate_links)} affiliate links added")
-        print(f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
+        print(
+            f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -610,17 +627,17 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     if not available:
         print("All topics used, resetting...")
         available = topics
-        used      = []
+        used = []
 
     # ── Duplicate-topic guard ──────────────────────────────────────
     # Load existing post titles once and skip any candidate topic
     # that is already too similar to what has been published.
-    docs_dir        = Path("./docs")
+    docs_dir = Path("./docs")
     existing_titles = _load_existing_titles(docs_dir)
 
     if existing_titles:
         safe_available = []
-        skipped        = []
+        skipped = []
         for candidate in available:
             # Treat the raw topic string as a pseudo-title for comparison
             is_dup, match, score = _is_duplicate_title(
@@ -642,7 +659,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
             # All remaining topics have been covered — reset and pick any
             print("All available topics are already covered. Resetting topic history.")
             available = topics
-            used      = []
+            used = []
     # ──────────────────────────────────────────────────────────────
 
     topic = random.choice(available)
@@ -680,12 +697,12 @@ def create_sample_config():
         },
 
         "content_topics": [
- 
+
             # ══════════════════════════════════════════════════════════════════
             # TIER 1 — HIGHEST VIRALITY (broad audience, developers + non-devs)
             # These are the topics that get shared outside the tech bubble.
             # ══════════════════════════════════════════════════════════════════
- 
+
             # AI FOR EVERYONE (non-developer angle — massive Twitter audience)
             "How AI Is Changing Everyday Life in 2026",
             "ChatGPT vs Claude vs Gemini: Which AI Actually Wins",
@@ -702,7 +719,7 @@ def create_sample_config():
             "The Hidden Dangers of Relying on AI",
             "How Hospitals Are Using AI to Save Lives",
             "AI in Education: The Future of Learning",
- 
+
             # TECH MONEY & CAREERS (high engagement — salary, jobs, income)
             "Tech Salaries in 2026: Who Earns What",
             "How to Get a $150K Tech Job Without a Degree",
@@ -719,7 +736,7 @@ def create_sample_config():
             "The Fastest Growing Tech Roles Right Now",
             "Why Developers Burn Out and How to Prevent It",
             "How to Get Promoted Faster in Tech",
- 
+
             # STARTUPS & BUILDERS (entrepreneurs + developers both engage)
             "How to Build a SaaS Product as a Solo Developer",
             "The Tech Stack for Bootstrapped Startups in 2026",
@@ -736,7 +753,7 @@ def create_sample_config():
             "What VCs Actually Look for in Tech Startups",
             "Startup Failure Lessons from Founders Who Lost Everything",
             "The Solo Developer's Guide to Scaling",
- 
+
             # AI TOOLS & PRODUCTIVITY (everyone wants to be more productive)
             "The AI Workflow That Saves 10 Hours a Week",
             "Best AI Coding Assistants Compared: Copilot vs Cursor vs Others",
@@ -753,7 +770,7 @@ def create_sample_config():
             "The Best Free AI APIs for Developers",
             "Building AI-Powered Apps Without Machine Learning Knowledge",
             "AI for Personal Finance: Tools and Strategies",
- 
+
             # FUTURE OF WORK & TECH SOCIETY (widely shared, opinion-generating)
             "Will AI Replace Software Developers? The Honest Answer",
             "Remote Work vs Office: What the Data Actually Shows",
@@ -770,7 +787,7 @@ def create_sample_config():
             "Why Junior Developer Jobs Are Disappearing",
             "The Tech Industry's Mental Health Crisis",
             "How Technology Is Changing Human Relationships",
- 
+
             # TECH BUSINESS & STRATEGY (decision-makers and entrepreneurs engage)
             "Why Most Digital Transformations Fail",
             "How Netflix Decides What to Build Next",
@@ -787,11 +804,11 @@ def create_sample_config():
             "The API Economy: How Twilio and Stripe Print Money",
             "Why Most Tech Companies Never Become Profitable",
             "Platform Business Models Explained",
- 
+
             # ══════════════════════════════════════════════════════════════════
             # TIER 2 — STRONG VIRALITY (developer-focused but widely shareable)
             # ══════════════════════════════════════════════════════════════════
- 
+
             # AI & MACHINE LEARNING (keep the best, cut the ultra-academic)
             "Generative AI and Large Language Models Explained",
             "How Neural Networks Actually Learn",
@@ -808,7 +825,7 @@ def create_sample_config():
             "AI for Time Series Forecasting in Practice",
             "Explainable AI: Making Black Boxes Transparent",
             "Computer Vision Applications in the Real World",
- 
+
             # CYBERSECURITY (strong public interest after every breach)
             "How Hackers Actually Break Into Systems",
             "The Biggest Data Breaches of 2026 and What Went Wrong",
@@ -825,7 +842,7 @@ def create_sample_config():
             "DDoS Attacks: How They Work and How to Stop Them",
             "Container Security in Production Kubernetes",
             "The Security Vulnerabilities in Most Mobile Apps",
- 
+
             # WEB DEVELOPMENT (keep practical, cut framework reference docs)
             "React vs Next.js vs Remix: Choosing the Right Tool",
             "Full-Stack Development in 2026: The Best Stack",
@@ -842,7 +859,7 @@ def create_sample_config():
             "WebAssembly: When JavaScript Isn't Fast Enough",
             "Building a Micro-Frontend Architecture",
             "Modern Authentication Patterns for Web Apps",
- 
+
             # BACKEND & SYSTEM DESIGN (system design is perpetually viral)
             "System Design Interview: How to Think Like a Senior Engineer",
             "How Netflix Handles 200 Million Concurrent Streams",
@@ -859,7 +876,7 @@ def create_sample_config():
             "Message Queues: Kafka vs RabbitMQ vs SQS",
             "Database Sharding: When and How to Do It",
             "Serverless Architecture: Real Costs and Real Limits",
- 
+
             # DEVOPS & CLOUD (focus on pain points, not product docs)
             "The DevOps Mistakes That Cause Outages",
             "Kubernetes: When It Helps and When It Hurts",
@@ -876,11 +893,11 @@ def create_sample_config():
             "Multi-Cloud Strategy: Smart or Overkill",
             "Secrets Management: Keeping Credentials Safe",
             "Platform Engineering: Building Internal Developer Platforms",
- 
+
             # ══════════════════════════════════════════════════════════════════
             # TIER 3 — SOLID SEO (good search traffic, moderate social reach)
             # ══════════════════════════════════════════════════════════════════
- 
+
             # DATA ENGINEERING & ANALYTICS
             "Building Your First Data Pipeline That Doesn't Break",
             "Apache Kafka for Developers Who Aren't Data Engineers",
@@ -892,7 +909,7 @@ def create_sample_config():
             "A/B Testing: How to Run Experiments That Mean Something",
             "Data Mesh Architecture Explained",
             "Business Intelligence Tools for Engineering Teams",
- 
+
             # MOBILE DEVELOPMENT
             "React Native vs Flutter in 2026: Final Answer",
             "Building a Mobile App That Users Don't Delete",
@@ -904,7 +921,7 @@ def create_sample_config():
             "Mobile Security Vulnerabilities and Fixes",
             "Cross-Platform vs Native: The Real Trade-offs",
             "Mobile CI/CD Automation in Practice",
- 
+
             # EMERGING TECHNOLOGIES
             "Blockchain Beyond the Hype: Real Use Cases",
             "Web3 Development: What It Actually Takes",
@@ -916,7 +933,7 @@ def create_sample_config():
             "5G's Real Impact on Application Development",
             "Low-Code Platforms: Threat or Tool for Developers",
             "Robotics Process Automation in Enterprise",
- 
+
             # SOFTWARE ENGINEERING PRACTICES
             "Clean Code: The Rules That Actually Matter",
             "SOLID Principles Applied to Real Projects",
@@ -928,7 +945,7 @@ def create_sample_config():
             "Documentation That Developers Actually Read",
             "Agile in Practice: What Works, What's Theatre",
             "Pair Programming: When It's Worth It",
- 
+
             # DEVELOPER MENTAL MODELS & GROWTH
             "How Senior Developers Think Differently",
             "The Mental Models Every Developer Needs",
@@ -940,7 +957,7 @@ def create_sample_config():
             "How to Contribute to Open Source Projects",
             "Developer Productivity: What Research Actually Shows",
             "Managing Up: How Developers Build Influence",
- 
+
             # PROGRAMMING LANGUAGES (practical, not academic)
             "Python in 2026: What's New and What Changed",
             "JavaScript Features That Changed How We Code",
@@ -952,7 +969,7 @@ def create_sample_config():
             "SQL Tricks That Replace Complex Application Code",
             "Bash Scripting for Developers Who Avoid the Terminal",
             "Python vs Go vs Rust: Choosing for Your Use Case",
- 
+
             # TOOLS & PRODUCTIVITY (practical, search-friendly)
             "VS Code Setup That Makes You 2x Faster",
             "Git Commands That Senior Developers Use Daily",
@@ -964,7 +981,7 @@ def create_sample_config():
             "Automating Repetitive Dev Tasks with Python",
             "Command Line Tools Every Developer Should Know",
             "Building a Development Environment That Doesn't Frustrate",
- 
+
             # PERFORMANCE & OPTIMIZATION (good SEO, technical audience)
             "Application Performance Monitoring That Prevents Incidents",
             "Database Query Optimization: Finding and Fixing Slow Queries",
@@ -1007,7 +1024,8 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
-            print("\nAPI chain: Groq (primary) -> OpenRouter (fallback) -> local template")
+            print(
+                "\nAPI chain: Groq (primary) -> OpenRouter (fallback) -> local template")
             print("Add GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY")
 
         elif mode == "auto":
@@ -1024,7 +1042,7 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
 
             try:
-                topic     = pick_next_topic()
+                topic = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
                 blog_system.save_post(blog_post)
 
@@ -1035,25 +1053,57 @@ if __name__ == "__main__":
 
                 visibility = VisibilityAutomator(config)
 
-                hashtags   = blog_post.twitter_hashtags if hasattr(blog_post, 'twitter_hashtags') else ""
-                tweet_text = (
-                    f"New Post: {blog_post.title}\n\n"
-                    f"{blog_post.meta_description[:100]}...\n\n"
-                    f"Read more: https://kubaik.github.io/{blog_post.slug}\n\n"
-                    f"{hashtags}"
-                )
-                if len(tweet_text) > 280:
-                    tweet_text = (
-                        f"{blog_post.title}\n"
-                        f"Read: https://kubaik.github.io/{blog_post.slug}\n"
-                        f"{hashtags}"
-                    )
+                # ── 1. POST AS THREAD (maximum impressions) ──────────────────
+                print("\n🧵 Posting as thread for maximum impressions...")
+                thread_result = visibility.post_thread(blog_post)
 
-                twitter_result = visibility.post_with_best_strategy(blog_post)
-                if twitter_result['success']:
-                    print(f"Tweeted successfully: {twitter_result['url']}")
+                if thread_result['success']:
+                    print(
+                        f"✅ Thread posted ({thread_result['tweet_count']} tweets)")
+                    print(f"   First tweet: {thread_result['first_tweet']}")
+                    for i, url in enumerate(thread_result['thread_urls'], 1):
+                        print(f"   Tweet {i}: {url}")
                 else:
-                    print(f"Twitter post failed: {twitter_result.get('error')}")
+                    # Fallback: post single best tweet if thread fails
+                    print(
+                        f"⚠️  Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
+                    single_result = visibility.post_with_best_strategy(
+                        blog_post)
+                    if single_result['success']:
+                        print(f"✅ Single tweet posted: {single_result['url']}")
+                    else:
+                        print(
+                            f"❌ Single tweet also failed: {single_result.get('error')}")
+
+                # ── 2. REPLY TO TRENDING (boost impressions via engagement) ──
+                # Note: requires X API Basic tier ($100/mo) for search access.
+                # On the free tier this will log a warning and skip gracefully.
+                print("\n💬 Replying to trending tech tweets...")
+                try:
+                    reply_result = visibility.reply_to_trending(
+                        post=blog_post,
+                        keywords=[
+                            "AI tools",
+                            "Python tips",
+                            "web development",
+                            "system design",
+                            "machine learning",
+                        ],
+                        max_replies=3,
+                    )
+                    if reply_result['success']:
+                        print(
+                            f"✅ Replied to {reply_result['reply_count']} trending tweet(s)")
+                        for r in reply_result['replies_posted']:
+                            print(f"   [{r['keyword']}] {r['reply_url']}")
+                    else:
+                        # Errors are expected on the free X API tier
+                        print(
+                            f"⚠️  Reply to trending skipped: {reply_result.get('errors', ['unknown error'])}")
+                except Exception as reply_err:
+                    # Never let reply failures break the overall cron run
+                    print(
+                        f"⚠️  Reply to trending raised an exception (skipping): {reply_err}")
 
             except Exception as e:
                 print(f"Error: {e}")
@@ -1072,7 +1122,7 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
 
             blog_system = BlogSystem(config)
-            generator   = StaticSiteGenerator(blog_system)
+            generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
             print("Site rebuilt successfully!")
 
@@ -1112,21 +1162,28 @@ if __name__ == "__main__":
                 items = list(blog_system.output_dir.iterdir())
                 print(f"Items in directory: {len(items)}")
                 for item in items:
-                    print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
+                    print(
+                        f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
                     if item.is_dir():
-                        post_json   = item / "post.json"
-                        post_md     = item / "index.md"
+                        post_json = item / "post.json"
+                        post_md = item / "index.md"
                         social_json = item / "social_posts.json"
-                        print(f"    post.json:         {'Yes' if post_json.exists()   else 'No'}")
-                        print(f"    index.md:          {'Yes' if post_md.exists()     else 'No'}")
-                        print(f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
+                        print(
+                            f"    post.json:         {'Yes' if post_json.exists()   else 'No'}")
+                        print(
+                            f"    index.md:          {'Yes' if post_md.exists()     else 'No'}")
+                        print(
+                            f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
                                     data = json.load(f)
-                                print(f"    Valid post:        {data.get('title', 'Unknown')}")
-                                print(f"    Affiliate links:   {len(data.get('affiliate_links', []))}")
-                                print(f"    Ad slots:          {data.get('monetization_data', {}).get('ad_slots', 0)}")
+                                print(
+                                    f"    Valid post:        {data.get('title', 'Unknown')}")
+                                print(
+                                    f"    Affiliate links:   {len(data.get('affiliate_links', []))}")
+                                print(
+                                    f"    Ad slots:          {data.get('monetization_data', {}).get('ad_slots', 0)}")
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
 
@@ -1147,8 +1204,8 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
 
             blog_system = BlogSystem(config)
-            generator   = StaticSiteGenerator(blog_system)
-            posts       = generator._get_all_posts()
+            generator = StaticSiteGenerator(blog_system)
+            posts = generator._get_all_posts()
 
             visibility = VisibilityAutomator(config)
 
@@ -1156,7 +1213,7 @@ if __name__ == "__main__":
             for post in posts:
                 social_posts = visibility.generate_social_posts(post)
 
-                post_dir    = blog_system.output_dir / post.slug
+                post_dir = blog_system.output_dir / post.slug
                 social_file = post_dir / "social_posts.json"
                 with open(social_file, 'w', encoding='utf-8') as f:
                     json.dump(social_posts, f, indent=2)
@@ -1178,19 +1235,19 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
 
-            visibility      = VisibilityAutomator(config)
+            visibility = VisibilityAutomator(config)
             connection_test = visibility.test_twitter_connection()
             print(f"Connection test: {connection_test}")
 
             if connection_test['success']:
                 class TestPost:
                     def __init__(self):
-                        self.title            = "Test - AI Blog System Twitter Integration"
+                        self.title = "Test - AI Blog System Twitter Integration"
                         self.meta_description = "Testing our automated blog to Twitter posting system."
-                        self.slug             = "test-twitter-integration"
-                        self.tags             = ["test", "automation", "blogging"]
+                        self.slug = "test-twitter-integration"
+                        self.tags = ["test", "automation", "blogging"]
 
-                test_post    = TestPost()
+                test_post = TestPost()
                 social_posts = visibility.generate_social_posts(test_post)
                 print(f"\nGenerated Twitter post preview:")
                 print(f"  {social_posts['twitter']}")
@@ -1211,11 +1268,13 @@ if __name__ == "__main__":
             # Convenience: run deduplication directly from blog_system CLI
             print("Running deduplication...")
             import subprocess
-            args = ["python", "deduplicate_posts.py", "--delete"] + sys.argv[2:]
+            args = ["python", "deduplicate_posts.py",
+                    "--delete"] + sys.argv[2:]
             subprocess.run(args)
 
         else:
-            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
+            print(
+                "Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
             print("  init         - Initialize blog system with config")
             print("  auto         - Generate new post and rebuild site")
             print("  build        - Rebuild site")
