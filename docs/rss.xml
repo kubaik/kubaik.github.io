@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 09:37:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 09:41:05 +0000</lastBuildDate>
+    <item>
+      <title>EDA in Action</title>
+      <link>https://kubaik.github.io/eda-in-action/</link>
+      <description>See EDA in action: real-world examples, implementation tips, and benefits of event-driven systems.</description>
+      <pubDate>Sun, 12 Apr 2026 09:41:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-in-action/</guid>
+    </item>
     <item>
       <title>JS Game Changers</title>
       <link>https://kubaik.github.io/js-game-changers/</link>
@@ -138,13 +145,6 @@
       <description>Build AI-powered apps without coding expertise. Learn how to create intelligent apps easily.</description>
       <pubDate>Sun, 12 Apr 2026 00:03:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-made-easy/</guid>
-    </item>
-    <item>
-      <title>Mobile App Risks</title>
-      <link>https://kubaik.github.io/mobile-app-risks/</link>
-      <description>Discover hidden mobile app risks &amp; security vulnerabilities</description>
-      <pubDate>Sat, 11 Apr 2026 23:27:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-app-risks/</guid>
     </item>
   </channel>
 </rss>
