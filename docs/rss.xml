@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 07:52:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 08:00:23 +0000</lastBuildDate>
+    <item>
+      <title>Code: Not for All</title>
+      <link>https://kubaik.github.io/code-not-for-all/</link>
+      <description>Challenging the &apos;code for all&apos; mantra, exploring the reality of coding accessibility.</description>
+      <pubDate>Sun, 12 Apr 2026 08:00:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-not-for-all/</guid>
+    </item>
     <item>
       <title>Edge Up...</title>
       <link>https://kubaik.github.io/edge-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the basics of neural networks &amp; discover how they learn.</description>
       <pubDate>Sat, 11 Apr 2026 20:26:06 +0000</pubDate>
       <guid>https://kubaik.github.io/neural-networks-101/</guid>
-    </item>
-    <item>
-      <title>Build SaaS Solo</title>
-      <link>https://kubaik.github.io/build-saas-solo/</link>
-      <description>Learn how to successfully build a SaaS product as a solo developer with essential tips, tools, and strategies for your entrepreneurial journey.</description>
-      <pubDate>Sat, 11 Apr 2026 20:00:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-saas-solo/</guid>
     </item>
   </channel>
 </rss>
