@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 11:30:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 12:02:29 +0000</lastBuildDate>
+    <item>
+      <title>Mobile Security Risks: Fix Now</title>
+      <link>https://kubaik.github.io/mobile-security-risks-fix-now/</link>
+      <description>Protect your mobile device from hackers. Fix common security vulnerabilities and safeguard your data with expert fixes.</description>
+      <pubDate>Sun, 12 Apr 2026 12:02:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-security-risks-fix-now/</guid>
+    </item>
     <item>
       <title>Prompt Power</title>
       <link>https://kubaik.github.io/prompt-power/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Kubernetes&apos; potential: learn when it helps &amp; hurts your workflow</description>
       <pubDate>Sun, 12 Apr 2026 06:03:02 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-help-or-hurt/</guid>
-    </item>
-    <item>
-      <title>Plug the Leak</title>
-      <link>https://kubaik.github.io/plug-the-leak/</link>
-      <description>Stop memory leaks from draining performance. Learn how to find and fix them.</description>
-      <pubDate>Sun, 12 Apr 2026 04:44:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/plug-the-leak/</guid>
     </item>
   </channel>
 </rss>
