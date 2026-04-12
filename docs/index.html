@@ -584,6 +584,13 @@
 
         /* ── Search ── */
 
+        /* Safely read a text value from a DOM element — never throws. */
+        function readText(el, selector) {
+            if (!el) return '';
+            var child = el.querySelector(selector);
+            return child ? (child.textContent || '') : '';
+        }
+
         /* Build a lightweight search index from the server-rendered DOM cards.
            This powers search even before (or if) posts.json fails to load.   */
         var domIndex = [];
@@ -591,28 +598,55 @@
             postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
                 domIndex.push({
                     element:     el,
-                    title:       (el.dataset.title       || el.querySelector('h3')             && el.querySelector('h3').textContent || '').toLowerCase(),
-                    description: (el.dataset.description || el.querySelector('.post-excerpt')  && el.querySelector('.post-excerpt').textContent || '').toLowerCase(),
+                    title:       (el.dataset.title       || readText(el, 'h3')).toLowerCase(),
+                    description: (el.dataset.description || readText(el, '.post-excerpt')).toLowerCase(),
                     tags:        (el.dataset.tags        || '').toLowerCase()
                 });
             });
         }
 
-        function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\]\]/g, '\$&');
+        /*
+         * Highlight all case-insensitive occurrences of `query` inside `text`
+         * using plain string operations — no RegExp constructor, so special
+         * characters in the query (parentheses, brackets, pipes, etc.) are
+         * always treated as literals and never cause a SyntaxError.
+         */
+        function highlightText(text, query) {
+            if (!query) return text;
+            var lower  = text.toLowerCase();
+            var qLower = query.toLowerCase();
+            var result = '';
+            var pos    = 0;
+            var idx;
+            while ((idx = lower.indexOf(qLower, pos)) !== -1) {
+                result += escapeHtml(text.slice(pos, idx))
+                       +  '<mark class="search-highlight">'
+                       +  escapeHtml(text.slice(idx, idx + query.length))
+                       +  '</mark>';
+                pos = idx + query.length;
+            }
+            result += escapeHtml(text.slice(pos));
+            return result;
         }
 
-        function highlightText(text, re) {
-            return text.replace(re, '<mark class="search-highlight">$&</mark>');
+        /* Escape the five HTML special chars so injecting into innerHTML is safe. */
+        function escapeHtml(s) {
+            return s.replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
         }
 
         function runSearch(rawQuery) {
             if (!postsContainer) return;
-            searchMode = true;
-            stopObserver();
 
             var query = rawQuery.toLowerCase().trim();
-            var re    = new RegExp(escapeRe(query), 'gi');
+            /* Nothing to search — treat as clear */
+            if (!query) { clearSearch(); return; }
+
+            searchMode = true;
+            stopObserver();
 
             /*
              * Decide which data source to search:
@@ -632,8 +666,8 @@
                     var card    = buildCard(post);
                     var h3      = card.querySelector('h3');
                     var excerpt = card.querySelector('.post-excerpt');
-                    if (h3)      h3.innerHTML      = highlightText(h3.textContent, re);
-                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, re);
+                    if (h3)      h3.innerHTML      = highlightText(h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, rawQuery);
                     postsContainer.appendChild(card);
                 });
             } else {
@@ -650,8 +684,8 @@
                 matched.forEach(function (item) {
                     var h3      = item.element.querySelector('h3');
                     var excerpt = item.element.querySelector('.post-excerpt');
-                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain || h3.textContent, re);
-                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, re);
+                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain      || h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, rawQuery);
                 });
             }
 
