@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 22:27:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 23:06:59 +0000</lastBuildDate>
+    <item>
+      <title>How AI Is Changing Everyday Life in 2026: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/how-ai-is-changing-everyday-life-in-2026-a-practic/</link>
+      <description>A practical guide to How AI Is Changing Everyday Life in 2026 covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Sun, 12 Apr 2026 23:06:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-ai-is-changing-everyday-life-in-2026-a-practic/</guid>
+    </item>
     <item>
       <title>Dev Smarts</title>
       <link>https://kubaik.github.io/dev-smarts/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding speed with Terminal shortcuts, plugins, and workflows in DevFlow (April 2026)</description>
       <pubDate>Sun, 12 Apr 2026 15:11:00 +0000</pubDate>
       <guid>https://kubaik.github.io/devflow-april-2026/</guid>
-    </item>
-    <item>
-      <title>Debt Deadline</title>
-      <link>https://kubaik.github.io/debt-deadline/</link>
-      <description>Measure and pay down technical debt with actionable strategies and metrics to improve code quality and reduce development costs.</description>
-      <pubDate>Sun, 12 Apr 2026 14:38:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/debt-deadline/</guid>
     </item>
   </channel>
 </rss>
