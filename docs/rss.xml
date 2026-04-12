@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 08:00:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 08:44:49 +0000</lastBuildDate>
+    <item>
+      <title>AI&apos;s Limits</title>
+      <link>https://kubaik.github.io/ais-limits/</link>
+      <description>Explore AI&apos;s limitations &amp; where humans still reign supreme.</description>
+      <pubDate>Sun, 12 Apr 2026 08:44:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ais-limits/</guid>
+    </item>
     <item>
       <title>Code: Not for All</title>
       <link>https://kubaik.github.io/code-not-for-all/</link>
@@ -138,13 +145,6 @@
       <description>Discover the essential tech stack for bootstrapped startups in 2026. Boost efficiency and innovation with our expert insights and recommendations!</description>
       <pubDate>Sat, 11 Apr 2026 21:27:07 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-startup-stack/</guid>
-    </item>
-    <item>
-      <title>Neural Networks 101</title>
-      <link>https://kubaik.github.io/neural-networks-101/</link>
-      <description>Unlock the basics of neural networks &amp; discover how they learn.</description>
-      <pubDate>Sat, 11 Apr 2026 20:26:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/neural-networks-101/</guid>
     </item>
   </channel>
 </rss>
