@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 19:05:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 19:27:21 +0000</lastBuildDate>
+    <item>
+      <title>Pair Up</title>
+      <link>https://kubaik.github.io/pair-up/</link>
+      <description>Boost code quality and teamwork with pair programming. Find out when it&apos;s most effective.</description>
+      <pubDate>Sun, 12 Apr 2026 19:27:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/pair-up/</guid>
+    </item>
     <item>
       <title>AI Side Hustle</title>
       <link>https://kubaik.github.io/ai-side-hustle/</link>
@@ -138,13 +145,6 @@
       <description>Compare Kafka, RabbitMQ, and SQS: pros, cons, and use cases for choosing the best message queue for your needs.</description>
       <pubDate>Sun, 12 Apr 2026 10:33:23 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-vs-rabbitmq-vs-sqs/</guid>
-    </item>
-    <item>
-      <title>AI Meets Money</title>
-      <link>https://kubaik.github.io/ai-meets-money/</link>
-      <description>Boost financial literacy with AI-powered tools and strategies to automate savings, invest smarter, and reduce debt.</description>
-      <pubDate>Sun, 12 Apr 2026 10:23:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-meets-money/</guid>
     </item>
   </channel>
 </rss>
