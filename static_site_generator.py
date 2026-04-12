@@ -30,9 +30,7 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
-        # FIX: Re-enabled ads.txt — was commented out, which may cause AdSense issues
         self._generate_ads_txt()
-        # FIX: Added robots.txt generation — was missing entirely
         self._generate_robots_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
 
@@ -143,7 +141,6 @@ Sitemap: {base_url}/rss.xml
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
-            # FIX: Add reading time to every post page
             post_dict['reading_time'] = self._reading_time_minutes(
                 post.content)
             post_dict['word_count'] = len(post.content.split())
@@ -267,14 +264,9 @@ Sitemap: {base_url}/rss.xml
         return _build_templates()
 
 
-# ---------------------------------------------------------------------------
-# Template builder
-# FIX: Post template now shows reading time. About page now shows author info.
-# ---------------------------------------------------------------------------
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
-    # FIX: Added reading time display and word count to post header
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -359,7 +351,7 @@ def _build_templates() -> dict:
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
     <style>
-        .search-container { margin: 0; max-width: 420px; }
+        .search-container { margin: 0 0 1.5rem; max-width: 420px; }
         .search-wrapper {
             display: flex; align-items: center;
             border: 2px solid #e0e0e0; border-radius: 50px;
@@ -385,6 +377,11 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
+        .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+        .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
+        .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: #6366f1; color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -430,7 +427,10 @@ def _build_templates() -> dict:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/">
+                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
+                   data-title="{{ post.title | e }}"
+                   data-description="{{ post.meta_description | e }}"
+                   data-tags="{{ post.tags | join(',') | e }}">
                     <h3>{{ post.title }}</h3>
                     <p class="post-excerpt">{{ post.meta_description }}</p>
                     {% if post.reading_time %}
@@ -460,7 +460,7 @@ def _build_templates() -> dict:
         </section>
     </main>
 
-    <button id="back-to-top" class="back-to-top" style="display:none;"><span>&#8593;</span></button>
+    <button id="back-to-top" class="back-to-top" style="display:none;" aria-label="Back to top"><span>&#8593;</span></button>
 
     <footer>
         <div class="container">
@@ -475,95 +475,49 @@ def _build_templates() -> dict:
 
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var searchInput     = document.getElementById('search-input');
-        var clearSearchBtn  = document.getElementById('clear-search');
-        var resultsCount    = document.getElementById('search-results-count');
-        var postsContainer  = document.getElementById('posts-container');
-        var loadingSpinner  = document.getElementById('loading-spinner');
-        var sentinel        = document.getElementById('scroll-sentinel');
-        var backToTopButton = document.getElementById('back-to-top');
+    (function () {
+        'use strict';
 
-        var postsPerPage  = {{ posts_per_page }};
-        var allPosts      = [];
-        var currentPage   = 1;
-        var isLoading     = false;
-        var searchActive  = false;
-        var observer      = null;
-        var dataReady     = false;
+        /* ── DOM refs ── */
+        var searchInput    = document.getElementById('search-input');
+        var clearBtn       = document.getElementById('clear-search');
+        var resultsCount   = document.getElementById('search-results-count');
+        var postsContainer = document.getElementById('posts-container');
+        var loadingSpinner = document.getElementById('loading-spinner');
+        var sentinel       = document.getElementById('scroll-sentinel');
+        var backToTopBtn   = document.getElementById('back-to-top');
 
-        // ── Step 1: Seed allPosts from the server-rendered DOM immediately.
-        // This guarantees search and scroll work even if posts.json never loads.
-        // Each <a class="post-card"> in the HTML becomes a data object here.
-        function seedFromDOM() {
-            if (!postsContainer) return;
-            var domCards = postsContainer.querySelectorAll('a.post-card');
-            allPosts = Array.from(domCards).map(function(el) {
-                var href = el.getAttribute('href') || '';
-                var slug = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
-                return {
-                    slug:             slug,
-                    title:            (el.querySelector('h3') || {}).textContent || '',
-                    meta_description: (el.querySelector('.post-excerpt') || {}).textContent || '',
-                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); })
-                };
-            });
-        }
+        /* ── Constants ── */
+        var PAGE_SIZE = {{ posts_per_page }};
+        var BASE_PATH = '{{ base_path }}';
 
-        // ── Step 2: Snapshot the initial DOM cards so clearSearch can restore
-        // them exactly without rebuilding from data (avoids blank-grid bug).
-        var initialCards = null;
-        function snapshotInitialCards() {
-            if (!postsContainer) return;
-            initialCards = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
-                return el.cloneNode(true);
-            });
-        }
+        /* ── State ── */
+        /*
+         * fullPosts  – the complete ordered list from posts.json (may be empty
+         *              until the fetch resolves).
+         * loadedCount – how many cards are currently rendered in the grid
+         *              (initialised from the server-rendered DOM count so that
+         *              infinite scroll always knows exactly where to continue).
+         * jsonReady  – true once posts.json has loaded successfully.
+         * isLoading  – guard against concurrent loadMore calls.
+         * searchMode – true while a search query is active.
+         * observer   – the IntersectionObserver instance (or null).
+         */
+        var fullPosts   = [];
+        var loadedCount = postsContainer
+            ? postsContainer.querySelectorAll('a.post-card').length
+            : 0;
+        var jsonReady   = false;
+        var isLoading   = false;
+        var searchMode  = false;
+        var observer    = null;
 
-        // Run both synchronously before any async work
-        seedFromDOM();
-        snapshotInitialCards();
-        dataReady = allPosts.length > 0;
-
-        // ── Step 3: Start the observer immediately using DOM-seeded data.
-        // Do NOT wait for posts.json — that was the infinite-scroll bug.
-        startObserver();
-
-        // ── Step 4: Fetch posts.json to upgrade allPosts with full dataset
-        // (needed for searching posts beyond the first page of server-rendered cards).
-        fetch('{{ base_path }}/posts.json')
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
-            .then(function(posts) {
-                allPosts  = posts;
-                dataReady = true;
-                // Re-evaluate observer now we have the real total count
-                if (!hasMorePosts()) {
-                    stopObserver();
-                } else if (!observer) {
-                    startObserver();
-                }
-                // If user already typed something, re-run the search with full data
-                if (searchInput && searchInput.value.trim()) {
-                    performSearch(searchInput.value.trim().toLowerCase());
-                }
-            })
-            .catch(function(err) {
-                // DOM seed already handled this — just log and continue
-                console.warn('posts.json unavailable, using DOM seed only:', err);
-            });
-
-        // ─────────────────────────────────────────────────────────
-        // Observer helpers
-        // ─────────────────────────────────────────────────────────
-
+        /* ── Observer helpers ── */
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver || observer) return;
-            observer = new IntersectionObserver(function(entries) {
-                if (entries[0].isIntersecting) loadMorePosts();
-            }, { rootMargin: '0px 0px 300px 0px' });
+            observer = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) onSentinelVisible();
+            }, { rootMargin: '0px 0px 400px 0px' });
             observer.observe(sentinel);
         }
 
@@ -571,196 +525,88 @@ def _build_templates() -> dict:
             if (observer) { observer.disconnect(); observer = null; }
         }
 
-        // ─────────────────────────────────────────────────────────
-        // Card builder (JS-generated cards match server-rendered HTML)
-        // ─────────────────────────────────────────────────────────
+        function onSentinelVisible() {
+            /*
+             * Only load more when:
+             *   - json is ready (we know the real total)
+             *   - not already loading
+             *   - not in search mode
+             *   - there are actually more posts to show
+             */
+            if (!jsonReady || isLoading || searchMode) return;
+            if (loadedCount >= fullPosts.length) {
+                stopObserver();
+                return;
+            }
+            loadNextPage();
+        }
 
-        function createPostElement(post) {
-            var card       = document.createElement('a');
-            card.className = 'post-card';
-            card.href      = '{{ base_path }}/' + post.slug + '/';
+        /* ── Card builder ── */
+        function buildCard(post) {
+            var a       = document.createElement('a');
+            a.className = 'post-card';
+            a.href      = BASE_PATH + '/' + post.slug + '/';
 
             var h3         = document.createElement('h3');
             h3.textContent = post.title;
+            a.appendChild(h3);
 
-            var excerpt       = document.createElement('p');
-            excerpt.className = 'post-excerpt';
-            excerpt.textContent = post.meta_description;
+            var p         = document.createElement('p');
+            p.className   = 'post-excerpt';
+            p.textContent = post.meta_description || '';
+            a.appendChild(p);
 
-            card.appendChild(h3);
-            card.appendChild(excerpt);
+            if (post.reading_time) {
+                var rt         = document.createElement('p');
+                rt.className   = 'post-reading-time';
+                rt.textContent = post.reading_time + ' min read';
+                a.appendChild(rt);
+            }
 
-            if (post.tags && post.tags.length > 0) {
-                var tagsDiv       = document.createElement('div');
-                tagsDiv.className = 'tags';
-                post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3)
-                    .forEach(function(t) {
-                        var span       = document.createElement('span');
-                        span.className = 'tag';
-                        span.textContent = t;
-                        tagsDiv.appendChild(span);
+            var tags = post.tags || [];
+            if (tags.length) {
+                var div       = document.createElement('div');
+                div.className = 'tags';
+                tags.slice().sort(function (x, y) { return x.length - y.length; })
+                    .slice(0, 3)
+                    .forEach(function (t) {
+                        var sp         = document.createElement('span');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        div.appendChild(sp);
                     });
-                card.appendChild(tagsDiv);
+                a.appendChild(div);
             }
 
-            return card;
+            return a;
         }
 
-        // ─────────────────────────────────────────────────────────
-        // Search
-        // ─────────────────────────────────────────────────────────
-
-        function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-
-        function highlight(text, query) {
-            return text.replace(
-                new RegExp('(' + escapeRe(query) + ')', 'gi'),
-                '<span class="search-highlight">$1</span>'
-            );
-        }
-
-        function performSearch(query) {
-            // Guard: need at least DOM-seeded data
-            if (!allPosts.length) return;
-            searchActive = true;
-            stopObserver();
-
-            var matched = allPosts.filter(function(post) {
-                var t = (post.title            || '').toLowerCase();
-                var d = (post.meta_description || '').toLowerCase();
-                var g = (post.tags             || []).map(function(x) { return x.toLowerCase(); });
-                return t.indexOf(query) !== -1 ||
-                       d.indexOf(query) !== -1 ||
-                       g.some(function(x) { return x.indexOf(query) !== -1; });
-            });
-
-            postsContainer.innerHTML = '';
-            matched.forEach(function(post) {
-                var el      = createPostElement(post);
-                var heading = el.querySelector('h3');
-                var excerpt = el.querySelector('.post-excerpt');
-                if (heading) heading.innerHTML = highlight(heading.textContent, query);
-                if (excerpt) excerpt.innerHTML = highlight(excerpt.textContent, query);
-                postsContainer.appendChild(el);
-            });
-
-            // Remove stale no-results block if present
-            var oldNoRes = document.getElementById('no-results');
-            if (oldNoRes) oldNoRes.remove();
-
-            var n = matched.length;
-            if (resultsCount) {
-                resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
-                                         : n === 1 ? '1 post found'
-                                         : n + ' posts found';
-            }
-
-            if (n === 0) {
-                var noRes         = document.createElement('div');
-                noRes.id          = 'no-results';
-                noRes.className   = 'no-results-message';
-                noRes.innerHTML   = '<p>No posts matched <strong>' + query + '</strong>. Try different keywords.</p>';
-                postsContainer.after(noRes);
-            }
-        }
-
-        function clearSearch() {
-            searchActive = false;
-            currentPage  = 1;
-
-            // Restore the original server-rendered cards exactly.
-            // This avoids the blank-grid bug caused by rebuilding from
-            // allPosts when it only contains the DOM-seeded subset.
-            postsContainer.innerHTML = '';
-            if (initialCards && initialCards.length > 0) {
-                initialCards.forEach(function(el) {
-                    postsContainer.appendChild(el.cloneNode(true));
-                });
-            }
-
-            var oldNoRes = document.getElementById('no-results');
-            if (oldNoRes) oldNoRes.remove();
-            if (resultsCount) resultsCount.textContent = '';
-
-            // Restart observer — more posts may be available beyond page 1
-            startObserver();
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', function () {
-                var q = this.value.trim().toLowerCase();
-                if (clearSearchBtn) clearSearchBtn.style.display = q ? 'flex' : 'none';
-                if (q) { performSearch(q); } else { clearSearch(); }
-            });
-
-            if (clearSearchBtn) {
-                clearSearchBtn.addEventListener('click', function () {
-                    searchInput.value  = '';
-                    this.style.display = 'none';
-                    clearSearch();
-                    searchInput.focus();
-                });
-            }
-
-            searchInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') {
-                    this.value = '';
-                    if (clearSearchBtn) clearSearchBtn.style.display = 'none';
-                    clearSearch();
-                }
-            });
-        }
-
-        // ─────────────────────────────────────────────────────────
-        // Back to top
-        // ─────────────────────────────────────────────────────────
-
-        window.addEventListener('scroll', function () {
-            if (backToTopButton)
-                backToTopButton.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
-        }, { passive: true });
-
-        if (backToTopButton) {
-            backToTopButton.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        // ─────────────────────────────────────────────────────────
-        // Infinite scroll
-        // ─────────────────────────────────────────────────────────
-
-        function loadMorePosts() {
-            if (isLoading || searchActive || !hasMorePosts()) {
-                if (!hasMorePosts()) stopObserver();
-                return;
-            }
+        /* ── Infinite scroll: load next page ── */
+        function loadNextPage() {
             isLoading = true;
             if (loadingSpinner) loadingSpinner.style.display = 'flex';
 
-            setTimeout(function() {
-                currentPage++;
-                var start    = (currentPage - 1) * postsPerPage;
-                var slice    = allPosts.slice(start, start + postsPerPage);
+            /* Small delay so the spinner is visible before heavy DOM work */
+            setTimeout(function () {
+                var slice    = fullPosts.slice(loadedCount, loadedCount + PAGE_SIZE);
                 var fragment = document.createDocumentFragment();
                 var newCards = [];
 
-                slice.forEach(function(post) {
-                    var el = createPostElement(post);
-                    el.classList.add('post-card--entering');
-                    fragment.appendChild(el);
-                    newCards.push(el);
+                slice.forEach(function (post) {
+                    var card = buildCard(post);
+                    card.classList.add('post-card--entering');
+                    fragment.appendChild(card);
+                    newCards.push(card);
                 });
 
                 postsContainer.appendChild(fragment);
+                loadedCount += slice.length;
 
-                // Double rAF so the browser paints entering state before animating
-                requestAnimationFrame(function() {
-                    requestAnimationFrame(function() {
-                        newCards.forEach(function(el, i) {
-                            setTimeout(function() {
+                /* Animate in with staggered fade */
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        newCards.forEach(function (el, i) {
+                            setTimeout(function () {
                                 el.classList.remove('post-card--entering');
                             }, i * 60);
                         });
@@ -770,23 +616,232 @@ def _build_templates() -> dict:
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 isLoading = false;
 
-                if (!hasMorePosts()) {
-                    stopObserver();
-                }
-            }, 300);
+                if (loadedCount >= fullPosts.length) stopObserver();
+            }, 250);
         }
 
-        function hasMorePosts() {
-            // currentPage already shows page 1 (server-rendered).
-            // allPosts.length is the total. If we have loaded all of them, stop.
-            return dataReady && (currentPage * postsPerPage < allPosts.length);
+        /* ── Fetch posts.json ── */
+        fetch(BASE_PATH + '/posts.json')
+            .then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(function (posts) {
+                fullPosts = posts;
+                jsonReady = true;
+
+                /*
+                 * The server already rendered the first PAGE_SIZE cards.
+                 * loadedCount was initialised from the DOM so it matches.
+                 * Start the observer now that we know the real total.
+                 */
+                if (loadedCount < fullPosts.length) {
+                    startObserver();
+                }
+
+                /* Re-run active search against full dataset */
+                if (searchMode && searchInput && searchInput.value.trim()) {
+                    runSearch(searchInput.value.trim());
+                }
+            })
+            .catch(function (err) {
+                console.warn('posts.json fetch failed – infinite scroll disabled:', err);
+                /* Search still works against the DOM-seeded data built below */
+                jsonReady = false;
+            });
+
+        /* ── Search ── */
+
+        /* Build a lightweight search index from the server-rendered DOM cards.
+           This powers search even before (or if) posts.json fails to load.   */
+        var domIndex = [];
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                domIndex.push({
+                    element:     el,
+                    title:       (el.dataset.title       || el.querySelector('h3')             && el.querySelector('h3').textContent || '').toLowerCase(),
+                    description: (el.dataset.description || el.querySelector('.post-excerpt')  && el.querySelector('.post-excerpt').textContent || '').toLowerCase(),
+                    tags:        (el.dataset.tags        || '').toLowerCase()
+                });
+            });
         }
-    });
+
+        function escapeRe(s) {
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function highlightText(text, re) {
+            return text.replace(re, '<mark class="search-highlight">$&</mark>');
+        }
+
+        function runSearch(rawQuery) {
+            if (!postsContainer) return;
+            searchMode = true;
+            stopObserver();
+
+            var query = rawQuery.toLowerCase().trim();
+            var re    = new RegExp(escapeRe(query), 'gi');
+
+            /*
+             * Decide which data source to search:
+             *   - If posts.json loaded, search the full list (all posts).
+             *   - Otherwise fall back to the DOM-seeded index (first PAGE_SIZE).
+             */
+            var matched;
+            if (jsonReady && fullPosts.length) {
+                matched = fullPosts.filter(function (p) {
+                    return (p.title            || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.meta_description || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.tags             || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
+                });
+
+                postsContainer.innerHTML = '';
+                matched.forEach(function (post) {
+                    var card    = buildCard(post);
+                    var h3      = card.querySelector('h3');
+                    var excerpt = card.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.textContent, re);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, re);
+                    postsContainer.appendChild(card);
+                });
+            } else {
+                /* DOM-only fallback */
+                matched = [];
+                domIndex.forEach(function (item) {
+                    var hit = item.title.indexOf(query) !== -1 ||
+                              item.description.indexOf(query) !== -1 ||
+                              item.tags.indexOf(query) !== -1;
+                    item.element.style.display = hit ? '' : 'none';
+                    if (hit) matched.push(item);
+                });
+                /* Re-apply highlights to visible cards */
+                matched.forEach(function (item) {
+                    var h3      = item.element.querySelector('h3');
+                    var excerpt = item.element.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain || h3.textContent, re);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, re);
+                });
+            }
+
+            /* Update results count */
+            var n = matched.length;
+            if (resultsCount) {
+                resultsCount.textContent = n === 0
+                    ? 'No results for "' + rawQuery + '"'
+                    : n === 1 ? '1 post found' : n + ' posts found';
+            }
+
+            /* No-results message */
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (n === 0) {
+                var msg       = document.createElement('div');
+                msg.id        = 'no-results-msg';
+                msg.className = 'no-results-message';
+                msg.innerHTML = '<p>No posts matched <strong>' + rawQuery + '</strong>. Try different keywords.</p>';
+                postsContainer.insertAdjacentElement('afterend', msg);
+            }
+        }
+
+        function clearSearch() {
+            searchMode = false;
+
+            /* Remove highlights and restore all DOM cards to visible */
+            domIndex.forEach(function (item) {
+                item.element.style.display = '';
+                var h3      = item.element.querySelector('h3');
+                var excerpt = item.element.querySelector('.post-excerpt');
+                /* Restore plain text to strip <mark> tags */
+                if (h3)      h3.textContent      = h3.dataset.plain      || item.title;
+                if (excerpt) excerpt.textContent = excerpt.dataset.plain || item.description;
+            });
+
+            /* If JSON is loaded, rebuild from scratch so we show page 1 cleanly */
+            if (jsonReady && fullPosts.length) {
+                postsContainer.innerHTML = '';
+                var first = fullPosts.slice(0, PAGE_SIZE);
+                first.forEach(function (post) {
+                    postsContainer.appendChild(buildCard(post));
+                });
+                loadedCount = first.length;
+            } else {
+                /*
+                 * JSON hasn't loaded yet — just show all server-rendered cards.
+                 * loadedCount was set from the DOM on init, leave it unchanged.
+                 */
+                postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                    el.style.display = '';
+                });
+            }
+
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (resultsCount) resultsCount.textContent = '';
+
+            /* Restart observer if there are more posts to load */
+            if (jsonReady && loadedCount < fullPosts.length) {
+                startObserver();
+            }
+        }
+
+        /* Store original plain text in data attributes so highlights can be
+           stripped cleanly without a full rebuild.                            */
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                var h3      = el.querySelector('h3');
+                var excerpt = el.querySelector('.post-excerpt');
+                if (h3      && !h3.dataset.plain)      h3.dataset.plain      = h3.textContent;
+                if (excerpt && !excerpt.dataset.plain) excerpt.dataset.plain = excerpt.textContent;
+            });
+        }
+
+        /* ── Search event listeners ── */
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                var q = this.value.trim();
+                if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+                if (q) {
+                    runSearch(q);
+                } else {
+                    clearSearch();
+                }
+            });
+
+            searchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    if (clearBtn) clearBtn.style.display = 'none';
+                    clearSearch();
+                }
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (searchInput) searchInput.value = '';
+                this.style.display = 'none';
+                clearSearch();
+                if (searchInput) searchInput.focus();
+            });
+        }
+
+        /* ── Back to top ── */
+        window.addEventListener('scroll', function () {
+            if (backToTopBtn)
+                backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
+        }, { passive: true });
+
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+    }());
     </script>
 </body>
 </html>"""
 
-    # FIX: About page now includes an author/team section for E-E-A-T signals
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -823,7 +878,6 @@ def _build_templates() -> dict:
         <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing for developers and builders</p></div>
         <article class="page-content">
 
-            <!-- E-E-A-T: Author/team section — critical for AdSense approval -->
             <div class="about-section">
                 <h2>Who Writes Here</h2>
                 <div class="author-card">
