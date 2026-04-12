@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 07:35:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 07:52:49 +0000</lastBuildDate>
+    <item>
+      <title>Edge Up...</title>
+      <link>https://kubaik.github.io/edge-up/</link>
+      <description>Discover how edge computing boosts app performance &amp; security. Learn why it matters for your business.</description>
+      <pubDate>Sun, 12 Apr 2026 07:52:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-up/</guid>
+    </item>
     <item>
       <title>React vs Flutter</title>
       <link>https://kubaik.github.io/react-vs-flutter/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to successfully build a SaaS product as a solo developer with essential tips, tools, and strategies for your entrepreneurial journey.</description>
       <pubDate>Sat, 11 Apr 2026 20:00:17 +0000</pubDate>
       <guid>https://kubaik.github.io/build-saas-solo/</guid>
-    </item>
-    <item>
-      <title>Crack the Feed</title>
-      <link>https://kubaik.github.io/crack-the-feed/</link>
-      <description>Unlock social media secrets: learn how algorithms work &amp; boost your online presence</description>
-      <pubDate>Sat, 11 Apr 2026 19:31:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-the-feed/</guid>
     </item>
   </channel>
 </rss>
