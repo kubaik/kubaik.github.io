@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 12:16:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 09:19:14 +0000</lastBuildDate>
+    <item>
+      <title>Goroutines Unleashed</title>
+      <link>https://kubaik.github.io/goroutines-unleashed/</link>
+      <description>Unlock concurrent programming with goroutines, mastering Go&apos;s lightweight threads for efficient sync and async operations.</description>
+      <pubDate>Sun, 12 Apr 2026 09:19:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/goroutines-unleashed/</guid>
+    </item>
     <item>
       <title>Server vs Client</title>
       <link>https://kubaik.github.io/server-vs-client/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build scalable apps with micro-frontends architecture.</description>
       <pubDate>Sat, 11 Apr 2026 22:25:33 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-frontends/</guid>
-    </item>
-    <item>
-      <title>1M Requests/Day</title>
-      <link>https://kubaik.github.io/1m-requestsday/</link>
-      <description>Learn to build a scalable API handling 1M+ requests/day</description>
-      <pubDate>Sat, 11 Apr 2026 22:01:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/1m-requestsday/</guid>
     </item>
   </channel>
 </rss>
