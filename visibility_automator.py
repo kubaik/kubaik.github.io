@@ -339,8 +339,7 @@ class VisibilityAutomator:
         try:
             query = (
                 f'"{keyword}" lang:en '
-                f'-is:retweet -is:reply '
-                f'has:mentions OR min_faves:10'
+                f'-is:retweet -is:reply'
             )
             response = self.twitter_client.search_recent_tweets(
                 query=query,
