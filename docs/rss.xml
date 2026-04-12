@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 14:38:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 15:11:05 +0000</lastBuildDate>
+    <item>
+      <title>DevFlow (April 2026)</title>
+      <link>https://kubaik.github.io/devflow-april-2026/</link>
+      <description>Boost coding speed with Terminal shortcuts, plugins, and workflows in DevFlow (April 2026)</description>
+      <pubDate>Sun, 12 Apr 2026 15:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/devflow-april-2026/</guid>
+    </item>
     <item>
       <title>Debt Deadline</title>
       <link>https://kubaik.github.io/debt-deadline/</link>
@@ -138,13 +145,6 @@
       <description>React Native vs Flutter: Which wins in 2026? Discover the ultimate comparison.</description>
       <pubDate>Sun, 12 Apr 2026 07:35:34 +0000</pubDate>
       <guid>https://kubaik.github.io/react-vs-flutter/</guid>
-    </item>
-    <item>
-      <title>LLM Decoded...</title>
-      <link>https://kubaik.github.io/llm-decoded/</link>
-      <description>Unlock AI secrets: Discover how Large Language Models work and their impact on Generative AI.</description>
-      <pubDate>Sun, 12 Apr 2026 07:07:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-decoded/</guid>
     </item>
   </channel>
 </rss>
