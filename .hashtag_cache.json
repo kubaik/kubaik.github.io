@@ -4487,5 +4487,18 @@
       "DevOpsTools"
     ],
     "topic": "Server Components vs Client Components Explained"
+  },
+  "go_concurrency:_why_gophers_love_goroutines": {
+    "timestamp": "2026-04-12T09:19:09.208428",
+    "hashtags": [
+      "GoLang",
+      "ConcurrencyMatters",
+      "GoroutineLove",
+      "CloudNativeDev",
+      "AsyncProgramming",
+      "DevOpsTools",
+      "SystemDesign"
+    ],
+    "topic": "Go Concurrency: Why Gophers Love Goroutines"
   }
 }
