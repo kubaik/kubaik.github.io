@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 15:32:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 16:05:57 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Simplified</title>
+      <link>https://kubaik.github.io/kafka-simplified/</link>
+      <description>Master Apache Kafka fundamentals, understand key concepts and build scalable data pipelines without needing data engineering expertise.</description>
+      <pubDate>Sun, 12 Apr 2026 16:05:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-simplified/</guid>
+    </item>
     <item>
       <title>Break In: Tech Careers at 30+</title>
       <link>https://kubaik.github.io/break-in-tech-careers-at-30/</link>
@@ -138,13 +145,6 @@
       <description>Challenging the &apos;code for all&apos; mantra, exploring the reality of coding accessibility.</description>
       <pubDate>Sun, 12 Apr 2026 08:00:18 +0000</pubDate>
       <guid>https://kubaik.github.io/code-not-for-all/</guid>
-    </item>
-    <item>
-      <title>Edge Up...</title>
-      <link>https://kubaik.github.io/edge-up/</link>
-      <description>Discover how edge computing boosts app performance &amp; security. Learn why it matters for your business.</description>
-      <pubDate>Sun, 12 Apr 2026 07:52:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-up/</guid>
     </item>
   </channel>
 </rss>
