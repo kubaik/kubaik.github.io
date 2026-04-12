@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 09:41:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 10:23:37 +0000</lastBuildDate>
+    <item>
+      <title>AI Meets Money</title>
+      <link>https://kubaik.github.io/ai-meets-money/</link>
+      <description>Boost financial literacy with AI-powered tools and strategies to automate savings, invest smarter, and reduce debt.</description>
+      <pubDate>Sun, 12 Apr 2026 10:23:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-meets-money/</guid>
+    </item>
     <item>
       <title>EDA in Action</title>
       <link>https://kubaik.github.io/eda-in-action/</link>
@@ -138,13 +145,6 @@
       <description>Learn the essential rules for clean code &amp; boost development efficiency.</description>
       <pubDate>Sun, 12 Apr 2026 01:55:30 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clarity/</guid>
-    </item>
-    <item>
-      <title>AI Made Easy...</title>
-      <link>https://kubaik.github.io/ai-made-easy/</link>
-      <description>Build AI-powered apps without coding expertise. Learn how to create intelligent apps easily.</description>
-      <pubDate>Sun, 12 Apr 2026 00:03:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-made-easy/</guid>
     </item>
   </channel>
 </rss>
