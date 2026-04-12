@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 22:03:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 22:27:39 +0000</lastBuildDate>
+    <item>
+      <title>Dev Smarts</title>
+      <link>https://kubaik.github.io/dev-smarts/</link>
+      <description>Master 10 essential mental models for coding success, boosting productivity and problem-solving skills.</description>
+      <pubDate>Sun, 12 Apr 2026 22:27:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-smarts/</guid>
+    </item>
     <item>
       <title>Agile: Reality vs Ritual</title>
       <link>https://kubaik.github.io/agile-reality-vs-ritual/</link>
@@ -138,13 +145,6 @@
       <description>Measure and pay down technical debt with actionable strategies and metrics to improve code quality and reduce development costs.</description>
       <pubDate>Sun, 12 Apr 2026 14:38:11 +0000</pubDate>
       <guid>https://kubaik.github.io/debt-deadline/</guid>
-    </item>
-    <item>
-      <title>Senior Mindset</title>
-      <link>https://kubaik.github.io/senior-mindset/</link>
-      <description>Unlock senior dev mindset: prioritizing code quality, optimizing workflows, and mastering problem-solving strategies.</description>
-      <pubDate>Sun, 12 Apr 2026 13:57:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-mindset/</guid>
     </item>
   </channel>
 </rss>
