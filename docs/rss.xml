@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 15:11:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 15:32:19 +0000</lastBuildDate>
+    <item>
+      <title>Break In: Tech Careers at 30+</title>
+      <link>https://kubaik.github.io/break-in-tech-careers-at-30/</link>
+      <description>Launch a tech career in your 30s, 40s, or 50s: Get actionable tips and insider advice to transition successfully.</description>
+      <pubDate>Sun, 12 Apr 2026 15:32:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/break-in-tech-careers-at-30/</guid>
+    </item>
     <item>
       <title>DevFlow (April 2026)</title>
       <link>https://kubaik.github.io/devflow-april-2026/</link>
@@ -138,13 +145,6 @@
       <description>Discover how edge computing boosts app performance &amp; security. Learn why it matters for your business.</description>
       <pubDate>Sun, 12 Apr 2026 07:52:44 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-up/</guid>
-    </item>
-    <item>
-      <title>React vs Flutter</title>
-      <link>https://kubaik.github.io/react-vs-flutter/</link>
-      <description>React Native vs Flutter: Which wins in 2026? Discover the ultimate comparison.</description>
-      <pubDate>Sun, 12 Apr 2026 07:35:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-vs-flutter/</guid>
     </item>
   </channel>
 </rss>
