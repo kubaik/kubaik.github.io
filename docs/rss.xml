@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 00:03:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 01:55:35 +0000</lastBuildDate>
+    <item>
+      <title>Code Clarity</title>
+      <link>https://kubaik.github.io/code-clarity/</link>
+      <description>Learn the essential rules for clean code &amp; boost development efficiency.</description>
+      <pubDate>Sun, 12 Apr 2026 01:55:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-clarity/</guid>
+    </item>
     <item>
       <title>AI Made Easy...</title>
       <link>https://kubaik.github.io/ai-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Boost Python app performance with expert profiling tips.</description>
       <pubDate>Sat, 11 Apr 2026 14:32:06 +0000</pubDate>
       <guid>https://kubaik.github.io/python-speed-up/</guid>
-    </item>
-    <item>
-      <title>ASO: What Works</title>
-      <link>https://kubaik.github.io/aso-what-works/</link>
-      <description>Boost app rankings with proven ASO strategies. Discover what works.</description>
-      <pubDate>Sat, 11 Apr 2026 14:22:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/aso-what-works/</guid>
     </item>
   </channel>
 </rss>
