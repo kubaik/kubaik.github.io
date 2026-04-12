@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 16:33:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 17:09:41 +0000</lastBuildDate>
+    <item>
+      <title>Price to Grow</title>
+      <link>https://kubaik.github.io/price-to-grow/</link>
+      <description>Unlock optimal SaaS pricing: determine your product&apos;s value, calculate costs, and maximize revenue with actionable strategies.</description>
+      <pubDate>Sun, 12 Apr 2026 17:09:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-to-grow/</guid>
+    </item>
     <item>
       <title>RAG Simplified</title>
       <link>https://kubaik.github.io/rag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn the difference between server &amp; client components in web development.</description>
       <pubDate>Sun, 12 Apr 2026 08:56:14 +0000</pubDate>
       <guid>https://kubaik.github.io/server-vs-client/</guid>
-    </item>
-    <item>
-      <title>AI&apos;s Limits</title>
-      <link>https://kubaik.github.io/ais-limits/</link>
-      <description>Explore AI&apos;s limitations &amp; where humans still reign supreme.</description>
-      <pubDate>Sun, 12 Apr 2026 08:44:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ais-limits/</guid>
     </item>
   </channel>
 </rss>
