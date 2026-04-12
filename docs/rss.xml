@@ -5,35 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 10:33:28 +0000</lastBuildDate>
-    <item>
-      <title>Kafka vs RabbitMQ vs SQS</title>
-      <link>https://kubaik.github.io/kafka-vs-rabbitmq-vs-sqs/</link>
-      <description>Compare Kafka, RabbitMQ, and SQS: pros, cons, and use cases for choosing the best message queue for your needs.</description>
-      <pubDate>Sun, 12 Apr 2026 10:33:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-vs-rabbitmq-vs-sqs/</guid>
-    </item>
-    <item>
-      <title>AI Meets Money</title>
-      <link>https://kubaik.github.io/ai-meets-money/</link>
-      <description>Boost financial literacy with AI-powered tools and strategies to automate savings, invest smarter, and reduce debt.</description>
-      <pubDate>Sun, 12 Apr 2026 10:23:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-meets-money/</guid>
-    </item>
-    <item>
-      <title>EDA in Action</title>
-      <link>https://kubaik.github.io/eda-in-action/</link>
-      <description>See EDA in action: real-world examples, implementation tips, and benefits of event-driven systems.</description>
-      <pubDate>Sun, 12 Apr 2026 09:41:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-in-action/</guid>
-    </item>
-    <item>
-      <title>JS Game Changers</title>
-      <link>https://kubaik.github.io/js-game-changers/</link>
-      <description>Unlock JavaScript&apos;s full potential with 5 game-changing features that revolutionized coding, boosting efficiency and productivity.</description>
-      <pubDate>Sun, 12 Apr 2026 09:37:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/js-game-changers/</guid>
-    </item>
+    <lastBuildDate>Sun, 12 Apr 2026 13:33:25 +0000</lastBuildDate>
     <item>
       <title>FastTrack Tech</title>
       <link>https://kubaik.github.io/fasttrack-tech/</link>
