@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 17:30:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 18:06:21 +0000</lastBuildDate>
+    <item>
+      <title>Startup Failure Lessons from Founders Who Lost Everything: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/startup-failure-lessons-from-founders-who-lost-eve/</link>
+      <description>A practical guide to Startup Failure Lessons from Founders Who Lost Everything covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Sun, 12 Apr 2026 18:06:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/startup-failure-lessons-from-founders-who-lost-eve/</guid>
+    </item>
     <item>
       <title>Survive On-Call</title>
       <link>https://kubaik.github.io/survive-on-call/</link>
@@ -138,13 +145,6 @@
       <description>Unlock rapid career growth in tech: Get actionable tips to boost visibility, skills and promotions in record time.</description>
       <pubDate>Sun, 12 Apr 2026 09:29:05 +0000</pubDate>
       <guid>https://kubaik.github.io/fasttrack-tech/</guid>
-    </item>
-    <item>
-      <title>Goroutines Unleashed</title>
-      <link>https://kubaik.github.io/goroutines-unleashed/</link>
-      <description>Unlock concurrent programming with goroutines, mastering Go&apos;s lightweight threads for efficient sync and async operations.</description>
-      <pubDate>Sun, 12 Apr 2026 09:19:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/goroutines-unleashed/</guid>
     </item>
   </channel>
 </rss>
