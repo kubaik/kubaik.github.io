@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 04:44:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 06:03:07 +0000</lastBuildDate>
+    <item>
+      <title>K8s: Help or Hurt?</title>
+      <link>https://kubaik.github.io/k8s-help-or-hurt/</link>
+      <description>Unlock Kubernetes&apos; potential: learn when it helps &amp; hurts your workflow</description>
+      <pubDate>Sun, 12 Apr 2026 06:03:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-help-or-hurt/</guid>
+    </item>
     <item>
       <title>Plug the Leak</title>
       <link>https://kubaik.github.io/plug-the-leak/</link>
@@ -138,13 +145,6 @@
       <description>Prevent AI model failures with proactive monitoring. Learn how to catch drift before it hurts.</description>
       <pubDate>Sat, 11 Apr 2026 16:30:21 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-ai-drift/</guid>
-    </item>
-    <item>
-      <title>AI Blindspot</title>
-      <link>https://kubaik.github.io/ai-blindspot/</link>
-      <description>Discover the hidden dangers of relying on AI and learn how to avoid its blindspots.</description>
-      <pubDate>Sat, 11 Apr 2026 16:02:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blindspot/</guid>
     </item>
   </channel>
 </rss>

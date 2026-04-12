@@ -4339,5 +4339,18 @@
       "ErrorFixing"
     ],
     "topic": "Memory Leaks: How to Find and Fix Them"
+  },
+  "kubernetes:_when_it_helps_and_when_it_hurts": {
+    "timestamp": "2026-04-12T06:03:02.822097",
+    "hashtags": [
+      "CloudNative",
+      "Kubernetes",
+      "DevOps",
+      "Containerization",
+      "ServerlessTech",
+      "Microservices",
+      "TechDebt"
+    ],
+    "topic": "Kubernetes: When It Helps and When It Hurts"
   }
 }
