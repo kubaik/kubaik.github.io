@@ -62,6 +62,11 @@ class StaticSiteGenerator:
         posts.sort(key=lambda p: p.created_at, reverse=True)
         return posts
 
+    def _reading_time_minutes(self, content: str) -> int:
+        """Estimate reading time at 200 words per minute."""
+        word_count = len(content.split())
+        return max(1, round(word_count / 200))
+
     def _generate_homepage(self, posts: List[BlogPost]):
         config = self.blog_system.config
         posts_data = []
@@ -70,6 +75,7 @@ class StaticSiteGenerator:
             post_dict['display_date'] = self._format_display_date(p.created_at)
             post_dict['short_tags'] = sorted(p.tags, key=len)[
                 :3]  # shortest 3 tags
+            post_dict['reading_time'] = self._reading_time_minutes(p.content)
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -114,6 +120,9 @@ class StaticSiteGenerator:
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
+            post_dict['reading_time'] = self._reading_time_minutes(
+                post.content)
+            post_dict['word_count'] = len(post.content.split())
             ad_slots = post.monetization_data if post.monetization_data else {}
             context = {
                 'site_name': config.get('site_name', 'AI Blog'),
@@ -281,6 +290,9 @@ def _build_templates() -> dict:
                 {% endif %}
                 <div class="post-meta">
                     <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
+                    {% if post.reading_time %}
+                    <span class="reading-time"> &middot; {{ post.reading_time }} min read</span>
+                    {% endif %}
                 </div>
             </header>
             <div class="post-content">
@@ -405,6 +417,9 @@ def _build_templates() -> dict:
                 <a class="post-card" href="{{ base_path }}/{{ post.slug }}/">
                     <h3>{{ post.title }}</h3>
                     <p class="post-excerpt">{{ post.meta_description }}</p>
+                    {% if post.reading_time %}
+                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
+                    {% endif %}
                     {% if post.tags %}
                     <div class="tags">
                         {% for tag in post.short_tags %}
