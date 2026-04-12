@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 17:09:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 17:30:30 +0000</lastBuildDate>
+    <item>
+      <title>Survive On-Call</title>
+      <link>https://kubaik.github.io/survive-on-call/</link>
+      <description>Master on-call challenges with practical tips for stress management, effective communication, and prioritizing tasks to ensure a successful shift.</description>
+      <pubDate>Sun, 12 Apr 2026 17:30:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-on-call/</guid>
+    </item>
     <item>
       <title>Price to Grow</title>
       <link>https://kubaik.github.io/price-to-grow/</link>
@@ -138,13 +145,6 @@
       <description>Unlock concurrent programming with goroutines, mastering Go&apos;s lightweight threads for efficient sync and async operations.</description>
       <pubDate>Sun, 12 Apr 2026 09:19:08 +0000</pubDate>
       <guid>https://kubaik.github.io/goroutines-unleashed/</guid>
-    </item>
-    <item>
-      <title>Server vs Client</title>
-      <link>https://kubaik.github.io/server-vs-client/</link>
-      <description>Learn the difference between server &amp; client components in web development.</description>
-      <pubDate>Sun, 12 Apr 2026 08:56:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/server-vs-client/</guid>
     </item>
   </channel>
 </rss>
