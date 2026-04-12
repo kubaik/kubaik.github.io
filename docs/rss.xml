@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 21:28:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 22:03:03 +0000</lastBuildDate>
+    <item>
+      <title>Agile: Reality vs Ritual</title>
+      <link>https://kubaik.github.io/agile-reality-vs-ritual/</link>
+      <description>Uncover what truly drives Agile success: separate effective practices from mere rituals and boost your team&apos;s productivity.</description>
+      <pubDate>Sun, 12 Apr 2026 22:02:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-reality-vs-ritual/</guid>
+    </item>
     <item>
       <title>6 Essential Designs</title>
       <link>https://kubaik.github.io/6-essential-designs/</link>
@@ -138,13 +145,6 @@
       <description>Unlock senior dev mindset: prioritizing code quality, optimizing workflows, and mastering problem-solving strategies.</description>
       <pubDate>Sun, 12 Apr 2026 13:57:36 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-mindset/</guid>
-    </item>
-    <item>
-      <title>AI: Real or Fake?</title>
-      <link>https://kubaik.github.io/ai-real-or-fake/</link>
-      <description>Uncover the truth about AI-generated content: identify real vs fake, and spot manipulated media with expert insights.</description>
-      <pubDate>Sun, 12 Apr 2026 13:45:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-real-or-fake/</guid>
     </item>
   </channel>
 </rss>
