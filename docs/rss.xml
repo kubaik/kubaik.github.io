@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 03:46:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 03:55:06 +0000</lastBuildDate>
+    <item>
+      <title>2026&apos;s Worst Hacks</title>
+      <link>https://kubaik.github.io/2026s-worst-hacks/</link>
+      <description>2026&apos;s biggest data breaches exposed. Learn what went wrong and how to protect yourself.</description>
+      <pubDate>Sun, 12 Apr 2026 03:55:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026s-worst-hacks/</guid>
+    </item>
     <item>
       <title>Million $ Code</title>
       <link>https://kubaik.github.io/million-code/</link>
@@ -138,13 +145,6 @@
       <description>Discover top AI image tools in 2026 for stunning visuals</description>
       <pubDate>Sat, 11 Apr 2026 15:27:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pix-pros/</guid>
-    </item>
-    <item>
-      <title>Building in Public</title>
-      <link>https://kubaik.github.io/building-in-public/</link>
-      <description>Learn the pros &amp; cons of building in public, a transparent approach to product development &amp; marketing.</description>
-      <pubDate>Sat, 11 Apr 2026 15:07:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/building-in-public/</guid>
     </item>
   </channel>
 </rss>
