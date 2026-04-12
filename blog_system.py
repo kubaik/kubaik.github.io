@@ -1053,57 +1053,74 @@ if __name__ == "__main__":
 
                 visibility = VisibilityAutomator(config)
 
-                # ── 1. POST AS THREAD (maximum impressions) ──────────────────
-                print("\n🧵 Posting as thread for maximum impressions...")
+                # -- 1. POST AS THREAD (maximum impressions) ------------------
+                print("\nPosting as thread for maximum impressions...")
                 thread_result = visibility.post_thread(blog_post)
 
                 if thread_result['success']:
                     print(
-                        f"✅ Thread posted ({thread_result['tweet_count']} tweets)")
+                        f"Thread posted ({thread_result['tweet_count']} tweets)")
                     print(f"   First tweet: {thread_result['first_tweet']}")
                     for i, url in enumerate(thread_result['thread_urls'], 1):
                         print(f"   Tweet {i}: {url}")
+
+                    # -- 2. FOLLOW-UP REPLY TO OWN THREAD ---------------------
+                    # Replying to our own last tweet is always allowed and adds
+                    # an extra touch-point that the algorithm rewards.
+                    try:
+                        import time
+                        time.sleep(3)  # brief pause before follow-up
+
+                        last_tweet_id = thread_result['thread_ids'][-1]
+                        username = config.get('social_accounts', {}).get(
+                            'twitter', '@KubaiKevin')
+
+                        # Pull up to 3 shortest tags for hashtags
+                        hashtags = ""
+                        if hasattr(blog_post, 'tags') and blog_post.tags:
+                            sorted_tags = sorted(blog_post.tags, key=len)[:3]
+                            hashtags = " ".join(
+                                f"#{t.replace(' ', '').replace('-', '')}"
+                                for t in sorted_tags if t
+                            )
+
+                        followup_text = (
+                            f"Found this useful? Follow {username} for daily threads on "
+                            f"AI, dev tools, and software engineering\n\n"
+                            f"{hashtags}"
+                        ).strip()
+
+                        # Safety trim
+                        if len(followup_text) > 280:
+                            followup_text = followup_text[:277] + "..."
+
+                        followup_response = visibility.twitter_client.create_tweet(
+                            text=followup_text,
+                            in_reply_to_tweet_id=last_tweet_id
+                        )
+                        followup_id = followup_response.data['id']
+                        twitter_user = visibility._username or "KubaiKevin"
+                        followup_url = f"https://twitter.com/{twitter_user}/status/{followup_id}"
+
+                        print(
+                            f"Follow-up reply added to thread: {followup_url}")
+
+                    except Exception as followup_err:
+                        # Never let the follow-up break the overall cron run
+                        print(
+                            f"Follow-up reply failed (skipping): {followup_err}")
+
                 else:
                     # Fallback: post single best tweet if thread fails
                     print(
-                        f"⚠️  Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
+                        f"Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
                     single_result = visibility.post_with_best_strategy(
                         blog_post)
                     if single_result['success']:
-                        print(f"✅ Single tweet posted: {single_result['url']}")
+                        print(f"Single tweet posted: {single_result['url']}")
                     else:
                         print(
-                            f"❌ Single tweet also failed: {single_result.get('error')}")
-
-                # ── 2. REPLY TO TRENDING (boost impressions via engagement) ──
-                # Note: requires X API Basic tier ($100/mo) for search access.
-                # On the free tier this will log a warning and skip gracefully.
-                print("\n💬 Replying to trending tech tweets...")
-                try:
-                    reply_result = visibility.reply_to_trending(
-                        post=blog_post,
-                        keywords=[
-                            "AI tools",
-                            "Python tips",
-                            "web development",
-                            "system design",
-                            "machine learning",
-                        ],
-                        max_replies=3,
-                    )
-                    if reply_result['success']:
-                        print(
-                            f"✅ Replied to {reply_result['reply_count']} trending tweet(s)")
-                        for r in reply_result['replies_posted']:
-                            print(f"   [{r['keyword']}] {r['reply_url']}")
-                    else:
-                        # Errors are expected on the free X API tier
-                        print(
-                            f"⚠️  Reply to trending skipped: {reply_result.get('errors', ['unknown error'])}")
-                except Exception as reply_err:
-                    # Never let reply failures break the overall cron run
-                    print(
-                        f"⚠️  Reply to trending raised an exception (skipping): {reply_err}")
+                            f"Single tweet also failed: {single_result.get('error')}")
 
             except Exception as e:
                 print(f"Error: {e}")
