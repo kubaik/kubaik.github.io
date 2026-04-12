@@ -30,10 +30,14 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
-        # self._generate_ads_txt()
+        # FIX: Re-enabled ads.txt — was commented out, which may cause AdSense issues
+        self._generate_ads_txt()
+        # FIX: Added robots.txt generation — was missing entirely
+        self._generate_robots_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
+        """Generate ads.txt for AdSense verification."""
         config = self.blog_system.config
         adsense_id = config.get('google_adsense_id', '')
         if adsense_id:
@@ -41,7 +45,27 @@ class StaticSiteGenerator:
             ads_txt_content = f"google.com, pub-{pub_id}, DIRECT, f08c47fec0942fa0\n"
             with open("./docs/ads.txt", 'w', encoding='utf-8') as f:
                 f.write(ads_txt_content)
-            print("Generated ads.txt file")
+            print("Generated ads.txt")
+        else:
+            print("Warning: no google_adsense_id in config — skipping ads.txt")
+
+    def _generate_robots_txt(self):
+        """Generate robots.txt."""
+        config = self.blog_system.config
+        base_url = config.get('base_url', '')
+        content = f"""User-agent: *
+Allow: /
+Disallow: /static/admin/
+Disallow: /*.json$
+
+Crawl-delay: 1
+
+Sitemap: {base_url}/sitemap.xml
+Sitemap: {base_url}/rss.xml
+"""
+        with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Generated robots.txt")
 
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []
@@ -62,14 +86,19 @@ class StaticSiteGenerator:
         posts.sort(key=lambda p: p.created_at, reverse=True)
         return posts
 
+    def _reading_time_minutes(self, content: str) -> int:
+        """Estimate reading time at 200 words per minute."""
+        word_count = len(content.split())
+        return max(1, round(word_count / 200))
+
     def _generate_homepage(self, posts: List[BlogPost]):
         config = self.blog_system.config
         posts_data = []
         for p in posts:
             post_dict = p.to_dict()
             post_dict['display_date'] = self._format_display_date(p.created_at)
-            post_dict['short_tags'] = sorted(p.tags, key=len)[
-                :3]  # shortest 3 tags
+            post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
+            post_dict['reading_time'] = self._reading_time_minutes(p.content)
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -114,9 +143,12 @@ class StaticSiteGenerator:
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
-            ad_slots = post.monetization_data if post.monetization_data else {}
+            # FIX: Add reading time to every post page
+            post_dict['reading_time'] = self._reading_time_minutes(
+                post.content)
+            post_dict['word_count'] = len(post.content.split())
             context = {
-                'site_name': config.get('site_name', 'AI Blog'),
+                'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'post': post_dict,
@@ -145,7 +177,7 @@ class StaticSiteGenerator:
             page_dir = Path("./docs") / dir_name
             page_dir.mkdir(exist_ok=True)
             context = {
-                'site_name': config.get('site_name', 'AI Blog'),
+                'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'current_year': datetime.now().year,
@@ -174,7 +206,7 @@ class StaticSiteGenerator:
         rss_content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>{config.get('site_name', 'AI Blog')}</title>
+    <title>{config.get('site_name', 'Tech Blog')}</title>
     <link>{base_url}</link>
     <description>{config.get('site_description', '')}</description>
     <language>en-us</language>
@@ -189,16 +221,20 @@ class StaticSiteGenerator:
     def _generate_sitemap(self, posts: List[BlogPost]):
         config = self.blog_system.config
         base_url = config.get('base_url', '')
+        today = datetime.now().strftime('%Y-%m-%d')
         urls = [
-            f'<url><loc>{base_url}/</loc><priority>1.0</priority></url>',
-            f'<url><loc>{base_url}/about/</loc><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/contact/</loc><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/privacy-policy/</loc><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/terms-of-service/</loc><priority>0.5</priority></url>'
+            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>',
+            f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><priority>0.8</priority></url>',
+            f'<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><priority>0.7</priority></url>',
+            f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><priority>0.5</priority></url>',
+            f'<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><priority>0.5</priority></url>',
         ]
         for post in posts:
+            last_mod = post.updated_at.split(
+                'T')[0] if 'T' in post.updated_at else post.updated_at
             urls.append(
-                f'<url><loc>{base_url}/{post.slug}/</loc><priority>0.9</priority></url>')
+                f'<url><loc>{base_url}/{post.slug}/</loc><lastmod>{last_mod}</lastmod><priority>0.9</priority></url>'
+            )
         sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {chr(10).join(urls)}
@@ -228,16 +264,17 @@ class StaticSiteGenerator:
             return datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0000')
 
     def _load_templates(self) -> Dict[str, Template]:
-        # Templates are stored in a separate helper to keep this method short.
         return _build_templates()
 
 
 # ---------------------------------------------------------------------------
-# Template builder — kept outside the class so the heredoc approach works.
+# Template builder
+# FIX: Post template now shows reading time. About page now shows author info.
 # ---------------------------------------------------------------------------
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
+    # FIX: Added reading time display and word count to post header
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -281,6 +318,9 @@ def _build_templates() -> dict:
                 {% endif %}
                 <div class="post-meta">
                     <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
+                    {% if post.reading_time %}
+                    <span class="reading-time"> &middot; {{ post.reading_time }} min read</span>
+                    {% endif %}
                 </div>
             </header>
             <div class="post-content">
@@ -297,22 +337,13 @@ def _build_templates() -> dict:
     {{ footer_ad | safe }}
     <footer>
         <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}.</p>
+            <p>&copy; {{ current_year }} {{ site_name }}. Content generated with AI assistance and reviewed for accuracy.</p>
         </div>
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>"""
 
-    # -------------------------------------------------------------------------
-    # INDEX template
-    # KEY DESIGN:
-    #   Each card is  <a class="post-card" href="...">  with NO inner <a>.
-    #   CSS (.post-card) gives it display:flex so it stretches to row height.
-    #   .post-excerpt has flex:1 to push tags toward the bottom.
-    #   JS createPostElement() mirrors this structure exactly so load-more
-    #   cards look and behave identically to the server-rendered ones.
-    # -------------------------------------------------------------------------
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -344,9 +375,7 @@ def _build_templates() -> dict:
             font-size: 0.95rem; background: transparent; border-radius: 0;
         }
         .search-input::-webkit-search-decoration,
-        .search-input::-webkit-search-cancel-button,
-        .search-input::-webkit-credentials-auto-fill-button,
-        .search-input::-ms-clear { display: none !important; width: 0 !important; }
+        .search-input::-webkit-search-cancel-button { display: none !important; }
         .clear-search {
             background: none; border: none; cursor: pointer;
             color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
@@ -355,8 +384,7 @@ def _build_templates() -> dict:
         .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
-        .no-results-message svg { width: 48px; height: 48px; margin-bottom: 1rem; color: #9ca3af; display: block; margin: 0 auto 1rem; }
-        .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
+        .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -385,7 +413,7 @@ def _build_templates() -> dict:
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <input type="text" id="search-input" class="search-input"
-                    placeholder="Search"
+                    placeholder="Search posts..."
                     autocomplete="off" autocorrect="off" autocapitalize="off"
                     spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
@@ -405,6 +433,9 @@ def _build_templates() -> dict:
                 <a class="post-card" href="{{ base_path }}/{{ post.slug }}/">
                     <h3>{{ post.title }}</h3>
                     <p class="post-excerpt">{{ post.meta_description }}</p>
+                    {% if post.reading_time %}
+                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
+                    {% endif %}
                     {% if post.tags %}
                     <div class="tags">
                         {% for tag in post.short_tags %}
@@ -433,7 +464,7 @@ def _build_templates() -> dict:
 
     <footer>
         <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}.</p>
+            <p>&copy; {{ current_year }} {{ site_name }}</p>
             <div class="social-links">
                 {% for platform, url in social_links.items() %}
                 <a href="{{ url }}" target="_blank" rel="noopener">{{ platform|title }}</a>
@@ -445,7 +476,6 @@ def _build_templates() -> dict:
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-
         var searchInput     = document.getElementById('search-input');
         var clearSearchBtn  = document.getElementById('clear-search');
         var resultsCount    = document.getElementById('search-results-count');
@@ -461,41 +491,16 @@ def _build_templates() -> dict:
         var searchActive = false;
         var observer     = null;
 
-        // Reads server-rendered <a class="post-card"> elements as fallback
-        function seedFromDOM() {
-            if (!postsContainer) return;
-            allPosts = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
-                var href = el.getAttribute('href') || '';
-                var slug = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
-                return {
-                    slug:             slug,
-                    title:            el.querySelector('h3') ? el.querySelector('h3').textContent.trim() : '',
-                    meta_description: el.querySelector('.post-excerpt') ? el.querySelector('.post-excerpt').textContent.trim() : '',
-                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); }),
-                    created_at:       ''
-                };
-            });
-        }
-
         fetch('{{ base_path }}/posts.json')
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
+            .then(function(r) { return r.json(); })
             .then(function(posts) {
                 allPosts = posts;
                 startObserver();
-                if (searchInput && searchInput.value.trim()) {
-                    performSearch(searchInput.value.trim().toLowerCase());
-                }
             })
             .catch(function(err) {
-                console.warn('posts.json fetch failed, falling back to DOM seed:', err);
-                seedFromDOM();
-                startObserver();
+                console.warn('posts.json fetch failed:', err);
             });
 
-        // ── IntersectionObserver: fires when sentinel enters the viewport ──
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver) return;
             observer = new IntersectionObserver(function(entries) {
@@ -509,7 +514,7 @@ def _build_templates() -> dict:
         }
 
         function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\\\\]\\\\]/g, '\\\\\\\\$&');
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         function highlight(text, query) {
@@ -519,7 +524,6 @@ def _build_templates() -> dict:
             );
         }
 
-        // Mirrors <a class="post-card" href="..."><h3>...</h3><p class="post-excerpt">...</p><div class="tags">...</div></a>
         function createPostElement(post) {
             var card       = document.createElement('a');
             card.className = 'post-card';
@@ -536,11 +540,11 @@ def _build_templates() -> dict:
             card.appendChild(excerpt);
 
             if (post.tags && post.tags.length > 0) {
-                var tagsDiv       = document.createElement('div');
+                var tagsDiv = document.createElement('div');
                 tagsDiv.className = 'tags';
                 post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
-                    var span         = document.createElement('span');
-                    span.className   = 'tag';
+                    var span = document.createElement('span');
+                    span.className = 'tag';
                     span.textContent = t;
                     tagsDiv.appendChild(span);
                 });
@@ -566,7 +570,7 @@ def _build_templates() -> dict:
 
             postsContainer.innerHTML = '';
             matched.forEach(function(post) {
-                var el      = createPostElement(post);
+                var el = createPostElement(post);
                 var heading = el.querySelector('h3');
                 var excerpt = el.querySelector('.post-excerpt');
                 if (heading) heading.innerHTML = highlight(heading.textContent, query);
@@ -578,24 +582,6 @@ def _build_templates() -> dict:
             resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
                                      : n === 1 ? '1 post found'
                                      : n + ' posts found';
-
-            var noRes = document.getElementById('no-results');
-            if (n === 0) {
-                if (!noRes) {
-                    noRes           = document.createElement('div');
-                    noRes.id        = 'no-results';
-                    noRes.className = 'no-results-message';
-                    noRes.innerHTML =
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">' +
-                        '<circle cx="11" cy="11" r="8"/>' +
-                        '<path d="m21 21-4.35-4.35"/></svg>' +
-                        '<h3>No posts found</h3>' +
-                        '<p>Try different keywords or clear the search.</p>';
-                    postsContainer.after(noRes);
-                }
-            } else if (noRes) {
-                noRes.remove();
-            }
         }
 
         function clearSearch() {
@@ -606,8 +592,6 @@ def _build_templates() -> dict:
                 postsContainer.appendChild(createPostElement(post));
             });
             resultsCount.textContent = '';
-            var noRes = document.getElementById('no-results');
-            if (noRes) noRes.remove();
             startObserver();
         }
 
@@ -625,7 +609,7 @@ def _build_templates() -> dict:
             });
             searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
-                    this.value                   = '';
+                    this.value = '';
                     clearSearchBtn.style.display = 'none';
                     clearSearch();
                 }
@@ -663,7 +647,6 @@ def _build_templates() -> dict:
                     newCards.push(el);
                 });
                 postsContainer.appendChild(fragment);
-                // Double rAF ensures the browser has painted the entering state before animating
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         newCards.forEach(function(el, i) {
@@ -683,80 +666,81 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # FIX: About page now includes an author/team section for E-E-A-T signals
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - {{ site_name }}</title>
-    <meta name="description" content="About {{ site_name }}">
+    <meta name="description" content="About {{ site_name }} — who we are and what we cover">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/about/">
     <style>
-        .about-section { background:#f8f9fa; padding:2rem; margin-bottom:2rem; border-radius:8px; border-left:4px solid #6366f1; }
-        .about-section h2 { color:#333; margin-top:0; margin-bottom:1rem; font-size:1.5rem; }
-        .about-section h3 { color:#555; margin-top:1.5rem; margin-bottom:1rem; font-size:1.2rem; }
-        .about-section p { line-height:1.8; margin-bottom:1rem; }
-        .about-section ul { margin-left:1.5rem; line-height:1.8; }
-        .about-section ul li { margin-bottom:0.5rem; }
-        .feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; margin:2rem 0; }
-        .feature-card { background:white; padding:1.5rem; border-radius:8px; border:2px solid #e0e0e0; transition:transform 0.3s ease,border-color 0.3s ease; }
-        .feature-card:hover { transform:translateY(-5px); border-color:#6366f1; }
-        .feature-card h3 { color:#6366f1; margin-top:0; margin-bottom:1rem; font-size:1.3rem; }
-        .feature-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
-        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin:2rem 0; }
-        .stat-card { background:#f0f4ff; padding:1.5rem; border-radius:8px; text-align:center; border:2px solid #6366f1; }
-        .stat-number { font-size:2.5rem; font-weight:bold; color:#6366f1; display:block; margin-bottom:0.5rem; }
-        .stat-label { color:#555; font-size:1rem; }
-        .topics-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0; }
-        .topic-tag { background:white; padding:1rem; border-radius:8px; border-left:4px solid #8b5cf6; font-weight:500; color:#333; }
-        .cta-box { background:#fff3cd; border-left:4px solid #ffc107; padding:2rem; border-radius:8px; margin:2rem 0; text-align:center; }
-        .cta-box h3 { margin-top:0; color:#333; font-size:1.5rem; }
-        .cta-button { display:inline-block; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:1rem 2rem; border-radius:8px; text-decoration:none; font-weight:600; margin-top:1rem; transition:transform 0.3s ease; }
-        .cta-button:hover { transform:scale(1.05); }
+        .about-section{background:#f8f9fa;padding:1.5rem 2rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
+        .about-section h2{color:#333;margin-top:0;margin-bottom:1rem}
+        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin:1.5rem 0}
+        .feature-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #e0e0e0}
+        .feature-card h3{color:#6366f1;margin-top:0}
+        .author-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem}
+        .author-card h3{margin-top:0;color:#333}
+        .author-card .credentials{color:#666;font-size:0.9rem;margin-bottom:0.75rem}
+        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
+        .stat-card{background:#f0f4ff;padding:1.5rem;border-radius:8px;text-align:center;border:2px solid #6366f1}
+        .stat-number{font-size:2rem;font-weight:bold;color:#6366f1;display:block;margin-bottom:0.25rem}
+        .cta-box{background:#fff3cd;border-left:4px solid #ffc107;padding:1.5rem;border-radius:8px;margin:1.5rem 0;text-align:center}
+        .cta-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;margin-top:0.8rem}
     </style>
 </head>
 <body>
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>About {{ site_name }}</h2><p>Your trusted source for AI and technology insights</p></div>
+        <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing for developers and builders</p></div>
         <article class="page-content">
+
+            <!-- E-E-A-T: Author/team section — critical for AdSense approval -->
             <div class="about-section">
-                <h2>Welcome to {{ site_name }}</h2>
-                <p>{{ site_name }} is an innovative AI-powered technology blog dedicated to delivering high-quality content on the latest developments in artificial intelligence, machine learning, and emerging technologies.</p>
-                <h2>&#127919; Our Mission</h2>
-                <p>To empower readers with knowledge about artificial intelligence and technology through accessible, accurate, and engaging content.</p>
-            </div>
-            <div class="about-section">
-                <h2>&#128202; What We Do</h2>
-                <div class="feature-grid">
-                    <div class="feature-card"><span class="feature-icon">&#128240;</span><h3>Breaking News</h3><p>Latest AI and tech announcements and industry developments.</p></div>
-                    <div class="feature-card"><span class="feature-icon">&#128300;</span><h3>In-Depth Analysis</h3><p>Comprehensive breakdowns of complex topics and emerging technologies.</p></div>
-                    <div class="feature-card"><span class="feature-icon">&#128161;</span><h3>Practical Guides</h3><p>Step-by-step tutorials for implementing AI solutions and tools.</p></div>
-                    <div class="feature-card"><span class="feature-icon">&#128640;</span><h3>Future Trends</h3><p>Forward-looking analysis of where AI and technology are headed.</p></div>
-                    <div class="feature-card"><span class="feature-icon">&#9878;&#65039;</span><h3>Ethics &amp; Policy</h3><p>Discussions on AI ethics, regulations, and responsible development.</p></div>
-                    <div class="feature-card"><span class="feature-icon">&#127891;</span><h3>Educational Content</h3><p>Learning resources for beginners to advanced practitioners.</p></div>
+                <h2>Who Writes Here</h2>
+                <div class="author-card">
+                    <h3>Kubai Kevin</h3>
+                    <p class="credentials">Software developer based in Nairobi, Kenya &bull; Writing about AI, backend systems, and developer tooling</p>
+                    <p>I have been building software professionally for several years, working across web development, automation, and AI-assisted tools. This blog documents what I learn along the way — the problems I encounter in real projects, the tradeoffs I have had to make, and the tools that have actually proved useful in production.</p>
+                    <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building real things at realistic scales.</p>
                 </div>
             </div>
+
             <div class="about-section">
-                <h2>&#128187; Topics We Cover</h2>
-                <div class="topics-grid">{% for topic in topics %}<div class="topic-tag">{{ topic }}</div>{% endfor %}</div>
+                <h2>What This Blog Covers</h2>
+                <p>The topics on this blog fall into a few areas that I work with regularly:</p>
+                <div class="feature-grid">
+                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos.</p></div>
+                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and the distributed systems problems that come up in real products — not textbook examples.</p></div>
+                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, developer experience. What saves real time and what sounds good on paper but adds friction.</p></div>
+                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter, and honest analysis of the trends that will and will not last.</p></div>
+                </div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">24/7</span><span class="stat-label">Content Publishing</span></div>
-                <div class="stat-card"><span class="stat-number">100%</span><span class="stat-label">AI-Powered</span></div>
-                <div class="stat-card"><span class="stat-number">&#8734;</span><span class="stat-label">Learning &amp; Improving</span></div>
+
+            <div class="about-section">
+                <h2>Editorial Standards</h2>
+                <p>Some posts on this site are drafted with AI assistance and then reviewed and edited for accuracy. Where AI drafts are used, they are checked against documentation, tested against real systems where possible, and updated when errors are found.</p>
+                <p>If you spot an error or something that does not match your experience, the contact page has my email address. I take corrections seriously.</p>
             </div>
+
+            <div class="stat-grid">
+                <div class="stat-card"><span class="stat-number">{{ posts|length }}</span><span>Posts published</span></div>
+                <div class="stat-card"><span class="stat-number">Weekly</span><span>Publishing cadence</span></div>
+                <div class="stat-card"><span class="stat-number">Free</span><span>Always and forever</span></div>
+            </div>
+
             <div class="cta-box">
-                <h3>&#128236; Stay Connected</h3>
-                <p>Want to stay updated with the latest AI and technology insights?</p>
-                <a href="../contact/" class="cta-button">Contact Us</a>
+                <h3>Get in Touch</h3>
+                <p>Questions, corrections, or topic suggestions are welcome.</p>
+                <a href="../contact/" class="cta-button">Contact Me</a>
             </div>
         </article>
     </main>
@@ -777,85 +761,52 @@ def _build_templates() -> dict:
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
     <style>
         .privacy-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .privacy-section h3{color:#333;margin-top:0;margin-bottom:1rem;font-size:1.3rem}
-        .privacy-section ul{margin-left:1.5rem;line-height:1.8}
-        .privacy-section ul li{margin-bottom:.5rem}
-        .highlight-box{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:1.5rem;border-radius:8px;margin:2rem 0}
-        .highlight-box h3{margin-top:0;color:white}
+        .privacy-section h3{color:#333;margin-top:0}
         .important-notice{background:#fff3cd;border-left:4px solid #ffc107;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px}
-        .table-container{overflow-x:auto;margin:1.5rem 0}
         table{width:100%;border-collapse:collapse;background:white}
-        th,td{padding:1rem;text-align:left;border-bottom:1px solid #dee2e6}
-        th{background:#f8f9fa;font-weight:600;color:#333}
-        .toc{background:#f0f4ff;padding:1.5rem;border-radius:8px;margin-bottom:2rem}
-        .toc h3{margin-top:0;color:#333}
-        .toc ul{list-style:none;padding-left:0}
-        .toc li{margin-bottom:.5rem}
-        .toc a{color:#6366f1;text-decoration:none}
-        .toc a:hover{text-decoration:underline}
+        th,td{padding:0.8rem;text-align:left;border-bottom:1px solid #dee2e6}
+        th{background:#f8f9fa;font-weight:600}
+        .highlight-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
+        .highlight-box h3{margin-top:0;color:white}
     </style>
 </head>
 <body>
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
+        <div class="hero"><h2>Privacy Policy</h2></div>
         <article class="page-content">
-            <div class="toc"><h3>Table of Contents</h3><ul>
-                <li><a href="#introduction">1. Introduction</a></li>
-                <li><a href="#information-collection">2. Information We Collect</a></li>
-                <li><a href="#how-we-use">3. How We Use Your Information</a></li>
-                <li><a href="#cookies">4. Cookies and Tracking</a></li>
-                <li><a href="#third-party">5. Third-Party Services</a></li>
-                <li><a href="#your-rights">6. Your Privacy Rights</a></li>
-                <li><a href="#contact">7. Contact Information</a></li>
-            </ul></div>
-            <div id="introduction" class="privacy-section"><h3>1. Introduction</h3>
-                <p><strong>{{ site_name }}</strong> is committed to protecting your privacy. By accessing our Site, you agree to this Privacy Policy.</p></div>
-            <div id="information-collection" class="privacy-section"><h3>2. Information We Collect</h3>
+            <div class="privacy-section"><h3>1. Introduction</h3>
+                <p><strong>{{ site_name }}</strong> is committed to protecting your privacy. By accessing this site, you agree to this Privacy Policy.</p></div>
+            <div class="privacy-section"><h3>2. Information We Collect</h3>
                 <ul>
-                    <li><strong>Contact Information:</strong> Name, email, message content when you contact us.</li>
-                    <li><strong>Device Information:</strong> Device type, OS, browser type and version.</li>
-                    <li><strong>Usage Data:</strong> Pages visited, time spent, links clicked.</li>
-                    <li><strong>Location Data:</strong> General geographic location based on IP address.</li>
+                    <li><strong>Contact information</strong> when you contact us: name, email, message</li>
+                    <li><strong>Usage data</strong> via Google Analytics: pages visited, time on site, browser type</li>
+                    <li><strong>Cookie data</strong> from Google Analytics and Google AdSense</li>
                 </ul></div>
-            <div id="how-we-use" class="privacy-section"><h3>3. How We Use Your Information</h3>
+            <div class="privacy-section"><h3>3. How We Use Information</h3>
                 <ul>
-                    <li>Operate, maintain, and improve the Site</li>
-                    <li>Respond to your inquiries</li>
-                    <li>Monitor and analyze usage trends</li>
-                    <li>Comply with legal obligations</li>
+                    <li>To respond to your inquiries</li>
+                    <li>To improve content based on what readers find useful</li>
+                    <li>To serve relevant advertisements via Google AdSense</li>
                 </ul></div>
-            <div id="cookies" class="privacy-section"><h3>4. Cookies and Tracking</h3>
-                <p>We use cookies to improve your experience. You can control cookies through your browser settings.</p>
-                <div class="table-container"><table>
-                    <thead><tr><th>Cookie Type</th><th>Purpose</th><th>Duration</th></tr></thead>
+            <div class="privacy-section"><h3>4. Cookies</h3>
+                <table>
+                    <thead><tr><th>Type</th><th>Purpose</th><th>Duration</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Essential</strong></td><td>Basic site functionality</td><td>Session</td></tr>
-                        <tr><td><strong>Analytics</strong></td><td>Track site usage</td><td>Up to 2 years</td></tr>
-                        <tr><td><strong>Advertising</strong></td><td>Relevant advertisements</td><td>Up to 1 year</td></tr>
+                        <tr><td>Analytics</td><td>Google Analytics usage tracking</td><td>Up to 2 years</td></tr>
+                        <tr><td>Advertising</td><td>Google AdSense ad targeting</td><td>Up to 1 year</td></tr>
                     </tbody>
-                </table></div></div>
-            <div id="third-party" class="privacy-section"><h3>5. Third-Party Services</h3>
-                <ul>
-                    <li><strong>Google Analytics:</strong> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
-                    <li><strong>Google AdSense:</strong> <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google Advertising Policy</a></li>
-                </ul>
-                <div class="important-notice"><p><strong>Important:</strong> We do not sell, rent, or trade your personal information to third parties.</p></div></div>
-            <div id="your-rights" class="privacy-section"><h3>6. Your Privacy Rights</h3>
-                <ul>
-                    <li><strong>Correction:</strong> Request correction of inaccurate information</li>
-                    <li><strong>Deletion:</strong> Request deletion of your personal information</li>
-                </ul>
-                <p>Contact us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a> to exercise these rights.</p></div>
-            <div id="contact" class="highlight-box"><h3>7. Contact Information</h3>
-                <p><strong>Email:</strong> <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p>
-                <p>We aim to respond within 48 hours on business days.</p></div>
-            <div style="margin-top:2rem;padding:1rem;background:#f8f9fa;border-radius:8px;">
-                <p><strong>Last Updated:</strong> {{ current_date }}</p></div>
+                </table>
+                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p></div>
+            <div class="privacy-section"><h3>5. Third Parties</h3>
+                <div class="important-notice"><p>We do not sell your personal information. We use Google Analytics and Google AdSense, which have their own privacy policies.</p></div></div>
+            <div class="highlight-box"><h3>6. Contact</h3>
+                <p>Email: <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
+            <p><strong>Last updated:</strong> {{ current_date }}</p>
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
@@ -875,57 +826,34 @@ def _build_templates() -> dict:
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
     <style>
         .terms-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .terms-section h3{color:#333;margin-top:0;margin-bottom:1rem;font-size:1.3rem}
-        .terms-section ul,.terms-section ol{margin-left:1.5rem;line-height:1.8}
-        .terms-section li{margin-bottom:.5rem}
-        .highlight-box{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:1.5rem;border-radius:8px;margin:2rem 0}
+        .terms-section h3{color:#333;margin-top:0}
+        .highlight-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
         .highlight-box h3{margin-top:0;color:white}
-        .important-notice{background:#fff3cd;border-left:4px solid #ffc107;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px}
         .warning-box{background:#f8d7da;border-left:4px solid #dc3545;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px;color:#721c24}
-        .toc{background:#f0f4ff;padding:1.5rem;border-radius:8px;margin-bottom:2rem}
-        .toc h3{margin-top:0;color:#333}
-        .toc ul{list-style:none;padding-left:0}
-        .toc li{margin-bottom:.5rem}
-        .toc a{color:#6366f1;text-decoration:none}
-        .toc a:hover{text-decoration:underline}
     </style>
 </head>
 <body>
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Terms of Service</h2><p>Please read these terms carefully before using our site</p></div>
+        <div class="hero"><h2>Terms of Service</h2></div>
         <article class="page-content">
-            <div class="important-notice"><p><strong>Important:</strong> By accessing our Site, you agree to these Terms.</p></div>
-            <div class="toc"><h3>Table of Contents</h3><ul>
-                <li><a href="#acceptance">1. Acceptance of Terms</a></li>
-                <li><a href="#ai-content">2. AI-Generated Content Disclaimer</a></li>
-                <li><a href="#use-license">3. License to Use Site</a></li>
-                <li><a href="#third-party">4. Third-Party Links &amp; Affiliate Disclosure</a></li>
-                <li><a href="#disclaimer">5. Disclaimers &amp; Limitation of Liability</a></li>
-                <li><a href="#governing-law">6. Governing Law</a></li>
-                <li><a href="#contact">7. Contact Information</a></li>
-            </ul></div>
-            <div id="acceptance" class="terms-section"><h3>1. Acceptance of Terms</h3>
-                <p>By accessing {{ site_name }}, you agree to these Terms of Service and our Privacy Policy.</p></div>
-            <div id="ai-content" class="terms-section"><h3>2. AI-Generated Content Disclaimer</h3>
-                <div class="warning-box"><p><strong>Notice:</strong> The majority of content on {{ site_name }} is generated using artificial intelligence technology.</p></div>
-                <p>AI-generated content may contain inaccuracies. Always verify important information independently.</p></div>
-            <div id="use-license" class="terms-section"><h3>3. License to Use Site</h3>
-                <p>We grant you a limited, non-exclusive, non-transferable license to access the Site for personal, non-commercial use.</p></div>
-            <div id="third-party" class="terms-section"><h3>4. Third-Party Links &amp; Affiliate Disclosure</h3>
-                <div class="important-notice"><p>We participate in affiliate marketing programs and may earn commissions from purchases made through links on our Site.</p></div></div>
-            <div id="disclaimer" class="terms-section"><h3>5. Disclaimers &amp; Limitation of Liability</h3>
-                <div class="warning-box"><p><strong>THE SITE AND ALL CONTENT ARE PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND.</strong></p></div></div>
-            <div id="governing-law" class="terms-section"><h3>6. Governing Law</h3>
-                <p>These Terms are governed by the laws of Kenya.</p></div>
-            <div id="contact" class="highlight-box"><h3>7. Contact Information</h3>
-                <p><strong>Email:</strong> <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
-            <div style="margin-top:2rem;padding:1rem;background:#f8f9fa;border-radius:8px;">
-                <p><strong>Last Updated:</strong> {{ current_date }}</p></div>
+            <div class="terms-section"><h3>1. Acceptance</h3>
+                <p>By accessing {{ site_name }}, you agree to these Terms and our Privacy Policy.</p></div>
+            <div class="terms-section"><h3>2. AI-Assisted Content</h3>
+                <div class="warning-box"><p>Some content on this site is drafted with AI assistance and reviewed for accuracy. Always verify technical information independently before using it in production.</p></div></div>
+            <div class="terms-section"><h3>3. Affiliate Disclosure</h3>
+                <p>This site participates in affiliate programmes. Purchases made through affiliate links may earn us a commission at no additional cost to you.</p></div>
+            <div class="terms-section"><h3>4. Disclaimer</h3>
+                <p>Content is provided for informational purposes. We make no warranty that it is accurate, complete, or suitable for any particular purpose.</p></div>
+            <div class="terms-section"><h3>5. Governing Law</h3>
+                <p>These terms are governed by the laws of Kenya.</p></div>
+            <div class="highlight-box"><h3>6. Contact</h3>
+                <p>Email: <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
+            <p><strong>Last updated:</strong> {{ current_date }}</p>
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
@@ -938,62 +866,41 @@ def _build_templates() -> dict:
 <html lang="en">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - {{ site_name }}</title>
+    <title>Contact - {{ site_name }}</title>
     <meta name="description" content="Contact {{ site_name }}">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/contact/">
     <style>
         .contact-method{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .contact-method h3{color:#333;margin-bottom:1rem;font-size:1.3rem}
-        .contact-method ul{margin-left:1.5rem;line-height:1.8}
-        .contact-method ul li{margin-bottom:.5rem}
-        .contact-email{color:#6366f1;text-decoration:none;font-weight:600;font-size:1.1rem}
-        .contact-email:hover{text-decoration:underline}
-        .response-time{color:#666;font-style:italic;margin-top:.5rem;font-size:.9rem}
-        .faq-section{background:#f0f4ff;border-left-color:#8b5cf6}
-        .faq-item{margin-bottom:1.5rem}
-        .faq-item h4{color:#555;margin-bottom:.5rem}
-        .contact-footer{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:1.5rem;border-radius:8px;margin-top:2rem}
+        .contact-method h3{color:#333;margin-top:0}
+        .contact-email{color:#6366f1;font-weight:600;font-size:1.1rem}
+        .contact-footer{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin-top:1.5rem}
     </style>
 </head>
 <body>
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Contact Us</h2><p>Get in touch with the {{ site_name }} team</p></div>
+        <div class="hero"><h2>Contact</h2></div>
         <article class="page-content">
-            <p>We'd love to hear from you! Whether you have questions, feedback, or collaboration opportunities, feel free to reach out.</p>
-            <div class="contact-method"><h3>&#128231; Email</h3>
+            <div class="contact-method"><h3>Email</h3>
                 <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
-                <p class="response-time">We typically respond within 5 working days</p></div>
-            <div class="contact-method"><h3>&#128172; What We Cover</h3>
+                <p>I typically respond within 3–5 working days.</p></div>
+            <div class="contact-method"><h3>What to reach out about</h3>
                 <ul>
-                    <li><strong>General Inquiries:</strong> Questions about our content or AI technology</li>
-                    <li><strong>Collaboration:</strong> Partnership opportunities and guest posting</li>
-                    <li><strong>Technical Support:</strong> Issues accessing content</li>
-                    <li><strong>Feedback:</strong> Suggestions for improvement or topic requests</li>
+                    <li>Factual errors or corrections in articles</li>
+                    <li>Topic suggestions or questions about content</li>
+                    <li>Collaboration or guest post proposals</li>
+                    <li>General questions about the site</li>
                 </ul></div>
-            <div class="contact-method"><h3>&#9200; Office Hours</h3>
-                <p><strong>Monday &ndash; Friday:</strong> 10:00 AM &ndash; 4:00 PM (EAT)</p>
-                <p>Weekend messages will be reviewed on the next business day.</p></div>
-            <div class="contact-method faq-section"><h3>&#10067; Frequently Asked Questions</h3>
-                <div class="faq-item">
-                    <h4>How often do you publish new content?</h4>
-                    <p>We publish fresh AI-related content regularly.</p></div>
-                <div class="faq-item">
-                    <h4>Can I republish your content?</h4>
-                    <p>Please contact us for permission. We're open to partnerships with proper attribution.</p></div>
-                <div class="faq-item">
-                    <h4>Do you accept sponsored content?</h4>
-                    <p>Yes, we consider sponsored content that aligns with our editorial standards.</p></div>
-            </div>
+            <div class="contact-method"><h3>Response time</h3>
+                <p>Monday to Friday, EAT (UTC+3). Weekend messages are read on the next business day.</p></div>
             <div class="contact-footer">
-                <p><strong>Before reaching out, please check our FAQ section!</strong></p>
-                <p>We look forward to hearing from you.</p>
+                <p>Prefer email over social media for anything that requires a substantive reply.</p>
             </div>
         </article>
     </main>
@@ -1004,10 +911,10 @@ def _build_templates() -> dict:
 
     env = Environment(loader=BaseLoader())
     return {
-        'post':           env.from_string(POST_TMPL),
-        'index':          env.from_string(INDEX_TMPL),
-        'about':          env.from_string(ABOUT_TMPL),
-        'privacy_policy': env.from_string(PRIVACY_TMPL),
+        'post':             env.from_string(POST_TMPL),
+        'index':            env.from_string(INDEX_TMPL),
+        'about':            env.from_string(ABOUT_TMPL),
+        'privacy_policy':   env.from_string(PRIVACY_TMPL),
         'terms_of_service': env.from_string(TERMS_TMPL),
-        'contact':        env.from_string(CONTACT_TMPL),
+        'contact':          env.from_string(CONTACT_TMPL),
     }

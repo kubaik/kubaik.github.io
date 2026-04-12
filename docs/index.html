@@ -95,9 +95,7 @@
             font-size: 0.95rem; background: transparent; border-radius: 0;
         }
         .search-input::-webkit-search-decoration,
-        .search-input::-webkit-search-cancel-button,
-        .search-input::-webkit-credentials-auto-fill-button,
-        .search-input::-ms-clear { display: none !important; width: 0 !important; }
+        .search-input::-webkit-search-cancel-button { display: none !important; }
         .clear-search {
             background: none; border: none; cursor: pointer;
             color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
@@ -106,8 +104,7 @@
         .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
-        .no-results-message svg { width: 48px; height: 48px; margin-bottom: 1rem; color: #9ca3af; display: block; margin: 0 auto 1rem; }
-        .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
+        .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -136,7 +133,7 @@
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <input type="text" id="search-input" class="search-input"
-                    placeholder="Search"
+                    placeholder="Search posts..."
                     autocomplete="off" autocorrect="off" autocapitalize="off"
                     spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
@@ -157,6 +154,9 @@
                     <h3>Server vs Client</h3>
                     <p class="post-excerpt">Learn the difference between server & client components in web development.</p>
                     
+                    <p class="post-reading-time">7 min read</p>
+                    
+                    
                     <div class="tags">
                         
                         <span class="tag">AR</span>
@@ -172,6 +172,9 @@
                 <a class="post-card" href="/ais-limits/">
                     <h3>AI's Limits</h3>
                     <p class="post-excerpt">Explore AI's limitations & where humans still reign supreme.</p>
+                    
+                    <p class="post-reading-time">8 min read</p>
+                    
                     
                     <div class="tags">
                         
@@ -189,6 +192,9 @@
                     <h3>Code: Not for All</h3>
                     <p class="post-excerpt">Challenging the 'code for all' mantra, exploring the reality of coding accessibility.</p>
                     
+                    <p class="post-reading-time">7 min read</p>
+                    
+                    
                     <div class="tags">
                         
                         <span class="tag">AI</span>
@@ -204,6 +210,9 @@
                 <a class="post-card" href="/edge-up/">
                     <h3>Edge Up...</h3>
                     <p class="post-excerpt">Discover how edge computing boosts app performance & security. Learn why it matters for your business.</p>
+                    
+                    <p class="post-reading-time">7 min read</p>
+                    
                     
                     <div class="tags">
                         
@@ -221,6 +230,9 @@
                     <h3>React vs Flutter</h3>
                     <p class="post-excerpt">React Native vs Flutter: Which wins in 2026? Discover the ultimate comparison.</p>
                     
+                    <p class="post-reading-time">7 min read</p>
+                    
+                    
                     <div class="tags">
                         
                         <span class="tag">AR</span>
@@ -236,6 +248,9 @@
                 <a class="post-card" href="/llm-decoded/">
                     <h3>LLM Decoded...</h3>
                     <p class="post-excerpt">Unlock AI secrets: Discover how Large Language Models work and their impact on Generative AI.</p>
+                    
+                    <p class="post-reading-time">10 min read</p>
+                    
                     
                     <div class="tags">
                         
@@ -253,6 +268,9 @@
                     <h3>Hack Like Me</h3>
                     <p class="post-excerpt">Learn how ethical hackers think & penetrate systems with expert insights on penetration testing.</p>
                     
+                    <p class="post-reading-time">6 min read</p>
+                    
+                    
                     <div class="tags">
                         
                         <span class="tag">AI</span>
@@ -268,6 +286,9 @@
                 <a class="post-card" href="/test-deeper/">
                     <h3>Test Deeper</h3>
                     <p class="post-excerpt">Elevate API testing beyond Postman. Learn advanced techniques in 'Test Deeper'</p>
+                    
+                    <p class="post-reading-time">7 min read</p>
+                    
                     
                     <div class="tags">
                         
@@ -285,6 +306,9 @@
                     <h3>Dirty Data?</h3>
                     <p class="post-excerpt">Discover how dirty data sabotages your analytics & learn to clean up for accurate insights</p>
                     
+                    <p class="post-reading-time">6 min read</p>
+                    
+                    
                     <div class="tags">
                         
                         <span class="tag">software</span>
@@ -300,6 +324,9 @@
                 <a class="post-card" href="/ar-evolved-apple-vision-pro/">
                     <h3>AR Evolved: Apple Vision Pro</h3>
                     <p class="post-excerpt">Discover Apple Vision Pro's impact on AR development & innovation.</p>
+                    
+                    <p class="post-reading-time">7 min read</p>
+                    
                     
                     <div class="tags">
                         
@@ -330,7 +357,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Tech Blog.</p>
+            <p>&copy; 2026 Tech Blog</p>
             <div class="social-links">
                 
                 <a href="your-facebook-page" target="_blank" rel="noopener">Facebook</a>
@@ -346,7 +373,6 @@
     <script src="/static/navigation.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-
         var searchInput     = document.getElementById('search-input');
         var clearSearchBtn  = document.getElementById('clear-search');
         var resultsCount    = document.getElementById('search-results-count');
@@ -362,41 +388,16 @@
         var searchActive = false;
         var observer     = null;
 
-        // Reads server-rendered <a class="post-card"> elements as fallback
-        function seedFromDOM() {
-            if (!postsContainer) return;
-            allPosts = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
-                var href = el.getAttribute('href') || '';
-                var slug = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
-                return {
-                    slug:             slug,
-                    title:            el.querySelector('h3') ? el.querySelector('h3').textContent.trim() : '',
-                    meta_description: el.querySelector('.post-excerpt') ? el.querySelector('.post-excerpt').textContent.trim() : '',
-                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); }),
-                    created_at:       ''
-                };
-            });
-        }
-
         fetch('/posts.json')
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
+            .then(function(r) { return r.json(); })
             .then(function(posts) {
                 allPosts = posts;
                 startObserver();
-                if (searchInput && searchInput.value.trim()) {
-                    performSearch(searchInput.value.trim().toLowerCase());
-                }
             })
             .catch(function(err) {
-                console.warn('posts.json fetch failed, falling back to DOM seed:', err);
-                seedFromDOM();
-                startObserver();
+                console.warn('posts.json fetch failed:', err);
             });
 
-        // ── IntersectionObserver: fires when sentinel enters the viewport ──
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver) return;
             observer = new IntersectionObserver(function(entries) {
@@ -410,7 +411,7 @@
         }
 
         function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\\]\\]/g, '\\\\$&');
+            return s.replace(/[.*+?^${}()|[\]\]/g, '\$&');
         }
 
         function highlight(text, query) {
@@ -420,7 +421,6 @@
             );
         }
 
-        // Mirrors <a class="post-card" href="..."><h3>...</h3><p class="post-excerpt">...</p><div class="tags">...</div></a>
         function createPostElement(post) {
             var card       = document.createElement('a');
             card.className = 'post-card';
@@ -437,11 +437,11 @@
             card.appendChild(excerpt);
 
             if (post.tags && post.tags.length > 0) {
-                var tagsDiv       = document.createElement('div');
+                var tagsDiv = document.createElement('div');
                 tagsDiv.className = 'tags';
                 post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
-                    var span         = document.createElement('span');
-                    span.className   = 'tag';
+                    var span = document.createElement('span');
+                    span.className = 'tag';
                     span.textContent = t;
                     tagsDiv.appendChild(span);
                 });
@@ -467,7 +467,7 @@
 
             postsContainer.innerHTML = '';
             matched.forEach(function(post) {
-                var el      = createPostElement(post);
+                var el = createPostElement(post);
                 var heading = el.querySelector('h3');
                 var excerpt = el.querySelector('.post-excerpt');
                 if (heading) heading.innerHTML = highlight(heading.textContent, query);
@@ -479,24 +479,6 @@
             resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
                                      : n === 1 ? '1 post found'
                                      : n + ' posts found';
-
-            var noRes = document.getElementById('no-results');
-            if (n === 0) {
-                if (!noRes) {
-                    noRes           = document.createElement('div');
-                    noRes.id        = 'no-results';
-                    noRes.className = 'no-results-message';
-                    noRes.innerHTML =
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">' +
-                        '<circle cx="11" cy="11" r="8"/>' +
-                        '<path d="m21 21-4.35-4.35"/></svg>' +
-                        '<h3>No posts found</h3>' +
-                        '<p>Try different keywords or clear the search.</p>';
-                    postsContainer.after(noRes);
-                }
-            } else if (noRes) {
-                noRes.remove();
-            }
         }
 
         function clearSearch() {
@@ -507,8 +489,6 @@
                 postsContainer.appendChild(createPostElement(post));
             });
             resultsCount.textContent = '';
-            var noRes = document.getElementById('no-results');
-            if (noRes) noRes.remove();
             startObserver();
         }
 
@@ -526,7 +506,7 @@
             });
             searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
-                    this.value                   = '';
+                    this.value = '';
                     clearSearchBtn.style.display = 'none';
                     clearSearch();
                 }
@@ -564,7 +544,6 @@
                     newCards.push(el);
                 });
                 postsContainer.appendChild(fragment);
-                // Double rAF ensures the browser has painted the entering state before animating
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         newCards.forEach(function(el, i) {
