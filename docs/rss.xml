@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 14:10:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 11:12:35 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech&apos;s Dark Secrets (April 2026)</title>
+      <link>https://kubaik.github.io/big-techs-dark-secrets-april-2026/</link>
+      <description>Uncover insider secrets: exploitation, censorship &amp; surveillance in Big Tech, exposed in exclusive interviews.</description>
+      <pubDate>Sun, 12 Apr 2026 11:12:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-techs-dark-secrets-april-2026/</guid>
+    </item>
     <item>
       <title>Platform Power</title>
       <link>https://kubaik.github.io/platform-power/</link>
@@ -138,13 +145,6 @@
       <description>Stop memory leaks from draining performance. Learn how to find and fix them.</description>
       <pubDate>Sun, 12 Apr 2026 04:44:04 +0000</pubDate>
       <guid>https://kubaik.github.io/plug-the-leak/</guid>
-    </item>
-    <item>
-      <title>2026&apos;s Worst Hacks</title>
-      <link>https://kubaik.github.io/2026s-worst-hacks/</link>
-      <description>2026&apos;s biggest data breaches exposed. Learn what went wrong and how to protect yourself.</description>
-      <pubDate>Sun, 12 Apr 2026 03:55:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-worst-hacks/</guid>
     </item>
   </channel>
 </rss>
