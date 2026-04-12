@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 22:03:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 19:05:32 +0000</lastBuildDate>
+    <item>
+      <title>AI Side Hustle</title>
+      <link>https://kubaik.github.io/ai-side-hustle/</link>
+      <description>Build a lucrative AI side hustle with actionable strategies and expert insights to automate tasks and boost income.</description>
+      <pubDate>Sun, 12 Apr 2026 19:05:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-side-hustle/</guid>
+    </item>
     <item>
       <title>AI Tools for Students: Study Smarter Not Harder: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/ai-tools-for-students-study-smarter-not-harder-a-p/</link>
@@ -138,13 +145,6 @@
       <description>Boost financial literacy with AI-powered tools and strategies to automate savings, invest smarter, and reduce debt.</description>
       <pubDate>Sun, 12 Apr 2026 10:23:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-meets-money/</guid>
-    </item>
-    <item>
-      <title>EDA in Action</title>
-      <link>https://kubaik.github.io/eda-in-action/</link>
-      <description>See EDA in action: real-world examples, implementation tips, and benefits of event-driven systems.</description>
-      <pubDate>Sun, 12 Apr 2026 09:41:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-in-action/</guid>
     </item>
   </channel>
 </rss>
