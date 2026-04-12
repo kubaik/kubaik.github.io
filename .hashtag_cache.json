@@ -4513,5 +4513,18 @@
       "TechInnovation"
     ],
     "topic": "How to Get Promoted Faster in Tech"
+  },
+  "event-driven_architecture_in_practice": {
+    "timestamp": "2026-04-12T09:41:00.605687",
+    "hashtags": [
+      "EventDriven",
+      "SoftwareArchitecture",
+      "CloudNative",
+      "Microservices",
+      "ServerlessComputing",
+      "RealTimeSystems",
+      "DigitalTransformation"
+    ],
+    "topic": "Event-Driven Architecture in Practice"
   }
 }
