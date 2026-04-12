@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 03:55:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 04:44:09 +0000</lastBuildDate>
+    <item>
+      <title>Plug the Leak</title>
+      <link>https://kubaik.github.io/plug-the-leak/</link>
+      <description>Stop memory leaks from draining performance. Learn how to find and fix them.</description>
+      <pubDate>Sun, 12 Apr 2026 04:44:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/plug-the-leak/</guid>
+    </item>
     <item>
       <title>2026&apos;s Worst Hacks</title>
       <link>https://kubaik.github.io/2026s-worst-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Discover the hidden dangers of relying on AI and learn how to avoid its blindspots.</description>
       <pubDate>Sat, 11 Apr 2026 16:02:06 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blindspot/</guid>
-    </item>
-    <item>
-      <title>AI Pix Pros</title>
-      <link>https://kubaik.github.io/ai-pix-pros/</link>
-      <description>Discover top AI image tools in 2026 for stunning visuals</description>
-      <pubDate>Sat, 11 Apr 2026 15:27:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pix-pros/</guid>
     </item>
   </channel>
 </rss>
