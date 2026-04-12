@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 12:45:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 13:35:46 +0000</lastBuildDate>
+    <item>
+      <title>IoT Core</title>
+      <link>https://kubaik.github.io/iot-core/</link>
+      <description>Master IoT architecture with our in-depth guide to IoT Core, covering device management and data processing for streamlined development.</description>
+      <pubDate>Sun, 12 Apr 2026 13:35:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-core/</guid>
+    </item>
     <item>
       <title>AI Beats Junior Coders</title>
       <link>https://kubaik.github.io/ai-beats-junior-coders/</link>
@@ -138,13 +145,6 @@
       <description>Discover how dirty data sabotages your analytics &amp; learn to clean up for accurate insights</description>
       <pubDate>Sun, 12 Apr 2026 06:22:22 +0000</pubDate>
       <guid>https://kubaik.github.io/dirty-data/</guid>
-    </item>
-    <item>
-      <title>AR Evolved: Apple Vision Pro</title>
-      <link>https://kubaik.github.io/ar-evolved-apple-vision-pro/</link>
-      <description>Discover Apple Vision Pro&apos;s impact on AR development &amp; innovation.</description>
-      <pubDate>Sun, 12 Apr 2026 06:14:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-evolved-apple-vision-pro/</guid>
     </item>
   </channel>
 </rss>
