@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 06:03:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 06:14:39 +0000</lastBuildDate>
+    <item>
+      <title>AR Evolved: Apple Vision Pro</title>
+      <link>https://kubaik.github.io/ar-evolved-apple-vision-pro/</link>
+      <description>Discover Apple Vision Pro&apos;s impact on AR development &amp; innovation.</description>
+      <pubDate>Sun, 12 Apr 2026 06:14:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-evolved-apple-vision-pro/</guid>
+    </item>
     <item>
       <title>K8s: Help or Hurt?</title>
       <link>https://kubaik.github.io/k8s-help-or-hurt/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top platforms and strategies for landing remote tech jobs in 2026. Unlock your career potential in the evolving digital landscape today!</description>
       <pubDate>Sat, 11 Apr 2026 17:08:04 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-tech-jobs-2026/</guid>
-    </item>
-    <item>
-      <title>Stop AI Drift</title>
-      <link>https://kubaik.github.io/stop-ai-drift/</link>
-      <description>Prevent AI model failures with proactive monitoring. Learn how to catch drift before it hurts.</description>
-      <pubDate>Sat, 11 Apr 2026 16:30:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-ai-drift/</guid>
     </item>
   </channel>
 </rss>
