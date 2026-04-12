@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 09:29:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 09:37:13 +0000</lastBuildDate>
+    <item>
+      <title>JS Game Changers</title>
+      <link>https://kubaik.github.io/js-game-changers/</link>
+      <description>Unlock JavaScript&apos;s full potential with 5 game-changing features that revolutionized coding, boosting efficiency and productivity.</description>
+      <pubDate>Sun, 12 Apr 2026 09:37:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/js-game-changers/</guid>
+    </item>
     <item>
       <title>FastTrack Tech</title>
       <link>https://kubaik.github.io/fasttrack-tech/</link>
@@ -138,13 +145,6 @@
       <description>Discover hidden mobile app risks &amp; security vulnerabilities</description>
       <pubDate>Sat, 11 Apr 2026 23:27:52 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-app-risks/</guid>
-    </item>
-    <item>
-      <title>Quantum Coding</title>
-      <link>https://kubaik.github.io/quantum-coding/</link>
-      <description>Discover how quantum coding transforms software engineering! Explore essential concepts and practical tips to harness quantum computing in your projects.</description>
-      <pubDate>Sat, 11 Apr 2026 23:05:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-coding/</guid>
     </item>
   </channel>
 </rss>
