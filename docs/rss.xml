@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 08:44:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 08:56:19 +0000</lastBuildDate>
+    <item>
+      <title>Server vs Client</title>
+      <link>https://kubaik.github.io/server-vs-client/</link>
+      <description>Learn the difference between server &amp; client components in web development.</description>
+      <pubDate>Sun, 12 Apr 2026 08:56:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/server-vs-client/</guid>
+    </item>
     <item>
       <title>AI&apos;s Limits</title>
       <link>https://kubaik.github.io/ais-limits/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build a scalable API handling 1M+ requests/day</description>
       <pubDate>Sat, 11 Apr 2026 22:01:23 +0000</pubDate>
       <guid>https://kubaik.github.io/1m-requestsday/</guid>
-    </item>
-    <item>
-      <title>2026 Startup Stack</title>
-      <link>https://kubaik.github.io/2026-startup-stack/</link>
-      <description>Discover the essential tech stack for bootstrapped startups in 2026. Boost efficiency and innovation with our expert insights and recommendations!</description>
-      <pubDate>Sat, 11 Apr 2026 21:27:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-startup-stack/</guid>
     </item>
   </channel>
 </rss>
