@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 19:42:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 20:04:42 +0000</lastBuildDate>
+    <item>
+      <title>Code Fast</title>
+      <link>https://kubaik.github.io/code-fast/</link>
+      <description>Master a new programming language in weeks with proven strategies and techniques to boost coding speed and efficiency.</description>
+      <pubDate>Sun, 12 Apr 2026 20:04:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-fast/</guid>
+    </item>
     <item>
       <title>Tech Exodus (April 2026)</title>
       <link>https://kubaik.github.io/tech-exodus-april-2026/</link>
@@ -138,13 +145,6 @@
       <description>Protect your mobile device from hackers. Fix common security vulnerabilities and safeguard your data with expert fixes.</description>
       <pubDate>Sun, 12 Apr 2026 12:02:23 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-security-risks-fix-now/</guid>
-    </item>
-    <item>
-      <title>Prompt Power</title>
-      <link>https://kubaik.github.io/prompt-power/</link>
-      <description>Unlock prompt engineering secrets for real-world apps, boosting efficiency and accuracy in AI models.</description>
-      <pubDate>Sun, 12 Apr 2026 11:29:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-power/</guid>
     </item>
   </channel>
 </rss>
