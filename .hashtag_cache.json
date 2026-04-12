@@ -4539,5 +4539,19 @@
       "ArtificialIntelligenceFinance"
     ],
     "topic": "AI for Personal Finance: Tools and Strategies"
+  },
+  "message_queues:_kafka_vs_rabbitmq_vs_sqs": {
+    "timestamp": "2026-04-12T10:33:23.281244",
+    "hashtags": [
+      "CloudComputing",
+      "MessageQueues",
+      "KafkaVsRabbitMQ",
+      "ServerlessTech",
+      "Microservices",
+      "EventDrivenArch",
+      "CloudNativeApps",
+      "DevOpsTools"
+    ],
+    "topic": "Message Queues: Kafka vs RabbitMQ vs SQS"
   }
 }
