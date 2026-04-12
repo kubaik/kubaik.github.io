@@ -381,25 +381,83 @@
         var sentinel        = document.getElementById('scroll-sentinel');
         var backToTopButton = document.getElementById('back-to-top');
 
-        var postsPerPage = 10;
-        var allPosts     = [];
-        var currentPage  = 1;
-        var isLoading    = false;
-        var searchActive = false;
-        var observer     = null;
+        var postsPerPage  = 10;
+        var allPosts      = [];
+        var currentPage   = 1;
+        var isLoading     = false;
+        var searchActive  = false;
+        var observer      = null;
+        var dataReady     = false;
 
+        // ── Step 1: Seed allPosts from the server-rendered DOM immediately.
+        // This guarantees search and scroll work even if posts.json never loads.
+        // Each <a class="post-card"> in the HTML becomes a data object here.
+        function seedFromDOM() {
+            if (!postsContainer) return;
+            var domCards = postsContainer.querySelectorAll('a.post-card');
+            allPosts = Array.from(domCards).map(function(el) {
+                var href = el.getAttribute('href') || '';
+                var slug = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
+                return {
+                    slug:             slug,
+                    title:            (el.querySelector('h3') || {}).textContent || '',
+                    meta_description: (el.querySelector('.post-excerpt') || {}).textContent || '',
+                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); })
+                };
+            });
+        }
+
+        // ── Step 2: Snapshot the initial DOM cards so clearSearch can restore
+        // them exactly without rebuilding from data (avoids blank-grid bug).
+        var initialCards = null;
+        function snapshotInitialCards() {
+            if (!postsContainer) return;
+            initialCards = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
+                return el.cloneNode(true);
+            });
+        }
+
+        // Run both synchronously before any async work
+        seedFromDOM();
+        snapshotInitialCards();
+        dataReady = allPosts.length > 0;
+
+        // ── Step 3: Start the observer immediately using DOM-seeded data.
+        // Do NOT wait for posts.json — that was the infinite-scroll bug.
+        startObserver();
+
+        // ── Step 4: Fetch posts.json to upgrade allPosts with full dataset
+        // (needed for searching posts beyond the first page of server-rendered cards).
         fetch('/posts.json')
-            .then(function(r) { return r.json(); })
+            .then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
             .then(function(posts) {
-                allPosts = posts;
-                startObserver();
+                allPosts  = posts;
+                dataReady = true;
+                // Re-evaluate observer now we have the real total count
+                if (!hasMorePosts()) {
+                    stopObserver();
+                } else if (!observer) {
+                    startObserver();
+                }
+                // If user already typed something, re-run the search with full data
+                if (searchInput && searchInput.value.trim()) {
+                    performSearch(searchInput.value.trim().toLowerCase());
+                }
             })
             .catch(function(err) {
-                console.warn('posts.json fetch failed:', err);
+                // DOM seed already handled this — just log and continue
+                console.warn('posts.json unavailable, using DOM seed only:', err);
             });
 
+        // ─────────────────────────────────────────────────────────
+        // Observer helpers
+        // ─────────────────────────────────────────────────────────
+
         function startObserver() {
-            if (!sentinel || !window.IntersectionObserver) return;
+            if (!sentinel || !window.IntersectionObserver || observer) return;
             observer = new IntersectionObserver(function(entries) {
                 if (entries[0].isIntersecting) loadMorePosts();
             }, { rootMargin: '0px 0px 300px 0px' });
@@ -409,6 +467,45 @@
         function stopObserver() {
             if (observer) { observer.disconnect(); observer = null; }
         }
+
+        // ─────────────────────────────────────────────────────────
+        // Card builder (JS-generated cards match server-rendered HTML)
+        // ─────────────────────────────────────────────────────────
+
+        function createPostElement(post) {
+            var card       = document.createElement('a');
+            card.className = 'post-card';
+            card.href      = '/' + post.slug + '/';
+
+            var h3         = document.createElement('h3');
+            h3.textContent = post.title;
+
+            var excerpt       = document.createElement('p');
+            excerpt.className = 'post-excerpt';
+            excerpt.textContent = post.meta_description;
+
+            card.appendChild(h3);
+            card.appendChild(excerpt);
+
+            if (post.tags && post.tags.length > 0) {
+                var tagsDiv       = document.createElement('div');
+                tagsDiv.className = 'tags';
+                post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3)
+                    .forEach(function(t) {
+                        var span       = document.createElement('span');
+                        span.className = 'tag';
+                        span.textContent = t;
+                        tagsDiv.appendChild(span);
+                    });
+                card.appendChild(tagsDiv);
+            }
+
+            return card;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Search
+        // ─────────────────────────────────────────────────────────
 
         function escapeRe(s) {
             return s.replace(/[.*+?^${}()|[\]\]/g, '\$&');
@@ -421,37 +518,8 @@
             );
         }
 
-        function createPostElement(post) {
-            var card       = document.createElement('a');
-            card.className = 'post-card';
-            card.href      = '/' + post.slug + '/';
-
-            var h3         = document.createElement('h3');
-            h3.textContent = post.title;
-
-            var excerpt         = document.createElement('p');
-            excerpt.className   = 'post-excerpt';
-            excerpt.textContent = post.meta_description;
-
-            card.appendChild(h3);
-            card.appendChild(excerpt);
-
-            if (post.tags && post.tags.length > 0) {
-                var tagsDiv = document.createElement('div');
-                tagsDiv.className = 'tags';
-                post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
-                    var span = document.createElement('span');
-                    span.className = 'tag';
-                    span.textContent = t;
-                    tagsDiv.appendChild(span);
-                });
-                card.appendChild(tagsDiv);
-            }
-
-            return card;
-        }
-
         function performSearch(query) {
+            // Guard: need at least DOM-seeded data
             if (!allPosts.length) return;
             searchActive = true;
             stopObserver();
@@ -467,7 +535,7 @@
 
             postsContainer.innerHTML = '';
             matched.forEach(function(post) {
-                var el = createPostElement(post);
+                var el      = createPostElement(post);
                 var heading = el.querySelector('h3');
                 var excerpt = el.querySelector('.post-excerpt');
                 if (heading) heading.innerHTML = highlight(heading.textContent, query);
@@ -475,43 +543,76 @@
                 postsContainer.appendChild(el);
             });
 
+            // Remove stale no-results block if present
+            var oldNoRes = document.getElementById('no-results');
+            if (oldNoRes) oldNoRes.remove();
+
             var n = matched.length;
-            resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
-                                     : n === 1 ? '1 post found'
-                                     : n + ' posts found';
+            if (resultsCount) {
+                resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
+                                         : n === 1 ? '1 post found'
+                                         : n + ' posts found';
+            }
+
+            if (n === 0) {
+                var noRes         = document.createElement('div');
+                noRes.id          = 'no-results';
+                noRes.className   = 'no-results-message';
+                noRes.innerHTML   = '<p>No posts matched <strong>' + query + '</strong>. Try different keywords.</p>';
+                postsContainer.after(noRes);
+            }
         }
 
         function clearSearch() {
-            searchActive             = false;
+            searchActive = false;
+            currentPage  = 1;
+
+            // Restore the original server-rendered cards exactly.
+            // This avoids the blank-grid bug caused by rebuilding from
+            // allPosts when it only contains the DOM-seeded subset.
             postsContainer.innerHTML = '';
-            currentPage              = 1;
-            allPosts.slice(0, postsPerPage).forEach(function(post) {
-                postsContainer.appendChild(createPostElement(post));
-            });
-            resultsCount.textContent = '';
+            if (initialCards && initialCards.length > 0) {
+                initialCards.forEach(function(el) {
+                    postsContainer.appendChild(el.cloneNode(true));
+                });
+            }
+
+            var oldNoRes = document.getElementById('no-results');
+            if (oldNoRes) oldNoRes.remove();
+            if (resultsCount) resultsCount.textContent = '';
+
+            // Restart observer — more posts may be available beyond page 1
             startObserver();
         }
 
         if (searchInput) {
             searchInput.addEventListener('input', function () {
                 var q = this.value.trim().toLowerCase();
-                clearSearchBtn.style.display = q ? 'flex' : 'none';
+                if (clearSearchBtn) clearSearchBtn.style.display = q ? 'flex' : 'none';
                 if (q) { performSearch(q); } else { clearSearch(); }
             });
-            clearSearchBtn.addEventListener('click', function () {
-                searchInput.value  = '';
-                this.style.display = 'none';
-                clearSearch();
-                searchInput.focus();
-            });
+
+            if (clearSearchBtn) {
+                clearSearchBtn.addEventListener('click', function () {
+                    searchInput.value  = '';
+                    this.style.display = 'none';
+                    clearSearch();
+                    searchInput.focus();
+                });
+            }
+
             searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                     this.value = '';
-                    clearSearchBtn.style.display = 'none';
+                    if (clearSearchBtn) clearSearchBtn.style.display = 'none';
                     clearSearch();
                 }
             });
         }
+
+        // ─────────────────────────────────────────────────────────
+        // Back to top
+        // ─────────────────────────────────────────────────────────
 
         window.addEventListener('scroll', function () {
             if (backToTopButton)
@@ -524,6 +625,10 @@
             });
         }
 
+        // ─────────────────────────────────────────────────────────
+        // Infinite scroll
+        // ─────────────────────────────────────────────────────────
+
         function loadMorePosts() {
             if (isLoading || searchActive || !hasMorePosts()) {
                 if (!hasMorePosts()) stopObserver();
@@ -535,29 +640,44 @@
             setTimeout(function() {
                 currentPage++;
                 var start    = (currentPage - 1) * postsPerPage;
+                var slice    = allPosts.slice(start, start + postsPerPage);
                 var fragment = document.createDocumentFragment();
                 var newCards = [];
-                allPosts.slice(start, start + postsPerPage).forEach(function(post) {
+
+                slice.forEach(function(post) {
                     var el = createPostElement(post);
                     el.classList.add('post-card--entering');
                     fragment.appendChild(el);
                     newCards.push(el);
                 });
+
                 postsContainer.appendChild(fragment);
+
+                // Double rAF so the browser paints entering state before animating
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         newCards.forEach(function(el, i) {
-                            setTimeout(function() { el.classList.remove('post-card--entering'); }, i * 60);
+                            setTimeout(function() {
+                                el.classList.remove('post-card--entering');
+                            }, i * 60);
                         });
                     });
                 });
+
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 isLoading = false;
-                if (!hasMorePosts()) stopObserver();
+
+                if (!hasMorePosts()) {
+                    stopObserver();
+                }
             }, 300);
         }
 
-        function hasMorePosts() { return currentPage * postsPerPage < allPosts.length; }
+        function hasMorePosts() {
+            // currentPage already shows page 1 (server-rendered).
+            // allPosts.length is the total. If we have loaded all of them, stop.
+            return dataReady && (currentPage * postsPerPage < allPosts.length);
+        }
     });
     </script>
 </body>
