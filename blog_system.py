@@ -1053,7 +1053,7 @@ if __name__ == "__main__":
 
                 visibility = VisibilityAutomator(config)
 
-                # -- 1. POST AS THREAD (maximum impressions) ------------------
+                # -- 1. POST AS THREAD (4 tweets — cost optimised) ------------
                 print("\nPosting as thread for maximum impressions...")
                 thread_result = visibility.post_thread(blog_post)
 
@@ -1064,46 +1064,59 @@ if __name__ == "__main__":
                     for i, url in enumerate(thread_result['thread_urls'], 1):
                         print(f"   Tweet {i}: {url}")
 
-                    # -- 2. FOLLOW-UP REPLY TO OWN THREAD ---------------------
-                    # Replying to our own last tweet is always allowed and adds
-                    # an extra touch-point that the algorithm rewards.
+                    # -- 2. SELF-REPLY FOLLOW-UP (once per day guard) ----------
+                    # Only one follow-up per calendar day to avoid redundant
+                    # API write calls on reruns or manual triggers.
                     try:
                         import time
+                        import datetime
+                        import os
+
                         time.sleep(3)  # brief pause before follow-up
 
-                        last_tweet_id = thread_result['thread_ids'][-1]
-                        username = config.get('social_accounts', {}).get(
-                            'twitter', '@KubaiKevin')
+                        today = datetime.date.today().isoformat()
+                        flag_file = f".last_reply_{today}"
 
-                        # Pull up to 3 shortest tags for hashtags
-                        hashtags = ""
-                        if hasattr(blog_post, 'tags') and blog_post.tags:
-                            sorted_tags = sorted(blog_post.tags, key=len)[:3]
-                            hashtags = " ".join(
-                                f"#{t.replace(' ', '').replace('-', '')}"
-                                for t in sorted_tags if t
+                        if not os.path.exists(flag_file):
+                            last_tweet_id = thread_result['thread_ids'][-1]
+                            username = config.get('social_accounts', {}).get(
+                                'twitter', '@KubaiKevin')
+
+                            # Pull up to 3 shortest tags for hashtags
+                            hashtags = ""
+                            if hasattr(blog_post, 'tags') and blog_post.tags:
+                                sorted_tags = sorted(
+                                    blog_post.tags, key=len)[:3]
+                                hashtags = " ".join(
+                                    f"#{t.replace(' ', '').replace('-', '')}"
+                                    for t in sorted_tags if t
+                                )
+
+                            followup_text = (
+                                f"Found this useful? Follow {username} for daily threads on "
+                                f"AI, dev tools, and software engineering\n\n"
+                                f"{hashtags}"
+                            ).strip()
+
+                            # Safety trim
+                            if len(followup_text) > 280:
+                                followup_text = followup_text[:277] + "..."
+
+                            followup_response = visibility.twitter_client.create_tweet(
+                                text=followup_text,
+                                in_reply_to_tweet_id=last_tweet_id
                             )
+                            followup_id = followup_response.data['id']
+                            twitter_user = visibility._username or "KubaiKevin"
+                            followup_url = f"https://twitter.com/{twitter_user}/status/{followup_id}"
 
-                        followup_text = (
-                            f"Found this useful? Follow {username} for daily threads on "
-                            f"AI, dev tools, and software engineering\n\n"
-                            f"{hashtags}"
-                        ).strip()
+                            # Mark as done for today
+                            open(flag_file, 'w').close()
 
-                        # Safety trim
-                        if len(followup_text) > 280:
-                            followup_text = followup_text[:277] + "..."
-
-                        followup_response = visibility.twitter_client.create_tweet(
-                            text=followup_text,
-                            in_reply_to_tweet_id=last_tweet_id
-                        )
-                        followup_id = followup_response.data['id']
-                        twitter_user = visibility._username or "KubaiKevin"
-                        followup_url = f"https://twitter.com/{twitter_user}/status/{followup_id}"
-
-                        print(
-                            f"Follow-up reply added to thread: {followup_url}")
+                            print(
+                                f"Follow-up reply added to thread: {followup_url}")
+                        else:
+                            print("Follow-up reply already posted today, skipping.")
 
                     except Exception as followup_err:
                         # Never let the follow-up break the overall cron run
