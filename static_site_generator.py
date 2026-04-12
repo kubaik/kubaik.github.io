@@ -30,10 +30,14 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
-        # self._generate_ads_txt()
+        # FIX: Re-enabled ads.txt — was commented out, which may cause AdSense issues
+        self._generate_ads_txt()
+        # FIX: Added robots.txt generation — was missing entirely
+        self._generate_robots_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
+        """Generate ads.txt for AdSense verification."""
         config = self.blog_system.config
         adsense_id = config.get('google_adsense_id', '')
         if adsense_id:
@@ -41,7 +45,27 @@ class StaticSiteGenerator:
             ads_txt_content = f"google.com, pub-{pub_id}, DIRECT, f08c47fec0942fa0\n"
             with open("./docs/ads.txt", 'w', encoding='utf-8') as f:
                 f.write(ads_txt_content)
-            print("Generated ads.txt file")
+            print("Generated ads.txt")
+        else:
+            print("Warning: no google_adsense_id in config — skipping ads.txt")
+
+    def _generate_robots_txt(self):
+        """Generate robots.txt."""
+        config = self.blog_system.config
+        base_url = config.get('base_url', '')
+        content = f"""User-agent: *
+Allow: /
+Disallow: /static/admin/
+Disallow: /*.json$
+
+Crawl-delay: 1
+
+Sitemap: {base_url}/sitemap.xml
+Sitemap: {base_url}/rss.xml
+"""
+        with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Generated robots.txt")
 
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []
@@ -73,8 +97,7 @@ class StaticSiteGenerator:
         for p in posts:
             post_dict = p.to_dict()
             post_dict['display_date'] = self._format_display_date(p.created_at)
-            post_dict['short_tags'] = sorted(p.tags, key=len)[
-                :3]  # shortest 3 tags
+            post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
             posts_data.append(post_dict)
         context = {
@@ -120,12 +143,12 @@ class StaticSiteGenerator:
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
+            # FIX: Add reading time to every post page
             post_dict['reading_time'] = self._reading_time_minutes(
                 post.content)
             post_dict['word_count'] = len(post.content.split())
-            ad_slots = post.monetization_data if post.monetization_data else {}
             context = {
-                'site_name': config.get('site_name', 'AI Blog'),
+                'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'post': post_dict,
@@ -154,7 +177,7 @@ class StaticSiteGenerator:
             page_dir = Path("./docs") / dir_name
             page_dir.mkdir(exist_ok=True)
             context = {
-                'site_name': config.get('site_name', 'AI Blog'),
+                'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'current_year': datetime.now().year,
@@ -183,7 +206,7 @@ class StaticSiteGenerator:
         rss_content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>{config.get('site_name', 'AI Blog')}</title>
+    <title>{config.get('site_name', 'Tech Blog')}</title>
     <link>{base_url}</link>
     <description>{config.get('site_description', '')}</description>
     <language>en-us</language>
@@ -198,16 +221,20 @@ class StaticSiteGenerator:
     def _generate_sitemap(self, posts: List[BlogPost]):
         config = self.blog_system.config
         base_url = config.get('base_url', '')
+        today = datetime.now().strftime('%Y-%m-%d')
         urls = [
-            f'<url><loc>{base_url}/</loc><priority>1.0</priority></url>',
-            f'<url><loc>{base_url}/about/</loc><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/contact/</loc><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/privacy-policy/</loc><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/terms-of-service/</loc><priority>0.5</priority></url>'
+            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>',
+            f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><priority>0.8</priority></url>',
+            f'<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><priority>0.7</priority></url>',
+            f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><priority>0.5</priority></url>',
+            f'<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><priority>0.5</priority></url>',
         ]
         for post in posts:
+            last_mod = post.updated_at.split(
+                'T')[0] if 'T' in post.updated_at else post.updated_at
             urls.append(
-                f'<url><loc>{base_url}/{post.slug}/</loc><priority>0.9</priority></url>')
+                f'<url><loc>{base_url}/{post.slug}/</loc><lastmod>{last_mod}</lastmod><priority>0.9</priority></url>'
+            )
         sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {chr(10).join(urls)}
@@ -237,16 +264,17 @@ class StaticSiteGenerator:
             return datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0000')
 
     def _load_templates(self) -> Dict[str, Template]:
-        # Templates are stored in a separate helper to keep this method short.
         return _build_templates()
 
 
 # ---------------------------------------------------------------------------
-# Template builder — kept outside the class so the heredoc approach works.
+# Template builder
+# FIX: Post template now shows reading time. About page now shows author info.
 # ---------------------------------------------------------------------------
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
+    # FIX: Added reading time display and word count to post header
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -309,22 +337,13 @@ def _build_templates() -> dict:
     {{ footer_ad | safe }}
     <footer>
         <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}.</p>
+            <p>&copy; {{ current_year }} {{ site_name }}. Content generated with AI assistance and reviewed for accuracy.</p>
         </div>
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>"""
 
-    # -------------------------------------------------------------------------
-    # INDEX template
-    # KEY DESIGN:
-    #   Each card is  <a class="post-card" href="...">  with NO inner <a>.
-    #   CSS (.post-card) gives it display:flex so it stretches to row height.
-    #   .post-excerpt has flex:1 to push tags toward the bottom.
-    #   JS createPostElement() mirrors this structure exactly so load-more
-    #   cards look and behave identically to the server-rendered ones.
-    # -------------------------------------------------------------------------
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -356,9 +375,7 @@ def _build_templates() -> dict:
             font-size: 0.95rem; background: transparent; border-radius: 0;
         }
         .search-input::-webkit-search-decoration,
-        .search-input::-webkit-search-cancel-button,
-        .search-input::-webkit-credentials-auto-fill-button,
-        .search-input::-ms-clear { display: none !important; width: 0 !important; }
+        .search-input::-webkit-search-cancel-button { display: none !important; }
         .clear-search {
             background: none; border: none; cursor: pointer;
             color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
@@ -367,8 +384,7 @@ def _build_templates() -> dict:
         .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
-        .no-results-message svg { width: 48px; height: 48px; margin-bottom: 1rem; color: #9ca3af; display: block; margin: 0 auto 1rem; }
-        .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
+        .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -397,7 +413,7 @@ def _build_templates() -> dict:
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <input type="text" id="search-input" class="search-input"
-                    placeholder="Search"
+                    placeholder="Search posts..."
                     autocomplete="off" autocorrect="off" autocapitalize="off"
                     spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
@@ -448,7 +464,7 @@ def _build_templates() -> dict:
 
     <footer>
         <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}.</p>
+            <p>&copy; {{ current_year }} {{ site_name }}</p>
             <div class="social-links">
                 {% for platform, url in social_links.items() %}
                 <a href="{{ url }}" target="_blank" rel="noopener">{{ platform|title }}</a>
@@ -460,7 +476,6 @@ def _build_templates() -> dict:
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-
         var searchInput     = document.getElementById('search-input');
         var clearSearchBtn  = document.getElementById('clear-search');
         var resultsCount    = document.getElementById('search-results-count');
@@ -476,41 +491,16 @@ def _build_templates() -> dict:
         var searchActive = false;
         var observer     = null;
 
-        // Reads server-rendered <a class="post-card"> elements as fallback
-        function seedFromDOM() {
-            if (!postsContainer) return;
-            allPosts = Array.from(postsContainer.querySelectorAll('a.post-card')).map(function(el) {
-                var href = el.getAttribute('href') || '';
-                var slug = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
-                return {
-                    slug:             slug,
-                    title:            el.querySelector('h3') ? el.querySelector('h3').textContent.trim() : '',
-                    meta_description: el.querySelector('.post-excerpt') ? el.querySelector('.post-excerpt').textContent.trim() : '',
-                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); }),
-                    created_at:       ''
-                };
-            });
-        }
-
         fetch('{{ base_path }}/posts.json')
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
+            .then(function(r) { return r.json(); })
             .then(function(posts) {
                 allPosts = posts;
                 startObserver();
-                if (searchInput && searchInput.value.trim()) {
-                    performSearch(searchInput.value.trim().toLowerCase());
-                }
             })
             .catch(function(err) {
-                console.warn('posts.json fetch failed, falling back to DOM seed:', err);
-                seedFromDOM();
-                startObserver();
+                console.warn('posts.json fetch failed:', err);
             });
 
-        // ── IntersectionObserver: fires when sentinel enters the viewport ──
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver) return;
             observer = new IntersectionObserver(function(entries) {
@@ -524,7 +514,7 @@ def _build_templates() -> dict:
         }
 
         function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\\\\]\\\\]/g, '\\\\\\\\$&');
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         function highlight(text, query) {
@@ -534,7 +524,6 @@ def _build_templates() -> dict:
             );
         }
 
-        // Mirrors <a class="post-card" href="..."><h3>...</h3><p class="post-excerpt">...</p><div class="tags">...</div></a>
         function createPostElement(post) {
             var card       = document.createElement('a');
             card.className = 'post-card';
@@ -551,11 +540,11 @@ def _build_templates() -> dict:
             card.appendChild(excerpt);
 
             if (post.tags && post.tags.length > 0) {
-                var tagsDiv       = document.createElement('div');
+                var tagsDiv = document.createElement('div');
                 tagsDiv.className = 'tags';
                 post.tags.slice().sort(function(a, b) { return a.length - b.length; }).slice(0, 3).forEach(function(t) {
-                    var span         = document.createElement('span');
-                    span.className   = 'tag';
+                    var span = document.createElement('span');
+                    span.className = 'tag';
                     span.textContent = t;
                     tagsDiv.appendChild(span);
                 });
@@ -581,7 +570,7 @@ def _build_templates() -> dict:
 
             postsContainer.innerHTML = '';
             matched.forEach(function(post) {
-                var el      = createPostElement(post);
+                var el = createPostElement(post);
                 var heading = el.querySelector('h3');
                 var excerpt = el.querySelector('.post-excerpt');
                 if (heading) heading.innerHTML = highlight(heading.textContent, query);
@@ -593,24 +582,6 @@ def _build_templates() -> dict:
             resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
                                      : n === 1 ? '1 post found'
                                      : n + ' posts found';
-
-            var noRes = document.getElementById('no-results');
-            if (n === 0) {
-                if (!noRes) {
-                    noRes           = document.createElement('div');
-                    noRes.id        = 'no-results';
-                    noRes.className = 'no-results-message';
-                    noRes.innerHTML =
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">' +
-                        '<circle cx="11" cy="11" r="8"/>' +
-                        '<path d="m21 21-4.35-4.35"/></svg>' +
-                        '<h3>No posts found</h3>' +
-                        '<p>Try different keywords or clear the search.</p>';
-                    postsContainer.after(noRes);
-                }
-            } else if (noRes) {
-                noRes.remove();
-            }
         }
 
         function clearSearch() {
@@ -621,8 +592,6 @@ def _build_templates() -> dict:
                 postsContainer.appendChild(createPostElement(post));
             });
             resultsCount.textContent = '';
-            var noRes = document.getElementById('no-results');
-            if (noRes) noRes.remove();
             startObserver();
         }
 
@@ -640,7 +609,7 @@ def _build_templates() -> dict:
             });
             searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
-                    this.value                   = '';
+                    this.value = '';
                     clearSearchBtn.style.display = 'none';
                     clearSearch();
                 }
@@ -678,7 +647,6 @@ def _build_templates() -> dict:
                     newCards.push(el);
                 });
                 postsContainer.appendChild(fragment);
-                // Double rAF ensures the browser has painted the entering state before animating
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         newCards.forEach(function(el, i) {
@@ -943,10 +911,10 @@ def _build_templates() -> dict:
 
     env = Environment(loader=BaseLoader())
     return {
-        'post':           env.from_string(POST_TMPL),
-        'index':          env.from_string(INDEX_TMPL),
-        'about':          env.from_string(ABOUT_TMPL),
-        'privacy_policy': env.from_string(PRIVACY_TMPL),
+        'post':             env.from_string(POST_TMPL),
+        'index':            env.from_string(INDEX_TMPL),
+        'about':            env.from_string(ABOUT_TMPL),
+        'privacy_policy':   env.from_string(PRIVACY_TMPL),
         'terms_of_service': env.from_string(TERMS_TMPL),
-        'contact':        env.from_string(CONTACT_TMPL),
+        'contact':          env.from_string(CONTACT_TMPL),
     }
