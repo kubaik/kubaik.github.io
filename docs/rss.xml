@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 16:05:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 16:33:55 +0000</lastBuildDate>
+    <item>
+      <title>RAG Simplified</title>
+      <link>https://kubaik.github.io/rag-simplified/</link>
+      <description>Unlock Retrieval-Augmented Generation (RAG) basics, understanding its components and applications in simple terms.</description>
+      <pubDate>Sun, 12 Apr 2026 16:33:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-simplified/</guid>
+    </item>
     <item>
       <title>Kafka Simplified</title>
       <link>https://kubaik.github.io/kafka-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Explore AI&apos;s limitations &amp; where humans still reign supreme.</description>
       <pubDate>Sun, 12 Apr 2026 08:44:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ais-limits/</guid>
-    </item>
-    <item>
-      <title>Code: Not for All</title>
-      <link>https://kubaik.github.io/code-not-for-all/</link>
-      <description>Challenging the &apos;code for all&apos; mantra, exploring the reality of coding accessibility.</description>
-      <pubDate>Sun, 12 Apr 2026 08:00:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-not-for-all/</guid>
     </item>
   </channel>
 </rss>
