@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 22:40:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 19:42:31 +0000</lastBuildDate>
+    <item>
+      <title>Tech Exodus (April 2026)</title>
+      <link>https://kubaik.github.io/tech-exodus-april-2026/</link>
+      <description>Uncover reasons behind mass developer exodus from Big Tech in April 2026, and what it means for the industry&apos;s future.</description>
+      <pubDate>Sun, 12 Apr 2026 19:42:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-exodus-april-2026/</guid>
+    </item>
     <item>
       <title>Access Denied?</title>
       <link>https://kubaik.github.io/access-denied/</link>
@@ -138,13 +145,6 @@
       <description>Unlock prompt engineering secrets for real-world apps, boosting efficiency and accuracy in AI models.</description>
       <pubDate>Sun, 12 Apr 2026 11:29:59 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-power/</guid>
-    </item>
-    <item>
-      <title>Platform Power</title>
-      <link>https://kubaik.github.io/platform-power/</link>
-      <description>Unlock platform business models&apos; secrets: understand key components, benefits, and success strategies to drive growth.</description>
-      <pubDate>Sun, 12 Apr 2026 10:37:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-power/</guid>
     </item>
   </channel>
 </rss>
