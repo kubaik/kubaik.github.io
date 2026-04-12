@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Apr 2026 06:14:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 06:22:27 +0000</lastBuildDate>
+    <item>
+      <title>Dirty Data?</title>
+      <link>https://kubaik.github.io/dirty-data/</link>
+      <description>Discover how dirty data sabotages your analytics &amp; learn to clean up for accurate insights</description>
+      <pubDate>Sun, 12 Apr 2026 06:22:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/dirty-data/</guid>
+    </item>
     <item>
       <title>AR Evolved: Apple Vision Pro</title>
       <link>https://kubaik.github.io/ar-evolved-apple-vision-pro/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI-powered data analysis without coding. Discover insights faster and easier.</description>
       <pubDate>Sat, 11 Apr 2026 17:26:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-analyzes/</guid>
-    </item>
-    <item>
-      <title>Remote Tech Jobs 2026</title>
-      <link>https://kubaik.github.io/remote-tech-jobs-2026/</link>
-      <description>Discover the top platforms and strategies for landing remote tech jobs in 2026. Unlock your career potential in the evolving digital landscape today!</description>
-      <pubDate>Sat, 11 Apr 2026 17:08:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-tech-jobs-2026/</guid>
     </item>
   </channel>
 </rss>
