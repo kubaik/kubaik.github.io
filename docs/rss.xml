@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 15:11:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 15:57:24 +0000</lastBuildDate>
+    <item>
+      <title>Free AI Tools That Professionals Actually Use: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/free-ai-tools-that-professionals-actually-use-a-pr/</link>
+      <description>A practical guide to Free AI Tools That Professionals Actually Use covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Mon, 13 Apr 2026 15:57:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/free-ai-tools-that-professionals-actually-use-a-pr/</guid>
+    </item>
     <item>
       <title>Password Security: What Actually Works in 2026: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/password-security-what-actually-works-in-2026-a-pr/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to Progressive Web Apps: When They Beat Native covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Mon, 13 Apr 2026 07:35:33 +0000</pubDate>
       <guid>https://kubaik.github.io/progressive-web-apps-when-they-beat-native-a-pract/</guid>
-    </item>
-    <item>
-      <title>Boost UX: Core Web Vitals</title>
-      <link>https://kubaik.github.io/boost-ux-core-web-vitals/</link>
-      <description>Improve user experience with optimal Core Web Vitals. Master metrics for faster page loads &amp; higher conversions.</description>
-      <pubDate>Mon, 13 Apr 2026 07:13:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ux-core-web-vitals/</guid>
     </item>
   </channel>
 </rss>
