@@ -228,7 +228,7 @@ class VisibilityAutomator:
                 f"1/ Most people get this wrong:\n\n"
                 f"{post.meta_description[:180]}\n\n"
                 f"The fix starts with understanding {topic_a} properly.\n\n"
-                f"Full breakdown: {url_t2}"
+                f"Full breakdown:" + f"{url_t2}"
                 + (f"\n\n{hashtags}" if hashtags else "")
             ),
 
