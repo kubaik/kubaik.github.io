@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 19:33:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 16:38:14 +0000</lastBuildDate>
+    <item>
+      <title>Index to Win</title>
+      <link>https://kubaik.github.io/index-to-win/</link>
+      <description>Unlock faster query times and boost database performance by mastering indexing techniques and best practices.</description>
+      <pubDate>Mon, 13 Apr 2026 16:38:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-to-win/</guid>
+    </item>
     <item>
       <title>Documentation That Developers Actually Read: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/documentation-that-developers-actually-read-a-prac/</link>
@@ -138,13 +145,6 @@
       <description>Get realistic freelance developer income numbers and salary ranges to set your rates with confidence.</description>
       <pubDate>Mon, 13 Apr 2026 07:53:08 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-paychecks/</guid>
-    </item>
-    <item>
-      <title>Slow Site? Fix Now</title>
-      <link>https://kubaik.github.io/slow-site-fix-now/</link>
-      <description>Boost speed by 30%: Identify site slowdowns and fix common issues with our expert web performance tips and tools.</description>
-      <pubDate>Mon, 13 Apr 2026 07:42:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/slow-site-fix-now/</guid>
     </item>
   </channel>
 </rss>
