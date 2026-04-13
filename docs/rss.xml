@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 18:23:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 19:18:02 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Bye Perimeter</title>
+      <link>https://kubaik.github.io/zero-trust-bye-perimeter/</link>
+      <description>Say goodbye to perimeter defense. Get insider tips on implementing Zero Trust Security for a safer network.</description>
+      <pubDate>Mon, 13 Apr 2026 19:17:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-bye-perimeter/</guid>
+    </item>
     <item>
       <title>Engineer Smarter</title>
       <link>https://kubaik.github.io/engineer-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master Site Reliability Engineering principles to boost system uptime and performance.</description>
       <pubDate>Mon, 13 Apr 2026 11:55:07 +0000</pubDate>
       <guid>https://kubaik.github.io/reliable-by-design/</guid>
-    </item>
-    <item>
-      <title>Digital Doubles</title>
-      <link>https://kubaik.github.io/digital-doubles/</link>
-      <description>Unlock industry insights with Digital Twin Technology, exploring its applications and benefits in real-world scenarios.</description>
-      <pubDate>Mon, 13 Apr 2026 11:38:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-doubles/</guid>
     </item>
   </channel>
 </rss>
