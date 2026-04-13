@@ -29,10 +29,8 @@ _STOP_WORDS = {
     "introduction", "overview", "tutorial", "tips", "top", "ways",
 }
 
-# CHANGE: Lowered from 0.5 → 0.35 to catch more near-duplicates
 DUPLICATE_TITLE_THRESHOLD = 0.35
 
-# Minimum word count before a post is considered publishable
 MIN_WORD_COUNT = 1500
 
 
@@ -94,13 +92,22 @@ class BlogSystem:
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
 
+        # ── API keys ──────────────────────────────────────────────
         self.groq_key = os.getenv("GROQ_API_KEY")
+        # HuggingFace → SambaNova
+        self.hf_token = os.getenv("HF_TOKEN")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
+        self.gemini_key = os.getenv("GEMINI_API_KEY")
 
         self._log_key_status()
 
-        # kept for compatibility with monetization / other modules
-        self.api_key = self.groq_key or self.openrouter_key
+        # Primary key for legacy compatibility checks
+        self.api_key = (
+            self.groq_key
+            or self.hf_token
+            or self.openrouter_key
+            or self.gemini_key
+        )
 
         self.monetization = MonetizationManager(config)
         self.hashtag_manager = HashtagManager(config)
@@ -108,9 +115,13 @@ class BlogSystem:
     def _log_key_status(self):
         print("=== API Key Status ===")
         print(
-            f"  Groq:        {'configured' if self.groq_key       else 'NOT SET'}")
+            f"  Groq:             {'configured' if self.groq_key       else 'NOT SET'}")
         print(
-            f"  OpenRouter:  {'configured' if self.openrouter_key else 'NOT SET'}")
+            f"  HuggingFace (HF): {'configured' if self.hf_token       else 'NOT SET'}")
+        print(
+            f"  OpenRouter:       {'configured' if self.openrouter_key  else 'NOT SET'}")
+        print(
+            f"  Gemini:           {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -157,78 +168,194 @@ class BlogSystem:
             f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     # ─────────────────────────────────────────────────────────────
-    # API FALLBACK CHAIN: Groq → OpenRouter
+    # API FALLBACK CHAIN:
+    #   Groq → HuggingFace/Llama → OpenRouter → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
-        # CHANGE: default max_tokens raised from 3000 → 4000
-        if self.groq_key:
-            try:
-                result = await self._call_groq(messages, max_tokens)
-                print("API: Groq responded successfully.")
-                return result
-            except Exception as e:
-                print(f"Groq error: {e}")
-                print("Falling back to OpenRouter...")
-        else:
-            print("Groq key not configured — skipping.")
+        providers = []
 
+        if self.groq_key:
+            providers.append(("Groq",              self._call_groq))
+        if self.hf_token:
+            providers.append(("HuggingFace/Llama", self._call_huggingface))
         if self.openrouter_key:
+            providers.append(("OpenRouter",         self._call_openrouter))
+        if self.gemini_key:
+            providers.append(("Gemini",             self._call_gemini))
+
+        if not providers:
+            raise Exception(
+                "No API keys configured. "
+                "Set at least one of: GROQ_API_KEY, HF_TOKEN, "
+                "OPENROUTER_API_KEY, GEMINI_API_KEY."
+            )
+
+        last_error = None
+        for name, caller in providers:
             try:
-                result = await self._call_openrouter(messages, max_tokens)
-                print("API: OpenRouter responded successfully.")
+                result = await caller(messages, max_tokens)
+                print(f"API: {name} responded successfully.")
                 return result
             except Exception as e:
-                print(f"OpenRouter error: {e}")
-        else:
-            print("OpenRouter key not configured — skipping.")
+                last_error = e
+                print(f"{name} error: {e}")
+                if name != providers[-1][0]:
+                    print(f"Falling back to next provider...")
 
         raise Exception(
-            "All configured API providers failed. "
-            "Ensure GROQ_API_KEY and/or OPENROUTER_API_KEY are set as GitHub secrets."
+            f"All configured API providers failed. Last error: {last_error}\n"
+            "Ensure at least one of GROQ_API_KEY / HF_TOKEN / "
+            "OPENROUTER_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
         )
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER IMPLEMENTATIONS
+    # PROVIDER: Groq
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
         headers = {
             "Authorization": f"Bearer {self.groq_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
         data = {
             "model": "llama-3.3-70b-versatile",
             "messages": messages,
             "max_tokens": max_tokens,
-            "temperature": 0.7
+            "temperature": 0.7,
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 "https://api.groq.com/openai/v1/chat/completions",
-                headers=headers, json=data
+                headers=headers,
+                json=data,
+                timeout=aiohttp.ClientTimeout(total=60),
             ) as response:
                 if response.status != 200:
                     raise Exception(f"Groq {response.status}: {await response.text()}")
                 result = await response.json()
                 return result["choices"][0]["message"]["content"]
 
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: HuggingFace → SambaNova (Llama 3.3 70B Instruct)
+    # Uses huggingface_hub InferenceClient when installed; falls back
+    # to the OpenAI-compatible HF router REST API automatically.
+    # pip install --upgrade huggingface_hub
+    # GitHub secret: HF_TOKEN
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_huggingface(self, messages: List[Dict], max_tokens: int) -> str:
+        HF_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
+        HF_PROVIDER = "sambanova"
+        HF_BASE_URL = "https://router.huggingface.co/v1"
+
+        # ── Try huggingface_hub InferenceClient first ─────────────
+        try:
+            from huggingface_hub import InferenceClient
+
+            def _sdk_call():
+                client = InferenceClient(
+                    provider=HF_PROVIDER,
+                    token=self.hf_token,
+                )
+                response = client.chat.completions.create(
+                    model=HF_MODEL,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=0.7,
+                )
+                return response.choices[0].message.content
+
+            loop = asyncio.get_event_loop()
+            result = await loop.run_in_executor(None, _sdk_call)
+            return result
+
+        except ImportError:
+            # huggingface_hub not installed — fall through to REST router
+            pass
+
+        # ── HuggingFace OpenAI-compatible REST router ─────────────
+        # Router requires "model-id:provider" format in the model field
+        headers = {
+            "Authorization": f"Bearer {self.hf_token}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       f"{HF_MODEL}:{HF_PROVIDER}",
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+        }
+        max_attempts = 3
+        wait_seconds = [3, 8]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        f"{HF_BASE_URL}/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=90),
+                    ) as response:
+                        if response.status != 200:
+                            raise Exception(
+                                f"HuggingFace {response.status}: {await response.text()}"
+                            )
+                        result = await response.json()
+                        if "error" in result:
+                            raise Exception(
+                                f"HuggingFace error payload: {result['error']}"
+                            )
+                        return result["choices"][0]["message"]["content"]
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"HuggingFace connection error "
+                        f"(attempt {attempt}/{max_attempts}): {e}"
+                    )
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"HuggingFace connection failed after {max_attempts} attempts: {e}"
+                    )
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"HuggingFace timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"HuggingFace timed out after {max_attempts} attempts."
+                    )
+
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: OpenRouter
+    # ─────────────────────────────────────────────────────────────
+
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
-            "X-Title":      self.config.get("site_name", "Tech Blog")
+            "Content-Type":  "application/json",
+            "HTTP-Referer":  self.config.get("base_url", "https://kubaik.github.io"),
+            "X-Title":       self.config.get("site_name", "Tech Blog"),
         }
         data = {
-            "model": "openai/gpt-4o-mini",
-            "messages": messages,
-            "max_tokens": max_tokens,
+            "model":       "openai/gpt-4o-mini",
+            "messages":    messages,
+            "max_tokens":  max_tokens,
             "temperature": 0.7,
             "provider": {
-                "ignore": ["Venice"],
-                "allow_fallbacks": True
-            }
+                "ignore":          ["Venice"],
+                "allow_fallbacks": True,
+            },
         }
 
         max_attempts = 3
@@ -241,14 +368,17 @@ class BlogSystem:
                         "https://openrouter.ai/api/v1/chat/completions",
                         headers=headers,
                         json=data,
-                        timeout=aiohttp.ClientTimeout(total=60)
+                        timeout=aiohttp.ClientTimeout(total=60),
                     ) as response:
                         if response.status != 200:
-                            raise Exception(f"OpenRouter {response.status}: {await response.text()}")
+                            raise Exception(
+                                f"OpenRouter {response.status}: {await response.text()}"
+                            )
                         result = await response.json()
                         if "error" in result:
                             raise Exception(
-                                f"OpenRouter error payload: {result['error']}")
+                                f"OpenRouter error payload: {result['error']}"
+                            )
                         return result["choices"][0]["message"]["content"]
 
             except aiohttp.ClientConnectionError as e:
@@ -260,7 +390,8 @@ class BlogSystem:
                     await asyncio.sleep(wait)
                 else:
                     raise Exception(
-                        f"OpenRouter connection failed after {max_attempts} attempts: {e}")
+                        f"OpenRouter connection failed after {max_attempts} attempts: {e}"
+                    )
 
             except asyncio.TimeoutError:
                 if attempt < max_attempts:
@@ -270,7 +401,135 @@ class BlogSystem:
                     await asyncio.sleep(wait)
                 else:
                     raise Exception(
-                        f"OpenRouter timed out after {max_attempts} attempts.")
+                        f"OpenRouter timed out after {max_attempts} attempts."
+                    )
+
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: Gemini (Google Generative Language REST API)
+    # Uses the google-generativeai SDK when available; falls back to
+    # plain REST so the system works without the package installed.
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
+        # ── Try google-generativeai SDK first ────────────────────
+        try:
+            import google.generativeai as genai
+
+            def _sdk_call():
+                genai.configure(api_key=self.gemini_key)
+                model = genai.GenerativeModel(
+                    model_name="gemini-1.5-flash",
+                    generation_config=genai.types.GenerationConfig(
+                        max_output_tokens=max_tokens,
+                        temperature=0.7,
+                    ),
+                )
+
+                # Convert messages list → single prompt string.
+                # Gemini's chat history API expects alternating user/model turns;
+                # using generate_content with a merged prompt is simpler and
+                # works reliably for our single-turn generation use case.
+                parts = []
+                for msg in messages:
+                    role = msg.get("role", "user")
+                    content = msg.get("content", "")
+                    prefix = "SYSTEM: " if role == "system" else "USER: "
+                    parts.append(f"{prefix}{content}")
+
+                prompt = "\n\n".join(parts) + "\n\nASSISTANT:"
+                response = model.generate_content(prompt)
+                return response.text
+
+            loop = asyncio.get_event_loop()
+            result = await loop.run_in_executor(None, _sdk_call)
+            return result
+
+        except ImportError:
+            # google-generativeai not installed — use REST API
+            pass
+
+        # ── Gemini REST API (v1beta generateContent) ─────────────
+        model = "gemini-1.5-flash"
+        api_url = (
+            f"https://generativelanguage.googleapis.com/v1beta/models/"
+            f"{model}:generateContent?key={self.gemini_key}"
+        )
+
+        # Merge system + user messages into Gemini's content format.
+        # Gemini requires alternating user/model roles; we prepend any
+        # system prompt to the first user message to stay compatible.
+        system_parts = [
+            msg["content"] for msg in messages if msg.get("role") == "system"
+        ]
+        user_parts = [
+            msg["content"] for msg in messages if msg.get("role") != "system"
+        ]
+
+        first_user = ""
+        if system_parts:
+            first_user = "\n\n".join(system_parts) + "\n\n"
+        first_user += (user_parts[0] if user_parts else "")
+
+        contents = [{"role": "user", "parts": [{"text": first_user}]}]
+        for extra in user_parts[1:]:
+            contents.append({"role": "user", "parts": [{"text": extra}]})
+
+        payload = {
+            "contents": contents,
+            "generationConfig": {
+                "maxOutputTokens": max_tokens,
+                "temperature":     0.7,
+            },
+        }
+
+        max_attempts = 3
+        wait_seconds = [3, 8]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        api_url,
+                        json=payload,
+                        timeout=aiohttp.ClientTimeout(total=90),
+                    ) as response:
+                        if response.status != 200:
+                            raise Exception(
+                                f"Gemini {response.status}: {await response.text()}"
+                            )
+                        result = await response.json()
+
+                        # Extract text from Gemini response structure
+                        try:
+                            return (
+                                result["candidates"][0]["content"]["parts"][0]["text"]
+                            )
+                        except (KeyError, IndexError) as parse_err:
+                            raise Exception(
+                                f"Gemini unexpected response shape: {parse_err} — {result}"
+                            )
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Gemini connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Gemini connection failed after {max_attempts} attempts: {e}"
+                    )
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Gemini timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Gemini timed out after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
@@ -294,12 +553,13 @@ class BlogSystem:
             if not keywords:
                 keywords = await self._generate_keywords(topic, title)
 
-            # CHANGE: Validate word count — expand thin content before saving
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
             if word_count < MIN_WORD_COUNT:
                 print(
-                    f"Warning: content only {word_count} words (min {MIN_WORD_COUNT}). Expanding...")
+                    f"Warning: content only {word_count} words "
+                    f"(min {MIN_WORD_COUNT}). Expanding..."
+                )
                 content = await self._expand_content(content, title, topic)
                 word_count = _count_words(content)
                 print(f"After expansion: {word_count} words")
@@ -315,7 +575,7 @@ class BlogSystem:
                 updated_at=datetime.now().isoformat(),
                 seo_keywords=keywords,
                 affiliate_links=[],
-                monetization_data={}
+                monetization_data={},
             )
 
             enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
@@ -327,11 +587,14 @@ class BlogSystem:
                 enhanced_content)
 
             print("Generating trending hashtags...")
-            hashtags = await self.hashtag_manager.get_daily_hashtags(topic, max_hashtags=10)
+            hashtags = await self.hashtag_manager.get_daily_hashtags(
+                topic, max_hashtags=10
+            )
             post.tags = list(set(post.tags + hashtags))[:15]
             post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
             post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(
-                hashtags[:5])
+                hashtags[:5]
+            )
             print(f"Hashtags: {', '.join(hashtags[:5])}")
 
             return post
@@ -352,13 +615,14 @@ class BlogSystem:
             extra_instruction = ""
             if attempt > 1:
                 extra_instruction = (
-                    f" IMPORTANT: Do NOT produce a title similar to any of these: "
+                    " IMPORTANT: Do NOT produce a title similar to any of these: "
                     + ", ".join(f'"{t}"' for t in existing_titles[:10])
                     + ". Choose a clearly different angle."
                 )
 
-            title = await self._generate_title(topic, keywords,
-                                               extra_instruction=extra_instruction)
+            title = await self._generate_title(
+                topic, keywords, extra_instruction=extra_instruction
+            )
             title = title.strip().strip('"')
 
             if not existing_titles:
@@ -367,7 +631,8 @@ class BlogSystem:
             is_dup, match, score = _is_duplicate_title(title, existing_titles)
             if not is_dup:
                 print(
-                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
+                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}"
+                )
                 return title
 
             print(
@@ -375,7 +640,6 @@ class BlogSystem:
                 f"({score:.0%}) to existing post '{match}'. Retrying…"
             )
 
-        # CHANGE: append actual month/year instead of "..."
         print("Warning: could not generate a fully unique title. Appending date suffix.")
         suffix = f" ({datetime.now().strftime('%B %Y')})"
         return f"{title}{suffix}"
@@ -384,32 +648,43 @@ class BlogSystem:
                               extra_instruction: str = "") -> str:
         keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
         messages = [
-            {"role": "system", "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles."},
-            {"role": "user",   "content": (
-                f"Generate a compelling blog post title about '{topic}'.{keyword_text} "
-                "The title should be catchy, informative, and under 60 characters. "
-                "Avoid generic titles starting with 'The Ultimate Guide' or 'Everything You Need to Know'."
-                f"{extra_instruction}"
-            )}
+            {
+                "role": "system",
+                "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles.",
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Generate a compelling blog post title about '{topic}'.{keyword_text} "
+                    "The title should be catchy, informative, and under 60 characters. "
+                    "Avoid generic titles starting with 'The Ultimate Guide' or "
+                    "'Everything You Need to Know'."
+                    f"{extra_instruction}"
+                ),
+            },
         ]
         title = await self._call_api_with_fallback(messages, max_tokens=100)
         return title.strip().strip('"')
 
-    async def _generate_content(self, title: str, topic: str, keywords: List[str] = None) -> str:
-        keyword_text = f"\nKeywords to incorporate naturally: {', '.join(keywords)}" if keywords else ""
-
-        # CHANGE: rewrote prompt to produce higher-quality, less generic content
-        # CHANGE: max_tokens raised to 4000 (was 3000)
+    async def _generate_content(self, title: str, topic: str,
+                                keywords: List[str] = None) -> str:
+        keyword_text = (
+            f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
+            if keywords else ""
+        )
         messages = [
             {
                 "role": "system",
                 "content": (
                     "You are an experienced tech professional with 10+ years of hands-on experience. "
-                    "Write in a direct, opinionated voice — share specific insights, real tradeoffs, and concrete numbers. "
-                    "Never use filler phrases like 'in today's fast-paced world', 'crucial aspect', or 'it is important to note'. "
-                    "Every paragraph must deliver concrete value. Be specific: name actual tools, libraries, companies, and version numbers. "
+                    "Write in a direct, opinionated voice — share specific insights, real tradeoffs, "
+                    "and concrete numbers. "
+                    "Never use filler phrases like 'in today's fast-paced world', 'crucial aspect', "
+                    "or 'it is important to note'. "
+                    "Every paragraph must deliver concrete value. Be specific: name actual tools, "
+                    "libraries, companies, and version numbers. "
                     "Take clear stances. Acknowledge tradeoffs honestly."
-                )
+                ),
             },
             {
                 "role": "user",
@@ -443,8 +718,8 @@ Avoid:
 - Starting sentences with "In conclusion" or "Overall"
 - The phrase "dive into" or "delve into"
 
-Do not include the main title (# {title}) — it is added automatically."""
-            }
+Do not include the main title (# {title}) — it is added automatically.""",
+            },
         ]
         content = await self._call_api_with_fallback(messages, max_tokens=4000)
         return content.strip()
@@ -454,7 +729,7 @@ Do not include the main title (# {title}) — it is added automatically."""
         messages = [
             {
                 "role": "system",
-                "content": "You are a technical writer expanding existing blog content with substantive additions."
+                "content": "You are a technical writer expanding existing blog content with substantive additions.",
             },
             {
                 "role": "user",
@@ -467,31 +742,46 @@ Do not include the main title (# {title}) — it is added automatically."""
                     f"Existing content:\n{existing_content}\n\n"
                     "Return the complete article including original content plus the new sections. "
                     "Do not include the title line."
-                )
-            }
+                ),
+            },
         ]
         return await self._call_api_with_fallback(messages, max_tokens=4000)
 
     async def _generate_meta_description(self, topic: str, title: str) -> str:
         messages = [
-            {"role": "system", "content": "You create SEO-optimized meta descriptions that are specific and enticing."},
-            {"role": "user",   "content": (
-                f"Write a meta description (under 155 characters) for a blog post titled '{title}' about {topic}. "
-                "Be specific — mention what the reader will learn or gain. "
-                "Do not start with 'Learn how to' or 'Discover'. Avoid generic phrases."
-            )}
+            {
+                "role": "system",
+                "content": "You create SEO-optimized meta descriptions that are specific and enticing.",
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Write a meta description (under 155 characters) for a blog post "
+                    f"titled '{title}' about {topic}. "
+                    "Be specific — mention what the reader will learn or gain. "
+                    "Do not start with 'Learn how to' or 'Discover'. Avoid generic phrases."
+                ),
+            },
         ]
         description = await self._call_api_with_fallback(messages, max_tokens=100)
         return description.strip().strip('"')
 
     async def _generate_keywords(self, topic: str, title: str) -> List[str]:
         messages = [
-            {"role": "system", "content": "You generate relevant SEO keywords for technical blog posts."},
-            {"role": "user",   "content": (
-                f"Generate 8-10 relevant SEO keywords for a blog post titled '{title}' about {topic}. "
-                "Include a mix of: 2 short-tail keywords, 4 long-tail keywords, 2 question-based keywords. "
-                "Return as a comma-separated list, no numbering."
-            )}
+            {
+                "role": "system",
+                "content": "You generate relevant SEO keywords for technical blog posts.",
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Generate 8-10 relevant SEO keywords for a blog post titled '{title}' "
+                    f"about {topic}. "
+                    "Include a mix of: 2 short-tail keywords, 4 long-tail keywords, "
+                    "2 question-based keywords. "
+                    "Return as a comma-separated list, no numbering."
+                ),
+            },
         ]
         keywords_text = await self._call_api_with_fallback(messages, max_tokens=150)
         keywords = [k.strip().strip('"') for k in keywords_text.split(',')]
@@ -499,14 +789,12 @@ Do not include the main title (# {title}) — it is added automatically."""
 
     # ─────────────────────────────────────────────────────────────
     # LOCAL FALLBACK
-    # CHANGE: replaced thin generic template with structured 1800-word content
     # ─────────────────────────────────────────────────────────────
 
     def _generate_fallback_post(self, topic: str) -> BlogPost:
         """Generate a structured fallback post when all APIs are unavailable."""
         title = f"{topic}: A Practical Technical Guide"
         slug = self._create_slug(title)
-
         topic_lower = topic.lower()
         topic_slug = topic.replace(' ', '').replace('-', '')[:20]
 
@@ -636,16 +924,28 @@ Further reading: the official {topic} documentation covers configuration options
             title=title,
             content=content,
             slug=slug,
-            tags=[topic_lower.replace(
-                ' ', '-'), 'development', 'technical-guide', 'best-practices'],
-            meta_description=f"A practical guide to {topic} covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.",
+            tags=[
+                topic_lower.replace(' ', '-'),
+                'development',
+                'technical-guide',
+                'best-practices',
+            ],
+            meta_description=(
+                f"A practical guide to {topic} covering implementation, "
+                "real performance benchmarks, common mistakes, and honest tradeoffs."
+            ),
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(),
             updated_at=datetime.now().isoformat(),
-            seo_keywords=[topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices",
-                          f"how to use {topic_lower}", f"{topic_lower} performance"],
+            seo_keywords=[
+                topic_lower,
+                f"{topic_lower} tutorial",
+                f"{topic_lower} best practices",
+                f"how to use {topic_lower}",
+                f"{topic_lower} performance",
+            ],
             affiliate_links=[],
-            monetization_data={}
+            monetization_data={},
         )
 
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
@@ -670,11 +970,12 @@ Further reading: the official {topic} documentation covers configuration options
         return slug[:50]
 
     def save_post(self, post: BlogPost):
-        # CHANGE: log word count on save so thin posts are visible in CI logs
         word_count = _count_words(post.content)
         if word_count < MIN_WORD_COUNT:
             print(
-                f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
+                f"Warning: saving post with only {word_count} words "
+                f"(min recommended: {MIN_WORD_COUNT})"
+            )
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
@@ -701,7 +1002,8 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
 
     if not os.path.exists(config_path):
         raise FileNotFoundError(
-            f"Config file {config_path} not found. Run 'python blog_system.py init' first."
+            f"Config file {config_path} not found. "
+            "Run 'python blog_system.py init' first."
         )
 
     with open(config_path, "r") as f:
@@ -782,7 +1084,7 @@ def create_sample_config():
         "social_accounts": {
             "twitter":  "@KubaiKevin",
             "linkedin": "your-linkedin-page",
-            "facebook": "your-facebook-page"
+            "facebook": "your-facebook-page",
         },
 
         "content_topics": [
@@ -1046,7 +1348,7 @@ def create_sample_config():
             "Network Performance Optimization for APIs",
             "Algorithm Optimization: Practical Big O Analysis",
             "Caching Strategies That Actually Improve Performance",
-        ]
+        ],
     }
 
     with open("config.yaml", "w") as f:
@@ -1058,7 +1360,11 @@ def create_sample_config():
     print("2. Add your Google Analytics 4 measurement ID")
     print("3. Add your Google AdSense ID (ca-pub-xxxxxxxxxx)")
     print("4. Update social media handles")
-    print("5. Add GitHub secrets: GROQ_API_KEY and OPENROUTER_API_KEY")
+    print("5. Add GitHub secrets:")
+    print("     GROQ_API_KEY       (primary)")
+    print("     HF_TOKEN           (fallback 1 — HuggingFace/SambaNova Llama 3.3 70B)")
+    print("     OPENROUTER_API_KEY (fallback 2)")
+    print("     GEMINI_API_KEY     (fallback 3)")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1078,12 +1384,17 @@ if __name__ == "__main__":
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
             print(
-                "\nAPI chain: Groq (primary) -> OpenRouter (fallback) -> local template")
-            print("Add GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY")
+                "\nAPI chain: Groq → HuggingFace/Llama → OpenRouter → Gemini → local template"
+            )
+            print(
+                "Add GitHub secrets: GROQ_API_KEY, HF_TOKEN, "
+                "OPENROUTER_API_KEY, GEMINI_API_KEY"
+            )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
-            print("API chain: Groq -> OpenRouter -> local template")
+            print(
+                "API chain: Groq → HuggingFace/Llama → OpenRouter → Gemini → local template")
 
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -1106,7 +1417,6 @@ if __name__ == "__main__":
 
                 visibility = VisibilityAutomator(config)
 
-                # ── YOUR ADDITION: post as thread ────────────────────────────
                 print("\nPosting as thread for maximum impressions...")
                 thread_result = visibility.post_thread(blog_post)
 
@@ -1117,7 +1427,6 @@ if __name__ == "__main__":
                     for i, url in enumerate(thread_result['thread_urls'], 1):
                         print(f"   Tweet {i}: {url}")
 
-                    # ── YOUR ADDITION: self-reply follow-up (once-per-day guard)
                     try:
                         import time
                         import datetime as dt_module
@@ -1130,7 +1439,8 @@ if __name__ == "__main__":
                         if not os.path.exists(flag_file):
                             last_tweet_id = thread_result['thread_ids'][-1]
                             username = config.get('social_accounts', {}).get(
-                                'twitter', '@KubaiKevin')
+                                'twitter', '@KubaiKevin'
+                            )
 
                             hashtags = ""
                             if hasattr(blog_post, 'tags') and blog_post.tags:
@@ -1152,11 +1462,13 @@ if __name__ == "__main__":
 
                             followup_response = visibility.twitter_client.create_tweet(
                                 text=followup_text,
-                                in_reply_to_tweet_id=last_tweet_id
+                                in_reply_to_tweet_id=last_tweet_id,
                             )
                             followup_id = followup_response.data['id']
                             twitter_user = visibility._username or "KubaiKevin"
-                            followup_url = f"https://twitter.com/{twitter_user}/status/{followup_id}"
+                            followup_url = (
+                                f"https://twitter.com/{twitter_user}/status/{followup_id}"
+                            )
 
                             open(flag_file, 'w').close()
                             print(
@@ -1169,9 +1481,10 @@ if __name__ == "__main__":
                             f"Follow-up reply failed (skipping): {followup_err}")
 
                 else:
-                    # Fallback: single tweet if thread fails
                     print(
-                        f"Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
+                        f"Thread failed ({thread_result.get('error')}). "
+                        "Falling back to single tweet..."
+                    )
                     single_result = visibility.post_with_best_strategy(
                         blog_post)
                     if single_result['success']:
@@ -1253,16 +1566,19 @@ if __name__ == "__main__":
                             try:
                                 with open(post_json, 'r') as f:
                                     data = json.load(f)
-                                # CHANGE: show word count in debug output
                                 wc = _count_words(data.get('content', ''))
                                 print(
                                     f"    Valid post:        {data.get('title', 'Unknown')}")
                                 print(
-                                    f"    Word count:        {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠ TOO SHORT'}")
+                                    f"    Word count:        {wc} "
+                                    f"{'✓' if wc >= MIN_WORD_COUNT else '⚠ TOO SHORT'}"
+                                )
                                 print(
                                     f"    Affiliate links:   {len(data.get('affiliate_links', []))}")
                                 print(
-                                    f"    Ad slots:          {data.get('monetization_data', {}).get('ad_slots', 0)}")
+                                    f"    Ad slots:          "
+                                    f"{data.get('monetization_data', {}).get('ad_slots', 0)}"
+                                )
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
 
@@ -1352,7 +1668,9 @@ if __name__ == "__main__":
 
         else:
             print(
-                "Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
+                "Usage: python blog_system.py "
+                "[init|auto|build|cleanup|debug|social|test-twitter|dedup]"
+            )
             print("  init         - Initialize blog system with config")
             print("  auto         - Generate new post and rebuild site")
             print("  build        - Rebuild site")
@@ -1364,7 +1682,9 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System with Monetization")
-        print("API chain: Groq (primary) -> OpenRouter (fallback) -> local template")
+        print(
+            "API chain: Groq (primary) → HuggingFace/Llama → OpenRouter → Gemini → local template"
+        )
         print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
@@ -1382,6 +1702,8 @@ if __name__ == "__main__":
         print("  - SEO optimization with structured data")
         print("  - Social media post generation")
         print("  - RSS feed for subscribers (/rss.xml)")
-        print("\nGitHub secrets required (at least one):")
+        print("\nGitHub secrets (set at least one):")
         print("  GROQ_API_KEY       - Primary  (100k tokens/day free, very fast)")
-        print("  OPENROUTER_API_KEY - Fallback (same 70B model, no daily token cap)")
+        print("  HF_TOKEN           - Fallback 1 (HuggingFace/SambaNova — Llama 3.3 70B)")
+        print("  OPENROUTER_API_KEY - Fallback 2 (GPT-4o-mini via OpenRouter)")
+        print("  GEMINI_API_KEY     - Fallback 3 (Gemini 1.5 Flash — generous free tier)")
