@@ -189,7 +189,8 @@ class VisibilityAutomator:
             (
                 f"🧵 {short_title}\n\n"
                 f"A thread breaking down everything that actually matters 👇"
-                + (f"\n\n{hashtags}" if hashtags else "")
+                + (f"\n{hashtags}" if hashtags else "")
+                f"\n\n{post_url}"
             ),
 
             # 2. Problem + key insight (merged to save one API call)
@@ -211,7 +212,7 @@ class VisibilityAutomator:
             (
                 f"3/ TL;DR — stop guessing, start with a clear system.\n\n"
                 f"Full breakdown with examples + code 👇"
-                f"\n\n{post_url}"
+                f"\n{post_url}"
             ),
         ]
 
