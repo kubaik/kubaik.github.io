@@ -184,44 +184,51 @@ class VisibilityAutomator:
         topic_b = title_words[1] if len(title_words) > 1 else "best practices"
         topic_c = title_words[-1] if len(title_words) > 2 else "performance"
 
-        # Hook strategy — configurable per post or globally via config
-        # Options: 'knowledge_gap' | 'contrarian' | 'specific_number' | 'pattern_interrupt'
         hook_style = self.config.get('hook_style', 'knowledge_gap')
 
         hook_templates = {
             'knowledge_gap': (
                 f"🧵 There's one thing most people skip when approaching {topic_a}.\n\n"
                 f"It costs them weeks later.\n\n"
-                f"{short_title} — a thread 👇"
+                f"{short_title} — a thread 👇\n"
+                f"(full guide in the blog for those who want to go deeper)"
             ),
             'contrarian': (
                 f"🧵 Most advice on {topic_a} is wrong.\n\n"
                 f"Not slightly off — actively harmful.\n\n"
-                f"Here's what {short_title} actually looks like when done right 👇"
+                f"Here's what {short_title} actually looks like when done right 👇\n"
+                f"(full breakdown in the blog)"
             ),
             'specific_number': (
                 f"🧵 3 things I wish I knew before spending months on {topic_a}.\n\n"
-                f"{short_title} — lessons learned the hard way 👇"
+                f"{short_title} — lessons learned the hard way 👇\n"
+                f"(full guide in the blog)"
             ),
             'pattern_interrupt': (
                 f"🧵 You can tell within 5 minutes whether someone understands "
                 f"{topic_a} or just thinks they do.\n\n"
-                f"The difference is subtle. {short_title} 👇"
+                f"The difference is subtle. {short_title} 👇\n"
+                f"(full breakdown in the blog)"
             ),
         }
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
 
+        # UTM-tagged URLs per tweet position for click attribution
+        url_t2 = self._build_post_url(post_url, position=2, style=hook_style)
+        url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
+
         tweets = [
-            # 1. Hook — no URL (avoids Twitter reach suppression on external links)
+            # 1. Hook — no URL (avoids Twitter reach suppression)
             hook,
 
-            # 2. Problem + key insight — hashtags buried here for discovery without
-            #    cluttering the hook
+            # 2. Problem + key insight — early URL captures high-intent readers
+            #    who won't wait for tweet #4
             (
                 f"1/ Most people get this wrong:\n\n"
                 f"{post.meta_description[:180]}\n\n"
-                f"The fix starts with understanding {topic_a} properly."
+                f"The fix starts with understanding {topic_a} properly.\n\n"
+                f"Full breakdown: {url_t2}"
                 + (f"\n\n{hashtags}" if hashtags else "")
             ),
 
@@ -233,16 +240,27 @@ class VisibilityAutomator:
                 f"✅ Optimise {topic_c} before it becomes expensive to fix"
             ),
 
-            # 4. CTA with link — URL lives here only
+            # 4. CTA — specific payoff language to increase click intent
             (
-                f"3/ TL;DR — stop guessing, start with a clear system.\n\n"
-                f"Full breakdown with examples + code 👇"
-                f"\n{post_url}"
+                f"3/ TL;DR — if you only read one thing on {topic_a} this week, "
+                f"make it this.\n\n"
+                f"Full guide with examples, code, and the mistakes to avoid 👇\n"
+                f"{url_t4}"
             ),
         ]
 
         # Safety trim — no tweet over 280 chars
         return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
+
+    def _build_post_url(self, post_url: str, position: int, style: str) -> str:
+        """Append UTM params so each tweet's clicks are distinguishable in analytics."""
+        return (
+            f"{post_url}"
+            f"?utm_source=twitter"
+            f"&utm_medium=thread"
+            f"&utm_campaign=tweet_{position}"
+            f"&utm_content={style}"
+        )
 
     # ─────────────────────────────────────────────────────────────
     # REPLY TO TRENDING
