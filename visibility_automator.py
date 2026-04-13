@@ -184,23 +184,48 @@ class VisibilityAutomator:
         topic_b = title_words[1] if len(title_words) > 1 else "best practices"
         topic_c = title_words[-1] if len(title_words) > 2 else "performance"
 
-        tweets = [
-            # 1. Hook
-            (
-                f"🧵 {short_title}\n\n"
-                f"A thread breaking down everything that actually matters 👇"
-                + (f"\n{hashtags}" if hashtags else "")
-                + f"\n\n{post_url}"
-            ),
+        # Hook strategy — configurable per post or globally via config
+        # Options: 'knowledge_gap' | 'contrarian' | 'specific_number' | 'pattern_interrupt'
+        hook_style = self.config.get('hook_style', 'knowledge_gap')
 
-            # 2. Problem + key insight (merged to save one API call)
+        hook_templates = {
+            'knowledge_gap': (
+                f"🧵 There's one thing most people skip when approaching {topic_a}.\n\n"
+                f"It costs them weeks later.\n\n"
+                f"{short_title} — a thread 👇"
+            ),
+            'contrarian': (
+                f"🧵 Most advice on {topic_a} is wrong.\n\n"
+                f"Not slightly off — actively harmful.\n\n"
+                f"Here's what {short_title} actually looks like when done right 👇"
+            ),
+            'specific_number': (
+                f"🧵 3 things I wish I knew before spending months on {topic_a}.\n\n"
+                f"{short_title} — lessons learned the hard way 👇"
+            ),
+            'pattern_interrupt': (
+                f"🧵 You can tell within 5 minutes whether someone understands "
+                f"{topic_a} or just thinks they do.\n\n"
+                f"The difference is subtle. {short_title} 👇"
+            ),
+        }
+
+        hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
+
+        tweets = [
+            # 1. Hook — no URL (avoids Twitter reach suppression on external links)
+            hook,
+
+            # 2. Problem + key insight — hashtags buried here for discovery without
+            #    cluttering the hook
             (
                 f"1/ Most people get this wrong:\n\n"
                 f"{post.meta_description[:180]}\n\n"
                 f"The fix starts with understanding {topic_a} properly."
+                + (f"\n\n{hashtags}" if hashtags else "")
             ),
 
-            # 3. Top tips (merged to save one API call)
+            # 3. Top tips
             (
                 f"2/ What the best practitioners do differently:\n\n"
                 f"✅ Nail {topic_a} fundamentals first\n"
@@ -208,7 +233,7 @@ class VisibilityAutomator:
                 f"✅ Optimise {topic_c} before it becomes expensive to fix"
             ),
 
-            # 4. CTA with link
+            # 4. CTA with link — URL lives here only
             (
                 f"3/ TL;DR — stop guessing, start with a clear system.\n\n"
                 f"Full breakdown with examples + code 👇"
