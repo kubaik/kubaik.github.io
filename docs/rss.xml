@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 10:20:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 11:13:02 +0000</lastBuildDate>
+    <item>
+      <title>Decoding Others&apos; Code</title>
+      <link>https://kubaik.github.io/decoding-others-code/</link>
+      <description>Unlock the secrets of code comprehension! This guide reveals techniques to analyze, interpret, and effectively navigate other programmers&apos; code with ease.</description>
+      <pubDate>Mon, 13 Apr 2026 11:12:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/decoding-others-code/</guid>
+    </item>
     <item>
       <title>Multi-Modal AI: When Models See, Hear, and Read: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/multi-modal-ai-when-models-see-hear-and-read-a-pra/</link>
@@ -138,13 +145,6 @@
       <description>Master 10 essential mental models for coding success, boosting productivity and problem-solving skills.</description>
       <pubDate>Sun, 12 Apr 2026 22:27:33 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-smarts/</guid>
-    </item>
-    <item>
-      <title>Agile: Reality vs Ritual</title>
-      <link>https://kubaik.github.io/agile-reality-vs-ritual/</link>
-      <description>Uncover what truly drives Agile success: separate effective practices from mere rituals and boost your team&apos;s productivity.</description>
-      <pubDate>Sun, 12 Apr 2026 22:02:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-reality-vs-ritual/</guid>
     </item>
   </channel>
 </rss>
