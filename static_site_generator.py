@@ -317,7 +317,7 @@ def _build_templates() -> dict:
                 </div>
                  <div class="post-meta">
                     {% if post.reading_time %}
-                    <span class="reading-time">; {{ post.reading_time }} min read</span>
+                    <span class="reading-time"> {{ post.reading_time }} min read</span>
                     {% endif %}
                 </div>
             </header>
