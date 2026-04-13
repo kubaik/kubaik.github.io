@@ -210,8 +210,8 @@ class VisibilityAutomator:
             # 4. CTA with link
             (
                 f"3/ TL;DR — stop guessing, start with a clear system.\n\n"
-                f"Full breakdown with examples + code: {post_url}\n\n"
-                f"{hashtags}"
+                f"Full breakdown with examples + code 👇"
+                f"\n\n{post_url}"
             ),
         ]
 
