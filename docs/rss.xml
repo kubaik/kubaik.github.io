@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 10:39:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 07:42:25 +0000</lastBuildDate>
+    <item>
+      <title>Slow Site? Fix Now</title>
+      <link>https://kubaik.github.io/slow-site-fix-now/</link>
+      <description>Boost speed by 30%: Identify site slowdowns and fix common issues with our expert web performance tips and tools.</description>
+      <pubDate>Mon, 13 Apr 2026 07:42:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/slow-site-fix-now/</guid>
+    </item>
+    <item>
+      <title>Progressive Web Apps: When They Beat Native: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/progressive-web-apps-when-they-beat-native-a-pract/</link>
+      <description>A practical guide to Progressive Web Apps: When They Beat Native covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Mon, 13 Apr 2026 07:35:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/progressive-web-apps-when-they-beat-native-a-pract/</guid>
+    </item>
     <item>
       <title>Boost UX: Core Web Vitals</title>
       <link>https://kubaik.github.io/boost-ux-core-web-vitals/</link>
@@ -131,13 +145,6 @@
       <description>Understand web accessibility laws and coding standards to ensure compliance and inclusivity.</description>
       <pubDate>Sun, 12 Apr 2026 19:36:10 +0000</pubDate>
       <guid>https://kubaik.github.io/access-denied/</guid>
-    </item>
-    <item>
-      <title>Pair Up</title>
-      <link>https://kubaik.github.io/pair-up/</link>
-      <description>Boost code quality and teamwork with pair programming. Find out when it&apos;s most effective.</description>
-      <pubDate>Sun, 12 Apr 2026 19:27:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/pair-up/</guid>
     </item>
   </channel>
 </rss>
