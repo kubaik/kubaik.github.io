@@ -310,6 +310,8 @@ def _build_templates() -> dict:
                 {% endif %}
                 <div class="post-meta">
                     <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
+                </div>
+                 <div class="post-meta">
                     {% if post.reading_time %}
                     <span class="reading-time"> &middot; {{ post.reading_time }} min read</span>
                     {% endif %}
