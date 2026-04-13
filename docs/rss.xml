@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 18:00:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 18:23:32 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Smarter</title>
+      <link>https://kubaik.github.io/engineer-smarter/</link>
+      <description>Optimize engineering workflows with top BI tools, expert insights, and data-driven strategies to boost team efficiency and project success.</description>
+      <pubDate>Mon, 13 Apr 2026 18:23:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-smarter/</guid>
+    </item>
     <item>
       <title>Netflix&apos;s Next Move</title>
       <link>https://kubaik.github.io/netflixs-next-move/</link>
@@ -138,13 +145,6 @@
       <description>Unlock industry insights with Digital Twin Technology, exploring its applications and benefits in real-world scenarios.</description>
       <pubDate>Mon, 13 Apr 2026 11:38:53 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-doubles/</guid>
-    </item>
-    <item>
-      <title>Decoding Others&apos; Code</title>
-      <link>https://kubaik.github.io/decoding-others-code/</link>
-      <description>Unlock the secrets of code comprehension! This guide reveals techniques to analyze, interpret, and effectively navigate other programmers&apos; code with ease.</description>
-      <pubDate>Mon, 13 Apr 2026 11:12:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/decoding-others-code/</guid>
     </item>
   </channel>
 </rss>
