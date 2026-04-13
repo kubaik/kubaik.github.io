@@ -225,11 +225,12 @@ class VisibilityAutomator:
             # 2. Problem + key insight — early URL captures high-intent readers
             #    who won't wait for tweet #4
             (
-                f"1/ Most people get this wrong:\n\n"
-                f"{post.meta_description[:180]}\n\n"
-                f"The fix starts with understanding {topic_a} properly.\n\n"
-                f"Full breakdown: {url_t2}"
-                + (f"\n\n{hashtags}" if hashtags else "")
+                f"1/ Most people get this wrong:\n"
+                f"{post.meta_description[:180]}\n"
+                f"The fix starts with understanding {topic_a} properly.\n"
+                f"Full breakdown: 👇"
+                f"{url_t4}"
+                + (f"\n{hashtags}" if hashtags else "")
             ),
 
             # 3. Top tips
