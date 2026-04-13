@@ -189,6 +189,7 @@ class VisibilityAutomator:
             (
                 f"🧵 {short_title}\n\n"
                 f"A thread breaking down everything that actually matters 👇"
+                + (f"\n\n{hashtags}" if hashtags else "")
             ),
 
             # 2. Problem + key insight (merged to save one API call)

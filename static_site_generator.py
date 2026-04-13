@@ -241,7 +241,11 @@ Sitemap: {base_url}/rss.xml
         print("Generated sitemap")
 
     def _generate_posts_json(self, posts: List[BlogPost]):
-        posts_data = [p.to_dict() for p in posts]
+        posts_data = []
+        for p in posts:
+            d = p.to_dict()
+            d['reading_time'] = self._reading_time_minutes(p.content)
+            posts_data.append(d)
         with open("./docs/posts.json", 'w', encoding='utf-8') as f:
             json.dump(posts_data, f, indent=2)
         print("Generated posts.json")
@@ -313,7 +317,7 @@ def _build_templates() -> dict:
                 </div>
                  <div class="post-meta">
                     {% if post.reading_time %}
-                    <span class="reading-time"> &middot; {{ post.reading_time }} min read</span>
+                    <span class="reading-time">; {{ post.reading_time }} min read</span>
                     {% endif %}
                 </div>
             </header>
