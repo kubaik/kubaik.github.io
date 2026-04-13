@@ -94,9 +94,9 @@ class BlogSystem:
 
         # ── API keys ──────────────────────────────────────────────
         self.groq_key = os.getenv("GROQ_API_KEY")
-        # HuggingFace → SambaNova
         self.hf_token = os.getenv("HF_TOKEN")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
+        self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
 
         self._log_key_status()
@@ -106,6 +106,7 @@ class BlogSystem:
             self.groq_key
             or self.hf_token
             or self.openrouter_key
+            or self.cerebras_key
             or self.gemini_key
         )
 
@@ -120,6 +121,8 @@ class BlogSystem:
             f"  HuggingFace (HF): {'configured' if self.hf_token       else 'NOT SET'}")
         print(
             f"  OpenRouter:       {'configured' if self.openrouter_key  else 'NOT SET'}")
+        print(
+            f"  Cerebras:         {'configured' if self.cerebras_key    else 'NOT SET'}")
         print(
             f"  Gemini:           {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
@@ -169,26 +172,28 @@ class BlogSystem:
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN:
-    #   Groq → HuggingFace/Llama → OpenRouter → Gemini → local template
+    #   Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
 
         if self.groq_key:
-            providers.append(("Groq",              self._call_groq))
+            providers.append(("Groq",               self._call_groq))
         if self.hf_token:
-            providers.append(("HuggingFace/Llama", self._call_huggingface))
+            providers.append(("HuggingFace/Llama",  self._call_huggingface))
         if self.openrouter_key:
-            providers.append(("OpenRouter",         self._call_openrouter))
+            providers.append(("OpenRouter",          self._call_openrouter))
+        if self.cerebras_key:
+            providers.append(("Cerebras",            self._call_cerebras))
         if self.gemini_key:
-            providers.append(("Gemini",             self._call_gemini))
+            providers.append(("Gemini",              self._call_gemini))
 
         if not providers:
             raise Exception(
                 "No API keys configured. "
                 "Set at least one of: GROQ_API_KEY, HF_TOKEN, "
-                "OPENROUTER_API_KEY, GEMINI_API_KEY."
+                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY."
             )
 
         last_error = None
@@ -201,12 +206,12 @@ class BlogSystem:
                 last_error = e
                 print(f"{name} error: {e}")
                 if name != providers[-1][0]:
-                    print(f"Falling back to next provider...")
+                    print("Falling back to next provider...")
 
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}\n"
             "Ensure at least one of GROQ_API_KEY / HF_TOKEN / "
-            "OPENROUTER_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
+            "OPENROUTER_API_KEY / CEREBRAS_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
         )
 
     # ─────────────────────────────────────────────────────────────
@@ -214,27 +219,71 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
+
         headers = {
             "Authorization": f"Bearer {self.groq_key}",
-            "Content-Type": "application/json",
+            "Content-Type":  "application/json",
         }
         data = {
-            "model": "llama-3.3-70b-versatile",
-            "messages": messages,
-            "max_tokens": max_tokens,
+            "model":       "llama-3.3-70b-versatile",
+            "messages":    messages,
+            "max_tokens":  max_tokens,
             "temperature": 0.7,
         }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers=headers,
-                json=data,
-                timeout=aiohttp.ClientTimeout(total=60),
-            ) as response:
-                if response.status != 200:
-                    raise Exception(f"Groq {response.status}: {await response.text()}")
-                result = await response.json()
-                return result["choices"][0]["message"]["content"]
+
+        max_attempts = 4
+        wait_seconds = [5, 15, 30]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=60),
+                    ) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            return result["choices"][0]["message"]["content"]
+
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"Groq {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(f"Groq {response.status}: {await response.text()}")
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Groq connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Groq connection failed after {max_attempts} attempts: {e}")
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Groq timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Groq timed out after {max_attempts} attempts.")
+
+        raise Exception(f"Groq unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: HuggingFace → SambaNova (Llama 3.3 70B Instruct)
@@ -271,11 +320,9 @@ class BlogSystem:
             return result
 
         except ImportError:
-            # huggingface_hub not installed — fall through to REST router
             pass
 
         # ── HuggingFace OpenAI-compatible REST router ─────────────
-        # Router requires "model-id:provider" format in the model field
         headers = {
             "Authorization": f"Bearer {self.hf_token}",
             "Content-Type":  "application/json",
@@ -305,17 +352,14 @@ class BlogSystem:
                         result = await response.json()
                         if "error" in result:
                             raise Exception(
-                                f"HuggingFace error payload: {result['error']}"
-                            )
+                                f"HuggingFace error payload: {result['error']}")
                         return result["choices"][0]["message"]["content"]
 
             except aiohttp.ClientConnectionError as e:
                 if attempt < max_attempts:
                     wait = wait_seconds[attempt - 1]
                     print(
-                        f"HuggingFace connection error "
-                        f"(attempt {attempt}/{max_attempts}): {e}"
-                    )
+                        f"HuggingFace connection error (attempt {attempt}/{max_attempts}): {e}")
                     print(f"Retrying in {wait}s...")
                     await asyncio.sleep(wait)
                 else:
@@ -341,6 +385,8 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
+
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type":  "application/json",
@@ -358,8 +404,8 @@ class BlogSystem:
             },
         }
 
-        max_attempts = 3
-        wait_seconds = [3, 8]
+        max_attempts = 4
+        wait_seconds = [5, 15, 30]
 
         for attempt in range(1, max_attempts + 1):
             try:
@@ -370,16 +416,26 @@ class BlogSystem:
                         json=data,
                         timeout=aiohttp.ClientTimeout(total=60),
                     ) as response:
-                        if response.status != 200:
-                            raise Exception(
-                                f"OpenRouter {response.status}: {await response.text()}"
-                            )
-                        result = await response.json()
-                        if "error" in result:
-                            raise Exception(
-                                f"OpenRouter error payload: {result['error']}"
-                            )
-                        return result["choices"][0]["message"]["content"]
+                        if response.status == 200:
+                            result = await response.json()
+                            if "error" in result:
+                                raise Exception(
+                                    f"OpenRouter error payload: {result['error']}")
+                            return result["choices"][0]["message"]["content"]
+
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"OpenRouter {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(f"OpenRouter {response.status}: {await response.text()}")
 
             except aiohttp.ClientConnectionError as e:
                 if attempt < max_attempts:
@@ -397,12 +453,94 @@ class BlogSystem:
                 if attempt < max_attempts:
                     wait = wait_seconds[attempt - 1]
                     print(
-                        f"OpenRouter timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                        f"OpenRouter timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
                     await asyncio.sleep(wait)
                 else:
                     raise Exception(
                         f"OpenRouter timed out after {max_attempts} attempts."
                     )
+
+        raise Exception(
+            f"OpenRouter unavailable after {max_attempts} attempts.")
+
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: Cerebras — OpenAI-compatible, ~1,000 tokens/sec
+    # Free tier: 30 req/min, 60K tokens/min. No credit card required.
+    # Get key: https://cloud.cerebras.ai
+    # GitHub secret: CEREBRAS_API_KEY
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
+
+        headers = {
+            "Authorization": f"Bearer {self.cerebras_key}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       "llama-3.3-70b",
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+        }
+
+        max_attempts = 4
+        wait_seconds = [5, 15, 30]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        "https://api.cerebras.ai/v1/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=60),
+                    ) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            return result["choices"][0]["message"]["content"]
+
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"Cerebras {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(f"Cerebras {response.status}: {await response.text()}")
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Cerebras connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Cerebras connection failed after {max_attempts} attempts: {e}"
+                    )
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Cerebras timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Cerebras timed out after {max_attempts} attempts.")
+
+        raise Exception(f"Cerebras unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: Gemini (Google Generative Language REST API)
@@ -411,7 +549,8 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
-        GEMINI_MODEL = "gemini-2.5-flash"  # single source of truth — update here only
+        GEMINI_MODEL = "gemini-2.5-flash"   # single source of truth
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
 
         # ── Try google-generativeai SDK first ────────────────────
         try:
@@ -420,7 +559,7 @@ class BlogSystem:
             def _sdk_call():
                 genai.configure(api_key=self.gemini_key)
                 model = genai.GenerativeModel(
-                    model_name=GEMINI_MODEL,  # was hardcoded "gemini-1.5-flash"
+                    model_name=GEMINI_MODEL,
                     generation_config=genai.types.GenerationConfig(
                         max_output_tokens=max_tokens,
                         temperature=0.7,
@@ -446,9 +585,8 @@ class BlogSystem:
             pass
 
         # ── Gemini REST API — v1 (not v1beta) ────────────────────
-        # v1beta dropped support for 1.5 models; v1 is the stable endpoint
         api_url = (
-            f"https://generativelanguage.googleapis.com/v1/models/"  # was v1beta
+            f"https://generativelanguage.googleapis.com/v1/models/"
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
 
@@ -476,8 +614,8 @@ class BlogSystem:
             },
         }
 
-        max_attempts = 3
-        wait_seconds = [3, 8]
+        max_attempts = 5
+        wait_seconds = [5, 15, 30, 60]
 
         for attempt in range(1, max_attempts + 1):
             try:
@@ -487,20 +625,30 @@ class BlogSystem:
                         json=payload,
                         timeout=aiohttp.ClientTimeout(total=90),
                     ) as response:
-                        if response.status != 200:
-                            raise Exception(
-                                f"Gemini {response.status}: {await response.text()}"
-                            )
-                        result = await response.json()
+                        if response.status == 200:
+                            result = await response.json()
+                            try:
+                                return (
+                                    result["candidates"][0]["content"]["parts"][0]["text"]
+                                )
+                            except (KeyError, IndexError) as parse_err:
+                                raise Exception(
+                                    f"Gemini unexpected response shape: {parse_err} — {result}"
+                                )
 
-                        try:
-                            return (
-                                result["candidates"][0]["content"]["parts"][0]["text"]
-                            )
-                        except (KeyError, IndexError) as parse_err:
-                            raise Exception(
-                                f"Gemini unexpected response shape: {parse_err} — {result}"
-                            )
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"Gemini {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(f"Gemini {response.status}: {await response.text()}")
 
             except aiohttp.ClientConnectionError as e:
                 if attempt < max_attempts:
@@ -518,11 +666,17 @@ class BlogSystem:
                 if attempt < max_attempts:
                     wait = wait_seconds[attempt - 1]
                     print(
-                        f"Gemini timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                        f"Gemini timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
                     await asyncio.sleep(wait)
                 else:
                     raise Exception(
                         f"Gemini timed out after {max_attempts} attempts.")
+
+        raise Exception(
+            f"Gemini unavailable after {max_attempts} attempts. Will fall back to next provider."
+        )
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
@@ -779,6 +933,114 @@ Do not include the main title (# {title}) — it is added automatically.""",
         keywords_text = await self._call_api_with_fallback(messages, max_tokens=150)
         keywords = [k.strip().strip('"') for k in keywords_text.split(',')]
         return [k for k in keywords if k][:10]
+
+    # ─────────────────────────────────────────────────────────────
+    # THREAD TWEETS
+    # ─────────────────────────────────────────────────────────────
+
+    def _build_post_url(self, post_url: str, position: int, style: str) -> str:
+        """Append UTM params so each tweet's clicks are distinguishable in analytics."""
+        return (
+            f"{post_url}"
+            f"?utm_source=twitter"
+            f"&utm_medium=thread"
+            f"&utm_campaign=tweet_{position}"
+            f"&utm_content={style}"
+        )
+
+    def _build_thread_tweets(self, post) -> List[str]:
+        """
+        Build a 4-tweet thread (cost optimised — was 7).
+        Keeps impression value while halving API write calls.
+        """
+        base_url = self.config.get('base_url', 'https://kubaik.github.io')
+        post_url = f"{base_url}/{post.slug}"
+        short_title = post.title if len(
+            post.title) <= 60 else post.title[:57] + "..."
+
+        # Pull up to 3 shortest hashtags
+        hashtags = ""
+        if hasattr(post, 'tags') and post.tags:
+            sorted_tags = sorted(post.tags, key=len)[:3]
+            hashtags = " ".join(
+                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags
+            )
+
+        # Derive talking points from title words
+        title_words = [w for w in post.title.split() if len(w) > 4]
+        topic_a = title_words[0] if len(title_words) > 0 else "this topic"
+        topic_b = title_words[1] if len(title_words) > 1 else "best practices"
+        topic_c = title_words[-1] if len(title_words) > 2 else "performance"
+
+        # Hook strategy — configurable per post or globally via config
+        # Options: 'knowledge_gap' | 'contrarian' | 'specific_number' | 'pattern_interrupt'
+        hook_style = self.config.get('hook_style', 'knowledge_gap')
+
+        hook_templates = {
+            'knowledge_gap': (
+                f"🧵 There's one thing most people skip when approaching {topic_a}.\n\n"
+                f"It costs them weeks later.\n\n"
+                f"{short_title} — a thread 👇\n"
+                f"(full guide in the blog for those who want to go deeper)"
+            ),
+            'contrarian': (
+                f"🧵 Most advice on {topic_a} is wrong.\n\n"
+                f"Not slightly off — actively harmful.\n\n"
+                f"Here's what {short_title} actually looks like when done right 👇\n"
+                f"(full breakdown in the blog)"
+            ),
+            'specific_number': (
+                f"🧵 3 things I wish I knew before spending months on {topic_a}.\n\n"
+                f"{short_title} — lessons learned the hard way 👇\n"
+                f"(full guide in the blog)"
+            ),
+            'pattern_interrupt': (
+                f"🧵 You can tell within 5 minutes whether someone understands "
+                f"{topic_a} or just thinks they do.\n\n"
+                f"The difference is subtle. {short_title} 👇\n"
+                f"(full breakdown in the blog)"
+            ),
+        }
+
+        hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
+
+        # UTM-tagged URLs per tweet position for click attribution
+        url_t2 = self._build_post_url(post_url, position=2, style=hook_style)
+        url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
+
+        tweets = [
+            # 1. Hook — no URL (avoids Twitter reach suppression on external links)
+            hook,
+
+            # 2. Problem + key insight — early URL captures high-intent readers
+            #    who won't wait for tweet #4; hashtags buried here for discovery
+            (
+                f"1/ Most people get this wrong:\n\n"
+                f"{post.meta_description[:180]}\n\n"
+                f"The fix starts with understanding {topic_a} properly.\n\n"
+                f"Full breakdown: {url_t2}"
+                + (f"\n\n{hashtags}" if hashtags else "")
+            ),
+
+            # 3. Top tips
+            (
+                f"2/ What the best practitioners do differently:\n\n"
+                f"✅ Nail {topic_a} fundamentals first\n"
+                f"✅ Apply {topic_b} discipline early\n"
+                f"✅ Optimise {topic_c} before it becomes expensive to fix"
+            ),
+
+            # 4. CTA — specific payoff language to increase click intent
+            (
+                f"3/ TL;DR — if you only read one thing on {topic_a} this week, "
+                f"make it this.\n\n"
+                f"Full guide with examples, code, and the mistakes to avoid 👇\n"
+                f"{url_t4}"
+            ),
+        ]
+
+        # Safety trim — no tweet over 280 chars
+        return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
 
     # ─────────────────────────────────────────────────────────────
     # LOCAL FALLBACK
@@ -1074,6 +1336,9 @@ def create_sample_config():
         "google_search_console_key":   "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
         "google_adsense_verification": "ca-pub-4477679588953789",
 
+        # options: knowledge_gap | contrarian | specific_number | pattern_interrupt
+        "hook_style": "knowledge_gap",
+
         "social_accounts": {
             "twitter":  "@KubaiKevin",
             "linkedin": "your-linkedin-page",
@@ -1357,7 +1622,8 @@ def create_sample_config():
     print("     GROQ_API_KEY       (primary)")
     print("     HF_TOKEN           (fallback 1 — HuggingFace/SambaNova Llama 3.3 70B)")
     print("     OPENROUTER_API_KEY (fallback 2)")
-    print("     GEMINI_API_KEY     (fallback 3)")
+    print("     CEREBRAS_API_KEY   (fallback 3 — fast Llama 3.3 70B, ~1000 tok/s)")
+    print("     GEMINI_API_KEY     (fallback 4)")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1377,17 +1643,16 @@ if __name__ == "__main__":
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
             print(
-                "\nAPI chain: Groq → HuggingFace/Llama → OpenRouter → Gemini → local template"
-            )
+                "\nAPI chain: Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
             print(
                 "Add GitHub secrets: GROQ_API_KEY, HF_TOKEN, "
-                "OPENROUTER_API_KEY, GEMINI_API_KEY"
+                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY"
             )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
             print(
-                "API chain: Groq → HuggingFace/Llama → OpenRouter → Gemini → local template")
+                "API chain: Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
 
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -1675,9 +1940,7 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System with Monetization")
-        print(
-            "API chain: Groq (primary) → HuggingFace/Llama → OpenRouter → Gemini → local template"
-        )
+        print("API chain: Groq (primary) → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
         print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
@@ -1699,4 +1962,6 @@ if __name__ == "__main__":
         print("  GROQ_API_KEY       - Primary  (100k tokens/day free, very fast)")
         print("  HF_TOKEN           - Fallback 1 (HuggingFace/SambaNova — Llama 3.3 70B)")
         print("  OPENROUTER_API_KEY - Fallback 2 (GPT-4o-mini via OpenRouter)")
-        print("  GEMINI_API_KEY     - Fallback 3 (Gemini 1.5 Flash — generous free tier)")
+        print(
+            "  CEREBRAS_API_KEY   - Fallback 3 (Llama 3.3 70B, ~1000 tok/s, no credit card)")
+        print("  GEMINI_API_KEY     - Fallback 4 (Gemini 2.5 Flash — generous free tier)")
