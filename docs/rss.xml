@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 12:20:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 12:35:42 +0000</lastBuildDate>
+    <item>
+      <title>AI on a Budget</title>
+      <link>https://kubaik.github.io/ai-on-a-budget/</link>
+      <description>Replace pricey software with 10 affordable AI tools, saving you money and boosting productivity.</description>
+      <pubDate>Mon, 13 Apr 2026 12:35:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-on-a-budget/</guid>
+    </item>
     <item>
       <title>The Open Source Business Models That Work: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/the-open-source-business-models-that-work-a-practi/</link>
@@ -138,13 +145,6 @@
       <description>Build a robust data pipeline with our April 2026 guide, featuring expert tips to prevent breaks and ensure seamless data flow.</description>
       <pubDate>Mon, 13 Apr 2026 03:52:28 +0000</pubDate>
       <guid>https://kubaik.github.io/pipe-up-april-2026/</guid>
-    </item>
-    <item>
-      <title>Prompt Hacks</title>
-      <link>https://kubaik.github.io/prompt-hacks/</link>
-      <description>Unlock effective prompt engineering techniques to boost AI performance and get accurate results.</description>
-      <pubDate>Mon, 13 Apr 2026 02:00:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-hacks/</guid>
     </item>
   </channel>
 </rss>
