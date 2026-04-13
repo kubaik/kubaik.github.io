@@ -906,7 +906,7 @@ def _build_templates() -> dict:
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
+        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing for developers and builders</p></div>
@@ -982,7 +982,7 @@ def _build_templates() -> dict:
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
+        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Privacy Policy</h2></div>
@@ -1044,7 +1044,7 @@ def _build_templates() -> dict:
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Terms of Service</h2></div>
@@ -1090,7 +1090,7 @@ def _build_templates() -> dict:
     <header><div class="container">
         <h1><a href="../">{{ site_name }}</a></h1>
         <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms</a></nav>
+        <a href="../privacy-policy/">Privacy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Contact</h2></div>
