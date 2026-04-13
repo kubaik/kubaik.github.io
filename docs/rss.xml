@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2026 17:19:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 17:29:39 +0000</lastBuildDate>
+    <item>
+      <title>Code or Not (April 2026)</title>
+      <link>https://kubaik.github.io/code-or-not-april-2026/</link>
+      <description>Decide between No-Code and Code: get clarity on when to use each for efficient project execution.</description>
+      <pubDate>Mon, 13 Apr 2026 17:29:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-or-not-april-2026/</guid>
+    </item>
     <item>
       <title>Data Showdown: Warehouse, Lake, or Lakehouse?</title>
       <link>https://kubaik.github.io/data-showdown-warehouse-lake-or-lakehouse/</link>
@@ -138,13 +145,6 @@
       <description>Uncover profitable strategies used by indie hackers earning $10K/month, and start building your own 6-figure business.</description>
       <pubDate>Mon, 13 Apr 2026 09:31:39 +0000</pubDate>
       <guid>https://kubaik.github.io/indie-hackers-10kmo/</guid>
-    </item>
-    <item>
-      <title>API Security Mistakes That Got Companies Hacked: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/api-security-mistakes-that-got-companies-hacked-a-/</link>
-      <description>A practical guide to API Security Mistakes That Got Companies Hacked covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 13 Apr 2026 08:42:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-security-mistakes-that-got-companies-hacked-a-/</guid>
     </item>
   </channel>
 </rss>
