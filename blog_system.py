@@ -411,6 +411,8 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
+        GEMINI_MODEL = "gemini-2.5-flash"  # single source of truth — update here only
+
         # ── Try google-generativeai SDK first ────────────────────
         try:
             import google.generativeai as genai
@@ -418,17 +420,13 @@ class BlogSystem:
             def _sdk_call():
                 genai.configure(api_key=self.gemini_key)
                 model = genai.GenerativeModel(
-                    model_name="gemini-1.5-flash",
+                    model_name=GEMINI_MODEL,  # was hardcoded "gemini-1.5-flash"
                     generation_config=genai.types.GenerationConfig(
                         max_output_tokens=max_tokens,
                         temperature=0.7,
                     ),
                 )
 
-                # Convert messages list → single prompt string.
-                # Gemini's chat history API expects alternating user/model turns;
-                # using generate_content with a merged prompt is simpler and
-                # works reliably for our single-turn generation use case.
                 parts = []
                 for msg in messages:
                     role = msg.get("role", "user")
@@ -445,19 +443,15 @@ class BlogSystem:
             return result
 
         except ImportError:
-            # google-generativeai not installed — use REST API
             pass
 
-        # ── Gemini REST API (v1beta generateContent) ─────────────
-        model = "gemini-1.5-flash"
+        # ── Gemini REST API — v1 (not v1beta) ────────────────────
+        # v1beta dropped support for 1.5 models; v1 is the stable endpoint
         api_url = (
-            f"https://generativelanguage.googleapis.com/v1beta/models/"
-            f"{model}:generateContent?key={self.gemini_key}"
+            f"https://generativelanguage.googleapis.com/v1/models/"  # was v1beta
+            f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
 
-        # Merge system + user messages into Gemini's content format.
-        # Gemini requires alternating user/model roles; we prepend any
-        # system prompt to the first user message to stay compatible.
         system_parts = [
             msg["content"] for msg in messages if msg.get("role") == "system"
         ]
@@ -499,7 +493,6 @@ class BlogSystem:
                             )
                         result = await response.json()
 
-                        # Extract text from Gemini response structure
                         try:
                             return (
                                 result["candidates"][0]["content"]["parts"][0]["text"]
