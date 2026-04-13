@@ -8,3 +8,4 @@ requests-oauthlib
 tweepy
 numpy
 scikit-learn
+huggingface_hub
