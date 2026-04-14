@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 18:08:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 19:42:26 +0000</lastBuildDate>
+    <item>
+      <title>Time-Saving TypeScript Patterns</title>
+      <link>https://kubaik.github.io/time-saving-typescript-patterns/</link>
+      <description>TypeScript patterns for improved code quality</description>
+      <pubDate>Tue, 14 Apr 2026 19:42:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/time-saving-typescript-patterns/</guid>
+    </item>
     <item>
       <title>Human Touch AI</title>
       <link>https://kubaik.github.io/human-touch-ai/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to How Netflix Handles 200 Million Concurrent Streams covering production-ready implementation, real performance benchmarks, circuit breaking, common mistakes, and honest tradeoffs.</description>
       <pubDate>Tue, 14 Apr 2026 09:27:44 +0000</pubDate>
       <guid>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</guid>
-    </item>
-    <item>
-      <title>5G Turbocharges Apps</title>
-      <link>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</link>
-      <description>5G&apos;s impact on app development: low latency, high bandwidth, and new opportunities</description>
-      <pubDate>Tue, 14 Apr 2026 09:03:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</guid>
     </item>
   </channel>
 </rss>
