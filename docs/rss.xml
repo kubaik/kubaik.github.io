@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 20:03:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 21:08:09 +0000</lastBuildDate>
+    <item>
+      <title>AI Forecasts .</title>
+      <link>https://kubaik.github.io/ai-forecasts/</link>
+      <description>AI forecasts with up to 25% accuracy improvement</description>
+      <pubDate>Tue, 14 Apr 2026 21:08:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-forecasts/</guid>
+    </item>
     <item>
       <title>Blue-Green vs Canary: Choose Wisely</title>
       <link>https://kubaik.github.io/blue-green-vs-canary-choose-wisely/</link>
@@ -138,13 +145,6 @@
       <description>Build a breakproof data pipeline with Apache Kafka and Apache Spark</description>
       <pubDate>Tue, 14 Apr 2026 10:00:37 +0000</pubDate>
       <guid>https://kubaik.github.io/breakproof-data-pipelines/</guid>
-    </item>
-    <item>
-      <title>TypeScript Pro Tips .</title>
-      <link>https://kubaik.github.io/typescript-pro-tips/</link>
-      <description>TypeScript advanced patterns for better code</description>
-      <pubDate>Tue, 14 Apr 2026 09:57:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-pro-tips/</guid>
     </item>
   </channel>
 </rss>
