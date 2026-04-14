@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 09:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 09:46:54 +0000</lastBuildDate>
+    <item>
+      <title>Cross-Platform vs Native: Which Wins</title>
+      <link>https://kubaik.github.io/cross-platform-vs-native-which-wins/</link>
+      <description>Cross-platform vs native: performance, security, and user experience</description>
+      <pubDate>Tue, 14 Apr 2026 09:46:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/cross-platform-vs-native-which-wins/</guid>
+    </item>
     <item>
       <title>How Netflix Handles 200 Million Concurrent Streams: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</link>
@@ -138,13 +145,6 @@
       <description>Unlock 10 essential CLI tools to boost productivity and streamline development workflows.</description>
       <pubDate>Mon, 13 Apr 2026 21:44:09 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-essentials-10-cli-tools/</guid>
-    </item>
-    <item>
-      <title>Vision Tech (April 2026)</title>
-      <link>https://kubaik.github.io/vision-tech-april-2026/</link>
-      <description>Explore real-world Computer Vision apps, from facial recognition to medical diagnostics, and their impact on industries.</description>
-      <pubDate>Mon, 13 Apr 2026 20:46:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech-april-2026/</guid>
     </item>
   </channel>
 </rss>
