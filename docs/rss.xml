@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 09:57:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 10:00:43 +0000</lastBuildDate>
+    <item>
+      <title>Breakproof Data Pipelines</title>
+      <link>https://kubaik.github.io/breakproof-data-pipelines/</link>
+      <description>Build a breakproof data pipeline with Apache Kafka and Apache Spark</description>
+      <pubDate>Tue, 14 Apr 2026 10:00:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/breakproof-data-pipelines/</guid>
+    </item>
     <item>
       <title>TypeScript Pro Tips .</title>
       <link>https://kubaik.github.io/typescript-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Identify and fix mobile app performance issues causing slow load times and frustrating users.</description>
       <pubDate>Mon, 13 Apr 2026 22:41:35 +0000</pubDate>
       <guid>https://kubaik.github.io/slow-app-alert/</guid>
-    </item>
-    <item>
-      <title>Snowflake vs BQ vs Redshift</title>
-      <link>https://kubaik.github.io/snowflake-vs-bq-vs-redshift/</link>
-      <description>Compare Snowflake, BigQuery &amp; Redshift in 2026: costs, performance &amp; features to choose the best data warehouse for your needs.</description>
-      <pubDate>Mon, 13 Apr 2026 22:29:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/snowflake-vs-bq-vs-redshift/</guid>
     </item>
   </channel>
 </rss>
