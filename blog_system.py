@@ -837,7 +837,7 @@ Return ONLY the JSON object.""",
             },
         ]
 
-        raw = await self._call_api_with_fallback(messages, max_tokens=4500)
+        raw = await self._call_api_with_fallback(messages, max_tokens=6000)
 
         # Strip any accidental markdown fences the model might add
         raw = raw.strip()
@@ -846,12 +846,6 @@ Return ONLY the JSON object.""",
             raw = re.sub(r"\n?```$", "", raw.strip())
 
         def _sanitize_json_string(s: str) -> str:
-            """
-            Fix unescaped control characters inside JSON string values.
-            Models like Cerebras sometimes emit literal newlines/tabs inside
-            JSON strings, which is invalid per the JSON spec.
-            We only touch characters inside quoted string values.
-            """
             result = []
             in_string = False
             escape_next = False
@@ -869,7 +863,6 @@ Return ONLY the JSON object.""",
                     result.append(ch)
                     continue
                 if in_string:
-                    # Replace bare control characters with their JSON escape sequences
                     if ch == '\n':
                         result.append('\\n')
                     elif ch == '\r':
@@ -884,6 +877,119 @@ Return ONLY the JSON object.""",
                     result.append(ch)
             return ''.join(result)
 
+        def _repair_truncated_json(text: str) -> str:
+            """
+            Attempt to close a JSON object that was cut off mid-stream.
+            Handles the common case where a long 'content' string value
+            was truncated before the closing quote and braces were emitted.
+            Strategy:
+            1. Find the last complete key-value pair boundary we can trust.
+            2. Close any open string, then close the object.
+            """
+            text = text.rstrip()
+
+            # Already valid — nothing to do
+            try:
+                json.loads(text)
+                return text
+            except json.JSONDecodeError:
+                pass
+
+            # Track open/close state with a simple pass
+            in_string = False
+            escape_next = False
+            brace_depth = 0
+            last_safe_pos = 0   # position just after the last complete "key": "value", pair
+
+            for i, ch in enumerate(text):
+                if escape_next:
+                    escape_next = False
+                    continue
+                if ch == '\\' and in_string:
+                    escape_next = True
+                    continue
+                if ch == '"':
+                    in_string = not in_string
+                    continue
+                if not in_string:
+                    if ch == '{':
+                        brace_depth += 1
+                    elif ch == '}':
+                        brace_depth -= 1
+                    elif ch == ',' and brace_depth == 1:
+                        last_safe_pos = i  # safe cut point between top-level pairs
+
+            if not in_string and brace_depth == 0:
+                # Looks structurally complete — sanitize and return
+                return _sanitize_json_string(text)
+
+            repaired = text
+
+            if in_string:
+                # We're inside a truncated string value — close it
+                repaired = repaired + '"'
+
+            # Close any open arrays or extra braces
+            # (our schema has no arrays at top level except seo_keywords)
+            array_depth = repaired.count('[') - repaired.count(']')
+            for _ in range(max(0, array_depth)):
+                repaired += ']'
+
+            open_braces = repaired.count('{') - repaired.count('}')
+            for _ in range(max(0, open_braces)):
+                repaired += '}'
+
+            return repaired
+
+        def _extract_partial_fields(text: str) -> dict:
+            """
+            Last-resort field-by-field extraction when the JSON is too broken
+            to repair structurally. Pulls out whatever fields are present using
+            targeted regex, so a truncated 'content' is still usable.
+            """
+            data = {}
+
+            # Extract 'content' — grab everything between "content": " and the
+            # next top-level key (or end of string), then strip trailing garbage
+            content_match = re.search(
+                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})',
+                text, re.DOTALL
+            )
+            if not content_match:
+                # Truncated — take everything after the opening quote
+                content_match = re.search(
+                    r'"content"\s*:\s*"(.*)', text, re.DOTALL)
+                if content_match:
+                    raw_content = content_match.group(1)
+                    # Unescape what we have
+                    data['content'] = raw_content.replace(
+                        '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
+            else:
+                raw_content = content_match.group(1)
+                data['content'] = raw_content.replace(
+                    '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
+
+            # Extract 'meta_description'
+            meta_match = re.search(
+                r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})',
+                text, re.DOTALL
+            )
+            if meta_match:
+                data['meta_description'] = meta_match.group(
+                    1).replace('\\n', ' ').strip()
+
+            # Extract 'seo_keywords' array
+            kw_match = re.search(
+                r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
+            if kw_match:
+                raw_kws = kw_match.group(1)
+                data['seo_keywords'] = [
+                    k.strip().strip('"') for k in raw_kws.split(',')
+                    if k.strip().strip('"')
+                ]
+
+            return data
+
         def _try_parse_json(text: str) -> dict:
             # Attempt 1: parse as-is
             try:
@@ -897,13 +1003,32 @@ Return ONLY the JSON object.""",
             except json.JSONDecodeError:
                 pass
 
-            # Attempt 3: extract outermost {...} block then sanitize and parse
-            match = re.search(r'\{.*\}', text, re.DOTALL)
-            if match:
+            # Attempt 3: extract outermost {...} block, sanitize, parse
+            block_match = re.search(r'\{.*\}', text, re.DOTALL)
+            if block_match:
                 try:
-                    return json.loads(_sanitize_json_string(match.group()))
+                    return json.loads(_sanitize_json_string(block_match.group()))
                 except json.JSONDecodeError:
                     pass
+
+            # Attempt 4: repair truncation (close open strings/braces) then parse
+            try:
+                repaired = _repair_truncated_json(text)
+                data = json.loads(_sanitize_json_string(repaired))
+                print("Warning: JSON was truncated — repaired successfully.")
+                return data
+            except (json.JSONDecodeError, Exception):
+                pass
+
+            # Attempt 5: field-by-field regex extraction
+            print(
+                "Warning: JSON structurally unrecoverable — extracting fields individually.")
+            data = _extract_partial_fields(text)
+            if 'content' in data:
+                # Fill in defaults for missing fields so the caller never KeyErrors
+                data.setdefault('meta_description', '')
+                data.setdefault('seo_keywords', [])
+                return data
 
             raise ValueError(
                 f"Model did not return valid JSON after all repair attempts.\n"
@@ -1045,202 +1170,129 @@ Return ONLY the JSON object.""",
         title = f"{topic}: A Practical Technical Guide"
         slug = self._create_slug(title)
         topic_lower = topic.lower()
-        topic_slug = re.sub(r"[^\w]", "", topic.replace(" ", ""))[:20]
+        topic_slug = topic.replace(' ', '').replace('-', '')[:20]
 
         content = f"""## The Problem Most Developers Miss
 
-    When working with {topic}, most developers jump straight to implementation without understanding the underlying mechanics. This leads to brittle solutions that fail under load, are difficult to debug, and create maintenance headaches months later when the original author has moved on.
+When working with {topic}, most developers jump straight to implementation without understanding the underlying mechanics. This leads to brittle solutions that fail under load, are difficult to debug, and create maintenance headaches down the line.
 
-    The most common mistake is treating {topic} as a black box. You configure it, it works in development, and you ship it — until production load reveals gaps in your assumptions. Documentation covers the happy path. This guide covers what the documentation skips.
+The most common mistake is treating {topic} as a black box. You configure it, it works in development, and you ship it — until production load reveals gaps in your assumptions. This guide covers what the documentation usually skips.
 
-    Before writing a single line of code, answer three questions: What failure modes does {topic} introduce? What are the actual resource costs at scale? What does the fallback look like when it fails? Teams that skip these questions spend 3× more time debugging incidents than teams that answer them upfront.
+Before writing a single line of code, you need to answer three questions: What failure modes does {topic} introduce? What are the actual resource costs at scale? And what does the fallback look like when it fails?
 
-    One underappreciated issue is the gap between synthetic benchmarks and real-world behaviour. Lab tests with uniform traffic patterns will not surface the concurrency bugs, memory leaks, or connection pool exhaustion that emerge under bursty production load. Build your understanding of {topic} around how it behaves at the edges, not the centre.
+## How {topic} Actually Works Under the Hood
 
-    ## How {topic} Actually Works Under the Hood
+At its core, {topic} relies on a combination of in-memory state management and persistent coordination. Understanding this dual nature is the key to avoiding the most common performance problems.
 
-    At its core, {topic} relies on a combination of in-memory state management and persistent coordination. Understanding this dual nature is the key to avoiding the most common performance problems.
+When a request comes in, the system first checks local state (fast, ~1ms), then falls back to shared state (slower, typically 10–50ms depending on network conditions). Most documentation focuses on the happy path. Real systems need to handle the cases where shared state is unavailable, inconsistent, or outdated.
 
-    When a request arrives, the system first checks local state (fast, ~0.5–2 ms), then falls back to shared state (slower, typically 10–50 ms depending on network latency and serialisation overhead). Most documentation focuses on the happy path. Real systems need to handle the cases where shared state is unavailable, inconsistent, or stale.
+The coordination overhead is real. In benchmarks across several production systems, poorly configured {topic} setups added 15–40% latency compared to a baseline. Well-tuned implementations added 2–8%. The difference is almost entirely in how you handle connection pooling and retry logic.
 
-    The coordination overhead is measurable. Across several production deployments, poorly configured {topic} setups added 15–40% end-to-end latency compared to a tuned baseline. Well-optimised implementations added 2–8%. The difference is almost entirely in connection pooling strategy, retry logic, and how aggressively the system caches negative results.
+Memory usage scales roughly linearly with concurrent connections. Budget approximately 2–5MB per 100 active connections for the coordination layer. This is separate from your application memory and often overlooked in capacity planning.
 
-    Memory usage scales roughly linearly with concurrent connections. Budget approximately 2–5 MB per 100 active connections for the coordination layer alone — separate from application memory and frequently overlooked in capacity planning. At 1,000 concurrent users, that is 20–50 MB of overhead before your application does anything.
+## Step-by-Step Implementation
 
-    CPU behaviour is equally important. {topic} implementations that serialise and deserialise on every operation can spike CPU by 10–20% under moderate load. If your profiler shows unexpected CPU time in serialisation code paths, that is a strong signal your {topic} configuration needs tuning.
+Here is a minimal, production-ready implementation pattern:
 
-    ## Step-by-Step Implementation
+```python
+import time
+import logging
+from typing import Optional, Dict, Any
 
-    A minimal, production-ready implementation pattern looks like this:
+logger = logging.getLogger(__name__)
 
-    ```python
-    import time
-    import logging
-    from typing import Optional, Dict, Any, Callable
+class {topic_slug}Client:
+    def __init__(self, config: Dict[str, Any]):
+        self.config      = config
+        self.max_retries = config.get("max_retries", 3)
+        self.timeout     = config.get("timeout_seconds", 5.0)
+        self._connection = None
 
-    logger = logging.getLogger(__name__)
-
-    class {topic_slug}Client:
-        \"\"\"
-        Production-ready client with retries, circuit breaking, and health checks.
-        Designed to fail fast and degrade gracefully rather than queue indefinitely.
-        \"\"\"
-
-        def __init__(self, config: Dict[str, Any]):
-            self.config         = config
-            self.max_retries    = config.get("max_retries", 3)
-            self.timeout        = config.get("timeout_seconds", 5.0)
-            self._connection    = None
-            self._failure_count = 0
-            self._open_until    = 0.0   # circuit-breaker reset timestamp
-
-        # ── Connection ──────────────────────────────────────────────
-
-        def connect(self) -> bool:
-            \"\"\"Establish connection with exponential backoff (1 s, 2 s, 4 s).\"\"\"
-            for attempt in range(self.max_retries):
-                try:
-                    self._connection    = self._create_connection()
-                    self._failure_count = 0
-                    logger.info("Connected on attempt %d", attempt + 1)
-                    return True
-                except ConnectionError as exc:
-                    wait = 2 ** attempt
-                    logger.warning(
-                        "Attempt %d/%d failed: %s — retrying in %ds",
-                        attempt + 1, self.max_retries, exc, wait,
-                    )
-                    time.sleep(wait)
-            logger.error("Could not connect after %d attempts", self.max_retries)
-            return False
-
-        def _create_connection(self):
-            raise NotImplementedError("Subclasses must implement _create_connection()")
-
-        # ── Circuit breaker ─────────────────────────────────────────
-
-        def _is_open(self) -> bool:
-            \"\"\"Return True when the circuit is open (requests should be rejected).\"\"\"
-            if self._failure_count >= 5:
-                if time.time() < self._open_until:
-                    return True
-                # Half-open: allow one probe through
-                self._failure_count = 4
-            return False
-
-        def _record_failure(self):
-            self._failure_count += 1
-            if self._failure_count >= 5:
-                self._open_until = time.time() + 30  # 30-second cool-down
-
-        def _record_success(self):
-            self._failure_count = 0
-
-        # ── Execute with circuit breaker ────────────────────────────
-
-        def execute(self, operation: Callable, *args, **kwargs):
-            \"\"\"Run *operation* under circuit-breaker protection.\"\"\"
-            if self._is_open():
-                raise RuntimeError("Circuit open — skipping call to avoid cascade failure")
+    def connect(self) -> bool:
+        \"\"\"Establish connection with exponential backoff.\"\"\"
+        for attempt in range(self.max_retries):
             try:
-                result = operation(*args, **kwargs)
-                self._record_success()
-                return result
-            except Exception as exc:
-                self._record_failure()
-                raise
+                self._connection = self._create_connection()
+                logger.info(f"Connected on attempt {{attempt + 1}}")
+                return True
+            except ConnectionError as e:
+                wait = 2 ** attempt  # 1s, 2s, 4s
+                logger.warning(f"Attempt {{attempt + 1}} failed: {{e}}. Retrying in {{wait}}s")
+                time.sleep(wait)
+        return False
 
-        # ── Health check ────────────────────────────────────────────
+    def _create_connection(self):
+        raise NotImplementedError
 
-        def health_check(self) -> bool:
-            \"\"\"Lightweight liveness probe — safe to call every 30 s from a scheduler.\"\"\"
-            if self._connection is None:
-                return False
-            try:
-                return self._ping()
-            except Exception:
-                self._connection = None
-                return False
+    def health_check(self) -> bool:
+        if self._connection is None:
+            return False
+        try:
+            return self._ping()
+        except Exception:
+            self._connection = None
+            return False
+```
 
-        def _ping(self) -> bool:
-            raise NotImplementedError
-    ```
+Step 1: Install dependencies and set environment variables. Never hardcode credentials — use environment variables or a secrets manager.
 
-    **Step 1 — Install dependencies and inject credentials.** Never hardcode secrets. Use environment variables (`os.getenv`) or a secrets manager such as AWS Secrets Manager, HashiCorp Vault, or GCP Secret Manager. Rotate credentials on a 90-day schedule at minimum.
+Step 2: Initialise with conservative timeouts. Start at 5 seconds and tune down based on your p99 latency measurements.
 
-    **Step 2 — Start with conservative timeouts.** Begin at 5 seconds and tune downward based on your measured p99 latency. A timeout that is too generous masks slow-query problems; one that is too aggressive causes spurious failures. Aim for timeout ≈ p99 × 1.5.
+Step 3: Add circuit breaker logic around all external calls. After 5 consecutive failures, stop trying for 30 seconds.
 
-    **Step 3 — Add the circuit breaker before going to production.** After 5 consecutive failures, stop sending requests for 30 seconds. This single change prevents a slow downstream dependency from turning into a full-service outage via thread-pool exhaustion.
+Step 4: Instrument everything. Track: connection attempt count, success rate, p50/p95/p99 latency, and error rates by error type.
 
-    **Step 4 — Instrument every operation.** Track at minimum: attempt count, success rate, p50/p95/p99 latency, and error breakdown by type (timeout vs connection refused vs application error). These four metrics will diagnose 90% of production incidents.
+Step 5: Load test before going live with realistic traffic patterns, not just peak load.
 
-    **Step 5 — Load test with realistic traffic shapes, not just peak volume.** Ramp traffic up slowly, hold it, then spike it. The spike — not the sustained load — is usually where {topic} configurations fail.
+## Real-World Performance Numbers
 
-    ## Real-World Performance Numbers
+Based on production deployments across different scales:
 
-    Based on production data across systems of different scales:
+- **Small scale (under 1,000 req/min):** Overhead is negligible. Default configuration works fine. Focus on correctness, not optimisation.
+- **Medium scale (1,000–50,000 req/min):** Connection pooling becomes critical. Without it, expect 20–35% latency increase under load. Pool size: start at 10 connections per application instance.
+- **Large scale (50,000+ req/min):** Single coordinator nodes become bottlenecks. Benchmarks show 40% throughput improvement moving from single-node to clustered setup.
 
-    **Small scale (under 1,000 req/min):** Overhead is negligible. Default configuration works. Invest time in correctness and observability, not premature optimisation.
+Cold start latency is often 10× worse than steady-state. If your application auto-scales, build in a 2–3 second warmup period before routing traffic to new instances.
 
-    **Medium scale (1,000–50,000 req/min):** Connection pooling becomes critical. Without a properly sized pool, expect 20–35% latency increase under load. A starting pool size of 10 connections per application instance is a reasonable baseline; tune based on observed wait-time metrics.
+## Common Mistakes and How to Avoid Them
 
-    **Large scale (50,000+ req/min):** Single-coordinator topologies become throughput bottlenecks. Production benchmarks consistently show 35–45% throughput improvement when moving from single-node to a clustered setup, with p99 latency improving by a similar margin.
+**Mistake 1: No timeout on individual operations.** Most libraries default to no timeout or 30+ seconds. Set explicit timeouts: connection timeout (2–5s) and per-operation timeout (1–5s).
 
-    **Cold start latency** is a frequently overlooked multiplier. First-request latency after a cold start is typically 8–15× worse than steady-state. If your application auto-scales, build in a 2–3 second warmup grace period before routing live traffic to new instances. Kubernetes readiness probes are the standard mechanism for enforcing this.
+**Mistake 2: Treating errors as binary.** A connection refused error warrants a different response than a timeout, which differs from an authentication error. Build specific handlers for each error class.
 
-    **Garbage collection pauses** on JVM-based implementations (and Python's GC to a lesser extent) can add 5–20 ms spikes. If your p99 looks fine but your p99.9 is alarming, GC is the first thing to investigate.
+**Mistake 3: No connection pool monitoring.** Pool exhaustion causes requests to queue silently. Add metrics for pool size, active connections, waiting requests, and wait time. Alert when wait time exceeds 500ms.
 
-    ## Common Mistakes and How to Avoid Them
+**Mistake 4: Testing only the happy path.** Use fault injection in staging: simulate network partitions, slow responses, and connection drops. Most production incidents come from failure modes that were never tested.
 
-    **Mistake 1 — No explicit timeout on individual operations.** Most client libraries default to no timeout or an absurdly long one (30+ seconds). Set two separate timeouts: a connection timeout (2–5 s) and a per-operation timeout (1–5 s). They serve different purposes and should be tuned independently.
+**Mistake 5: Ignoring DNS caching.** In containerised environments, DNS records change frequently. Set TTL to 30–60 seconds, not 300+.
 
-    **Mistake 2 — Binary error handling.** A `ConnectionRefused` error warrants different handling from a timeout, which differs from an authentication failure, which differs from a rate-limit response. Build specific handlers for each error class. Generic catch-all handlers hide useful signal and make incidents harder to diagnose.
+## Tools and Libraries Worth Using
 
-    **Mistake 3 — Unmonitored connection pools.** Pool exhaustion causes requests to queue silently until they time out — from the outside, it looks like the downstream service is slow. Add metrics for pool size, active connections, waiting requests, and wait time. Alert when average wait time exceeds 500 ms.
+- **Prometheus + Grafana:** Standard stack for metrics. Use histograms (not averages) for latency.
+- **OpenTelemetry:** Distributed tracing. Adds ~1–2% overhead but invaluable for debugging.
+- **Testcontainers:** Spin up real infrastructure in tests. Far better than mocks.
+- **k6 or Locust:** Load testing. Run weekly against staging, not just before launch.
+- **resilience4j (JVM) / tenacity (Python) / polly (.NET):** Ready-made circuit breaker and retry implementations.
 
-    **Mistake 4 — Testing only the happy path.** Use fault injection in staging: simulate network partitions (add 200 ms of latency with `tc netem`), slow responses (respond after 4.9 seconds to trigger near-timeout behaviour), and abrupt connection drops. Most production incidents come from failure modes that were never tested.
+## When Not to Use This Approach
 
-    **Mistake 5 — Ignoring DNS TTL in containerised environments.** In Kubernetes and similar platforms, pod IPs change frequently. If your client caches DNS indefinitely, it will keep sending traffic to dead IPs. Set DNS TTL to 30–60 seconds. Some HTTP client libraries cache DNS at the OS level and ignore TTL entirely — check your library's documentation.
+This pattern is not the right choice in every situation:
 
-    **Mistake 6 — Over-aggressive retry logic.** Retrying every failure immediately with no jitter turns a brief downstream hiccup into a thundering-herd problem. Use exponential backoff with ±25% jitter and a retry budget (e.g. max 3 retries, max 10% of requests retrying at any given moment).
+**Skip it if your traffic is low and predictable.** Under 100 requests/minute with no spikes, the added complexity is not worth it.
 
-    ## Tools and Libraries Worth Using
+**Skip it if you do not have observability in place.** Distributed systems require distributed tracing to debug. If you cannot see what is happening across service boundaries, you will spend more time debugging than you saved.
 
-    **Prometheus + Grafana** — the standard observability stack. Use histograms, not averages, for latency. A histogram lets you compute accurate p50/p95/p99 from raw data; an average hides the outliers that cause user complaints.
+**Skip it if your team is unfamiliar with the failure modes.** Operational complexity is a real cost. A simpler system your team understands deeply will outperform a sophisticated one that confuses them.
 
-    **OpenTelemetry** — distributed tracing with ~1–2% overhead. Invaluable for debugging latency that spans multiple services. Vendor-neutral: works with Jaeger, Tempo, Honeycomb, Datadog, and others.
+**Consider alternatives when:** strong consistency is required, latency budget is extremely tight (sub-millisecond), or you are operating in environments with unreliable networking.
 
-    **Testcontainers** — spin up real infrastructure (databases, message brokers, caches) in unit and integration tests. Far more reliable than mocks, and catches compatibility bugs that mocks miss entirely.
+## Conclusion and Next Steps
 
-    **k6 or Locust** — load testing. Run weekly against a staging environment, not just before launch. Load profiles should include ramp-up, sustained load, and sudden spike phases.
+The gap between a working prototype and a production-ready {topic} implementation comes down to handling failure cases systematically. The happy path is easy. The value is in what happens when things go wrong.
 
-    **resilience4j (JVM) / tenacity (Python) / Polly (.NET)** — battle-tested circuit breaker, retry, and rate-limiter implementations. Do not write your own unless you have very specific requirements; the edge cases in retry logic are numerous.
+Three actions to take now: add explicit timeouts to every operation today; set up latency histograms (p50, p95, p99) this week; run a chaos test against staging this month.
 
-    **Pydantic v2** — if you are serialising configuration or API responses in Python, Pydantic v2 is 5–10× faster than v1 and adds strict-mode validation that catches type mismatches at the boundary rather than deep inside business logic.
-
-    ## When Not to Use This Approach
-
-    This pattern is not the right choice in every situation, and being honest about the tradeoffs is more useful than overselling.
-
-    **Skip it when your traffic is low and predictable.** Under 100 requests/minute with no spikes, the added operational complexity outweighs the benefits. A simpler, synchronous implementation is easier to reason about, test, and operate.
-
-    **Skip it when your team does not yet have observability in place.** Distributed systems require distributed tracing to debug effectively. If you cannot see what is happening across service boundaries, you will spend more time guessing than fixing. Get your metrics and tracing baseline right first.
-
-    **Skip it when strong consistency is a hard requirement.** This pattern trades some consistency for availability and performance. If your use case requires linearisable reads and writes, evaluate solutions designed explicitly for strong consistency rather than bending an eventually-consistent system to fit.
-
-    **Reconsider when the latency budget is extremely tight.** Sub-millisecond p99 requirements are difficult to meet with any coordination layer. Measure the overhead in your specific environment before committing.
-
-    **Consider a simpler alternative when:** the team is small and unfamiliar with the failure modes, the service is internal-only with a single client, or you are in the early validation stage of a product and operational simplicity matters more than scale.
-
-    ## Conclusion and Next Steps
-
-    The gap between a working prototype and a production-ready {topic} implementation comes down to one thing: systematic handling of failure cases. The happy path is the easy part. The value is in what happens when things go wrong at 2 AM on a Sunday.
-
-    Three concrete actions to take this week: add explicit timeouts to every external operation today; set up p50/p95/p99 latency histograms by end of week; run a chaos test — network partition plus slow responses — against your staging environment before your next release.
-
-    For further reading, the Google SRE Book chapters on managing risk and cascading failures are directly applicable to {topic} at any scale. The "Production Readiness Review" checklist from Squarespace Engineering is a useful pre-launch framework that translates the principles above into actionable checklist items.
-
-    The patterns in this guide apply regardless of the specific technology underlying {topic}. The failure modes change; the discipline of measuring, testing boundaries, and failing gracefully does not."""
+Further reading: the official {topic} documentation covers configuration options in depth. For production patterns, the Google SRE book chapters on managing risk and cascading failures are directly applicable."""
 
         post = BlogPost(
             title=title,
@@ -1248,14 +1300,13 @@ Return ONLY the JSON object.""",
             slug=slug,
             tags=[
                 topic_lower.replace(' ', '-'),
-                'software-engineering',
-                'production',
+                'development',
+                'technical-guide',
                 'best-practices',
-                'performance',
             ],
             meta_description=(
-                f"A practical guide to {topic} covering production-ready implementation, "
-                "real performance benchmarks, circuit breaking, common mistakes, and honest tradeoffs."
+                f"A practical guide to {topic} covering implementation, "
+                "real performance benchmarks, common mistakes, and honest tradeoffs."
             ),
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(),
@@ -1264,11 +1315,8 @@ Return ONLY the JSON object.""",
                 topic_lower,
                 f"{topic_lower} tutorial",
                 f"{topic_lower} best practices",
+                f"how to use {topic_lower}",
                 f"{topic_lower} performance",
-                f"how to implement {topic_lower}",
-                f"{topic_lower} production guide",
-                f"what is {topic_lower}",
-                f"{topic_lower} architecture",
             ],
             affiliate_links=[],
             monetization_data={},
