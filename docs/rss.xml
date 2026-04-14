@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 22:41:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 23:29:30 +0000</lastBuildDate>
+    <item>
+      <title>AI Prompting Hacks</title>
+      <link>https://kubaik.github.io/ai-prompting-hacks/</link>
+      <description>Optimize your AI prompting workflow with these secrets most developers miss</description>
+      <pubDate>Tue, 14 Apr 2026 23:29:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompting-hacks/</guid>
+    </item>
     <item>
       <title>Twinning Success</title>
       <link>https://kubaik.github.io/twinning-success/</link>
@@ -138,13 +145,6 @@
       <description>System design interview tips</description>
       <pubDate>Tue, 14 Apr 2026 11:55:17 +0000</pubDate>
       <guid>https://kubaik.github.io/design-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Price to Win</title>
-      <link>https://kubaik.github.io/price-to-win/</link>
-      <description>SaaS pricing strategy and optimization</description>
-      <pubDate>Tue, 14 Apr 2026 11:42:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-to-win/</guid>
     </item>
   </channel>
 </rss>
