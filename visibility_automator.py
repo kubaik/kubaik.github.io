@@ -214,8 +214,6 @@ class VisibilityAutomator:
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
 
-        # UTM-tagged URLs per tweet position for click attribution
-        url_t2 = self._build_post_url(post_url, position=2, style=hook_style)
         url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
 
         tweets = [
