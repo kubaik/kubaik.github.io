@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 17:45:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 17:49:34 +0000</lastBuildDate>
+    <item>
+      <title>RPA in Enterprise</title>
+      <link>https://kubaik.github.io/rpa-in-enterprise/</link>
+      <description>Discover how Robotics Process Automation (RPA) can improve productivity and reduce costs in your enterprise.</description>
+      <pubDate>Tue, 14 Apr 2026 17:49:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-in-enterprise/</guid>
+    </item>
     <item>
       <title>Dev Toolbox Essentials .</title>
       <link>https://kubaik.github.io/dev-toolbox-essentials/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to How Senior Developers Think Differently covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Tue, 14 Apr 2026 08:33:41 +0000</pubDate>
       <guid>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</guid>
-    </item>
-    <item>
-      <title>Platform Business Models Decoded</title>
-      <link>https://kubaik.github.io/platform-business-models-decoded/</link>
-      <description>Unlock platform business model secrets: revenue streams, network effects, and growth strategies.</description>
-      <pubDate>Tue, 14 Apr 2026 08:26:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-business-models-decoded/</guid>
     </item>
   </channel>
 </rss>
