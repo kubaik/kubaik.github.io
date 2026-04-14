@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 10:11:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 11:20:17 +0000</lastBuildDate>
+    <item>
+      <title>Prompt Engineering Simplified</title>
+      <link>https://kubaik.github.io/prompt-engineering-simplified/</link>
+      <description>Improve language model performance with prompt engineering</description>
+      <pubDate>Tue, 14 Apr 2026 11:20:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-engineering-simplified/</guid>
+    </item>
     <item>
       <title>Code Less Fear .</title>
       <link>https://kubaik.github.io/code-less-fear/</link>
@@ -138,13 +145,6 @@
       <description>Get a tech job in 12 months with a proven roadmap, insider tips and a step-by-step guide to launching your career.</description>
       <pubDate>Mon, 13 Apr 2026 23:40:34 +0000</pubDate>
       <guid>https://kubaik.github.io/0-to-tech-job-in-12-mos/</guid>
-    </item>
-    <item>
-      <title>Stripe&apos;s Secure Pay Flow</title>
-      <link>https://kubaik.github.io/stripes-secure-pay-flow/</link>
-      <description>Unlock secure payment processing with Stripe, protecting sensitive data at every step.</description>
-      <pubDate>Mon, 13 Apr 2026 23:28:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/stripes-secure-pay-flow/</guid>
     </item>
   </channel>
 </rss>
