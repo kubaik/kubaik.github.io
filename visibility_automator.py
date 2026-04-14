@@ -162,93 +162,94 @@ class VisibilityAutomator:
 
     def _build_thread_tweets(self, post) -> List[str]:
         """
-        Build a 4-tweet thread (cost optimised — was 7).
-        Keeps impression value while halving API write calls.
+        2-tweet format optimised for X algorithm boost:
+
+        Tweet 1 — Hook only. No URL, no hashtags.
+                X suppresses reach on tweets with outbound links.
+                The hook's job is purely to earn replies/likes/bookmarks,
+                which signals quality to the algorithm before the URL drops.
+
+        Tweet 2 — Reply to tweet 1. Contains the payoff: 3 punchy insights
+                from the article, the blog URL with UTM params, and up to
+                3 hashtags. Replies are deprioritised for suppression, so
+                the URL here costs almost nothing in reach.
+
+        Total: 2 API write calls, zero filler tweets.
         """
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
-        short_title = post.title if len(
-            post.title) <= 60 else post.title[:57] + "..."
+        hook_style = self.config.get('hook_style', 'knowledge_gap')
+        tracked_url = self._build_post_url(
+            post_url, position=2, style=hook_style)
 
-        # Pull up to 3 shortest hashtags
+        # ── Hashtags: max 3, shortest first ──────────────────────────
         hashtags = ""
         if hasattr(post, 'tags') and post.tags:
-            sorted_tags = sorted(post.tags, key=len)[:3]
-            hashtags = " ".join(
-                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags
-            )
+            clean_tags = [
+                t.replace(' ', '').replace('-', '')
+                for t in sorted(post.tags, key=len)
+                if t and len(t.replace(' ', '').replace('-', '')) >= 3
+            ]
+            hashtags = " ".join(f"#{t}" for t in clean_tags[:3])
 
-        # Derive talking points from title words
+        # ── Topic words extracted from title ─────────────────────────
         title_words = [w for w in post.title.split() if len(w) > 4]
-        topic_a = title_words[0] if len(title_words) > 0 else "this topic"
-        topic_b = title_words[1] if len(title_words) > 1 else "best practices"
+        topic_a = title_words[0] if len(title_words) > 0 else "this"
+        topic_b = title_words[1] if len(
+            title_words) > 1 else "the fundamentals"
         topic_c = title_words[-1] if len(title_words) > 2 else "performance"
 
-        hook_style = self.config.get('hook_style', 'knowledge_gap')
-
+        # ── Hook templates (tweet 1 — no URL, no hashtags) ───────────
         hook_templates = {
             'knowledge_gap': (
-                f"🧵 There's one thing most people skip when approaching {topic_a}.\n\n"
-                f"It costs them weeks later.\n\n"
-                f"{short_title} — a thread 👇\n"
-                f"(full guide in the blog for those who want to go deeper)"
+                f"Most people approach {topic_a} backwards.\n\n"
+                f"They spend weeks on the wrong layer and wonder why nothing scales.\n\n"
+                f"The fix is simpler than you think — but only if you understand "
+                f"what's actually going wrong first. 🧵"
             ),
             'contrarian': (
-                f"🧵 Most advice on {topic_a} is wrong.\n\n"
-                f"Not slightly off — actively harmful.\n\n"
-                f"Here's what {short_title} actually looks like when done right 👇\n"
-                f"(full breakdown in the blog)"
+                f"Hot take: most {topic_a} advice actively makes your system worse.\n\n"
+                f"Not because it's wrong in theory — because it ignores the part "
+                f"that breaks in production.\n\n"
+                f"Here's what actually works. 🧵"
             ),
             'specific_number': (
-                f"🧵 3 things I wish I knew before spending months on {topic_a}.\n\n"
-                f"{short_title} — lessons learned the hard way 👇\n"
-                f"(full guide in the blog)"
+                f"3 {topic_a} mistakes I see constantly — even from senior engineers:\n\n"
+                f"① Skipping the boring foundation work\n"
+                f"② Optimising before measuring\n"
+                f"③ Ignoring failure modes until they're on fire\n\n"
+                f"The third one is the silent killer. 🧵"
             ),
             'pattern_interrupt': (
-                f"🧵 You can tell within 5 minutes whether someone understands "
-                f"{topic_a} or just thinks they do.\n\n"
-                f"The difference is subtle. {short_title} 👇\n"
-                f"(full breakdown in the blog)"
+                f"You can tell in 5 minutes whether an engineer truly understands "
+                f"{topic_a} — or just thinks they do.\n\n"
+                f"The difference isn't knowledge. It's what they check first "
+                f"when something breaks. 🧵"
             ),
         }
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
 
-        url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
+        # ── Payoff reply (tweet 2 — insights + URL + hashtags) ───────
+        description = post.meta_description[:120].rstrip()
+        if len(post.meta_description) > 120:
+            description += "…"
 
-        tweets = [
-            # 1. Hook — no URL (avoids Twitter reach suppression)
-            hook,
+        payoff = (
+            f"Full breakdown 👇\n\n"
+            f"{description}\n\n"
+            f"What's covered:\n"
+            f"→ Why {topic_a} fails at scale\n"
+            f"→ The {topic_b} patterns that actually work\n"
+            f"→ {topic_c.capitalize()} benchmarks + real code\n\n"
+            f"{tracked_url}"
+        )
+        if hashtags:
+            payoff += f"\n\n{hashtags}"
 
-            # 2. Problem + key insight — early URL captures high-intent readers
-            #    who won't wait for tweet #4
-            (
-                f"1/ Most people get this wrong:\n\n"
-                f"{post.meta_description[:180]}\n\n"
-                f"The fix starts with understanding {topic_a} properly."
-                f"Full breakdown:"
-                f"{url_t4}"
-                + (f"\n{hashtags}" if hashtags else "")
-            ),
+        tweets = [hook, payoff]
 
-            # 3. Top tips
-            (
-                f"2/ What the best practitioners do differently:\n\n"
-                f"✅ Nail {topic_a} fundamentals first\n"
-                f"✅ Apply {topic_b} discipline early\n"
-                f"✅ Optimise {topic_c} before it becomes expensive to fix"
-            ),
-
-            # 4. CTA — specific payoff language to increase click intent
-            (
-                f"3/ TL;DR — if you only read one thing on {topic_a} this week, "
-                f"make it this.\n\n"
-                f"Full guide with examples, code, and the mistakes to avoid 👇\n"
-                f"{url_t4}"
-            ),
-        ]
-
-        # Safety trim — no tweet over 280 chars
+        # Hard 280-char ceiling
         return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
 
     def _build_post_url(self, post_url: str, position: int, style: str) -> str:
