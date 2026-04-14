@@ -94,7 +94,6 @@ class BlogSystem:
 
         # ── API keys ──────────────────────────────────────────────
         self.groq_key = os.getenv("GROQ_API_KEY")
-        self.hf_token = os.getenv("HF_TOKEN")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
@@ -104,7 +103,6 @@ class BlogSystem:
         # Primary key for legacy compatibility checks
         self.api_key = (
             self.groq_key
-            or self.hf_token
             or self.openrouter_key
             or self.cerebras_key
             or self.gemini_key
@@ -116,15 +114,13 @@ class BlogSystem:
     def _log_key_status(self):
         print("=== API Key Status ===")
         print(
-            f"  Groq:             {'configured' if self.groq_key       else 'NOT SET'}")
+            f"  Groq:       {'configured' if self.groq_key       else 'NOT SET'}")
         print(
-            f"  HuggingFace (HF): {'configured' if self.hf_token       else 'NOT SET'}")
+            f"  OpenRouter: {'configured' if self.openrouter_key  else 'NOT SET'}")
         print(
-            f"  OpenRouter:       {'configured' if self.openrouter_key  else 'NOT SET'}")
+            f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
         print(
-            f"  Cerebras:         {'configured' if self.cerebras_key    else 'NOT SET'}")
-        print(
-            f"  Gemini:           {'configured' if self.gemini_key      else 'NOT SET'}")
+            f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -172,27 +168,25 @@ class BlogSystem:
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN:
-    #   Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template
+    #   Groq → OpenRouter → Cerebras → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
 
         if self.groq_key:
-            providers.append(("Groq",               self._call_groq))
-        if self.hf_token:
-            providers.append(("HuggingFace/Llama",  self._call_huggingface))
+            providers.append(("Groq",       self._call_groq))
         if self.openrouter_key:
-            providers.append(("OpenRouter",          self._call_openrouter))
+            providers.append(("OpenRouter",  self._call_openrouter))
         if self.cerebras_key:
-            providers.append(("Cerebras",            self._call_cerebras))
+            providers.append(("Cerebras",    self._call_cerebras))
         if self.gemini_key:
-            providers.append(("Gemini",              self._call_gemini))
+            providers.append(("Gemini",      self._call_gemini))
 
         if not providers:
             raise Exception(
                 "No API keys configured. "
-                "Set at least one of: GROQ_API_KEY, HF_TOKEN, "
+                "Set at least one of: GROQ_API_KEY, "
                 "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY."
             )
 
@@ -210,7 +204,7 @@ class BlogSystem:
 
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}\n"
-            "Ensure at least one of GROQ_API_KEY / HF_TOKEN / "
+            "Ensure at least one of GROQ_API_KEY / "
             "OPENROUTER_API_KEY / CEREBRAS_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
         )
 
@@ -284,101 +278,6 @@ class BlogSystem:
                         f"Groq timed out after {max_attempts} attempts.")
 
         raise Exception(f"Groq unavailable after {max_attempts} attempts.")
-
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: HuggingFace → SambaNova (Llama 3.3 70B Instruct)
-    # Uses huggingface_hub InferenceClient when installed; falls back
-    # to the OpenAI-compatible HF router REST API automatically.
-    # pip install --upgrade huggingface_hub
-    # GitHub secret: HF_TOKEN
-    # ─────────────────────────────────────────────────────────────
-
-    async def _call_huggingface(self, messages: List[Dict], max_tokens: int) -> str:
-        HF_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
-        HF_PROVIDER = "sambanova"
-        HF_BASE_URL = "https://router.huggingface.co/v1"
-
-        # ── Try huggingface_hub InferenceClient first ─────────────
-        try:
-            from huggingface_hub import InferenceClient
-
-            def _sdk_call():
-                client = InferenceClient(
-                    provider=HF_PROVIDER,
-                    token=self.hf_token,
-                )
-                response = client.chat.completions.create(
-                    model=HF_MODEL,
-                    messages=messages,
-                    max_tokens=max_tokens,
-                    temperature=0.7,
-                )
-                return response.choices[0].message.content
-
-            loop = asyncio.get_event_loop()
-            result = await loop.run_in_executor(None, _sdk_call)
-            return result
-
-        except ImportError:
-            pass
-
-        # ── HuggingFace OpenAI-compatible REST router ─────────────
-        headers = {
-            "Authorization": f"Bearer {self.hf_token}",
-            "Content-Type":  "application/json",
-        }
-        data = {
-            "model":       f"{HF_MODEL}:{HF_PROVIDER}",
-            "messages":    messages,
-            "max_tokens":  max_tokens,
-            "temperature": 0.7,
-        }
-        max_attempts = 3
-        wait_seconds = [3, 8]
-
-        for attempt in range(1, max_attempts + 1):
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(
-                        f"{HF_BASE_URL}/chat/completions",
-                        headers=headers,
-                        json=data,
-                        timeout=aiohttp.ClientTimeout(total=90),
-                    ) as response:
-                        if response.status != 200:
-                            raise Exception(
-                                f"HuggingFace {response.status}: {await response.text()}"
-                            )
-                        result = await response.json()
-                        if "error" in result:
-                            raise Exception(
-                                f"HuggingFace error payload: {result['error']}")
-                        return result["choices"][0]["message"]["content"]
-
-            except aiohttp.ClientConnectionError as e:
-                if attempt < max_attempts:
-                    wait = wait_seconds[attempt - 1]
-                    print(
-                        f"HuggingFace connection error (attempt {attempt}/{max_attempts}): {e}")
-                    print(f"Retrying in {wait}s...")
-                    await asyncio.sleep(wait)
-                else:
-                    raise Exception(
-                        f"HuggingFace connection failed after {max_attempts} attempts: {e}"
-                    )
-
-            except asyncio.TimeoutError:
-                if attempt < max_attempts:
-                    wait = wait_seconds[attempt - 1]
-                    print(
-                        f"HuggingFace timeout (attempt {attempt}/{max_attempts}). "
-                        f"Retrying in {wait}s..."
-                    )
-                    await asyncio.sleep(wait)
-                else:
-                    raise Exception(
-                        f"HuggingFace timed out after {max_attempts} attempts."
-                    )
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: OpenRouter
@@ -480,7 +379,7 @@ class BlogSystem:
             "Content-Type":  "application/json",
         }
         data = {
-            "model":       "llama-3.3-70b",
+            "model":       "llama3.1-8b",
             "messages":    messages,
             "max_tokens":  max_tokens,
             "temperature": 0.7,
@@ -796,22 +695,23 @@ class BlogSystem:
         keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
         messages = [
             {
-                "role": "system",
+                "role":    "system",
                 "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles.",
             },
             {
-                "role": "user",
+                "role":    "user",
                 "content": (
                     f"Generate a compelling blog post title about '{topic}'.{keyword_text} "
                     "The title should be catchy, informative, and under 60 characters. "
                     "Avoid generic titles starting with 'The Ultimate Guide' or "
-                    "'Everything You Need to Know'."
+                    "'Everything You Need to Know'. "
+                    "Respond with ONLY the title — no quotes, no numbering, no explanation."
                     f"{extra_instruction}"
                 ),
             },
         ]
         title = await self._call_api_with_fallback(messages, max_tokens=100)
-        return title.strip().strip('"')
+        return title.strip().splitlines()[0].strip().strip('"')
 
     async def _generate_content(self, title: str, topic: str,
                                 keywords: List[str] = None) -> str:
@@ -821,7 +721,7 @@ class BlogSystem:
         )
         messages = [
             {
-                "role": "system",
+                "role":    "system",
                 "content": (
                     "You are an experienced tech professional with 10+ years of hands-on experience. "
                     "Write in a direct, opinionated voice — share specific insights, real tradeoffs, "
@@ -834,7 +734,7 @@ class BlogSystem:
                 ),
             },
             {
-                "role": "user",
+                "role":    "user",
                 "content": f"""Write a 2000-word technical blog post with the title: \"{title}\"
 
 Topic: {topic}{keyword_text}
@@ -875,11 +775,11 @@ Do not include the main title (# {title}) — it is added automatically.""",
         """Expand thin content by adding additional substantive sections."""
         messages = [
             {
-                "role": "system",
+                "role":    "system",
                 "content": "You are a technical writer expanding existing blog content with substantive additions.",
             },
             {
-                "role": "user",
+                "role":    "user",
                 "content": (
                     f"The following blog post about '{topic}' is too short. "
                     "Add 3 additional detailed sections at the end (each 200+ words) covering:\n"
@@ -897,11 +797,11 @@ Do not include the main title (# {title}) — it is added automatically.""",
     async def _generate_meta_description(self, topic: str, title: str) -> str:
         messages = [
             {
-                "role": "system",
+                "role":    "system",
                 "content": "You create SEO-optimized meta descriptions that are specific and enticing.",
             },
             {
-                "role": "user",
+                "role":    "user",
                 "content": (
                     f"Write a meta description (under 155 characters) for a blog post "
                     f"titled '{title}' about {topic}. "
@@ -916,11 +816,11 @@ Do not include the main title (# {title}) — it is added automatically.""",
     async def _generate_keywords(self, topic: str, title: str) -> List[str]:
         messages = [
             {
-                "role": "system",
+                "role":    "system",
                 "content": "You generate relevant SEO keywords for technical blog posts.",
             },
             {
-                "role": "user",
+                "role":    "user",
                 "content": (
                     f"Generate 8-10 relevant SEO keywords for a blog post titled '{title}' "
                     f"about {topic}. "
@@ -1620,10 +1520,9 @@ def create_sample_config():
     print("4. Update social media handles")
     print("5. Add GitHub secrets:")
     print("     GROQ_API_KEY       (primary)")
-    print("     HF_TOKEN           (fallback 1 — HuggingFace/SambaNova Llama 3.3 70B)")
-    print("     OPENROUTER_API_KEY (fallback 2)")
-    print("     CEREBRAS_API_KEY   (fallback 3 — fast Llama 3.3 70B, ~1000 tok/s)")
-    print("     GEMINI_API_KEY     (fallback 4)")
+    print("     OPENROUTER_API_KEY (fallback 1)")
+    print("     CEREBRAS_API_KEY   (fallback 2 — fast Llama, ~1000 tok/s)")
+    print("     GEMINI_API_KEY     (fallback 3)")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1643,16 +1542,16 @@ if __name__ == "__main__":
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
             print(
-                "\nAPI chain: Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
+                "\nAPI chain: Groq → OpenRouter → Cerebras → Gemini → local template")
             print(
-                "Add GitHub secrets: GROQ_API_KEY, HF_TOKEN, "
+                "Add GitHub secrets: GROQ_API_KEY, "
                 "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY"
             )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
             print(
-                "API chain: Groq → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
+                "API chain: Groq → OpenRouter → Cerebras → Gemini → local template")
 
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -1815,11 +1714,11 @@ if __name__ == "__main__":
                         post_md = item / "index.md"
                         social_json = item / "social_posts.json"
                         print(
-                            f"    post.json:         {'Yes' if post_json.exists()   else 'No'}")
+                            f"    post.json:         {'Yes' if post_json.exists()    else 'No'}")
                         print(
-                            f"    index.md:          {'Yes' if post_md.exists()     else 'No'}")
+                            f"    index.md:          {'Yes' if post_md.exists()      else 'No'}")
                         print(
-                            f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
+                            f"    social_posts.json: {'Yes' if social_json.exists()  else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
@@ -1940,7 +1839,7 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System with Monetization")
-        print("API chain: Groq (primary) → HuggingFace/Llama → OpenRouter → Cerebras → Gemini → local template")
+        print("API chain: Groq (primary) → OpenRouter → Cerebras → Gemini → local template")
         print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
@@ -1960,8 +1859,6 @@ if __name__ == "__main__":
         print("  - RSS feed for subscribers (/rss.xml)")
         print("\nGitHub secrets (set at least one):")
         print("  GROQ_API_KEY       - Primary  (100k tokens/day free, very fast)")
-        print("  HF_TOKEN           - Fallback 1 (HuggingFace/SambaNova — Llama 3.3 70B)")
-        print("  OPENROUTER_API_KEY - Fallback 2 (GPT-4o-mini via OpenRouter)")
-        print(
-            "  CEREBRAS_API_KEY   - Fallback 3 (Llama 3.3 70B, ~1000 tok/s, no credit card)")
-        print("  GEMINI_API_KEY     - Fallback 4 (Gemini 2.5 Flash — generous free tier)")
+        print("  OPENROUTER_API_KEY - Fallback 1 (GPT-4o-mini via OpenRouter)")
+        print("  CEREBRAS_API_KEY   - Fallback 2 (Llama, ~1000 tok/s, no credit card)")
+        print("  GEMINI_API_KEY     - Fallback 3 (Gemini 2.5 Flash — generous free tier)")
