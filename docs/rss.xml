@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 21:31:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 21:46:25 +0000</lastBuildDate>
+    <item>
+      <title>Mobile Apps Under Attack .</title>
+      <link>https://kubaik.github.io/mobile-apps-under-attack/</link>
+      <description>Mobile apps are increasingly vulnerable to security attacks. Learn how to implement secure coding practices and security testing and validation to mitigate the risk of data breaches.</description>
+      <pubDate>Tue, 14 Apr 2026 21:46:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-apps-under-attack/</guid>
+    </item>
     <item>
       <title>Bootstrapped Tech Stack 2026 .</title>
       <link>https://kubaik.github.io/bootstrapped-tech-stack-2026/</link>
@@ -138,13 +145,6 @@
       <description>Improve language model performance with prompt engineering</description>
       <pubDate>Tue, 14 Apr 2026 11:20:11 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-engineering-simplified/</guid>
-    </item>
-    <item>
-      <title>Code Less Fear .</title>
-      <link>https://kubaik.github.io/code-less-fear/</link>
-      <description>Low-code platforms: 30% dev time reduction</description>
-      <pubDate>Tue, 14 Apr 2026 10:11:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-fear/</guid>
     </item>
   </channel>
 </rss>
