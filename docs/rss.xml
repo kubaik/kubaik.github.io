@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 11:35:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 11:42:18 +0000</lastBuildDate>
+    <item>
+      <title>Price to Win</title>
+      <link>https://kubaik.github.io/price-to-win/</link>
+      <description>SaaS pricing strategy and optimization</description>
+      <pubDate>Tue, 14 Apr 2026 11:42:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-to-win/</guid>
+    </item>
     <item>
       <title>Code Smarter Not Harder .</title>
       <link>https://kubaik.github.io/code-smarter-not-harder/</link>
@@ -138,13 +145,6 @@
       <description>Get the latest on 2026 tech layoffs: trends, affected companies, and expert insights to navigate the shifting job market.</description>
       <pubDate>Tue, 14 Apr 2026 01:56:29 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-layoff-wave/</guid>
-    </item>
-    <item>
-      <title>Boost Dev Brain (April 2026)</title>
-      <link>https://kubaik.github.io/boost-dev-brain-april-2026/</link>
-      <description>Unlock a Second Brain as a dev: organize code, retain knowledge, and boost productivity with actionable tips.</description>
-      <pubDate>Tue, 14 Apr 2026 01:12:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-dev-brain-april-2026/</guid>
     </item>
   </channel>
 </rss>
