@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 10:33:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 07:48:41 +0000</lastBuildDate>
+    <item>
+      <title>Boost Team Efficiency</title>
+      <link>https://kubaik.github.io/boost-team-efficiency/</link>
+      <description>Unlock the potential of your engineering team with top Business Intelligence tools that enhance collaboration, streamline workflows, and drive productivity.</description>
+      <pubDate>Tue, 14 Apr 2026 07:48:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-team-efficiency/</guid>
+    </item>
     <item>
       <title>Dev Paycheck</title>
       <link>https://kubaik.github.io/dev-paycheck/</link>
@@ -138,13 +145,6 @@
       <description>Uncover Netflix&apos;s content strategy and gain insights into their decision-making process for new shows and features.</description>
       <pubDate>Mon, 13 Apr 2026 17:59:58 +0000</pubDate>
       <guid>https://kubaik.github.io/netflixs-next-move/</guid>
-    </item>
-    <item>
-      <title>Web3 Dev Uncovered</title>
-      <link>https://kubaik.github.io/web3-dev-uncovered/</link>
-      <description>Unlock Web3 development secrets: costs, skills, and tools required to build decentralized apps and succeed in the ecosystem.</description>
-      <pubDate>Mon, 13 Apr 2026 17:42:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-dev-uncovered/</guid>
     </item>
   </channel>
 </rss>
