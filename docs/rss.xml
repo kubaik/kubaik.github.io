@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 21:46:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 22:28:26 +0000</lastBuildDate>
+    <item>
+      <title>VCs&apos; Top Picks</title>
+      <link>https://kubaik.github.io/vcs-top-picks/</link>
+      <description>VCs look for strong tech, business plan, and team</description>
+      <pubDate>Tue, 14 Apr 2026 22:28:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/vcs-top-picks/</guid>
+    </item>
     <item>
       <title>Mobile Apps Under Attack .</title>
       <link>https://kubaik.github.io/mobile-apps-under-attack/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity by 30% with effective time management</description>
       <pubDate>Tue, 14 Apr 2026 11:35:19 +0000</pubDate>
       <guid>https://kubaik.github.io/code-smarter-not-harder/</guid>
-    </item>
-    <item>
-      <title>Prompt Engineering Simplified</title>
-      <link>https://kubaik.github.io/prompt-engineering-simplified/</link>
-      <description>Improve language model performance with prompt engineering</description>
-      <pubDate>Tue, 14 Apr 2026 11:20:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-engineering-simplified/</guid>
     </item>
   </channel>
 </rss>
