@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 04:34:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 04:45:08 +0000</lastBuildDate>
+    <item>
+      <title>Master Apache Kafka: A Developer&apos;s Easy-Start Playbook</title>
+      <link>https://kubaik.github.io/master-apache-kafka-a-developers-easy-start-playbo/</link>
+      <description>Get hands-on with Apache Kafka: build scalable data pipelines, integrate with APIs, and streamline data processing without being a data engineer.</description>
+      <pubDate>Tue, 14 Apr 2026 04:45:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-apache-kafka-a-developers-easy-start-playbo/</guid>
+    </item>
     <item>
       <title>Terminal Phobia? Learn Bash</title>
       <link>https://kubaik.github.io/terminal-phobia-learn-bash/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to How Developers Are Using AI to 10x Their Output covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Mon, 13 Apr 2026 17:08:47 +0000</pubDate>
       <guid>https://kubaik.github.io/how-developers-are-using-ai-to-10x-their-output-a-/</guid>
-    </item>
-    <item>
-      <title>VS Code Setup That Makes You 2x Faster: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/vs-code-setup-that-makes-you-2x-faster-a-practical/</link>
-      <description>A practical guide to VS Code Setup That Makes You 2x Faster covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 13 Apr 2026 16:58:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/vs-code-setup-that-makes-you-2x-faster-a-practical/</guid>
     </item>
   </channel>
 </rss>
