@@ -845,18 +845,72 @@ Return ONLY the JSON object.""",
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
             raw = re.sub(r"\n?```$", "", raw.strip())
 
-        try:
-            data = json.loads(raw)
-        except json.JSONDecodeError:
-            # Last-resort: pull out the JSON object if the model added prose around it
-            match = re.search(r'\{.*\}', raw, re.DOTALL)
+        def _sanitize_json_string(s: str) -> str:
+            """
+            Fix unescaped control characters inside JSON string values.
+            Models like Cerebras sometimes emit literal newlines/tabs inside
+            JSON strings, which is invalid per the JSON spec.
+            We only touch characters inside quoted string values.
+            """
+            result = []
+            in_string = False
+            escape_next = False
+            for ch in s:
+                if escape_next:
+                    result.append(ch)
+                    escape_next = False
+                    continue
+                if ch == '\\':
+                    result.append(ch)
+                    escape_next = True
+                    continue
+                if ch == '"' and not escape_next:
+                    in_string = not in_string
+                    result.append(ch)
+                    continue
+                if in_string:
+                    # Replace bare control characters with their JSON escape sequences
+                    if ch == '\n':
+                        result.append('\\n')
+                    elif ch == '\r':
+                        result.append('\\r')
+                    elif ch == '\t':
+                        result.append('\\t')
+                    elif ord(ch) < 0x20:
+                        result.append(f'\\u{ord(ch):04x}')
+                    else:
+                        result.append(ch)
+                else:
+                    result.append(ch)
+            return ''.join(result)
+
+        def _try_parse_json(text: str) -> dict:
+            # Attempt 1: parse as-is
+            try:
+                return json.loads(text)
+            except json.JSONDecodeError:
+                pass
+
+            # Attempt 2: sanitize control characters then parse
+            try:
+                return json.loads(_sanitize_json_string(text))
+            except json.JSONDecodeError:
+                pass
+
+            # Attempt 3: extract outermost {...} block then sanitize and parse
+            match = re.search(r'\{.*\}', text, re.DOTALL)
             if match:
-                data = json.loads(match.group())
-            else:
-                raise ValueError(
-                    f"Model did not return valid JSON.\n"
-                    f"Raw response (first 400 chars):\n{raw[:400]}"
-                )
+                try:
+                    return json.loads(_sanitize_json_string(match.group()))
+                except json.JSONDecodeError:
+                    pass
+
+            raise ValueError(
+                f"Model did not return valid JSON after all repair attempts.\n"
+                f"Raw response (first 400 chars):\n{text[:400]}"
+            )
+
+        data = _try_parse_json(raw)
 
         # Validate required keys
         for key in ("content", "meta_description", "seo_keywords"):
