@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 11:55:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 12:46:11 +0000</lastBuildDate>
+    <item>
+      <title>AI vs Developers: Will Robots Replace You?</title>
+      <link>https://kubaik.github.io/ai-vs-developers-will-robots-replace-you/</link>
+      <description>AI-powered coding tools improve efficiency by 20%</description>
+      <pubDate>Tue, 14 Apr 2026 12:46:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-vs-developers-will-robots-replace-you/</guid>
+    </item>
     <item>
       <title>Design Like a Pro .</title>
       <link>https://kubaik.github.io/design-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>Master Bash scripting, overcome terminal phobia, and automate tasks with ease.</description>
       <pubDate>Tue, 14 Apr 2026 04:34:03 +0000</pubDate>
       <guid>https://kubaik.github.io/terminal-phobia-learn-bash/</guid>
-    </item>
-    <item>
-      <title>Ransomware: Hijacked</title>
-      <link>https://kubaik.github.io/ransomware-hijacked/</link>
-      <description>Uncover ransomware attack tactics and get expert tips to protect your data and survive a hijack.</description>
-      <pubDate>Tue, 14 Apr 2026 03:41:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ransomware-hijacked/</guid>
     </item>
   </channel>
 </rss>
