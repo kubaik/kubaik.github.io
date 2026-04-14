@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 13:12:01 +0000</lastBuildDate>
-    <item>
-      <title>Google&apos;s Secret Sauce</title>
-      <link>https://kubaik.github.io/googles-secret-sauce/</link>
-      <description>Google&apos;s engineering culture drives innovation</description>
-      <pubDate>Tue, 14 Apr 2026 13:11:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/googles-secret-sauce/</guid>
-    </item>
+    <lastBuildDate>Tue, 14 Apr 2026 16:17:23 +0000</lastBuildDate>
     <item>
       <title>AI vs Developers: Will Robots Replace You?</title>
       <link>https://kubaik.github.io/ai-vs-developers-will-robots-replace-you/</link>
@@ -84,7 +77,7 @@
       <guid>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</guid>
     </item>
     <item>
-      <title>5G Turbocharges Apps (April 2026)</title>
+      <title>5G Turbocharges Apps</title>
       <link>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</link>
       <description>5G&apos;s impact on app development: low latency, high bandwidth, and new opportunities</description>
       <pubDate>Tue, 14 Apr 2026 09:03:10 +0000</pubDate>
@@ -145,6 +138,13 @@
       <description>Get hands-on with Apache Kafka: build scalable data pipelines, integrate with APIs, and streamline data processing without being a data engineer.</description>
       <pubDate>Tue, 14 Apr 2026 04:45:02 +0000</pubDate>
       <guid>https://kubaik.github.io/master-apache-kafka-a-developers-easy-start-playbo/</guid>
+    </item>
+    <item>
+      <title>Terminal Phobia? Learn Bash</title>
+      <link>https://kubaik.github.io/terminal-phobia-learn-bash/</link>
+      <description>Master Bash scripting, overcome terminal phobia, and automate tasks with ease.</description>
+      <pubDate>Tue, 14 Apr 2026 04:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/terminal-phobia-learn-bash/</guid>
     </item>
   </channel>
 </rss>
