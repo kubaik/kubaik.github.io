@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 19:53:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 20:03:33 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green vs Canary: Choose Wisely</title>
+      <link>https://kubaik.github.io/blue-green-vs-canary-choose-wisely/</link>
+      <description>Blue-green and canary deployments: choose wisely. Learn about the pros and cons of each approach and how to implement them for a smooth and successful deployment process.</description>
+      <pubDate>Tue, 14 Apr 2026 20:03:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-vs-canary-choose-wisely/</guid>
+    </item>
     <item>
       <title>Vision In Action</title>
       <link>https://kubaik.github.io/vision-in-action/</link>
@@ -138,13 +145,6 @@
       <description>TypeScript advanced patterns for better code</description>
       <pubDate>Tue, 14 Apr 2026 09:57:28 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Cross-Platform vs Native: Which Wins</title>
-      <link>https://kubaik.github.io/cross-platform-vs-native-which-wins/</link>
-      <description>Cross-platform vs native: performance, security, and user experience</description>
-      <pubDate>Tue, 14 Apr 2026 09:46:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/cross-platform-vs-native-which-wins/</guid>
     </item>
   </channel>
 </rss>
