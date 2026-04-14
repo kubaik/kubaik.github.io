@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 01:56:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 03:41:39 +0000</lastBuildDate>
+    <item>
+      <title>Ransomware: Hijacked</title>
+      <link>https://kubaik.github.io/ransomware-hijacked/</link>
+      <description>Uncover ransomware attack tactics and get expert tips to protect your data and survive a hijack.</description>
+      <pubDate>Tue, 14 Apr 2026 03:41:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/ransomware-hijacked/</guid>
+    </item>
     <item>
       <title>2026 Layoff Wave</title>
       <link>https://kubaik.github.io/2026-layoff-wave/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster query times and boost database performance by mastering indexing techniques and best practices.</description>
       <pubDate>Mon, 13 Apr 2026 16:38:08 +0000</pubDate>
       <guid>https://kubaik.github.io/index-to-win/</guid>
-    </item>
-    <item>
-      <title>Documentation That Developers Actually Read: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/documentation-that-developers-actually-read-a-prac/</link>
-      <description>A practical guide to Documentation That Developers Actually Read covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 13 Apr 2026 16:00:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/documentation-that-developers-actually-read-a-prac/</guid>
     </item>
   </channel>
 </rss>
