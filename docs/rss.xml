@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 19:42:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 19:53:39 +0000</lastBuildDate>
+    <item>
+      <title>Vision In Action</title>
+      <link>https://kubaik.github.io/vision-in-action/</link>
+      <description>Computer Vision Applications in the Real World</description>
+      <pubDate>Tue, 14 Apr 2026 19:53:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-in-action/</guid>
+    </item>
     <item>
       <title>Time-Saving TypeScript Patterns</title>
       <link>https://kubaik.github.io/time-saving-typescript-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Cross-platform vs native: performance, security, and user experience</description>
       <pubDate>Tue, 14 Apr 2026 09:46:48 +0000</pubDate>
       <guid>https://kubaik.github.io/cross-platform-vs-native-which-wins/</guid>
-    </item>
-    <item>
-      <title>How Netflix Handles 200 Million Concurrent Streams: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</link>
-      <description>A practical guide to How Netflix Handles 200 Million Concurrent Streams covering production-ready implementation, real performance benchmarks, circuit breaking, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Tue, 14 Apr 2026 09:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</guid>
     </item>
   </channel>
 </rss>
