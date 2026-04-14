@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 17:49:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 18:08:51 +0000</lastBuildDate>
+    <item>
+      <title>Human Touch AI</title>
+      <link>https://kubaik.github.io/human-touch-ai/</link>
+      <description>Use AI for content creation without it sounding robotic by following these steps and using the right tools and libraries.</description>
+      <pubDate>Tue, 14 Apr 2026 18:08:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/human-touch-ai/</guid>
+    </item>
     <item>
       <title>RPA in Enterprise</title>
       <link>https://kubaik.github.io/rpa-in-enterprise/</link>
@@ -138,13 +145,6 @@
       <description>5G&apos;s impact on app development: low latency, high bandwidth, and new opportunities</description>
       <pubDate>Tue, 14 Apr 2026 09:03:10 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</guid>
-    </item>
-    <item>
-      <title>How Senior Developers Think Differently: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</link>
-      <description>A practical guide to How Senior Developers Think Differently covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Tue, 14 Apr 2026 08:33:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</guid>
     </item>
   </channel>
 </rss>
