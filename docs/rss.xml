@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 08:33:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 09:03:16 +0000</lastBuildDate>
+    <item>
+      <title>5G Turbocharges Apps (April 2026)</title>
+      <link>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</link>
+      <description>5G&apos;s impact on app development: low latency, high bandwidth, and new opportunities</description>
+      <pubDate>Tue, 14 Apr 2026 09:03:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-turbocharges-apps-april-2026/</guid>
+    </item>
     <item>
       <title>How Senior Developers Think Differently: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Compare top AI coding assistants: Copilot, Cursor, and more. Find the best fit for your coding needs.</description>
       <pubDate>Mon, 13 Apr 2026 20:37:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-showdown/</guid>
-    </item>
-    <item>
-      <title>Prevent Incidents</title>
-      <link>https://kubaik.github.io/prevent-incidents/</link>
-      <description>Prevent application downtime with proactive monitoring strategies and tools to minimize incidents and optimize performance.</description>
-      <pubDate>Mon, 13 Apr 2026 19:52:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/prevent-incidents/</guid>
     </item>
   </channel>
 </rss>
