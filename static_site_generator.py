@@ -991,7 +991,7 @@ def _build_templates() -> dict:
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Privacy Policy</h2></div>
+        <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
         <article class="page-content">
             <div class="privacy-section"><h3>1. Introduction</h3>
                 <p><strong>{{ site_name }}</strong> is committed to protecting your privacy. By accessing this site, you agree to this Privacy Policy.</p></div>
@@ -1053,7 +1053,7 @@ def _build_templates() -> dict:
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Terms of Service</h2></div>
+        <div class="hero"><h2>Terms of Service</h2><p>Please read these terms carefully before using our site</p></div>
         <article class="page-content">
             <div class="terms-section"><h3>1. Acceptance</h3>
                 <p>By accessing {{ site_name }}, you agree to these Terms and our Privacy Policy.</p></div>
@@ -1099,7 +1099,7 @@ def _build_templates() -> dict:
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Contact</h2></div>
+        <div class="hero"><h2>Contact Us</h2><p>Get in touch with the {{ site_name }} team</p></div>
         <article class="page-content">
             <div class="contact-method"><h3>Email</h3>
                 <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
