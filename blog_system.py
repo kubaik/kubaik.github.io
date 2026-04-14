@@ -82,6 +82,34 @@ def _count_words(text: str) -> int:
     return len(text.split())
 
 
+def _derive_hashtags_from_keywords(keywords: List[str],
+                                   max_hashtags: int = 10) -> List[str]:
+    """
+    Convert seo_keywords to hashtag-style strings without an API call.
+    Short keywords (<=3 words) become hashtags directly.
+    Question-based keywords ("how to …", "what is …") are skipped.
+    """
+    question_starters = {"how", "what", "why", "when", "where", "which", "who"}
+    hashtags = []
+
+    for kw in keywords:
+        kw = kw.strip()
+        if not kw:
+            continue
+        words = kw.lower().split()
+        if words and words[0] in question_starters:
+            continue
+        if len(words) <= 3:
+            tag = "".join(w.capitalize() for w in words)
+            tag = re.sub(r"[^\w]", "", tag)
+            if tag:
+                hashtags.append(tag)
+        if len(hashtags) >= max_hashtags:
+            break
+
+    return hashtags
+
+
 # ─────────────────────────────────────────────────────────────────
 # BlogSystem
 # ─────────────────────────────────────────────────────────────────
@@ -365,10 +393,7 @@ class BlogSystem:
             f"OpenRouter unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Cerebras — OpenAI-compatible, ~1,000 tokens/sec
-    # Free tier: 30 req/min, 60K tokens/min. No credit card required.
-    # Get key: https://cloud.cerebras.ai
-    # GitHub secret: CEREBRAS_API_KEY
+    # PROVIDER: Cerebras
     # ─────────────────────────────────────────────────────────────
 
     async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
@@ -442,16 +467,13 @@ class BlogSystem:
         raise Exception(f"Cerebras unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Gemini (Google Generative Language REST API)
-    # Uses the google-generativeai SDK when available; falls back to
-    # plain REST so the system works without the package installed.
+    # PROVIDER: Gemini
     # ─────────────────────────────────────────────────────────────
 
     async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
-        GEMINI_MODEL = "gemini-2.5-flash"   # single source of truth
+        GEMINI_MODEL = "gemini-2.5-flash"
         RETRYABLE_STATUS = {503, 429, 500, 502, 504}
 
-        # ── Try google-generativeai SDK first ────────────────────
         try:
             import google.generativeai as genai
 
@@ -483,7 +505,6 @@ class BlogSystem:
         except ImportError:
             pass
 
-        # ── Gemini REST API — v1 (not v1beta) ────────────────────
         api_url = (
             f"https://generativelanguage.googleapis.com/v1/models/"
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
@@ -582,6 +603,15 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
+        """
+        Optimised orchestration:
+          Call 1: _generate_unique_title()    (~80 tokens out, up to 2 retries)
+          Call 2: _generate_content_bundle()  (~4500 tokens out — content+meta+keywords)
+
+        Hashtags are derived from seo_keywords locally — no extra API call.
+        _expand_content() is kept as a safety net but fires only when the
+        model under-delivers on word count.
+        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -592,15 +622,21 @@ class BlogSystem:
             existing_titles = _load_existing_titles(self.output_dir)
             title = await self._generate_unique_title(topic, keywords, existing_titles)
 
-            content = await self._generate_content(title, topic, keywords)
-            meta_description = await self._generate_meta_description(topic, title)
-            slug = self._create_slug(title)
+            # ── Single bundle call replacing 3 separate calls ──────
+            bundle = await self._generate_content_bundle(title, topic, keywords)
+
+            content = bundle["content"].strip()
+            meta_description = bundle["meta_description"].strip()
+            seo_keywords = [k.strip()
+                            for k in bundle["seo_keywords"] if k.strip()]
 
             if not keywords:
-                keywords = await self._generate_keywords(topic, title)
+                keywords = seo_keywords
+            # ────────────────────────────────────────────────────────
 
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
+
             if word_count < MIN_WORD_COUNT:
                 print(
                     f"Warning: content only {word_count} words "
@@ -610,16 +646,18 @@ class BlogSystem:
                 word_count = _count_words(content)
                 print(f"After expansion: {word_count} words")
 
+            slug = self._create_slug(title)
+
             post = BlogPost(
                 title=title.strip(),
-                content=content.strip(),
+                content=content,
                 slug=slug,
-                tags=keywords[:5],
-                meta_description=meta_description.strip(),
+                tags=seo_keywords[:5],
+                meta_description=meta_description,
                 featured_image=f"/static/images/{slug}.jpg",
                 created_at=datetime.now().isoformat(),
                 updated_at=datetime.now().isoformat(),
-                seo_keywords=keywords,
+                seo_keywords=seo_keywords,
                 affiliate_links=[],
                 monetization_data={},
             )
@@ -632,16 +670,17 @@ class BlogSystem:
             post.monetization_data = self.monetization.generate_ad_slots(
                 enhanced_content)
 
-            print("Generating trending hashtags...")
-            hashtags = await self.hashtag_manager.get_daily_hashtags(
-                topic, max_hashtags=10
-            )
+            # ── Derive hashtags from seo_keywords — no extra API call
+            print("Deriving hashtags from keywords...")
+            hashtags = _derive_hashtags_from_keywords(
+                seo_keywords, max_hashtags=10)
+            print(f"Hashtags: {', '.join(hashtags[:5])}")
+
             post.tags = list(set(post.tags + hashtags))[:15]
             post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
-            post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(
-                hashtags[:5]
+            post.twitter_hashtags = " ".join(
+                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags[:5]
             )
-            print(f"Hashtags: {', '.join(hashtags[:5])}")
 
             return post
 
@@ -656,7 +695,12 @@ class BlogSystem:
 
     async def _generate_unique_title(self, topic: str, keywords: List[str],
                                      existing_titles: List[str],
-                                     max_attempts: int = 3) -> str:
+                                     max_attempts: int = 2) -> str:
+        """
+        Reduced from 3 attempts to 2. One retry is usually enough;
+        the third attempt rarely produces a meaningfully different result
+        and just burns tokens.
+        """
         for attempt in range(1, max_attempts + 1):
             extra_instruction = ""
             if attempt > 1:
@@ -710,18 +754,34 @@ class BlogSystem:
                 ),
             },
         ]
-        title = await self._call_api_with_fallback(messages, max_tokens=100)
+        # Trimmed from 100 → 80 tokens (titles rarely exceed 60 chars / ~15 tokens)
+        title = await self._call_api_with_fallback(messages, max_tokens=80)
         return title.strip().splitlines()[0].strip().strip('"')
 
-    async def _generate_content(self, title: str, topic: str,
-                                keywords: List[str] = None) -> str:
+    async def _generate_content_bundle(self, title: str, topic: str,
+                                       keywords: List[str] = None) -> Dict:
+        """
+        Single API call that returns content + meta_description + seo_keywords
+        as a JSON object.
+
+        Saves 2 API calls and ~600 tokens compared to calling each method
+        separately.
+
+        Returns:
+            {
+                "content":          "<markdown body>",
+                "meta_description": "<155-char string>",
+                "seo_keywords":     ["kw1", "kw2", ...]
+            }
+        """
         keyword_text = (
             f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
             if keywords else ""
         )
+
         messages = [
             {
-                "role":    "system",
+                "role": "system",
                 "content": (
                     "You are an experienced tech professional with 10+ years of hands-on experience. "
                     "Write in a direct, opinionated voice — share specific insights, real tradeoffs, "
@@ -730,16 +790,25 @@ class BlogSystem:
                     "or 'it is important to note'. "
                     "Every paragraph must deliver concrete value. Be specific: name actual tools, "
                     "libraries, companies, and version numbers. "
-                    "Take clear stances. Acknowledge tradeoffs honestly."
+                    "Take clear stances. Acknowledge tradeoffs honestly. "
+                    "You MUST respond with ONLY a valid JSON object — no markdown fences, "
+                    "no preamble, no trailing commentary."
                 ),
             },
             {
-                "role":    "user",
-                "content": f"""Write a 2000-word technical blog post with the title: \"{title}\"
+                "role": "user",
+                "content": f"""Write a 2000-word technical blog post titled: "{title}"
 
 Topic: {topic}{keyword_text}
 
-Structure (use exactly these ## headings):
+Respond with ONLY a JSON object in this exact shape:
+{{
+  "content": "<full markdown article body — no title line>",
+  "meta_description": "<under 155 chars, specific, no 'Learn how to' opener>",
+  "seo_keywords": ["kw1", "kw2", "kw3", "kw4", "kw5", "kw6", "kw7", "kw8"]
+}}
+
+Article structure (use exactly these ## headings inside "content"):
 ## The Problem Most Developers Miss
 ## How [Topic] Actually Works Under the Hood
 ## Step-by-Step Implementation
@@ -749,27 +818,52 @@ Structure (use exactly these ## headings):
 ## When Not to Use This Approach
 ## Conclusion and Next Steps
 
-Requirements:
-- Write in Markdown format
-- Include at least 1 realistic code example (with language tag, e.g. ```python)
-- Include specific tool names with version numbers where relevant
-- Include at least 2 concrete numbers (benchmarks, percentages, file sizes, etc.)
-- Each section must be at minimum 150 words
-- Address a real pain point developers encounter
-- The "When Not to Use This Approach" section must be honest and specific
+Requirements for "content":
+- Markdown format
+- At least 1 realistic code example (with language tag, e.g. ```python)
+- Specific tool names with version numbers where relevant
+- At least 2 concrete numbers (benchmarks, percentages, file sizes, etc.)
+- Each section minimum 150 words
+- "When Not to Use This Approach" must be honest and specific
+- Do NOT include the title as a # heading
 
-Avoid:
-- Vague phrases like "significantly improve", "seamlessly integrate", "powerful solution"
-- Padding sentences that add length without adding information
-- Lists of more than 6 items (they read like AI output)
-- Starting sentences with "In conclusion" or "Overall"
-- The phrase "dive into" or "delve into"
+Requirements for "seo_keywords":
+- 8 items: 2 short-tail, 4 long-tail, 2 question-based
 
-Do not include the main title (# {title}) — it is added automatically.""",
+Avoid in content: vague phrases, padding sentences, lists over 6 items,
+"dive into", "delve into", "In conclusion", "Overall".
+
+Return ONLY the JSON object.""",
             },
         ]
-        content = await self._call_api_with_fallback(messages, max_tokens=4000)
-        return content.strip()
+
+        raw = await self._call_api_with_fallback(messages, max_tokens=4500)
+
+        # Strip any accidental markdown fences the model might add
+        raw = raw.strip()
+        if raw.startswith("```"):
+            raw = re.sub(r"^```[a-z]*\n?", "", raw)
+            raw = re.sub(r"\n?```$", "", raw.strip())
+
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            # Last-resort: pull out the JSON object if the model added prose around it
+            match = re.search(r'\{.*\}', raw, re.DOTALL)
+            if match:
+                data = json.loads(match.group())
+            else:
+                raise ValueError(
+                    f"Model did not return valid JSON.\n"
+                    f"Raw response (first 400 chars):\n{raw[:400]}"
+                )
+
+        # Validate required keys
+        for key in ("content", "meta_description", "seo_keywords"):
+            if key not in data:
+                raise ValueError(f"Bundle response missing key: '{key}'")
+
+        return data
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
         """Expand thin content by adding additional substantive sections."""
@@ -793,46 +887,6 @@ Do not include the main title (# {title}) — it is added automatically.""",
             },
         ]
         return await self._call_api_with_fallback(messages, max_tokens=4000)
-
-    async def _generate_meta_description(self, topic: str, title: str) -> str:
-        messages = [
-            {
-                "role":    "system",
-                "content": "You create SEO-optimized meta descriptions that are specific and enticing.",
-            },
-            {
-                "role":    "user",
-                "content": (
-                    f"Write a meta description (under 155 characters) for a blog post "
-                    f"titled '{title}' about {topic}. "
-                    "Be specific — mention what the reader will learn or gain. "
-                    "Do not start with 'Learn how to' or 'Discover'. Avoid generic phrases."
-                ),
-            },
-        ]
-        description = await self._call_api_with_fallback(messages, max_tokens=100)
-        return description.strip().strip('"')
-
-    async def _generate_keywords(self, topic: str, title: str) -> List[str]:
-        messages = [
-            {
-                "role":    "system",
-                "content": "You generate relevant SEO keywords for technical blog posts.",
-            },
-            {
-                "role":    "user",
-                "content": (
-                    f"Generate 8-10 relevant SEO keywords for a blog post titled '{title}' "
-                    f"about {topic}. "
-                    "Include a mix of: 2 short-tail keywords, 4 long-tail keywords, "
-                    "2 question-based keywords. "
-                    "Return as a comma-separated list, no numbering."
-                ),
-            },
-        ]
-        keywords_text = await self._call_api_with_fallback(messages, max_tokens=150)
-        keywords = [k.strip().strip('"') for k in keywords_text.split(',')]
-        return [k for k in keywords if k][:10]
 
     # ─────────────────────────────────────────────────────────────
     # THREAD TWEETS
@@ -858,7 +912,6 @@ Do not include the main title (# {title}) — it is added automatically.""",
         short_title = post.title if len(
             post.title) <= 60 else post.title[:57] + "..."
 
-        # Pull up to 3 shortest hashtags
         hashtags = ""
         if hasattr(post, 'tags') and post.tags:
             sorted_tags = sorted(post.tags, key=len)[:3]
@@ -866,14 +919,11 @@ Do not include the main title (# {title}) — it is added automatically.""",
                 f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags
             )
 
-        # Derive talking points from title words
         title_words = [w for w in post.title.split() if len(w) > 4]
         topic_a = title_words[0] if len(title_words) > 0 else "this topic"
         topic_b = title_words[1] if len(title_words) > 1 else "best practices"
         topic_c = title_words[-1] if len(title_words) > 2 else "performance"
 
-        # Hook strategy — configurable per post or globally via config
-        # Options: 'knowledge_gap' | 'contrarian' | 'specific_number' | 'pattern_interrupt'
         hook_style = self.config.get('hook_style', 'knowledge_gap')
 
         hook_templates = {
@@ -904,16 +954,11 @@ Do not include the main title (# {title}) — it is added automatically.""",
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
 
-        # UTM-tagged URLs per tweet position for click attribution
         url_t2 = self._build_post_url(post_url, position=2, style=hook_style)
         url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
 
         tweets = [
-            # 1. Hook — no URL (avoids Twitter reach suppression on external links)
             hook,
-
-            # 2. Problem + key insight — early URL captures high-intent readers
-            #    who won't wait for tweet #4; hashtags buried here for discovery
             (
                 f"1/ Most people get this wrong:\n\n"
                 f"{post.meta_description[:180]}\n\n"
@@ -921,16 +966,12 @@ Do not include the main title (# {title}) — it is added automatically.""",
                 f"Full breakdown: {url_t2}"
                 + (f"\n\n{hashtags}" if hashtags else "")
             ),
-
-            # 3. Top tips
             (
                 f"2/ What the best practitioners do differently:\n\n"
                 f"✅ Nail {topic_a} fundamentals first\n"
                 f"✅ Apply {topic_b} discipline early\n"
                 f"✅ Optimise {topic_c} before it becomes expensive to fix"
             ),
-
-            # 4. CTA — specific payoff language to increase click intent
             (
                 f"3/ TL;DR — if you only read one thing on {topic_a} this week, "
                 f"make it this.\n\n"
@@ -939,7 +980,6 @@ Do not include the main title (# {title}) — it is added automatically.""",
             ),
         ]
 
-        # Safety trim — no tweet over 280 chars
         return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
 
     # ─────────────────────────────────────────────────────────────
