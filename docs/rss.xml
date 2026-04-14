@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 08:17:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 08:26:16 +0000</lastBuildDate>
+    <item>
+      <title>Platform Business Models Decoded</title>
+      <link>https://kubaik.github.io/platform-business-models-decoded/</link>
+      <description>Unlock platform business model secrets: revenue streams, network effects, and growth strategies.</description>
+      <pubDate>Tue, 14 Apr 2026 08:26:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-business-models-decoded/</guid>
+    </item>
     <item>
       <title>Stripe&apos;s Rise to Payment Dominance</title>
       <link>https://kubaik.github.io/stripes-rise-to-payment-dominance/</link>
@@ -138,13 +145,6 @@
       <description>Say goodbye to perimeter defense. Get insider tips on implementing Zero Trust Security for a safer network.</description>
       <pubDate>Mon, 13 Apr 2026 19:17:57 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-bye-perimeter/</guid>
-    </item>
-    <item>
-      <title>Engineer Smarter</title>
-      <link>https://kubaik.github.io/engineer-smarter/</link>
-      <description>Optimize engineering workflows with top BI tools, expert insights, and data-driven strategies to boost team efficiency and project success.</description>
-      <pubDate>Mon, 13 Apr 2026 18:23:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-smarter/</guid>
     </item>
   </channel>
 </rss>
