@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 06:11:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 06:25:07 +0000</lastBuildDate>
+    <item>
+      <title>Access Law</title>
+      <link>https://kubaik.github.io/access-law/</link>
+      <description>Uncover essential web accessibility laws and coding standards in &apos;Access Law,&apos; empowering you to create inclusive digital experiences for all users.</description>
+      <pubDate>Tue, 14 Apr 2026 06:25:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/access-law/</guid>
+    </item>
     <item>
       <title>DevPlatform</title>
       <link>https://kubaik.github.io/devplatform/</link>
@@ -138,13 +145,6 @@
       <description>Decide between No-Code and Code: get clarity on when to use each for efficient project execution.</description>
       <pubDate>Mon, 13 Apr 2026 17:29:34 +0000</pubDate>
       <guid>https://kubaik.github.io/code-or-not-april-2026/</guid>
-    </item>
-    <item>
-      <title>Data Showdown: Warehouse, Lake, or Lakehouse?</title>
-      <link>https://kubaik.github.io/data-showdown-warehouse-lake-or-lakehouse/</link>
-      <description>Compare data warehouses, lakes, and lakehouses to find the best fit for your analytics needs. Uncover key features, benefits, and use cases in this insightful showdown.</description>
-      <pubDate>Mon, 13 Apr 2026 17:19:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-showdown-warehouse-lake-or-lakehouse/</guid>
     </item>
   </channel>
 </rss>
