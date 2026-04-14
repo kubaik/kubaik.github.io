@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 23:29:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 23:39:54 +0000</lastBuildDate>
+    <item>
+      <title>Refactor Safely</title>
+      <link>https://kubaik.github.io/refactor-safely/</link>
+      <description>Refactoring legacy code without breaking everything requires a deep understanding of the system&apos;s architecture, performance bottlenecks, and potential issues.</description>
+      <pubDate>Tue, 14 Apr 2026 23:39:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/refactor-safely/</guid>
+    </item>
     <item>
       <title>AI Prompting Hacks</title>
       <link>https://kubaik.github.io/ai-prompting-hacks/</link>
@@ -138,13 +145,6 @@
       <description>AI-powered coding tools improve efficiency by 20%</description>
       <pubDate>Tue, 14 Apr 2026 12:46:05 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-vs-developers-will-robots-replace-you/</guid>
-    </item>
-    <item>
-      <title>Design Like a Pro .</title>
-      <link>https://kubaik.github.io/design-like-a-pro/</link>
-      <description>System design interview tips</description>
-      <pubDate>Tue, 14 Apr 2026 11:55:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
