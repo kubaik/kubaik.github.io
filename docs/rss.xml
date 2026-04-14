@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2026 11:42:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2026 11:55:22 +0000</lastBuildDate>
+    <item>
+      <title>Design Like a Pro .</title>
+      <link>https://kubaik.github.io/design-like-a-pro/</link>
+      <description>System design interview tips</description>
+      <pubDate>Tue, 14 Apr 2026 11:55:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-like-a-pro/</guid>
+    </item>
     <item>
       <title>Price to Win</title>
       <link>https://kubaik.github.io/price-to-win/</link>
@@ -138,13 +145,6 @@
       <description>Uncover ransomware attack tactics and get expert tips to protect your data and survive a hijack.</description>
       <pubDate>Tue, 14 Apr 2026 03:41:33 +0000</pubDate>
       <guid>https://kubaik.github.io/ransomware-hijacked/</guid>
-    </item>
-    <item>
-      <title>2026 Layoff Wave</title>
-      <link>https://kubaik.github.io/2026-layoff-wave/</link>
-      <description>Get the latest on 2026 tech layoffs: trends, affected companies, and expert insights to navigate the shifting job market.</description>
-      <pubDate>Tue, 14 Apr 2026 01:56:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-layoff-wave/</guid>
     </item>
   </channel>
 </rss>
