@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 04:43:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 06:10:18 +0000</lastBuildDate>
+    <item>
+      <title>AI Powered Life</title>
+      <link>https://kubaik.github.io/ai-powered-life/</link>
+      <description>Automate daily tasks with AI and Python</description>
+      <pubDate>Wed, 15 Apr 2026 06:10:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-powered-life/</guid>
+    </item>
     <item>
       <title>AI Unlocked: LLMs Simplified</title>
       <link>https://kubaik.github.io/ai-unlocked-llms-simplified/</link>
@@ -138,13 +145,6 @@
       <description>React Native vs Flutter in 2026</description>
       <pubDate>Tue, 14 Apr 2026 16:59:45 +0000</pubDate>
       <guid>https://kubaik.github.io/react-vs-flutter/</guid>
-    </item>
-    <item>
-      <title>Stripe&apos;s Secure Flow .</title>
-      <link>https://kubaik.github.io/stripes-secure-flow/</link>
-      <description>Stripe secure payment flow</description>
-      <pubDate>Tue, 14 Apr 2026 15:56:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/stripes-secure-flow/</guid>
     </item>
   </channel>
 </rss>
