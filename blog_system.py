@@ -111,6 +111,16 @@ def _derive_hashtags_from_keywords(keywords: List[str],
 
 
 # ─────────────────────────────────────────────────────────────────
+# Mistral constants  (mirrors test_mistral.py)
+# ─────────────────────────────────────────────────────────────────
+
+_MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
+_MISTRAL_MODEL = "mistral-small-latest"   # free tier: 1 req/sec, 1B tok/month
+# seconds to respect 1 req/sec limit
+_MISTRAL_FREE_TIER_DELAY = 1.2
+
+
+# ─────────────────────────────────────────────────────────────────
 # BlogSystem
 # ─────────────────────────────────────────────────────────────────
 
@@ -124,6 +134,7 @@ class BlogSystem:
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
+        self.mistral_key = os.getenv("MISTRAL_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
 
         self._log_key_status()
@@ -133,6 +144,7 @@ class BlogSystem:
             self.groq_key
             or self.openrouter_key
             or self.cerebras_key
+            or self.mistral_key
             or self.gemini_key
         )
 
@@ -147,6 +159,8 @@ class BlogSystem:
             f"  OpenRouter: {'configured' if self.openrouter_key  else 'NOT SET'}")
         print(
             f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
+        print(
+            f"  Mistral:    {'configured' if self.mistral_key     else 'NOT SET'}")
         print(
             f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
@@ -196,26 +210,28 @@ class BlogSystem:
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN:
-    #   Groq → OpenRouter → Cerebras → Gemini → local template
+    #   Groq → OpenRouter → Cerebras → Mistral → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
 
         if self.groq_key:
-            providers.append(("Groq",       self._call_groq))
+            providers.append(("Groq",        self._call_groq))
         if self.openrouter_key:
-            providers.append(("OpenRouter",  self._call_openrouter))
+            providers.append(("OpenRouter",   self._call_openrouter))
         if self.cerebras_key:
-            providers.append(("Cerebras",    self._call_cerebras))
+            providers.append(("Cerebras",     self._call_cerebras))
+        if self.mistral_key:
+            providers.append(("Mistral",      self._call_mistral))
         if self.gemini_key:
-            providers.append(("Gemini",      self._call_gemini))
+            providers.append(("Gemini",       self._call_gemini))
 
         if not providers:
             raise Exception(
                 "No API keys configured. "
-                "Set at least one of: GROQ_API_KEY, "
-                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY."
+                "Set at least one of: GROQ_API_KEY, OPENROUTER_API_KEY, "
+                "CEREBRAS_API_KEY, MISTRAL_API_KEY, GEMINI_API_KEY."
             )
 
         last_error = None
@@ -232,8 +248,8 @@ class BlogSystem:
 
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}\n"
-            "Ensure at least one of GROQ_API_KEY / "
-            "OPENROUTER_API_KEY / CEREBRAS_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
+            "Ensure at least one of GROQ_API_KEY / OPENROUTER_API_KEY / "
+            "CEREBRAS_API_KEY / MISTRAL_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
         )
 
     # ─────────────────────────────────────────────────────────────
@@ -386,8 +402,7 @@ class BlogSystem:
                     await asyncio.sleep(wait)
                 else:
                     raise Exception(
-                        f"OpenRouter timed out after {max_attempts} attempts."
-                    )
+                        f"OpenRouter timed out after {max_attempts} attempts.")
 
         raise Exception(
             f"OpenRouter unavailable after {max_attempts} attempts.")
@@ -467,6 +482,79 @@ class BlogSystem:
         raise Exception(f"Cerebras unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
+    # PROVIDER: Mistral
+    # ─────────────────────────────────────────────────────────────
+    async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
+
+        headers = {
+            "Authorization": f"Bearer {self.mistral_key}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       _MISTRAL_MODEL,
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+        }
+
+        max_attempts = 4
+        wait_seconds = [_MISTRAL_FREE_TIER_DELAY, 15, 30]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        _MISTRAL_API_URL,
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=60),
+                    ) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            return result["choices"][0]["message"]["content"]
+
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"Mistral {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(f"Mistral {response.status}: {await response.text()}")
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Mistral connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Mistral connection failed after {max_attempts} attempts: {e}"
+                    )
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"Mistral timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"Mistral timed out after {max_attempts} attempts.")
+
+        raise Exception(f"Mistral unavailable after {max_attempts} attempts.")
+
+    # ─────────────────────────────────────────────────────────────
     # PROVIDER: Gemini
     # ─────────────────────────────────────────────────────────────
 
@@ -510,12 +598,10 @@ class BlogSystem:
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
 
-        system_parts = [
-            msg["content"] for msg in messages if msg.get("role") == "system"
-        ]
-        user_parts = [
-            msg["content"] for msg in messages if msg.get("role") != "system"
-        ]
+        system_parts = [msg["content"]
+                        for msg in messages if msg.get("role") == "system"]
+        user_parts = [msg["content"]
+                      for msg in messages if msg.get("role") != "system"]
 
         first_user = ""
         if system_parts:
@@ -548,9 +634,7 @@ class BlogSystem:
                         if response.status == 200:
                             result = await response.json()
                             try:
-                                return (
-                                    result["candidates"][0]["content"]["parts"][0]["text"]
-                                )
+                                return result["candidates"][0]["content"]["parts"][0]["text"]
                             except (KeyError, IndexError) as parse_err:
                                 raise Exception(
                                     f"Gemini unexpected response shape: {parse_err} — {result}"
@@ -721,8 +805,7 @@ class BlogSystem:
             is_dup, match, score = _is_duplicate_title(title, existing_titles)
             if not is_dup:
                 print(
-                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}"
-                )
+                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
                 return title
 
             print(
@@ -878,28 +961,17 @@ Return ONLY the JSON object.""",
             return ''.join(result)
 
         def _repair_truncated_json(text: str) -> str:
-            """
-            Attempt to close a JSON object that was cut off mid-stream.
-            Handles the common case where a long 'content' string value
-            was truncated before the closing quote and braces were emitted.
-            Strategy:
-            1. Find the last complete key-value pair boundary we can trust.
-            2. Close any open string, then close the object.
-            """
             text = text.rstrip()
-
-            # Already valid — nothing to do
             try:
                 json.loads(text)
                 return text
             except json.JSONDecodeError:
                 pass
 
-            # Track open/close state with a simple pass
             in_string = False
             escape_next = False
             brace_depth = 0
-            last_safe_pos = 0   # position just after the last complete "key": "value", pair
+            last_safe_pos = 0
 
             for i, ch in enumerate(text):
                 if escape_next:
@@ -917,20 +989,15 @@ Return ONLY the JSON object.""",
                     elif ch == '}':
                         brace_depth -= 1
                     elif ch == ',' and brace_depth == 1:
-                        last_safe_pos = i  # safe cut point between top-level pairs
+                        last_safe_pos = i
 
             if not in_string and brace_depth == 0:
-                # Looks structurally complete — sanitize and return
                 return _sanitize_json_string(text)
 
             repaired = text
-
             if in_string:
-                # We're inside a truncated string value — close it
                 repaired = repaired + '"'
 
-            # Close any open arrays or extra braces
-            # (our schema has no arrays at top level except seo_keywords)
             array_depth = repaired.count('[') - repaired.count(']')
             for _ in range(max(0, array_depth)):
                 repaired += ']'
@@ -942,26 +1009,17 @@ Return ONLY the JSON object.""",
             return repaired
 
         def _extract_partial_fields(text: str) -> dict:
-            """
-            Last-resort field-by-field extraction when the JSON is too broken
-            to repair structurally. Pulls out whatever fields are present using
-            targeted regex, so a truncated 'content' is still usable.
-            """
             data = {}
 
-            # Extract 'content' — grab everything between "content": " and the
-            # next top-level key (or end of string), then strip trailing garbage
             content_match = re.search(
                 r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})',
                 text, re.DOTALL
             )
             if not content_match:
-                # Truncated — take everything after the opening quote
                 content_match = re.search(
                     r'"content"\s*:\s*"(.*)', text, re.DOTALL)
                 if content_match:
                     raw_content = content_match.group(1)
-                    # Unescape what we have
                     data['content'] = raw_content.replace(
                         '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
             else:
@@ -969,7 +1027,6 @@ Return ONLY the JSON object.""",
                 data['content'] = raw_content.replace(
                     '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
 
-            # Extract 'meta_description'
             meta_match = re.search(
                 r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})',
                 text, re.DOTALL
@@ -978,7 +1035,6 @@ Return ONLY the JSON object.""",
                 data['meta_description'] = meta_match.group(
                     1).replace('\\n', ' ').strip()
 
-            # Extract 'seo_keywords' array
             kw_match = re.search(
                 r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
             if kw_match:
@@ -991,19 +1047,16 @@ Return ONLY the JSON object.""",
             return data
 
         def _try_parse_json(text: str) -> dict:
-            # Attempt 1: parse as-is
             try:
                 return json.loads(text)
             except json.JSONDecodeError:
                 pass
 
-            # Attempt 2: sanitize control characters then parse
             try:
                 return json.loads(_sanitize_json_string(text))
             except json.JSONDecodeError:
                 pass
 
-            # Attempt 3: extract outermost {...} block, sanitize, parse
             block_match = re.search(r'\{.*\}', text, re.DOTALL)
             if block_match:
                 try:
@@ -1011,7 +1064,6 @@ Return ONLY the JSON object.""",
                 except json.JSONDecodeError:
                     pass
 
-            # Attempt 4: repair truncation (close open strings/braces) then parse
             try:
                 repaired = _repair_truncated_json(text)
                 data = json.loads(_sanitize_json_string(repaired))
@@ -1020,12 +1072,10 @@ Return ONLY the JSON object.""",
             except (json.JSONDecodeError, Exception):
                 pass
 
-            # Attempt 5: field-by-field regex extraction
             print(
                 "Warning: JSON structurally unrecoverable — extracting fields individually.")
             data = _extract_partial_fields(text)
             if 'content' in data:
-                # Fill in defaults for missing fields so the caller never KeyErrors
                 data.setdefault('meta_description', '')
                 data.setdefault('seo_keywords', [])
                 return data
@@ -1037,7 +1087,6 @@ Return ONLY the JSON object.""",
 
         data = _try_parse_json(raw)
 
-        # Validate required keys
         for key in ("content", "meta_description", "seo_keywords"):
             if key not in data:
                 raise ValueError(f"Bundle response missing key: '{key}'")
@@ -1072,7 +1121,6 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _build_post_url(self, post_url: str, position: int, style: str) -> str:
-        """Append UTM params so each tweet's clicks are distinguishable in analytics."""
         return (
             f"{post_url}"
             f"?utm_source=twitter"
@@ -1082,10 +1130,6 @@ Return ONLY the JSON object.""",
         )
 
     def _build_thread_tweets(self, post) -> List[str]:
-        """
-        Build a 4-tweet thread (cost optimised — was 7).
-        Keeps impression value while halving API write calls.
-        """
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
         short_title = post.title if len(
@@ -1741,7 +1785,8 @@ def create_sample_config():
     print("     GROQ_API_KEY       (primary)")
     print("     OPENROUTER_API_KEY (fallback 1)")
     print("     CEREBRAS_API_KEY   (fallback 2 — fast Llama, ~1000 tok/s)")
-    print("     GEMINI_API_KEY     (fallback 3)")
+    print("     MISTRAL_API_KEY    (fallback 3 — free tier, 1B tok/month)")
+    print("     GEMINI_API_KEY     (fallback 4)")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1761,16 +1806,16 @@ if __name__ == "__main__":
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
             print(
-                "\nAPI chain: Groq → OpenRouter → Cerebras → Gemini → local template")
+                "\nAPI chain: Groq → OpenRouter → Cerebras → Mistral → Gemini → local template")
             print(
                 "Add GitHub secrets: GROQ_API_KEY, "
-                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY"
+                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, GEMINI_API_KEY"
             )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
             print(
-                "API chain: Groq → OpenRouter → Cerebras → Gemini → local template")
+                "API chain: Groq → OpenRouter → Cerebras → Mistral → Gemini → local template")
 
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -2058,7 +2103,7 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System with Monetization")
-        print("API chain: Groq (primary) → OpenRouter → Cerebras → Gemini → local template")
+        print("API chain: Groq (primary) → OpenRouter → Cerebras → Mistral → Gemini → local template")
         print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
@@ -2080,4 +2125,5 @@ if __name__ == "__main__":
         print("  GROQ_API_KEY       - Primary  (100k tokens/day free, very fast)")
         print("  OPENROUTER_API_KEY - Fallback 1 (GPT-4o-mini via OpenRouter)")
         print("  CEREBRAS_API_KEY   - Fallback 2 (Llama, ~1000 tok/s, no credit card)")
-        print("  GEMINI_API_KEY     - Fallback 3 (Gemini 2.5 Flash — generous free tier)")
+        print("  MISTRAL_API_KEY    - Fallback 3 (mistral-small-latest, 1B tok/month free)")
+        print("  GEMINI_API_KEY     - Fallback 4 (Gemini 2.5 Flash — generous free tier)")
