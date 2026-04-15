@@ -106,14 +106,9 @@ class VisibilityAutomator:
         """
         Convert a blog post into a tweet thread and post it.
 
-        Thread structure (7 tweets):
-          1. Hook  — grab attention
-          2. Problem  — pain point the post addresses
-          3. Key insight — the core idea
-          4. Tip 1  — first actionable point
-          5. Tip 2  — second actionable point
-          6. Tip 3  — third actionable point
-          7. CTA  — link back to the full post
+        Thread structure (2 tweets — optimised for X algorithm):
+          1. Hook  — grab attention, no URL (algorithm suppresses link tweets)
+          2. Reply — insights + blog URL + tiered hashtags
 
         Returns a dict with success status, thread_ids, and URLs.
         """
@@ -171,8 +166,9 @@ class VisibilityAutomator:
 
         Tweet 2 — Reply to tweet 1. Contains the payoff: 3 punchy insights
                 from the article, the blog URL with UTM params, and up to
-                3 hashtags. Replies are deprioritised for suppression, so
-                the URL here costs almost nothing in reach.
+                5 tiered hashtags (2 broad + 2 niche + 1 monetization).
+                Replies are deprioritised for suppression, so the URL here
+                costs almost nothing in reach.
 
         Total: 2 API write calls, zero filler tweets.
         """
@@ -182,15 +178,20 @@ class VisibilityAutomator:
         tracked_url = self._build_post_url(
             post_url, position=2, style=hook_style)
 
-        # ── Hashtags: max 3, shortest first ──────────────────────────
-        hashtags = ""
-        if hasattr(post, 'tags') and post.tags:
+        # ── Hashtags: prefer tiered twitter_hashtags set on the post object ──
+        # Falls back to cleaning post.tags if twitter_hashtags not present.
+        # Capped at 5 — X suppresses posts with 6+ hashtags as potential spam.
+        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+            hashtags = post.twitter_hashtags  # already formatted: "#Tag1 #Tag2 ..."
+        elif hasattr(post, 'tags') and post.tags:
             clean_tags = [
                 t.replace(' ', '').replace('-', '')
-                for t in sorted(post.tags, key=len)
+                for t in post.tags
                 if t and len(t.replace(' ', '').replace('-', '')) >= 3
             ]
-            hashtags = " ".join(f"#{t}" for t in clean_tags[:3])
+            hashtags = " ".join(f"#{t}" for t in clean_tags[:5])
+        else:
+            hashtags = ""
 
         # ── Topic words extracted from title ─────────────────────────
         title_words = [w for w in post.title.split() if len(w) > 4]
@@ -420,9 +421,13 @@ class VisibilityAutomator:
             idx = int(str(tweet.id)[-1]) % len(generic_replies)
             reply = generic_replies[idx].replace("{url}", post_url)
 
-            # Add a relevant hashtag from the post
+            # Add one relevant hashtag from the post's tiered set
             tag = ""
-            if hasattr(post, 'tags') and post.tags:
+            if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+                # Pull just the first hashtag from the tiered set
+                first_tag = post.twitter_hashtags.split()[0]
+                tag = f" {first_tag}"
+            elif hasattr(post, 'tags') and post.tags:
                 clean = post.tags[0].replace(' ', '').replace('-', '')
                 tag = f" #{clean}"
 
@@ -567,6 +572,9 @@ class VisibilityAutomator:
         twitter_post = self.tweet_generator.create_engaging_tweet(
             post, strategy="auto")
 
+        # Use tiered hashtags for LinkedIn if available
+        linkedin_hashtags = self._format_hashtags_linkedin(post)
+
         linkedin_post = f"""🚀 New Article: {post.title}
 
 {post.meta_description}
@@ -581,7 +589,7 @@ Perfect for developers and tech professionals looking to level up their skills.
 
 Read the full article: https://kubaik.github.io/{post.slug}
 
-{self._format_hashtags_linkedin(post)}
+{linkedin_hashtags}
 """
         reddit_title = f"[Guide] {post.title}"
         reddit_post = f"""{post.meta_description}
@@ -619,6 +627,9 @@ Let me know what you think! 💬
         }
 
     def _format_hashtags_linkedin(self, post) -> str:
+        # Prefer tiered twitter_hashtags (already formatted) for consistency
+        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+            return post.twitter_hashtags
         if hasattr(post, 'tags') and post.tags:
             tags = post.tags[:5]
             return ' '.join(f"#{t.replace(' ', '').replace('-', '')}" for t in tags if t)
@@ -645,7 +656,7 @@ if __name__ == "__main__":
                                      "your data and prevent breaches.")
             self.tags = ["coding", "innovation",
                          "CloudNative", "OpenAPI", "5G"]
-            self.twitter_hashtags = "#coding #innovation #CloudNative"
+            self.twitter_hashtags = "#CyberSecurity #APIs #CloudNative #InfoSec #BuildInPublic"
 
     post = MockPost()
 
