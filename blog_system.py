@@ -82,32 +82,158 @@ def _count_words(text: str) -> int:
     return len(text.split())
 
 
-def _derive_hashtags_from_keywords(keywords: List[str],
-                                   max_hashtags: int = 10) -> List[str]:
-    """
-    Convert seo_keywords to hashtag-style strings without an API call.
-    Short keywords (<=3 words) become hashtags directly.
-    Question-based keywords ("how to …", "what is …") are skipped.
-    """
-    question_starters = {"how", "what", "why", "when", "where", "which", "who"}
-    hashtags = []
+# ─────────────────────────────────────────────────────────────────
+# Tiered hashtag system
+# ─────────────────────────────────────────────────────────────────
 
-    for kw in keywords:
-        kw = kw.strip()
-        if not kw:
-            continue
-        words = kw.lower().split()
-        if words and words[0] in question_starters:
-            continue
-        if len(words) <= 3:
-            tag = "".join(w.capitalize() for w in words)
-            tag = re.sub(r"[^\w]", "", tag)
-            if tag:
-                hashtags.append(tag)
-        if len(hashtags) >= max_hashtags:
-            break
+# Tier 1: broad reach — high volume, gets impressions from non-followers
+# Tier 2: niche/community — medium volume, engaged developer audience
+# Tier 3: monetization — low volume, high buyer-intent (converts affiliate clicks)
+_HASHTAG_TIERS = {
+    "broad": {
+        "ai": ["AI", "ArtificialIntelligence"],
+        "python": ["Python", "Python3"],
+        "javascript": ["JavaScript", "JS"],
+        "typescript": ["TypeScript"],
+        "react": ["ReactJS", "React"],
+        "web": ["WebDev", "WebDevelopment"],
+        "devops": ["DevOps"],
+        "cloud": ["CloudComputing"],
+        "security": ["CyberSecurity", "InfoSec"],
+        "data": ["DataEngineering", "DataScience"],
+        "ml": ["MachineLearning", "ML"],
+        "llm": ["LLM", "GenerativeAI"],
+        "tech": ["Tech", "Technology"],
+        "coding": ["Coding", "Programming"],
+        "software": ["SoftwareEngineering"],
+        "startup": ["Startups", "Entrepreneurship"],
+        "api": ["APIs"],
+        "database": ["Database"],
+        "performance": ["Performance"],
+        "mobile": ["MobileDev"],
+    },
+    "niche": {
+        "kubernetes": ["Kubernetes", "K8s"],
+        "docker": ["Docker", "Containers"],
+        "rust": ["RustLang"],
+        "golang": ["Golang"],
+        "go lang": ["Golang"],
+        "java": ["Java"],
+        "api design": ["APIDesign", "REST"],
+        "sql": ["SQL", "Database"],
+        "system design": ["SystemDesign"],
+        "open source": ["OpenSource"],
+        "cloud native": ["CloudNative", "CNCF"],
+        "rag": ["RAG"],
+        "vector": ["VectorDB"],
+        "saas": ["SaaS", "ProductDev"],
+        "nextjs": ["NextJS"],
+        "next.js": ["NextJS"],
+        "tailwind": ["TailwindCSS"],
+        "graphql": ["GraphQL"],
+        "serverless": ["Serverless"],
+        "microservices": ["Microservices"],
+        "kafka": ["ApacheKafka"],
+        "redis": ["Redis"],
+        "postgres": ["PostgreSQL"],
+        "mysql": ["MySQL"],
+        "mongodb": ["MongoDB"],
+        "terraform": ["Terraform", "IaC"],
+        "github": ["GitHub", "GitOps"],
+        "swift": ["Swift", "iOSDev"],
+        "kotlin": ["Kotlin", "AndroidDev"],
+        "flutter": ["Flutter"],
+        "react native": ["ReactNative"],
+        "cybersecurity": ["PenTesting", "ZeroTrust"],
+        "llm": ["PromptEngineering", "LLMOps"],
+        "gpt": ["ChatGPT", "OpenAI"],
+        "claude": ["Anthropic"],
+        "gemini": ["GoogleAI"],
+        "fine-tuning": ["FineTuning", "MLOps"],
+        "rag": ["RAG", "VectorSearch"],
+        "mlops": ["MLOps", "ModelDeployment"],
+    },
+    "monetization": {
+        "passive income": ["PassiveIncome"],
+        "side hustle": ["SideHustle"],
+        "indie": ["IndieHacker", "BuildInPublic"],
+        "freelance": ["Freelancing", "TechCareer"],
+        "career": ["TechCareer", "CareerAdvice"],
+        "learn": ["100DaysOfCode", "LearnToCode"],
+        "salary": ["TechSalary", "GetHired"],
+        "money": ["MakeMoneyOnline"],
+        "saas": ["MicroSaaS", "BootstrappedFounder"],
+        "build": ["BuildInPublic"],
+        "launch": ["ProductLaunch", "IndieHacker"],
+        "monetize": ["Monetization", "CreatorEconomy"],
+        "affiliate": ["AffiliateMarketing"],
+        "blog": ["Blogging", "ContentCreator"],
+        "student": ["StudentDev", "LearnToCode"],
+        "hire": ["GetHired", "TechJobs"],
+        "job": ["TechJobs", "Hiring"],
+        "remote": ["RemoteWork", "DigitalNomad"],
+    },
+}
 
-    return hashtags
+
+def _derive_hashtags_from_keywords(
+    keywords: List[str],
+    topic: str = "",
+    max_hashtags: int = 5,
+) -> List[str]:
+    """
+    Build a tiered hashtag set for maximum X reach and monetization potential.
+
+    Mix: 1-2 broad reach + 2 niche community + 1 monetization/high-intent.
+    Capped at 5 total — X suppresses posts with 6+ hashtags as potential spam.
+
+    Falls back to camelCased keywords for anything not matched in the tier map.
+    """
+    combined = " ".join(keywords + [topic]).lower()
+
+    selected = {"broad": [], "niche": [], "monetization": []}
+
+    for tier, mapping in _HASHTAG_TIERS.items():
+        for keyword, tags in mapping.items():
+            if keyword in combined and tags:
+                for tag in tags:
+                    if tag not in selected[tier]:
+                        selected[tier].append(tag)
+
+    # Balanced mix: 2 broad + 2 niche + 1 monetization
+    result = []
+    result.extend(selected["broad"][:2])
+    result.extend(selected["niche"][:2])
+    result.extend(selected["monetization"][:1])
+
+    # Pad with camelCased keywords if still under limit
+    if len(result) < max_hashtags:
+        question_starters = {"how", "what", "why",
+                             "when", "where", "which", "who"}
+        for kw in keywords:
+            kw = kw.strip().lower()
+            if not kw:
+                continue
+            words = kw.split()
+            if words and words[0] in question_starters:
+                continue
+            if len(words) <= 2:
+                tag = "".join(w.capitalize() for w in words)
+                tag = re.sub(r"[^\w]", "", tag)
+                if tag and tag not in result:
+                    result.append(tag)
+            if len(result) >= max_hashtags:
+                break
+
+    # Deduplicate while preserving order
+    seen = set()
+    final = []
+    for tag in result:
+        if tag not in seen:
+            seen.add(tag)
+            final.append(tag)
+
+    return final[:max_hashtags]
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -854,15 +980,19 @@ class BlogSystem:
             post.monetization_data = self.monetization.generate_ad_slots(
                 enhanced_content)
 
-            print("Deriving hashtags from keywords...")
+            # ── Tiered hashtag derivation (no API call) ───────────
+            # Capped at 5: X suppresses posts with 6+ hashtags as spam.
+            # Mix: 2 broad reach + 2 niche community + 1 monetization/high-intent.
+            print("Deriving hashtags from keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
-                seo_keywords, max_hashtags=10)
-            print(f"Hashtags: {', '.join(hashtags[:5])}")
+                seo_keywords, topic=topic, max_hashtags=5
+            )
+            print(f"Hashtags selected: {', '.join(hashtags)}")
 
             post.tags = list(set(post.tags + hashtags))[:15]
             post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
             post.twitter_hashtags = " ".join(
-                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags[:5]
+                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
             )
 
             return post
@@ -1214,12 +1344,18 @@ Return ONLY the JSON object.""",
         short_title = post.title if len(
             post.title) <= 60 else post.title[:57] + "..."
 
-        hashtags = ""
-        if hasattr(post, 'tags') and post.tags:
-            sorted_tags = sorted(post.tags, key=len)[:3]
-            hashtags = " ".join(
-                f"#{t.replace(' ', '').replace('-', '')}" for t in sorted_tags
-            )
+        # Use tiered twitter_hashtags if available, else fall back to tags
+        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+            hashtags = post.twitter_hashtags  # already formatted as "#Tag1 #Tag2 ..."
+        elif hasattr(post, 'tags') and post.tags:
+            clean_tags = [
+                t.replace(' ', '').replace('-', '')
+                for t in post.tags
+                if t and len(t.replace(' ', '').replace('-', '')) >= 3
+            ]
+            hashtags = " ".join(f"#{t}" for t in clean_tags[:3])
+        else:
+            hashtags = ""
 
         title_words = [w for w in post.title.split() if len(w) > 4]
         topic_a = title_words[0] if len(title_words) > 0 else "this topic"
@@ -1416,6 +1552,14 @@ Three actions to take now: add explicit timeouts to every operation today; set u
 
 Further reading: the official {topic} documentation covers configuration options in depth. For production patterns, the Google SRE book chapters on managing risk and cascading failures are directly applicable."""
 
+        # Derive hashtags for fallback post too
+        fallback_hashtags = _derive_hashtags_from_keywords(
+            [topic_lower, f"{topic_lower} tutorial",
+                f"{topic_lower} best practices"],
+            topic=topic,
+            max_hashtags=5,
+        )
+
         post = BlogPost(
             title=title,
             content=content,
@@ -1425,7 +1569,7 @@ Further reading: the official {topic} documentation covers configuration options
                 'development',
                 'technical-guide',
                 'best-practices',
-            ],
+            ] + fallback_hashtags,
             meta_description=(
                 f"A practical guide to {topic} covering implementation, "
                 "real performance benchmarks, common mistakes, and honest tradeoffs."
@@ -1443,6 +1587,8 @@ Further reading: the official {topic} documentation covers configuration options
             affiliate_links=[],
             monetization_data={},
         )
+
+        post.twitter_hashtags = " ".join(f"#{h}" for h in fallback_hashtags)
 
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
             post.content, topic
@@ -1487,6 +1633,8 @@ Further reading: the official {topic} documentation covers configuration options
             print(f"  - {len(post.affiliate_links)} affiliate links added")
         print(
             f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
+        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+            print(f"  - Hashtags: {post.twitter_hashtags}")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1944,14 +2092,18 @@ if __name__ == "__main__":
                                 'twitter', '@KubaiKevin'
                             )
 
-                            hashtags = ""
-                            if hasattr(blog_post, 'tags') and blog_post.tags:
+                            # Use tiered hashtags from post if available
+                            if hasattr(blog_post, 'twitter_hashtags') and blog_post.twitter_hashtags:
+                                hashtags = blog_post.twitter_hashtags
+                            elif hasattr(blog_post, 'tags') and blog_post.tags:
                                 sorted_tags = sorted(
                                     blog_post.tags, key=len)[:3]
                                 hashtags = " ".join(
                                     f"#{t.replace(' ', '').replace('-', '')}"
                                     for t in sorted_tags if t
                                 )
+                            else:
+                                hashtags = ""
 
                             followup_text = (
                                 f"Found this useful? Follow {username} for daily threads on "
@@ -2143,6 +2295,7 @@ if __name__ == "__main__":
                         self.meta_description = "Testing our automated blog to Twitter posting system."
                         self.slug = "test-twitter-integration"
                         self.tags = ["test", "automation", "blogging"]
+                        self.twitter_hashtags = "#Tech #Coding #BuildInPublic"
 
                 test_post = TestPost()
                 social_posts = visibility.generate_social_posts(test_post)
