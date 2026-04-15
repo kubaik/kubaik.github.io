@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 19:53:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 20:01:51 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Code</title>
+      <link>https://kubaik.github.io/optimize-code/</link>
+      <description>Boost application performance with algorithm optimization best practices, including time and space complexity analysis and efficient data structure usage.</description>
+      <pubDate>Wed, 15 Apr 2026 20:01:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-code/</guid>
+    </item>
     <item>
       <title>AI Agents Unleashed</title>
       <link>https://kubaik.github.io/ai-agents-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.</description>
       <pubDate>Wed, 15 Apr 2026 08:30:06 +0000</pubDate>
       <guid>https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/</guid>
-    </item>
-    <item>
-      <title>Big Tech Exodus .</title>
-      <link>https://kubaik.github.io/big-tech-exodus/</link>
-      <description>Why developers are leaving big tech companies, and what they can do to prepare for their next move.</description>
-      <pubDate>Wed, 15 Apr 2026 08:18:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exodus/</guid>
     </item>
   </channel>
 </rss>
