@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 17:47:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 18:04:26 +0000</lastBuildDate>
+    <item>
+      <title>AI Made Easy</title>
+      <link>https://kubaik.github.io/ai-made-easy/</link>
+      <description>Build AI-powered apps without machine learning knowledge using pre-trained models and APIs. Learn how to implement AI-powered features with ease.</description>
+      <pubDate>Wed, 15 Apr 2026 18:04:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-made-easy/</guid>
+    </item>
     <item>
       <title>AI Widens Wealth Gap</title>
       <link>https://kubaik.github.io/ai-widens-wealth-gap/</link>
@@ -138,13 +145,6 @@
       <description>Learn how hackers use buffer overflow attacks to break into systems and how to prevent these types of attacks.</description>
       <pubDate>Wed, 15 Apr 2026 06:31:59 +0000</pubDate>
       <guid>https://kubaik.github.io/hackers-exposed/</guid>
-    </item>
-    <item>
-      <title>CPU LLM Boost</title>
-      <link>https://kubaik.github.io/cpu-llm-boost/</link>
-      <description>Fine-tune LLMs on CPUs with 60% faster throughput</description>
-      <pubDate>Wed, 15 Apr 2026 06:22:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/cpu-llm-boost/</guid>
     </item>
   </channel>
 </rss>
