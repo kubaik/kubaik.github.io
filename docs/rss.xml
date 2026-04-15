@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 12:44:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 13:10:03 +0000</lastBuildDate>
+    <item>
+      <title>Slack vs Teams: Why Slack Lost .</title>
+      <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
+      <description>Slack vs Teams: Microsoft Teams outperforms Slack</description>
+      <pubDate>Wed, 15 Apr 2026 13:09:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
+    </item>
     <item>
       <title>Slow App Alert .</title>
       <link>https://kubaik.github.io/slow-app-alert/</link>
@@ -138,13 +145,6 @@
       <description>Optimize your AI prompting workflow with these secrets most developers miss</description>
       <pubDate>Tue, 14 Apr 2026 23:29:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-prompting-hacks/</guid>
-    </item>
-    <item>
-      <title>Twinning Success</title>
-      <link>https://kubaik.github.io/twinning-success/</link>
-      <description>Digital twin tech reduces downtime by 20%, increases productivity by 15%</description>
-      <pubDate>Tue, 14 Apr 2026 22:41:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/twinning-success/</guid>
     </item>
   </channel>
 </rss>
