@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 13:10:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 13:19:04 +0000</lastBuildDate>
+    <item>
+      <title>AI Showdown: ChatGPT vs Claude vs Gemini</title>
+      <link>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</link>
+      <description>Evaluating the performance of AI chatbots like ChatGPT, Claude, and Gemini for conversational AI tasks.</description>
+      <pubDate>Wed, 15 Apr 2026 13:18:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</guid>
+    </item>
     <item>
       <title>Slack vs Teams: Why Slack Lost .</title>
       <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
@@ -138,13 +145,6 @@
       <description>Refactoring legacy code without breaking everything requires a deep understanding of the system&apos;s architecture, performance bottlenecks, and potential issues.</description>
       <pubDate>Tue, 14 Apr 2026 23:39:48 +0000</pubDate>
       <guid>https://kubaik.github.io/refactor-safely/</guid>
-    </item>
-    <item>
-      <title>AI Prompting Hacks</title>
-      <link>https://kubaik.github.io/ai-prompting-hacks/</link>
-      <description>Optimize your AI prompting workflow with these secrets most developers miss</description>
-      <pubDate>Tue, 14 Apr 2026 23:29:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompting-hacks/</guid>
     </item>
   </channel>
 </rss>
