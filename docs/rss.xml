@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 18:04:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 19:44:21 +0000</lastBuildDate>
+    <item>
+      <title>Spark Simplified</title>
+      <link>https://kubaik.github.io/spark-simplified/</link>
+      <description>Simplify Apache Spark development and deployment</description>
+      <pubDate>Wed, 15 Apr 2026 19:44:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-simplified/</guid>
+    </item>
     <item>
       <title>AI Made Easy</title>
       <link>https://kubaik.github.io/ai-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Developers build influence</description>
       <pubDate>Wed, 15 Apr 2026 08:05:24 +0000</pubDate>
       <guid>https://kubaik.github.io/code-to-influence/</guid>
-    </item>
-    <item>
-      <title>Hackers Exposed</title>
-      <link>https://kubaik.github.io/hackers-exposed/</link>
-      <description>Learn how hackers use buffer overflow attacks to break into systems and how to prevent these types of attacks.</description>
-      <pubDate>Wed, 15 Apr 2026 06:31:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/hackers-exposed/</guid>
     </item>
   </channel>
 </rss>
