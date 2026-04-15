@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 08:05:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 08:18:20 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech Exodus .</title>
+      <link>https://kubaik.github.io/big-tech-exodus/</link>
+      <description>Why developers are leaving big tech companies, and what they can do to prepare for their next move.</description>
+      <pubDate>Wed, 15 Apr 2026 08:18:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus/</guid>
+    </item>
     <item>
       <title>Code to Influence</title>
       <link>https://kubaik.github.io/code-to-influence/</link>
@@ -138,13 +145,6 @@
       <description>TypeScript patterns for improved code quality</description>
       <pubDate>Tue, 14 Apr 2026 19:42:21 +0000</pubDate>
       <guid>https://kubaik.github.io/time-saving-typescript-patterns/</guid>
-    </item>
-    <item>
-      <title>Human Touch AI</title>
-      <link>https://kubaik.github.io/human-touch-ai/</link>
-      <description>Use AI for content creation without it sounding robotic by following these steps and using the right tools and libraries.</description>
-      <pubDate>Tue, 14 Apr 2026 18:08:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/human-touch-ai/</guid>
     </item>
   </channel>
 </rss>
