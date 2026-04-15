@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 08:36:24 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 09:50:58 +0000</lastBuildDate>
+    <item>
+      <title>WhatsApp&apos;s $19B Secret</title>
+      <link>https://kubaik.github.io/whatsapps-19b-secret/</link>
+      <description>WhatsApp&apos;s $19B valuation can be attributed to its clever use of WebSockets and a well-optimized architecture.</description>
+      <pubDate>Wed, 15 Apr 2026 09:50:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/whatsapps-19b-secret/</guid>
+    </item>
     <item>
       <title>Build Your AI Assistant</title>
       <link>https://kubaik.github.io/build-your-ai-assistant/</link>
@@ -138,13 +145,6 @@
       <description>AI forecasts with up to 25% accuracy improvement</description>
       <pubDate>Tue, 14 Apr 2026 21:08:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Blue-Green vs Canary: Choose Wisely</title>
-      <link>https://kubaik.github.io/blue-green-vs-canary-choose-wisely/</link>
-      <description>Blue-green and canary deployments: choose wisely. Learn about the pros and cons of each approach and how to implement them for a smooth and successful deployment process.</description>
-      <pubDate>Tue, 14 Apr 2026 20:03:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-vs-canary-choose-wisely/</guid>
     </item>
   </channel>
 </rss>
