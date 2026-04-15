@@ -111,13 +111,22 @@ def _derive_hashtags_from_keywords(keywords: List[str],
 
 
 # ─────────────────────────────────────────────────────────────────
-# Mistral constants  (mirrors test_mistral.py)
+# Provider constants
 # ─────────────────────────────────────────────────────────────────
 
+# Mistral
 _MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
 _MISTRAL_MODEL = "mistral-small-latest"   # free tier: 1 req/sec, 1B tok/month
-# seconds to respect 1 req/sec limit
+# seconds — respect 1 req/sec limit
 _MISTRAL_FREE_TIER_DELAY = 1.2
+
+# NVIDIA NIM  (OpenAI-compatible endpoint via build.nvidia.com)
+# Free tier: 1,000 credits on signup, no credit card required.
+# Rate limit: 40 RPM on free tier.
+# Get key: https://build.nvidia.com → click any model → "Get API Key"
+# GitHub secret: NVIDIA_API_KEY
+_NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
+_NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"     # same quality as Groq/Cerebras
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -135,6 +144,7 @@ class BlogSystem:
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.mistral_key = os.getenv("MISTRAL_API_KEY")
+        self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
 
         self._log_key_status()
@@ -145,6 +155,7 @@ class BlogSystem:
             or self.openrouter_key
             or self.cerebras_key
             or self.mistral_key
+            or self.nvidia_key
             or self.gemini_key
         )
 
@@ -161,6 +172,8 @@ class BlogSystem:
             f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
         print(
             f"  Mistral:    {'configured' if self.mistral_key     else 'NOT SET'}")
+        print(
+            f"  NVIDIA NIM: {'configured' if self.nvidia_key      else 'NOT SET'}")
         print(
             f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
@@ -210,7 +223,7 @@ class BlogSystem:
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN:
-    #   Groq → OpenRouter → Cerebras → Mistral → Gemini → local template
+    #   Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
@@ -224,6 +237,8 @@ class BlogSystem:
             providers.append(("Cerebras",     self._call_cerebras))
         if self.mistral_key:
             providers.append(("Mistral",      self._call_mistral))
+        if self.nvidia_key:
+            providers.append(("NVIDIA NIM",   self._call_nvidia))
         if self.gemini_key:
             providers.append(("Gemini",       self._call_gemini))
 
@@ -231,7 +246,7 @@ class BlogSystem:
             raise Exception(
                 "No API keys configured. "
                 "Set at least one of: GROQ_API_KEY, OPENROUTER_API_KEY, "
-                "CEREBRAS_API_KEY, MISTRAL_API_KEY, GEMINI_API_KEY."
+                "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY."
             )
 
         last_error = None
@@ -249,7 +264,8 @@ class BlogSystem:
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}\n"
             "Ensure at least one of GROQ_API_KEY / OPENROUTER_API_KEY / "
-            "CEREBRAS_API_KEY / MISTRAL_API_KEY / GEMINI_API_KEY is set as a GitHub secret."
+            "CEREBRAS_API_KEY / MISTRAL_API_KEY / NVIDIA_API_KEY / GEMINI_API_KEY "
+            "is set as a GitHub secret."
         )
 
     # ─────────────────────────────────────────────────────────────
@@ -483,7 +499,11 @@ class BlogSystem:
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: Mistral
+    # Free tier: 1 req/sec, 1B tokens/month. No credit card.
+    # Get key: https://console.mistral.ai
+    # GitHub secret: MISTRAL_API_KEY
     # ─────────────────────────────────────────────────────────────
+
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE_STATUS = {503, 429, 500, 502, 504}
 
@@ -553,6 +573,90 @@ class BlogSystem:
                         f"Mistral timed out after {max_attempts} attempts.")
 
         raise Exception(f"Mistral unavailable after {max_attempts} attempts.")
+
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: NVIDIA NIM  (OpenAI-compatible)
+    # Free tier: 1,000 credits on signup. No credit card required.
+    # Rate limit: 40 RPM on free tier.
+    # Model: Llama 3.3 70B Instruct — same quality as Groq/Cerebras.
+    # Get key: https://build.nvidia.com → click any model → "Get API Key"
+    # GitHub secret: NVIDIA_API_KEY
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE_STATUS = {503, 429, 500, 502, 504}
+
+        headers = {
+            "Authorization": f"Bearer {self.nvidia_key}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       _NVIDIA_MODEL,
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+            # NVIDIA NIM supports streaming; use non-streaming for simplicity
+            "stream":      False,
+        }
+
+        max_attempts = 4
+        wait_seconds = [5, 15, 30]
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        _NVIDIA_API_URL,
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=90),
+                    ) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            return result["choices"][0]["message"]["content"]
+
+                        if response.status in RETRYABLE_STATUS:
+                            err_body = await response.text()
+                            if attempt < max_attempts:
+                                wait = wait_seconds[attempt - 1]
+                                print(
+                                    f"NVIDIA NIM {response.status} "
+                                    f"(attempt {attempt}/{max_attempts}): "
+                                    f"retrying in {wait}s... [{err_body[:120]}]"
+                                )
+                                await asyncio.sleep(wait)
+                                continue
+
+                        raise Exception(
+                            f"NVIDIA NIM {response.status}: {await response.text()}"
+                        )
+
+            except aiohttp.ClientConnectionError as e:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"NVIDIA NIM connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"NVIDIA NIM connection failed after {max_attempts} attempts: {e}"
+                    )
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(
+                        f"NVIDIA NIM timeout (attempt {attempt}/{max_attempts}). "
+                        f"Retrying in {wait}s..."
+                    )
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(
+                        f"NVIDIA NIM timed out after {max_attempts} attempts.")
+
+        raise Exception(
+            f"NVIDIA NIM unavailable after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: Gemini
@@ -693,8 +797,7 @@ class BlogSystem:
           Call 2: _generate_content_bundle()  (~4500 tokens out — content+meta+keywords)
 
         Hashtags are derived from seo_keywords locally — no extra API call.
-        _expand_content() is kept as a safety net but fires only when the
-        model under-delivers on word count.
+        _expand_content() fires only when the model under-delivers on word count.
         """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
@@ -706,9 +809,7 @@ class BlogSystem:
             existing_titles = _load_existing_titles(self.output_dir)
             title = await self._generate_unique_title(topic, keywords, existing_titles)
 
-            # ── Single bundle call replacing 3 separate calls ──────
             bundle = await self._generate_content_bundle(title, topic, keywords)
-
             content = bundle["content"].strip()
             meta_description = bundle["meta_description"].strip()
             seo_keywords = [k.strip()
@@ -716,7 +817,6 @@ class BlogSystem:
 
             if not keywords:
                 keywords = seo_keywords
-            # ────────────────────────────────────────────────────────
 
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
@@ -754,7 +854,6 @@ class BlogSystem:
             post.monetization_data = self.monetization.generate_ad_slots(
                 enhanced_content)
 
-            # ── Derive hashtags from seo_keywords — no extra API call
             print("Deriving hashtags from keywords...")
             hashtags = _derive_hashtags_from_keywords(
                 seo_keywords, max_hashtags=10)
@@ -780,11 +879,6 @@ class BlogSystem:
     async def _generate_unique_title(self, topic: str, keywords: List[str],
                                      existing_titles: List[str],
                                      max_attempts: int = 2) -> str:
-        """
-        Reduced from 3 attempts to 2. One retry is usually enough;
-        the third attempt rarely produces a meaningfully different result
-        and just burns tokens.
-        """
         for attempt in range(1, max_attempts + 1):
             extra_instruction = ""
             if attempt > 1:
@@ -815,7 +909,7 @@ class BlogSystem:
 
         print("Warning: could not generate a fully unique title. Appending date suffix.")
         suffix = f" ({datetime.now().strftime('%B %Y')})"
-        return f"{title} ."
+        return f"{title}{suffix}"
 
     async def _generate_title(self, topic: str, keywords: List[str] = None,
                               extra_instruction: str = "") -> str:
@@ -837,25 +931,14 @@ class BlogSystem:
                 ),
             },
         ]
-        # Trimmed from 100 → 80 tokens (titles rarely exceed 60 chars / ~15 tokens)
         title = await self._call_api_with_fallback(messages, max_tokens=80)
         return title.strip().splitlines()[0].strip().strip('"')
 
     async def _generate_content_bundle(self, title: str, topic: str,
                                        keywords: List[str] = None) -> Dict:
         """
-        Single API call that returns content + meta_description + seo_keywords
-        as a JSON object.
-
-        Saves 2 API calls and ~600 tokens compared to calling each method
-        separately.
-
-        Returns:
-            {
-                "content":          "<markdown body>",
-                "meta_description": "<155-char string>",
-                "seo_keywords":     ["kw1", "kw2", ...]
-            }
+        Single API call returning content + meta_description + seo_keywords as JSON.
+        Saves 2 API calls vs calling each method separately.
         """
         keyword_text = (
             f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
@@ -922,7 +1005,6 @@ Return ONLY the JSON object.""",
 
         raw = await self._call_api_with_fallback(messages, max_tokens=6000)
 
-        # Strip any accidental markdown fences the model might add
         raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
@@ -971,7 +1053,6 @@ Return ONLY the JSON object.""",
             in_string = False
             escape_next = False
             brace_depth = 0
-            last_safe_pos = 0
 
             for i, ch in enumerate(text):
                 if escape_next:
@@ -988,8 +1069,6 @@ Return ONLY the JSON object.""",
                         brace_depth += 1
                     elif ch == '}':
                         brace_depth -= 1
-                    elif ch == ',' and brace_depth == 1:
-                        last_safe_pos = i
 
             if not in_string and brace_depth == 0:
                 return _sanitize_json_string(text)
@@ -1176,7 +1255,6 @@ Return ONLY the JSON object.""",
         }
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
-
         url_t2 = self._build_post_url(post_url, position=2, style=hook_style)
         url_t4 = self._build_post_url(post_url, position=4, style=hook_style)
 
@@ -1786,7 +1864,8 @@ def create_sample_config():
     print("     OPENROUTER_API_KEY (fallback 1)")
     print("     CEREBRAS_API_KEY   (fallback 2 — fast Llama, ~1000 tok/s)")
     print("     MISTRAL_API_KEY    (fallback 3 — free tier, 1B tok/month)")
-    print("     GEMINI_API_KEY     (fallback 4)")
+    print("     NVIDIA_API_KEY     (fallback 4 — 1,000 free credits, 40 RPM)")
+    print("     GEMINI_API_KEY     (fallback 5)")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1806,16 +1885,18 @@ if __name__ == "__main__":
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized!")
             print(
-                "\nAPI chain: Groq → OpenRouter → Cerebras → Mistral → Gemini → local template")
+                "\nAPI chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template"
+            )
             print(
-                "Add GitHub secrets: GROQ_API_KEY, "
-                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, GEMINI_API_KEY"
+                "Add GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
+                "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY"
             )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
             print(
-                "API chain: Groq → OpenRouter → Cerebras → Mistral → Gemini → local template")
+                "API chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template"
+            )
 
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -1978,11 +2059,11 @@ if __name__ == "__main__":
                         post_md = item / "index.md"
                         social_json = item / "social_posts.json"
                         print(
-                            f"    post.json:         {'Yes' if post_json.exists()    else 'No'}")
+                            f"    post.json:         {'Yes' if post_json.exists()   else 'No'}")
                         print(
-                            f"    index.md:          {'Yes' if post_md.exists()      else 'No'}")
+                            f"    index.md:          {'Yes' if post_md.exists()     else 'No'}")
                         print(
-                            f"    social_posts.json: {'Yes' if social_json.exists()  else 'No'}")
+                            f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
@@ -2103,7 +2184,9 @@ if __name__ == "__main__":
 
     else:
         print("AI Blog System with Monetization")
-        print("API chain: Groq (primary) → OpenRouter → Cerebras → Mistral → Gemini → local template")
+        print(
+            "API chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template"
+        )
         print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
@@ -2126,4 +2209,6 @@ if __name__ == "__main__":
         print("  OPENROUTER_API_KEY - Fallback 1 (GPT-4o-mini via OpenRouter)")
         print("  CEREBRAS_API_KEY   - Fallback 2 (Llama, ~1000 tok/s, no credit card)")
         print("  MISTRAL_API_KEY    - Fallback 3 (mistral-small-latest, 1B tok/month free)")
-        print("  GEMINI_API_KEY     - Fallback 4 (Gemini 2.5 Flash — generous free tier)")
+        print(
+            "  NVIDIA_API_KEY     - Fallback 4 (Llama 3.3 70B, 1000 free credits, 40 RPM)")
+        print("  GEMINI_API_KEY     - Fallback 5 (Gemini 2.5 Flash — generous free tier)")
