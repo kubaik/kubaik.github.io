@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 03:39:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 04:35:03 +0000</lastBuildDate>
+    <item>
+      <title>Dev Burnout Fix .</title>
+      <link>https://kubaik.github.io/dev-burnout-fix/</link>
+      <description>Developer burnout affects 60% of developers, causing decreased productivity</description>
+      <pubDate>Wed, 15 Apr 2026 04:34:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-burnout-fix/</guid>
+    </item>
     <item>
       <title>Dev Productivity Facts</title>
       <link>https://kubaik.github.io/dev-productivity-facts/</link>
@@ -138,13 +145,6 @@
       <description>Vector databases and embeddings for ML and NLP</description>
       <pubDate>Tue, 14 Apr 2026 15:10:21 +0000</pubDate>
       <guid>https://kubaik.github.io/vectordb-simplified/</guid>
-    </item>
-    <item>
-      <title>Speed Up With Smart Caching</title>
-      <link>https://kubaik.github.io/speed-up-with-smart-caching/</link>
-      <description>Improve application performance and scalability with effective caching strategies.</description>
-      <pubDate>Tue, 14 Apr 2026 14:23:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up-with-smart-caching/</guid>
     </item>
   </channel>
 </rss>
