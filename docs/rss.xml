@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 22:26:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 22:38:42 +0000</lastBuildDate>
+    <item>
+      <title>Unboxing AI Secrets</title>
+      <link>https://kubaik.github.io/unboxing-ai-secrets/</link>
+      <description>Explainable AI makes black boxes transparent</description>
+      <pubDate>Wed, 15 Apr 2026 22:38:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/unboxing-ai-secrets/</guid>
+    </item>
     <item>
       <title>Mental Models for Devs</title>
       <link>https://kubaik.github.io/mental-models-for-devs/</link>
@@ -138,13 +145,6 @@
       <description>Skills to scrap in 5 years</description>
       <pubDate>Wed, 15 Apr 2026 11:54:13 +0000</pubDate>
       <guid>https://kubaik.github.io/skills-to-scrap/</guid>
-    </item>
-    <item>
-      <title>AI&apos;s Dark Side .</title>
-      <link>https://kubaik.github.io/ais-dark-side/</link>
-      <description>AI&apos;s dark side: hidden dangers of relying on AI</description>
-      <pubDate>Wed, 15 Apr 2026 11:16:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ais-dark-side/</guid>
     </item>
   </channel>
 </rss>
