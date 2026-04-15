@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 11:16:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 11:39:33 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech&apos;s Dark Secrets .</title>
+      <link>https://kubaik.github.io/big-techs-dark-secrets/</link>
+      <description>Big tech&apos;s dark secrets revealed</description>
+      <pubDate>Wed, 15 Apr 2026 11:39:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-techs-dark-secrets/</guid>
+    </item>
     <item>
       <title>AI&apos;s Dark Side .</title>
       <link>https://kubaik.github.io/ais-dark-side/</link>
@@ -138,13 +145,6 @@
       <description>VCs look for strong tech, business plan, and team</description>
       <pubDate>Tue, 14 Apr 2026 22:28:20 +0000</pubDate>
       <guid>https://kubaik.github.io/vcs-top-picks/</guid>
-    </item>
-    <item>
-      <title>Mobile Apps Under Attack .</title>
-      <link>https://kubaik.github.io/mobile-apps-under-attack/</link>
-      <description>Mobile apps are increasingly vulnerable to security attacks. Learn how to implement secure coding practices and security testing and validation to mitigate the risk of data breaches.</description>
-      <pubDate>Tue, 14 Apr 2026 21:46:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-apps-under-attack/</guid>
     </item>
   </channel>
 </rss>
