@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 10:03:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 10:14:17 +0000</lastBuildDate>
+    <item>
+      <title>Slash AWS Costs</title>
+      <link>https://kubaik.github.io/slash-aws-costs/</link>
+      <description>Cut AWS costs by 50% with these optimization techniques</description>
+      <pubDate>Wed, 15 Apr 2026 10:14:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/slash-aws-costs/</guid>
+    </item>
     <item>
       <title>Paycode 2026</title>
       <link>https://kubaik.github.io/paycode-2026/</link>
@@ -138,13 +145,6 @@
       <description>Bootstrapped tech stack for startups in 2026</description>
       <pubDate>Tue, 14 Apr 2026 21:31:24 +0000</pubDate>
       <guid>https://kubaik.github.io/bootstrapped-tech-stack-2026/</guid>
-    </item>
-    <item>
-      <title>AI Forecasts .</title>
-      <link>https://kubaik.github.io/ai-forecasts/</link>
-      <description>AI forecasts with up to 25% accuracy improvement</description>
-      <pubDate>Tue, 14 Apr 2026 21:08:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasts/</guid>
     </item>
   </channel>
 </rss>
