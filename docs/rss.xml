@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 06:10:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 06:22:15 +0000</lastBuildDate>
+    <item>
+      <title>CPU LLM Boost</title>
+      <link>https://kubaik.github.io/cpu-llm-boost/</link>
+      <description>Fine-tune LLMs on CPUs with 60% faster throughput</description>
+      <pubDate>Wed, 15 Apr 2026 06:22:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/cpu-llm-boost/</guid>
+    </item>
     <item>
       <title>AI Powered Life</title>
       <link>https://kubaik.github.io/ai-powered-life/</link>
@@ -138,13 +145,6 @@
       <description>Unlock productivity and efficiency with command line tools every developer should know, from grep and find to pip and jq.</description>
       <pubDate>Tue, 14 Apr 2026 17:44:55 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-toolbox-essentials/</guid>
-    </item>
-    <item>
-      <title>React vs Flutter .</title>
-      <link>https://kubaik.github.io/react-vs-flutter/</link>
-      <description>React Native vs Flutter in 2026</description>
-      <pubDate>Tue, 14 Apr 2026 16:59:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-vs-flutter/</guid>
     </item>
   </channel>
 </rss>
