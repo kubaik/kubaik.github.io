@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 13:19:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 14:00:33 +0000</lastBuildDate>
+    <item>
+      <title>Cash In On Code (April 2026)</title>
+      <link>https://kubaik.github.io/cash-in-on-code-april-2026/</link>
+      <description>Boost salary with in-demand tech skills</description>
+      <pubDate>Wed, 15 Apr 2026 14:00:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/cash-in-on-code-april-2026/</guid>
+    </item>
     <item>
       <title>AI Showdown: ChatGPT vs Claude vs Gemini</title>
       <link>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</link>
@@ -138,13 +145,6 @@
       <description>Improve NLP model performance by up to 45% with prompt engineering</description>
       <pubDate>Wed, 15 Apr 2026 01:09:06 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-mastery/</guid>
-    </item>
-    <item>
-      <title>Refactor Safely</title>
-      <link>https://kubaik.github.io/refactor-safely/</link>
-      <description>Refactoring legacy code without breaking everything requires a deep understanding of the system&apos;s architecture, performance bottlenecks, and potential issues.</description>
-      <pubDate>Tue, 14 Apr 2026 23:39:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactor-safely/</guid>
     </item>
   </channel>
 </rss>
