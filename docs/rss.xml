@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 19:44:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 19:53:44 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents Unleashed</title>
+      <link>https://kubaik.github.io/ai-agents-unleashed/</link>
+      <description>Build AI agents to create engaging, personalized, and efficient applications. Learn the concepts, implementation, and common mistakes to avoid.</description>
+      <pubDate>Wed, 15 Apr 2026 19:53:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-unleashed/</guid>
+    </item>
     <item>
       <title>Spark Simplified</title>
       <link>https://kubaik.github.io/spark-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Why developers are leaving big tech companies, and what they can do to prepare for their next move.</description>
       <pubDate>Wed, 15 Apr 2026 08:18:14 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus/</guid>
-    </item>
-    <item>
-      <title>Code to Influence</title>
-      <link>https://kubaik.github.io/code-to-influence/</link>
-      <description>Developers build influence</description>
-      <pubDate>Wed, 15 Apr 2026 08:05:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-to-influence/</guid>
     </item>
   </channel>
 </rss>
