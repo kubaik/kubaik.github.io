@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 14:29:34 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 15:04:16 +0000</lastBuildDate>
+    <item>
+      <title>JS Game Changers</title>
+      <link>https://kubaik.github.io/js-game-changers/</link>
+      <description></description>
+      <pubDate>Wed, 15 Apr 2026 15:04:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/js-game-changers/</guid>
+    </item>
     <item>
       <title>Micro-Frontend Mastery</title>
       <link>https://kubaik.github.io/micro-frontend-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Developer productivity research and optimization</description>
       <pubDate>Wed, 15 Apr 2026 03:39:49 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-productivity-facts/</guid>
-    </item>
-    <item>
-      <title>Senior Devs Exit Big Tech</title>
-      <link>https://kubaik.github.io/senior-devs-exit-big-tech/</link>
-      <description>Discover why senior developers are leaving big tech companies and what it means for the future of tech development.</description>
-      <pubDate>Wed, 15 Apr 2026 01:52:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-exit-big-tech/</guid>
     </item>
   </channel>
 </rss>
