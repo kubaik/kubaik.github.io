@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 08:18:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 08:30:12 +0000</lastBuildDate>
+    <item>
+      <title>Fortify Your Kubernetes: Mastering Container Security Now</title>
+      <link>https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/</link>
+      <description>Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.</description>
+      <pubDate>Wed, 15 Apr 2026 08:30:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/</guid>
+    </item>
     <item>
       <title>Big Tech Exodus .</title>
       <link>https://kubaik.github.io/big-tech-exodus/</link>
@@ -138,13 +145,6 @@
       <description>Computer Vision Applications in the Real World</description>
       <pubDate>Tue, 14 Apr 2026 19:53:34 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-in-action/</guid>
-    </item>
-    <item>
-      <title>Time-Saving TypeScript Patterns</title>
-      <link>https://kubaik.github.io/time-saving-typescript-patterns/</link>
-      <description>TypeScript patterns for improved code quality</description>
-      <pubDate>Tue, 14 Apr 2026 19:42:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/time-saving-typescript-patterns/</guid>
     </item>
   </channel>
 </rss>
