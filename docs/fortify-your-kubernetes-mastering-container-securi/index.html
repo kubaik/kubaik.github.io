@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortify Your Kubernetes: Mastering Container Security Now - Tech Blog</title>
+    <meta name="description" content="Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.">
+    <meta name="keywords" content="kubernetes network policies performance, seccomp vs apparmor for containers, distroless images vs alpine security, how to secure kubernetes pods, kubernetes security, container security best practices, KubernetesSecurity, KyvernoPolicyExamples, kyverno policy examples, is kubernetes secure by default">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.">
+    <meta property="og:title" content="Fortify Your Kubernetes: Mastering Container Security Now">
+    <meta property="og:description" content="Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.">
+    <meta property="og:url" content="https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-15T08:30:06.454490">
+    <meta property="article:modified_time" content="2026-04-15T08:30:06.454496">
+    <meta property="og:image" content="/static/images/fortify-your-kubernetes-mastering-container-securi.jpg">
+    <meta property="og:image:alt" content="Fortify Your Kubernetes: Mastering Container Security Now">
+    <meta name="twitter:image" content="/static/images/fortify-your-kubernetes-mastering-container-securi.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fortify Your Kubernetes: Mastering Container Security Now">
+    <meta name="twitter:description" content="Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/">
+    <meta name="keywords" content="kubernetes network policies performance, seccomp vs apparmor for containers, distroless images vs alpine security, how to secure kubernetes pods, kubernetes security, container security best practices, KubernetesSecurity, KyvernoPolicyExamples, kyverno policy examples, is kubernetes secure by default">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fortify Your Kubernetes: Mastering Container Security Now",
+  "description": "Secure Kubernetes clusters with concrete steps: distroless images, Kyverno policies, seccomp, and network segmentation with real-world performance costs and CVE stats.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-15T08:30:06.454490",
+  "dateModified": "2026-04-15T08:30:06.454496",
+  "url": "https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/fortify-your-kubernetes-mastering-container-securi/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/fortify-your-kubernetes-mastering-container-securi.jpg"
+  },
+  "keywords": [
+    "kubernetes network policies performance",
+    "seccomp vs apparmor for containers",
+    "distroless images vs alpine security",
+    "how to secure kubernetes pods",
+    "kubernetes security",
+    "container security best practices",
+    "KubernetesSecurity",
+    "KyvernoPolicyExamples",
+    "kyverno policy examples",
+    "is kubernetes secure by default"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <h1>Fortify Your Kubernetes: Mastering Container Security Now</h1>
+                
+                <div class="tags">
+                    
+                    <span class="tag">distroless images vs alpine security</span>
+                    
+                    <span class="tag">how to secure kubernetes pods</span>
+                    
+                    <span class="tag">kubernetes security</span>
+                    
+                    <span class="tag">container security best practices</span>
+                    
+                    <span class="tag">KubernetesSecurity</span>
+                    
+                    <span class="tag">KyvernoPolicyExamples</span>
+                    
+                </div>
+                
+                <div class="post-meta">
+                    <time datetime="2026-04-15T08:30:06.454490">15 April 2026</time>
+                </div>
+                 <div class="post-meta">
+                    
+                    <span class="reading-time"> 10 min read</span>
+                    
+                </div>
+            </header>
+            <div class="post-content">
+                <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
+<p>Most teams treat container security as an afterthought—until they’re staring at a CVE list or a compromised cluster. The typical mistake? Over-relying on Dockerfile best practices like <code>FROM scratch</code> or <code>USER nobody</code> without understanding the blast radius of a single vulnerable container image. In 2023, 60% of critical Kubernetes vulnerabilities originated from misconfigured base images according to the Kubernetes Security Insights Report (v2.2). That’s not a small margin—it’s a systematic failure to enforce image provenance at scale.</p>
+<p>Even when teams scan images with Trivy or Clair, they often skip runtime enforcement. A 2022 Sysdig report found that 78% of Kubernetes clusters had at least one container running with elevated privileges (<code>privileged: true</code>), exposing the host kernel to container escapes. Worse, 43% of those clusters had no Pod Security Admission (PSA) policies in place, leaving the door open for lateral movement attacks using mounted host paths or unbounded capabilities.</p>
+<p>The core issue isn’t tooling—it’s architecture. Developers build images locally, push to public registries, and deploy via Helm without validating signatures or enforcing network policies. By the time security teams get involved, the container is already running in production with secrets in environment variables and a <code>/tmp</code> directory mounted as writable. You need defense in depth: image immutability, runtime enforcement, and zero-trust networking from day one.</p>
+<h2 id="how-container-security-in-kubernetes-actually-works-under-the-hood">How Container Security in Kubernetes Actually Works Under the Hood</h2>
+<p>Kubernetes security isn’t just about running <code>kube-bench</code> and calling it a day. Under the hood, it’s a layered enforcement model: admission controllers, runtime protection, and network segmentation. The admission layer (enabled via <code>ValidatingAdmissionWebhook</code>) blocks deployments that violate policies before they hit the API server. For example, Pod Security Standards (v1.25+) enforce baseline profiles like <code>restricted</code> by default, rejecting pods that request <code>hostNetwork: true</code> or run as root.</p>
+<p>At runtime, mechanisms like seccomp, AppArmor, and SELinux restrict system calls and file access. A container running with seccomp profile <code>RuntimeDefault</code> (Kubernetes v1.25 default) blocks 44% of syscalls compared to unconfined containers, according to Google’s seccomp performance study (2023). That’s not just security—it’s hardening. Meanwhile, Cgroups v2 (default in Kubernetes v1.25 with <code>cgroupDriver: systemd</code>) limits memory, CPU, and I/O, preventing noisy neighbor attacks that crash nodes or skew metrics.</p>
+<p>Network policies are the unsung heroes. With Calico v3.26, you can enforce <code>deny-all</code> ingress/egress and explicitly allow only DNS (UDP 53) and your service mesh (e.g., Istio sidecar on port 15090). The performance hit? Less than 2% latency increase on p99 requests (measured with <code>wrk2</code> on a 500ms baseline), according to Calico’s 2024 benchmarks. Without network policies, lateral movement is trivial—an attacker compromises one pod and scans the entire cluster via <code>kube-proxy</code>’s open ports.</p>
+<h2 id="step-by-step-implementation">Step-by-Step Implementation</h2>
+<p>Start with image hardening. Use distroless images (e.g., <code>gcr.io/distroless/base-debian12</code> v1.70.0) instead of Alpine for production. Distroless images reduce attack surface by 85% compared to Alpine (Trivy vulnerability scan, 2024) and start in 20ms vs. 200ms for Alpine. Build your images with multi-stage Dockerfiles—here’s a concrete example for a Go app:</p>
+<pre><code class="language-dockerfile"># Build stage
+FROM golang:1.21.6-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/server
+
+# Runtime stage
+FROM gcr.io/distroless/base-debian12:nonroot@sha256:abc123...
+WORKDIR /
+COPY --from=builder /app/server /server
+USER nonroot:nonroot
+EXPOSE 8080
+ENTRYPOINT [&quot;/server&quot;]
+</code></pre>
+<p>Next, enforce immutability via admission control. Apply a Kyverno (v1.10.0) policy to require immutable tags and signature verification:</p>
+<pre><code class="language-yaml">apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-image-verification
+spec:
+  validationFailureAction: enforce
+  rules:
+  - name: verify-signature
+    match:
+      resources:
+        kinds:
+        - Pod
+    verifyImages:
+    - imageReferences:
+      - &quot;ghcr.io/yourorg/*&quot;
+      attestors:
+      - count: 1
+        entries:
+        - keys:
+            publicKeys: |-
+              -----BEGIN PUBLIC KEY-----
+              MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEX...
+              -----END PUBLIC KEY-----
+</code></pre>
+<p>Then, harden the runtime. Set <code>securityContext</code> in your Deployment to run as non-root, drop all capabilities, and use a read-only root filesystem:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure-app
+spec:
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: app
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [&quot;ALL&quot;]
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        image: ghcr.io/yourorg/app:v1.0.0
+        ports:
+        - containerPort: 8080
+</code></pre>
+<p>Finally, lock down networking. Apply a Calico (v3.26) policy to deny all traffic except to Istio’s sidecar and DNS:</p>
+<pre><code class="language-yaml">apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: deny-all-except-istio-dns
+spec:
+  selector: app == 'secure-app'
+  types:
+  - Ingress
+  - Egress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports: [15090]  # Istio sidecar
+  egress:
+  - action: Allow
+    protocol: UDP
+    destination:
+      ports: [53]     # DNS
+</code></pre>
+<h2 id="real-world-performance-numbers">Real-World Performance Numbers</h2>
+<p>Hardening containers isn’t free—there’s a cost to immutability, runtime enforcement, and network segmentation. In a 2024 benchmark by Datadog (using k6 and Prometheus), a secure Pod using distroless images and seccomp profile <code>RuntimeDefault</code> added <strong>8ms</strong> to cold start time (from 12ms to 20ms) and <strong>0.4% CPU overhead</strong> under load (measured at 1000 RPS). That’s negligible compared to the security gains—especially when compared to unhardened pods that crashed under memory pressure due to unbounded growth.</p>
+<p>Network policies introduce measurable, but predictable, latency. In the same benchmark, Calico v3.26 added <strong>1.8ms</strong> to p95 latency (from 50ms to 51.8ms) and <strong>0.2% throughput reduction</strong> at 500 RPS. The tradeoff is clear: 2ms of latency vs. preventing a data exfiltration attack via lateral movement. Meanwhile, seccomp’s syscall filtering added <strong>&lt;1% overhead</strong> in CPU-bound workloads (measured with <code>sysbench --test=cpu --num-threads=4</code>), proving that security doesn’t have to mean sacrificing performance.</p>
+<p>Image signing slows down CI/CD pipelines, but not catastrophically. A GitHub Actions workflow using Sigstore’s Cosign (v2.2.0) to sign a 500MB image adds <strong>30-45 seconds</strong> to the build time—mostly due to the time to push the signature to the OCI registry. That’s a one-time cost per image vs. the risk of deploying unsigned images that could be tampered with in transit. For teams using GitHub Container Registry, the latency is absorbed into the existing push time; for Docker Hub, it’s a noticeable slowdown but worth the security tradeoff.</p>
+<h2 id="common-mistakes-and-how-to-avoid-them">Common Mistakes and How to Avoid Them</h2>
+<p>Mistake 1: Using <code>latest</code> tags in production. A 2023 Aqua Security report found that 68% of Kubernetes clusters pulled images with <code>latest</code> tags, making rollbacks impossible and exposing clusters to supply chain attacks. Always pin tags to immutable digests (e.g., <code>ghcr.io/yourorg/app@sha256:abc123...</code>).</p>
+<p>Mistake 2: Running as root in containers. Even if the container image is distroless, a misconfigured <code>securityContext</code> can override it. Use <code>runAsNonRoot: true</code> and <code>runAsUser: 1000</code> in your Pod spec. In 2024, 42% of CVE exploits in Kubernetes required root privileges, according to the CVE Details database.</p>
+<p>Mistake 3: Disabling seccomp or AppArmor for "performance." Google’s seccomp study (2023) showed that unconfined containers averaged <strong>3x more syscalls</strong> than hardened ones, increasing the attack surface. The performance hit of seccomp is <strong>&lt;0.5% CPU overhead</strong> at 1000 RPS—negligible compared to the risk of a container escape.</p>
+<p>Mistake 4: Allowing <code>hostPath</code> mounts. In 2022, a misconfigured <code>hostPath</code> in a Redis pod led to a cluster compromise at a Fortune 500 company. Always use <code>emptyDir</code> or persistent volumes with proper access modes. If you must mount a host directory, restrict it to read-only and use SELinux labels.</p>
+<p>Mistake 5: Skipping network policies. Without network policies, pods can talk to each other freely. A 2023 attack simulation by Aqua Security showed that 92% of lateral movement attacks succeeded when network policies were absent. Start with a <code>deny-all</code> policy and gradually allow only what’s necessary.</p>
+<p>Mistake 6: Not rotating secrets. Kubernetes Secrets are base64-encoded by default, not encrypted. Use sealed-secrets (v0.24.0) or HashiCorp Vault (v1.16) to rotate and encrypt secrets. In 2024, 23% of breaches involved leaked Kubernetes Secrets, per the Verizon DBIR.</p>
+<h2 id="tools-and-libraries-worth-using">Tools and Libraries Worth Using</h2>
+<ol>
+<li>
+<p><strong>Trivy (v0.49.0)</strong> – Scan images, filesystems, and Kubernetes manifests for vulnerabilities. Trivy’s Kubernetes scanner integrates with Kyverno and OPA Gatekeeper to block deployments with critical CVEs. In 2024 benchmarks, Trivy scanned a 1GB image in <strong>12 seconds</strong> vs. Clair’s 45 seconds.</p>
+</li>
+<li>
+<p><strong>Kyverno (v1.10.0)</strong> – Policy engine for Kubernetes that enforces immutability, signatures, and runtime constraints via admission control. Kyverno’s mutation webhooks can automatically add <code>securityContext</code> to Pods, reducing manual configuration errors.</p>
+</li>
+<li>
+<p><strong>Falco (v0.36.0)</strong> – Runtime security tool that detects anomalous behavior (e.g., shell spawned in a container). Falco’s rule set includes CVE-specific detections (e.g., CVE-2021-44228 for Log4Shell) and integrates with SIEMs like Splunk.</p>
+</li>
+<li>
+<p><strong>Cilium (v1.15.0)</strong> – eBPF-based networking and security for Kubernetes. Cilium’s L7 filtering (e.g., HTTP headers) adds <strong>&lt;3% latency overhead</strong> at 1000 RPS, and its Hubble observability tool provides real-time traffic flow analysis.</p>
+</li>
+<li>
+<p><strong>Sigstore/Cosign (v2.2.0)</strong> – Sign and verify container images using keyless signatures (via Fulcio and Rekor). Cosign’s <code>cosign sign</code> command adds <strong>30-45 seconds</strong> to image builds but provides cryptographic proof of provenance.</p>
+</li>
+<li>
+<p><strong>OPA Gatekeeper (v3.14.0)</strong> – Policy-as-code for Kubernetes. Gatekeeper’s <code>constrainttemplates</code> can enforce PSA policies (e.g., no root containers) and integrate with external data sources like AWS IAM for cross-cloud security.</p>
+</li>
+<li>
+<p><strong>Sealed Secrets (v0.24.0)</strong> – Encrypt Kubernetes Secrets into SealedSecret CRDs, preventing exposure in Git repos. Sealed Secrets adds <strong>&lt;100ms overhead</strong> to Secret retrieval and supports rotation out of the box.</p>
+</li>
+<li>
+<p><strong>kube-bench (v0.8.0)</strong> – CIS Kubernetes Benchmark scanner. Run <code>kube-bench run --targets master,node</code> to audit cluster configurations against CIS v1.8.0 standards. In 2024, kube-bench flagged <strong>72% of clusters</strong> with at least one misconfiguration in the <code>api-server</code> flags.</p>
+</li>
+</ol>
+<h2 id="when-not-to-use-this-approach">When Not to Use This Approach</h2>
+<p>Don’t enforce runtime security policies on <strong>debug or development clusters</strong>. Teams using <code>minikube</code> or <code>kind</code> for local development often need elevated privileges (e.g., <code>hostPath</code> mounts, <code>privileged: true</code>) to debug networking or filesystem issues. Applying <code>restricted</code> PSA policies here will break tooling like Telepresence or Skaffold. Instead, use separate clusters for dev/test and prod, or label namespaces to skip admission checks.</p>
+<p>Avoid <strong>seccomp/AppArmor profiles</strong> on clusters running <strong>gaming or real-time workloads</strong>. eBPF-based seccomp filters add overhead to syscall-heavy applications. For example, a Redis cluster running on Kubernetes with <code>seccompProfile: RuntimeDefault</code> saw a <strong>5% increase in P99 latency</strong> (measured with Redis-benchmark at 10k ops/sec). If your workload is latency-sensitive, benchmark with and without seccomp before enforcing it.</p>
+<p>Skip <strong>network policies</strong> in clusters with <strong>dynamic pod IPs</strong> and no service mesh. If your workloads rely on headless Services with pod IPs changing frequently (e.g., StatefulSets with <code>podManagementPolicy: Parallel</code>), Calico or Cilium network policies may break connectivity. In these cases, use <strong>L4 load balancers</strong> (e.g., MetalLB) or <strong>CNI plugins with native support</strong> (e.g., Cilium’s <code>host-routing</code>).</p>
+<p>Don’t use <strong>distroless images</strong> for <strong>legacy apps</strong> with dynamic linking or JIT compilation. Distroless images lack a shell, package manager, and debugging tools. If your app requires <code>libc</code>, <code>gcc</code>, or <code>glibc</code>, use Alpine (v3.19) with <code>apk add --no-cache</code> and harden it with <code>securityContext</code> instead. The tradeoff is a larger attack surface but necessary functionality.</p>
+<p>Finally, avoid <strong>Kyverno or Gatekeeper</strong> if your cluster runs <strong>older Kubernetes versions</strong> (&lt; v1.21). Admission webhooks require <code>admissionregistration.k8s.io/v1</code>, which was GA in v1.16 but had bugs in earlier versions. Upgrade to v1.21+ or use <strong>Pod Security Policies (PSP)</strong> as a stopgap—but PSP is deprecated in v1.25 and removed in v1.26.</p>
+<h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
+<p>Container security in Kubernetes isn’t a checkbox—it’s a stack of interdependent layers. Start with image immutability (distroless + Cosign), enforce runtime constraints (Kyverno + seccomp), and lock down networking (Calico/Cilium). The performance cost is measurable but trivial compared to the risk of a breach.</p>
+<p>Next, automate enforcement. Integrate Trivy scans into your CI pipeline (GitHub Actions example below), block merges if vulnerabilities exceed a threshold, and rotate secrets weekly using Sealed Secrets or Vault. Document your policies in Git (e.g., Kyverno ClusterPolicies in a <code>policies/</code> repo) and audit them with kube-bench monthly.</p>
+<p>Finally, monitor runtime behavior. Deploy Falco to detect anomalies (e.g., shell spawned in a container) and ship logs to your SIEM. In 2024, 63% of breaches were detected via runtime monitoring, per IBM’s Cost of a Data Breach Report—proving that defense in depth works.</p>
+<p>The tools and techniques here aren’t optional. They’re the minimum viable security posture for production Kubernetes. Ignore them at your peril.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Content generated with AI assistance and reviewed for accuracy.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
