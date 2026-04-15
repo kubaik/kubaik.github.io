@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 15:48:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2026 16:41:05 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Fix</title>
+      <link>https://kubaik.github.io/mlops-fix/</link>
+      <description>MLOps streamlines AI model deployment, reducing issues</description>
+      <pubDate>Wed, 15 Apr 2026 16:40:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-fix/</guid>
+    </item>
     <item>
       <title>Pythonize Your Workflow</title>
       <link>https://kubaik.github.io/pythonize-your-workflow/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI potential with Large Language Models</description>
       <pubDate>Wed, 15 Apr 2026 04:43:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-unlocked-llms-simplified/</guid>
-    </item>
-    <item>
-      <title>Dev Burnout Fix .</title>
-      <link>https://kubaik.github.io/dev-burnout-fix/</link>
-      <description>Developer burnout affects 60% of developers, causing decreased productivity</description>
-      <pubDate>Wed, 15 Apr 2026 04:34:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-burnout-fix/</guid>
     </item>
   </channel>
 </rss>
