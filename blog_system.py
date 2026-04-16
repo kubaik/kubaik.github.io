@@ -913,9 +913,8 @@ class BlogSystem:
                 return title
             print(
                 f"Attempt {attempt}: title too similar ({score:.0%}) to '{match}'. Retrying…")
-
-        print("Warning: could not generate a fully unique title. Appending date suffix.")
-        return f"{title} ({datetime.now().strftime('%B %Y')})"
+        # Dont add any suffix
+        return f"{title} .."
 
     async def _generate_title(self, topic: str, keywords: List[str] = None,
                               extra_instruction: str = "") -> str:
