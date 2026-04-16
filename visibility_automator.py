@@ -394,8 +394,8 @@ class VisibilityAutomator:
             f"What's inside:\n"
             f"→ Why {topic_phrase} fails at scale\n"
             f"→ {topic_b} patterns that actually work\n"
-            f"→ Real benchmarks + code\n\n"
-            f"{tracked_url}\n\n"
+            f"→ Real benchmarks + code\n"
+            f"{tracked_url}\n"
             f"{hashtags}"
         )
 
