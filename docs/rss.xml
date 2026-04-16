@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 18:55:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 19:05:22 +0000</lastBuildDate>
+    <item>
+      <title>AI Money Hacks</title>
+      <link>https://kubaik.github.io/ai-money-hacks/</link>
+      <description>AI Money Hacks: Learn how to automate and optimize personal finance tasks using Artificial Intelligence and Machine Learning.</description>
+      <pubDate>Thu, 16 Apr 2026 19:05:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-money-hacks/</guid>
+    </item>
     <item>
       <title>Agile in Action</title>
       <link>https://kubaik.github.io/agile-in-action/</link>
@@ -138,13 +145,6 @@
       <description>API testing beyond basic Postman requests</description>
       <pubDate>Thu, 16 Apr 2026 11:36:38 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-deep-dive/</guid>
-    </item>
-    <item>
-      <title>Negotiate Like Pro (April 2026)</title>
-      <link>https://kubaik.github.io/negotiate-like-pro-april-2026/</link>
-      <description>Negotiate tech salary with scripts and data</description>
-      <pubDate>Thu, 16 Apr 2026 11:20:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-like-pro-april-2026/</guid>
     </item>
   </channel>
 </rss>
