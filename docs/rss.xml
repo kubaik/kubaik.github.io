@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 02:00:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 03:47:30 +0000</lastBuildDate>
+    <item>
+      <title>Modern Web Auth Secrets</title>
+      <link>https://kubaik.github.io/modern-web-auth-secrets/</link>
+      <description>Modern web auth secrets revealed</description>
+      <pubDate>Thu, 16 Apr 2026 03:47:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/modern-web-auth-secrets/</guid>
+    </item>
     <item>
       <title>Dev Jobs Vanish</title>
       <link>https://kubaik.github.io/dev-jobs-vanish/</link>
@@ -138,13 +145,6 @@
       <description>Boost salary with in-demand tech skills</description>
       <pubDate>Wed, 15 Apr 2026 14:00:27 +0000</pubDate>
       <guid>https://kubaik.github.io/cash-in-on-code-april-2026/</guid>
-    </item>
-    <item>
-      <title>AI Showdown: ChatGPT vs Claude vs Gemini</title>
-      <link>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</link>
-      <description>Evaluating the performance of AI chatbots like ChatGPT, Claude, and Gemini for conversational AI tasks.</description>
-      <pubDate>Wed, 15 Apr 2026 13:18:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</guid>
     </item>
   </channel>
 </rss>
