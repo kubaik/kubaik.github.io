@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 17:01:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 17:09:01 +0000</lastBuildDate>
+    <item>
+      <title>Crack Social Media Codes</title>
+      <link>https://kubaik.github.io/crack-social-media-codes/</link>
+      <description>Use natural language processing and machine learning to beat social media algorithms and maximize engagement</description>
+      <pubDate>Thu, 16 Apr 2026 17:08:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-social-media-codes/</guid>
+    </item>
     <item>
       <title>GitOps Simplified</title>
       <link>https://kubaik.github.io/gitops-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Database sharding improves performance by 50%</description>
       <pubDate>Thu, 16 Apr 2026 09:25:04 +0000</pubDate>
       <guid>https://kubaik.github.io/shard-smarter/</guid>
-    </item>
-    <item>
-      <title>Scale with Redis</title>
-      <link>https://kubaik.github.io/scale-with-redis/</link>
-      <description>Scale with Redis in production</description>
-      <pubDate>Thu, 16 Apr 2026 08:17:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-redis/</guid>
     </item>
   </channel>
 </rss>
