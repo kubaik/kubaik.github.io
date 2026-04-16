@@ -87,6 +87,7 @@ def _count_words(text: str) -> int:
 
 # Words to strip when building a hook phrase from the blog title
 _HOOK_STOP_WORDS = {
+    # Articles / prepositions / conjunctions
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
     "with", "how", "your", "my", "our", "its", "on", "at", "by", "from",
     "this", "that", "best", "using", "guide", "complete", "introduction",
@@ -94,6 +95,88 @@ _HOOK_STOP_WORDS = {
     "without", "beyond", "vs", "why", "when", "where", "which", "who",
     "most", "every", "what", "will", "does", "behind", "inside", "between",
     "about", "after", "before", "during", "through", "across",
+    # FIX: adjectives / determiners that leak into topic phrases
+    # e.g. "AI Ethics Big", "Dark Side Tech", "Hidden Dangers AI"
+    "big", "new", "old", "bad", "good", "great", "real", "true", "key",
+    "main", "full", "last", "next", "part", "each", "both", "many", "much",
+    "more", "less", "few", "own", "same", "other", "another", "such",
+    "sure", "just", "also", "even", "still", "yet", "well", "back",
+    "dark", "side", "deep", "fast", "slow", "hard", "easy", "smart",
+    "hidden", "ultimate", "simple", "practical", "essential", "advanced",
+    "modern", "wrong", "right", "never", "always", "common",
+    # FIX: common verbs that slip through when title has no noun after them
+    "say", "says", "fail", "fails", "work", "works", "make", "makes",
+    "get", "gets", "know", "use", "need", "want", "find", "give", "take",
+    "show", "tell", "look", "come", "keep", "let", "put", "think", "help",
+    "earn", "wins", "win", "lose", "beat", "buy", "sell", "run", "start",
+    # FIX: generic nouns that pollute topic phrases
+    "people", "person", "developer", "developers", "engineer", "engineers",
+    "company", "companies", "team", "teams", "user", "users", "way",
+}
+
+_TOPIC_OVERRIDES = {
+    "database index":   "Database Indexing",
+    "indexing":         "Database Indexing",
+    "query optimiz":    "Query Optimization",
+    "sql ":             "SQL Optimization",
+    "redis":            "Redis",
+    "kafka":            "Apache Kafka",
+    "postgres":         "PostgreSQL",
+    "kubernetes":       "Kubernetes",
+    "docker":           "Docker",
+    "system design":    "System Design",
+    "machine learning": "Machine Learning",
+    "deep learning":    "Deep Learning",
+    "neural network":   "Neural Networks",
+    "large language":   "LLMs",
+    "llm":              "LLMs",
+    "generative ai":    "Generative AI",
+    "prompt engineer":  "Prompt Engineering",
+    "rag ":             "RAG",
+    "vector db":        "Vector Databases",
+    "microservice":     "Microservices",
+    "serverless":       "Serverless",
+    "ci/cd":            "CI/CD",
+    "devops":           "DevOps",
+    "terraform":        "Terraform",
+    "passive income":   "Passive Income",
+    "side hustle":      "Side Hustle",
+    "side project":     "Side Projects",
+    "indie hacker":     "Indie Hacking",
+    "saas":             "SaaS",
+    "web performance":  "Web Performance",
+    "core web vital":   "Core Web Vitals",
+    "websocket":        "WebSockets",
+    "graphql":          "GraphQL",
+    "typescript":       "TypeScript",
+    "react native":     "React Native",
+    "next.js":          "Next.js",
+    "nextjs":           "Next.js",
+    "cybersecurity":    "Cybersecurity",
+    "penetration":      "Pen Testing",
+    "zero trust":       "Zero Trust",
+    "rate limit":       "Rate Limiting",
+    "caching":          "Caching",
+    "load balanc":      "Load Balancing",
+    "data pipeline":    "Data Pipelines",
+    "data engineer":    "Data Engineering",
+    "mlops":            "MLOps",
+    "burnout":          "Developer Burnout",
+    "remote work":      "Remote Work",
+    "tech salar":       "Tech Salaries",
+    "negotiate":        "Salary Negotiation",
+    # FIX: AI-specific overrides (were missing, caused "AI Ethics Big")
+    "ai ethics":        "AI Ethics",
+    "ai tool":          "AI Tools",
+    "ai agent":         "AI Agents",
+    "ai model":         "AI Models",
+    "ai workflow":      "AI Workflows",
+    "ai skill":         "AI Skills",
+    "ai-powered":       "AI-Powered Apps",
+    "chatgpt":          "ChatGPT",
+    "openai":           "OpenAI",
+    "fine-tun":         "Fine-Tuning LLMs",
+    "artificial int":   "Artificial Intelligence",
 }
 
 
@@ -101,31 +184,43 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
     """
     Extract a concise, meaningful topic phrase from a blog post title.
 
-    Examples:
-      "How to Build Passive Income as a Developer"  → "Passive Income Developer"
-      "AI Tools That Write Better Code"             → "AI Tools"
-      "Redis in Production: Patterns That Scale"    → "Redis Production Patterns"
-      "Why Most Side Projects Fail"                 → "Side Projects"
+    Priority:
+      1. Canonical override from _TOPIC_OVERRIDES   (most reliable)
+      2. First N meaningful words after stop-word filtering
+      3. Truncated title fallback
 
-    Short ALL-CAPS acronyms (AI, ML, API, LLM, SQL) are always kept.
-    Falls back to the truncated title if nothing meaningful is found.
+    ALL-CAPS acronyms (AI, ML, API, LLM) are always preserved.
+    Pure year tokens (2024, 2025, 2026) are always stripped.
+
+    FIX: _HOOK_STOP_WORDS now includes adjectives so titles like
+    "AI Ethics: The Hidden Dangers…" no longer produce "AI Ethics Hidden"
+    or "AI Ethics Big".
     """
-    cleaned = re.sub(r"[^\w\s\-]", " ", title)
+    import re as _re
+
+    title_lower = f" {title.lower()} "
+
+    # 1. Canonical overrides
+    for key, phrase in _TOPIC_OVERRIDES.items():
+        if key in title_lower:
+            return phrase
+
+    # 2. Filter stop-words, skip year tokens, keep acronyms
+    cleaned = _re.sub(r"[^\w\s\-]", " ", title)
     words = cleaned.split()
     meaningful = []
     for w in words:
-        lower = w.lower()
-        if lower in _HOOK_STOP_WORDS:
+        if w.lower() in _HOOK_STOP_WORDS:
             continue
-        # Always keep short ALL-CAPS acronyms (AI, ML, API ...)
-        if w.isupper() and len(w) >= 2:
+        if _re.match(r'^\d{4}$', w):         # skip "2025", "2026" etc.
+            continue
+        if w.isupper() and len(w) >= 2:       # keep AI, ML, API, LLM
             meaningful.append(w)
         elif len(w) >= 3:
             meaningful.append(w)
 
     if not meaningful:
         return title[:40]
-
     return " ".join(meaningful[:max_words])
 
 
