@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 15:16:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 15:24:10 +0000</lastBuildDate>
+    <item>
+      <title>Fix Before Fail ..</title>
+      <link>https://kubaik.github.io/fix-before-fail/</link>
+      <description>Proactive monitoring for high availability</description>
+      <pubDate>Thu, 16 Apr 2026 15:24:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-before-fail/</guid>
+    </item>
     <item>
       <title>Processing Data in Real Time</title>
       <link>https://kubaik.github.io/processing-data-in-real-time/</link>
@@ -138,13 +145,6 @@
       <description>Lazy Loading and Code Splitting: Improve Web Application Performance with a Step-by-Step Guide</description>
       <pubDate>Thu, 16 Apr 2026 06:24:57 +0000</pubDate>
       <guid>https://kubaik.github.io/load-less/</guid>
-    </item>
-    <item>
-      <title>Lang Wars: PyGoRu</title>
-      <link>https://kubaik.github.io/lang-wars-pygoru/</link>
-      <description>Python vs Go vs Rust: Choosing for Your Use Case</description>
-      <pubDate>Thu, 16 Apr 2026 06:14:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/lang-wars-pygoru/</guid>
     </item>
   </channel>
 </rss>
