@@ -390,9 +390,8 @@ class VisibilityAutomator:
             description += "…"
 
         payoff = (
-            f"Full breakdown 🧵\n\n"
             f"Why {topic_phrase} fails at scale + real patterns that actually work "
-            f"+ benchmarks & code.\n"
+            f"+ benchmarks & code.\n\n"
             f"Full guide + code here 👇\n"
             f"{tracked_url}\n\n"
             f"{hashtags}\n\n"
