@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 12:22:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 09:25:10 +0000</lastBuildDate>
+    <item>
+      <title>Shard Smarter</title>
+      <link>https://kubaik.github.io/shard-smarter/</link>
+      <description>Database sharding improves performance by 50%</description>
+      <pubDate>Thu, 16 Apr 2026 09:25:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/shard-smarter/</guid>
+    </item>
     <item>
       <title>Scale with Redis</title>
       <link>https://kubaik.github.io/scale-with-redis/</link>
@@ -138,13 +145,6 @@
       <description>AI exacerbates wealth inequality</description>
       <pubDate>Wed, 15 Apr 2026 17:47:45 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-widens-wealth-gap/</guid>
-    </item>
-    <item>
-      <title>Code Fast Lane</title>
-      <link>https://kubaik.github.io/code-fast-lane/</link>
-      <description>Learn a new programming language fast with the Code Fast Lane approach, a simple yet effective method for writing production-quality code in no time.</description>
-      <pubDate>Wed, 15 Apr 2026 16:57:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-fast-lane/</guid>
     </item>
   </channel>
 </rss>
