@@ -358,9 +358,10 @@ class VisibilityAutomator:
         hook_templates = {
             'knowledge_gap': (
                 f"🧵 Most people approach {topic_phrase} backwards.\n\n"
-                f"They spend weeks on the wrong layer and wonder why nothing scales.\n\n"
+                f"They spend weeks on the wrong layer and wonder why nothing scales.\n"
                 f"The fix is simpler than you think — but only if you understand "
-                f"what's actually going wrong first."
+                f"what's actually going wrong first.\n\n"
+                f"{hashtags}"
             ),
             'contrarian': (
                 f"🧵 Hot take: most {topic_phrase} advice actively makes your system worse.\n\n"
@@ -391,8 +392,8 @@ class VisibilityAutomator:
         payoff = (
             f"Full breakdown 🧵\n\n"
             f"Why {topic_phrase} fails at scale + real patterns that actually work "
-            f"+ benchmarks & code.\n\n"
-            f"Full guide + code here 👇\n\n"
+            f"+ benchmarks & code.\n"
+            f"Full guide + code here 👇\n"
             f"{tracked_url}\n\n"
             f"{hashtags}\n\n"
             f"What do you think? Reply 👇"
