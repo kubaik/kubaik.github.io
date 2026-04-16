@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 21:38:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 22:24:59 +0000</lastBuildDate>
+    <item>
+      <title>Multi-Cloud: Smart Move or Overkill?</title>
+      <link>https://kubaik.github.io/multi-cloud-smart-move-or-overkill/</link>
+      <description>Multi-cloud pros, cons, and hidden costs with real benchmarks, tools, and when to avoid it entirely.</description>
+      <pubDate>Thu, 16 Apr 2026 22:24:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-cloud-smart-move-or-overkill/</guid>
+    </item>
     <item>
       <title>Master OAuth 2.0 &amp; JWT: Secure Auth Deep Dive</title>
       <link>https://kubaik.github.io/master-oauth-20-jwt-secure-auth-deep-dive/</link>
@@ -138,13 +145,6 @@
       <description>Optimize your workflow: Set up a seamless dev environment to boost productivity and reduce coding headaches.</description>
       <pubDate>Mon, 13 Apr 2026 08:34:30 +0000</pubDate>
       <guid>https://kubaik.github.io/code-in-peace/</guid>
-    </item>
-    <item>
-      <title>Boost UX: Core Web Vitals</title>
-      <link>https://kubaik.github.io/boost-ux-core-web-vitals/</link>
-      <description>Improve user experience with optimal Core Web Vitals. Master metrics for faster page loads &amp; higher conversions.</description>
-      <pubDate>Mon, 13 Apr 2026 07:13:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ux-core-web-vitals/</guid>
     </item>
   </channel>
 </rss>
