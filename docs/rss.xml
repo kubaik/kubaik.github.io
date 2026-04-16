@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 09:58:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 10:02:47 +0000</lastBuildDate>
+    <item>
+      <title>AI Leaders Emerge</title>
+      <link>https://kubaik.github.io/ai-leaders-emerge/</link>
+      <description>Countries investing in AI research and development</description>
+      <pubDate>Thu, 16 Apr 2026 10:02:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-leaders-emerge/</guid>
+    </item>
     <item>
       <title>Boost Dev Flow (April 2026)</title>
       <link>https://kubaik.github.io/boost-dev-flow-april-2026/</link>
@@ -138,13 +145,6 @@
       <description>Build AI agents to create engaging, personalized, and efficient applications. Learn the concepts, implementation, and common mistakes to avoid.</description>
       <pubDate>Wed, 15 Apr 2026 19:53:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-unleashed/</guid>
-    </item>
-    <item>
-      <title>Spark Simplified</title>
-      <link>https://kubaik.github.io/spark-simplified/</link>
-      <description>Simplify Apache Spark development and deployment</description>
-      <pubDate>Wed, 15 Apr 2026 19:44:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-simplified/</guid>
     </item>
   </channel>
 </rss>
