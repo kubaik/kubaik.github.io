@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 17:25:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 17:56:55 +0000</lastBuildDate>
+    <item>
+      <title>Drift Detectors</title>
+      <link>https://kubaik.github.io/drift-detectors/</link>
+      <description>AI model drift detection and monitoring</description>
+      <pubDate>Thu, 16 Apr 2026 17:56:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/drift-detectors/</guid>
+    </item>
     <item>
       <title>No-Code vs Code: Know When</title>
       <link>https://kubaik.github.io/no-code-vs-code-know-when/</link>
@@ -138,13 +145,6 @@
       <description>Terminal productivity for developers</description>
       <pubDate>Thu, 16 Apr 2026 09:58:16 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-dev-flow-april-2026/</guid>
-    </item>
-    <item>
-      <title>Bug Fix Blitz</title>
-      <link>https://kubaik.github.io/bug-fix-blitz/</link>
-      <description>Debugging techniques to find bugs in minutes</description>
-      <pubDate>Thu, 16 Apr 2026 09:51:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/bug-fix-blitz/</guid>
     </item>
   </channel>
 </rss>
