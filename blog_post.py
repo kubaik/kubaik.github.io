@@ -4,9 +4,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
+
 class BlogPost:
     def __init__(self, title, content, slug, tags, meta_description, featured_image,
-                 created_at, updated_at, seo_keywords, affiliate_links=None, 
+                 created_at, updated_at, seo_keywords, affiliate_links=None,
                  monetization_data=None, twitter_hashtags=None):
         self.title = title
         self.content = content
@@ -19,7 +20,7 @@ class BlogPost:
         self.seo_keywords = seo_keywords or []
         self.affiliate_links = affiliate_links or []
         self.monetization_data = monetization_data or {}
-        
+
         # Social media hashtags
         self.twitter_hashtags = twitter_hashtags or ""
 
@@ -48,20 +49,20 @@ class BlogPost:
         """Create a BlogPost from a markdown file when post.json is missing"""
         with open(md_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
+
         lines = content.split('\n')
         title = "Untitled Post"
         content_without_title = content
-        
+
         if lines and lines[0].startswith('# '):
             title = lines[0][2:].strip()
             content_without_title = '\n'.join(lines[1:]).strip()
-        
+
         if not slug:
             slug = cls._create_slug_static(title)
-        
+
         current_time = datetime.now().isoformat()
-        
+
         return cls(
             title=title,
             content=content_without_title,
@@ -76,7 +77,7 @@ class BlogPost:
             monetization_data={"ad_slots": 3, "affiliate_count": 0},
             twitter_hashtags=""
         )
-    
+
     @staticmethod
     def _create_slug_static(title: str) -> str:
         slug = title.lower()

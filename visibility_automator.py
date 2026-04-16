@@ -33,7 +33,6 @@ MAX_REPLIES_PER_RUN = 3
 SEARCH_RESULT_LIMIT = 20
 
 # Words to strip when building a hook phrase from the blog title.
-# Kept in sync with blog_system.py's _HOOK_STOP_WORDS.
 _HOOK_STOP_WORDS = {
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
     "with", "how", "your", "my", "our", "its", "on", "at", "by", "from",
@@ -42,6 +41,78 @@ _HOOK_STOP_WORDS = {
     "without", "beyond", "vs", "why", "when", "where", "which", "who",
     "most", "every", "what", "will", "does", "behind", "inside", "between",
     "about", "after", "before", "during", "through", "across",
+    # ── NEW: strip generic filler nouns that produce bad topic phrases ──
+    "secrets", "revealed", "secret", "things", "stuff", "basics",
+    "fundamentals", "concepts", "ideas", "points", "steps", "facts",
+    "tricks", "hacks", "methods", "techniques", "approach", "approaches",
+    "solution", "solutions", "answer", "answers", "insight", "insights",
+    "lesson", "lessons", "tip",
+}
+
+# ── Canonical topic overrides ────────────────────────────────────
+# When the title slug contains any key (lowercase), use the mapped phrase.
+# This catches titles like "Database Indexing Secrets Revealed" and ensures
+# the topic phrase is always meaningful and relevant.
+_TOPIC_OVERRIDES = {
+    "database index":   "Database Indexing",
+    "indexing":         "Database Indexing",
+    "query optimiz":    "Query Optimization",
+    "sql ":             "SQL Optimization",
+    "redis":            "Redis",
+    "kafka":            "Apache Kafka",
+    "postgres":         "PostgreSQL",
+    "kubernetes":       "Kubernetes",
+    "docker":           "Docker",
+    "system design":    "System Design",
+    "machine learning": "Machine Learning",
+    "deep learning":    "Deep Learning",
+    "neural network":   "Neural Networks",
+    "large language":   "LLMs",
+    "llm":              "LLMs",
+    "generative ai":    "Generative AI",
+    "prompt engineer":  "Prompt Engineering",
+    "rag ":             "RAG",
+    "vector db":        "Vector Databases",
+    "microservice":     "Microservices",
+    "serverless":       "Serverless",
+    "ci/cd":            "CI/CD",
+    "devops":           "DevOps",
+    "kubernetes":       "Kubernetes",
+    "terraform":        "Terraform",
+    "passive income":   "Passive Income",
+    "side hustle":      "Side Hustle",
+    "indie hacker":     "Indie Hacking",
+    "saas":             "SaaS",
+    "web performance":  "Web Performance",
+    "core web vital":   "Core Web Vitals",
+    "websocket":        "WebSockets",
+    "graphql":          "GraphQL",
+    "typescript":       "TypeScript",
+    "react native":     "React Native",
+    "next.js":          "Next.js",
+    "nextjs":           "Next.js",
+    "cybersecurity":    "Cybersecurity",
+    "penetration":      "Pen Testing",
+    "zero trust":       "Zero Trust",
+    "rate limit":       "Rate Limiting",
+    "caching":          "Caching",
+    "load balanc":      "Load Balancing",
+    "data pipeline":    "Data Pipelines",
+    "data engineer":    "Data Engineering",
+    "mlops":            "MLOps",
+    "burnout":          "Developer Burnout",
+    "remote work":      "Remote Work",
+    "tech salary":      "Tech Salaries",
+    "negotiate":        "Salary Negotiation",
+}
+
+ADDITIONAL_STOP_WORDS = {
+    # Generic filler nouns that make bad topic phrases
+    "secrets", "revealed", "secret", "things", "stuff", "basics",
+    "fundamentals", "concepts", "ideas", "points", "steps", "facts",
+    "tricks", "hacks", "methods", "techniques", "approach", "approaches",
+    "solution", "solutions", "answer", "answers", "insight", "insights",
+    "lesson", "lessons", "tip",
 }
 
 
@@ -49,28 +120,96 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
     """
     Extract a concise, meaningful topic phrase from a blog post title.
 
+    Priority order:
+      1. Canonical override from _TOPIC_OVERRIDES (most reliable)
+      2. First N meaningful words after stripping _HOOK_STOP_WORDS
+      3. Truncated title fallback
+
     Short ALL-CAPS acronyms (AI, ML, API, LLM) are always preserved.
-    Filler words from _HOOK_STOP_WORDS are stripped.
 
     Examples:
-      "How to Build Passive Income as a Developer" → "Passive Income Developer"
-      "AI Tools That Write Better Code"            → "AI Tools"
-      "Why Most Side Projects Fail"                → "Side Projects"
+      "Database Indexing Secrets Revealed"          → "Database Indexing"  (override)
+      "How to Build Passive Income as a Developer"  → "Passive Income"     (override)
+      "AI Tools That Write Better Code"             → "AI Tools"           (meaningful words)
+      "Why Most Side Projects Fail"                 → "Side Projects"      (meaningful words)
     """
     import re
+
+    title_lower = f" {title.lower()} "
+
+    # 1. Check canonical overrides first
+    for key, phrase in _TOPIC_OVERRIDES.items():
+        if key in title_lower:
+            return phrase
+
+    # 2. Strip filler words and take first N meaningful tokens
     cleaned = re.sub(r"[^\w\s\-]", " ", title)
     words = cleaned.split()
     meaningful = []
     for w in words:
         if w.lower() in _HOOK_STOP_WORDS:
             continue
-        if w.isupper() and len(w) >= 2:   # acronyms: AI, ML, API, LLM ...
+        # Always keep short ALL-CAPS acronyms: AI, ML, API, LLM …
+        if w.isupper() and len(w) >= 2:
             meaningful.append(w)
         elif len(w) >= 3:
             meaningful.append(w)
+
     if not meaningful:
         return title[:40]
+
     return " ".join(meaningful[:max_words])
+
+
+def _get_hashtags_for_post(post) -> str:
+    """
+    Reliably retrieve hashtag string from a post object.
+
+    Checks (in order):
+      1. post.twitter_hashtags  — set by blog_system.py during generation
+      2. post.tags              — fallback, camelCased
+      3. post.seo_keywords      — last resort
+
+    Always returns a non-empty string for tech posts by deriving from
+    topic phrase if all else fails.
+    """
+    # 1. Prefer the pre-built tiered hashtag string
+    if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags and post.twitter_hashtags.strip():
+        return post.twitter_hashtags.strip()
+
+    # 2. Build from tags
+    if hasattr(post, 'tags') and post.tags:
+        clean = [
+            t.replace(' ', '').replace('-', '')
+            for t in post.tags
+            if t and len(t.replace(' ', '').replace('-', '')) >= 2
+        ]
+        if clean:
+            return " ".join(f"#{t}" for t in clean[:5])
+
+    # 3. Build from seo_keywords
+    if hasattr(post, 'seo_keywords') and post.seo_keywords:
+        tags = []
+        for kw in post.seo_keywords[:5]:
+            kw = kw.strip()
+            if not kw:
+                continue
+            words = kw.split()
+            if len(words) <= 3:
+                tag = "".join(w.capitalize() for w in words)
+                tag = tag.replace('-', '').replace('_', '')
+                if tag:
+                    tags.append(f"#{tag}")
+        if tags:
+            return " ".join(tags[:5])
+
+    # 4. Derive from title as absolute last resort
+    if hasattr(post, 'title') and post.title:
+        phrase = _extract_topic_phrase(post.title, max_words=2)
+        tag = phrase.replace(' ', '')
+        return f"#{tag} #Programming #SoftwareEngineering"
+
+    return "#Programming #SoftwareEngineering #TechBlog"
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -172,14 +311,10 @@ class VisibilityAutomator:
 
         Tweet 1 — Hook only. No URL, no hashtags.
                   X suppresses reach on tweets with outbound links.
-                  Hook earns replies/likes/bookmarks first, signalling quality.
+                  Hook earns replies/likes/bookmarks first.
 
-        Tweet 2 — Reply: payoff description + blog URL (UTM-tracked) + tiered hashtags.
-                  Replies get less suppression for links, so the URL costs little reach.
-
-        topic_phrase is extracted via _extract_topic_phrase() so short acronyms
-        like "AI" and multi-word topics like "Passive Income" come through correctly
-        instead of a bare single word like "Profit".
+        Tweet 2 — Reply: payoff description + blog URL (UTM-tracked) + hashtags.
+                  Uses _get_hashtags_for_post() which never returns empty.
         """
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
@@ -187,24 +322,19 @@ class VisibilityAutomator:
         tracked_url = self._build_post_url(
             post_url, position=2, style=hook_style)
 
-        # ── Hashtags: prefer tiered twitter_hashtags from post object ──────
-        # blog_system.py sets post.twitter_hashtags via _derive_hashtags_from_keywords()
-        # which now passes both topic and title — so tags are always relevant.
-        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
-            hashtags = post.twitter_hashtags   # already formatted: "#Tag1 #Tag2 ..."
-        elif hasattr(post, 'tags') and post.tags:
-            clean = [t.replace(' ', '').replace(
-                '-', '') for t in post.tags if t and len(t.replace(' ', '').replace('-', '')) >= 2]
-            hashtags = " ".join(f"#{t}" for t in clean[:5])
-        else:
-            hashtags = ""
+        # ── Hashtags — always non-empty ──────────────────────────────────────
+        hashtags = _get_hashtags_for_post(post)
+        print(f"  🏷️  Hashtags for thread: {hashtags}")
 
-        # ── Topic phrase — meaningful, not just the first long word ─────────
+        # ── Topic phrase — override-aware, never "Secrets Revealed" ─────────
         topic_phrase = _extract_topic_phrase(post.title, max_words=3)
+        print(f"  🎯 Topic phrase: {topic_phrase}")
 
         # Secondary phrases for tweet body variety
-        topic_words = [w for w in post.title.split() if w.lower()
-                       not in _HOOK_STOP_WORDS and len(w) >= 2]
+        topic_words = [
+            w for w in post.title.split()
+            if w.lower() not in _HOOK_STOP_WORDS and len(w) >= 2
+        ]
         topic_b = " ".join(topic_words[1:3]) if len(
             topic_words) > 1 else "the fundamentals"
         topic_c = topic_words[-1] if topic_words else "performance"
@@ -249,10 +379,9 @@ class VisibilityAutomator:
             f"→ Why {topic_phrase} fails at scale\n"
             f"→ {topic_b} patterns that actually work\n"
             f"→ Real benchmarks + code\n\n"
-            f"{tracked_url}"
+            f"{tracked_url}\n\n"
+            f"{hashtags}"
         )
-        if hashtags:
-            payoff += f"\n\n{hashtags}"
 
         tweets = [hook, payoff]
         return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
@@ -293,8 +422,10 @@ class VisibilityAutomator:
                     reply_id = response.data['id']
                     username = self._username or "i"
                     reply_url = f"https://twitter.com/{username}/status/{reply_id}"
-                    replies_posted.append({'keyword': keyword, 'target_id': tweet.id, 'reply_id': reply_id,
-                                          'reply_url': reply_url, 'reply_preview': reply_text[:80] + "..."})
+                    replies_posted.append({
+                        'keyword': keyword, 'target_id': tweet.id, 'reply_id': reply_id,
+                        'reply_url': reply_url, 'reply_preview': reply_text[:80] + "..."
+                    })
                     print(f"  💬 Replied to tweet {tweet.id} → {reply_url}")
                     import time
                     time.sleep(5)
@@ -302,7 +433,12 @@ class VisibilityAutomator:
                 errors.append(f"Error for '{keyword}': {e}")
                 print(f"  ⚠️  {errors[-1]}")
 
-        return {'success': len(replies_posted) > 0, 'replies_posted': replies_posted, 'reply_count': len(replies_posted), 'errors': errors}
+        return {
+            'success': len(replies_posted) > 0,
+            'replies_posted': replies_posted,
+            'reply_count': len(replies_posted),
+            'errors': errors,
+        }
 
     def _find_reply_targets(self, keyword: str) -> List:
         try:
@@ -311,7 +447,8 @@ class VisibilityAutomator:
                 max_results=SEARCH_RESULT_LIMIT,
                 tweet_fields=['public_metrics',
                               'author_id', 'created_at', 'text'],
-                expansions=['author_id'], user_fields=['public_metrics'],
+                expansions=['author_id'],
+                user_fields=['public_metrics'],
             )
             if not response.data:
                 return []
@@ -321,10 +458,15 @@ class VisibilityAutomator:
                     if hasattr(user, 'public_metrics') and user.public_metrics:
                         author_followers[user.id] = user.public_metrics.get(
                             'followers_count', 0)
-            filtered = [t for t in response.data if author_followers.get(
-                t.author_id, 0) >= MIN_AUTHOR_FOLLOWERS]
-            filtered.sort(key=lambda t: t.public_metrics.get(
-                'like_count', 0) if t.public_metrics else 0, reverse=True)
+            filtered = [
+                t for t in response.data
+                if author_followers.get(t.author_id, 0) >= MIN_AUTHOR_FOLLOWERS
+            ]
+            filtered.sort(
+                key=lambda t: t.public_metrics.get(
+                    'like_count', 0) if t.public_metrics else 0,
+                reverse=True,
+            )
             return filtered[:5]
         except Exception as e:
             print(f"  ⚠️  Search failed for '{keyword}': {e}")
@@ -342,11 +484,10 @@ class VisibilityAutomator:
         if post:
             post_url = f"{base_url}/{post.slug}"
             reply = generic_replies[idx].replace("{url}", post_url)
-            # Add the first hashtag from the tiered set
-            if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
-                reply += f" {post.twitter_hashtags.split()[0]}"
-            elif hasattr(post, 'tags') and post.tags:
-                reply += f" #{post.tags[0].replace(' ','').replace('-','')}"
+            hashtags = _get_hashtags_for_post(post)
+            first_tag = hashtags.split()[0] if hashtags else ""
+            if first_tag:
+                reply += f" {first_tag}"
         else:
             reply = generic_replies[idx].replace(
                 " My full breakdown: {url}", "").replace(": {{url}}", ".")
@@ -398,7 +539,11 @@ class VisibilityAutomator:
             response = self.twitter_client.create_tweet(text=final_tweet)
             tweet_id = response.data['id']
             username = self._username or "i"
-            return {'success': True, 'tweet_id': tweet_id, 'url': f"https://twitter.com/{username}/status/{tweet_id}", 'tweet_text': final_tweet, 'quality_score': analysis['score'], 'strategy': strategy}
+            return {
+                'success': True, 'tweet_id': tweet_id,
+                'url': f"https://twitter.com/{username}/status/{tweet_id}",
+                'tweet_text': final_tweet, 'quality_score': analysis['score'], 'strategy': strategy,
+            }
         except Exception as e:
             return {'success': False, 'error': str(e)}
 
@@ -416,7 +561,10 @@ class VisibilityAutomator:
     def generate_tweet_preview(self, post, strategy: str = "auto") -> Dict:
         tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
         analysis = self.tweet_generator.analyze_tweet_quality(tweet)
-        return {'tweet': tweet, 'length': len(tweet), 'strategy': strategy, 'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback']}
+        return {
+            'tweet': tweet, 'length': len(tweet), 'strategy': strategy,
+            'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback'],
+        }
 
     def generate_all_variations(self, post) -> list:
         variations = self.tweet_generator.create_multiple_variations(
@@ -424,8 +572,10 @@ class VisibilityAutomator:
         results = []
         for var in variations:
             analysis = self.tweet_generator.analyze_tweet_quality(var['tweet'])
-            results.append({'strategy': var['strategy'], 'tweet': var['tweet'], 'length': var['length'],
-                           'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback']})
+            results.append({
+                'strategy': var['strategy'], 'tweet': var['tweet'], 'length': var['length'],
+                'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback'],
+            })
         return sorted(results, key=lambda x: x['quality_score'], reverse=True)
 
     def test_twitter_connection(self) -> Dict:
@@ -440,7 +590,8 @@ class VisibilityAutomator:
     def generate_social_posts(self, post) -> Dict:
         twitter_post = self.tweet_generator.create_engaging_tweet(
             post, strategy="auto")
-        linkedin_hashtags = self._format_hashtags_linkedin(post)
+        hashtags = _get_hashtags_for_post(post)
+        linkedin_hashtags = hashtags  # already formatted as "#Tag1 #Tag2 ..."
 
         linkedin_post = f"""🚀 New Article: {post.title}
 
@@ -464,13 +615,6 @@ Read the full article: https://kubaik.github.io/{post.slug}
             'facebook':     f"Just published: {post.title}\n\n{post.meta_description}\n\nhttps://kubaik.github.io/{post.slug}",
         }
 
-    def _format_hashtags_linkedin(self, post) -> str:
-        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
-            return post.twitter_hashtags
-        if hasattr(post, 'tags') and post.tags:
-            return ' '.join(f"#{t.replace(' ','').replace('-','')}" for t in post.tags[:5] if t)
-        return ""
-
 
 # ─────────────────────────────────────────────────────────────────
 # CLI entry point
@@ -486,12 +630,15 @@ if __name__ == "__main__":
 
     class MockPost:
         def __init__(self):
-            self.title = "How to Build Passive Income as a Developer"
-            self.slug = "passive-income-developer"
-            self.meta_description = "Practical strategies for developers to build passive income streams through SaaS, APIs, content, and open source monetization."
-            self.tags = ["PassiveIncome", "SideHustle",
-                         "IndieHacker", "SoftwareEngineering", "BuildInPublic"]
-            self.twitter_hashtags = "#PassiveIncome #SoftwareEngineering #IndieHacker #SideHustle #BuildInPublic"
+            self.title = "Database Indexing Secrets Revealed"
+            self.slug = "database-indexing-secrets-revealed"
+            self.meta_description = "Database indexing improves query performance by up to 90%. Learn the indexing patterns that eliminate slow queries in production PostgreSQL and MySQL."
+            self.tags = ["DatabaseIndexing", "SQL",
+                         "PostgreSQL", "Performance", "Backend"]
+            self.seo_keywords = [
+                "database indexing", "query optimization", "postgresql performance", "sql indexes"]
+            # Simulate a post loaded from disk where twitter_hashtags was NOT saved
+            # self.twitter_hashtags is intentionally omitted to test the fallback
 
     post = MockPost()
 
@@ -504,6 +651,7 @@ if __name__ == "__main__":
     visibility = VisibilityAutomator(config)
 
     print(f"\n🔍 Topic phrase extracted: '{_extract_topic_phrase(post.title)}'")
+    print(f"🏷️  Hashtags resolved:      '{_get_hashtags_for_post(post)}'")
 
     print("\n🧵 THREAD PREVIEW")
     print("=" * 70)
