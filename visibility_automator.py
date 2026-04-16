@@ -389,8 +389,8 @@ class VisibilityAutomator:
             description += "…"
 
         payoff = (
-            f"Full breakdown 👇\n\n"
-            f"{description}\n\n"
+            f"Full breakdown 👇\n"
+            f"{description}\n"
             f"What's inside:\n"
             f"→ Why {topic_phrase} fails at scale\n"
             f"→ {topic_b} patterns that actually work\n"
