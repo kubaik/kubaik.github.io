@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 11:57:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 12:04:14 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up Your Database: Mastering Query Optimization Tricks</title>
+      <link>https://kubaik.github.io/speed-up-your-database-mastering-query-optimizatio/</link>
+      <description>Optimize database queries with these step-by-step instructions and real-world performance numbers.</description>
+      <pubDate>Thu, 16 Apr 2026 12:04:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up-your-database-mastering-query-optimizatio/</guid>
+    </item>
     <item>
       <title>Prevent App Failures</title>
       <link>https://kubaik.github.io/prevent-app-failures/</link>
@@ -138,13 +145,6 @@
       <description>Developing mental models for software development: a guide to understanding complex systems and improving code quality.</description>
       <pubDate>Wed, 15 Apr 2026 22:26:34 +0000</pubDate>
       <guid>https://kubaik.github.io/mental-models-for-devs/</guid>
-    </item>
-    <item>
-      <title>AI That Delivers</title>
-      <link>https://kubaik.github.io/ai-that-delivers/</link>
-      <description>AI agents that work</description>
-      <pubDate>Wed, 15 Apr 2026 21:46:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-that-delivers/</guid>
     </item>
   </channel>
 </rss>
