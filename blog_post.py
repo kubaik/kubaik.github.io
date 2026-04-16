@@ -37,21 +37,11 @@ class BlogPost:
             'seo_keywords': self.seo_keywords,
             'affiliate_links': self.affiliate_links,
             'monetization_data': self.monetization_data,
-            # ── FIX: always persist twitter_hashtags in JSON ──────────────
             'twitter_hashtags': self.twitter_hashtags,
         }
 
     @classmethod
     def from_dict(cls, data):
-        """
-        Reconstruct a BlogPost from a saved dict (post.json).
-
-        FIX: twitter_hashtags is explicitly extracted so it is never lost
-        when loading posts back from disk.  Previously from_dict() forwarded
-        **data directly to __init__, but post.json keys that don't match
-        __init__ parameter names were silently dropped — including
-        twitter_hashtags when saved under a slightly different key.
-        """
         return cls(
             title=data.get('title', ''),
             content=data.get('content', ''),
@@ -64,7 +54,6 @@ class BlogPost:
             seo_keywords=data.get('seo_keywords', []),
             affiliate_links=data.get('affiliate_links', []),
             monetization_data=data.get('monetization_data', {}),
-            # ── FIX: restore twitter_hashtags from persisted JSON ─────────
             twitter_hashtags=data.get('twitter_hashtags', ''),
         )
 

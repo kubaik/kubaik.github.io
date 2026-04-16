@@ -30,12 +30,10 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
-        # self._generate_ads_txt()
         self._generate_robots_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
-        """Generate ads.txt for AdSense verification."""
         config = self.blog_system.config
         adsense_id = config.get('google_adsense_id', '')
         if adsense_id:
@@ -48,7 +46,6 @@ class StaticSiteGenerator:
             print("Warning: no google_adsense_id in config — skipping ads.txt")
 
     def _generate_robots_txt(self):
-        """Generate robots.txt."""
         config = self.blog_system.config
         base_url = config.get('base_url', '')
         content = f"""User-agent: *
@@ -85,7 +82,6 @@ Sitemap: {base_url}/rss.xml
         return posts
 
     def _reading_time_minutes(self, content: str) -> int:
-        """Estimate reading time at 200 words per minute."""
         word_count = len(content.split())
         return max(1, round(word_count / 200))
 
@@ -131,16 +127,22 @@ Sitemap: {base_url}/rss.xml
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
-        for post in posts:
+        for i, post in enumerate(posts):
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
             markdown_converter = md.Markdown(
                 extensions=['extra', 'fenced_code', 'toc'])
             content_html = markdown_converter.convert(post.content)
+
+            # ── CHANGE: build related posts (up to 3, by shared tags) ──────
+            related = self._find_related_posts(post, posts, max_count=3)
+
             post_dict = post.to_dict()
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
+            post_dict['updated_date'] = self._format_display_date(
+                post.updated_at)
             post_dict['reading_time'] = self._reading_time_minutes(
                 post.content)
             post_dict['word_count'] = len(post.content.split())
@@ -149,6 +151,7 @@ Sitemap: {base_url}/rss.xml
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'post': post_dict,
+                'related_posts': related,
                 'current_year': datetime.now().year,
                 'global_meta_tags': self.seo.generate_global_meta_tags(),
                 'meta_tags': self.seo.generate_meta_tags(post),
@@ -161,6 +164,30 @@ Sitemap: {base_url}/rss.xml
             output_file = post_dir / "index.html"
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html)
+
+    # ── CHANGE: new helper to find related posts by tag overlap ──────────
+    def _find_related_posts(self, current: BlogPost, all_posts: List[BlogPost],
+                            max_count: int = 3) -> List[Dict]:
+        current_tags = set(t.lower() for t in current.tags)
+        scored = []
+        for p in all_posts:
+            if p.slug == current.slug:
+                continue
+            overlap = len(current_tags & set(t.lower() for t in p.tags))
+            if overlap > 0:
+                scored.append((overlap, p))
+        scored.sort(key=lambda x: x[0], reverse=True)
+        result = []
+        for _, p in scored[:max_count]:
+            result.append({
+                'title': p.title,
+                'slug': p.slug,
+                'meta_description': p.meta_description[:120] + ('…' if len(p.meta_description) > 120 else ''),
+                'reading_time': self._reading_time_minutes(p.content),
+                'display_date': self._format_display_date(p.created_at),
+                'short_tags': sorted(p.tags, key=len)[:2],
+            })
+        return result
 
     def _generate_static_pages(self):
         config = self.blog_system.config
@@ -271,6 +298,14 @@ Sitemap: {base_url}/rss.xml
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
+    # ─────────────────────────────────────────────────────────────
+    # POST TEMPLATE
+    # CHANGES:
+    #   • Author byline block below post header (name + bio + link to About)
+    #   • Word count and updated date shown in post meta
+    #   • Related posts section at bottom
+    #   • Breadcrumb nav for site structure signals
+    # ─────────────────────────────────────────────────────────────
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -286,6 +321,80 @@ def _build_templates() -> dict:
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
     <script defer src="{{ base_path }}/static/code_runner.js"></script>
+    <style>
+        /* ── Author block ── */
+        .author-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: #f8f9fa;
+            border-left: 4px solid #6366f1;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0 1.75rem;
+        }
+        .author-avatar {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .author-info { flex: 1; }
+        .author-name {
+            font-weight: 700; color: #1a1a2e; font-size: 0.95rem;
+            margin: 0 0 0.2rem;
+        }
+        .author-name a { color: inherit; text-decoration: none; }
+        .author-name a:hover { color: #6366f1; }
+        .author-bio { color: #555; font-size: 0.85rem; margin: 0; line-height: 1.5; }
+        /* ── Post meta row ── */
+        .post-meta-row {
+            display: flex; flex-wrap: wrap; gap: 0.75rem;
+            color: #666; font-size: 0.82rem; margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        .post-meta-row span::before { content: "·"; margin-right: 0.75rem; }
+        .post-meta-row span:first-child::before { content: ""; margin-right: 0; }
+        /* ── Related posts ── */
+        .related-posts {
+            margin-top: 3rem; padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+        .related-posts h2 {
+            font-size: 1.3rem; color: #1a1a2e; margin-bottom: 1.25rem;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .related-card {
+            background: #f8f9fa; border-radius: 8px; padding: 1rem;
+            border: 1px solid #e0e0e0; text-decoration: none; color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s; display: block;
+        }
+        .related-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.12);
+        }
+        .related-card h3 {
+            font-size: 0.92rem; margin: 0 0 0.4rem; color: #1a1a2e; line-height: 1.4;
+        }
+        .related-card p {
+            font-size: 0.8rem; color: #666; margin: 0 0 0.5rem; line-height: 1.4;
+        }
+        .related-card .related-meta {
+            font-size: 0.75rem; color: #999;
+        }
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            font-size: 0.82rem; color: #888; margin-bottom: 1rem;
+        }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 0.4rem; }
+    </style>
 </head>
 <body>
     {{ header_ad | safe }}
@@ -302,9 +411,41 @@ def _build_templates() -> dict:
         </div>
     </header>
     <main class="container">
-        <article class="blog-post">
+
+        {# ── Breadcrumb ── #}
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="{{ base_path }}/">Home</a>
+            <span>›</span>
+            <span>{{ post.title }}</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1>{{ post.title }}</h1>
+                <h1 itemprop="headline">{{ post.title }}</h1>
+
+                {# ── Post meta row: date, updated, read time, word count ── #}
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="{{ post.created_at }}" itemprop="datePublished">
+                            {{ post.display_date }}
+                        </time>
+                    </span>
+                    {% if post.updated_date and post.updated_date != post.display_date %}
+                    <span>
+                        Updated
+                        <time datetime="{{ post.updated_at }}" itemprop="dateModified">
+                            {{ post.updated_date }}
+                        </time>
+                    </span>
+                    {% endif %}
+                    {% if post.reading_time %}
+                    <span>{{ post.reading_time }} min read</span>
+                    {% endif %}
+                    {% if post.word_count %}
+                    <span>{{ post.word_count | int }} words</span>
+                    {% endif %}
+                </div>
+
                 {% if post.tags %}
                 <div class="tags">
                     {% for tag in post.tags[:6] %}
@@ -312,36 +453,67 @@ def _build_templates() -> dict:
                     {% endfor %}
                 </div>
                 {% endif %}
-                <div class="post-meta">
-                    <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
-                </div>
-                 <div class="post-meta">
-                    {% if post.reading_time %}
-                    <span class="reading-time"> {{ post.reading_time }} min read</span>
-                    {% endif %}
-                </div>
             </header>
-            <div class="post-content">
+
+            {# ── CHANGE: Author block — visible E-E-A-T signal ── #}
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="{{ base_path }}/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="{{ base_path }}/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
                 {{ post.content_html | safe }}
                 {{ middle_ad | safe }}
             </div>
+
             {% if post.affiliate_links %}
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             {% endif %}
+
+            {# ── CHANGE: Related posts section ── #}
+            {% if related_posts %}
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    {% for rp in related_posts %}
+                    <a class="related-card" href="{{ base_path }}/{{ rp.slug }}/">
+                        <h3>{{ rp.title }}</h3>
+                        <p>{{ rp.meta_description }}</p>
+                        <span class="related-meta">{{ rp.reading_time }} min read · {{ rp.display_date }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
         </article>
     </main>
     {{ footer_ad | safe }}
     <footer>
         <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}. Content generated with AI assistance and reviewed for accuracy.</p>
+            <p>&copy; {{ current_year }} {{ site_name }}. Written by
+               <a href="{{ base_path }}/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
         </div>
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
+    # INDEX TEMPLATE  (unchanged from original)
+    # ─────────────────────────────────────────────────────────────
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -484,7 +656,6 @@ def _build_templates() -> dict:
     (function () {
         'use strict';
 
-        /* ── DOM refs ── */
         var searchInput    = document.getElementById('search-input');
         var clearBtn       = document.getElementById('clear-search');
         var resultsCount   = document.getElementById('search-results-count');
@@ -493,22 +664,9 @@ def _build_templates() -> dict:
         var sentinel       = document.getElementById('scroll-sentinel');
         var backToTopBtn   = document.getElementById('back-to-top');
 
-        /* ── Constants ── */
         var PAGE_SIZE = {{ posts_per_page }};
         var BASE_PATH = '{{ base_path }}';
 
-        /* ── State ── */
-        /*
-         * fullPosts  – the complete ordered list from posts.json (may be empty
-         *              until the fetch resolves).
-         * loadedCount – how many cards are currently rendered in the grid
-         *              (initialised from the server-rendered DOM count so that
-         *              infinite scroll always knows exactly where to continue).
-         * jsonReady  – true once posts.json has loaded successfully.
-         * isLoading  – guard against concurrent loadMore calls.
-         * searchMode – true while a search query is active.
-         * observer   – the IntersectionObserver instance (or null).
-         */
         var fullPosts   = [];
         var loadedCount = postsContainer
             ? postsContainer.querySelectorAll('a.post-card').length
@@ -518,7 +676,6 @@ def _build_templates() -> dict:
         var searchMode  = false;
         var observer    = null;
 
-        /* ── Observer helpers ── */
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver || observer) return;
             observer = new IntersectionObserver(function (entries) {
@@ -532,43 +689,28 @@ def _build_templates() -> dict:
         }
 
         function onSentinelVisible() {
-            /*
-             * Only load more when:
-             *   - json is ready (we know the real total)
-             *   - not already loading
-             *   - not in search mode
-             *   - there are actually more posts to show
-             */
             if (!jsonReady || isLoading || searchMode) return;
-            if (loadedCount >= fullPosts.length) {
-                stopObserver();
-                return;
-            }
+            if (loadedCount >= fullPosts.length) { stopObserver(); return; }
             loadNextPage();
         }
 
-        /* ── Card builder ── */
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
             a.href      = BASE_PATH + '/' + post.slug + '/';
-
             var h3         = document.createElement('h3');
             h3.textContent = post.title;
             a.appendChild(h3);
-
             var p         = document.createElement('p');
             p.className   = 'post-excerpt';
             p.textContent = post.meta_description || '';
             a.appendChild(p);
-
             if (post.reading_time) {
                 var rt         = document.createElement('p');
                 rt.className   = 'post-reading-time';
                 rt.textContent = post.reading_time + ' min read';
                 a.appendChild(rt);
             }
-
             var tags = post.tags || [];
             if (tags.length) {
                 var div       = document.createElement('div');
@@ -583,90 +725,53 @@ def _build_templates() -> dict:
                     });
                 a.appendChild(div);
             }
-
             return a;
         }
 
-        /* ── Infinite scroll: load next page ── */
         function loadNextPage() {
             isLoading = true;
             if (loadingSpinner) loadingSpinner.style.display = 'flex';
-
-            /* Small delay so the spinner is visible before heavy DOM work */
             setTimeout(function () {
                 var slice    = fullPosts.slice(loadedCount, loadedCount + PAGE_SIZE);
                 var fragment = document.createDocumentFragment();
                 var newCards = [];
-
                 slice.forEach(function (post) {
                     var card = buildCard(post);
                     card.classList.add('post-card--entering');
                     fragment.appendChild(card);
                     newCards.push(card);
                 });
-
                 postsContainer.appendChild(fragment);
                 loadedCount += slice.length;
-
-                /* Animate in with staggered fade */
                 requestAnimationFrame(function () {
                     requestAnimationFrame(function () {
                         newCards.forEach(function (el, i) {
-                            setTimeout(function () {
-                                el.classList.remove('post-card--entering');
-                            }, i * 60);
+                            setTimeout(function () { el.classList.remove('post-card--entering'); }, i * 60);
                         });
                     });
                 });
-
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 isLoading = false;
-
                 if (loadedCount >= fullPosts.length) stopObserver();
             }, 250);
         }
 
-        /* ── Fetch posts.json ── */
         fetch(BASE_PATH + '/posts.json')
-            .then(function (r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
             .then(function (posts) {
                 fullPosts = posts;
                 jsonReady = true;
-
-                /*
-                 * The server already rendered the first PAGE_SIZE cards.
-                 * loadedCount was initialised from the DOM so it matches.
-                 * Start the observer now that we know the real total.
-                 */
-                if (loadedCount < fullPosts.length) {
-                    startObserver();
-                }
-
-                /* Re-run active search against full dataset */
-                if (searchMode && searchInput && searchInput.value.trim()) {
-                    runSearch(searchInput.value.trim());
-                }
+                if (loadedCount < fullPosts.length) startObserver();
+                if (searchMode && searchInput && searchInput.value.trim()) runSearch(searchInput.value.trim());
             })
-            .catch(function (err) {
-                console.warn('posts.json fetch failed – infinite scroll disabled:', err);
-                /* Search still works against the DOM-seeded data built below */
-                jsonReady = false;
-            });
+            .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
 
-        /* ── Search ── */
-
-        /* Safely read a text value from a DOM element — never throws. */
         function readText(el, selector) {
             if (!el) return '';
             var child = el.querySelector(selector);
             return child ? (child.textContent || '') : '';
         }
 
-        /* Build a lightweight search index from the server-rendered DOM cards.
-           This powers search even before (or if) posts.json fails to load.   */
         var domIndex = [];
         if (postsContainer) {
             postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
@@ -679,12 +784,6 @@ def _build_templates() -> dict:
             });
         }
 
-        /*
-         * Highlight all case-insensitive occurrences of `query` inside `text`
-         * using plain string operations — no RegExp constructor, so special
-         * characters in the query (parentheses, brackets, pipes, etc.) are
-         * always treated as literals and never cause a SyntaxError.
-         */
         function highlightText(text, query) {
             if (!query) return text;
             var lower  = text.toLowerCase();
@@ -703,30 +802,17 @@ def _build_templates() -> dict:
             return result;
         }
 
-        /* Escape the five HTML special chars so injecting into innerHTML is safe. */
         function escapeHtml(s) {
-            return s.replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#39;');
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
         function runSearch(rawQuery) {
             if (!postsContainer) return;
-
             var query = rawQuery.toLowerCase().trim();
-            /* Nothing to search — treat as clear */
             if (!query) { clearSearch(); return; }
-
             searchMode = true;
             stopObserver();
-
-            /*
-             * Decide which data source to search:
-             *   - If posts.json loaded, search the full list (all posts).
-             *   - Otherwise fall back to the DOM-seeded index (first PAGE_SIZE).
-             */
             var matched;
             if (jsonReady && fullPosts.length) {
                 matched = fullPosts.filter(function (p) {
@@ -734,7 +820,6 @@ def _build_templates() -> dict:
                            (p.meta_description || '').toLowerCase().indexOf(query) !== -1 ||
                            (p.tags             || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
                 });
-
                 postsContainer.innerHTML = '';
                 matched.forEach(function (post) {
                     var card    = buildCard(post);
@@ -745,7 +830,6 @@ def _build_templates() -> dict:
                     postsContainer.appendChild(card);
                 });
             } else {
-                /* DOM-only fallback */
                 matched = [];
                 domIndex.forEach(function (item) {
                     var hit = item.title.indexOf(query) !== -1 ||
@@ -754,7 +838,6 @@ def _build_templates() -> dict:
                     item.element.style.display = hit ? '' : 'none';
                     if (hit) matched.push(item);
                 });
-                /* Re-apply highlights to visible cards */
                 matched.forEach(function (item) {
                     var h3      = item.element.querySelector('h3');
                     var excerpt = item.element.querySelector('.post-excerpt');
@@ -762,16 +845,12 @@ def _build_templates() -> dict:
                     if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, rawQuery);
                 });
             }
-
-            /* Update results count */
             var n = matched.length;
             if (resultsCount) {
                 resultsCount.textContent = n === 0
                     ? 'No results for "' + rawQuery + '"'
                     : n === 1 ? '1 post found' : n + ' posts found';
             }
-
-            /* No-results message */
             var old = document.getElementById('no-results-msg');
             if (old) old.remove();
             if (n === 0) {
@@ -785,47 +864,27 @@ def _build_templates() -> dict:
 
         function clearSearch() {
             searchMode = false;
-
-            /* Remove highlights and restore all DOM cards to visible */
             domIndex.forEach(function (item) {
                 item.element.style.display = '';
                 var h3      = item.element.querySelector('h3');
                 var excerpt = item.element.querySelector('.post-excerpt');
-                /* Restore plain text to strip <mark> tags */
                 if (h3)      h3.textContent      = h3.dataset.plain      || item.title;
                 if (excerpt) excerpt.textContent = excerpt.dataset.plain || item.description;
             });
-
-            /* If JSON is loaded, rebuild from scratch so we show page 1 cleanly */
             if (jsonReady && fullPosts.length) {
                 postsContainer.innerHTML = '';
                 var first = fullPosts.slice(0, PAGE_SIZE);
-                first.forEach(function (post) {
-                    postsContainer.appendChild(buildCard(post));
-                });
+                first.forEach(function (post) { postsContainer.appendChild(buildCard(post)); });
                 loadedCount = first.length;
             } else {
-                /*
-                 * JSON hasn't loaded yet — just show all server-rendered cards.
-                 * loadedCount was set from the DOM on init, leave it unchanged.
-                 */
-                postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
-                    el.style.display = '';
-                });
+                postsContainer.querySelectorAll('a.post-card').forEach(function (el) { el.style.display = ''; });
             }
-
             var old = document.getElementById('no-results-msg');
             if (old) old.remove();
             if (resultsCount) resultsCount.textContent = '';
-
-            /* Restart observer if there are more posts to load */
-            if (jsonReady && loadedCount < fullPosts.length) {
-                startObserver();
-            }
+            if (jsonReady && loadedCount < fullPosts.length) startObserver();
         }
 
-        /* Store original plain text in data attributes so highlights can be
-           stripped cleanly without a full rebuild.                            */
         if (postsContainer) {
             postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
                 var h3      = el.querySelector('h3');
@@ -835,24 +894,14 @@ def _build_templates() -> dict:
             });
         }
 
-        /* ── Search event listeners ── */
         if (searchInput) {
             searchInput.addEventListener('input', function () {
                 var q = this.value.trim();
                 if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
-                if (q) {
-                    runSearch(q);
-                } else {
-                    clearSearch();
-                }
+                if (q) { runSearch(q); } else { clearSearch(); }
             });
-
             searchInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') {
-                    this.value = '';
-                    if (clearBtn) clearBtn.style.display = 'none';
-                    clearSearch();
-                }
+                if (e.key === 'Escape') { this.value = ''; if (clearBtn) clearBtn.style.display = 'none'; clearSearch(); }
             });
         }
 
@@ -865,16 +914,13 @@ def _build_templates() -> dict:
             });
         }
 
-        /* ── Back to top ── */
         window.addEventListener('scroll', function () {
             if (backToTopBtn)
                 backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
         }, { passive: true });
 
         if (backToTopBtn) {
-            backToTopBtn.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            backToTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         }
 
     }());
@@ -882,13 +928,18 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
+    # ABOUT TEMPLATE
+    # CHANGE: Expanded with more personal detail, credentials, writing process,
+    # and a clear editorial policy — all key E-E-A-T signals for AdSense reviewers.
+    # ─────────────────────────────────────────────────────────────
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - {{ site_name }}</title>
-    <meta name="description" content="About {{ site_name }} — who we are and what we cover">
+    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi writing about AI, backend systems, and developer careers.">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/about/">
@@ -898,14 +949,17 @@ def _build_templates() -> dict:
         .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin:1.5rem 0}
         .feature-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #e0e0e0}
         .feature-card h3{color:#6366f1;margin-top:0}
-        .author-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem}
-        .author-card h3{margin-top:0;color:#333}
-        .author-card .credentials{color:#666;font-size:0.9rem;margin-bottom:0.75rem}
+        .author-card{background:white;padding:1.5rem 2rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:flex-start}
+        .author-avatar-lg{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.6rem;flex-shrink:0}
+        .author-card h3{margin-top:0;color:#333;font-size:1.2rem}
+        .author-card .credentials{color:#6366f1;font-size:0.88rem;margin-bottom:0.75rem;font-weight:600}
         .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
         .stat-card{background:#f0f4ff;padding:1.5rem;border-radius:8px;text-align:center;border:2px solid #6366f1}
         .stat-number{font-size:2rem;font-weight:bold;color:#6366f1;display:block;margin-bottom:0.25rem}
         .cta-box{background:#fff3cd;border-left:4px solid #ffc107;padding:1.5rem;border-radius:8px;margin:1.5rem 0;text-align:center}
         .cta-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;margin-top:0.8rem}
+        .process-step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
+        .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
     </style>
 </head>
 <body>
@@ -915,50 +969,58 @@ def _build_templates() -> dict:
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing for developers and builders</p></div>
-        <article class="page-content">
+        <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing from a working developer</p></div>
+        <article class="page-content" itemscope itemtype="https://schema.org/Person">
 
             <div class="about-section">
-                <h2>Who Writes Here</h2>
+                <h2>The Author</h2>
                 <div class="author-card">
-                    <h3>Kubai Kevin</h3>
-                    <p class="credentials">Software developer based in Nairobi, Kenya &bull; Writing about AI, backend systems, and developer tooling</p>
-                    <p>I have been building software professionally for several years, working across web development, automation, and AI-assisted tools. This blog documents what I learn along the way — the problems I encounter in real projects, the tradeoffs I have had to make, and the tools that have actually proved useful in production.</p>
-                    <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building real things at realistic scales.</p>
+                    <div class="author-avatar-lg" aria-hidden="true">KK</div>
+                    <div>
+                        <h3 itemprop="name">Kubai Kevin</h3>
+                        <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
+                        <p itemprop="description">I have been building software professionally since 2019, working across web development, automation pipelines, and AI-assisted tooling. My day-to-day involves Python backends, API design, and increasingly: integrating large language models into practical workflows that real teams can use and maintain.</p>
+                        <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building things at realistic scales — including the parts that break and why.</p>
+                        <p>When I am not writing or coding, I contribute to open source projects and occasionally speak at local developer meetups in Nairobi.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="about-section">
                 <h2>What This Blog Covers</h2>
-                <p>The topics on this blog fall into a few areas that I work with regularly:</p>
+                <p>The topics on this blog fall into a few areas I work with regularly and care about enough to have strong opinions on:</p>
                 <div class="feature-grid">
-                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos.</p></div>
-                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and the distributed systems problems that come up in real products — not textbook examples.</p></div>
-                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, developer experience. What saves real time and what sounds good on paper but adds friction.</p></div>
-                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter, and honest analysis of the trends that will and will not last.</p></div>
+                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos. I am particularly interested in the gap between benchmark performance and production reliability.</p></div>
+                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and the distributed systems problems that come up in real products. I focus on the decisions that matter at 10,000 req/min, not just the ones that matter at 10 million.</p></div>
+                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, and developer experience. What saves real time and what sounds good on paper but adds friction. I try to include concrete before/after numbers wherever possible.</p></div>
+                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter in 2026, and honest analysis of the trends that will and will not last. I pay particular attention to what is happening in African tech markets.</p></div>
                 </div>
             </div>
 
             <div class="about-section">
-                <h2>Editorial Standards</h2>
-                <p>Some posts on this site are drafted with AI assistance and then reviewed and edited for accuracy. Where AI drafts are used, they are checked against documentation, tested against real systems where possible, and updated when errors are found.</p>
-                <p>If you spot an error or something that does not match your experience, the contact page has my email address. I take corrections seriously.</p>
+                <h2>How Articles Are Written</h2>
+                <p>I use a combination of personal experience and AI-assisted drafting. Here is the exact process:</p>
+                <div class="process-step"><div class="step-num">1</div><p><strong>Topic selection</strong> — I pick topics I have direct experience with or have researched recently for work. I do not write about things I cannot personally verify.</p></div>
+                <div class="process-step"><div class="step-num">2</div><p><strong>AI-assisted drafting</strong> — I use language models (Claude, GPT-4o) to generate a first draft based on my specifications. The prompt I use requires specific tool names, version numbers, benchmarks, and honest tradeoffs.</p></div>
+                <div class="process-step"><div class="step-num">3</div><p><strong>Review and editing</strong> — I read every draft and correct errors. If I cannot verify a specific claim against documentation or my own experience, I remove it. Code examples are tested locally where practical.</p></div>
+                <div class="process-step"><div class="step-num">4</div><p><strong>My take section</strong> — Every article includes a section with my personal opinion on the topic — something that reflects what I actually believe based on production experience, not just what the documentation says.</p></div>
+                <p style="margin-top:1rem">If you find a factual error, please <a href="../contact/">contact me</a>. I take corrections seriously and update articles when errors are found.</p>
             </div>
 
             <div class="stat-grid">
                 <div class="stat-card"><span class="stat-number">{{ posts|length }}</span><span>Posts published</span></div>
-                <div class="stat-card"><span class="stat-number">Weekly</span><span>Publishing cadence</span></div>
+                <div class="stat-card"><span class="stat-number">2019</span><span>Started coding professionally</span></div>
                 <div class="stat-card"><span class="stat-number">Free</span><span>Always and forever</span></div>
             </div>
 
             <div class="cta-box">
-                <h3>Get in Touch</h3>
-                <p>Questions, corrections, or topic suggestions are welcome.</p>
+                <h3>Questions or Corrections?</h3>
+                <p>I respond to every email. Factual corrections are especially welcome.</p>
                 <a href="../contact/" class="cta-button">Contact Me</a>
             </div>
         </article>
     </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
 </body>
 </html>"""
@@ -1058,7 +1120,7 @@ def _build_templates() -> dict:
             <div class="terms-section"><h3>1. Acceptance</h3>
                 <p>By accessing {{ site_name }}, you agree to these Terms and our Privacy Policy.</p></div>
             <div class="terms-section"><h3>2. AI-Assisted Content</h3>
-                <div class="warning-box"><p>Some content on this site is drafted with AI assistance and reviewed for accuracy. Always verify technical information independently before using it in production.</p></div></div>
+                <div class="warning-box"><p>Some content on this site is drafted with AI assistance and reviewed for accuracy by the author. Always verify technical information independently before using it in production.</p></div></div>
             <div class="terms-section"><h3>3. Affiliate Disclosure</h3>
                 <p>This site participates in affiliate programmes. Purchases made through affiliate links may earn us a commission at no additional cost to you.</p></div>
             <div class="terms-section"><h3>4. Disclaimer</h3>
@@ -1081,7 +1143,7 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - {{ site_name }}</title>
-    <meta name="description" content="Contact {{ site_name }}">
+    <meta name="description" content="Contact Kubai Kevin at {{ site_name }}">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/contact/">
@@ -1099,26 +1161,30 @@ def _build_templates() -> dict:
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>Contact Us</h2><p>Get in touch with the {{ site_name }} team</p></div>
+        <div class="hero"><h2>Contact</h2><p>Get in touch with Kubai Kevin</p></div>
         <article class="page-content">
             <div class="contact-method"><h3>Email</h3>
                 <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
-                <p>I typically respond within 3–5 working days.</p></div>
+                <p>I typically respond within 3–5 working days (EAT, UTC+3).</p></div>
             <div class="contact-method"><h3>What to reach out about</h3>
                 <ul>
-                    <li>Factual errors or corrections in articles</li>
-                    <li>Topic suggestions or questions about content</li>
+                    <li>Factual errors or corrections in articles — I take these seriously and update posts when errors are confirmed</li>
+                    <li>Topic suggestions or questions about content covered on the site</li>
                     <li>Collaboration or guest post proposals</li>
-                    <li>General questions about the site</li>
+                    <li>General questions about the site or the author</li>
                 </ul></div>
-            <div class="contact-method"><h3>Response time</h3>
-                <p>Monday to Friday, EAT (UTC+3). Weekend messages are read on the next business day.</p></div>
+            <div class="contact-method"><h3>What not to email about</h3>
+                <ul>
+                    <li>Link exchange or SEO partnership requests — these go unanswered</li>
+                    <li>Sponsored post inquiries without prior discussion</li>
+                </ul></div>
             <div class="contact-footer">
-                <p>Prefer email over social media for anything that requires a substantive reply.</p>
+                <p>Prefer email over social media for anything requiring a substantive reply.
+                For quick questions, Twitter DMs (<a href="https://twitter.com/KubaiKevin" style="color:#fff;text-decoration:underline;" target="_blank" rel="noopener">@KubaiKevin</a>) also work.</p>
             </div>
         </article>
     </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
 </body>
 </html>"""

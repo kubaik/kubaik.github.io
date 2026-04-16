@@ -98,6 +98,80 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <style>
+        /* ── Author block ── */
+        .author-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: #f8f9fa;
+            border-left: 4px solid #6366f1;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0 1.75rem;
+        }
+        .author-avatar {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .author-info { flex: 1; }
+        .author-name {
+            font-weight: 700; color: #1a1a2e; font-size: 0.95rem;
+            margin: 0 0 0.2rem;
+        }
+        .author-name a { color: inherit; text-decoration: none; }
+        .author-name a:hover { color: #6366f1; }
+        .author-bio { color: #555; font-size: 0.85rem; margin: 0; line-height: 1.5; }
+        /* ── Post meta row ── */
+        .post-meta-row {
+            display: flex; flex-wrap: wrap; gap: 0.75rem;
+            color: #666; font-size: 0.82rem; margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        .post-meta-row span::before { content: "·"; margin-right: 0.75rem; }
+        .post-meta-row span:first-child::before { content: ""; margin-right: 0; }
+        /* ── Related posts ── */
+        .related-posts {
+            margin-top: 3rem; padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+        .related-posts h2 {
+            font-size: 1.3rem; color: #1a1a2e; margin-bottom: 1.25rem;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .related-card {
+            background: #f8f9fa; border-radius: 8px; padding: 1rem;
+            border: 1px solid #e0e0e0; text-decoration: none; color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s; display: block;
+        }
+        .related-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.12);
+        }
+        .related-card h3 {
+            font-size: 0.92rem; margin: 0 0 0.4rem; color: #1a1a2e; line-height: 1.4;
+        }
+        .related-card p {
+            font-size: 0.8rem; color: #666; margin: 0 0 0.5rem; line-height: 1.4;
+        }
+        .related-card .related-meta {
+            font-size: 0.75rem; color: #999;
+        }
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            font-size: 0.82rem; color: #888; margin-bottom: 1rem;
+        }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 0.4rem; }
+    </style>
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -124,9 +198,34 @@
         </div>
     </header>
     <main class="container">
-        <article class="blog-post">
+
+        
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Tech Interview Prep</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1>Tech Interview Prep</h1>
+                <h1 itemprop="headline">Tech Interview Prep</h1>
+
+                
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-05T14:59:37.172245" itemprop="datePublished">
+                            5 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>12 min read</span>
+                    
+                    
+                    <span>2305 words</span>
+                    
+                </div>
+
                 
                 <div class="tags">
                     
@@ -144,16 +243,24 @@
                     
                 </div>
                 
-                <div class="post-meta">
-                    <time datetime="2026-04-05T14:59:37.172245">5 April 2026</time>
-                </div>
-                 <div class="post-meta">
-                    
-                    <span class="reading-time"> 12 min read</span>
-                    
-                </div>
             </header>
-            <div class="post-content">
+
+            
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
                 <h2 id="introduction-to-tech-interviews">Introduction to Tech Interviews</h2>
 <p>Preparing for a tech interview can be a daunting task, especially for those who are new to the industry. With the rise of tech companies, the demand for skilled engineers has increased, and the competition for jobs has become fierce. To stand out from the crowd, it's essential to have a solid understanding of the fundamentals and be able to apply them to real-world problems. In this guide, we'll walk you through the process of preparing for a tech interview, including the most common topics, practice resources, and tips for acing the interview.</p>
 <h3 id="understanding-the-interview-process">Understanding the Interview Process</h3>
@@ -324,7 +431,37 @@
     </script>
 </div>
             </div>
+
             
+
+            
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/vision-tech-april-2026/">
+                        <h3>Vision Tech (April 2026)</h3>
+                        <p>Explore real-world Computer Vision apps, from facial recognition to medical diagnostics, and their impact on industries.</p>
+                        <span class="related-meta">11 min read · 13 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/6-essential-designs/">
+                        <h3>6 Essential Designs</h3>
+                        <p>Master 6 essential design patterns, boosting efficiency and code quality in your projects.</p>
+                        <span class="related-meta">10 min read · 12 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/price-to-grow/">
+                        <h3>Price to Grow</h3>
+                        <p>Unlock optimal SaaS pricing: determine your product's value, calculate costs, and maximize revenue with actionable strat…</p>
+                        <span class="related-meta">10 min read · 12 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -340,7 +477,9 @@
 </div>
     <footer>
         <div class="container">
-            <p>&copy; 2026 Tech Blog. Content generated with AI assistance and reviewed for accuracy.</p>
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
