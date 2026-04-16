@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 04:55:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 06:14:39 +0000</lastBuildDate>
+    <item>
+      <title>Lang Wars: PyGoRu</title>
+      <link>https://kubaik.github.io/lang-wars-pygoru/</link>
+      <description>Python vs Go vs Rust: Choosing for Your Use Case</description>
+      <pubDate>Thu, 16 Apr 2026 06:14:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/lang-wars-pygoru/</guid>
+    </item>
     <item>
       <title>Million Dollar Code</title>
       <link>https://kubaik.github.io/million-dollar-code/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Wed, 15 Apr 2026 15:04:10 +0000</pubDate>
       <guid>https://kubaik.github.io/js-game-changers/</guid>
-    </item>
-    <item>
-      <title>Micro-Frontend Mastery</title>
-      <link>https://kubaik.github.io/micro-frontend-mastery/</link>
-      <description>Micro-frontend architecture for scalable applications</description>
-      <pubDate>Wed, 15 Apr 2026 14:29:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-frontend-mastery/</guid>
     </item>
   </channel>
 </rss>
