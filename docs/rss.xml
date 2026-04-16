@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 22:35:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 23:25:10 +0000</lastBuildDate>
+    <item>
+      <title>Master Cybersecurity: Outsmart Social Engineers</title>
+      <link>https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/</link>
+      <description>Social engineering bypasses firewalls 74% of the time. Learn how to harden identity, monitor DMs, and automate response with real metrics and code examples.</description>
+      <pubDate>Thu, 16 Apr 2026 23:25:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/</guid>
+    </item>
     <item>
       <title>Fast-Track Your Tech Career: Promotion Hacks</title>
       <link>https://kubaik.github.io/fast-track-your-tech-career-promotion-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Uncover Netflix&apos;s content strategy and gain insights into their decision-making process for new shows and features.</description>
       <pubDate>Mon, 13 Apr 2026 17:59:58 +0000</pubDate>
       <guid>https://kubaik.github.io/netflixs-next-move/</guid>
-    </item>
-    <item>
-      <title>AI on a Budget</title>
-      <link>https://kubaik.github.io/ai-on-a-budget/</link>
-      <description>Replace pricey software with 10 affordable AI tools, saving you money and boosting productivity.</description>
-      <pubDate>Mon, 13 Apr 2026 12:35:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-on-a-budget/</guid>
     </item>
   </channel>
 </rss>
