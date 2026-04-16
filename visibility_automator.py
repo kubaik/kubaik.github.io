@@ -389,10 +389,13 @@ class VisibilityAutomator:
             description += "…"
 
         payoff = (
-            f"{description}\n\n"
-            f"→ Why {topic_phrase} fails at scale\n"
-            f"→ Read More: {tracked_url}\n"
-            f"{hashtags}"
+            f"Full breakdown 🧵\n\n"
+            f"Why {topic_phrase} fails at scale + real patterns that actually work "
+            f"+ benchmarks & code.\n\n"
+            f"Full guide + code here 👇\n\n"
+            f"{tracked_url}\n\n"
+            f"{hashtags}\n\n"
+            f"What do you think? Reply 👇"
         )
 
         tweets = [hook, payoff]
