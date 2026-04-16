@@ -281,7 +281,8 @@ def _derive_hashtags_from_keywords(
     # Space-pad so substring tokens like " ai " don't match mid-word
     combined = f" {' '.join([title, topic] + keywords).lower()} "
 
-    selected: Dict[str, List[str]] = {"broad": [], "niche": [], "monetization": []}
+    selected: Dict[str, List[str]] = {
+        "broad": [], "niche": [], "monetization": []}
 
     for tier, mapping in _HASHTAG_TIERS.items():
         for keyword, tags in mapping.items():
@@ -298,7 +299,8 @@ def _derive_hashtags_from_keywords(
 
     # Pad with camelCased keywords if still under the limit
     if len(result) < max_hashtags:
-        question_starters = {"how", "what", "why", "when", "where", "which", "who"}
+        question_starters = {"how", "what", "why",
+                             "when", "where", "which", "who"}
         for kw in keywords:
             kw = kw.strip().lower()
             if not kw:
@@ -366,12 +368,18 @@ class BlogSystem:
 
     def _log_key_status(self):
         print("=== API Key Status ===")
-        print(f"  Groq:       {'configured' if self.groq_key       else 'NOT SET'}")
-        print(f"  OpenRouter: {'configured' if self.openrouter_key  else 'NOT SET'}")
-        print(f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
-        print(f"  Mistral:    {'configured' if self.mistral_key     else 'NOT SET'}")
-        print(f"  NVIDIA NIM: {'configured' if self.nvidia_key      else 'NOT SET'}")
-        print(f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
+        print(
+            f"  Groq:       {'configured' if self.groq_key       else 'NOT SET'}")
+        print(
+            f"  OpenRouter: {'configured' if self.openrouter_key  else 'NOT SET'}")
+        print(
+            f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
+        print(
+            f"  Mistral:    {'configured' if self.mistral_key     else 'NOT SET'}")
+        print(
+            f"  NVIDIA NIM: {'configured' if self.nvidia_key      else 'NOT SET'}")
+        print(
+            f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -393,7 +401,8 @@ class BlogSystem:
             if not post_json_path.exists() and markdown_path.exists():
                 try:
                     print(f"Recovering {post_dir.name}...")
-                    post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
+                    post = BlogPost.from_markdown_file(
+                        markdown_path, post_dir.name)
                     self.save_post(post)
                     fixed_count += 1
                     print(f"Recovered: {post.title}")
@@ -406,7 +415,8 @@ class BlogSystem:
                     removed_count += 1
                 except OSError:
                     print(f"Directory not empty: {list(post_dir.iterdir())}")
-        print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
+        print(
+            f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN
@@ -415,12 +425,18 @@ class BlogSystem:
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
-        if self.groq_key:       providers.append(("Groq",       self._call_groq))
-        if self.openrouter_key: providers.append(("OpenRouter",  self._call_openrouter))
-        if self.cerebras_key:   providers.append(("Cerebras",    self._call_cerebras))
-        if self.mistral_key:    providers.append(("Mistral",     self._call_mistral))
-        if self.nvidia_key:     providers.append(("NVIDIA NIM",  self._call_nvidia))
-        if self.gemini_key:     providers.append(("Gemini",      self._call_gemini))
+        if self.groq_key:
+            providers.append(("Groq",       self._call_groq))
+        if self.openrouter_key:
+            providers.append(("OpenRouter",  self._call_openrouter))
+        if self.cerebras_key:
+            providers.append(("Cerebras",    self._call_cerebras))
+        if self.mistral_key:
+            providers.append(("Mistral",     self._call_mistral))
+        if self.nvidia_key:
+            providers.append(("NVIDIA NIM",  self._call_nvidia))
+        if self.gemini_key:
+            providers.append(("Gemini",      self._call_gemini))
 
         if not providers:
             raise Exception(
@@ -441,7 +457,8 @@ class BlogSystem:
                 if name != providers[-1][0]:
                     print("Falling back to next provider...")
 
-        raise Exception(f"All configured API providers failed. Last error: {last_error}")
+        raise Exception(
+            f"All configured API providers failed. Last error: {last_error}")
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDER: Groq
@@ -449,8 +466,10 @@ class BlogSystem:
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.groq_key}", "Content-Type": "application/json"}
-        data = {"model": "llama-3.3-70b-versatile", "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
+        headers = {"Authorization": f"Bearer {self.groq_key}",
+                   "Content-Type": "application/json"}
+        data = {"model": "llama-3.3-70b-versatile", "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7}
         waits = [5, 15, 30]
         for attempt in range(1, 5):
             try:
@@ -461,14 +480,19 @@ class BlogSystem:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 4:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"Groq {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"Groq connection failed: {e}")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Groq connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("Groq timed out.")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("Groq timed out.")
         raise Exception("Groq unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -495,17 +519,24 @@ class BlogSystem:
                                       timeout=aiohttp.ClientTimeout(total=60)) as r:
                         if r.status == 200:
                             result = await r.json()
-                            if "error" in result: raise Exception(f"OpenRouter error: {result['error']}")
+                            if "error" in result:
+                                raise Exception(
+                                    f"OpenRouter error: {result['error']}")
                             return result["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 4:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"OpenRouter {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"OpenRouter connection failed: {e}")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"OpenRouter connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("OpenRouter timed out.")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("OpenRouter timed out.")
         raise Exception("OpenRouter unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -514,8 +545,10 @@ class BlogSystem:
 
     async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.cerebras_key}", "Content-Type": "application/json"}
-        data = {"model": "llama3.1-8b", "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
+        headers = {"Authorization": f"Bearer {self.cerebras_key}",
+                   "Content-Type": "application/json"}
+        data = {"model": "llama3.1-8b", "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7}
         waits = [5, 15, 30]
         for attempt in range(1, 5):
             try:
@@ -526,14 +559,19 @@ class BlogSystem:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 4:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"Cerebras {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"Cerebras connection failed: {e}")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Cerebras connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("Cerebras timed out.")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("Cerebras timed out.")
         raise Exception("Cerebras unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -542,8 +580,10 @@ class BlogSystem:
 
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.mistral_key}", "Content-Type": "application/json"}
-        data = {"model": _MISTRAL_MODEL, "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
+        headers = {"Authorization": f"Bearer {self.mistral_key}",
+                   "Content-Type": "application/json"}
+        data = {"model": _MISTRAL_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7}
         waits = [_MISTRAL_FREE_TIER_DELAY, 15, 30]
         for attempt in range(1, 5):
             try:
@@ -553,14 +593,19 @@ class BlogSystem:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 4:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"Mistral {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"Mistral connection failed: {e}")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Mistral connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("Mistral timed out.")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("Mistral timed out.")
         raise Exception("Mistral unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -569,8 +614,10 @@ class BlogSystem:
 
     async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.nvidia_key}", "Content-Type": "application/json"}
-        data = {"model": _NVIDIA_MODEL, "messages": messages, "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        headers = {"Authorization": f"Bearer {self.nvidia_key}",
+                   "Content-Type": "application/json"}
+        data = {"model": _NVIDIA_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
         waits = [5, 15, 30]
         for attempt in range(1, 5):
             try:
@@ -580,14 +627,19 @@ class BlogSystem:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 4:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"NVIDIA NIM {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"NVIDIA NIM connection failed: {e}")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"NVIDIA NIM connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("NVIDIA NIM timed out.")
+                if attempt < 4:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("NVIDIA NIM timed out.")
         raise Exception("NVIDIA NIM unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -600,26 +652,33 @@ class BlogSystem:
 
         try:
             import google.generativeai as genai
+
             def _sdk_call():
                 genai.configure(api_key=self.gemini_key)
                 model = genai.GenerativeModel(
                     model_name=GEMINI_MODEL,
-                    generation_config=genai.types.GenerationConfig(max_output_tokens=max_tokens, temperature=0.7),
+                    generation_config=genai.types.GenerationConfig(
+                        max_output_tokens=max_tokens, temperature=0.7),
                 )
-                parts = [("SYSTEM: " if m.get("role") == "system" else "USER: ") + m.get("content", "") for m in messages]
+                parts = [("SYSTEM: " if m.get(
+                    "role") == "system" else "USER: ") + m.get("content", "") for m in messages]
                 return model.generate_content("\n\n".join(parts) + "\n\nASSISTANT:").text
             return await asyncio.get_event_loop().run_in_executor(None, _sdk_call)
         except ImportError:
             pass
 
         api_url = f"https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
-        system_parts = [m["content"] for m in messages if m.get("role") == "system"]
-        user_parts = [m["content"] for m in messages if m.get("role") != "system"]
-        first_user = ("\n\n".join(system_parts) + "\n\n" if system_parts else "") + (user_parts[0] if user_parts else "")
+        system_parts = [m["content"]
+                        for m in messages if m.get("role") == "system"]
+        user_parts = [m["content"]
+                      for m in messages if m.get("role") != "system"]
+        first_user = ("\n\n".join(system_parts) + "\n\n" if system_parts else "") + \
+            (user_parts[0] if user_parts else "")
         contents = [{"role": "user", "parts": [{"text": first_user}]}]
         for extra in user_parts[1:]:
             contents.append({"role": "user", "parts": [{"text": extra}]})
-        payload = {"contents": contents, "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.7}}
+        payload = {"contents": contents, "generationConfig": {
+            "maxOutputTokens": max_tokens, "temperature": 0.7}}
         waits = [5, 15, 30, 60]
         for attempt in range(1, 6):
             try:
@@ -627,17 +686,24 @@ class BlogSystem:
                     async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             result = await r.json()
-                            try: return result["candidates"][0]["content"]["parts"][0]["text"]
-                            except (KeyError, IndexError) as e: raise Exception(f"Gemini parse error: {e}")
+                            try:
+                                return result["candidates"][0]["content"]["parts"][0]["text"]
+                            except (KeyError, IndexError) as e:
+                                raise Exception(f"Gemini parse error: {e}")
                         if r.status in RETRYABLE and attempt < 5:
-                            await asyncio.sleep(waits[attempt - 1]); continue
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
                         raise Exception(f"Gemini {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 5: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception(f"Gemini connection failed: {e}")
+                if attempt < 5:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Gemini connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 5: await asyncio.sleep(waits[attempt - 1])
-                else: raise Exception("Gemini timed out.")
+                if attempt < 5:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -664,7 +730,8 @@ class BlogSystem:
             bundle = await self._generate_content_bundle(title, topic, keywords)
             content = bundle["content"].strip()
             meta_description = bundle["meta_description"].strip()
-            seo_keywords = [k.strip() for k in bundle["seo_keywords"] if k.strip()]
+            seo_keywords = [k.strip()
+                            for k in bundle["seo_keywords"] if k.strip()]
 
             if not keywords:
                 keywords = seo_keywords
@@ -673,7 +740,8 @@ class BlogSystem:
             print(f"Generated content: {word_count} words")
 
             if word_count < MIN_WORD_COUNT:
-                print(f"Warning: content only {word_count} words (min {MIN_WORD_COUNT}). Expanding...")
+                print(
+                    f"Warning: content only {word_count} words (min {MIN_WORD_COUNT}). Expanding...")
                 content = await self._expand_content(content, title, topic)
                 word_count = _count_words(content)
                 print(f"After expansion: {word_count} words")
@@ -694,10 +762,12 @@ class BlogSystem:
                 monetization_data={},
             )
 
-            enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(post.content, topic)
+            enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
+                post.content, topic)
             post.content = enhanced_content
             post.affiliate_links = affiliate_links
-            post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+            post.monetization_data = self.monetization.generate_ad_slots(
+                enhanced_content)
 
             # ── Tiered hashtag derivation ─────────────────────────────────
             # Title is now passed so broad topics like "Profit", "AI", "Salary"
@@ -718,7 +788,8 @@ class BlogSystem:
             return post
 
         except Exception as e:
-            print(f"All API providers exhausted ({e}). Using local template content.")
+            print(
+                f"All API providers exhausted ({e}). Using local template content.")
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
@@ -742,9 +813,11 @@ class BlogSystem:
                 return title
             is_dup, match, score = _is_duplicate_title(title, existing_titles)
             if not is_dup:
-                print(f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
+                print(
+                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
                 return title
-            print(f"Attempt {attempt}: title too similar ({score:.0%}) to '{match}'. Retrying…")
+            print(
+                f"Attempt {attempt}: title too similar ({score:.0%}) to '{match}'. Retrying…")
 
         print("Warning: could not generate a fully unique title. Appending date suffix.")
         return f"{title} ({datetime.now().strftime('%B %Y')})"
@@ -827,68 +900,112 @@ Return ONLY the JSON object.""",
         def _sanitize(s):
             result, in_str, esc = [], False, False
             for ch in s:
-                if esc: result.append(ch); esc = False; continue
-                if ch == '\\': result.append(ch); esc = True; continue
-                if ch == '"': in_str = not in_str; result.append(ch); continue
+                if esc:
+                    result.append(ch)
+                    esc = False
+                    continue
+                if ch == '\\':
+                    result.append(ch)
+                    esc = True
+                    continue
+                if ch == '"':
+                    in_str = not in_str
+                    result.append(ch)
+                    continue
                 if in_str:
-                    if ch == '\n': result.append('\\n')
-                    elif ch == '\r': result.append('\\r')
-                    elif ch == '\t': result.append('\\t')
-                    elif ord(ch) < 0x20: result.append(f'\\u{ord(ch):04x}')
-                    else: result.append(ch)
-                else: result.append(ch)
+                    if ch == '\n':
+                        result.append('\\n')
+                    elif ch == '\r':
+                        result.append('\\r')
+                    elif ch == '\t':
+                        result.append('\\t')
+                    elif ord(ch) < 0x20:
+                        result.append(f'\\u{ord(ch):04x}')
+                    else:
+                        result.append(ch)
+                else:
+                    result.append(ch)
             return ''.join(result)
 
         def _repair(text):
             text = text.rstrip()
-            try: json.loads(text); return text
-            except json.JSONDecodeError: pass
+            try:
+                json.loads(text)
+                return text
+            except json.JSONDecodeError:
+                pass
             in_str, esc, depth = False, False, 0
             for ch in text:
-                if esc: esc = False; continue
-                if ch == '\\' and in_str: esc = True; continue
-                if ch == '"': in_str = not in_str; continue
+                if esc:
+                    esc = False
+                    continue
+                if ch == '\\' and in_str:
+                    esc = True
+                    continue
+                if ch == '"':
+                    in_str = not in_str
+                    continue
                 if not in_str:
-                    if ch == '{': depth += 1
-                    elif ch == '}': depth -= 1
-            if not in_str and depth == 0: return _sanitize(text)
+                    if ch == '{':
+                        depth += 1
+                    elif ch == '}':
+                        depth -= 1
+            if not in_str and depth == 0:
+                return _sanitize(text)
             rep = text
-            if in_str: rep += '"'
-            for _ in range(max(0, rep.count('[') - rep.count(']'))): rep += ']'
-            for _ in range(max(0, rep.count('{') - rep.count('}'))): rep += '}'
+            if in_str:
+                rep += '"'
+            for _ in range(max(0, rep.count('[') - rep.count(']'))):
+                rep += ']'
+            for _ in range(max(0, rep.count('{') - rep.count('}'))):
+                rep += '}'
             return rep
 
         def _partial(text):
             data = {}
-            m = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})', text, re.DOTALL)
-            if not m: m = re.search(r'"content"\s*:\s*"(.*)', text, re.DOTALL)
-            if m: data['content'] = m.group(1).replace('\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
-            m = re.search(r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
-            if m: data['meta_description'] = m.group(1).replace('\\n', ' ').strip()
+            m = re.search(
+                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})', text, re.DOTALL)
+            if not m:
+                m = re.search(r'"content"\s*:\s*"(.*)', text, re.DOTALL)
+            if m:
+                data['content'] = m.group(1).replace(
+                    '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
+            m = re.search(
+                r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
+            if m:
+                data['meta_description'] = m.group(
+                    1).replace('\\n', ' ').strip()
             m = re.search(r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
-            if m: data['seo_keywords'] = [k.strip().strip('"') for k in m.group(1).split(',') if k.strip().strip('"')]
+            if m:
+                data['seo_keywords'] = [k.strip().strip('"')
+                                        for k in m.group(1).split(',') if k.strip().strip('"')]
             return data
 
         def _parse(text):
             for attempt in [
                 lambda t: json.loads(t),
                 lambda t: json.loads(_sanitize(t)),
-                lambda t: json.loads(_sanitize(re.search(r'\{.*\}', t, re.DOTALL).group())) if re.search(r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
+                lambda t: json.loads(_sanitize(re.search(r'\{.*\}', t, re.DOTALL).group())) if re.search(
+                    r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
                 lambda t: json.loads(_sanitize(_repair(t))),
             ]:
-                try: return attempt(text)
-                except Exception: pass
+                try:
+                    return attempt(text)
+                except Exception:
+                    pass
             print("Warning: JSON unrecoverable — extracting fields individually.")
             data = _partial(text)
             if 'content' in data:
                 data.setdefault('meta_description', '')
                 data.setdefault('seo_keywords', [])
                 return data
-            raise ValueError(f"Model did not return valid JSON.\nRaw (first 400):\n{text[:400]}")
+            raise ValueError(
+                f"Model did not return valid JSON.\nRaw (first 400):\n{text[:400]}")
 
         data = _parse(raw)
         for key in ("content", "meta_description", "seo_keywords"):
-            if key not in data: raise ValueError(f"Bundle response missing key: '{key}'")
+            if key not in data:
+                raise ValueError(f"Bundle response missing key: '{key}'")
         return data
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
@@ -917,13 +1034,15 @@ Return ONLY the JSON object.""",
     def _build_thread_tweets(self, post) -> List[str]:
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
-        short_title = post.title if len(post.title) <= 60 else post.title[:57] + "..."
+        short_title = post.title if len(
+            post.title) <= 60 else post.title[:57] + "..."
 
         # Use tiered twitter_hashtags from post object (set during generation)
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             hashtags = post.twitter_hashtags
         elif hasattr(post, 'tags') and post.tags:
-            clean_tags = [t.replace(' ', '').replace('-', '') for t in post.tags if t and len(t.replace(' ', '').replace('-', '')) >= 2]
+            clean_tags = [t.replace(' ', '').replace(
+                '-', '') for t in post.tags if t and len(t.replace(' ', '').replace('-', '')) >= 2]
             hashtags = " ".join(f"#{t}" for t in clean_tags[:5])
         else:
             hashtags = ""
@@ -933,8 +1052,10 @@ Return ONLY the JSON object.""",
         topic_phrase = _extract_topic_phrase(post.title, max_words=3)
 
         # Secondary phrases for tweet body variety
-        topic_words = [w for w in post.title.split() if w.lower() not in _HOOK_STOP_WORDS and len(w) >= 2]
-        topic_b = " ".join(topic_words[1:3]) if len(topic_words) > 1 else "the fundamentals"
+        topic_words = [w for w in post.title.split() if w.lower()
+                       not in _HOOK_STOP_WORDS and len(w) >= 2]
+        topic_b = " ".join(topic_words[1:3]) if len(
+            topic_words) > 1 else "the fundamentals"
         topic_c = topic_words[-1] if topic_words else "performance"
 
         hook_style = self.config.get('hook_style', 'knowledge_gap')
@@ -1100,25 +1221,30 @@ Skip it for low, predictable traffic (under 100 req/min). Skip it without observ
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
         fallback_hashtags = _derive_hashtags_from_keywords(
-            [topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices"],
+            [topic_lower, f"{topic_lower} tutorial",
+                f"{topic_lower} best practices"],
             topic=topic, title=title, max_hashtags=5,
         )
 
         post = BlogPost(
             title=title, content=content, slug=slug,
-            tags=[topic_lower.replace(' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
+            tags=[topic_lower.replace(
+                ' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
             meta_description=f"A practical guide to {topic} covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.",
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(), updated_at=datetime.now().isoformat(),
-            seo_keywords=[topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices", f"how to use {topic_lower}", f"{topic_lower} performance"],
+            seo_keywords=[topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices",
+                          f"how to use {topic_lower}", f"{topic_lower} performance"],
             affiliate_links=[], monetization_data={},
         )
         post.twitter_hashtags = " ".join(f"#{h}" for h in fallback_hashtags)
 
-        enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(post.content, topic)
+        enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
+            post.content, topic)
         post.content = enhanced_content
         post.affiliate_links = affiliate_links
-        post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+        post.monetization_data = self.monetization.generate_ad_slots(
+            enhanced_content)
         return post
 
     # ─────────────────────────────────────────────────────────────
@@ -1131,23 +1257,35 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         slug = re.sub(r'[\s_-]+', '-', slug)
         return slug.strip('-')[:50]
 
-    def save_post(self, post: BlogPost):
-        word_count = _count_words(post.content)
+    def save_post(self, post):
+        from pathlib import Path
+        import json
+
+        word_count = len(post.content.split())
+        MIN_WORD_COUNT = 1500
         if word_count < MIN_WORD_COUNT:
-            print(f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
+            print(
+                f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
 
+        # Serialise to dict and inject twitter_hashtags so it persists across runs
+        post_data = post.to_dict()
+        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
+            post_data['twitter_hashtags'] = post.twitter_hashtags
+
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
-            json.dump(post.to_dict(), f, indent=2, ensure_ascii=False)
+            json.dump(post_data, f, indent=2, ensure_ascii=False)
+
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
 
         print(f"Saved post: {post.title} ({post.slug}) — {word_count} words")
         if post.affiliate_links:
             print(f"  - {len(post.affiliate_links)} affiliate links added")
-        print(f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
+        print(
+            f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             print(f"  - Twitter hashtags: {post.twitter_hashtags}")
 
@@ -1159,7 +1297,8 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
     print(f"Picking topic from {config_path}")
     if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Config file {config_path} not found. Run 'python blog_system.py init' first.")
+        raise FileNotFoundError(
+            f"Config file {config_path} not found. Run 'python blog_system.py init' first.")
 
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
@@ -1188,16 +1327,20 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     if existing_titles:
         safe_available, skipped = [], []
         for candidate in available:
-            is_dup, match, score = _is_duplicate_title(candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD)
-            if is_dup: skipped.append((candidate, match, score))
-            else: safe_available.append(candidate)
+            is_dup, match, score = _is_duplicate_title(
+                candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD)
+            if is_dup:
+                skipped.append((candidate, match, score))
+            else:
+                safe_available.append(candidate)
 
         if skipped:
             print(f"Skipped {len(skipped)} topic(s) already covered:")
             for topic, match, score in skipped:
                 print(f"  '{topic}' ≈ '{match}' ({score:.0%})")
 
-        if safe_available: available = safe_available
+        if safe_available:
+            available = safe_available
         else:
             print("All available topics covered. Resetting.")
             available = topics
@@ -1381,7 +1524,8 @@ if __name__ == "__main__":
             create_sample_config()
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
-            print("Done! API chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template")
+            print(
+                "Done! API chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template")
 
         elif mode == "auto":
             print("Starting automated blog generation...")
@@ -1410,7 +1554,8 @@ if __name__ == "__main__":
                 thread_result = visibility.post_thread(blog_post)
 
                 if thread_result['success']:
-                    print(f"Thread posted ({thread_result['tweet_count']} tweets)")
+                    print(
+                        f"Thread posted ({thread_result['tweet_count']} tweets)")
                     for i, url in enumerate(thread_result['thread_urls'], 1):
                         print(f"   Tweet {i}: {url}")
 
@@ -1423,9 +1568,10 @@ if __name__ == "__main__":
 
                         if not os.path.exists(flag_file):
                             last_tweet_id = thread_result['thread_ids'][-1]
-                            username = config.get('social_accounts', {}).get('twitter', '@KubaiKevin')
+                            username = config.get('social_accounts', {}).get(
+                                'twitter', '@KubaiKevin')
                             hashtags = getattr(blog_post, 'twitter_hashtags', '') or " ".join(
-                                f"#{t.replace(' ','').replace('-','')}" for t in sorted(getattr(blog_post,'tags',[]), key=len)[:3] if t
+                                f"#{t.replace(' ','').replace('-','')}" for t in sorted(getattr(blog_post, 'tags', []), key=len)[:3] if t
                             )
                             followup_text = (
                                 f"Found this useful? Follow {username} for daily threads on AI, dev tools, and software engineering\n\n{hashtags}"
@@ -1437,20 +1583,25 @@ if __name__ == "__main__":
                             followup_id = followup_response.data['id']
                             twitter_user = visibility._username or "KubaiKevin"
                             open(flag_file, 'w').close()
-                            print(f"Follow-up reply: https://twitter.com/{twitter_user}/status/{followup_id}")
+                            print(
+                                f"Follow-up reply: https://twitter.com/{twitter_user}/status/{followup_id}")
                         else:
                             print("Follow-up reply already posted today, skipping.")
 
                     except Exception as followup_err:
-                        print(f"Follow-up reply failed (skipping): {followup_err}")
+                        print(
+                            f"Follow-up reply failed (skipping): {followup_err}")
 
                 else:
-                    print(f"Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
-                    single_result = visibility.post_with_best_strategy(blog_post)
+                    print(
+                        f"Thread failed ({thread_result.get('error')}). Falling back to single tweet...")
+                    single_result = visibility.post_with_best_strategy(
+                        blog_post)
                     if single_result['success']:
                         print(f"Single tweet posted: {single_result['url']}")
                     else:
-                        print(f"Single tweet also failed: {single_result.get('error')}")
+                        print(
+                            f"Single tweet also failed: {single_result.get('error')}")
 
             except Exception as e:
                 print(f"Error: {e}")
@@ -1459,43 +1610,61 @@ if __name__ == "__main__":
                 sys.exit(1)
 
         elif mode == "build":
-            if not os.path.exists("config.yaml"): print("config.yaml not found."); sys.exit(1)
-            with open("config.yaml", "r") as f: config = yaml.safe_load(f)
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
             generator = StaticSiteGenerator(BlogSystem(config))
             generator.generate_site()
             print("Site rebuilt successfully!")
 
         elif mode == "cleanup":
-            if not os.path.exists("config.yaml"): print("config.yaml not found."); sys.exit(1)
-            with open("config.yaml", "r") as f: config = yaml.safe_load(f)
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
             blog_system.cleanup_posts()
             StaticSiteGenerator(blog_system).generate_site()
             print("Cleanup and rebuild complete!")
 
         elif mode == "debug":
-            if not os.path.exists("config.yaml"): print("config.yaml not found."); sys.exit(1)
-            with open("config.yaml", "r") as f: config = yaml.safe_load(f)
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
-            print(f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})")
+            print(
+                f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})")
             if blog_system.output_dir.exists():
                 for item in blog_system.output_dir.iterdir():
-                    print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
+                    print(
+                        f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
                     if item.is_dir():
                         for fname in ["post.json", "index.md", "social_posts.json"]:
-                            print(f"    {fname}: {'Yes' if (item/fname).exists() else 'No'}")
+                            print(
+                                f"    {fname}: {'Yes' if (item/fname).exists() else 'No'}")
                         if (item/"post.json").exists():
                             try:
-                                with open(item/"post.json") as f: data = json.load(f)
+                                with open(item/"post.json") as f:
+                                    data = json.load(f)
                                 wc = _count_words(data.get('content', ''))
-                                print(f"    Title: {data.get('title','Unknown')} | Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'}")
-                            except Exception as e: print(f"    Invalid JSON: {e}")
+                                print(
+                                    f"    Title: {data.get('title','Unknown')} | Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'}")
+                            except Exception as e:
+                                print(f"    Invalid JSON: {e}")
             blog_system.cleanup_posts()
             StaticSiteGenerator(blog_system).generate_site()
 
         elif mode == "social":
-            if not os.path.exists("config.yaml"): print("config.yaml not found."); sys.exit(1)
-            with open("config.yaml", "r") as f: config = yaml.safe_load(f)
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
             generator = StaticSiteGenerator(blog_system)
             posts = generator._get_all_posts()
@@ -1508,17 +1677,22 @@ if __name__ == "__main__":
             print("Done!")
 
         elif mode == "test-twitter":
-            if not os.path.exists("config.yaml"): print("config.yaml not found."); sys.exit(1)
-            with open("config.yaml", "r") as f: config = yaml.safe_load(f)
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
             visibility = VisibilityAutomator(config)
             print(f"Connection test: {visibility.test_twitter_connection()}")
 
         elif mode == "dedup":
             import subprocess
-            subprocess.run(["python", "deduplicate_posts.py", "--delete"] + sys.argv[2:])
+            subprocess.run(["python", "deduplicate_posts.py",
+                           "--delete"] + sys.argv[2:])
 
         else:
-            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
+            print(
+                "Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
