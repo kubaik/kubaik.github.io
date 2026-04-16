@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 09:25:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 09:51:57 +0000</lastBuildDate>
+    <item>
+      <title>Bug Fix Blitz</title>
+      <link>https://kubaik.github.io/bug-fix-blitz/</link>
+      <description>Debugging techniques to find bugs in minutes</description>
+      <pubDate>Thu, 16 Apr 2026 09:51:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/bug-fix-blitz/</guid>
+    </item>
     <item>
       <title>Shard Smarter</title>
       <link>https://kubaik.github.io/shard-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Build AI-powered apps without machine learning knowledge using pre-trained models and APIs. Learn how to implement AI-powered features with ease.</description>
       <pubDate>Wed, 15 Apr 2026 18:04:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-made-easy/</guid>
-    </item>
-    <item>
-      <title>AI Widens Wealth Gap</title>
-      <link>https://kubaik.github.io/ai-widens-wealth-gap/</link>
-      <description>AI exacerbates wealth inequality</description>
-      <pubDate>Wed, 15 Apr 2026 17:47:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-widens-wealth-gap/</guid>
     </item>
   </channel>
 </rss>
