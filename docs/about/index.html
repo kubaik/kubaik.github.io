@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Tech Blog</title>
-    <meta name="description" content="About Tech Blog — who we are and what we cover">
+    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi writing about AI, backend systems, and developer careers.">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -26,14 +26,17 @@
         .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin:1.5rem 0}
         .feature-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #e0e0e0}
         .feature-card h3{color:#6366f1;margin-top:0}
-        .author-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem}
-        .author-card h3{margin-top:0;color:#333}
-        .author-card .credentials{color:#666;font-size:0.9rem;margin-bottom:0.75rem}
+        .author-card{background:white;padding:1.5rem 2rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:flex-start}
+        .author-avatar-lg{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.6rem;flex-shrink:0}
+        .author-card h3{margin-top:0;color:#333;font-size:1.2rem}
+        .author-card .credentials{color:#6366f1;font-size:0.88rem;margin-bottom:0.75rem;font-weight:600}
         .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
         .stat-card{background:#f0f4ff;padding:1.5rem;border-radius:8px;text-align:center;border:2px solid #6366f1}
         .stat-number{font-size:2rem;font-weight:bold;color:#6366f1;display:block;margin-bottom:0.25rem}
         .cta-box{background:#fff3cd;border-left:4px solid #ffc107;padding:1.5rem;border-radius:8px;margin:1.5rem 0;text-align:center}
         .cta-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;margin-top:0.8rem}
+        .process-step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
+        .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
     </style>
 </head>
 <body>
@@ -43,50 +46,58 @@
         <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
-        <div class="hero"><h2>About Tech Blog</h2><p>Practical technology writing for developers and builders</p></div>
-        <article class="page-content">
+        <div class="hero"><h2>About Tech Blog</h2><p>Practical technology writing from a working developer</p></div>
+        <article class="page-content" itemscope itemtype="https://schema.org/Person">
 
             <div class="about-section">
-                <h2>Who Writes Here</h2>
+                <h2>The Author</h2>
                 <div class="author-card">
-                    <h3>Kubai Kevin</h3>
-                    <p class="credentials">Software developer based in Nairobi, Kenya &bull; Writing about AI, backend systems, and developer tooling</p>
-                    <p>I have been building software professionally for several years, working across web development, automation, and AI-assisted tools. This blog documents what I learn along the way — the problems I encounter in real projects, the tradeoffs I have had to make, and the tools that have actually proved useful in production.</p>
-                    <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building real things at realistic scales.</p>
+                    <div class="author-avatar-lg" aria-hidden="true">KK</div>
+                    <div>
+                        <h3 itemprop="name">Kubai Kevin</h3>
+                        <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
+                        <p itemprop="description">I have been building software professionally since 2019, working across web development, automation pipelines, and AI-assisted tooling. My day-to-day involves Python backends, API design, and increasingly: integrating large language models into practical workflows that real teams can use and maintain.</p>
+                        <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building things at realistic scales — including the parts that break and why.</p>
+                        <p>When I am not writing or coding, I contribute to open source projects and occasionally speak at local developer meetups in Nairobi.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="about-section">
                 <h2>What This Blog Covers</h2>
-                <p>The topics on this blog fall into a few areas that I work with regularly:</p>
+                <p>The topics on this blog fall into a few areas I work with regularly and care about enough to have strong opinions on:</p>
                 <div class="feature-grid">
-                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos.</p></div>
-                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and the distributed systems problems that come up in real products — not textbook examples.</p></div>
-                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, developer experience. What saves real time and what sounds good on paper but adds friction.</p></div>
-                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter, and honest analysis of the trends that will and will not last.</p></div>
+                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos. I am particularly interested in the gap between benchmark performance and production reliability.</p></div>
+                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and the distributed systems problems that come up in real products. I focus on the decisions that matter at 10,000 req/min, not just the ones that matter at 10 million.</p></div>
+                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, and developer experience. What saves real time and what sounds good on paper but adds friction. I try to include concrete before/after numbers wherever possible.</p></div>
+                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter in 2026, and honest analysis of the trends that will and will not last. I pay particular attention to what is happening in African tech markets.</p></div>
                 </div>
             </div>
 
             <div class="about-section">
-                <h2>Editorial Standards</h2>
-                <p>Some posts on this site are drafted with AI assistance and then reviewed and edited for accuracy. Where AI drafts are used, they are checked against documentation, tested against real systems where possible, and updated when errors are found.</p>
-                <p>If you spot an error or something that does not match your experience, the contact page has my email address. I take corrections seriously.</p>
+                <h2>How Articles Are Written</h2>
+                <p>I use a combination of personal experience and AI-assisted drafting. Here is the exact process:</p>
+                <div class="process-step"><div class="step-num">1</div><p><strong>Topic selection</strong> — I pick topics I have direct experience with or have researched recently for work. I do not write about things I cannot personally verify.</p></div>
+                <div class="process-step"><div class="step-num">2</div><p><strong>AI-assisted drafting</strong> — I use language models (Claude, GPT-4o) to generate a first draft based on my specifications. The prompt I use requires specific tool names, version numbers, benchmarks, and honest tradeoffs.</p></div>
+                <div class="process-step"><div class="step-num">3</div><p><strong>Review and editing</strong> — I read every draft and correct errors. If I cannot verify a specific claim against documentation or my own experience, I remove it. Code examples are tested locally where practical.</p></div>
+                <div class="process-step"><div class="step-num">4</div><p><strong>My take section</strong> — Every article includes a section with my personal opinion on the topic — something that reflects what I actually believe based on production experience, not just what the documentation says.</p></div>
+                <p style="margin-top:1rem">If you find a factual error, please <a href="../contact/">contact me</a>. I take corrections seriously and update articles when errors are found.</p>
             </div>
 
             <div class="stat-grid">
                 <div class="stat-card"><span class="stat-number">0</span><span>Posts published</span></div>
-                <div class="stat-card"><span class="stat-number">Weekly</span><span>Publishing cadence</span></div>
+                <div class="stat-card"><span class="stat-number">2019</span><span>Started coding professionally</span></div>
                 <div class="stat-card"><span class="stat-number">Free</span><span>Always and forever</span></div>
             </div>
 
             <div class="cta-box">
-                <h3>Get in Touch</h3>
-                <p>Questions, corrections, or topic suggestions are welcome.</p>
+                <h3>Questions or Corrections?</h3>
+                <p>I respond to every email. Factual corrections are especially welcome.</p>
                 <a href="../contact/" class="cta-button">Contact Me</a>
             </div>
         </article>
     </main>
-    <footer><div class="container"><p>&copy; 2026 Tech Blog.</p></div></footer>
+    <footer><div class="container"><p>&copy; 2026 Tech Blog · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
 </body>
 </html>

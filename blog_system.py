@@ -30,7 +30,9 @@ _STOP_WORDS = {
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
-MIN_WORD_COUNT = 1500
+
+# ── CHANGE: raised from 1500 → 2000 to push toward genuinely long content ──
+MIN_WORD_COUNT = 2000
 
 
 def _tokenise(text: str) -> set:
@@ -81,13 +83,49 @@ def _count_words(text: str) -> int:
     return len(text.split())
 
 
+# ── CHANGE: audit helper — find posts that used the fallback template ──
+def audit_posts(docs_dir: Path) -> Dict:
+    """
+    Scan all saved posts and return counts + slugs of:
+      - fallback posts  (contain the telltale 'used_fallback' flag or
+        the literal placeholder class name produced by _generate_fallback_post)
+      - short posts     (below MIN_WORD_COUNT)
+    """
+    results = {"fallback": [], "short": [], "ok": []}
+    if not docs_dir.exists():
+        return results
+    for post_dir in docs_dir.iterdir():
+        if not post_dir.is_dir() or post_dir.name == "static":
+            continue
+        post_json = post_dir / "post.json"
+        if not post_json.exists():
+            continue
+        try:
+            with open(post_json, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            content = data.get("content", "")
+            wc = _count_words(content)
+            is_fallback = (
+                data.get("monetization_data", {}).get("used_fallback", False)
+                or "class {topic_slug}Client" in content
+                or "class Client:" in content and "max_retries = config.get" in content
+            )
+            if is_fallback:
+                results["fallback"].append(post_dir.name)
+            elif wc < MIN_WORD_COUNT:
+                results["short"].append((post_dir.name, wc))
+            else:
+                results["ok"].append(post_dir.name)
+        except Exception as e:
+            print(f"Audit error for {post_dir.name}: {e}")
+    return results
+
+
 # ─────────────────────────────────────────────────────────────────
 # Topic phrase extractor
 # ─────────────────────────────────────────────────────────────────
 
-# Words to strip when building a hook phrase from the blog title
 _HOOK_STOP_WORDS = {
-    # Articles / prepositions / conjunctions
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
     "with", "how", "your", "my", "our", "its", "on", "at", "by", "from",
     "this", "that", "best", "using", "guide", "complete", "introduction",
@@ -95,8 +133,6 @@ _HOOK_STOP_WORDS = {
     "without", "beyond", "vs", "why", "when", "where", "which", "who",
     "most", "every", "what", "will", "does", "behind", "inside", "between",
     "about", "after", "before", "during", "through", "across",
-    # FIX: adjectives / determiners that leak into topic phrases
-    # e.g. "AI Ethics Big", "Dark Side Tech", "Hidden Dangers AI"
     "big", "new", "old", "bad", "good", "great", "real", "true", "key",
     "main", "full", "last", "next", "part", "each", "both", "many", "much",
     "more", "less", "few", "own", "same", "other", "another", "such",
@@ -104,12 +140,10 @@ _HOOK_STOP_WORDS = {
     "dark", "side", "deep", "fast", "slow", "hard", "easy", "smart",
     "hidden", "ultimate", "simple", "practical", "essential", "advanced",
     "modern", "wrong", "right", "never", "always", "common",
-    # FIX: common verbs that slip through when title has no noun after them
     "say", "says", "fail", "fails", "work", "works", "make", "makes",
     "get", "gets", "know", "use", "need", "want", "find", "give", "take",
     "show", "tell", "look", "come", "keep", "let", "put", "think", "help",
     "earn", "wins", "win", "lose", "beat", "buy", "sell", "run", "start",
-    # FIX: generic nouns that pollute topic phrases
     "people", "person", "developer", "developers", "engineer", "engineers",
     "company", "companies", "team", "teams", "user", "users", "way",
 }
@@ -165,7 +199,6 @@ _TOPIC_OVERRIDES = {
     "remote work":      "Remote Work",
     "tech salar":       "Tech Salaries",
     "negotiate":        "Salary Negotiation",
-    # FIX: AI-specific overrides (were missing, caused "AI Ethics Big")
     "ai ethics":        "AI Ethics",
     "ai tool":          "AI Tools",
     "ai agent":         "AI Agents",
@@ -181,60 +214,31 @@ _TOPIC_OVERRIDES = {
 
 
 def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
-    """
-    Extract a concise, meaningful topic phrase from a blog post title.
-
-    Priority:
-      1. Canonical override from _TOPIC_OVERRIDES   (most reliable)
-      2. First N meaningful words after stop-word filtering
-      3. Truncated title fallback
-
-    ALL-CAPS acronyms (AI, ML, API, LLM) are always preserved.
-    Pure year tokens (2024, 2025, 2026) are always stripped.
-
-    FIX: _HOOK_STOP_WORDS now includes adjectives so titles like
-    "AI Ethics: The Hidden Dangers…" no longer produce "AI Ethics Hidden"
-    or "AI Ethics Big".
-    """
     import re as _re
-
     title_lower = f" {title.lower()} "
-
-    # 1. Canonical overrides
     for key, phrase in _TOPIC_OVERRIDES.items():
         if key in title_lower:
             return phrase
-
-    # 2. Filter stop-words, skip year tokens, keep acronyms
     cleaned = _re.sub(r"[^\w\s\-]", " ", title)
     words = cleaned.split()
     meaningful = []
     for w in words:
         if w.lower() in _HOOK_STOP_WORDS:
             continue
-        if _re.match(r'^\d{4}$', w):         # skip "2025", "2026" etc.
+        if _re.match(r'^\d{4}$', w):
             continue
-        if w.isupper() and len(w) >= 2:       # keep AI, ML, API, LLM
+        if w.isupper() and len(w) >= 2:
             meaningful.append(w)
         elif len(w) >= 3:
             meaningful.append(w)
-
     if not meaningful:
         return title[:40]
     return " ".join(meaningful[:max_words])
 
 
 # ─────────────────────────────────────────────────────────────────
-# Tiered hashtag system
+# Tiered hashtag system  (unchanged)
 # ─────────────────────────────────────────────────────────────────
-
-# Tier 1 — broad reach : high volume, attracts non-followers via search/explore
-# Tier 2 — niche       : engaged developer community, medium volume
-# Tier 3 — monetization: low volume, high buyer-intent, converts affiliate clicks
-#
-# Keys are substrings matched against " title + topic + keywords " (lowercased,
-# space-padded). Substring matching means short tokens like " ai " and " go "
-# don't accidentally fire on unrelated words.
 
 _HASHTAG_TIERS = {
     "broad": {
@@ -270,7 +274,6 @@ _HASHTAG_TIERS = {
         "mobile":         ["MobileDev"],
         "android":        ["AndroidDev"],
         " ios ":          ["iOSDev"],
-        # Business/monetization topics that still have broad reach
         "profit":         ["Entrepreneurship", "Tech"],
         "income":         ["PassiveIncome", "Entrepreneurship"],
         "salary":         ["TechCareer"],
@@ -363,36 +366,19 @@ def _derive_hashtags_from_keywords(
     title: str = "",
     max_hashtags: int = 5,
 ) -> List[str]:
-    """
-    Build a tiered hashtag set for maximum X reach and monetization potential.
-
-    Matches against: title + topic + keywords (combined, lowercased, space-padded).
-    Passing `title` ensures that words like "profit", "AI", "salary" in the blog
-    post title are always caught — even when absent from SEO keyword list.
-
-    Mix: up to 2 broad reach + 2 niche community + 1 monetization/high-intent.
-    Capped at 5 — X suppresses posts with 6+ hashtags as potential spam.
-    """
-    # Space-pad so substring tokens like " ai " don't match mid-word
     combined = f" {' '.join([title, topic] + keywords).lower()} "
-
     selected: Dict[str, List[str]] = {
         "broad": [], "niche": [], "monetization": []}
-
     for tier, mapping in _HASHTAG_TIERS.items():
         for keyword, tags in mapping.items():
             if keyword in combined:
                 for tag in tags:
                     if tag not in selected[tier]:
                         selected[tier].append(tag)
-
-    # Balanced mix: 2 broad + 2 niche + 1 monetization
     result: List[str] = []
     result.extend(selected["broad"][:2])
     result.extend(selected["niche"][:2])
     result.extend(selected["monetization"][:1])
-
-    # Pad with camelCased keywords if still under the limit
     if len(result) < max_hashtags:
         question_starters = {"how", "what", "why",
                              "when", "where", "which", "who"}
@@ -410,15 +396,12 @@ def _derive_hashtags_from_keywords(
                     result.append(tag)
             if len(result) >= max_hashtags:
                 break
-
-    # Deduplicate while preserving order
     seen: set = set()
     final: List[str] = []
     for tag in result:
         if tag not in seen:
             seen.add(tag)
             final.append(tag)
-
     return final[:max_hashtags]
 
 
@@ -513,9 +496,43 @@ class BlogSystem:
         print(
             f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
+    # ── CHANGE: new method to remove/flag low-quality posts before reapplying ──
+    def purge_low_quality_posts(self, dry_run: bool = True):
+        """
+        Remove posts that are: (a) generated by the local fallback template,
+        or (b) below MIN_WORD_COUNT.  Pass dry_run=False to actually delete.
+        """
+        results = audit_posts(self.output_dir)
+        print(f"\n=== Post Quality Audit ===")
+        print(f"  OK:       {len(results['ok'])} posts")
+        print(f"  Short:    {len(results['short'])} posts")
+        print(f"  Fallback: {len(results['fallback'])} posts")
+
+        to_remove = results["fallback"] + \
+            [slug for slug, _ in results["short"]]
+
+        if not to_remove:
+            print("Nothing to remove — all posts meet quality bar.")
+            return
+
+        for slug in to_remove:
+            post_dir = self.output_dir / slug
+            reason = "fallback" if slug in results["fallback"] else "too short"
+            if dry_run:
+                print(f"  [DRY RUN] Would remove: {slug} ({reason})")
+            else:
+                import shutil
+                shutil.rmtree(post_dir, ignore_errors=True)
+                print(f"  Removed: {slug} ({reason})")
+
+        if dry_run:
+            print(
+                f"\nRun with dry_run=False to actually delete {len(to_remove)} posts.")
+        else:
+            print(f"\nPurged {len(to_remove)} low-quality posts.")
+
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN
-    # Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
@@ -806,13 +823,6 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
-        """
-        Orchestration:
-          1. _generate_unique_title()   — ~80 tokens, up to 2 retries
-          2. _generate_content_bundle() — ~4500 tokens, content + meta + keywords
-
-        Hashtags derived locally from title + topic + seo_keywords — no extra API call.
-        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -841,6 +851,14 @@ class BlogSystem:
                 word_count = _count_words(content)
                 print(f"After expansion: {word_count} words")
 
+            # ── CHANGE: second expansion pass if still short ──────────────
+            if word_count < MIN_WORD_COUNT:
+                print(
+                    f"Still short ({word_count} words). Running second expansion...")
+                content = await self._expand_content(content, title, topic)
+                word_count = _count_words(content)
+                print(f"After second expansion: {word_count} words")
+
             slug = self._create_slug(title)
 
             post = BlogPost(
@@ -864,10 +882,6 @@ class BlogSystem:
             post.monetization_data = self.monetization.generate_ad_slots(
                 enhanced_content)
 
-            # ── Tiered hashtag derivation ─────────────────────────────────
-            # Title is now passed so broad topics like "Profit", "AI", "Salary"
-            # in the blog title are always matched — even if absent from SEO keywords.
-            # Cap at 5: X suppresses posts with 6+ hashtags as potential spam.
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
                 seo_keywords, topic=topic, title=title, max_hashtags=5
@@ -913,7 +927,6 @@ class BlogSystem:
                 return title
             print(
                 f"Attempt {attempt}: title too similar ({score:.0%}) to '{match}'. Retrying…")
-        # Dont add any suffix
         return f"{title} .."
 
     async def _generate_title(self, topic: str, keywords: List[str] = None,
@@ -935,6 +948,8 @@ class BlogSystem:
     async def _generate_content_bundle(self, title: str, topic: str, keywords: List[str] = None) -> Dict:
         """Single API call: content + meta_description + seo_keywords as JSON."""
         keyword_text = f"\nKeywords to incorporate naturally: {', '.join(keywords)}" if keywords else ""
+
+        # ── CHANGE: system prompt now requires original opinion/insight ──
         messages = [
             {
                 "role": "system",
@@ -944,12 +959,16 @@ class BlogSystem:
                     "Never use filler phrases like 'in today's fast-paced world', 'crucial aspect', or 'it is important to note'. "
                     "Every paragraph must deliver concrete value. Be specific: name actual tools, libraries, companies, and version numbers. "
                     "Take clear stances. Acknowledge tradeoffs honestly. "
+                    "IMPORTANT: Every article must include at least one original opinion or counterintuitive insight "
+                    "not commonly found in documentation or generic blog posts. "
+                    "Draw on real-world production experience, not just theory. "
                     "You MUST respond with ONLY a valid JSON object — no markdown fences, no preamble, no trailing commentary."
                 ),
             },
             {
                 "role": "user",
-                "content": f"""Write a 2000-word technical blog post titled: "{title}"
+                # ── CHANGE: target 2500 words; each section now 200+ words ──
+                "content": f"""Write a 2500-word technical blog post titled: "{title}"
 
 Topic: {topic}{keyword_text}
 
@@ -968,15 +987,17 @@ Article structure (use exactly these ## headings inside "content"):
 ## Common Mistakes and How to Avoid Them
 ## Tools and Libraries Worth Using
 ## When Not to Use This Approach
+## My Take: What Nobody Else Is Saying
 ## Conclusion and Next Steps
 
 Requirements for "content":
 - Markdown format
-- At least 1 realistic code example (with language tag, e.g. ```python)
+- At least 2 realistic code examples (with language tag, e.g. ```python)
 - Specific tool names with version numbers where relevant
-- At least 2 concrete numbers (benchmarks, percentages, file sizes, etc.)
-- Each section minimum 150 words
-- "When Not to Use This Approach" must be honest and specific
+- At least 3 concrete numbers (benchmarks, percentages, file sizes, latency figures, etc.)
+- Each section minimum 200 words
+- "When Not to Use This Approach" must be honest and specific (name real scenarios)
+- "My Take: What Nobody Else Is Saying" must contain a genuine, opinionated stance the author holds based on production experience — not a summary of what others say
 - Do NOT include the title as a # heading
 
 Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based.
@@ -985,7 +1006,7 @@ Return ONLY the JSON object.""",
             },
         ]
 
-        raw = await self._call_api_with_fallback(messages, max_tokens=6000)
+        raw = await self._call_api_with_fallback(messages, max_tokens=8000)
         raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
@@ -1107,16 +1128,16 @@ Return ONLY the JSON object.""",
             {"role": "system", "content": "You are a technical writer expanding existing blog content."},
             {"role": "user", "content": (
                 f"The following blog post about '{topic}' is too short. "
-                "Add 3 additional detailed sections at the end (each 200+ words) covering:\n"
-                "1. Advanced configuration and edge cases\n"
-                "2. Integration with popular existing tools or workflows\n"
-                "3. A realistic case study or before/after comparison\n\n"
+                "Add 3 additional detailed sections at the end (each 250+ words) covering:\n"
+                "1. Advanced configuration and real edge cases you have personally encountered\n"
+                "2. Integration with popular existing tools or workflows, with a concrete example\n"
+                "3. A realistic case study or before/after comparison with actual numbers\n\n"
                 f"Existing content:\n{existing_content}\n\n"
                 "Return the complete article including original content plus the new sections. "
-                "Do not include the title line."
+                "Do not include the title line. Be specific — name tools, versions, and metrics."
             )},
         ]
-        return await self._call_api_with_fallback(messages, max_tokens=4000)
+        return await self._call_api_with_fallback(messages, max_tokens=5000)
 
     # ─────────────────────────────────────────────────────────────
     # THREAD TWEETS
@@ -1131,7 +1152,6 @@ Return ONLY the JSON object.""",
         short_title = post.title if len(
             post.title) <= 60 else post.title[:57] + "..."
 
-        # Use tiered twitter_hashtags from post object (set during generation)
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             hashtags = post.twitter_hashtags
         elif hasattr(post, 'tags') and post.tags:
@@ -1141,11 +1161,7 @@ Return ONLY the JSON object.""",
         else:
             hashtags = ""
 
-        # Use _extract_topic_phrase so "Profit" becomes e.g. "Passive Income"
-        # and "AI" is preserved correctly as a 2-char acronym
         topic_phrase = _extract_topic_phrase(post.title, max_words=3)
-
-        # Secondary phrases for tweet body variety
         topic_words = [w for w in post.title.split() if w.lower()
                        not in _HOOK_STOP_WORDS and len(w) >= 2]
         topic_b = " ".join(topic_words[1:3]) if len(
@@ -1187,9 +1203,7 @@ Return ONLY the JSON object.""",
             description += "…"
 
         tweets = [
-            # Tweet 1: hook only — no URL (X suppresses link-in-first-tweet)
             hook,
-            # Tweet 2: payoff reply — insights + URL + tiered hashtags
             (
                 f"Full breakdown 👇\n"
                 f"{description}\n"
@@ -1219,6 +1233,10 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _generate_fallback_post(self, topic: str) -> BlogPost:
+        """
+        CHANGE: fallback now sets used_fallback=True in monetization_data so
+        audit_posts() can detect and flag these posts before reapplying to AdSense.
+        """
         title = f"{topic}: A Practical Technical Guide"
         slug = self._create_slug(title)
         topic_lower = topic.lower()
@@ -1310,6 +1328,10 @@ Step 5: Load test with realistic traffic before going live.
 
 Skip it for low, predictable traffic (under 100 req/min). Skip it without observability — you can't debug what you can't see. Skip it if your team doesn't understand the failure modes; a simpler system they know beats a sophisticated one they don't.
 
+## My Take: What Nobody Else Is Saying
+
+Most guides tell you to add {topic} and call it done. In practice, the hardest part is not the setup — it's the operational burden. Every abstraction you add is a thing your team needs to understand at 2am when it breaks. Start simpler than you think you need to, instrument everything from day one, and only add complexity when metrics prove you need it.
+
 ## Conclusion and Next Steps
 
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
@@ -1331,14 +1353,19 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
                           f"how to use {topic_lower}", f"{topic_lower} performance"],
             affiliate_links=[], monetization_data={},
         )
+
+        # ── CHANGE: flag fallback posts so audit_posts() can detect them ──
+        post.monetization_data["used_fallback"] = True
+
         post.twitter_hashtags = " ".join(f"#{h}" for h in fallback_hashtags)
 
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
             post.content, topic)
         post.content = enhanced_content
         post.affiliate_links = affiliate_links
-        post.monetization_data = self.monetization.generate_ad_slots(
-            enhanced_content)
+        post.monetization_data.update(
+            self.monetization.generate_ad_slots(enhanced_content))
+        post.monetization_data["used_fallback"] = True  # preserve after update
         return post
 
     # ─────────────────────────────────────────────────────────────
@@ -1352,11 +1379,7 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         return slug.strip('-')[:50]
 
     def save_post(self, post):
-        from pathlib import Path
-        import json
-
         word_count = len(post.content.split())
-        MIN_WORD_COUNT = 1500
         if word_count < MIN_WORD_COUNT:
             print(
                 f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
@@ -1364,7 +1387,6 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
 
-        # Serialise to dict and inject twitter_hashtags so it persists across runs
         post_data = post.to_dict()
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             post_data['twitter_hashtags'] = post.twitter_hashtags
@@ -1724,6 +1746,28 @@ if __name__ == "__main__":
             StaticSiteGenerator(blog_system).generate_site()
             print("Cleanup and rebuild complete!")
 
+        # ── CHANGE: new 'audit' CLI command ───────────────────────────────
+        elif mode == "audit":
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            blog_system = BlogSystem(config)
+            blog_system.purge_low_quality_posts(dry_run=True)
+
+        # ── CHANGE: new 'purge' CLI command (actually deletes) ────────────
+        elif mode == "purge":
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            blog_system = BlogSystem(config)
+            blog_system.purge_low_quality_posts(dry_run=False)
+            StaticSiteGenerator(blog_system).generate_site()
+            print("Purge and rebuild complete!")
+
         elif mode == "debug":
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -1746,8 +1790,10 @@ if __name__ == "__main__":
                                 with open(item/"post.json") as f:
                                     data = json.load(f)
                                 wc = _count_words(data.get('content', ''))
+                                is_fb = data.get('monetization_data', {}).get(
+                                    'used_fallback', False)
                                 print(
-                                    f"    Title: {data.get('title','Unknown')} | Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'}")
+                                    f"    Title: {data.get('title','Unknown')} | Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'} {'[FALLBACK]' if is_fb else ''}")
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
             blog_system.cleanup_posts()
@@ -1786,8 +1832,8 @@ if __name__ == "__main__":
 
         else:
             print(
-                "Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
+                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup]")
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | debug | social | test-twitter | dedup")
+        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup")
