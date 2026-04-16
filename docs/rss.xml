@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 22:21:27 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 19:25:57 +0000</lastBuildDate>
+    <item>
+      <title>Safeguard Your Data</title>
+      <link>https://kubaik.github.io/safeguard-your-data/</link>
+      <description>Protect your personal data from corporations with a multi-layered approach to data protection, including encryption, access control, and secure storage.</description>
+      <pubDate>Thu, 16 Apr 2026 19:25:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/safeguard-your-data/</guid>
+    </item>
     <item>
       <title>Dev Burnout Fix .</title>
       <link>https://kubaik.github.io/dev-burnout-fix/</link>
@@ -138,13 +145,6 @@
       <description>Master a new programming language in weeks with proven strategies and techniques to boost coding speed and efficiency.</description>
       <pubDate>Sun, 12 Apr 2026 20:04:36 +0000</pubDate>
       <guid>https://kubaik.github.io/code-fast/</guid>
-    </item>
-    <item>
-      <title>Access Denied?</title>
-      <link>https://kubaik.github.io/access-denied/</link>
-      <description>Understand web accessibility laws and coding standards to ensure compliance and inclusivity.</description>
-      <pubDate>Sun, 12 Apr 2026 19:36:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/access-denied/</guid>
     </item>
   </channel>
 </rss>
