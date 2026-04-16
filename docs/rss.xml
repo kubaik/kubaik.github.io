@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 20:42:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 21:27:11 +0000</lastBuildDate>
+    <item>
+      <title>Clean Code: Essential Rules That Actually Work</title>
+      <link>https://kubaik.github.io/clean-code-essential-rules-that-actually-work/</link>
+      <description>Learn how clean code rules cut bugs by 63% and build times by 48% in real-world codebases with specific metrics and tools.</description>
+      <pubDate>Thu, 16 Apr 2026 21:27:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-code-essential-rules-that-actually-work/</guid>
+    </item>
     <item>
       <title>How to Land a $150K Tech Job Without a Degree</title>
       <link>https://kubaik.github.io/how-to-land-a-150k-tech-job-without-a-degree/</link>
@@ -138,13 +145,6 @@
       <description>Build a robust data pipeline with our April 2026 guide, featuring expert tips to prevent breaks and ensure seamless data flow.</description>
       <pubDate>Mon, 13 Apr 2026 03:52:28 +0000</pubDate>
       <guid>https://kubaik.github.io/pipe-up-april-2026/</guid>
-    </item>
-    <item>
-      <title>Agile: Reality vs Ritual</title>
-      <link>https://kubaik.github.io/agile-reality-vs-ritual/</link>
-      <description>Uncover what truly drives Agile success: separate effective practices from mere rituals and boost your team&apos;s productivity.</description>
-      <pubDate>Sun, 12 Apr 2026 22:02:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-reality-vs-ritual/</guid>
     </item>
   </channel>
 </rss>
