@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 06:25:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 06:57:19 +0000</lastBuildDate>
+    <item>
+      <title>Tech Profit Paradox</title>
+      <link>https://kubaik.github.io/tech-profit-paradox/</link>
+      <description>Why most tech companies never become profitable and how to achieve cost-effective development and scalability</description>
+      <pubDate>Thu, 16 Apr 2026 06:57:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-profit-paradox/</guid>
+    </item>
     <item>
       <title>Load Less</title>
       <link>https://kubaik.github.io/load-less/</link>
@@ -138,13 +145,6 @@
       <description>MLOps streamlines AI model deployment, reducing issues</description>
       <pubDate>Wed, 15 Apr 2026 16:40:59 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-fix/</guid>
-    </item>
-    <item>
-      <title>Pythonize Your Workflow</title>
-      <link>https://kubaik.github.io/pythonize-your-workflow/</link>
-      <description>Automate repetitive tasks with Python and free up time for strategic work. Learn how to automate workflows with Python and improve your productivity.</description>
-      <pubDate>Wed, 15 Apr 2026 15:48:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/pythonize-your-workflow/</guid>
     </item>
   </channel>
 </rss>
