@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 04:40:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 04:55:49 +0000</lastBuildDate>
+    <item>
+      <title>Million Dollar Code</title>
+      <link>https://kubaik.github.io/million-dollar-code/</link>
+      <description>Open source projects made millions</description>
+      <pubDate>Thu, 16 Apr 2026 04:55:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/million-dollar-code/</guid>
+    </item>
     <item>
       <title>Optimize API Speed</title>
       <link>https://kubaik.github.io/optimize-api-speed/</link>
@@ -138,13 +145,6 @@
       <description>Micro-frontend architecture for scalable applications</description>
       <pubDate>Wed, 15 Apr 2026 14:29:28 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-frontend-mastery/</guid>
-    </item>
-    <item>
-      <title>Cash In On Code (April 2026)</title>
-      <link>https://kubaik.github.io/cash-in-on-code-april-2026/</link>
-      <description>Boost salary with in-demand tech skills</description>
-      <pubDate>Wed, 15 Apr 2026 14:00:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/cash-in-on-code-april-2026/</guid>
     </item>
   </channel>
 </rss>
