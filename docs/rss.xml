@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 01:13:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 02:00:55 +0000</lastBuildDate>
+    <item>
+      <title>Dev Jobs Vanish</title>
+      <link>https://kubaik.github.io/dev-jobs-vanish/</link>
+      <description></description>
+      <pubDate>Thu, 16 Apr 2026 02:00:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-jobs-vanish/</guid>
+    </item>
     <item>
       <title>AI Skills 2026</title>
       <link>https://kubaik.github.io/ai-skills-2026/</link>
@@ -138,13 +145,6 @@
       <description>Evaluating the performance of AI chatbots like ChatGPT, Claude, and Gemini for conversational AI tasks.</description>
       <pubDate>Wed, 15 Apr 2026 13:18:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-showdown-chatgpt-vs-claude-vs-gemini/</guid>
-    </item>
-    <item>
-      <title>Slack vs Teams: Why Slack Lost .</title>
-      <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
-      <description>Slack vs Teams: Microsoft Teams outperforms Slack</description>
-      <pubDate>Wed, 15 Apr 2026 13:09:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
     </item>
   </channel>
 </rss>
