@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 17:09:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 17:25:25 +0000</lastBuildDate>
+    <item>
+      <title>No-Code vs Code: Know When</title>
+      <link>https://kubaik.github.io/no-code-vs-code-know-when/</link>
+      <description>No-code vs code: choose the right approach</description>
+      <pubDate>Thu, 16 Apr 2026 17:25:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-code-vs-code-know-when/</guid>
+    </item>
     <item>
       <title>Crack Social Media Codes</title>
       <link>https://kubaik.github.io/crack-social-media-codes/</link>
@@ -138,13 +145,6 @@
       <description>Debugging techniques to find bugs in minutes</description>
       <pubDate>Thu, 16 Apr 2026 09:51:51 +0000</pubDate>
       <guid>https://kubaik.github.io/bug-fix-blitz/</guid>
-    </item>
-    <item>
-      <title>Shard Smarter</title>
-      <link>https://kubaik.github.io/shard-smarter/</link>
-      <description>Database sharding improves performance by 50%</description>
-      <pubDate>Thu, 16 Apr 2026 09:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/shard-smarter/</guid>
     </item>
   </channel>
 </rss>
