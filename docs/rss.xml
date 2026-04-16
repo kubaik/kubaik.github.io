@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 19:05:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 19:11:22 +0000</lastBuildDate>
+    <item>
+      <title>Netflix&apos;s Secret Formula</title>
+      <link>https://kubaik.github.io/netflixs-secret-formula/</link>
+      <description>Discover how Netflix uses data-driven decision-making to decide what to build next, and learn how to apply this approach to your own projects.</description>
+      <pubDate>Thu, 16 Apr 2026 19:11:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/netflixs-secret-formula/</guid>
+    </item>
     <item>
       <title>AI Money Hacks</title>
       <link>https://kubaik.github.io/ai-money-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Compare AI coding assistants Copilot, Cursor, and others, including GitHub Copilot, and learn how to use them responsibly.</description>
       <pubDate>Thu, 16 Apr 2026 11:43:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-showdown/</guid>
-    </item>
-    <item>
-      <title>API Test Deep Dive</title>
-      <link>https://kubaik.github.io/api-test-deep-dive/</link>
-      <description>API testing beyond basic Postman requests</description>
-      <pubDate>Thu, 16 Apr 2026 11:36:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-test-deep-dive/</guid>
     </item>
   </channel>
 </rss>
