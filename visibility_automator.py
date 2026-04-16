@@ -388,9 +388,6 @@ class VisibilityAutomator:
         if len(post.meta_description) > 150:
             description += "…"
 
-        description = (
-            description[:80] + "...") if len(description) > 100 else description
-
         payoff = (
             f"{description}\n\n"
             f"→ Why {topic_phrase} fails at scale\n"
