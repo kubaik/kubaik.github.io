@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 16:12:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 17:01:16 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Simplified</title>
+      <link>https://kubaik.github.io/gitops-simplified/</link>
+      <description>Discover the benefits and best practices of GitOps, an emerging deployment strategy that transforms infrastructure and application code management.</description>
+      <pubDate>Thu, 16 Apr 2026 17:01:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-simplified/</guid>
+    </item>
     <item>
       <title>Code Clear: Dev Writing Tips</title>
       <link>https://kubaik.github.io/code-clear-dev-writing-tips/</link>
@@ -138,13 +145,6 @@
       <description>Scale with Redis in production</description>
       <pubDate>Thu, 16 Apr 2026 08:17:30 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-redis/</guid>
-    </item>
-    <item>
-      <title>Tech Profit Paradox</title>
-      <link>https://kubaik.github.io/tech-profit-paradox/</link>
-      <description>Why most tech companies never become profitable and how to achieve cost-effective development and scalability</description>
-      <pubDate>Thu, 16 Apr 2026 06:57:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-profit-paradox/</guid>
     </item>
   </channel>
 </rss>
