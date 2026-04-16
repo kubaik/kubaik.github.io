@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 11:20:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 11:36:44 +0000</lastBuildDate>
+    <item>
+      <title>API Test Deep Dive</title>
+      <link>https://kubaik.github.io/api-test-deep-dive/</link>
+      <description>API testing beyond basic Postman requests</description>
+      <pubDate>Thu, 16 Apr 2026 11:36:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-test-deep-dive/</guid>
+    </item>
     <item>
       <title>Negotiate Like Pro (April 2026)</title>
       <link>https://kubaik.github.io/negotiate-like-pro-april-2026/</link>
@@ -138,13 +145,6 @@
       <description>Optimize images for web by 90% with the right tools and techniques</description>
       <pubDate>Wed, 15 Apr 2026 20:56:40 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images-fast/</guid>
-    </item>
-    <item>
-      <title>Optimize Code</title>
-      <link>https://kubaik.github.io/optimize-code/</link>
-      <description>Boost application performance with algorithm optimization best practices, including time and space complexity analysis and efficient data structure usage.</description>
-      <pubDate>Wed, 15 Apr 2026 20:01:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-code/</guid>
     </item>
   </channel>
 </rss>
