@@ -390,7 +390,8 @@ class VisibilityAutomator:
 
         payoff = (
             f"{description}\n\n"
-            f"Read More: {tracked_url}\n"
+            f"→ Why {topic_phrase} fails at scale\n"
+            f"→ Read More: {tracked_url}\n\n"
             f"{hashtags}"
         )
 
