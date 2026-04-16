@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 11:43:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 11:57:18 +0000</lastBuildDate>
+    <item>
+      <title>Prevent App Failures</title>
+      <link>https://kubaik.github.io/prevent-app-failures/</link>
+      <description>Prevent app failures with proactive performance monitoring</description>
+      <pubDate>Thu, 16 Apr 2026 11:57:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/prevent-app-failures/</guid>
+    </item>
     <item>
       <title>AI Coding Showdown</title>
       <link>https://kubaik.github.io/ai-coding-showdown/</link>
@@ -138,13 +145,6 @@
       <description>AI agents that work</description>
       <pubDate>Wed, 15 Apr 2026 21:46:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-that-delivers/</guid>
-    </item>
-    <item>
-      <title>RAG Explained</title>
-      <link>https://kubaik.github.io/rag-explained/</link>
-      <description>Retrieval-Augmented Generation (RAG) explained: a structured approach to conversational AI models, integrating retrieval and generation for accurate and transparent models.</description>
-      <pubDate>Wed, 15 Apr 2026 21:34:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-explained/</guid>
     </item>
   </channel>
 </rss>
