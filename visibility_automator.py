@@ -6,10 +6,19 @@ Features:
   - post_thread()        : 2-tweet thread optimised for X algorithm
   - reply_to_trending()  : Replies to high-engagement tech tweets
   - post_at_peak_or_now(): Posts at optimal EAT timezone hours
+
+FIXES (2026-04-16):
+  - _HOOK_STOP_WORDS expanded with adjectives/verbs so "Big", "Dark",
+    "Hidden" etc. never appear in topic phrases (was "AI Ethics Big")
+  - _TOPIC_OVERRIDES added (AI Ethics, AI Tools, Side Projects, etc.)
+  - Year tokens (2024-2026) stripped from topic phrases
+  - _get_hashtags_for_post() deduplicates, caps at 5, never double-hashes
+    — hashtags now always appear in tweet 2
 """
 
 import asyncio
 import datetime
+import re
 import tweepy
 from typing import Dict, List, Optional
 from enhanced_tweet_generator import EnhancedTweetGenerator
@@ -32,8 +41,12 @@ MIN_AUTHOR_FOLLOWERS = 500
 MAX_REPLIES_PER_RUN = 3
 SEARCH_RESULT_LIMIT = 20
 
-# Words to strip when building a hook phrase from the blog title.
+# ─────────────────────────────────────────────────────────────────
+# Stop-word set for topic-phrase extraction
+# ─────────────────────────────────────────────────────────────────
+
 _HOOK_STOP_WORDS = {
+    # Articles / prepositions / conjunctions
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
     "with", "how", "your", "my", "our", "its", "on", "at", "by", "from",
     "this", "that", "best", "using", "guide", "complete", "introduction",
@@ -41,18 +54,31 @@ _HOOK_STOP_WORDS = {
     "without", "beyond", "vs", "why", "when", "where", "which", "who",
     "most", "every", "what", "will", "does", "behind", "inside", "between",
     "about", "after", "before", "during", "through", "across",
-    # ── NEW: strip generic filler nouns that produce bad topic phrases ──
+    # Generic filler nouns
     "secrets", "revealed", "secret", "things", "stuff", "basics",
     "fundamentals", "concepts", "ideas", "points", "steps", "facts",
     "tricks", "hacks", "methods", "techniques", "approach", "approaches",
     "solution", "solutions", "answer", "answers", "insight", "insights",
     "lesson", "lessons", "tip",
+    # FIX: adjectives / determiners that were leaking into topic phrases
+    "big", "new", "old", "bad", "good", "great", "real", "true", "key",
+    "main", "full", "last", "next", "part", "each", "both", "many", "much",
+    "more", "less", "few", "own", "same", "other", "another", "such",
+    "sure", "just", "also", "even", "still", "yet", "well", "back",
+    "dark", "side", "deep", "fast", "slow", "hard", "easy", "smart",
+    "hidden", "ultimate", "simple", "practical", "essential", "advanced",
+    "modern", "wrong", "right", "never", "always", "common",
+    # FIX: common verbs that slip through
+    "say", "says", "fail", "fails", "work", "works", "make", "makes",
+    "get", "gets", "know", "use", "need", "want", "find", "give", "take",
+    "show", "tell", "look", "come", "keep", "let", "put", "think", "help",
+    "earn", "wins", "win", "lose", "beat", "buy", "sell", "run", "start",
+    # FIX: generic nouns that pollute topic phrases
+    "people", "person", "developer", "developers", "engineer", "engineers",
+    "company", "companies", "team", "teams", "user", "users", "way",
 }
 
 # ── Canonical topic overrides ────────────────────────────────────
-# When the title slug contains any key (lowercase), use the mapped phrase.
-# This catches titles like "Database Indexing Secrets Revealed" and ensures
-# the topic phrase is always meaningful and relevant.
 _TOPIC_OVERRIDES = {
     "database index":   "Database Indexing",
     "indexing":         "Database Indexing",
@@ -77,10 +103,10 @@ _TOPIC_OVERRIDES = {
     "serverless":       "Serverless",
     "ci/cd":            "CI/CD",
     "devops":           "DevOps",
-    "kubernetes":       "Kubernetes",
     "terraform":        "Terraform",
     "passive income":   "Passive Income",
     "side hustle":      "Side Hustle",
+    "side project":     "Side Projects",
     "indie hacker":     "Indie Hacking",
     "saas":             "SaaS",
     "web performance":  "Web Performance",
@@ -102,17 +128,20 @@ _TOPIC_OVERRIDES = {
     "mlops":            "MLOps",
     "burnout":          "Developer Burnout",
     "remote work":      "Remote Work",
-    "tech salary":      "Tech Salaries",
+    "tech salar":       "Tech Salaries",
     "negotiate":        "Salary Negotiation",
-}
-
-ADDITIONAL_STOP_WORDS = {
-    # Generic filler nouns that make bad topic phrases
-    "secrets", "revealed", "secret", "things", "stuff", "basics",
-    "fundamentals", "concepts", "ideas", "points", "steps", "facts",
-    "tricks", "hacks", "methods", "techniques", "approach", "approaches",
-    "solution", "solutions", "answer", "answers", "insight", "insights",
-    "lesson", "lessons", "tip",
+    # FIX: AI-specific overrides that were missing
+    "ai ethics":        "AI Ethics",
+    "ai tool":          "AI Tools",
+    "ai agent":         "AI Agents",
+    "ai model":         "AI Models",
+    "ai workflow":      "AI Workflows",
+    "ai skill":         "AI Skills",
+    "ai-powered":       "AI-Powered Apps",
+    "chatgpt":          "ChatGPT",
+    "openai":           "OpenAI",
+    "fine-tun":         "Fine-Tuning LLMs",
+    "artificial int":   "Artificial Intelligence",
 }
 
 
@@ -120,90 +149,103 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
     """
     Extract a concise, meaningful topic phrase from a blog post title.
 
-    Priority order:
+    Priority:
       1. Canonical override from _TOPIC_OVERRIDES (most reliable)
-      2. First N meaningful words after stripping _HOOK_STOP_WORDS
+      2. First N meaningful words after stop-word filtering
       3. Truncated title fallback
 
-    Short ALL-CAPS acronyms (AI, ML, API, LLM) are always preserved.
-
-    Examples:
-      "Database Indexing Secrets Revealed"          → "Database Indexing"  (override)
-      "How to Build Passive Income as a Developer"  → "Passive Income"     (override)
-      "AI Tools That Write Better Code"             → "AI Tools"           (meaningful words)
-      "Why Most Side Projects Fail"                 → "Side Projects"      (meaningful words)
+    ALL-CAPS acronyms (AI, ML, API, LLM) are always preserved.
+    Pure year tokens (2024-2026) are always stripped.
     """
-    import re
-
     title_lower = f" {title.lower()} "
 
-    # 1. Check canonical overrides first
+    # 1. Canonical overrides
     for key, phrase in _TOPIC_OVERRIDES.items():
         if key in title_lower:
             return phrase
 
-    # 2. Strip filler words and take first N meaningful tokens
+    # 2. Filter stop-words, skip years, keep acronyms
     cleaned = re.sub(r"[^\w\s\-]", " ", title)
     words = cleaned.split()
-    meaningful = []
+    meaningful: List[str] = []
     for w in words:
         if w.lower() in _HOOK_STOP_WORDS:
             continue
-        # Always keep short ALL-CAPS acronyms: AI, ML, API, LLM …
-        if w.isupper() and len(w) >= 2:
+        if re.match(r'^\d{4}$', w):          # skip year tokens
+            continue
+        if w.isupper() and len(w) >= 2:       # AI, ML, API, LLM …
             meaningful.append(w)
         elif len(w) >= 3:
             meaningful.append(w)
 
     if not meaningful:
         return title[:40]
-
     return " ".join(meaningful[:max_words])
 
 
+# ─────────────────────────────────────────────────────────────────
+# Hashtag resolver
+# ─────────────────────────────────────────────────────────────────
+
 def _get_hashtags_for_post(post) -> str:
     """
-    Reliably retrieve hashtag string from a post object.
+    Reliably retrieve a hashtag string from a post object.
 
-    Checks (in order):
-      1. post.twitter_hashtags  — set by blog_system.py during generation
-      2. post.tags              — fallback, camelCased
-      3. post.seo_keywords      — last resort
+    Resolution order:
+      1. post.twitter_hashtags  — set during generation, persisted to JSON
+      2. post.tags              — camelCased, deduped, capped at 5
+      3. post.seo_keywords      — camelCased, deduped, capped at 5
+      4. Title-derived phrase   — absolute last resort
 
-    Always returns a non-empty string for tech posts by deriving from
-    topic phrase if all else fails.
+    FIX: deduplication + cap at 5 (X suppresses 6+ hashtags as spam).
+    FIX: strips leading '#' before re-prefixing to prevent "##Tag".
     """
-    # 1. Prefer the pre-built tiered hashtag string
-    if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags and post.twitter_hashtags.strip():
+    # 1. Pre-built tiered string written during generation
+    if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags \
+            and post.twitter_hashtags.strip():
         return post.twitter_hashtags.strip()
 
     # 2. Build from tags
     if hasattr(post, 'tags') and post.tags:
-        clean = [
-            t.replace(' ', '').replace('-', '')
-            for t in post.tags
-            if t and len(t.replace(' ', '').replace('-', '')) >= 2
-        ]
+        seen: set = set()
+        clean: List[str] = []
+        for t in post.tags:
+            if not t:
+                continue
+            raw = t.lstrip('#').replace(' ', '').replace('-', '')
+            if len(raw) < 2:
+                continue
+            key = raw.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            clean.append(f"#{raw}")
+            if len(clean) == 5:
+                break
         if clean:
-            return " ".join(f"#{t}" for t in clean[:5])
+            return " ".join(clean)
 
     # 3. Build from seo_keywords
     if hasattr(post, 'seo_keywords') and post.seo_keywords:
-        tags = []
-        for kw in post.seo_keywords[:5]:
+        seen = set()
+        tags: List[str] = []
+        for kw in post.seo_keywords[:8]:
             kw = kw.strip()
             if not kw:
                 continue
-            words = kw.split()
-            if len(words) <= 3:
-                tag = "".join(w.capitalize() for w in words)
-                tag = tag.replace('-', '').replace('_', '')
-                if tag:
+            parts = kw.split()
+            if len(parts) <= 3:
+                tag = "".join(w.capitalize() for w in parts)
+                tag = re.sub(r"[^\w]", "", tag)
+                if tag and tag.lower() not in seen:
+                    seen.add(tag.lower())
                     tags.append(f"#{tag}")
+            if len(tags) == 5:
+                break
         if tags:
-            return " ".join(tags[:5])
+            return " ".join(tags)
 
-    # 4. Derive from title as absolute last resort
+    # 4. Absolute fallback
     if hasattr(post, 'title') and post.title:
         phrase = _extract_topic_phrase(post.title, max_words=2)
         tag = phrase.replace(' ', '')
@@ -224,10 +266,6 @@ class VisibilityAutomator:
         self._username = None
         self._init_twitter()
 
-    # ─────────────────────────────────────────────────────────────
-    # INIT
-    # ─────────────────────────────────────────────────────────────
-
     def _init_twitter(self):
         import os
         api_key = os.getenv('TWITTER_API_KEY')
@@ -237,10 +275,11 @@ class VisibilityAutomator:
         bearer_token = os.getenv('TWITTER_BEARER_TOKEN')
 
         missing = [k for k, v in {
-            "TWITTER_API_KEY": api_key, "TWITTER_API_SECRET": api_secret,
-            "TWITTER_ACCESS_TOKEN": access_token,
+            "TWITTER_API_KEY":             api_key,
+            "TWITTER_API_SECRET":          api_secret,
+            "TWITTER_ACCESS_TOKEN":        access_token,
             "TWITTER_ACCESS_TOKEN_SECRET": access_token_secret,
-            "TWITTER_BEARER_TOKEN": bearer_token,
+            "TWITTER_BEARER_TOKEN":        bearer_token,
         }.items() if not v]
 
         if missing:
@@ -261,25 +300,15 @@ class VisibilityAutomator:
             print(f"❌ Twitter initialization failed: {e}")
             self.twitter_client = None
 
-    # ─────────────────────────────────────────────────────────────
-    # THREAD POSTING
-    # ─────────────────────────────────────────────────────────────
+    # ── Thread posting ────────────────────────────────────────────
 
     def post_thread(self, post) -> Dict:
-        """
-        Post a 2-tweet thread:
-          Tweet 1 — Hook only, no URL (X suppresses reach on link tweets)
-          Tweet 2 — Reply with payoff: description + URL + tiered hashtags
-        """
         if not self.twitter_client:
             return {'success': False, 'error': 'Twitter client not initialized.'}
-
         try:
             tweets = self._build_thread_tweets(post)
             thread_ids, thread_urls, previous_id = [], [], None
-
             print(f"🧵 Posting thread ({len(tweets)} tweets) for: {post.title}")
-
             for i, tweet_text in enumerate(tweets, 1):
                 kwargs = {'text': tweet_text}
                 if previous_id:
@@ -295,7 +324,6 @@ class VisibilityAutomator:
                 if i < len(tweets):
                     import time
                     time.sleep(2)
-
             return {
                 'success': True, 'thread_ids': thread_ids,
                 'thread_urls': thread_urls,
@@ -306,45 +334,33 @@ class VisibilityAutomator:
             return {'success': False, 'error': str(e)}
 
     def _build_thread_tweets(self, post) -> List[str]:
-        """
-        2-tweet format:
-
-        Tweet 1 — Hook only. No URL, no hashtags.
-                  X suppresses reach on tweets with outbound links.
-                  Hook earns replies/likes/bookmarks first.
-
-        Tweet 2 — Reply: payoff description + blog URL (UTM-tracked) + hashtags.
-                  Uses _get_hashtags_for_post() which never returns empty.
-        """
         base_url = self.config.get('base_url', 'https://kubaik.github.io')
         post_url = f"{base_url}/{post.slug}"
         hook_style = self.config.get('hook_style', 'knowledge_gap')
         tracked_url = self._build_post_url(
             post_url, position=2, style=hook_style)
 
-        # ── Hashtags — always non-empty ──────────────────────────────────────
         hashtags = _get_hashtags_for_post(post)
-        print(f"  🏷️  Hashtags for thread: {hashtags}")
-
-        # ── Topic phrase — override-aware, never "Secrets Revealed" ─────────
         topic_phrase = _extract_topic_phrase(post.title, max_words=3)
+        print(f"  🏷️  Hashtags for thread: {hashtags}")
         print(f"  🎯 Topic phrase: {topic_phrase}")
 
-        # Secondary phrases for tweet body variety
         topic_words = [
             w for w in post.title.split()
-            if w.lower() not in _HOOK_STOP_WORDS and len(w) >= 2
+            if w.lower() not in _HOOK_STOP_WORDS
+            and not re.match(r'^\d{4}$', w)
+            and len(w) >= 2
         ]
         topic_b = " ".join(topic_words[1:3]) if len(
             topic_words) > 1 else "the fundamentals"
         topic_c = topic_words[-1] if topic_words else "performance"
 
-        # ── Hook templates (tweet 1 — no URL, no hashtags) ──────────────────
         hook_templates = {
             'knowledge_gap': (
                 f"🧵 Most people approach {topic_phrase} backwards.\n\n"
                 f"They spend weeks on the wrong layer and wonder why nothing scales.\n\n"
-                f"The fix is simpler than you think — but only if you understand what's actually going wrong first."
+                f"The fix is simpler than you think — but only if you understand "
+                f"what's actually going wrong first."
             ),
             'contrarian': (
                 f"🧵 Hot take: most {topic_phrase} advice actively makes your system worse.\n\n"
@@ -361,13 +377,13 @@ class VisibilityAutomator:
             'pattern_interrupt': (
                 f"🧵 You can tell in 5 minutes whether someone truly understands "
                 f"{topic_phrase} — or just thinks they do.\n\n"
-                f"The difference isn't knowledge. It's what they check first when something breaks."
+                f"The difference isn't knowledge. "
+                f"It's what they check first when something breaks."
             ),
         }
 
         hook = hook_templates.get(hook_style, hook_templates['knowledge_gap'])
 
-        # ── Payoff reply (tweet 2 — description + URL + hashtags) ───────────
         description = post.meta_description[:150].rstrip()
         if len(post.meta_description) > 150:
             description += "…"
@@ -387,23 +403,20 @@ class VisibilityAutomator:
         return [t if len(t) <= 280 else t[:277] + "..." for t in tweets]
 
     def _build_post_url(self, post_url: str, position: int, style: str) -> str:
-        return f"{post_url}?utm_source=twitter&utm_medium=thread&utm_campaign=tweet_{position}&utm_content={style}"
+        return (
+            f"{post_url}?utm_source=twitter&utm_medium=thread"
+            f"&utm_campaign=tweet_{position}&utm_content={style}"
+        )
 
-    # ─────────────────────────────────────────────────────────────
-    # REPLY TO TRENDING
-    # ─────────────────────────────────────────────────────────────
+    # ── Reply to trending ─────────────────────────────────────────
 
     def reply_to_trending(self, post=None, keywords: Optional[List[str]] = None,
                           max_replies: int = MAX_REPLIES_PER_RUN) -> Dict:
-        """Search recent high-engagement tech tweets and reply with value-add content."""
         if not self.twitter_client:
             return {'success': False, 'error': 'Twitter client not initialized.'}
-
         if not keywords:
             keywords = TRENDING_TECH_KEYWORDS
-
         replies_posted, errors = [], []
-
         for keyword in keywords:
             if len(replies_posted) >= max_replies:
                 break
@@ -423,8 +436,9 @@ class VisibilityAutomator:
                     username = self._username or "i"
                     reply_url = f"https://twitter.com/{username}/status/{reply_id}"
                     replies_posted.append({
-                        'keyword': keyword, 'target_id': tweet.id, 'reply_id': reply_id,
-                        'reply_url': reply_url, 'reply_preview': reply_text[:80] + "..."
+                        'keyword': keyword, 'target_id': tweet.id,
+                        'reply_id': reply_id, 'reply_url': reply_url,
+                        'reply_preview': reply_text[:80] + "...",
                     })
                     print(f"  💬 Replied to tweet {tweet.id} → {reply_url}")
                     import time
@@ -432,7 +446,6 @@ class VisibilityAutomator:
             except Exception as e:
                 errors.append(f"Error for '{keyword}': {e}")
                 print(f"  ⚠️  {errors[-1]}")
-
         return {
             'success': len(replies_posted) > 0,
             'replies_posted': replies_posted,
@@ -452,7 +465,7 @@ class VisibilityAutomator:
             )
             if not response.data:
                 return []
-            author_followers = {}
+            author_followers: Dict = {}
             if response.includes and 'users' in response.includes:
                 for user in response.includes['users']:
                     if hasattr(user, 'public_metrics') and user.public_metrics:
@@ -489,11 +502,10 @@ class VisibilityAutomator:
             if first_tag:
                 reply += f" {first_tag}"
         else:
-            reply = generic_replies[idx].replace(
-                " My full breakdown: {url}", "").replace(": {{url}}", ".")
-        if len(reply) > 270:
-            reply = reply[:267] + "..."
-        return reply
+            reply = generic_replies[idx] \
+                .replace(" My full breakdown: {url}", "") \
+                .replace(": {{url}}", ".")
+        return reply[:267] + "..." if len(reply) > 270 else reply
 
     def _get_my_id(self) -> Optional[str]:
         if not hasattr(self, '_my_id'):
@@ -504,9 +516,7 @@ class VisibilityAutomator:
                 self._my_id = None
         return self._my_id
 
-    # ─────────────────────────────────────────────────────────────
-    # PEAK-TIME POSTING
-    # ─────────────────────────────────────────────────────────────
+    # ── Peak-time posting ─────────────────────────────────────────
 
     def is_peak_time(self) -> bool:
         return (datetime.datetime.utcnow().hour + 3) % 24 in PEAK_HOURS_EAT
@@ -515,12 +525,10 @@ class VisibilityAutomator:
         if not self.is_peak_time():
             eat_hour = (datetime.datetime.utcnow().hour + 3) % 24
             print(
-                f"⏰ EAT hour {eat_hour}:00 is outside peak hours {PEAK_HOURS_EAT}. Posting anyway.")
+                f"⏰ EAT hour {eat_hour}:00 is outside peak {PEAK_HOURS_EAT}. Posting anyway.")
         return self.post_thread(post) if use_thread else self.post_with_best_strategy(post)
 
-    # ─────────────────────────────────────────────────────────────
-    # EXISTING METHODS
-    # ─────────────────────────────────────────────────────────────
+    # ── Existing methods ──────────────────────────────────────────
 
     def post_to_twitter(self, tweet_text: str = None, post=None, strategy: str = "auto") -> Dict:
         if not self.twitter_client:
@@ -554,8 +562,9 @@ class VisibilityAutomator:
             post, count=5)
         best = max(variations, key=lambda v: self.tweet_generator.analyze_tweet_quality(
             v['tweet'])['score'])
-        print(
-            f"🎯 Strategy: {best['strategy']} | Score: {self.tweet_generator.analyze_tweet_quality(best['tweet'])['score']}")
+        score = self.tweet_generator.analyze_tweet_quality(best['tweet'])[
+            'score']
+        print(f"🎯 Strategy: {best['strategy']} | Score: {score}")
         return self.post_to_twitter(tweet_text=best['tweet'], strategy=best['strategy'])
 
     def generate_tweet_preview(self, post, strategy: str = "auto") -> Dict:
@@ -563,7 +572,8 @@ class VisibilityAutomator:
         analysis = self.tweet_generator.analyze_tweet_quality(tweet)
         return {
             'tweet': tweet, 'length': len(tweet), 'strategy': strategy,
-            'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback'],
+            'quality_score': analysis['score'], 'grade': analysis['grade'],
+            'feedback': analysis['feedback'],
         }
 
     def generate_all_variations(self, post) -> list:
@@ -574,7 +584,8 @@ class VisibilityAutomator:
             analysis = self.tweet_generator.analyze_tweet_quality(var['tweet'])
             results.append({
                 'strategy': var['strategy'], 'tweet': var['tweet'], 'length': var['length'],
-                'quality_score': analysis['score'], 'grade': analysis['grade'], 'feedback': analysis['feedback'],
+                'quality_score': analysis['score'], 'grade': analysis['grade'],
+                'feedback': analysis['feedback'],
             })
         return sorted(results, key=lambda x: x['quality_score'], reverse=True)
 
@@ -591,8 +602,6 @@ class VisibilityAutomator:
         twitter_post = self.tweet_generator.create_engaging_tweet(
             post, strategy="auto")
         hashtags = _get_hashtags_for_post(post)
-        linkedin_hashtags = hashtags  # already formatted as "#Tag1 #Tag2 ..."
-
         linkedin_post = f"""🚀 New Article: {post.title}
 
 {post.meta_description}
@@ -605,7 +614,7 @@ In this comprehensive guide, I cover:
 
 Read the full article: https://kubaik.github.io/{post.slug}
 
-{linkedin_hashtags}
+{hashtags}
 """
         return {
             'twitter':      twitter_post,
@@ -629,54 +638,53 @@ if __name__ == "__main__":
     print("=" * 70)
 
     class MockPost:
-        def __init__(self):
-            self.title = "Database Indexing Secrets Revealed"
-            self.slug = "database-indexing-secrets-revealed"
-            self.meta_description = "Database indexing improves query performance by up to 90%. Learn the indexing patterns that eliminate slow queries in production PostgreSQL and MySQL."
-            self.tags = ["DatabaseIndexing", "SQL",
-                         "PostgreSQL", "Performance", "Backend"]
-            self.seo_keywords = [
-                "database indexing", "query optimization", "postgresql performance", "sql indexes"]
-            # Simulate a post loaded from disk where twitter_hashtags was NOT saved
-            # self.twitter_hashtags is intentionally omitted to test the fallback
+        title = "AI Ethics: The Hidden Dangers of Relying on AI"
+        slug = "ai-ethics-hidden-dangers"
+        meta_description = (
+            "AI ethics issues in Big Tech are rarely discussed publicly. "
+            "This guide covers algorithmic harms and the internal debates "
+            "that never reach the public."
+        )
+        tags = ["AI", "AIEthics", "Tech",
+                "MachineLearning", "SoftwareEngineering"]
+        seo_keywords = ["ai ethics", "big tech problems",
+                        "responsible ai", "ai bias"]
+        twitter_hashtags = "#AI #AIEthics #MachineLearning #Tech #GenerativeAI"
 
     post = MockPost()
 
     try:
-        with open("config.yaml", "r") as f:
+        with open("config.yaml") as f:
             config = yaml.safe_load(f)
     except Exception:
         config = {}
 
     visibility = VisibilityAutomator(config)
 
-    print(f"\n🔍 Topic phrase extracted: '{_extract_topic_phrase(post.title)}'")
-    print(f"🏷️  Hashtags resolved:      '{_get_hashtags_for_post(post)}'")
+    print(f"\n🔍 Topic phrase: '{_extract_topic_phrase(post.title)}'")
+    print(f"🏷️  Hashtags:     '{_get_hashtags_for_post(post)}'")
 
     print("\n🧵 THREAD PREVIEW")
     print("=" * 70)
-    thread_tweets = visibility._build_thread_tweets(post)
-    for i, t in enumerate(thread_tweets, 1):
+    for i, t in enumerate(visibility._build_thread_tweets(post), 1):
         print(f"\nTweet {i} ({len(t)} chars):\n{'-'*50}\n{t}")
 
     print("\n\n🎨 SINGLE-TWEET VARIATIONS")
     print("=" * 70)
-    variations = visibility.generate_all_variations(post)
-    for i, var in enumerate(variations, 1):
+    for i, var in enumerate(visibility.generate_all_variations(post), 1):
         print(
-            f"\n📱 VARIATION {i}: {var['strategy'].upper()} | Score: {var['quality_score']}/100 | {var['length']} chars")
+            f"\n📱 {i}: {var['strategy'].upper()} | {var['quality_score']}/100 | {var['length']} chars")
         print(f"{'-'*50}\n{var['tweet']}")
 
     if visibility.twitter_client:
-        choice = input("\nPost? (1=best tweet  2=thread  3=skip): ").strip()
+        choice = input("\nPost? (1=best  2=thread  3=skip): ").strip()
         if choice == "1":
-            result = visibility.post_with_best_strategy(post)
+            r = visibility.post_with_best_strategy(post)
             print(
-                f"{'✅' if result['success'] else '❌'} {result.get('url', result.get('error'))}")
+                f"{'✅' if r['success'] else '❌'} {r.get('url', r.get('error'))}")
         elif choice == "2":
-            result = visibility.post_thread(post)
+            r = visibility.post_thread(post)
             print(
-                f"{'✅ Thread posted' if result['success'] else '❌'} ({result.get('tweet_count','')} tweets) {result.get('first_tweet', result.get('error',''))}")
+                f"{'✅' if r['success'] else '❌'} {r.get('tweet_count','')} tweets {r.get('first_tweet', r.get('error',''))}")
     else:
-        print(
-            "\n⚠️  No live Twitter client. Set credentials in environment to test posting.")
+        print("\n⚠️  No live Twitter client — set env vars to test live posting.")

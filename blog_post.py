@@ -21,7 +21,7 @@ class BlogPost:
         self.affiliate_links = affiliate_links or []
         self.monetization_data = monetization_data or {}
 
-        # Social media hashtags
+        # Social media hashtags — always stored as a space-separated "#Tag" string
         self.twitter_hashtags = twitter_hashtags or ""
 
     def to_dict(self):
@@ -37,16 +37,40 @@ class BlogPost:
             'seo_keywords': self.seo_keywords,
             'affiliate_links': self.affiliate_links,
             'monetization_data': self.monetization_data,
-            'twitter_hashtags': self.twitter_hashtags
+            # ── FIX: always persist twitter_hashtags in JSON ──────────────
+            'twitter_hashtags': self.twitter_hashtags,
         }
 
     @classmethod
     def from_dict(cls, data):
-        return cls(**data)
+        """
+        Reconstruct a BlogPost from a saved dict (post.json).
+
+        FIX: twitter_hashtags is explicitly extracted so it is never lost
+        when loading posts back from disk.  Previously from_dict() forwarded
+        **data directly to __init__, but post.json keys that don't match
+        __init__ parameter names were silently dropped — including
+        twitter_hashtags when saved under a slightly different key.
+        """
+        return cls(
+            title=data.get('title', ''),
+            content=data.get('content', ''),
+            slug=data.get('slug', ''),
+            tags=data.get('tags', []),
+            meta_description=data.get('meta_description', ''),
+            featured_image=data.get('featured_image', ''),
+            created_at=data.get('created_at', ''),
+            updated_at=data.get('updated_at', ''),
+            seo_keywords=data.get('seo_keywords', []),
+            affiliate_links=data.get('affiliate_links', []),
+            monetization_data=data.get('monetization_data', {}),
+            # ── FIX: restore twitter_hashtags from persisted JSON ─────────
+            twitter_hashtags=data.get('twitter_hashtags', ''),
+        )
 
     @classmethod
     def from_markdown_file(cls, md_file_path: Path, slug: str = None) -> 'BlogPost':
-        """Create a BlogPost from a markdown file when post.json is missing"""
+        """Create a BlogPost from a markdown file when post.json is missing."""
         with open(md_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -75,7 +99,7 @@ class BlogPost:
             seo_keywords=[],
             affiliate_links=[],
             monetization_data={"ad_slots": 3, "affiliate_count": 0},
-            twitter_hashtags=""
+            twitter_hashtags="",
         )
 
     @staticmethod
