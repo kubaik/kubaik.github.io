@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 10:02:47 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 10:12:09 +0000</lastBuildDate>
+    <item>
+      <title>Safekeeping Secrets</title>
+      <link>https://kubaik.github.io/safekeeping-secrets/</link>
+      <description>Secure credentials with secrets management</description>
+      <pubDate>Thu, 16 Apr 2026 10:12:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/safekeeping-secrets/</guid>
+    </item>
     <item>
       <title>AI Leaders Emerge</title>
       <link>https://kubaik.github.io/ai-leaders-emerge/</link>
@@ -138,13 +145,6 @@
       <description>Boost application performance with algorithm optimization best practices, including time and space complexity analysis and efficient data structure usage.</description>
       <pubDate>Wed, 15 Apr 2026 20:01:45 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-code/</guid>
-    </item>
-    <item>
-      <title>AI Agents Unleashed</title>
-      <link>https://kubaik.github.io/ai-agents-unleashed/</link>
-      <description>Build AI agents to create engaging, personalized, and efficient applications. Learn the concepts, implementation, and common mistakes to avoid.</description>
-      <pubDate>Wed, 15 Apr 2026 19:53:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-unleashed/</guid>
     </item>
   </channel>
 </rss>
