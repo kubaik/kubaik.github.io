@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 18:48:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 18:55:06 +0000</lastBuildDate>
+    <item>
+      <title>Agile in Action</title>
+      <link>https://kubaik.github.io/agile-in-action/</link>
+      <description>Agile in Practice: What Works, What&apos;s Theatre – a guide to implementing Agile in your team, including common mistakes, tools, and next steps.</description>
+      <pubDate>Thu, 16 Apr 2026 18:55:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-in-action/</guid>
+    </item>
     <item>
       <title>TDD Boost ..</title>
       <link>https://kubaik.github.io/tdd-boost/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate tech salary with scripts and data</description>
       <pubDate>Thu, 16 Apr 2026 11:20:40 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-like-pro-april-2026/</guid>
-    </item>
-    <item>
-      <title>AI Leaders Emerge</title>
-      <link>https://kubaik.github.io/ai-leaders-emerge/</link>
-      <description>Countries investing in AI research and development</description>
-      <pubDate>Thu, 16 Apr 2026 10:02:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-leaders-emerge/</guid>
     </item>
   </channel>
 </rss>
