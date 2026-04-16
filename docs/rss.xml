@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 17:56:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 18:48:44 +0000</lastBuildDate>
+    <item>
+      <title>TDD Boost ..</title>
+      <link>https://kubaik.github.io/tdd-boost/</link>
+      <description>TDD for faster development</description>
+      <pubDate>Thu, 16 Apr 2026 18:48:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-boost/</guid>
+    </item>
     <item>
       <title>Drift Detectors</title>
       <link>https://kubaik.github.io/drift-detectors/</link>
@@ -138,13 +145,6 @@
       <description>Countries investing in AI research and development</description>
       <pubDate>Thu, 16 Apr 2026 10:02:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-leaders-emerge/</guid>
-    </item>
-    <item>
-      <title>Boost Dev Flow (April 2026)</title>
-      <link>https://kubaik.github.io/boost-dev-flow-april-2026/</link>
-      <description>Terminal productivity for developers</description>
-      <pubDate>Thu, 16 Apr 2026 09:58:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-dev-flow-april-2026/</guid>
     </item>
   </channel>
 </rss>
