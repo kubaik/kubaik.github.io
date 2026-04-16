@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2026 23:39:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 01:13:23 +0000</lastBuildDate>
+    <item>
+      <title>AI Skills 2026</title>
+      <link>https://kubaik.github.io/ai-skills-2026/</link>
+      <description>Acquire AI skills to get hired in 2026</description>
+      <pubDate>Thu, 16 Apr 2026 01:13:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-2026/</guid>
+    </item>
     <item>
       <title>Simplify Code with SQL Tricks</title>
       <link>https://kubaik.github.io/simplify-code-with-sql-tricks/</link>
@@ -138,13 +145,6 @@
       <description>Slack vs Teams: Microsoft Teams outperforms Slack</description>
       <pubDate>Wed, 15 Apr 2026 13:09:57 +0000</pubDate>
       <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
-    </item>
-    <item>
-      <title>Slow App Alert .</title>
-      <link>https://kubaik.github.io/slow-app-alert/</link>
-      <description>Mobile app performance affects user experience, with slow apps leading to 29% higher uninstall rates</description>
-      <pubDate>Wed, 15 Apr 2026 12:44:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/slow-app-alert/</guid>
     </item>
   </channel>
 </rss>
