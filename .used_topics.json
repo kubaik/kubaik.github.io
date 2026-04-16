@@ -89,5 +89,6 @@
   "Python vs Go vs Rust: Choosing for Your Use Case",
   "Lazy Loading and Code Splitting in Practice",
   "Why Most Tech Companies Never Become Profitable",
-  "Database Indexing: The Hidden Performance Secret"
+  "Database Indexing: The Hidden Performance Secret",
+  "Redis in Production: Patterns That Scale"
 ]
