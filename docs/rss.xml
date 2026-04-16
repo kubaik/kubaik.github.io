@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 13:08:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2026 13:18:27 +0000</lastBuildDate>
+    <item>
+      <title>Solo Scale Up ..</title>
+      <link>https://kubaik.github.io/solo-scale-up/</link>
+      <description>Implement a scalable architecture for solo developers to ensure smooth growth and performance</description>
+      <pubDate>Thu, 16 Apr 2026 13:18:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/solo-scale-up/</guid>
+    </item>
     <item>
       <title>AI Alternatives</title>
       <link>https://kubaik.github.io/ai-alternatives/</link>
@@ -138,13 +145,6 @@
       <description>Optimize API speed with compression, caching, and connection keep-alive</description>
       <pubDate>Thu, 16 Apr 2026 04:40:44 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-api-speed/</guid>
-    </item>
-    <item>
-      <title>Dev Jobs Vanish</title>
-      <link>https://kubaik.github.io/dev-jobs-vanish/</link>
-      <description></description>
-      <pubDate>Thu, 16 Apr 2026 02:00:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-jobs-vanish/</guid>
     </item>
   </channel>
 </rss>
