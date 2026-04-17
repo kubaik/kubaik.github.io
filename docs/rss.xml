@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 14:58:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 15:49:59 +0000</lastBuildDate>
+    <item>
+      <title>Solo SaaS Success</title>
+      <link>https://kubaik.github.io/solo-saas-success/</link>
+      <description>Solo SaaS success with Docker, Kubernetes, and Redis</description>
+      <pubDate>Fri, 17 Apr 2026 15:49:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/solo-saas-success/</guid>
+    </item>
     <item>
       <title>Debug Like a Pro</title>
       <link>https://kubaik.github.io/debug-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>Coding education has limitations and biases</description>
       <pubDate>Fri, 17 Apr 2026 08:44:18 +0000</pubDate>
       <guid>https://kubaik.github.io/code-for-all-myth-busted/</guid>
-    </item>
-    <item>
-      <title>Hackers&apos; Mindset</title>
-      <link>https://kubaik.github.io/hackers-mindset/</link>
-      <description>Penetration testing insights</description>
-      <pubDate>Fri, 17 Apr 2026 08:38:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/hackers-mindset/</guid>
     </item>
   </channel>
 </rss>
