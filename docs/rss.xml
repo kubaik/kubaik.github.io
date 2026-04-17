@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 11:58:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 09:01:07 +0000</lastBuildDate>
+    <item>
+      <title>Event Driven Done Right</title>
+      <link>https://kubaik.github.io/event-driven-done-right/</link>
+      <description>Event-driven architecture in practice: handling event versioning, schema evolution, and data consistency</description>
+      <pubDate>Fri, 17 Apr 2026 09:01:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/event-driven-done-right/</guid>
+    </item>
     <item>
       <title>Tech&apos;s Dark Side: Mental Health</title>
       <link>https://kubaik.github.io/techs-dark-side-mental-health/</link>
@@ -138,13 +145,6 @@
       <description>OAuth 2.0 &amp; JWT deep dive with benchmarks, code examples, and hard truths on revocation, PKCE, and key rotation from 10+ years of production experience.</description>
       <pubDate>Thu, 16 Apr 2026 21:38:24 +0000</pubDate>
       <guid>https://kubaik.github.io/master-oauth-20-jwt-secure-auth-deep-dive/</guid>
-    </item>
-    <item>
-      <title>Clean Code: Essential Rules That Actually Work</title>
-      <link>https://kubaik.github.io/clean-code-essential-rules-that-actually-work/</link>
-      <description>Learn how clean code rules cut bugs by 63% and build times by 48% in real-world codebases with specific metrics and tools.</description>
-      <pubDate>Thu, 16 Apr 2026 21:27:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-code-essential-rules-that-actually-work/</guid>
     </item>
   </channel>
 </rss>
