@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 15:49:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 16:40:47 +0000</lastBuildDate>
+    <item>
+      <title>Augment Reality with Apple Vision Pro</title>
+      <link>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</link>
+      <description>Apple Vision Pro AR development</description>
+      <pubDate>Fri, 17 Apr 2026 16:40:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</guid>
+    </item>
     <item>
       <title>Solo SaaS Success</title>
       <link>https://kubaik.github.io/solo-saas-success/</link>
@@ -138,13 +145,6 @@
       <description>Tech industry&apos;s mental health crisis</description>
       <pubDate>Fri, 17 Apr 2026 08:50:53 +0000</pubDate>
       <guid>https://kubaik.github.io/techs-dark-side-mental-health/</guid>
-    </item>
-    <item>
-      <title>Code For All: Myth Busted</title>
-      <link>https://kubaik.github.io/code-for-all-myth-busted/</link>
-      <description>Coding education has limitations and biases</description>
-      <pubDate>Fri, 17 Apr 2026 08:44:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-for-all-myth-busted/</guid>
     </item>
   </channel>
 </rss>
