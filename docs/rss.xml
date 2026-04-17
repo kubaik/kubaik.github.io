@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 00:10:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 01:10:43 +0000</lastBuildDate>
+    <item>
+      <title>Boost Your Workflow: Free AI Tools Pros Swear By</title>
+      <link>https://kubaik.github.io/boost-your-workflow-free-ai-tools-pros-swear-by/</link>
+      <description>Free AI tools that slash context switching by 60%—with real latency, memory, and ROI numbers from 12 engineers over 6 weeks.</description>
+      <pubDate>Fri, 17 Apr 2026 01:10:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-your-workflow-free-ai-tools-pros-swear-by/</guid>
+    </item>
     <item>
       <title>Microservices vs Monolith: The Honest Showdown</title>
       <link>https://kubaik.github.io/microservices-vs-monolith-the-honest-showdown/</link>
@@ -138,13 +145,6 @@
       <description>Compare top AI coding assistants: Copilot, Cursor, and more. Find the best fit for your coding needs.</description>
       <pubDate>Mon, 13 Apr 2026 20:37:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-showdown/</guid>
-    </item>
-    <item>
-      <title>Prevent Incidents</title>
-      <link>https://kubaik.github.io/prevent-incidents/</link>
-      <description>Prevent application downtime with proactive monitoring strategies and tools to minimize incidents and optimize performance.</description>
-      <pubDate>Mon, 13 Apr 2026 19:52:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/prevent-incidents/</guid>
     </item>
   </channel>
 </rss>
