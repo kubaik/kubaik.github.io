@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 15:42:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 12:51:47 +0000</lastBuildDate>
+    <item>
+      <title>Dev-Tested Docs</title>
+      <link>https://kubaik.github.io/dev-tested-docs/</link>
+      <description>Dev-Tested Docs ensures documentation is accurate and up-to-date</description>
+      <pubDate>Fri, 17 Apr 2026 12:51:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-tested-docs/</guid>
+    </item>
+    <item>
+      <title>Plug Leaks Fast</title>
+      <link>https://kubaik.github.io/plug-leaks-fast/</link>
+      <description>Fix memory leaks with 90% reduction</description>
+      <pubDate>Fri, 17 Apr 2026 12:42:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/plug-leaks-fast/</guid>
+    </item>
     <item>
       <title>API Showdown: GraphQL vs REST vs tRPC</title>
       <link>https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/</link>
@@ -131,13 +145,6 @@
       <description>AI study tools only work if you fix your data pipeline first—convert PDFs to Markdown, chunk notes smartly, and use retrieval not chatbots</description>
       <pubDate>Fri, 17 Apr 2026 06:15:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-for-students-boost-grades-save-time/</guid>
-    </item>
-    <item>
-      <title>Validate Your Startup Idea Before You Build</title>
-      <link>https://kubaik.github.io/validate-your-startup-idea-before-you-build/</link>
-      <description>Stop wasting months building the wrong startup. Learn how to validate ideas with $1 pre-authorizations, fake doors, and behavioral signals instead of vanity metrics.</description>
-      <pubDate>Fri, 17 Apr 2026 04:46:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/validate-your-startup-idea-before-you-build/</guid>
     </item>
   </channel>
 </rss>
