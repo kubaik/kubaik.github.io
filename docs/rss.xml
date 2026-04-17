@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 03:56:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 04:46:42 +0000</lastBuildDate>
+    <item>
+      <title>Validate Your Startup Idea Before You Build</title>
+      <link>https://kubaik.github.io/validate-your-startup-idea-before-you-build/</link>
+      <description>Stop wasting months building the wrong startup. Learn how to validate ideas with $1 pre-authorizations, fake doors, and behavioral signals instead of vanity metrics.</description>
+      <pubDate>Fri, 17 Apr 2026 04:46:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/validate-your-startup-idea-before-you-build/</guid>
+    </item>
     <item>
       <title>Design Patterns You&apos;ll Actually Use in Code</title>
       <link>https://kubaik.github.io/design-patterns-youll-actually-use-in-code/</link>
@@ -138,13 +145,6 @@
       <description>Uncover ransomware attack tactics and get expert tips to protect your data and survive a hijack.</description>
       <pubDate>Tue, 14 Apr 2026 03:41:33 +0000</pubDate>
       <guid>https://kubaik.github.io/ransomware-hijacked/</guid>
-    </item>
-    <item>
-      <title>Boost Dev Brain (April 2026)</title>
-      <link>https://kubaik.github.io/boost-dev-brain-april-2026/</link>
-      <description>Unlock a Second Brain as a dev: organize code, retain knowledge, and boost productivity with actionable tips.</description>
-      <pubDate>Tue, 14 Apr 2026 01:12:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-dev-brain-april-2026/</guid>
     </item>
   </channel>
 </rss>
