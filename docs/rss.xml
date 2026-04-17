@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 15:09:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 12:14:11 +0000</lastBuildDate>
+    <item>
+      <title>API Showdown: GraphQL vs REST vs tRPC</title>
+      <link>https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/</link>
+      <description>GraphQL vs REST vs tRPC in 2026</description>
+      <pubDate>Fri, 17 Apr 2026 12:14:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/</guid>
+    </item>
     <item>
       <title>Edge Computing: App Supercharger</title>
       <link>https://kubaik.github.io/edge-computing-app-supercharger/</link>
@@ -138,13 +145,6 @@
       <description>Practical guide to design patterns that work in production, with benchmarks, code, and honest tradeoffs for Java, .NET, and Python</description>
       <pubDate>Fri, 17 Apr 2026 03:56:09 +0000</pubDate>
       <guid>https://kubaik.github.io/design-patterns-youll-actually-use-in-code/</guid>
-    </item>
-    <item>
-      <title>Why Side Projects Fail &amp; How to Succeed Instead</title>
-      <link>https://kubaik.github.io/why-side-projects-fail-how-to-succeed-instead/</link>
-      <description>Side projects fail when over-engineered and under-validated—here’s the real playbook with hard numbers and tradeoffs from 50+ projects</description>
-      <pubDate>Fri, 17 Apr 2026 03:45:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-side-projects-fail-how-to-succeed-instead/</guid>
     </item>
   </channel>
 </rss>
