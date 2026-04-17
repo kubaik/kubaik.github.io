@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 12:12:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 09:16:23 +0000</lastBuildDate>
+    <item>
+      <title>Shortening Billions</title>
+      <link>https://kubaik.github.io/shortening-billions/</link>
+      <description>Designing a URL shortener for billions of requests</description>
+      <pubDate>Fri, 17 Apr 2026 09:16:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/shortening-billions/</guid>
+    </item>
+    <item>
+      <title>Event Driven Done Right</title>
+      <link>https://kubaik.github.io/event-driven-done-right/</link>
+      <description>Event-driven architecture in practice: handling event versioning, schema evolution, and data consistency</description>
+      <pubDate>Fri, 17 Apr 2026 09:01:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/event-driven-done-right/</guid>
+    </item>
     <item>
       <title>Tech&apos;s Dark Side: Mental Health</title>
       <link>https://kubaik.github.io/techs-dark-side-mental-health/</link>
@@ -131,13 +145,6 @@
       <description>Multi-cloud pros, cons, and hidden costs with real benchmarks, tools, and when to avoid it entirely.</description>
       <pubDate>Thu, 16 Apr 2026 22:24:59 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-cloud-smart-move-or-overkill/</guid>
-    </item>
-    <item>
-      <title>Master OAuth 2.0 &amp; JWT: Secure Auth Deep Dive</title>
-      <link>https://kubaik.github.io/master-oauth-20-jwt-secure-auth-deep-dive/</link>
-      <description>OAuth 2.0 &amp; JWT deep dive with benchmarks, code examples, and hard truths on revocation, PKCE, and key rotation from 10+ years of production experience.</description>
-      <pubDate>Thu, 16 Apr 2026 21:38:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-oauth-20-jwt-secure-auth-deep-dive/</guid>
     </item>
   </channel>
 </rss>
