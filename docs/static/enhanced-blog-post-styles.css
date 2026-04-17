@@ -194,7 +194,7 @@
 }
 
 /* ── Post meta row ── */
-.post-meta-row {
+.post-header .post-meta-row {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
@@ -204,12 +204,12 @@
     align-items: center;
 }
 
-.post-meta-row span::before {
+.post-header .post-meta-row span::before {
     content: "·";
     margin-right: 0.75rem;
 }
 
-.post-meta-row span:first-child::before {
+.post-header .post-meta-row span:first-child::before {
     content: "";
     margin-right: 0;
 }
