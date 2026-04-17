@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 08:38:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 08:44:19 +0000</lastBuildDate>
+    <item>
+      <title>Code For All: Myth Busted</title>
+      <link>https://kubaik.github.io/code-for-all-myth-busted/</link>
+      <description>Coding education has limitations and biases</description>
+      <pubDate>Fri, 17 Apr 2026 08:44:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-for-all-myth-busted/</guid>
+    </item>
     <item>
       <title>Hackers&apos; Mindset</title>
       <link>https://kubaik.github.io/hackers-mindset/</link>
@@ -138,13 +145,6 @@
       <description>Break down the $150K tech job pipeline: how self-taught engineers bypass degrees with impact portfolios and referral networks</description>
       <pubDate>Thu, 16 Apr 2026 20:42:55 +0000</pubDate>
       <guid>https://kubaik.github.io/how-to-land-a-150k-tech-job-without-a-degree/</guid>
-    </item>
-    <item>
-      <title>100 Customers Fast: Developer Growth Hack</title>
-      <link>https://kubaik.github.io/100-customers-fast-developer-growth-hack/</link>
-      <description>Cold email scripts, real conversion rates, and tools that helped solo devs hit 100 paying customers in 30 days.</description>
-      <pubDate>Thu, 16 Apr 2026 19:52:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/100-customers-fast-developer-growth-hack/</guid>
     </item>
   </channel>
 </rss>
