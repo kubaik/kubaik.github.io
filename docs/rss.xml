@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 21:54:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 22:26:21 +0000</lastBuildDate>
+    <item>
+      <title>APIs Minting Money</title>
+      <link>https://kubaik.github.io/apis-minting-money/</link>
+      <description>Twilio and Stripe&apos;s API economy success</description>
+      <pubDate>Fri, 17 Apr 2026 22:26:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/apis-minting-money/</guid>
+    </item>
     <item>
       <title>Code Sense</title>
       <link>https://kubaik.github.io/code-sense/</link>
@@ -138,13 +145,6 @@
       <description>Boost speed with VS Code setup</description>
       <pubDate>Fri, 17 Apr 2026 10:12:09 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-2x-with-vs-code/</guid>
-    </item>
-    <item>
-      <title>Tech&apos;s 4-Day Test</title>
-      <link>https://kubaik.github.io/techs-4-day-test/</link>
-      <description>A fintech team cut cycle time 44% in 6 weeks using a 4-day work week—here’s the data, the tools, and the brutal tradeoffs most articles miss.</description>
-      <pubDate>Fri, 17 Apr 2026 10:00:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/techs-4-day-test/</guid>
     </item>
   </channel>
 </rss>
