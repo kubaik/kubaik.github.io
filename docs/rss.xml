@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 11:35:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 11:46:59 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing: App Supercharger</title>
+      <link>https://kubaik.github.io/edge-computing-app-supercharger/</link>
+      <description>Edge computing slashes 150 ms off app latency—here’s how real apps cut costs and boost conversions using Fastly, Cloudflare, and AWS.</description>
+      <pubDate>Fri, 17 Apr 2026 11:46:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-app-supercharger/</guid>
+    </item>
     <item>
       <title>Building Real-Time Apps with WebSockets: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/building-real-time-apps-with-websockets-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Side projects fail when over-engineered and under-validated—here’s the real playbook with hard numbers and tradeoffs from 50+ projects</description>
       <pubDate>Fri, 17 Apr 2026 03:45:33 +0000</pubDate>
       <guid>https://kubaik.github.io/why-side-projects-fail-how-to-succeed-instead/</guid>
-    </item>
-    <item>
-      <title>Master Mobile CI/CD Automation Today!</title>
-      <link>https://kubaik.github.io/master-mobile-cicd-automation-today/</link>
-      <description>Mobile CI/CD pipelines optimized: cut build time 47%, reduce false failures 60%, and shrink artifact bloat 19% with real benchmarks and code.</description>
-      <pubDate>Fri, 17 Apr 2026 01:56:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-mobile-cicd-automation-today/</guid>
     </item>
   </channel>
 </rss>
