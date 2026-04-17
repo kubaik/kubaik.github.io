@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 09:44:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 10:00:09 +0000</lastBuildDate>
+    <item>
+      <title>Tech&apos;s 4-Day Test</title>
+      <link>https://kubaik.github.io/techs-4-day-test/</link>
+      <description>A fintech team cut cycle time 44% in 6 weeks using a 4-day work week—here’s the data, the tools, and the brutal tradeoffs most articles miss.</description>
+      <pubDate>Fri, 17 Apr 2026 10:00:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/techs-4-day-test/</guid>
+    </item>
     <item>
       <title>Startup Failure Lessons</title>
       <link>https://kubaik.github.io/startup-failure-lessons/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to Cloud Security Best Practices for Developers covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Thu, 16 Apr 2026 23:36:20 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-security-best-practices-for-developers-a-pra/</guid>
-    </item>
-    <item>
-      <title>Master Cybersecurity: Outsmart Social Engineers</title>
-      <link>https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/</link>
-      <description>Social engineering bypasses firewalls 74% of the time. Learn how to harden identity, monitor DMs, and automate response with real metrics and code examples.</description>
-      <pubDate>Thu, 16 Apr 2026 23:25:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/</guid>
     </item>
   </channel>
 </rss>
