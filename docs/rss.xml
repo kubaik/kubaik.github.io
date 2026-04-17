@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 01:10:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 01:56:36 +0000</lastBuildDate>
+    <item>
+      <title>Master Mobile CI/CD Automation Today!</title>
+      <link>https://kubaik.github.io/master-mobile-cicd-automation-today/</link>
+      <description>Mobile CI/CD pipelines optimized: cut build time 47%, reduce false failures 60%, and shrink artifact bloat 19% with real benchmarks and code.</description>
+      <pubDate>Fri, 17 Apr 2026 01:56:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-mobile-cicd-automation-today/</guid>
+    </item>
     <item>
       <title>Boost Your Workflow: Free AI Tools Pros Swear By</title>
       <link>https://kubaik.github.io/boost-your-workflow-free-ai-tools-pros-swear-by/</link>
@@ -138,13 +145,6 @@
       <description>Explore real-world Computer Vision apps, from facial recognition to medical diagnostics, and their impact on industries.</description>
       <pubDate>Mon, 13 Apr 2026 20:46:39 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech-april-2026/</guid>
-    </item>
-    <item>
-      <title>AI Code Showdown</title>
-      <link>https://kubaik.github.io/ai-code-showdown/</link>
-      <description>Compare top AI coding assistants: Copilot, Cursor, and more. Find the best fit for your coding needs.</description>
-      <pubDate>Mon, 13 Apr 2026 20:37:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-showdown/</guid>
     </item>
   </channel>
 </rss>
