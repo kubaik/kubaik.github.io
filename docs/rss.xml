@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 18:43:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 20:06:01 +0000</lastBuildDate>
+    <item>
+      <title>API</title>
+      <link>https://kubaik.github.io/api/</link>
+      <description>API security mistakes</description>
+      <pubDate>Fri, 17 Apr 2026 20:05:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/api/</guid>
+    </item>
     <item>
       <title>Tech Boom Jobs ..</title>
       <link>https://kubaik.github.io/tech-boom-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Startup failure lessons from founders</description>
       <pubDate>Fri, 17 Apr 2026 09:44:36 +0000</pubDate>
       <guid>https://kubaik.github.io/startup-failure-lessons/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>IoT architecture blueprint for developers</description>
-      <pubDate>Fri, 17 Apr 2026 09:30:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
