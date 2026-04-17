@@ -3,6 +3,7 @@ Here's a comprehensive strategy to automate monetization and increase visibility
 ## **Monetization Strategies**
 
 ### 1. **Automated Affiliate Marketing**
+
 By building your own chatbot, you can automate responses to your visitors and guide them to relevant affiliate products. The code above includes an `MonetizationManager` that automatically:
 
 - Injects relevant affiliate links based on post topics (Amazon books, courses, tools)
@@ -11,12 +12,15 @@ By building your own chatbot, you can automate responses to your visitors and gu
 - Adds proper disclosure statements
 
 **Quick Setup:**
+
 - Join Amazon Associates, ShareASale, or Commission Junction
 - Add your affiliate IDs to the config
 - The system will automatically suggest and insert relevant products
 
-### 2. **Display Advertising** 
+### 2. **Display Advertising**
+
 This is probably the most well known way that bloggers make money - display ads through networks like:
+
 - **Google AdSense** (easiest to start)
 - **Mediavine** (requires 50k monthly sessions)
 - **Raptive** (formerly AdThrive, requires 100k+ sessions)
@@ -24,25 +28,31 @@ This is probably the most well known way that bloggers make money - display ads 
 The enhanced templates include strategic ad placement slots that can increase revenue by 30-40%.
 
 ### 3. **Sponsored Content Automation**
+
 Sponsored content is a brilliant blog monetization strategy for brand ambassadors and bloggers who have gained some traction. Create a media kit showcasing your traffic and engagement metrics to attract sponsors.
 
 ## **Visibility & SEO Automation**
 
 ### 1. **Search Engine Optimization**
+
 The `SEOOptimizer` class automatically:
+
 - Generates JSON-LD structured data for better search visibility
 - Creates comprehensive meta tags for social sharing
 - Submits sitemaps to Google and Bing
 - Optimizes for featured snippets
 
 ### 2. **Social Media Automation**
+
 The `VisibilityAutomator` generates platform-specific posts:
+
 - **Twitter**: Concise with hashtags
-- **LinkedIn**: Professional tone with detailed descriptions  
+- **LinkedIn**: Professional tone with detailed descriptions
 - **Reddit**: Community-focused submissions
 - **Facebook**: Engaging with call-to-actions
 
 ### 3. **Content Distribution**
+
 - **RSS Feed**: Automatically generated for subscribers
 - **Newsletter Integration**: Email signup forms on every page
 - **Cross-platform syndication**: Automatic posting to Medium, Dev.to
@@ -50,18 +60,21 @@ The `VisibilityAutomator` generates platform-specific posts:
 ## **Implementation Plan**
 
 ### Phase 1: Foundation (Week 1-2)
+
 1. Set up Google Analytics and Search Console
 2. Apply for Google AdSense
 3. Create affiliate accounts (Amazon, tech tools)
 4. Implement the enhanced blog system
 
 ### Phase 2: Content & Traffic (Week 3-8)
+
 1. Generate 20-30 high-quality posts using your system
 2. Submit to search engines
 3. Share on social media
 4. Build email subscriber base
 
 ### Phase 3: Monetization (Week 9-12)
+
 1. Add affiliate links to existing posts
 2. Enable display ads once traffic reaches thresholds
 3. Reach out for sponsored content opportunities
@@ -70,6 +83,7 @@ The `VisibilityAutomator` generates platform-specific posts:
 ## **Revenue Projections**
 
 Based on industry averages:
+
 - **Month 1-3**: $0-50 (building traffic)
 - **Month 4-6**: $100-300 (affiliate + ads)
 - **Month 7-12**: $500-2000 (sponsored content + products)
@@ -77,7 +91,7 @@ Based on industry averages:
 ## **Key Automation Tools**
 
 1. **Buffer/Hootsuite**: Schedule social media posts
-2. **ConvertKit/Mailchimp**: Email marketing automation  
+2. **ConvertKit/Mailchimp**: Email marketing automation
 3. **Google Tag Manager**: Track conversions
 4. **Hotjar**: Understand user behavior
 5. **Canva**: Auto-generate social media images
@@ -93,55 +107,71 @@ The enhanced system I provided automates much of this process, but you'll need t
 
 How to Use:
 
-Initialize: 
-Configure: 
+Initialize:
+Configure:
 Edit config.yaml and
 python blog_system.py init
 add your Google AdSense ID (format: ca-pub-xxxxxxxxxx)
 Generate:
 python blog_system.py auto to create posts with ads
-Build: 
+Build:
 python blog_system.py build to rebuild with all features
-test 
+test
 
 Please store the following recovery codes in a safe place.
 39899368 7557534644562325 4775911375475328 3200884863234973 5074926508020529 12418813
 
-
 # Safe first — see what would be deleted without touching anything
+
 python delete_fallback_posts.py
 
 # Actually delete once you're happy with the list
+
 python delete_fallback_posts.py --delete
 
 # Then rebuild the site
+
 python blog_system.py build
 
 ###################################################################################################
 
 # Always start with a dry run to see what it finds
+
 python delete_similar_posts.py
 
 # Tune the threshold until the groups look right
-python delete_similar_posts.py --threshold 0.85   # stricter — only near-identical
-python delete_similar_posts.py --threshold 0.65   # looser — catches broader overlaps
+
+python delete_similar_posts.py --threshold 0.85 # stricter — only near-identical
+python delete_similar_posts.py --threshold 0.65 # looser — catches broader overlaps
 
 # Keep the post with the most content instead of the oldest
+
 python delete_similar_posts.py --keep-longest
 
 # Once happy, delete
-python delete_similar_posts.py --delete --threshold 0.80
 
+python delete_similar_posts.py --delete --threshold 0.80
 
 #####################################################################################
 
 # Preview what would be deleted (safe, no changes)
+
 python deduplicate_posts.py
 
 # Actually delete the older duplicates and rebuild the site
+
 python deduplicate_posts.py --delete
 
 # Or via blog_system.py shortcut
+
 python blog_system.py dedup
 
 test
+
+Run the audit first to see your current post quality:
+
+python blog_system.py audit
+
+Then if there are fallback or short posts:
+
+python blog_system.py purge
