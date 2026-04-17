@@ -537,6 +537,7 @@ class BlogSystem:
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
+
         if self.nvidia_key:
             providers.append(("NVIDIA NIM",  self._call_nvidia))
         if self.mistral_key:
