@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 06:24:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 06:56:07 +0000</lastBuildDate>
+    <item>
+      <title>Apple’s Secret: Keeping Prices High in a Crowded Market</title>
+      <link>https://kubaik.github.io/apples-secret-keeping-prices-high-in-a-crowded-mar/</link>
+      <description>Apple’s $1,000 iPhones outsell Android flagships 3-to-1. The real secret isn’t branding—it’s vertical integration, supply chain control, and psychological pricing that competitors can’t replicate.</description>
+      <pubDate>Fri, 17 Apr 2026 06:56:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/apples-secret-keeping-prices-high-in-a-crowded-mar/</guid>
+    </item>
     <item>
       <title>Boost Your Career: Contribute to Open Source Today</title>
       <link>https://kubaik.github.io/boost-your-career-contribute-to-open-source-today/</link>
@@ -138,13 +145,6 @@
       <description>Improve language model performance with prompt engineering</description>
       <pubDate>Tue, 14 Apr 2026 11:20:11 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-engineering-simplified/</guid>
-    </item>
-    <item>
-      <title>How Netflix Handles 200 Million Concurrent Streams: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</link>
-      <description>A practical guide to How Netflix Handles 200 Million Concurrent Streams covering production-ready implementation, real performance benchmarks, circuit breaking, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Tue, 14 Apr 2026 09:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</guid>
     </item>
   </channel>
 </rss>
