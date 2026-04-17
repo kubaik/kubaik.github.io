@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 17:06:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 17:35:47 +0000</lastBuildDate>
+    <item>
+      <title>Git Like a Pro ..</title>
+      <link>https://kubaik.github.io/git-like-a-pro/</link>
+      <description>Master advanced Git commands for senior developers. Optimize history, debug efficiently, and switch contexts with rebase, bisect, worktree, and filter-repo.</description>
+      <pubDate>Fri, 17 Apr 2026 17:35:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-like-a-pro/</guid>
+    </item>
     <item>
       <title>Server Components vs Client Components Explained: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/server-components-vs-client-components-explained-a/</link>
@@ -138,13 +145,6 @@
       <description>Designing a URL shortener for billions of requests</description>
       <pubDate>Fri, 17 Apr 2026 09:16:22 +0000</pubDate>
       <guid>https://kubaik.github.io/shortening-billions/</guid>
-    </item>
-    <item>
-      <title>Event Driven Done Right</title>
-      <link>https://kubaik.github.io/event-driven-done-right/</link>
-      <description>Event-driven architecture in practice: handling event versioning, schema evolution, and data consistency</description>
-      <pubDate>Fri, 17 Apr 2026 09:01:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-driven-done-right/</guid>
     </item>
   </channel>
 </rss>
