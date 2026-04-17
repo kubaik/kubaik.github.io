@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 14:38:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 14:58:28 +0000</lastBuildDate>
+    <item>
+      <title>Debug Like a Pro</title>
+      <link>https://kubaik.github.io/debug-like-a-pro/</link>
+      <description>Debugging mindset reduces bugs</description>
+      <pubDate>Fri, 17 Apr 2026 14:58:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-like-a-pro/</guid>
+    </item>
     <item>
       <title>Remote Tech Jobs</title>
       <link>https://kubaik.github.io/remote-tech-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Penetration testing insights</description>
       <pubDate>Fri, 17 Apr 2026 08:38:21 +0000</pubDate>
       <guid>https://kubaik.github.io/hackers-mindset/</guid>
-    </item>
-    <item>
-      <title>K8s: Help or Hurt?</title>
-      <link>https://kubaik.github.io/k8s-help-or-hurt/</link>
-      <description>K8s: Help or Hurt? When to use Kubernetes</description>
-      <pubDate>Fri, 17 Apr 2026 08:26:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-help-or-hurt/</guid>
     </item>
   </channel>
 </rss>
