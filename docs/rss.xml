@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 11:47:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 08:50:54 +0000</lastBuildDate>
+    <item>
+      <title>Tech&apos;s Dark Side: Mental Health</title>
+      <link>https://kubaik.github.io/techs-dark-side-mental-health/</link>
+      <description>Tech industry&apos;s mental health crisis</description>
+      <pubDate>Fri, 17 Apr 2026 08:50:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/techs-dark-side-mental-health/</guid>
+    </item>
+    <item>
+      <title>Code For All: Myth Busted</title>
+      <link>https://kubaik.github.io/code-for-all-myth-busted/</link>
+      <description>Coding education has limitations and biases</description>
+      <pubDate>Fri, 17 Apr 2026 08:44:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-for-all-myth-busted/</guid>
+    </item>
     <item>
       <title>Hackers&apos; Mindset</title>
       <link>https://kubaik.github.io/hackers-mindset/</link>
@@ -131,13 +145,6 @@
       <description>Learn how clean code rules cut bugs by 63% and build times by 48% in real-world codebases with specific metrics and tools.</description>
       <pubDate>Thu, 16 Apr 2026 21:27:10 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-code-essential-rules-that-actually-work/</guid>
-    </item>
-    <item>
-      <title>How to Land a $150K Tech Job Without a Degree</title>
-      <link>https://kubaik.github.io/how-to-land-a-150k-tech-job-without-a-degree/</link>
-      <description>Break down the $150K tech job pipeline: how self-taught engineers bypass degrees with impact portfolios and referral networks</description>
-      <pubDate>Thu, 16 Apr 2026 20:42:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-to-land-a-150k-tech-job-without-a-degree/</guid>
     </item>
   </channel>
 </rss>
