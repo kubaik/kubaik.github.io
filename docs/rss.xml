@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 17:35:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 18:43:02 +0000</lastBuildDate>
+    <item>
+      <title>Tech Boom Jobs ..</title>
+      <link>https://kubaik.github.io/tech-boom-jobs/</link>
+      <description>Fastest growing tech roles: cloud engineer, data scientist, product manager</description>
+      <pubDate>Fri, 17 Apr 2026 18:43:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-boom-jobs/</guid>
+    </item>
     <item>
       <title>Git Like a Pro ..</title>
       <link>https://kubaik.github.io/git-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>IoT architecture blueprint for developers</description>
       <pubDate>Fri, 17 Apr 2026 09:30:29 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Shortening Billions</title>
-      <link>https://kubaik.github.io/shortening-billions/</link>
-      <description>Designing a URL shortener for billions of requests</description>
-      <pubDate>Fri, 17 Apr 2026 09:16:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/shortening-billions/</guid>
     </item>
   </channel>
 </rss>
