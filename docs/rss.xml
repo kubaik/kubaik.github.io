@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 16:40:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 17:06:29 +0000</lastBuildDate>
+    <item>
+      <title>Server Components vs Client Components Explained: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/server-components-vs-client-components-explained-a/</link>
+      <description>A practical guide to Server Components vs Client Components Explained covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Fri, 17 Apr 2026 17:06:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/server-components-vs-client-components-explained-a/</guid>
+    </item>
     <item>
       <title>Augment Reality with Apple Vision Pro</title>
       <link>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</link>
@@ -138,13 +145,6 @@
       <description>Event-driven architecture in practice: handling event versioning, schema evolution, and data consistency</description>
       <pubDate>Fri, 17 Apr 2026 09:01:06 +0000</pubDate>
       <guid>https://kubaik.github.io/event-driven-done-right/</guid>
-    </item>
-    <item>
-      <title>Tech&apos;s Dark Side: Mental Health</title>
-      <link>https://kubaik.github.io/techs-dark-side-mental-health/</link>
-      <description>Tech industry&apos;s mental health crisis</description>
-      <pubDate>Fri, 17 Apr 2026 08:50:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/techs-dark-side-mental-health/</guid>
     </item>
   </channel>
 </rss>
