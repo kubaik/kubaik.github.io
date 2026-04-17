@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 22:26:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 22:50:54 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Measure and pay down technical debt</description>
+      <pubDate>Fri, 17 Apr 2026 22:50:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>APIs Minting Money</title>
       <link>https://kubaik.github.io/apis-minting-money/</link>
@@ -138,13 +145,6 @@
       <description>Jamstack in 2026: Still Worth It?</description>
       <pubDate>Fri, 17 Apr 2026 11:13:57 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-in-2026-still-relevant/</guid>
-    </item>
-    <item>
-      <title>Boost Speed 2x with VS Code</title>
-      <link>https://kubaik.github.io/boost-speed-2x-with-vs-code/</link>
-      <description>Boost speed with VS Code setup</description>
-      <pubDate>Fri, 17 Apr 2026 10:12:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-2x-with-vs-code/</guid>
     </item>
   </channel>
 </rss>
