@@ -905,7 +905,7 @@ def _build_templates() -> dict:
                     <div>
                         <h3 itemprop="name">Kubai Kevin</h3>
                         <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
-                        <p itemprop="description">I have been building software professionally since 2019, working across web development, automation pipelines, and AI-assisted tooling. My day-to-day involves Python backends, API design, and increasingly: integrating large language models into practical workflows that real teams can use and maintain.</p>
+                        <p itemprop="description">I have been building software professionally since 2014, working across web development, automation pipelines, and AI-assisted tooling. My day-to-day involves Python backends, API design, and increasingly: integrating large language models into practical workflows that real teams can use and maintain.</p>
                         <p>I started this blog because most technical content either explains concepts without showing real tradeoffs, or gives advice that only applies at the scale of large companies. My goal is to write about what actually works for developers building things at realistic scales — including the parts that break and why.</p>
                         <p>When I am not writing or coding, I contribute to open source projects and occasionally speak at local developer meetups in Nairobi.</p>
                     </div>
