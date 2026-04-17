@@ -270,22 +270,22 @@
 }
 
 /* ── Breadcrumb ── */
-.breadcrumb {
+.container .breadcrumb {
     font-size: 0.82rem;
     color: #888;
     margin-bottom: 1rem;
 }
 
-.breadcrumb a {
+.container .breadcrumb a {
     color: #6366f1;
     text-decoration: none;
 }
 
-.breadcrumb a:hover {
+.container .breadcrumb a:hover {
     text-decoration: underline;
 }
 
-.breadcrumb span {
+.container .breadcrumb span {
     margin: 0 0.4rem;
 }
 
