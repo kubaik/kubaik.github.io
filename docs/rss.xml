@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Apr 2026 23:36:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 00:10:58 +0000</lastBuildDate>
+    <item>
+      <title>Microservices vs Monolith: The Honest Showdown</title>
+      <link>https://kubaik.github.io/microservices-vs-monolith-the-honest-showdown/</link>
+      <description>Microservices vs monolith benchmarks: real latency, cost, and complexity numbers from production systems</description>
+      <pubDate>Fri, 17 Apr 2026 00:10:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/microservices-vs-monolith-the-honest-showdown/</guid>
+    </item>
     <item>
       <title>Cloud Security Best Practices for Developers: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/cloud-security-best-practices-for-developers-a-pra/</link>
@@ -138,13 +145,6 @@
       <description>Prevent application downtime with proactive monitoring strategies and tools to minimize incidents and optimize performance.</description>
       <pubDate>Mon, 13 Apr 2026 19:52:17 +0000</pubDate>
       <guid>https://kubaik.github.io/prevent-incidents/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Bye Perimeter</title>
-      <link>https://kubaik.github.io/zero-trust-bye-perimeter/</link>
-      <description>Say goodbye to perimeter defense. Get insider tips on implementing Zero Trust Security for a safer network.</description>
-      <pubDate>Mon, 13 Apr 2026 19:17:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-bye-perimeter/</guid>
     </item>
   </channel>
 </rss>
