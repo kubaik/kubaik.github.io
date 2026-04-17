@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 10:12:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 11:13:58 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack in 2026: Still Relevant?</title>
+      <link>https://kubaik.github.io/jamstack-in-2026-still-relevant/</link>
+      <description>Jamstack in 2026: Still Worth It?</description>
+      <pubDate>Fri, 17 Apr 2026 11:13:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-in-2026-still-relevant/</guid>
+    </item>
     <item>
       <title>Boost Speed 2x with VS Code</title>
       <link>https://kubaik.github.io/boost-speed-2x-with-vs-code/</link>
@@ -138,13 +145,6 @@
       <description>Free AI tools that slash context switching by 60%—with real latency, memory, and ROI numbers from 12 engineers over 6 weeks.</description>
       <pubDate>Fri, 17 Apr 2026 01:10:42 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-workflow-free-ai-tools-pros-swear-by/</guid>
-    </item>
-    <item>
-      <title>Microservices vs Monolith: The Honest Showdown</title>
-      <link>https://kubaik.github.io/microservices-vs-monolith-the-honest-showdown/</link>
-      <description>Microservices vs monolith benchmarks: real latency, cost, and complexity numbers from production systems</description>
-      <pubDate>Fri, 17 Apr 2026 00:10:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/microservices-vs-monolith-the-honest-showdown/</guid>
     </item>
   </channel>
 </rss>
