@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 12:51:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 13:03:36 +0000</lastBuildDate>
+    <item>
+      <title>Password Security Hacks 2026</title>
+      <link>https://kubaik.github.io/password-security-hacks-2026/</link>
+      <description>Password security best practices</description>
+      <pubDate>Fri, 17 Apr 2026 13:03:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/password-security-hacks-2026/</guid>
+    </item>
     <item>
       <title>Dev-Tested Docs</title>
       <link>https://kubaik.github.io/dev-tested-docs/</link>
@@ -138,13 +145,6 @@
       <description>Contribute to open source today with this step-by-step guide using GitHub CLI, Dev Containers, and CodeQL—real tradeoffs, benchmarks, and hiring impact.</description>
       <pubDate>Fri, 17 Apr 2026 06:24:20 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-career-contribute-to-open-source-today/</guid>
-    </item>
-    <item>
-      <title>AI Tools for Students: Boost Grades &amp; Save Time</title>
-      <link>https://kubaik.github.io/ai-tools-for-students-boost-grades-save-time/</link>
-      <description>AI study tools only work if you fix your data pipeline first—convert PDFs to Markdown, chunk notes smartly, and use retrieval not chatbots</description>
-      <pubDate>Fri, 17 Apr 2026 06:15:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-for-students-boost-grades-save-time/</guid>
     </item>
   </channel>
 </rss>
