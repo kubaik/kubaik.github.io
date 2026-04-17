@@ -538,12 +538,12 @@ class BlogSystem:
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
         providers = []
 
-        if self.nvidia_key:
-            providers.append(("NVIDIA NIM",  self._call_nvidia))
-        if self.mistral_key:
-            providers.append(("Mistral",     self._call_mistral))
         if self.groq_key:
             providers.append(("Groq",       self._call_groq))
+        if self.mistral_key:
+            providers.append(("Mistral",     self._call_mistral))
+        if self.nvidia_key:
+            providers.append(("NVIDIA NIM",  self._call_nvidia))
         if self.openrouter_key:
             providers.append(("OpenRouter",  self._call_openrouter))
         if self.cerebras_key:
