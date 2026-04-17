@@ -154,5 +154,6 @@
   "The Jamstack in 2026: Still Worth It?",
   "Building Real-Time Apps with WebSockets",
   "Edge Computing: Why It Matters for Your App",
-  "GraphQL vs REST vs tRPC in 2026"
+  "GraphQL vs REST vs tRPC in 2026",
+  "Memory Leaks: How to Find and Fix Them"
 ]
