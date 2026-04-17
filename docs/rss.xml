@@ -5,7 +5,35 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 11:32:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 08:38:22 +0000</lastBuildDate>
+    <item>
+      <title>Hackers&apos; Mindset</title>
+      <link>https://kubaik.github.io/hackers-mindset/</link>
+      <description>Penetration testing insights</description>
+      <pubDate>Fri, 17 Apr 2026 08:38:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/hackers-mindset/</guid>
+    </item>
+    <item>
+      <title>K8s: Help or Hurt?</title>
+      <link>https://kubaik.github.io/k8s-help-or-hurt/</link>
+      <description>K8s: Help or Hurt? When to use Kubernetes</description>
+      <pubDate>Fri, 17 Apr 2026 08:26:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-help-or-hurt/</guid>
+    </item>
+    <item>
+      <title>Machines Fall Short</title>
+      <link>https://kubaik.github.io/machines-fall-short/</link>
+      <description>AI limitations and human-AI collaboration</description>
+      <pubDate>Fri, 17 Apr 2026 08:20:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/machines-fall-short/</guid>
+    </item>
+    <item>
+      <title>Tech Paychecks Revealed</title>
+      <link>https://kubaik.github.io/tech-paychecks-revealed/</link>
+      <description>Tech salaries in 2026: average pay, industry standards</description>
+      <pubDate>Fri, 17 Apr 2026 08:09:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-paychecks-revealed/</guid>
+    </item>
     <item>
       <title>Boost Your Career: Contribute to Open Source Today</title>
       <link>https://kubaik.github.io/boost-your-career-contribute-to-open-source-today/</link>
@@ -117,34 +145,6 @@
       <description>Cold email scripts, real conversion rates, and tools that helped solo devs hit 100 paying customers in 30 days.</description>
       <pubDate>Thu, 16 Apr 2026 19:52:57 +0000</pubDate>
       <guid>https://kubaik.github.io/100-customers-fast-developer-growth-hack/</guid>
-    </item>
-    <item>
-      <title>Safeguard Your Data</title>
-      <link>https://kubaik.github.io/safeguard-your-data/</link>
-      <description>Protect your personal data from corporations with a multi-layered approach to data protection, including encryption, access control, and secure storage.</description>
-      <pubDate>Thu, 16 Apr 2026 19:25:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/safeguard-your-data/</guid>
-    </item>
-    <item>
-      <title>Dev Burnout Fix .</title>
-      <link>https://kubaik.github.io/dev-burnout-fix/</link>
-      <description>Developer burnout affects 60% of developers, causing decreased productivity</description>
-      <pubDate>Wed, 15 Apr 2026 04:34:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-burnout-fix/</guid>
-    </item>
-    <item>
-      <title>Prompt Engineering Simplified</title>
-      <link>https://kubaik.github.io/prompt-engineering-simplified/</link>
-      <description>Improve language model performance with prompt engineering</description>
-      <pubDate>Tue, 14 Apr 2026 11:20:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-engineering-simplified/</guid>
-    </item>
-    <item>
-      <title>How Netflix Handles 200 Million Concurrent Streams: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</link>
-      <description>A practical guide to How Netflix Handles 200 Million Concurrent Streams covering production-ready implementation, real performance benchmarks, circuit breaking, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Tue, 14 Apr 2026 09:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-netflix-handles-200-million-concurrent-streams/</guid>
     </item>
   </channel>
 </rss>
