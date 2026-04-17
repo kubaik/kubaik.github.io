@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Apr 2026 12:40:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 09:44:37 +0000</lastBuildDate>
+    <item>
+      <title>Startup Failure Lessons</title>
+      <link>https://kubaik.github.io/startup-failure-lessons/</link>
+      <description>Startup failure lessons from founders</description>
+      <pubDate>Fri, 17 Apr 2026 09:44:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/startup-failure-lessons/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Social engineering bypasses firewalls 74% of the time. Learn how to harden identity, monitor DMs, and automate response with real metrics and code examples.</description>
       <pubDate>Thu, 16 Apr 2026 23:25:09 +0000</pubDate>
       <guid>https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/</guid>
-    </item>
-    <item>
-      <title>Fast-Track Your Tech Career: Promotion Hacks</title>
-      <link>https://kubaik.github.io/fast-track-your-tech-career-promotion-hacks/</link>
-      <description>Tech promotion hacks: align work to revenue, negotiate every 90 days, and get promoted in 12–18 months using real $ metrics and case studies.</description>
-      <pubDate>Thu, 16 Apr 2026 22:35:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/fast-track-your-tech-career-promotion-hacks/</guid>
     </item>
   </channel>
 </rss>
