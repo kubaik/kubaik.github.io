@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 21:34:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 22:07:51 +0000</lastBuildDate>
+    <item>
+      <title>Turbocharge Learning</title>
+      <link>https://kubaik.github.io/turbocharge-learning/</link>
+      <description>AI-powered learning boosts skill acquisition</description>
+      <pubDate>Sat, 18 Apr 2026 22:07:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/turbocharge-learning/</guid>
+    </item>
     <item>
       <title>PWA Beats Native</title>
       <link>https://kubaik.github.io/pwa-beats-native/</link>
@@ -138,13 +145,6 @@
       <description>Rust for Python/JS devs: memory safety, performance, concurrency</description>
       <pubDate>Sat, 18 Apr 2026 12:05:32 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-for-pythonjs-devs/</guid>
-    </item>
-    <item>
-      <title>Serverless: Costs &amp; Limits</title>
-      <link>https://kubaik.github.io/serverless-costs-limits/</link>
-      <description>Serverless costs and limits</description>
-      <pubDate>Sat, 18 Apr 2026 11:07:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-costs-limits/</guid>
     </item>
   </channel>
 </rss>
