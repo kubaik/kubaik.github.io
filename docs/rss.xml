@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 20:36:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 21:12:46 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain Beyond Hype</title>
+      <link>https://kubaik.github.io/blockchain-beyond-hype/</link>
+      <description>Cut through blockchain hype. Real-world insights on Hyperledger Fabric &amp; Corda for supply chain, identity, finance. Performance, pitfalls, and when NOT to use DLTs.</description>
+      <pubDate>Sat, 18 Apr 2026 21:12:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-beyond-hype/</guid>
+    </item>
     <item>
       <title>Message Queues: Kafka vs RabbitMQ vs SQS: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/message-queues-kafka-vs-rabbitmq-vs-sqs-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Push notifications done right</description>
       <pubDate>Sat, 18 Apr 2026 09:48:30 +0000</pubDate>
       <guid>https://kubaik.github.io/push-notify-smarter/</guid>
-    </item>
-    <item>
-      <title>Build in</title>
-      <link>https://kubaik.github.io/build-in/</link>
-      <description>Building in public: benefits and challenges</description>
-      <pubDate>Sat, 18 Apr 2026 09:39:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-in/</guid>
     </item>
   </channel>
 </rss>
