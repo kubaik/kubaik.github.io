@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 05:27:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 06:10:40 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Web App</title>
+      <link>https://kubaik.github.io/secure-your-web-app/</link>
+      <description>Run a web app security audit with expert insights. Cover SAST, DAST, manual pentesting, real-world numbers, tools like Burp Suite &amp; ZAP. Avoid common pitfalls.</description>
+      <pubDate>Sat, 18 Apr 2026 06:10:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-web-app/</guid>
+    </item>
     <item>
       <title>AI Data Analysis</title>
       <link>https://kubaik.github.io/ai-data-analysis/</link>
@@ -138,13 +145,6 @@
       <description>Find remote tech jobs with these tips</description>
       <pubDate>Fri, 17 Apr 2026 14:38:33 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-tech-jobs/</guid>
-    </item>
-    <item>
-      <title>Streamline Your Dev Flow</title>
-      <link>https://kubaik.github.io/streamline-your-dev-flow/</link>
-      <description>Streamline dev flow for 30% productivity gain</description>
-      <pubDate>Fri, 17 Apr 2026 13:45:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/streamline-your-dev-flow/</guid>
     </item>
   </channel>
 </rss>
