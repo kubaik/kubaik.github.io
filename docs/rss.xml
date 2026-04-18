@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 12:49:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 13:54:17 +0000</lastBuildDate>
+    <item>
+      <title>Limit Smarter</title>
+      <link>https://kubaik.github.io/limit-smarter/</link>
+      <description>Rate limiting strategies for scalable apps</description>
+      <pubDate>Sat, 18 Apr 2026 13:54:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-smarter/</guid>
+    </item>
     <item>
       <title>AI Meets Privacy: Federated Learning</title>
       <link>https://kubaik.github.io/ai-meets-privacy-federated-learning/</link>
@@ -138,13 +145,6 @@
       <description>Improve code reading skills</description>
       <pubDate>Fri, 17 Apr 2026 21:54:54 +0000</pubDate>
       <guid>https://kubaik.github.io/code-sense/</guid>
-    </item>
-    <item>
-      <title>API</title>
-      <link>https://kubaik.github.io/api/</link>
-      <description>API security mistakes</description>
-      <pubDate>Fri, 17 Apr 2026 20:05:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/api/</guid>
     </item>
   </channel>
 </rss>
