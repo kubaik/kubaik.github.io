@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 22:07:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 22:29:45 +0000</lastBuildDate>
+    <item>
+      <title>Million-Request API Blueprint</title>
+      <link>https://kubaik.github.io/million-request-api-blueprint/</link>
+      <description>Building a million-request API</description>
+      <pubDate>Sat, 18 Apr 2026 22:29:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/million-request-api-blueprint/</guid>
+    </item>
     <item>
       <title>Turbocharge Learning</title>
       <link>https://kubaik.github.io/turbocharge-learning/</link>
@@ -138,13 +145,6 @@
       <description>Federated learning for AI that respects privacy</description>
       <pubDate>Sat, 18 Apr 2026 12:49:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-meets-privacy-federated-learning/</guid>
-    </item>
-    <item>
-      <title>Rust for Python/JS Devs</title>
-      <link>https://kubaik.github.io/rust-for-pythonjs-devs/</link>
-      <description>Rust for Python/JS devs: memory safety, performance, concurrency</description>
-      <pubDate>Sat, 18 Apr 2026 12:05:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-for-pythonjs-devs/</guid>
     </item>
   </channel>
 </rss>
