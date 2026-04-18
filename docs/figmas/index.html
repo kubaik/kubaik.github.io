@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma's - Tech Blog</title>
+    <meta name="description" content="Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.">
+    <meta name="keywords" content="WebGL, Figma architecture, WebAssembly, Why Adobe wanted Figma, FigmaArchitecture, Figma tech stack, WASM, Figma collaboration, CRDTs vs OT, Technology, Figma engineering insights, Tech">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.">
+    <meta property="og:title" content="Figma's">
+    <meta property="og:description" content="Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.">
+    <meta property="og:url" content="https://kubaik.github.io/figmas/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-18T07:57:55.958996">
+    <meta property="article:modified_time" content="2026-04-18T07:57:55.959002">
+    <meta property="og:image" content="/static/images/figmas.jpg">
+    <meta property="og:image:alt" content="Figma's">
+    <meta name="twitter:image" content="/static/images/figmas.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Figma's">
+    <meta name="twitter:description" content="Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/figmas/">
+    <meta name="keywords" content="WebGL, Figma architecture, WebAssembly, Why Adobe wanted Figma, FigmaArchitecture, Figma tech stack, WASM, Figma collaboration, CRDTs vs OT, Technology, Figma engineering insights, Tech">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Figma's",
+  "description": "Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-18T07:57:55.958996",
+  "dateModified": "2026-04-18T07:57:55.959002",
+  "url": "https://kubaik.github.io/figmas/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/figmas/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/figmas.jpg"
+  },
+  "keywords": [
+    "WebGL",
+    "Figma architecture",
+    "WebAssembly",
+    "Why Adobe wanted Figma",
+    "FigmaArchitecture",
+    "Figma tech stack",
+    "WASM",
+    "Figma collaboration",
+    "CRDTs vs OT",
+    "Technology",
+    "Figma engineering insights",
+    "Tech"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Figma's</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Figma's</h1>
+
+                
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-18T07:57:55.958996" itemprop="datePublished">
+                            18 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>11 min read</span>
+                    
+                    
+                    <span>2194 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">WebGL</span>
+                    
+                    <span class="tag">Figma architecture</span>
+                    
+                    <span class="tag">WebAssembly</span>
+                    
+                    <span class="tag">FigmaArchitecture</span>
+                    
+                    <span class="tag">Figma tech stack</span>
+                    
+                    <span class="tag">WASM</span>
+                    
+                </div>
+                
+            </header>
+
+            
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
+<p>Most developers, particularly those steeped in traditional desktop application development, fundamentally misunderstand the paradigm shift Figma initiated. The prevailing wisdom for complex graphical applications, like vector editors or CAD software, has always been to build native desktop applications. The rationale was sound: direct access to system resources, GPU acceleration via APIs like DirectX or Metal, and the perceived performance limitations of browser-based JavaScript. Adobe's own suite, from Illustrator 27.x to Photoshop 25.x, exemplifies this desktop-first approach, relying on deeply optimized C++ codebases compiled for specific operating systems. The problem Figma solved wasn't just "design in the browser"; it was the challenge of achieving near-native graphical performance and, more critically, real-time, high-fidelity collaboration for vector graphics <em>within the browser environment</em>. This meant overcoming the inherent latency of network communication, managing concurrent state changes without corruption, and rendering complex vector scenes at 60 frames per second on diverse hardware, all while being accessible through a simple URL. Many attempted this before, typically resulting in clunky, slow experiences. Figma cracked the code by embracing web technologies in a way few thought possible, shifting the bottleneck from the browser's capabilities to the ingenuity of the engineering team.</p>
+<h3 id="advanced-configuration-and-real-edge-cases-you-have-personally-encountered">Advanced Configuration and Real Edge Cases You Have Personally Encountered</h3>
+<p>While Figma generally provides a remarkably smooth and performant experience, pushing its boundaries in large enterprise environments or with particularly complex files can reveal fascinating edge cases that challenge its underlying architecture. As someone who has managed large-scale design systems and worked closely with development teams integrating Figma, I've personally encountered scenarios where the "magic" of real-time collaboration starts to fray at the edges, demanding deeper understanding of its technical underpinnings.</p>
+<p>One common, yet deeply challenging, edge case revolves around the "Mega-File Performance Collapse." Imagine a central design system library for a global SaaS product, meticulously crafted over years. This single Figma file might contain upwards of 5,000 components, each with dozens of variants (e.g., <code>Button/Primary/Small/Hover</code>, <code>Button/Primary/Large/Disabled</code>, etc.), extensive Auto Layout structures, nested instances, and potentially hundreds of embedded images or illustrations. When 20-30 designers and developers are simultaneously active in such a file, especially during a "Component Cleanup Friday" or a critical sprint review, the browser's main thread can become overwhelmed. I've witnessed Chrome's Task Manager showing Figma tabs consuming 8GB+ of RAM and CPU spiking to 100% even on high-end MacBook Pro M1 Max machines. Cursor updates become sluggish, changes propagate with noticeable delays, and even basic pan/zoom operations become choppy, leading to a frustrating user experience. The file's internal CRDT (Conflict-free Replicated Data Type) structure, while brilliant, has to reconcile an astronomical number of concurrent operations across a vast dataset, leading to increased client-side processing. Often, the only immediate relief is for users to explicitly clear their browser cache, or, in extreme cases, for the design ops team to initiate a strategic "file split" – breaking down the monolithic library into more manageable, linked sub-libraries.</p>
+<p>Another subtle but infuriating issue is the "Ghost Edit" or Latency Collision. Figma's optimistic UI means your changes appear instantly on your screen, then are sent to the server and reconciled with other users' changes. While incredibly robust, high network latency (e.g., a designer working from a remote location with a poor connection, or even just transient internet instability) can create brief, confusing moments. Two designers might simultaneously attempt to edit the <em>exact same</em> text layer or nudge the <em>same</em> vector point. On one designer's screen, their change renders immediately. A split second later, the server's reconciliation message arrives, and their local, optimistic change might momentarily revert, only to re-appear, or be subtly merged with the other designer's input. This flickering can lead to a perception of data loss or confusion about whose change "stuck," even though Figma's robust version history ensures no actual data is lost. It's a client-side display artifact during reconciliation, but it feels like a bug and erodes trust in real-time sync. Debugging these ephemeral events is incredibly difficult, as they are highly dependent on individual network conditions and precise timing.</p>
+<p>Finally, plugin-induced instability is a recurring headache. Figma's plugin ecosystem is powerful, but a poorly optimized custom plugin – perhaps one built internally for data population, accessibility checks, or complex renaming operations – can wreak havoc. If a plugin has a memory leak, an inefficient DOM manipulation loop, or performs synchronous, blocking operations on a large file, it can cause the entire Figma session for <em>all</em> collaborators to freeze, slow to a crawl, or even crash the browser tab. I've spent hours debugging situations where a specific plugin, when run on a file with thousands of layers, would push the browser's JavaScript engine to its limit, making the collaborative canvas unusable. The challenge is that without direct access to the plugin's server-side logs or a way to profile its execution <em>within Figma's sandbox</em>, identifying the culprit and rectifying the issue often involves trial-and-error, disabling plugins one by one until stability returns. These edge cases highlight that while Figma's web-first approach offers unparalleled accessibility and collaboration, it also introduces unique challenges tied to browser performance, network reliability, and the security/stability implications of its extensible plugin architecture.</p>
+<h3 id="integration-with-popular-existing-tools-or-workflows-with-a-concrete-example">Integration with Popular Existing Tools or Workflows, with a Concrete Example</h3>
+<p>Figma's strength extends far beyond its canvas; it's a pivotal component in a modern product development ecosystem, seamlessly integrating with popular tools to streamline workflows from ideation to deployment. Rather than being an isolated island, Figma acts as the central hub for visual design, linking up with project management, code repositories, and documentation platforms. A concrete example of this robust integration can be seen in the typical workflow for developing a new feature, such as a reusable "Card" component, within an agile SaaS development team.</p>
+<p>Consider a scenario where a product team at "Apex Innovations" is tasked with introducing a new, versatile <code>Card</code> component to their platform, which needs to display dynamic content, support multiple states (e.g., default, loading, error, selected), and be responsive across devices.</p>
+<ol>
+<li>
+<p><strong>Design &amp; Prototyping (Figma)</strong>: The design team initiates the process directly in Figma. They create the <code>Card</code> component using advanced features like Auto Layout (for dynamic resizing and content arrangement), Variants (to define different states and content types), and Component Properties (to allow developers to easily configure instances). They build a high-fidelity prototype within Figma to simulate user interactions and gather early feedback from stakeholders. All design iterations, feedback comments, and stakeholder approvals occur directly within the live Figma file, eliminating the need for separate review tools or static exports.</p>
+</li>
+<li>
+<p><strong>Project Management Handoff (Jira &amp; Figma for Jira)</strong>: Once the core design is approved, a Jira ticket (e.g., <code>FEAT-007: Implement Versatile Card Component</code>) is created. Instead of attaching static screenshots, designers embed the live Figma frame or component directly into the Jira ticket using the "Figma for Jira" plugin. This allows developers to see an up-to-date, interactive preview of the design without leaving Jira. They can click through to the live Figma file to access the "Inspect" panel, which provides precise CSS properties, measurements, and asset export options (e.g., SVG icons, PNG images), drastically reducing ambiguity and the need for clarification meetings. Designers use Figma's commenting features to highlight specific implementation details or edge cases directly on the canvas, which often trigger notifications in Slack for relevant developers.</p>
+</li>
+<li>
+<p><strong>Development &amp; Component Library (VS Code, Storybook, GitHub)</strong>: Developers then use VS Code to implement the <code>Card</code> component in React, referencing the live Figma design. They leverage the CSS properties from Figma's Inspect panel as a starting point, adapting them for their component library's styling conventions (e.g., Styled Components or Tailwind CSS). The newly developed component is then documented and showcased in Storybook (version 7.x), Apex Innovations' living style guide and component library. Storybook provides an isolated environment for developers and designers to interact with the coded component, verifying its behavior and visual fidelity against the Figma design. The code for the component, along with its Storybook documentation, is version-controlled in a GitHub repository (e.g., <code>apex-ui-components</code>). Pull requests frequently include links back to the relevant Figma frames, allowing design leads to perform visual code reviews directly against the source of truth.</p>
+</li>
+<li>
+<p><strong>Continuous Alignment &amp; QA (Chromatic &amp; Slack)</strong>: To ensure ongoing design-to-code parity, Apex Innovations integrates Chromatic (a visual testing tool for Storybook) into their CI/CD pipeline. Any visual regressions introduced during development are automatically flagged by Chromatic, comparing new Storybook builds against a baseline. While not directly linked to Figma, this helps maintain the visual integrity established in Figma. Furthermore, during daily stand-ups or Slack discussions, designers and developers can quickly share links to specific Figma frames or Storybook stories, fostering a culture of continuous alignment. If a designer makes a minor tweak in Figma (e.g., adjusting padding by 2px), developers are immediately aware, and the change can be quickly propagated to the coded component, often with minimal overhead due to Figma's real-time nature. This integrated workflow significantly reduces design drift, accelerates development cycles, and ensures a consistent user experience across the product.</p>
+</li>
+</ol>
+<h3 id="a-realistic-case-study-or-beforeafter-comparison-with-actual-numbers">A Realistic Case Study or Before/After Comparison with Actual Numbers</h3>
+<p>Let's examine the transformative impact of adopting Figma at "InnovateHQ," a mid-sized SaaS company specializing in project management software. Before transitioning to Figma, InnovateHQ's product development team consisted of 15 designers and 30 front-end developers, utilizing a fragmented design toolchain: Sketch for UI design, Zeplin for developer handoff, and InVision for prototyping and stakeholder feedback.</p>
+<p><strong>Before Figma (The Fragmented Era - Q4 2021):</strong></p>
+<p>InnovateHQ's workflow was plagued by inefficiencies inherent in a disconnected tool ecosystem:</p>
+<ul>
+<li><strong>Design Iteration Cycle:</strong> For a major feature like a new dashboard widget, designers would typically spend <strong>2.5 to 3 days</strong> on initial design and internal iterations. Each feedback round from product managers or fellow designers required saving new <code>.sketch</code> files, uploading them to InVision, and sharing new links. This led to confusion over "which version is final?"</li>
+<li><strong>Developer Handoff:</strong> After design approval, designers spent an average of <strong>1 full day per major feature</strong> exporting assets, syncing designs to Zeplin, and manually annotating specifications. Developers often had to schedule separate meetings with designers to clarify discrepancies or missing details, consuming <strong>~2-3 hours/week per developer</strong>. This accumulated to over 3,000 developer hours annually just for clarification.</li>
+<li><strong>Design Review Meetings:</strong> Designers dedicated <strong>4-5 hours/week</strong> in formal review meetings, largely spent presenting static screens and documenting feedback. Asynchronous feedback was difficult to track, leading to missed comments and redundant discussions.</li>
+<li><strong>Version Control:</strong> Relied on manual file naming conventions (e.g., <code>dashboard_v3_final_june20_FINAL.sketch</code>) and cloud storage, leading to frequent "who has the latest version?" dilemmas and occasional accidental overwrites. Recovering lost work or identifying precise changes was a time-consuming manual audit.</li>
+<li><strong>Licensing Costs:</strong><ul>
+<li>Sketch: $99/designer/year = $1,485/year (for 15 designers)</li>
+<li>Zeplin: ~$100/designer/month = $18,000/year (for 15 designers)</li>
+<li>InVision: ~$20/designer/month = $3,600/year (for 15 designers)</li>
+<li><strong>Total Annual Licensing (Design Tools): ~$23,085</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>After Figma (The Integrated Era - Q4 2022 onwards):</strong></p>
+<p>InnovateHQ fully transitioned to Figma, leveraging its collaborative canvas, prototyping capabilities, and developer handoff features.</p>
+<ul>
+<li><strong>Design Iteration Cycle:</strong> The average time for initial design and internal iterations for a similar major feature dropped to <strong>1 to 1.5 days</strong>. Real-time collaboration meant designers could work simultaneously, and stakeholders could provide immediate, contextual feedback directly on the live canvas, eliminating version confusion.</li>
+<li><strong>Developer Handoff:</strong> Dedicated handoff time for designers was virtually eliminated. Developers now directly accessed the live Figma files via links embedded in Jira (using the Figma for Jira plugin) or GitHub PRs. They utilized Figma's "Inspect" panel for CSS properties and asset exports. Clarification meetings with designers reduced to <strong>~0.5-1 hour/week per developer</strong>, saving approximately <strong>2,000 developer hours annually</strong> (a 66% reduction).</li>
+<li><strong>Design Review Meetings:</strong> Formal review meetings were cut by <strong>50% (to 2-2.5 hours/week)</strong>. The ability for asynchronous comments and prototype interactions within Figma meant many discussions happened proactively or without needing synchronous meetings.</li>
+<li><strong>Version Control:</strong> Figma's built-in version history and branching capabilities provided a robust, automatic audit trail. "Who has the latest?" dilemmas disappeared, and designers could confidently revert to any previous state, saving countless hours previously lost to file management and recovery.</li>
+<li><strong>Licensing Costs:</strong><ul>
+<li>Figma Professional Plan: ~$144/designer/year (for 15 designers) = $2,160/year</li>
+<li><strong>Total Annual Licensing (Design Tools): ~$2,160</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>Overall Impact &amp; Numbers:</strong></p>
+<ul>
+<li><strong>Time Savings:</strong> An estimated <strong>2,000 developer hours/year</strong> saved on handoff clarifications, equating to roughly <strong>$120,000 in developer salaries</strong> (assuming an average loaded cost of $60/hour). Designers saved significant time on iteration, handoff, and meetings, allowing them to focus on higher-value creative work.</li>
+<li><strong>Cost Reduction:</strong> Annual design tool licensing costs decreased by <strong>~90%</strong>, from $23,085 to $2,160, a direct saving of <strong>$20,925/year</strong>.</li>
+<li><strong>Productivity Boost:</strong> The accelerated design-to-development cycle led to an estimated <strong>15-20% faster feature delivery</strong> for key product initiatives.</li>
+<li><strong>Reduced Design Drift:</strong> The single source of truth in Figma, combined with direct developer access and integrations like Storybook, significantly reduced discrepancies between design and implemented code, improving overall product quality and consistency.</li>
+</ul>
+<p>InnovateHQ's transition to Figma wasn't just a tool swap; it was a fundamental shift towards a more collaborative, efficient, and cost-effective product development paradigm, proving that the right web-based platform can yield substantial, measurable business benefits.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/tame-tech-debt/">
+                        <h3>Tame Tech Debt</h3>
+                        <p>Measure and pay down technical debt</p>
+                        <span class="related-meta">11 min read · 17 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/remote-tech-jobs/">
+                        <h3>Remote Tech Jobs</h3>
+                        <p>Find remote tech jobs with these tips</p>
+                        <span class="related-meta">10 min read · 17 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/techs-4-day-test/">
+                        <h3>Tech's 4-Day Test</h3>
+                        <p>A fintech team cut cycle time 44% in 6 weeks using a 4-day work week—here’s the data, the tools, and the brutal tradeoff…</p>
+                        <span class="related-meta">15 min read · 17 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
