@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 14:00:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 14:47:19 +0000</lastBuildDate>
+    <item>
+      <title>Zero to Hired in 12 Months</title>
+      <link>https://kubaik.github.io/zero-to-hired-in-12-months/</link>
+      <description>Get hired as a developer in 12 months</description>
+      <pubDate>Sat, 18 Apr 2026 14:47:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-to-hired-in-12-months/</guid>
+    </item>
     <item>
       <title>Functional Code Done Right</title>
       <link>https://kubaik.github.io/functional-code-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock free AI APIs from Hugging Face, Google, and more. Understand real-world limits, performance, and hidden costs. Get pro insights on production readiness and critical tradeoffs.</description>
       <pubDate>Fri, 17 Apr 2026 23:26:52 +0000</pubDate>
       <guid>https://kubaik.github.io/free-ai-apis/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Measure and pay down technical debt</description>
-      <pubDate>Fri, 17 Apr 2026 22:50:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
