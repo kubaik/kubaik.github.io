@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 09:48:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 11:07:26 +0000</lastBuildDate>
+    <item>
+      <title>Serverless: Costs &amp; Limits</title>
+      <link>https://kubaik.github.io/serverless-costs-limits/</link>
+      <description>Serverless costs and limits</description>
+      <pubDate>Sat, 18 Apr 2026 11:07:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-costs-limits/</guid>
+    </item>
     <item>
       <title>Push Notify Smarter</title>
       <link>https://kubaik.github.io/push-notify-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master advanced Git commands for senior developers. Optimize history, debug efficiently, and switch contexts with rebase, bisect, worktree, and filter-repo.</description>
       <pubDate>Fri, 17 Apr 2026 17:35:46 +0000</pubDate>
       <guid>https://kubaik.github.io/git-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Augment Reality with Apple Vision Pro</title>
-      <link>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</link>
-      <description>Apple Vision Pro AR development</description>
-      <pubDate>Fri, 17 Apr 2026 16:40:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</guid>
     </item>
   </channel>
 </rss>
