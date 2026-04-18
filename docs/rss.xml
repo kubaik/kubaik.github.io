@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 08:43:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 12:22:54 +0000</lastBuildDate>
     <item>
       <title>Python 2 ..</title>
       <link>https://kubaik.github.io/python-2/</link>
@@ -26,13 +26,6 @@
       <description>Figma&apos;s architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe&apos;s acquisition failed.</description>
       <pubDate>Sat, 18 Apr 2026 07:57:55 +0000</pubDate>
       <guid>https://kubaik.github.io/figmas/</guid>
-    </item>
-    <item>
-      <title>Launch in 30 Days</title>
-      <link>https://kubaik.github.io/launch-in-30-days/</link>
-      <description>Launch MVP in 30 days with React, Node.js, and MongoDB</description>
-      <pubDate>Sat, 18 Apr 2026 07:02:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/launch-in-30-days/</guid>
     </item>
     <item>
       <title>Secure Your Web App</title>
@@ -56,13 +49,6 @@
       <guid>https://kubaik.github.io/d/</guid>
     </item>
     <item>
-      <title>Developer&apos;s Guide</title>
-      <link>https://kubaik.github.io/developers-guide/</link>
-      <description>Build passive income as a developer. Leverage serverless, Stripe, and automation to create scalable micro-SaaS and API products.</description>
-      <pubDate>Sat, 18 Apr 2026 03:44:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/developers-guide/</guid>
-    </item>
-    <item>
       <title>Indie</title>
       <link>https://kubaik.github.io/indie/</link>
       <description></description>
@@ -84,13 +70,6 @@
       <guid>https://kubaik.github.io/devops/</guid>
     </item>
     <item>
-      <title>Terraform IaC Mastery</title>
-      <link>https://kubaik.github.io/terraform-iac-mastery/</link>
-      <description>Terraform IaC guide with real-world examples</description>
-      <pubDate>Fri, 17 Apr 2026 23:50:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-iac-mastery/</guid>
-    </item>
-    <item>
       <title>Free AI APIs</title>
       <link>https://kubaik.github.io/free-ai-apis/</link>
       <description>Unlock free AI APIs from Hugging Face, Google, and more. Understand real-world limits, performance, and hidden costs. Get pro insights on production readiness and critical tradeoffs.</description>
@@ -103,13 +82,6 @@
       <description>Measure and pay down technical debt</description>
       <pubDate>Fri, 17 Apr 2026 22:50:52 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>APIs Minting Money</title>
-      <link>https://kubaik.github.io/apis-minting-money/</link>
-      <description>Twilio and Stripe&apos;s API economy success</description>
-      <pubDate>Fri, 17 Apr 2026 22:26:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/apis-minting-money/</guid>
     </item>
     <item>
       <title>Code Sense</title>
@@ -140,11 +112,39 @@
       <guid>https://kubaik.github.io/git-like-a-pro/</guid>
     </item>
     <item>
-      <title>Server Components vs Client Components Explained: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/server-components-vs-client-components-explained-a/</link>
-      <description>A practical guide to Server Components vs Client Components Explained covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Fri, 17 Apr 2026 17:06:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/server-components-vs-client-components-explained-a/</guid>
+      <title>Augment Reality with Apple Vision Pro</title>
+      <link>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</link>
+      <description>Apple Vision Pro AR development</description>
+      <pubDate>Fri, 17 Apr 2026 16:40:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</guid>
+    </item>
+    <item>
+      <title>Remote Tech Jobs</title>
+      <link>https://kubaik.github.io/remote-tech-jobs/</link>
+      <description>Find remote tech jobs with these tips</description>
+      <pubDate>Fri, 17 Apr 2026 14:38:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-tech-jobs/</guid>
+    </item>
+    <item>
+      <title>10hr/Week Saved</title>
+      <link>https://kubaik.github.io/10hrweek-saved/</link>
+      <description>AI workflow saves 10 hours/week</description>
+      <pubDate>Fri, 17 Apr 2026 13:23:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/10hrweek-saved/</guid>
+    </item>
+    <item>
+      <title>API Showdown: GraphQL vs REST vs tRPC</title>
+      <link>https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/</link>
+      <description>GraphQL vs REST vs tRPC in 2026</description>
+      <pubDate>Fri, 17 Apr 2026 12:14:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/</guid>
+    </item>
+    <item>
+      <title>Edge Computing: App Supercharger</title>
+      <link>https://kubaik.github.io/edge-computing-app-supercharger/</link>
+      <description>Edge computing slashes 150 ms off app latency—here’s how real apps cut costs and boost conversions using Fastly, Cloudflare, and AWS.</description>
+      <pubDate>Fri, 17 Apr 2026 11:46:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-app-supercharger/</guid>
     </item>
   </channel>
 </rss>
