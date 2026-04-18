@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 07:02:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 07:57:57 +0000</lastBuildDate>
+    <item>
+      <title>Figma&apos;s</title>
+      <link>https://kubaik.github.io/figmas/</link>
+      <description>Figma&apos;s architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe&apos;s acquisition failed.</description>
+      <pubDate>Sat, 18 Apr 2026 07:57:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/figmas/</guid>
+    </item>
     <item>
       <title>Launch in 30 Days</title>
       <link>https://kubaik.github.io/launch-in-30-days/</link>
@@ -138,13 +145,6 @@
       <description>Solo SaaS success with Docker, Kubernetes, and Redis</description>
       <pubDate>Fri, 17 Apr 2026 15:49:58 +0000</pubDate>
       <guid>https://kubaik.github.io/solo-saas-success/</guid>
-    </item>
-    <item>
-      <title>Debug Like a Pro</title>
-      <link>https://kubaik.github.io/debug-like-a-pro/</link>
-      <description>Debugging mindset reduces bugs</description>
-      <pubDate>Fri, 17 Apr 2026 14:58:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
