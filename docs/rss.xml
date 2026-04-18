@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 18:45:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 19:34:32 +0000</lastBuildDate>
+    <item>
+      <title>Remote Work Wins</title>
+      <link>https://kubaik.github.io/remote-work-wins/</link>
+      <description>Remote work vs office: what the data shows</description>
+      <pubDate>Sat, 18 Apr 2026 19:34:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-work-wins/</guid>
+    </item>
     <item>
       <title>Deploy Web Apps for Less</title>
       <link>https://kubaik.github.io/deploy-web-apps-for-less/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sat, 18 Apr 2026 08:43:20 +0000</pubDate>
       <guid>https://kubaik.github.io/python-2/</guid>
-    </item>
-    <item>
-      <title>Your Data ..</title>
-      <link>https://kubaik.github.io/your-data/</link>
-      <description></description>
-      <pubDate>Sat, 18 Apr 2026 08:25:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-data/</guid>
     </item>
   </channel>
 </rss>
