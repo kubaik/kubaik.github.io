@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 15:49:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 16:23:00 +0000</lastBuildDate>
+    <item>
+      <title>Digital Transformation Gone Wrong</title>
+      <link>https://kubaik.github.io/digital-transformation-gone-wrong/</link>
+      <description>Digital transformation failures: 70% of projects fail</description>
+      <pubDate>Sat, 18 Apr 2026 16:22:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-transformation-gone-wrong/</guid>
+    </item>
     <item>
       <title>Build WhatsApp Like Chat</title>
       <link>https://kubaik.github.io/build-whatsapp-like-chat/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sat, 18 Apr 2026 03:30:24 +0000</pubDate>
       <guid>https://kubaik.github.io/indie/</guid>
-    </item>
-    <item>
-      <title>Sup</title>
-      <link>https://kubaik.github.io/sup/</link>
-      <description></description>
-      <pubDate>Sat, 18 Apr 2026 01:48:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/sup/</guid>
     </item>
   </channel>
 </rss>
