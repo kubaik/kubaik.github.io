@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 18:23:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 18:45:09 +0000</lastBuildDate>
+    <item>
+      <title>Deploy Web Apps for Less</title>
+      <link>https://kubaik.github.io/deploy-web-apps-for-less/</link>
+      <description>Deploy web apps for less with serverless architecture and containerization</description>
+      <pubDate>Sat, 18 Apr 2026 18:45:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-web-apps-for-less/</guid>
+    </item>
     <item>
       <title>Docker in Prod: Hidden Truths</title>
       <link>https://kubaik.github.io/docker-in-prod-hidden-truths/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sat, 18 Apr 2026 08:25:28 +0000</pubDate>
       <guid>https://kubaik.github.io/your-data/</guid>
-    </item>
-    <item>
-      <title>Figma&apos;s</title>
-      <link>https://kubaik.github.io/figmas/</link>
-      <description>Figma&apos;s architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe&apos;s acquisition failed.</description>
-      <pubDate>Sat, 18 Apr 2026 07:57:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/figmas/</guid>
     </item>
   </channel>
 </rss>
