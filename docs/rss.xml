@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 17:16:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 17:38:55 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Dev Uncovered</title>
+      <link>https://kubaik.github.io/web3-dev-uncovered/</link>
+      <description>Web3 dev insights and trade-offs</description>
+      <pubDate>Sat, 18 Apr 2026 17:38:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-dev-uncovered/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Run a web app security audit with expert insights. Cover SAST, DAST, manual pentesting, real-world numbers, tools like Burp Suite &amp; ZAP. Avoid common pitfalls.</description>
       <pubDate>Sat, 18 Apr 2026 06:10:39 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-web-app/</guid>
-    </item>
-    <item>
-      <title>AI Data Analysis</title>
-      <link>https://kubaik.github.io/ai-data-analysis/</link>
-      <description></description>
-      <pubDate>Sat, 18 Apr 2026 05:27:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-data-analysis/</guid>
     </item>
   </channel>
 </rss>
