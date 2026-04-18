@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 14:47:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 15:25:23 +0000</lastBuildDate>
+    <item>
+      <title>AI Cash Boost</title>
+      <link>https://kubaik.github.io/ai-cash-boost/</link>
+      <description>AI cash boost with 20% revenue increase</description>
+      <pubDate>Sat, 18 Apr 2026 15:25:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-cash-boost/</guid>
+    </item>
     <item>
       <title>Zero to Hired in 12 Months</title>
       <link>https://kubaik.github.io/zero-to-hired-in-12-months/</link>
@@ -138,13 +145,6 @@
       <description>DevOps mistakes causing outages</description>
       <pubDate>Sat, 18 Apr 2026 00:20:40 +0000</pubDate>
       <guid>https://kubaik.github.io/devops/</guid>
-    </item>
-    <item>
-      <title>Free AI APIs</title>
-      <link>https://kubaik.github.io/free-ai-apis/</link>
-      <description>Unlock free AI APIs from Hugging Face, Google, and more. Understand real-world limits, performance, and hidden costs. Get pro insights on production readiness and critical tradeoffs.</description>
-      <pubDate>Fri, 17 Apr 2026 23:26:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/free-ai-apis/</guid>
     </item>
   </channel>
 </rss>
