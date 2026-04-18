@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 16:23:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 16:43:03 +0000</lastBuildDate>
+    <item>
+      <title>Open Source Profits</title>
+      <link>https://kubaik.github.io/open-source-profits/</link>
+      <description>Open source profits through right business models</description>
+      <pubDate>Sat, 18 Apr 2026 16:43:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/open-source-profits/</guid>
+    </item>
     <item>
       <title>Digital Transformation Gone Wrong</title>
       <link>https://kubaik.github.io/digital-transformation-gone-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Stop DDoS attacks with real-world strategies. Understand L3/L7 attacks, implement Nginx/Flask rate limits, and avoid common defense mistakes. Includes specific tools and original insights.</description>
       <pubDate>Sat, 18 Apr 2026 04:37:49 +0000</pubDate>
       <guid>https://kubaik.github.io/d/</guid>
-    </item>
-    <item>
-      <title>Indie</title>
-      <link>https://kubaik.github.io/indie/</link>
-      <description></description>
-      <pubDate>Sat, 18 Apr 2026 03:30:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/indie/</guid>
     </item>
   </channel>
 </rss>
