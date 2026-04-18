@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 06:10:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 07:02:14 +0000</lastBuildDate>
+    <item>
+      <title>Launch in 30 Days</title>
+      <link>https://kubaik.github.io/launch-in-30-days/</link>
+      <description>Launch MVP in 30 days with React, Node.js, and MongoDB</description>
+      <pubDate>Sat, 18 Apr 2026 07:02:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/launch-in-30-days/</guid>
+    </item>
     <item>
       <title>Secure Your Web App</title>
       <link>https://kubaik.github.io/secure-your-web-app/</link>
@@ -138,13 +145,6 @@
       <description>Debugging mindset reduces bugs</description>
       <pubDate>Fri, 17 Apr 2026 14:58:27 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Remote Tech Jobs</title>
-      <link>https://kubaik.github.io/remote-tech-jobs/</link>
-      <description>Find remote tech jobs with these tips</description>
-      <pubDate>Fri, 17 Apr 2026 14:38:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-tech-jobs/</guid>
     </item>
   </channel>
 </rss>
