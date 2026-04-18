@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 09:40:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 09:48:31 +0000</lastBuildDate>
+    <item>
+      <title>Push Notify Smarter</title>
+      <link>https://kubaik.github.io/push-notify-smarter/</link>
+      <description>Push notifications done right</description>
+      <pubDate>Sat, 18 Apr 2026 09:48:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-notify-smarter/</guid>
+    </item>
     <item>
       <title>Build in</title>
       <link>https://kubaik.github.io/build-in/</link>
@@ -138,13 +145,6 @@
       <description>Apple Vision Pro AR development</description>
       <pubDate>Fri, 17 Apr 2026 16:40:46 +0000</pubDate>
       <guid>https://kubaik.github.io/augment-reality-with-apple-vision-pro/</guid>
-    </item>
-    <item>
-      <title>Remote Tech Jobs</title>
-      <link>https://kubaik.github.io/remote-tech-jobs/</link>
-      <description>Find remote tech jobs with these tips</description>
-      <pubDate>Fri, 17 Apr 2026 14:38:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-tech-jobs/</guid>
     </item>
   </channel>
 </rss>
