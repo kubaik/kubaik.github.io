@@ -544,10 +544,10 @@ class BlogSystem:
             providers.append(("Mistral",     self._call_mistral))
         if self.openrouter_key:
             providers.append(("OpenRouter",  self._call_openrouter))
-        if self.gemini_key:
-            providers.append(("Gemini",      self._call_gemini))
         if self.cerebras_key:
             providers.append(("Cerebras",    self._call_cerebras))
+        if self.gemini_key:
+            providers.append(("Gemini",      self._call_gemini))
         if self.nvidia_key:
             providers.append(("NVIDIA NIM",  self._call_nvidia))
 
@@ -660,7 +660,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.cerebras_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "llama-3.3-70b", "messages": messages,
+        data = {"model": "llama3.1-70b", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [5, 15, 30]
         for attempt in range(1, 5):
