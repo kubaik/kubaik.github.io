@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE Principles: - Tech Blog</title>
+    <meta name="description" content="Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.">
+    <meta name="keywords" content="When to use SRE, blameless postmortem best practices, SRE error budgets, Site Reliability Engineering, toil reduction strategies, SRE Principles, SrePrinciples, SLO implementation guide, How to define SLOs, SoftwareEngineering">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.">
+    <meta property="og:title" content="SRE Principles:">
+    <meta property="og:description" content="Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.">
+    <meta property="og:url" content="https://kubaik.github.io/sre-principles/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-18T09:34:11.093567">
+    <meta property="article:modified_time" content="2026-04-18T09:34:11.093574">
+    <meta property="og:image" content="/static/images/sre-principles.jpg">
+    <meta property="og:image:alt" content="SRE Principles:">
+    <meta name="twitter:image" content="/static/images/sre-principles.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SRE Principles:">
+    <meta name="twitter:description" content="Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/sre-principles/">
+    <meta name="keywords" content="When to use SRE, blameless postmortem best practices, SRE error budgets, Site Reliability Engineering, toil reduction strategies, SRE Principles, SrePrinciples, SLO implementation guide, How to define SLOs, SoftwareEngineering">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SRE Principles:",
+  "description": "Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-18T09:34:11.093567",
+  "dateModified": "2026-04-18T09:34:11.093574",
+  "url": "https://kubaik.github.io/sre-principles/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/sre-principles/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/sre-principles.jpg"
+  },
+  "keywords": [
+    "When to use SRE",
+    "blameless postmortem best practices",
+    "SRE error budgets",
+    "Site Reliability Engineering",
+    "toil reduction strategies",
+    "SRE Principles",
+    "SrePrinciples",
+    "SLO implementation guide",
+    "How to define SLOs",
+    "SoftwareEngineering"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>SRE Principles:</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">SRE Principles:</h1>
+
+                
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-18T09:34:11.093567" itemprop="datePublished">
+                            18 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>11 min read</span>
+                    
+                    
+                    <span>2279 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">SRE error budgets</span>
+                    
+                    <span class="tag">Site Reliability Engineering</span>
+                    
+                    <span class="tag">toil reduction strategies</span>
+                    
+                    <span class="tag">SRE Principles</span>
+                    
+                    <span class="tag">SrePrinciples</span>
+                    
+                    <span class="tag">SLO implementation guide</span>
+                    
+                </div>
+                
+            </header>
+
+            
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
+<p>Most developers, myself included during my early career, fall into a common trap: optimizing for feature delivery above all else. We're wired to build, to ship, to see our code in production. The operational realities, the subtle failure modes, the cumulative drag of manual processes, these are often an afterthought. This isn't a criticism of developers; it's a systemic blind spot. You ship a new microservice, it passes functional tests, but does anyone define its P99 latency SLO <em>before</em> it goes live? Rarely. Does the team calculate an error budget for it? Almost never. The result? A system that works fine until it doesn't. A P99 latency of 50ms in development becomes 500ms under a moderate load, and suddenly, your users are churning. Observability is bolted on reactively after the first major incident, not designed in. Resilience patterns like circuit breakers or bulkheads are often implemented only after a cascading failure brings down half the stack. This reactive posture, where reliability is an operational burden rather than an intrinsic product feature, is the fundamental problem SRE seeks to solve. It's not about operations taking over; it's about engineering reliability from the ground up, making developers accountable for the operational characteristics of their code just as much as its functionality.</p>
+<h2 id="how-sre-principles-actually-work-under-the-hood">How SRE Principles Actually Work Under the Hood</h2>
+<p>SRE principles aren't academic constructs; they're actionable engineering directives that directly impact system behavior and team dynamics. At their core, they transform nebulous concepts like "uptime" into quantifiable, engineering-driven metrics. Take <strong>Service Level Objectives (SLOs)</strong> and <strong>Service Level Indicators (SLIs)</strong>. An SLI is a raw metric – requests per second, error rate, latency. An SLO is the target: "Our API will have a P99 latency of less than 100ms over a 5-minute window," or "Our service availability will be 99.9% over a 30-day period." This 99.9% availability, for instance, translates directly into an <strong>Error Budget</strong> of approximately 43.2 minutes of allowed downtime or degradation per month. This isn't just a number; it's a currency. If a team is developing a new, risky feature, and they've already consumed 30 minutes of their monthly error budget due to previous incidents, that deployment is blocked. The error budget forces a hard trade-off: reliability versus velocity. It's a mechanism to prevent teams from continuously pushing features that erode reliability. Another critical principle is <strong>Toil Reduction</strong>. Toil is manual, repetitive, automatable work that lacks enduring value. Manually restarting a failed process, SSHing into a server to check logs, or deploying code by hand – these are all toil. SRE mandates that a significant portion of engineering effort (often 20-30%) be dedicated to eliminating toil through automation, freeing engineers for strategic work. Finally, <strong>Blameless Postmortems</strong> are non-negotiable. When an incident occurs, the focus isn't on who made the mistake, but on what systemic failures allowed the mistake to propagate. This fosters a culture of learning, not fear, leading to more robust systems and processes. These aren't soft skills; they are engineering disciplines with tangible impacts on system robustness and team effectiveness.</p>
+<h2 id="step-by-step-implementation">Step-by-Step Implementation</h2>
+<p>Implementing SRE principles requires a deliberate, iterative approach. You don't flip a switch. The first concrete step is to <strong>Define SLOs and SLIs</strong> for your most critical services. Start small: pick 3-5 key metrics – availability, latency (P99 is usually more meaningful than P50), and error rate. For a web service, an SLI might be `rate(http_requests_total{job="my-service", code=~"5..</p>
+<h2 id="advanced-configuration-and-real-edge-cases">Advanced Configuration and Real Edge Cases</h2>
+<p>While the foundational SRE principles are straightforward, implementing them in complex, distributed systems often unearths subtle, maddening edge cases. I've personally wrestled with several of these. One common challenge arises when defining latency SLOs for highly variable workloads, particularly for services that experience bursty traffic. A standard P99 latency target of, say, <code>100ms</code> might seem reasonable, but what if your service handles background batch jobs that intentionally take seconds, alongside real-time user requests? Or what if a daily peak traffic surge momentarily pushes P99 to <code>500ms</code> for a few minutes, while the P99.9 remains stable, yet your alerting fires constantly?</p>
+<p>We encountered this with an analytics processing service. Its primary function was to serve low-latency API queries, but it also had an asynchronous component that ingested large data dumps once an hour. If we set a blanket P99 latency SLO, the hourly ingestion would constantly breach it, triggering false alarms and eroding trust in our monitoring. The solution involved advanced SLI segmentation and composite SLOs. Instead of a single <code>http_request_duration_seconds_bucket</code> metric for the entire service, we introduced a <code>request_type</code> label. This allowed us to define a strict <code>P99_latency &lt; 100ms</code> for <code>request_type="interactive"</code> and a much looser <code>P99_latency &lt; 5s</code> for <code>request_type="batch"</code>. Our SLO was then a composite: <code>(interactive_requests_good_ratio &gt; 0.99) AND (batch_requests_good_ratio &gt; 0.999)</code>. This nuanced approach provided accurate signals without burying us in alert fatigue, ensuring that critical user-facing functionality was protected without penalizing the expected behavior of background tasks.</p>
+<p>Another persistent issue has been resource starvation in Kubernetes clusters, especially for memory-intensive Java applications. Developers would often set <code>requests</code> and <code>limits</code> in their pod definitions without a deep understanding of their implications. For instance, setting <code>memory_request</code> too low while <code>memory_limit</code> was high could lead to a pod being scheduled on a node with insufficient <em>actual</em> available memory, even if the node <em>appeared</em> to have capacity. The <code>OOMKilled</code> event was obvious, but the more insidious problem was <code>CPU throttling</code>. When a container's CPU usage consistently hit its <code>cpu_limit</code>, the kernel would throttle it, leading to increased P99 latency <em>without</em> any corresponding increase in CPU utilization metrics reported by the application itself. From the application's perspective, it was waiting. From the node's perspective, it wasn't oversaturated. The only way to diagnose this was by monitoring Kubernetes <code>kube_pod_container_resource_limits</code> and <code>kube_pod_container_resource_requests</code> alongside <code>container_cpu_cfs_throttled_periods_total</code> metrics in Prometheus, correlating them with application latency. We learned to enforce stricter <code>requests</code> and <code>limits</code> policies, leveraging tools like Goldilocks to recommend optimal values, and integrating <code>cfs_throttled</code> metrics directly into our service health dashboards. These seemingly minor configuration details are critical for reliable operations at scale. Without this deep dive into kernel-level behavior and Kubernetes scheduling intricacies, our teams would have continued to chase phantom performance issues, burning valuable engineering time and eroding confidence in the system.</p>
+<h2 id="integration-with-popular-existing-tools-and-workflows">Integration with Popular Existing Tools and Workflows</h2>
+<p>SRE principles gain their power through seamless integration with the existing ecosystem of development and operations tools. It's not about replacing everything; it's about leveraging what you have to enforce reliability. Let's walk through a concrete example of how our team integrated SRE principles into our workflow using a stack of popular tools: Prometheus, Grafana, Alertmanager, PagerDuty, and Jira.</p>
+<p>Our core application, a customer authentication service (let's call it "AuthN"), is critical. We defined a strict SLO: <code>AuthN API availability must be 99.95% over a 7-day rolling window</code>, and <code>AuthN P99 API latency must be &lt; 200ms over a 5-minute window</code>.</p>
+<ol>
+<li>
+<p><strong>SLI Measurement (Prometheus 2.x):</strong> AuthN exposes standard <code>JVM</code> and <code>Spring Boot</code> metrics (e.g., <code>jvm_memory_used_bytes</code>, <code>http_server_requests_seconds_count</code>), along with custom application-specific metrics (e.g., <code>auth_success_total</code>, <code>auth_failure_total</code>), via a <code>/actuator/prometheus</code> endpoint. Prometheus, our primary monitoring system (version 2.37 at the time), is configured to scrape these endpoints every 15 seconds. It collects raw data like <code>http_requests_total{service="AuthN", status="200"}</code> and <code>http_request_duration_seconds_bucket{service="AuthN", le="0.2"}</code>. These metrics are then used to derive the health of the service against its SLOs.</p>
+</li>
+<li>
+<p><strong>Dashboarding &amp; Real-time Visibility (Grafana 9.x):</strong> Grafana dashboards are built on top of Prometheus. We have dedicated "AuthN Service Health" dashboards that visualize the current availability and latency against our SLOs. For instance, a panel might display <code>1 - (sum(rate(http_requests_total{service="AuthN", status=~"5..|429"}[5m])) / sum(rate(http_requests_total{service="AuthN"}[5m])))</code> to show real-time availability, with clear red/green indicators based on the 99.95% target. Another panel visualizes <code>histogram_quantile(0.99, sum by(le, service) (rate(http_request_duration_seconds_bucket{service="AuthN"}[5m])))</code> to track P99 latency. This provides immediate, transparent visibility into our error budget consumption and overall service performance.</p>
+</li>
+<li>
+<p><strong>Alerting &amp; Error Budget Enforcement (Alertmanager 0.25, PagerDuty):</strong> Our Alertmanager configuration contains rules derived directly from our SLOs. For the latency SLO, an alert might look like:
+    ```yaml</p>
+<ul>
+<li>alert: AuthNHighLatency
+  expr: histogram_quantile(0.99, sum by(le, service) (rate(http_request_duration_seconds_bucket{service="AuthN"}[5m]))) &gt; 0.2
+  for: 5m
+  labels:
+    severity: critical
+  annotations:
+    summary: "AuthN P99 latency exceeding 200ms"
+    description: "AuthN service P99 latency has been above 200ms for 5 consecutive minutes, potentially impacting user experience and consuming error budget."
+```
+When this alert fires, Alertmanager routes it to PagerDuty. PagerDuty then triggers an incident, notifying the on-call SRE and development team via phone, SMS, and email, based on defined escalation policies. This immediate, automated notification ensures rapid response and minimizes incident duration.</li>
+</ul>
+</li>
+<li>
+<p><strong>Incident Management &amp; Postmortems (Jira Software 9.x):</strong> PagerDuty is integrated with Jira Software. When a critical incident is acknowledged, PagerDuty automatically creates a Jira ticket with a specific issue type ("Incident") pre-populated with alert details, a link to the Grafana dashboard, and the affected service. This streamlines the incident response and ensures every incident has a trackable record. After the incident is resolved, this Jira ticket becomes the basis for our blameless postmortem process. The team uses it to document the timeline, identify root causes (e.g., a recent deployment introduced a database query without an index), and track follow-up action items (e.g., "Add pre-deployment database schema analysis to CI/CD pipeline," "Implement read replicas for AuthN database").</p>
+</li>
+<li>
+<p><strong>Toil Reduction &amp; CI/CD Integration (GitLab CI/CD 15.x):</strong> The postmortem identified that manual database schema changes were a significant source of errors and toil. To reduce this and prevent future incidents, we integrated database migration tools (like Flyway 8.x) directly into our GitLab CI/CD pipeline. Now, every schema change is reviewed, tested, and automatically applied as part of the deployment process, reducing manual intervention and increasing reliability. Furthermore, our CI/CD pipeline has a gate that checks the remaining error budget for AuthN using a custom script that queries Prometheus. If a deployment would push the service over its monthly error budget due to recent incidents, the pipeline automatically blocks the deployment, forcing a discussion about prioritizing reliability work over new features. This hard gate ensures that reliability remains a first-class concern, even under pressure to deliver new functionality.</p>
+</li>
+</ol>
+<p>This integrated workflow ensures that SRE principles aren't just theoretical; they are baked into our daily operations, from monitoring and alerting to incident response and continuous improvement, making reliability a shared, measurable responsibility.</p>
+<h2 id="a-realistic-case-study-from-reactive-firefighting-to-proactive-reliability">A Realistic Case Study: From Reactive Firefighting to Proactive Reliability</h2>
+<p>Let's consider a mid-sized SaaS company, "DataFlow Inc.," which offers a data pipeline and analytics platform. Before adopting SRE principles, DataFlow operated under a traditional DevOps model, where developers focused heavily on feature velocity, and a small operations team was primarily responsible for keeping the lights on. The operational burden was immense, leading to constant firefighting, developer burnout, and ultimately, frustrated customers.</p>
+<p><strong>Before SRE Adoption (Q4 2021):</strong></p>
+<ul>
+<li><strong>Availability (Core Data Ingestion Service):</strong> Averaged <strong>99.5%</strong> monthly. This translated to approximately <strong>216 minutes (3.6 hours)</strong> of unplanned downtime or significant degradation per month. This was primarily due to database connection exhaustion, unhandled exceptions in data processing, and manual deployment errors.</li>
+<li><strong>Mean Time To Recovery (MTTR):</strong> Critical incidents typically took <strong>2-4 hours</strong> to resolve, often requiring multiple teams to jump on a bridge call, sifting through disparate logs and manually restarting services. There was no single source of truth for incident data.</li>
+<li><strong>Incident Frequency:</strong> <strong>10-15 major incidents</strong> per month, frequently impacting customer-facing services and requiring immediate, disruptive intervention from engineers.</li>
+<li><strong>Developer Focus:</strong> Approximately <strong>90%</strong> on new feature development, <strong>10%</strong> on reactive bug fixes and operational firefighting. The "firefighting" often involved developers being pulled off feature work without warning.</li>
+<li><strong>Deployment Frequency:</strong> Bi-weekly deployments were the norm, often followed by hotfixes within 24-48 hours to address regressions or unforeseen operational issues. Each deployment was a high-stress event.</li>
+<li><strong>On-call Burden:</strong> High developer burnout due to frequent, stressful on-call rotations, poorly documented runbooks, and a lack of clear ownership for operational issues. Pager fatigue was rampant.</li>
+<li><strong>Infrastructure Cost:</strong> Over-provisioned cloud resources (AWS EC2, RDS) by an estimated 20-30% "just in case" to mitigate performance issues, leading to significant unnecessary expenditure.</li>
+<li><strong>Customer Satisfaction:</strong> Declining due to frequent outages, inconsistent performance, and slow resolution of data processing issues, impacting customer retention.</li>
+</ul>
+<p>The management at DataFlow recognized that their rapid growth was unsustainable without a fundamental shift in their operational approach. They decided to implement SRE principles, starting with their most critical "Data Ingestion" service, which was the backbone of their platform.</p>
+<p><strong>SRE Intervention (Q1-Q3 2022):</strong></p>
+<ol>
+<li><strong>SLO/SLI Definition (Q1):</strong> The SRE team, working closely with product and development, defined clear, measurable SLOs for the Data Ingestion service. They set a target of <strong>99.95% availability</strong> (allowing ~21.6 minutes downtime/month) and <strong>P99 latency &lt; 500ms</strong> for data processing, measured using custom metrics exposed via Prometheus. This immediately provided a shared, quantifiable definition of "good enough" reliability.</li>
+<li><strong>Error Budget Implementation (Q1-Q2):</strong> Based on the SLOs, an error budget was established. The team started tracking error budget consumption in Grafana dashboards. Crucially, a policy was implemented: if the service consumed 80% of its monthly error budget, new feature deployments would be paused until reliability work was prioritized and completed. This forced a direct trade-off between velocity and stability.</li>
+<li><strong>Toil Reduction and Automation (Q2-Q3):</strong> A dedicated 25% of engineering time for the Data Ingestion team was allocated to toil reduction. This led to:<ul>
+<li><strong>Automated Scaling:</strong> Implementing Kubernetes Horizontal Pod Autoscalers (HPA) and Cluster Autoscalers based on CPU and custom metrics, reducing manual scaling efforts.</li>
+<li><strong>Self-Healing Services:</strong> Introducing automatic restart mechanisms for failed pods and services, and implementing circuit breakers (e.g., using Resilience4j) to prevent cascading failures.</li>
+<li><strong>Automated Deployment Pipelines:</strong> Migrating from manual deployment steps to fully automated, immutable infrastructure deployments via GitLab CI/CD, including automated rollback capabilities.</li>
+<li><strong>Enhanced Observability:</strong> Standardizing logging (ELK stack) and</li>
+</ul>
+</li>
+</ol>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/git-like-a-pro/">
+                        <h3>Git Like a Pro ..</h3>
+                        <p>Master advanced Git commands for senior developers. Optimize history, debug efficiently, and switch contexts with rebase…</p>
+                        <span class="related-meta">15 min read · 17 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/design-patterns-youll-actually-use-in-code/">
+                        <h3>Design Patterns You'll Actually Use in Code</h3>
+                        <p>Practical guide to design patterns that work in production, with benchmarks, code, and honest tradeoffs for Java, .NET, …</p>
+                        <span class="related-meta">14 min read · 17 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-side-projects-fail-how-to-succeed-instead/">
+                        <h3>Why Side Projects Fail & How to Succeed Instead</h3>
+                        <p>Side projects fail when over-engineered and under-validated—here’s the real playbook with hard numbers and tradeoffs fro…</p>
+                        <span class="related-meta">20 min read · 17 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
