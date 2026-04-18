@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 21:12:46 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 21:34:50 +0000</lastBuildDate>
+    <item>
+      <title>PWA Beats Native</title>
+      <link>https://kubaik.github.io/pwa-beats-native/</link>
+      <description>PWAs often beat native apps in cost, speed, and reach. Learn how Service Workers and the Web App Manifest deliver superior user experience and business value.</description>
+      <pubDate>Sat, 18 Apr 2026 21:34:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-beats-native/</guid>
+    </item>
     <item>
       <title>Blockchain Beyond Hype</title>
       <link>https://kubaik.github.io/blockchain-beyond-hype/</link>
@@ -138,13 +145,6 @@
       <description>Serverless costs and limits</description>
       <pubDate>Sat, 18 Apr 2026 11:07:25 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-costs-limits/</guid>
-    </item>
-    <item>
-      <title>Push Notify Smarter</title>
-      <link>https://kubaik.github.io/push-notify-smarter/</link>
-      <description>Push notifications done right</description>
-      <pubDate>Sat, 18 Apr 2026 09:48:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-notify-smarter/</guid>
     </item>
   </channel>
 </rss>
