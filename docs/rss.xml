@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 23:09:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 23:35:17 +0000</lastBuildDate>
+    <item>
+      <title>AI Cuts Costs</title>
+      <link>https://kubaik.github.io/ai-cuts-costs/</link>
+      <description></description>
+      <pubDate>Sat, 18 Apr 2026 23:35:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-cuts-costs/</guid>
+    </item>
     <item>
       <title>Stickier Apps</title>
       <link>https://kubaik.github.io/stickier-apps/</link>
@@ -138,13 +145,6 @@
       <description>Functional programming concepts in practical code</description>
       <pubDate>Sat, 18 Apr 2026 14:00:45 +0000</pubDate>
       <guid>https://kubaik.github.io/functional-code-done-right/</guid>
-    </item>
-    <item>
-      <title>Limit Smarter</title>
-      <link>https://kubaik.github.io/limit-smarter/</link>
-      <description>Rate limiting strategies for scalable apps</description>
-      <pubDate>Sat, 18 Apr 2026 13:54:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-smarter/</guid>
     </item>
   </channel>
 </rss>
