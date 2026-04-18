@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 03:30:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 03:44:40 +0000</lastBuildDate>
+    <item>
+      <title>Developer&apos;s Guide</title>
+      <link>https://kubaik.github.io/developers-guide/</link>
+      <description>Build passive income as a developer. Leverage serverless, Stripe, and automation to create scalable micro-SaaS and API products.</description>
+      <pubDate>Sat, 18 Apr 2026 03:44:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/developers-guide/</guid>
+    </item>
     <item>
       <title>Indie</title>
       <link>https://kubaik.github.io/indie/</link>
@@ -138,13 +145,6 @@
       <description>Password security best practices</description>
       <pubDate>Fri, 17 Apr 2026 13:03:35 +0000</pubDate>
       <guid>https://kubaik.github.io/password-security-hacks-2026/</guid>
-    </item>
-    <item>
-      <title>Dev-Tested Docs</title>
-      <link>https://kubaik.github.io/dev-tested-docs/</link>
-      <description>Dev-Tested Docs ensures documentation is accurate and up-to-date</description>
-      <pubDate>Fri, 17 Apr 2026 12:51:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-tested-docs/</guid>
     </item>
   </channel>
 </rss>
