@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 03:44:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 04:37:50 +0000</lastBuildDate>
+    <item>
+      <title>D</title>
+      <link>https://kubaik.github.io/d/</link>
+      <description>Stop DDoS attacks with real-world strategies. Understand L3/L7 attacks, implement Nginx/Flask rate limits, and avoid common defense mistakes. Includes specific tools and original insights.</description>
+      <pubDate>Sat, 18 Apr 2026 04:37:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/d/</guid>
+    </item>
     <item>
       <title>Developer&apos;s Guide</title>
       <link>https://kubaik.github.io/developers-guide/</link>
@@ -138,13 +145,6 @@
       <description>AI workflow saves 10 hours/week</description>
       <pubDate>Fri, 17 Apr 2026 13:23:52 +0000</pubDate>
       <guid>https://kubaik.github.io/10hrweek-saved/</guid>
-    </item>
-    <item>
-      <title>Password Security Hacks 2026</title>
-      <link>https://kubaik.github.io/password-security-hacks-2026/</link>
-      <description>Password security best practices</description>
-      <pubDate>Fri, 17 Apr 2026 13:03:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/password-security-hacks-2026/</guid>
     </item>
   </channel>
 </rss>
