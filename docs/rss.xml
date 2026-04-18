@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 11:07:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 12:05:34 +0000</lastBuildDate>
+    <item>
+      <title>Rust for Python/JS Devs</title>
+      <link>https://kubaik.github.io/rust-for-pythonjs-devs/</link>
+      <description>Rust for Python/JS devs: memory safety, performance, concurrency</description>
+      <pubDate>Sat, 18 Apr 2026 12:05:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-for-pythonjs-devs/</guid>
+    </item>
     <item>
       <title>Serverless: Costs &amp; Limits</title>
       <link>https://kubaik.github.io/serverless-costs-limits/</link>
@@ -138,13 +145,6 @@
       <description>Fastest growing tech roles: cloud engineer, data scientist, product manager</description>
       <pubDate>Fri, 17 Apr 2026 18:43:01 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-boom-jobs/</guid>
-    </item>
-    <item>
-      <title>Git Like a Pro ..</title>
-      <link>https://kubaik.github.io/git-like-a-pro/</link>
-      <description>Master advanced Git commands for senior developers. Optimize history, debug efficiently, and switch contexts with rebase, bisect, worktree, and filter-repo.</description>
-      <pubDate>Fri, 17 Apr 2026 17:35:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
