@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 19:40:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 20:07:03 +0000</lastBuildDate>
+    <item>
+      <title>AI in Learning</title>
+      <link>https://kubaik.github.io/ai-in-learning/</link>
+      <description>AI in education: 25% increase in math scores, 30% in reading</description>
+      <pubDate>Sat, 18 Apr 2026 20:07:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-learning/</guid>
+    </item>
     <item>
       <title>AI Beyond Text</title>
       <link>https://kubaik.github.io/ai-beyond-text/</link>
@@ -138,13 +145,6 @@
       <description>Practical SRE principles for experienced engineers. Focus on real tradeoffs, SLOs, error budgets, toil reduction, and tools like Prometheus, Terraform, PagerDuty.</description>
       <pubDate>Sat, 18 Apr 2026 09:34:11 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-principles/</guid>
-    </item>
-    <item>
-      <title>Database Tools Worth Having in 2026: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/database-tools-worth-having-in-2026-a-practical-te/</link>
-      <description>A practical guide to Database Tools Worth Having in 2026 covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Sat, 18 Apr 2026 09:25:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-tools-worth-having-in-2026-a-practical-te/</guid>
     </item>
   </channel>
 </rss>
