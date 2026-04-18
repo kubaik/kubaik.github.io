@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Apr 2026 13:54:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 14:00:47 +0000</lastBuildDate>
+    <item>
+      <title>Functional Code Done Right</title>
+      <link>https://kubaik.github.io/functional-code-done-right/</link>
+      <description>Functional programming concepts in practical code</description>
+      <pubDate>Sat, 18 Apr 2026 14:00:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/functional-code-done-right/</guid>
+    </item>
     <item>
       <title>Limit Smarter</title>
       <link>https://kubaik.github.io/limit-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Measure and pay down technical debt</description>
       <pubDate>Fri, 17 Apr 2026 22:50:52 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>Code Sense</title>
-      <link>https://kubaik.github.io/code-sense/</link>
-      <description>Improve code reading skills</description>
-      <pubDate>Fri, 17 Apr 2026 21:54:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-sense/</guid>
     </item>
   </channel>
 </rss>
