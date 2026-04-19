@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 23:15:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 23:36:52 +0000</lastBuildDate>
+    <item>
+      <title>Essential CLI Tools</title>
+      <link>https://kubaik.github.io/essential-cli-tools/</link>
+      <description>Master essential CLI tools like jq, ripgrep, tmux, and kubectl. Boost efficiency, debug faster, and automate complex tasks with concrete examples and real-world performance data.</description>
+      <pubDate>Sun, 19 Apr 2026 23:36:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/essential-cli-tools/</guid>
+    </item>
     <item>
       <title>Kubernetes Security Locked</title>
       <link>https://kubaik.github.io/kubernetes-security-locked/</link>
@@ -138,13 +145,6 @@
       <description>Mobile security vulnerabilities and fixes</description>
       <pubDate>Sun, 19 Apr 2026 13:45:46 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-phone/</guid>
-    </item>
-    <item>
-      <title>SOLID in Action</title>
-      <link>https://kubaik.github.io/solid-in-action/</link>
-      <description>SOLID principles in action: real-world examples and trade-offs</description>
-      <pubDate>Sun, 19 Apr 2026 12:51:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-in-action/</guid>
     </item>
   </channel>
 </rss>
