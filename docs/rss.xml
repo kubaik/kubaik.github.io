@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 06:24:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 06:31:52 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Android Simplified</title>
+      <link>https://kubaik.github.io/kotlin-for-android-simplified/</link>
+      <description>Kotlin for Android development guide</description>
+      <pubDate>Sun, 19 Apr 2026 06:31:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-android-simplified/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Docker in production</description>
       <pubDate>Sat, 18 Apr 2026 18:23:38 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-in-prod-hidden-truths/</guid>
-    </item>
-    <item>
-      <title>Web3 Dev Uncovered</title>
-      <link>https://kubaik.github.io/web3-dev-uncovered/</link>
-      <description>Web3 dev insights and trade-offs</description>
-      <pubDate>Sat, 18 Apr 2026 17:38:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-dev-uncovered/</guid>
     </item>
   </channel>
 </rss>
