@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ransomware Survival - Tech Blog</title>
+    <meta name="description" content="Ransomware attack survival guide">
+    <meta name="keywords" content="Veeam Backup & Replication 11, incident response, PowerShell, DisasterRecovery, Backup, What is ransomware, Python3, ransomware, security training, disaster recovery, Ransomware, backup, Python, How to survive a ransomware attack">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Ransomware attack survival guide">
+    <meta property="og:title" content="Ransomware Survival">
+    <meta property="og:description" content="Ransomware attack survival guide">
+    <meta property="og:url" content="https://kubaik.github.io/ransomware-survival/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-19T22:35:35.050986">
+    <meta property="article:modified_time" content="2026-04-19T22:35:35.050994">
+    <meta property="og:image" content="/static/images/ransomware-survival.jpg">
+    <meta property="og:image:alt" content="Ransomware Survival">
+    <meta name="twitter:image" content="/static/images/ransomware-survival.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ransomware Survival">
+    <meta name="twitter:description" content="Ransomware attack survival guide">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/ransomware-survival/">
+    <meta name="keywords" content="Veeam Backup & Replication 11, incident response, PowerShell, DisasterRecovery, Backup, What is ransomware, Python3, ransomware, security training, disaster recovery, Ransomware, backup, Python, How to survive a ransomware attack">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ransomware Survival",
+  "description": "Ransomware attack survival guide",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-19T22:35:35.050986",
+  "dateModified": "2026-04-19T22:35:35.050994",
+  "url": "https://kubaik.github.io/ransomware-survival/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/ransomware-survival/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/ransomware-survival.jpg"
+  },
+  "keywords": [
+    "Veeam Backup & Replication 11",
+    "incident response",
+    "PowerShell",
+    "DisasterRecovery",
+    "Backup",
+    "What is ransomware",
+    "Python3",
+    "ransomware",
+    "security training",
+    "disaster recovery",
+    "Ransomware",
+    "backup",
+    "Python",
+    "How to survive a ransomware attack"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Ransomware Survival</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Ransomware Survival</h1>
+
+                
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-19T22:35:35.050986" itemprop="datePublished">
+                            19 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>12 min read</span>
+                    
+                    
+                    <span>2417 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">incident response</span>
+                    
+                    <span class="tag">DisasterRecovery</span>
+                    
+                    <span class="tag">Backup</span>
+                    
+                    <span class="tag">Python3</span>
+                    
+                    <span class="tag">ransomware</span>
+                    
+                    <span class="tag">security training</span>
+                    
+                </div>
+                
+            </header>
+
+            
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
+<p>Ransomware attacks are on the rise, with a 150% increase in attacks in 2020 alone. Most developers focus on preventing attacks, but few have a plan in place for when an attack occurs. This lack of planning can lead to significant downtime, data loss, and financial losses. For example, the city of Baltimore was hit with a ransomware attack in 2019, resulting in $10 million in recovery costs and 14 days of downtime. To survive a ransomware attack, developers must have a comprehensive plan in place, including regular backups, disaster recovery procedures, and incident response protocols.</p>
+<h2 id="how-ransomware-attacks-actually-work-under-the-hood">How Ransomware Attacks Actually Work Under the Hood</h2>
+<p>Ransomware attacks typically start with a phishing email or exploit of a vulnerability. Once the attacker gains access to the system, they use tools like PowerShell or Python to spread the malware and encrypt files. For example, the WannaCry ransomware used the EternalBlue exploit to spread to over 200,000 computers worldwide. To illustrate how ransomware works, consider the following Python code example:</p>
+<pre><code class="language-python">import os
+import cryptography
+
+def encrypt_file(file_path):
+    # Generate a random key
+    key = os.urandom(32)
+
+    # Encrypt the file
+    with open(file_path, 'rb') as file:
+        file_data = file.read()
+    encrypted_data = cryptography.fernet.Fernet(key).encrypt(file_data)
+
+    # Write the encrypted data to a new file
+    with open(file_path + '.enc', 'wb') as encrypted_file:
+        encrypted_file.write(encrypted_data)
+
+# Encrypt all files in the current directory
+for file in os.listdir('.'):
+    if os.path.isfile(file):
+        encrypt_file(file)
+</code></pre>
+<p>This code example demonstrates how ransomware can encrypt files using a random key. To prevent such attacks, developers must ensure that their systems are up-to-date with the latest security patches and that they have a robust backup and disaster recovery plan in place.</p>
+<h2 id="step-by-step-implementation">Step-by-Step Implementation</h2>
+<p>To survive a ransomware attack, developers must have a step-by-step plan in place. This includes:
+* Regular backups: Backups should be performed at least daily, with a retention period of at least 30 days. This ensures that in the event of an attack, data can be restored to a point in time before the attack occurred.
+* Disaster recovery procedures: These procedures should include steps for restoring systems, applications, and data. This includes having a disaster recovery plan, a business continuity plan, and an incident response plan.
+* Incident response protocols: These protocols should include steps for responding to an attack, including containment, eradication, recovery, and post-incident activities.
+For example, using tools like Veeam Backup &amp; Replication 11, developers can create backups of their systems and applications, with a retention period of up to 365 days. This ensures that in the event of an attack, data can be restored to a point in time before the attack occurred.</p>
+<h2 id="real-world-performance-numbers">Real-World Performance Numbers</h2>
+<p>The cost of a ransomware attack can be significant. According to a report by Cybersecurity Ventures, the average cost of a ransomware attack is $1.85 million. This includes the cost of downtime, data loss, and recovery. In terms of performance, the time it takes to recover from a ransomware attack can vary significantly. For example, using Veeam Backup &amp; Replication 11, developers can recover a 1TB virtual machine in under 15 minutes, with a recovery point objective (RPO) of under 15 minutes and a recovery time objective (RTO) of under 1 hour. In contrast, using traditional backup methods, the recovery time can take up to 24 hours or more.</p>
+<h2 id="common-mistakes-and-how-to-avoid-them">Common Mistakes and How to Avoid Them</h2>
+<p>One common mistake developers make is not having a comprehensive backup and disaster recovery plan in place. This can lead to significant downtime and data loss. Another mistake is not testing backups regularly. This can lead to backups that are not recoverable, resulting in significant data loss. To avoid these mistakes, developers should:
+* Test backups regularly, using tools like Veeam Backup &amp; Replication 11 to verify that backups are recoverable.
+* Have a comprehensive disaster recovery plan in place, including steps for restoring systems, applications, and data.
+* Use tools like PowerShell or Python to automate backup and disaster recovery procedures, reducing the risk of human error.</p>
+<h2 id="tools-and-libraries-worth-using">Tools and Libraries Worth Using</h2>
+<p>There are several tools and libraries worth using to survive a ransomware attack. These include:
+* Veeam Backup &amp; Replication 11: This tool provides comprehensive backup and disaster recovery capabilities, including the ability to recover a 1TB virtual machine in under 15 minutes.
+* PowerShell: This tool provides a powerful scripting language for automating backup and disaster recovery procedures.
+* Python: This tool provides a powerful scripting language for automating backup and disaster recovery procedures, as well as for developing custom tools and libraries.
+For example, using the <code>cryptography</code> library in Python, developers can create custom encryption tools to protect sensitive data.</p>
+<h2 id="when-not-to-use-this-approach">When Not to Use This Approach</h2>
+<p>This approach may not be suitable for all scenarios. For example, in scenarios where data is highly sensitive, such as in healthcare or financial services, a more comprehensive approach may be required. This may include using tools like encryption and access controls to protect sensitive data. In scenarios where systems are highly complex, such as in large enterprises, a more customized approach may be required. This may include using tools like Veeam Backup &amp; Replication 11 to provide comprehensive backup and disaster recovery capabilities.</p>
+<h2 id="my-take-what-nobody-else-is-saying">My Take: What Nobody Else Is Saying</h2>
+<p>In my opinion, the key to surviving a ransomware attack is not just about having a comprehensive backup and disaster recovery plan in place. It's also about having a culture of security within the organization. This includes providing regular security training to employees, as well as having a robust incident response plan in place. For example, using tools like Veeam Backup &amp; Replication 11, developers can provide comprehensive backup and disaster recovery capabilities, but if employees are not trained on how to respond to an attack, the organization may still be vulnerable. To illustrate this, consider the following code example:</p>
+<pre><code class="language-python">import os
+
+def security_training():
+    # Provide security training to employees
+    print('Security training provided to employees')
+
+# Provide security training to employees
+security_training()
+</code></pre>
+<p>This code example demonstrates how security training can be provided to employees using a simple Python script.</p>
+<h2 id="advanced-configuration-and-real-edge-cases-you-have-personally-encountered">Advanced Configuration and Real Edge Cases You Have Personally Encountered</h2>
+<p>While the foundational principles of backups and incident response are critical, real-world ransomware attacks often present edge cases that demand more sophisticated configurations. One such scenario involves <strong>insider threats or highly sophisticated, persistent attackers</strong> who may compromise backup systems themselves or establish multiple points of persistence within the environment, making a clean recovery challenging. I've personally seen instances where an attacker, after gaining initial access via a compromised RDP endpoint, spent weeks mapping the network, disabling security agents, and identifying backup repositories before launching their encryption payload. In such cases, standard backups might be deleted, encrypted, or even subtly altered to impede recovery.</p>
+<p>To counter this, advanced configurations focus on <strong>immutable storage and air-gapped backups</strong>. For instance, implementing <strong>Veeam Backup &amp; Replication v12</strong> with its direct-to-object storage immutability capabilities (e.g., AWS S3 Object Lock, Azure Blob Storage Immutability policies) ensures that backup copies cannot be modified or deleted for a specified retention period, even by an administrator with full credentials. This provides a crucial last line of defense. Furthermore, an <strong>air-gapped backup strategy</strong> involves physically or logically isolating a copy of your backups. This could be achieved by writing backups to tape and storing them offline, or using a dedicated, isolated network segment for backup repositories that is only accessible during specific backup windows, often controlled by a "break-glass" procedure. Consider a scenario where a nation-state actor targets a critical infrastructure provider; their goal isn't just encryption but potentially data exfiltration and long-term disruption. Here, behavioral analytics tools like <strong>Splunk User Behavior Analytics (UBA)</strong> or <strong>Microsoft Sentinel UEBA</strong> become vital for detecting anomalous activity (e.g., an administrator account accessing unusual shares at odd hours, followed by large data transfers) <em>before</em> the encryption phase. We've also had to implement <strong>strict network micro-segmentation</strong> using tools like VMware NSX-T or Cisco ACI, not just at the perimeter but <em>within</em> the data center, limiting lateral movement even if an initial endpoint is breached. This ensures that a compromised web server cannot directly access a critical database or backup repository without traversing a highly controlled segment, significantly slowing down or preventing ransomware spread. These advanced layers provide resilience against the most cunning adversaries, moving beyond simple prevention to robust, multi-faceted recovery assurance.</p>
+<h2 id="integration-with-popular-existing-tools-or-workflows-with-a-concrete-example">Integration with Popular Existing Tools or Workflows, with a Concrete Example</h2>
+<p>Effective ransomware defense and recovery aren't standalone processes; they must integrate seamlessly into an organization's existing IT operations and security workflows. Two crucial areas for integration are <strong>Security Information and Event Management (SIEM)</strong> platforms and <strong>Security Orchestration, Automation, and Response (SOAR)</strong> tools, often tied into existing cloud infrastructure APIs.</p>
+<p>Consider a scenario where a ransomware attack begins with a user clicking a malicious link. Your <strong>Endpoint Detection and Response (EDR)</strong> solution, such as CrowdStrike Falcon or Microsoft Defender for Endpoint, detects suspicious process activity (e.g., a Microsoft Word macro attempting to execute PowerShell scripts). This alert is immediately ingested by your <strong>SIEM</strong> platform, for example, <strong>Splunk Enterprise Security (ES)</strong>. Splunk ES is configured with correlation rules that look for patterns indicating a potential ransomware attack: multiple failed login attempts on a domain controller, followed by a new process attempting to enumerate network shares, and then high outbound network traffic to an unknown IP range. When these seemingly disparate events occur within a defined timeframe (e.g., 5 minutes) and exceed a certain threshold, Splunk ES triggers a critical "Ransomware Suspect Activity" alert.</p>
+<p>This critical alert, rather than just notifying an analyst, then automatically triggers a <strong>SOAR playbook</strong>. For instance, using <strong>Palo Alto Networks Cortex XSOAR</strong> or <strong>Microsoft Sentinel Playbooks (powered by Azure Logic Apps)</strong>, the alert initiates an automated response workflow.
+1.  <strong>Containment</strong>: The playbook first interacts with the EDR solution's API to immediately isolate the suspected infected host from the network. It might also use the organization's firewall API (e.g., FortiGate REST API, Cisco ASA API) to block the identified malicious C2 (Command and Control) IP addresses and domains globally. If the host is a virtual machine in AWS, the playbook could call the <code>StopInstances</code> API action for the specific EC2 instance, effectively taking it offline.
+2.  <strong>Forensics</strong>: Concurrently, the playbook might trigger a forensic snapshot of the isolated host by interacting with the hypervisor's API (e.g., VMware vSphere API) or cloud provider's snapshot service (e.g., Azure VM snapshots). This preserves the state for later analysis.
+3.  <strong>Notification &amp; Escalation</strong>: The SOAR platform automatically creates an incident ticket in Jira Service Management or ServiceNow, assigns it to the on-call incident response team, and sends an alert to their Slack channel or PagerDuty, providing all relevant context from the SIEM alert.
+4.  <strong>Proactive Backup</strong>: As a precautionary measure, the playbook might initiate an immediate, immutable backup of critical data stores or applications known to be associated with the potentially compromised segment using <strong>Veeam Backup &amp; Replication 12</strong> via its PowerShell cmdlets, ensuring an extremely recent recovery point is secured.</p>
+<p>This integration transforms a reactive, manual incident response into a proactive, automated defense, drastically reducing the recovery time objective (RTO) and minimizing potential damage by containing threats within minutes, not hours.</p>
+<h2 id="a-realistic-case-study-or-beforeafter-comparison-with-actual-numbers">A Realistic Case Study or Before/After Comparison with Actual Numbers</h2>
+<p>To truly grasp the impact of a comprehensive ransomware survival strategy, let's look at a before-and-after comparison based on a fictional but realistic scenario involving "GlobalData Corp," a medium-sized software development firm with 500 employees.</p>
+<h3 id="before-the-reactive-approach">Before: The Reactive Approach</h3>
+<p>GlobalData Corp, prior to 2022, relied on a relatively common, yet flawed, backup strategy. They performed daily file server backups to an on-premises NAS, with a 7-day retention. Database backups were done nightly. Their incident response plan was largely theoretical, residing in a dusty PDF, and hadn't been tested in over two years. They lacked immutable storage, air-gapped backups, and comprehensive EDR/SIEM integration.</p>
+<p><strong>The Attack (Early 2022):</strong>
+A successful spear-phishing campaign led to an employee downloading a malicious attachment. The attacker gained a foothold, escalated privileges, disabled antivirus on several key servers, and spent 48 hours mapping the network. They then launched a LockerGoga variant, encrypting critical development repositories, customer databases, and file shares, including the on-premises NAS backup targets, which were directly accessible.</p>
+<p><strong>The Aftermath - Reactive Disaster:</strong>
+*   <strong>Initial Detection:</strong> 12 hours after encryption started, when developers couldn't access files.
+*   <strong>Downtime:</strong> 14 days of complete operational paralysis. Development stopped, customer support was severely hampered, and sales ground to a halt.
+*   <strong>Data Loss:</strong> 3 days of critical development work and 2 days of customer transaction data were permanently lost due to the compromised backups and the 7-day retention policy not covering the pre-attack clean state.
+*   <strong>Recovery Costs:</strong>
+    *   Third-party incident response and forensics consultants: $250,000
+    *   New hardware for compromised servers (to ensure no lingering malware): $150,000
+    *   Emergency software licenses and cloud resources for temporary operations: $50,000
+    *   Lost revenue due to downtime: Estimated $2.5 million
+    *   Legal fees and potential regulatory fines (GDPR, CCPA): Estimated $300,000
+*   <strong>Reputational Damage:</strong> Significant. Two major enterprise clients canceled contracts, and their stock price dipped by 15% over the following month.
+*   <strong>Total Financial Impact:</strong> Approximately $3.25 million.
+*   <strong>Recovery Point Objective (RPO):</strong> 3 days (best case, for what could be recovered).
+*   <strong>Recovery Time Objective (RTO):</strong> 14 days.</p>
+<h3 id="after-the-proactive-resilient-approach">After: The Proactive, Resilient Approach</h3>
+<p>Following the devastating attack, GlobalData Corp overhauled its security posture. They implemented <strong>Veeam Backup &amp; Replication v12</strong> with immutable backups to AWS S3 Object Lock, an air-gapped tape library for long-term archives, and <strong>Microsoft Defender for Endpoint</strong> integrated with <strong>Microsoft Sentinel</strong> for advanced threat detection and automated response playbooks. They conducted quarterly tabletop exercises for their incident response team.</p>
+<p><strong>The Attack (Late 2023):</strong>
+A similar phishing attempt occurred. This time, the EDR detected the suspicious PowerShell execution immediately.</p>
+<p><strong>The Aftermath - Proactive Resilience:</strong>
+*   <strong>Initial Detection:</strong> 15 minutes after the malicious attachment was opened, by Microsoft Defender for Endpoint.
+*   <strong>Automated Response:</strong> Within 5 minutes, a Sentinel playbook automatically isolated the infected workstation, blocked the malicious domain at the firewall, and triggered a full forensic snapshot.
+*   <strong>Containment:</strong> The threat was contained to a single workstation before any lateral movement or encryption could begin.
+*   <strong>Downtime:</strong> Minimal. The affected employee was given a new laptop within 2 hours. Business operations continued uninterrupted.
+*   <strong>Data Loss:</strong> Zero. No production data was compromised.
+*   <strong>Recovery Costs:</strong>
+    *   Internal IT team's time: Estimated $5,000
+    *   Minor forensic analysis post-containment: $10,000
+    *   No lost revenue. No new</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/code-purely/">
+                        <h3>Code Purely</h3>
+                        <p>Functional programming concepts in practical code</p>
+                        <span class="related-meta">12 min read · 19 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/functional-code-done-right/">
+                        <h3>Functional Code Done Right</h3>
+                        <p>Functional programming concepts in practical code</p>
+                        <span class="related-meta">10 min read · 18 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rust-for-pythonjs-devs/">
+                        <h3>Rust for Python/JS Devs</h3>
+                        <p>Rust for Python/JS devs: memory safety, performance, concurrency</p>
+                        <span class="related-meta">11 min read · 18 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>

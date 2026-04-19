@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 22:04:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 22:35:37 +0000</lastBuildDate>
+    <item>
+      <title>Ransomware Survival</title>
+      <link>https://kubaik.github.io/ransomware-survival/</link>
+      <description>Ransomware attack survival guide</description>
+      <pubDate>Sun, 19 Apr 2026 22:35:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ransomware-survival/</guid>
+    </item>
     <item>
       <title>Code Purely</title>
       <link>https://kubaik.github.io/code-purely/</link>
@@ -138,13 +145,6 @@
       <description>Dive into WebAssembly&apos;s real-world benefits beyond JavaScript for CPU-bound tasks. Learn implementation, performance, pitfalls, and the overlooked security advantages. Includes Rust/WASM code.</description>
       <pubDate>Sun, 19 Apr 2026 12:08:55 +0000</pubDate>
       <guid>https://kubaik.github.io/wasm-beyond-js-speed/</guid>
-    </item>
-    <item>
-      <title>Goroutines Unleashed</title>
-      <link>https://kubaik.github.io/goroutines-unleashed/</link>
-      <description>Go concurrency with goroutines</description>
-      <pubDate>Sun, 19 Apr 2026 11:32:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/goroutines-unleashed/</guid>
     </item>
   </channel>
 </rss>
