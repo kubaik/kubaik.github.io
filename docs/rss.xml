@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 14:04:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 15:29:34 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehouses vs Lakes vs Lakehouses</title>
+      <link>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 15:29:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</guid>
+    </item>
     <item>
       <title>Digital Nomad Costs Exposed</title>
       <link>https://kubaik.github.io/digital-nomad-costs-exposed/</link>
@@ -138,13 +145,6 @@
       <description>Swift iOS scaling patterns for maintainable apps</description>
       <pubDate>Sun, 19 Apr 2026 02:05:42 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-scaling-patterns/</guid>
-    </item>
-    <item>
-      <title>Interview Deal Breakers</title>
-      <link>https://kubaik.github.io/interview-deal-breakers/</link>
-      <description>Tech interview red flags that cost candidates jobs</description>
-      <pubDate>Sun, 19 Apr 2026 00:08:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/interview-deal-breakers/</guid>
     </item>
   </channel>
 </rss>
