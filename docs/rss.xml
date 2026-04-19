@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 06:16:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 06:24:36 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 06:24:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>On-Call Engineer Survival</title>
       <link>https://kubaik.github.io/on-call-engineer-survival/</link>
@@ -138,13 +145,6 @@
       <description>Web3 dev insights and trade-offs</description>
       <pubDate>Sat, 18 Apr 2026 17:38:53 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-dev-uncovered/</guid>
-    </item>
-    <item>
-      <title>Code Review Done Right</title>
-      <link>https://kubaik.github.io/code-review-done-right/</link>
-      <description>Improve code quality with effective review</description>
-      <pubDate>Sat, 18 Apr 2026 17:16:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-review-done-right/</guid>
     </item>
   </channel>
 </rss>
