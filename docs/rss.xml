@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 05:00:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 06:16:46 +0000</lastBuildDate>
+    <item>
+      <title>On-Call Engineer Survival</title>
+      <link>https://kubaik.github.io/on-call-engineer-survival/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 06:16:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/on-call-engineer-survival/</guid>
+    </item>
     <item>
       <title>Boost App Rankings</title>
       <link>https://kubaik.github.io/boost-app-rankings/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with effective review</description>
       <pubDate>Sat, 18 Apr 2026 17:16:56 +0000</pubDate>
       <guid>https://kubaik.github.io/code-review-done-right/</guid>
-    </item>
-    <item>
-      <title>Open Source Profits</title>
-      <link>https://kubaik.github.io/open-source-profits/</link>
-      <description>Open source profits through right business models</description>
-      <pubDate>Sat, 18 Apr 2026 16:43:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/open-source-profits/</guid>
     </item>
   </channel>
 </rss>
