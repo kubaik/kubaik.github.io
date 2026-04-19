@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 17:16:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 17:37:17 +0000</lastBuildDate>
+    <item>
+      <title>AI&apos;s Dark Side</title>
+      <link>https://kubaik.github.io/ais-dark-side/</link>
+      <description>AI&apos;s hidden dangers</description>
+      <pubDate>Sun, 19 Apr 2026 17:37:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/ais-dark-side/</guid>
+    </item>
     <item>
       <title>Transparent AI</title>
       <link>https://kubaik.github.io/transparent-ai/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 06:24:35 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>On-Call Engineer Survival</title>
-      <link>https://kubaik.github.io/on-call-engineer-survival/</link>
-      <description></description>
-      <pubDate>Sun, 19 Apr 2026 06:16:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/on-call-engineer-survival/</guid>
     </item>
   </channel>
 </rss>
