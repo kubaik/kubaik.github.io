@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 06:31:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 07:46:17 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh Demystified</title>
+      <link>https://kubaik.github.io/data-mesh-demystified/</link>
+      <description>Data mesh architecture for real-time data processing</description>
+      <pubDate>Sun, 19 Apr 2026 07:46:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-demystified/</guid>
+    </item>
     <item>
       <title>Kotlin for Android Simplified</title>
       <link>https://kubaik.github.io/kotlin-for-android-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Deploy web apps for less with serverless architecture and containerization</description>
       <pubDate>Sat, 18 Apr 2026 18:45:07 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-web-apps-for-less/</guid>
-    </item>
-    <item>
-      <title>Docker in Prod: Hidden Truths</title>
-      <link>https://kubaik.github.io/docker-in-prod-hidden-truths/</link>
-      <description>Docker in production</description>
-      <pubDate>Sat, 18 Apr 2026 18:23:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-in-prod-hidden-truths/</guid>
     </item>
   </channel>
 </rss>
