@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 20:12:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 20:40:13 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Outage Traps</title>
+      <link>https://kubaik.github.io/devops-outage-traps/</link>
+      <description>DevOps outage traps cause $1.1M/hour losses</description>
+      <pubDate>Sun, 19 Apr 2026 20:40:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-outage-traps/</guid>
+    </item>
     <item>
       <title>Developers As Leaders</title>
       <link>https://kubaik.github.io/developers-as-leaders/</link>
@@ -138,13 +145,6 @@
       <description>Examine 2026&apos;s worst data breaches like AetherCorp and GlobalHealthNet. Learn real-world tradeoffs and concrete steps to prevent AI-driven supply chain attacks, cloud misconfigurations, and deepfake identity theft. Direct, opinionated insights.</description>
       <pubDate>Sun, 19 Apr 2026 09:47:59 +0000</pubDate>
       <guid>https://kubaik.github.io/2026s-worst-hacks/</guid>
-    </item>
-    <item>
-      <title>Fix Slow Site Loads</title>
-      <link>https://kubaik.github.io/fix-slow-site-loads/</link>
-      <description></description>
-      <pubDate>Sun, 19 Apr 2026 09:34:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-slow-site-loads/</guid>
     </item>
   </channel>
 </rss>
