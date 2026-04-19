@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 16:39:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 17:16:53 +0000</lastBuildDate>
+    <item>
+      <title>Transparent AI</title>
+      <link>https://kubaik.github.io/transparent-ai/</link>
+      <description>XAI deep dive: real tradeoffs, performance numbers for SHAP/LIME, common mistakes, and when not to use. Focus on debugging, compliance, and developer value.</description>
+      <pubDate>Sun, 19 Apr 2026 17:16:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/transparent-ai/</guid>
+    </item>
     <item>
       <title>Neural Networks Uncovered</title>
       <link>https://kubaik.github.io/neural-networks-uncovered/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 06:16:44 +0000</pubDate>
       <guid>https://kubaik.github.io/on-call-engineer-survival/</guid>
-    </item>
-    <item>
-      <title>Boost App Rankings</title>
-      <link>https://kubaik.github.io/boost-app-rankings/</link>
-      <description></description>
-      <pubDate>Sun, 19 Apr 2026 05:00:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-rankings/</guid>
     </item>
   </channel>
 </rss>
