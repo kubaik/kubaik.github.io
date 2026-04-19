@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 03:56:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 04:04:44 +0000</lastBuildDate>
+    <item>
+      <title>2026 Top Dev Stack</title>
+      <link>https://kubaik.github.io/2026-top-dev-stack/</link>
+      <description>The 2026 full-stack dev stack: React Server Components, Rust, PostgreSQL, Vercel, and AWS ECS. Focus on performance, scalability, and developer efficiency.</description>
+      <pubDate>Sun, 19 Apr 2026 04:04:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-top-dev-stack/</guid>
+    </item>
     <item>
       <title>Dirty Data Lies</title>
       <link>https://kubaik.github.io/dirty-data-lies/</link>
@@ -138,13 +145,6 @@
       <description>Digital transformation failures: 70% of projects fail</description>
       <pubDate>Sat, 18 Apr 2026 16:22:59 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-transformation-gone-wrong/</guid>
-    </item>
-    <item>
-      <title>Build WhatsApp Like Chat</title>
-      <link>https://kubaik.github.io/build-whatsapp-like-chat/</link>
-      <description>WhatsApp handles 100B messages daily with &lt;100ms latency. Learn the reconnection fabric, MQTT QoS, and battery optimizations that most chat tutorials miss.</description>
-      <pubDate>Sat, 18 Apr 2026 15:49:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-whatsapp-like-chat/</guid>
     </item>
   </channel>
 </rss>
