@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 00:08:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 02:05:44 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Scaling Patterns</title>
+      <link>https://kubaik.github.io/swift-ios-scaling-patterns/</link>
+      <description>Swift iOS scaling patterns for maintainable apps</description>
+      <pubDate>Sun, 19 Apr 2026 02:05:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-scaling-patterns/</guid>
+    </item>
     <item>
       <title>Interview Deal Breakers</title>
       <link>https://kubaik.github.io/interview-deal-breakers/</link>
@@ -138,13 +145,6 @@
       <description>AI cash boost with 20% revenue increase</description>
       <pubDate>Sat, 18 Apr 2026 15:25:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-cash-boost/</guid>
-    </item>
-    <item>
-      <title>Zero to Hired in 12 Months</title>
-      <link>https://kubaik.github.io/zero-to-hired-in-12-months/</link>
-      <description>Get hired as a developer in 12 months</description>
-      <pubDate>Sat, 18 Apr 2026 14:47:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-to-hired-in-12-months/</guid>
     </item>
   </channel>
 </rss>
