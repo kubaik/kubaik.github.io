@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 11:32:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 12:08:57 +0000</lastBuildDate>
+    <item>
+      <title>WASM: Beyond JS Speed</title>
+      <link>https://kubaik.github.io/wasm-beyond-js-speed/</link>
+      <description>Dive into WebAssembly&apos;s real-world benefits beyond JavaScript for CPU-bound tasks. Learn implementation, performance, pitfalls, and the overlooked security advantages. Includes Rust/WASM code.</description>
+      <pubDate>Sun, 19 Apr 2026 12:08:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/wasm-beyond-js-speed/</guid>
+    </item>
     <item>
       <title>Goroutines Unleashed</title>
       <link>https://kubaik.github.io/goroutines-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Building a million-request API</description>
       <pubDate>Sat, 18 Apr 2026 22:29:44 +0000</pubDate>
       <guid>https://kubaik.github.io/million-request-api-blueprint/</guid>
-    </item>
-    <item>
-      <title>Turbocharge Learning</title>
-      <link>https://kubaik.github.io/turbocharge-learning/</link>
-      <description>AI-powered learning boosts skill acquisition</description>
-      <pubDate>Sat, 18 Apr 2026 22:07:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/turbocharge-learning/</guid>
     </item>
   </channel>
 </rss>
