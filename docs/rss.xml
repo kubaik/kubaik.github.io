@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 09:13:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 09:34:32 +0000</lastBuildDate>
+    <item>
+      <title>Fix Slow Site Loads</title>
+      <link>https://kubaik.github.io/fix-slow-site-loads/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 09:34:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-slow-site-loads/</guid>
+    </item>
     <item>
       <title>AI in Hospitals: Saving Lives</title>
       <link>https://kubaik.github.io/ai-in-hospitals-saving-lives/</link>
@@ -138,13 +145,6 @@
       <description>AI in education: 25% increase in math scores, 30% in reading</description>
       <pubDate>Sat, 18 Apr 2026 20:07:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-in-learning/</guid>
-    </item>
-    <item>
-      <title>AI Beyond Text</title>
-      <link>https://kubaik.github.io/ai-beyond-text/</link>
-      <description>Multi-modal AI models process images, audio, and text</description>
-      <pubDate>Sat, 18 Apr 2026 19:40:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-beyond-text/</guid>
     </item>
   </channel>
 </rss>
