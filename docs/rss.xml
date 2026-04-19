@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 12:51:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 13:45:48 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Phone</title>
+      <link>https://kubaik.github.io/secure-your-phone/</link>
+      <description>Mobile security vulnerabilities and fixes</description>
+      <pubDate>Sun, 19 Apr 2026 13:45:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-phone/</guid>
+    </item>
     <item>
       <title>SOLID in Action</title>
       <link>https://kubaik.github.io/solid-in-action/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sat, 18 Apr 2026 23:35:15 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-cuts-costs/</guid>
-    </item>
-    <item>
-      <title>Stickier Apps</title>
-      <link>https://kubaik.github.io/stickier-apps/</link>
-      <description>Build a mobile app that users don&apos;t delete</description>
-      <pubDate>Sat, 18 Apr 2026 23:09:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/stickier-apps/</guid>
     </item>
   </channel>
 </rss>
