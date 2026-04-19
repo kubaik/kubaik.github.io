@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 20:40:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 21:26:09 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Dev Uncovered</title>
+      <link>https://kubaik.github.io/web3-dev-uncovered/</link>
+      <description>Web3 dev challenges</description>
+      <pubDate>Sun, 19 Apr 2026 21:26:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-dev-uncovered/</guid>
+    </item>
     <item>
       <title>DevOps Outage Traps</title>
       <link>https://kubaik.github.io/devops-outage-traps/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 10:41:26 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-redefines-love/</guid>
-    </item>
-    <item>
-      <title>2026&apos;s Worst Hacks</title>
-      <link>https://kubaik.github.io/2026s-worst-hacks/</link>
-      <description>Examine 2026&apos;s worst data breaches like AetherCorp and GlobalHealthNet. Learn real-world tradeoffs and concrete steps to prevent AI-driven supply chain attacks, cloud misconfigurations, and deepfake identity theft. Direct, opinionated insights.</description>
-      <pubDate>Sun, 19 Apr 2026 09:47:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-worst-hacks/</guid>
     </item>
   </channel>
 </rss>
