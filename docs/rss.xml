@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 21:35:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 22:04:36 +0000</lastBuildDate>
+    <item>
+      <title>Code Purely</title>
+      <link>https://kubaik.github.io/code-purely/</link>
+      <description>Functional programming concepts in practical code</description>
+      <pubDate>Sun, 19 Apr 2026 22:04:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-purely/</guid>
+    </item>
     <item>
       <title>Progressive Web Apps: When They Beat Native: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/progressive-web-apps-when-they-beat-native-a-pract/</link>
@@ -138,13 +145,6 @@
       <description>Go concurrency with goroutines</description>
       <pubDate>Sun, 19 Apr 2026 11:32:44 +0000</pubDate>
       <guid>https://kubaik.github.io/goroutines-unleashed/</guid>
-    </item>
-    <item>
-      <title>AI Boosts Dev Output 10x</title>
-      <link>https://kubaik.github.io/ai-boosts-dev-output-10x/</link>
-      <description>AI boosts dev output 10x with automation</description>
-      <pubDate>Sun, 19 Apr 2026 11:23:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-boosts-dev-output-10x/</guid>
     </item>
   </channel>
 </rss>
