@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 15:29:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 15:39:06 +0000</lastBuildDate>
+    <item>
+      <title>AI Image Tools 2026</title>
+      <link>https://kubaik.github.io/ai-image-tools-2026/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 15:39:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-image-tools-2026/</guid>
+    </item>
     <item>
       <title>Data Warehouses vs Lakes vs Lakehouses</title>
       <link>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 03:56:26 +0000</pubDate>
       <guid>https://kubaik.github.io/dirty-data-lies/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Scaling Patterns</title>
-      <link>https://kubaik.github.io/swift-ios-scaling-patterns/</link>
-      <description>Swift iOS scaling patterns for maintainable apps</description>
-      <pubDate>Sun, 19 Apr 2026 02:05:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-scaling-patterns/</guid>
     </item>
   </channel>
 </rss>
