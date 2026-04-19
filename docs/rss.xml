@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 22:35:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 23:15:29 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes Security Locked</title>
+      <link>https://kubaik.github.io/kubernetes-security-locked/</link>
+      <description>Container security in Kubernetes</description>
+      <pubDate>Sun, 19 Apr 2026 23:15:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/kubernetes-security-locked/</guid>
+    </item>
     <item>
       <title>Ransomware Survival</title>
       <link>https://kubaik.github.io/ransomware-survival/</link>
@@ -138,13 +145,6 @@
       <description>SOLID principles in action: real-world examples and trade-offs</description>
       <pubDate>Sun, 19 Apr 2026 12:51:33 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-in-action/</guid>
-    </item>
-    <item>
-      <title>WASM: Beyond JS Speed</title>
-      <link>https://kubaik.github.io/wasm-beyond-js-speed/</link>
-      <description>Dive into WebAssembly&apos;s real-world benefits beyond JavaScript for CPU-bound tasks. Learn implementation, performance, pitfalls, and the overlooked security advantages. Includes Rust/WASM code.</description>
-      <pubDate>Sun, 19 Apr 2026 12:08:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/wasm-beyond-js-speed/</guid>
     </item>
   </channel>
 </rss>
