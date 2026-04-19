@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 18:13:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 18:45:39 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Attack Defense</title>
+      <link>https://kubaik.github.io/ddos-attack-defense/</link>
+      <description>DDoS attacks can bring down a website or application</description>
+      <pubDate>Sun, 19 Apr 2026 18:45:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-attack-defense/</guid>
+    </item>
     <item>
       <title>The Dark Side of Big Tech: What Insiders Say: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/the-dark-side-of-big-tech-what-insiders-say-a-prac/</link>
@@ -138,13 +145,6 @@
       <description>Data mesh architecture for real-time data processing</description>
       <pubDate>Sun, 19 Apr 2026 07:46:15 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh-demystified/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Android Simplified</title>
-      <link>https://kubaik.github.io/kotlin-for-android-simplified/</link>
-      <description>Kotlin for Android development guide</description>
-      <pubDate>Sun, 19 Apr 2026 06:31:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-android-simplified/</guid>
     </item>
   </channel>
 </rss>
