@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 18:45:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 19:35:44 +0000</lastBuildDate>
+    <item>
+      <title>Code Blues: Tech&apos;s Mental Toll</title>
+      <link>https://kubaik.github.io/code-blues-techs-mental-toll/</link>
+      <description></description>
+      <pubDate>Sun, 19 Apr 2026 19:35:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-blues-techs-mental-toll/</guid>
+    </item>
     <item>
       <title>DDoS Attack Defense</title>
       <link>https://kubaik.github.io/ddos-attack-defense/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 08:11:04 +0000</pubDate>
       <guid>https://kubaik.github.io/cap-theorem-simplified/</guid>
-    </item>
-    <item>
-      <title>Data Mesh Demystified</title>
-      <link>https://kubaik.github.io/data-mesh-demystified/</link>
-      <description>Data mesh architecture for real-time data processing</description>
-      <pubDate>Sun, 19 Apr 2026 07:46:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-demystified/</guid>
     </item>
   </channel>
 </rss>
