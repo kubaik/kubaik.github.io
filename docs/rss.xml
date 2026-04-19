@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 15:39:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 16:13:07 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolutionizes Life</title>
+      <link>https://kubaik.github.io/ai-revolutionizes-life/</link>
+      <description>AI revolutionizes life in 2026</description>
+      <pubDate>Sun, 19 Apr 2026 16:13:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolutionizes-life/</guid>
+    </item>
     <item>
       <title>AI Image Tools 2026</title>
       <link>https://kubaik.github.io/ai-image-tools-2026/</link>
@@ -138,13 +145,6 @@
       <description>The 2026 full-stack dev stack: React Server Components, Rust, PostgreSQL, Vercel, and AWS ECS. Focus on performance, scalability, and developer efficiency.</description>
       <pubDate>Sun, 19 Apr 2026 04:04:42 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-top-dev-stack/</guid>
-    </item>
-    <item>
-      <title>Dirty Data Lies</title>
-      <link>https://kubaik.github.io/dirty-data-lies/</link>
-      <description></description>
-      <pubDate>Sun, 19 Apr 2026 03:56:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/dirty-data-lies/</guid>
     </item>
   </channel>
 </rss>
