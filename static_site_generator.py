@@ -964,25 +964,44 @@ def _build_templates() -> dict:
                             alt="Kubai Kevin" 
                             class="author-photo">
                     </div>
+
                     <div>
                         <h3 itemprop="name">Kubai Kevin</h3>
                         <p class="credentials" itemprop="jobTitle">
                             Software Developer · Nairobi, Kenya
                         </p>
-                          <p class="about-summary">
-                                Software Engineer with experience building production systems since 2014, primarily in the financial services space. 
-                                I work across Python backends, Node.js (TypeScript), and Android (Java/Kotlin), with a focus on API design, automation, 
-                                and AWS serverless architectures. 
 
-                                My current work centers on integrating AI/LLMs into practical, maintainable workflows. I’m particularly interested in 
-                                building systems that balance performance, cost, and long-term scalability.
+                        <!-- LinkedIn -->
+                        <p>
+                            <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            Connect on LinkedIn
+                            </a>
+                        </p>
 
-                                For a detailed overview of my experience and projects, visit my 
-                                <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">LinkedIn profile</a>.
-                            </p>
-                            </div>
-                        </div>
+                        <p itemprop="description">
+                            I’m a software engineer with a strong background in the financial services industry, building production systems since 2014. My core stack spans Python backends, Node.js (TypeScript), and Android development (Java/Kotlin), along with AWS serverless architectures and both SQL (MySQL) and NoSQL databases.
+                        </p>
+
+                        <p>
+                            My day-to-day work focuses on API design, automation pipelines, and increasingly integrating large language models into practical workflows that teams can reliably use and maintain. I’m particularly interested in systems that balance performance, cost, and long-term maintainability.
+                        </p>
+
+                        <p>
+                            I graduated from Jomo Kenyatta University of Agriculture and Technology, and over the years have developed a hands-on approach to solving real-world engineering problems across web and mobile platforms.
+                        </p>
+
+                        <p>
+                            I started this blog because much of the technical content online either skips real-world tradeoffs or assumes large-scale environments. My goal is to share what actually works for developers building at realistic scales — including what breaks, and why.
+                        </p>
+
+                        <p>
+                            Outside of coding and writing, I contribute to open source projects and occasionally speak at local developer meetups in Nairobi.
+                        </p>
                     </div>
+                </div>
+            </div>
 
             <div class="about-section">
                 <h2>What This Blog Covers</h2>
