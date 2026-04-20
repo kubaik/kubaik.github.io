@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 12:56:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 13:15:20 +0000</lastBuildDate>
+    <item>
+      <title>Bug-Free Pipelines</title>
+      <link>https://kubaik.github.io/bug-free-pipelines/</link>
+      <description>Prevent bugs in CI/CD pipelines with code reviews, automated testing, and continuous integration</description>
+      <pubDate>Mon, 20 Apr 2026 13:15:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/bug-free-pipelines/</guid>
+    </item>
     <item>
       <title>Mobile App Security</title>
       <link>https://kubaik.github.io/mobile-app-security/</link>
@@ -138,13 +145,6 @@
       <description>Simplify deployment with GitOps</description>
       <pubDate>Mon, 20 Apr 2026 02:07:15 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-simplified/</guid>
-    </item>
-    <item>
-      <title>Slack vs Teams: Why Slack Lost</title>
-      <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
-      <description>Slack vs Teams: Why Slack Lost</description>
-      <pubDate>Mon, 20 Apr 2026 00:10:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
     </item>
   </channel>
 </rss>
