@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 14:54:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 11:56:19 +0000</lastBuildDate>
+    <item>
+      <title>Skills to Abandon Before 2027</title>
+      <link>https://kubaik.github.io/skills-to-abandon-before-2027/</link>
+      <description>Discover the skills that will become obsolete in 5 years and learn how to stay ahead of the curve</description>
+      <pubDate>Mon, 20 Apr 2026 11:56:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/skills-to-abandon-before-2027/</guid>
+    </item>
     <item>
       <title>Web Accessibility: Code, Laws, and Reality Checks</title>
       <link>https://kubaik.github.io/web-accessibility-code-laws-and-reality-checks/</link>
@@ -138,13 +145,6 @@
       <description>Container security in Kubernetes</description>
       <pubDate>Sun, 19 Apr 2026 23:15:27 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-security-locked/</guid>
-    </item>
-    <item>
-      <title>Ransomware Survival</title>
-      <link>https://kubaik.github.io/ransomware-survival/</link>
-      <description>Ransomware attack survival guide</description>
-      <pubDate>Sun, 19 Apr 2026 22:35:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ransomware-survival/</guid>
     </item>
   </channel>
 </rss>
