@@ -981,23 +981,17 @@ def _build_templates() -> dict:
                         </p>
 
                         <p itemprop="description">
-                            I’m a software engineer with a strong background in the financial services industry, building production systems since 2014. My core stack spans Python backends, Node.js (TypeScript), and Android development (Java/Kotlin), along with AWS serverless architectures and both SQL (MySQL) and NoSQL databases.
-                        </p>
+                            Software Engineer building production systems since 2014, with experience in the financial services industry. 
+                            I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
 
-                        <p>
-                            My day-to-day work focuses on API design, automation pipelines, and increasingly integrating large language models into practical workflows that teams can reliably use and maintain. I’m particularly interested in systems that balance performance, cost, and long-term maintainability.
-                        </p>
+                            My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
+                            with an emphasis on performance, cost, and scalability.
 
-                        <p>
-                            I graduated from Jomo Kenyatta University of Agriculture and Technology, and over the years have developed a hands-on approach to solving real-world engineering problems across web and mobile platforms.
-                        </p>
+                            I write about real-world engineering tradeoffs and what actually works in production.
 
-                        <p>
-                            I started this blog because much of the technical content online either skips real-world tradeoffs or assumes large-scale environments. My goal is to share what actually works for developers building at realistic scales — including what breaks, and why.
-                        </p>
-
-                        <p>
-                            Outside of coding and writing, I contribute to open source projects and occasionally speak at local developer meetups in Nairobi.
+                            <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">
+                                View full experience on LinkedIn →
+                            </a>
                         </p>
                     </div>
                 </div>
