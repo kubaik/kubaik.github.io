@@ -667,7 +667,7 @@ class BlogSystem:
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
-            "model": "google/gemini-flash-1.5",
+            "model": "openai/gpt-4o-mini",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,
@@ -709,7 +709,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.cerebras_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "llama3.1-70b", "messages": messages,
+        data = {"model": "llama3.1-8b", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):

@@ -960,7 +960,7 @@ def _build_templates() -> dict:
                 <div class="author-card">
                     <!-- Profile Image -->
                     <div class="author-avatar-lg">
-                        <img src="static/pic.jpg" 
+                        <img src="./static/photo.jpg" 
                             alt="Kubai Kevin profile photo" 
                             class="author-photo">
                     </div>
