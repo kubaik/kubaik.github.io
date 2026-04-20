@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 23:25:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 23:38:03 +0000</lastBuildDate>
+    <item>
+      <title>Netflix&apos;s Build Next</title>
+      <link>https://kubaik.github.io/netflixs-build-next/</link>
+      <description>Netflix&apos;s build process</description>
+      <pubDate>Mon, 20 Apr 2026 23:38:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/netflixs-build-next/</guid>
+    </item>
     <item>
       <title>CodeFast</title>
       <link>https://kubaik.github.io/codefast/</link>
@@ -138,13 +145,6 @@
       <description>Slow queries waste resources and hurt UX. Real fixes using PostgreSQL, indexes, and monitoring—backed by 94% performance gains and production war stories.</description>
       <pubDate>Mon, 20 Apr 2026 13:56:31 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-slow-queries-real-database-wins/</guid>
-    </item>
-    <item>
-      <title>Why Your Code Docs Fail and How to Fix Them</title>
-      <link>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</link>
-      <description>Most code docs fail because developers lack structured writing skills. Real-world fixes with Vale, MkDocs, and ADRs that cut onboarding time by 52%.</description>
-      <pubDate>Mon, 20 Apr 2026 13:42:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</guid>
     </item>
   </channel>
 </rss>
