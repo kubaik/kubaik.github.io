@@ -941,6 +941,8 @@ def _build_templates() -> dict:
         .cta-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;margin-top:0.8rem}
         .process-step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
         .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
+        .author-avatar-lg {width: 100px;height: 100px;border-radius: 50%;overflow: hidden;flex-shrink: 0;}
+        .author-photo {width: 100%;height: 100%;object-fit: cover;}
     </style>
 </head>
 <body>
@@ -958,7 +960,7 @@ def _build_templates() -> dict:
                 <div class="author-card">
                     <!-- Profile Image -->
                     <div class="author-avatar-lg">
-                        <img src="docs/pro_img/pic.jpg" 
+                        <img src="static/pic.jpg" 
                             alt="Kubai Kevin profile photo" 
                             class="author-photo">
                     </div>
