@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 06:33:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 07:42:51 +0000</lastBuildDate>
+    <item>
+      <title>2026 Data Breach Disasters</title>
+      <link>https://kubaik.github.io/2026-data-breach-disasters/</link>
+      <description>2026 data breach disasters: causes, effects, and prevention</description>
+      <pubDate>Mon, 20 Apr 2026 07:42:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-data-breach-disasters/</guid>
+    </item>
     <item>
       <title>AI Showdown: GPT vs Claude vs Gemini</title>
       <link>https://kubaik.github.io/ai-showdown-gpt-vs-claude-vs-gemini/</link>
@@ -138,13 +145,6 @@
       <description>AI&apos;s hidden dangers</description>
       <pubDate>Sun, 19 Apr 2026 17:37:15 +0000</pubDate>
       <guid>https://kubaik.github.io/ais-dark-side/</guid>
-    </item>
-    <item>
-      <title>Transparent AI</title>
-      <link>https://kubaik.github.io/transparent-ai/</link>
-      <description>XAI deep dive: real tradeoffs, performance numbers for SHAP/LIME, common mistakes, and when not to use. Focus on debugging, compliance, and developer value.</description>
-      <pubDate>Sun, 19 Apr 2026 17:16:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/transparent-ai/</guid>
     </item>
   </channel>
 </rss>
