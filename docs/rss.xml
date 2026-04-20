@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 13:17:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 10:19:22 +0000</lastBuildDate>
+    <item>
+      <title>Building in Public: Pitfalls and Payoffs</title>
+      <link>https://kubaik.github.io/building-in-public-pitfalls-and-payoffs/</link>
+      <description>A deep dive into the pitfalls and payoffs of building in public, including tools, platforms, and strategies for success.</description>
+      <pubDate>Mon, 20 Apr 2026 10:19:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-in-public-pitfalls-and-payoffs/</guid>
+    </item>
     <item>
       <title>How Companies Are Using AI to Cut Costs: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-companies-are-using-ai-to-cut-costs-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>DevOps outage traps cause $1.1M/hour losses</description>
       <pubDate>Sun, 19 Apr 2026 20:40:11 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-outage-traps/</guid>
-    </item>
-    <item>
-      <title>Developers As Leaders</title>
-      <link>https://kubaik.github.io/developers-as-leaders/</link>
-      <description>The Problem Most Developers Miss Most developers, particularly those early in their careers or even seasoned individual contributors (ICs) who prioritize…</description>
-      <pubDate>Sun, 19 Apr 2026 20:12:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/developers-as-leaders/</guid>
     </item>
   </channel>
 </rss>
