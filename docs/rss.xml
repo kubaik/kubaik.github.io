@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 15:14:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 15:56:53 +0000</lastBuildDate>
+    <item>
+      <title>Terraform IaC</title>
+      <link>https://kubaik.github.io/terraform-iac/</link>
+      <description>Terraform IaC for infrastructure management</description>
+      <pubDate>Mon, 20 Apr 2026 15:56:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-iac/</guid>
+    </item>
     <item>
       <title>SRE: Fixing What Breaks Silent</title>
       <link>https://kubaik.github.io/sre-fixing-what-breaks-silent/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to Data Quality: Why Your Analytics Are Lying to You covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Mon, 20 Apr 2026 09:12:36 +0000</pubDate>
       <guid>https://kubaik.github.io/data-quality-why-your-analytics-are-lying-to-you-a/</guid>
-    </item>
-    <item>
-      <title>Create Your AI Butler</title>
-      <link>https://kubaik.github.io/create-your-ai-butler/</link>
-      <description>Build a personal AI assistant with a user-centric approach</description>
-      <pubDate>Mon, 20 Apr 2026 08:55:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/create-your-ai-butler/</guid>
     </item>
   </channel>
 </rss>
