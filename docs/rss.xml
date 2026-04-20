@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 15:53:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 12:56:20 +0000</lastBuildDate>
+    <item>
+      <title>Mobile App Security</title>
+      <link>https://kubaik.github.io/mobile-app-security/</link>
+      <description>Mobile app security vulnerabilities can compromise user data, with 75% of apps having at least one vulnerability</description>
+      <pubDate>Mon, 20 Apr 2026 12:56:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-app-security/</guid>
+    </item>
     <item>
       <title>Code Read</title>
       <link>https://kubaik.github.io/code-read/</link>
@@ -138,13 +145,6 @@
       <description>Slack vs Teams: Why Slack Lost</description>
       <pubDate>Mon, 20 Apr 2026 00:10:36 +0000</pubDate>
       <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
-    </item>
-    <item>
-      <title>Essential CLI Tools</title>
-      <link>https://kubaik.github.io/essential-cli-tools/</link>
-      <description>Master essential CLI tools like jq, ripgrep, tmux, and kubectl. Boost efficiency, debug faster, and automate complex tasks with concrete examples and real-world performance data.</description>
-      <pubDate>Sun, 19 Apr 2026 23:36:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/essential-cli-tools/</guid>
     </item>
   </channel>
 </rss>
