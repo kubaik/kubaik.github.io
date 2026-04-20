@@ -442,7 +442,7 @@ def _derive_hashtags_from_keywords(
 # ─────────────────────────────────────────────────────────────────
 
 _MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
-_MISTRAL_MODEL = "mistral-large-latest"
+_MISTRAL_MODEL = "mistral-small-latest"
 _MISTRAL_FREE_TIER_DELAY = 1.2
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
@@ -648,7 +648,7 @@ class BlogSystem:
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
-            "model": "openai/gpt-4o-mini",
+            "model": "qwen/qwen3.6-plus",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,

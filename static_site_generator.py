@@ -969,49 +969,17 @@ def _build_templates() -> dict:
                         <p class="credentials" itemprop="jobTitle">
                             Software Developer · Nairobi, Kenya
                         </p>
-                         <p>
-                                <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" 
-                                target="_blank" 
-                                rel="noopener noreferrer">
-                                Connect on LinkedIn
-                                </a>
-                            </p>
-                            <!-- Professional Qualifications -->
-                                <h4>Professional Qualifications</h4>
-                                <ul class="about-list">
-                                    <li>Software Engineer building production systems since 2014</li>
-                                    <li>Experience in financial services systems and scalability</li>
-                                    <li>AI/LLM integration into practical workflows</li>
-                                    <li>Backend development: Python, Node.js (TypeScript)</li>
-                                    <li>Android development: Java & Kotlin</li>
-                                    <li>AWS Serverless architecture (Lambda, API Gateway)</li>
-                                    <li>Database systems: MySQL and NoSQL</li>
-                                    <li>API design, automation pipelines, system integration</li>
-                                </ul>
+                        <p class="about-summary">
+                            Software Engineer with experience building production systems since 2014, primarily in the financial services space. 
+                            I work across Python backends, Node.js (TypeScript), and Android (Java/Kotlin), with a focus on API design, automation, 
+                            and AWS serverless architectures. 
 
-                                <!-- Core Skills -->
-                                <h4>Core Skills</h4>
-                                <ul class="about-list">
-                                    <li>Backend Development (Python, Node.js)</li>
-                                    <li>Mobile Development (Android – Java/Kotlin)</li>
-                                    <li>Cloud & Serverless (AWS)</li>
-                                    <li>Database Systems (SQL & NoSQL)</li>
-                                    <li>API Design & Integration</li>
-                                    <li>Automation & Workflow Optimization</li>
-                                    <li>AI/LLM Integration</li>
-                                </ul>
+                            My current work centers on integrating AI/LLMs into practical, maintainable workflows. I’m particularly interested in 
+                            building systems that balance performance, cost, and long-term scalability.
 
-                                <!-- Engineering Focus -->
-                                <h4>Engineering Focus</h4>
-                                <ul class="about-list">
-                                    <li>Building maintainable and cost-efficient systems</li>
-                                    <li>Balancing performance, scalability, and simplicity</li>
-                                    <li>Solving real-world engineering problems</li>
-                                    <li>Applying practical trade-offs in system design</li>
-                                </ul>
-
-                            </div>
-                        </div>
+                            For a detailed overview of my experience and projects, visit my 
+                            <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">LinkedIn profile</a>.
+                        </p>
                     </div>
 
             <div class="about-section">
@@ -1037,7 +1005,7 @@ def _build_templates() -> dict:
 
             <div class="stat-grid">
                 <div class="stat-card"><span class="stat-number">{{ posts|length }}</span><span>Posts published</span></div>
-                <div class="stat-card"><span class="stat-number">2019</span><span>Started coding professionally</span></div>
+                <div class="stat-card"><span class="stat-number">2014</span><span>Started coding professionally</span></div>
                 <div class="stat-card"><span class="stat-number">Free</span><span>Always and forever</span></div>
             </div>
 
