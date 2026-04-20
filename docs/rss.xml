@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 16:39:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 13:42:49 +0000</lastBuildDate>
+    <item>
+      <title>Why Your Code Docs Fail and How to Fix Them</title>
+      <link>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</link>
+      <description>Most code docs fail because developers lack structured writing skills. Real-world fixes with Vale, MkDocs, and ADRs that cut onboarding time by 52%.</description>
+      <pubDate>Mon, 20 Apr 2026 13:42:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</guid>
+    </item>
     <item>
       <title>Bug-Free Pipelines</title>
       <link>https://kubaik.github.io/bug-free-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Tech companies often fail to become profitable</description>
       <pubDate>Mon, 20 Apr 2026 03:52:51 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-fail-why-most-never-profit/</guid>
-    </item>
-    <item>
-      <title>GitOps Simplified</title>
-      <link>https://kubaik.github.io/gitops-simplified/</link>
-      <description>Simplify deployment with GitOps</description>
-      <pubDate>Mon, 20 Apr 2026 02:07:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-simplified/</guid>
     </item>
   </channel>
 </rss>
