@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 02:07:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 03:52:53 +0000</lastBuildDate>
+    <item>
+      <title>Tech Fail: Why Most Never Profit</title>
+      <link>https://kubaik.github.io/tech-fail-why-most-never-profit/</link>
+      <description>Tech companies often fail to become profitable</description>
+      <pubDate>Mon, 20 Apr 2026 03:52:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-fail-why-most-never-profit/</guid>
+    </item>
     <item>
       <title>GitOps Simplified</title>
       <link>https://kubaik.github.io/gitops-simplified/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 15:39:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-image-tools-2026/</guid>
-    </item>
-    <item>
-      <title>Data Warehouses vs Lakes vs Lakehouses</title>
-      <link>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</link>
-      <description></description>
-      <pubDate>Sun, 19 Apr 2026 15:29:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</guid>
     </item>
   </channel>
 </rss>
