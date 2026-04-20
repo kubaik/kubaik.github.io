@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 18:58:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 19:06:34 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Cloud Apps: Dev-Friendly Guide</title>
+      <link>https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/</link>
+      <description>Practical cloud security: stop misconfigurations, enforce least-privilege IAM, rotate secrets, and audit with real AWS numbers and code.</description>
+      <pubDate>Mon, 20 Apr 2026 19:06:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/</guid>
+    </item>
     <item>
       <title>10 AI Tools That Replace Expensive Software: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</link>
@@ -138,13 +145,6 @@
       <description>Discover the skills that will become obsolete in 5 years and learn how to stay ahead of the curve</description>
       <pubDate>Mon, 20 Apr 2026 11:56:17 +0000</pubDate>
       <guid>https://kubaik.github.io/skills-to-abandon-before-2027/</guid>
-    </item>
-    <item>
-      <title>Web Accessibility: Code, Laws, and Reality Checks</title>
-      <link>https://kubaik.github.io/web-accessibility-code-laws-and-reality-checks/</link>
-      <description>Web accessibility is a legal requirement, but many developers misunderstand or ignore it. Here&apos;s a step-by-step guide to improve the accessibility of your website.</description>
-      <pubDate>Mon, 20 Apr 2026 11:43:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-accessibility-code-laws-and-reality-checks/</guid>
     </item>
   </channel>
 </rss>
