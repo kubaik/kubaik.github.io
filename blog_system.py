@@ -560,30 +560,24 @@ class BlogSystem:
             print(f"\nPurged {len(to_remove)} low-quality posts.")
 
     # ─────────────────────────────────────────────────────────────
-    # API FALLBACK CHAIN  (parallel race — all providers fire at once)
+    # API FALLBACK CHAIN
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
-        """
-        Race all configured providers in parallel.
-        Returns the first successful response and cancels the rest.
-        This eliminates the old sequential retry delays (up to 50 s per
-        failing provider) and cuts wall-clock time to roughly the latency
-        of the single fastest responding provider.
-        """
         providers = []
+
         if self.groq_key:
             providers.append(("Groq",       self._call_groq))
         if self.mistral_key:
-            providers.append(("Mistral",    self._call_mistral))
+            providers.append(("Mistral",     self._call_mistral))
         if self.openrouter_key:
-            providers.append(("OpenRouter", self._call_openrouter))
+            providers.append(("OpenRouter",  self._call_openrouter))
         if self.cerebras_key:
-            providers.append(("Cerebras",   self._call_cerebras))
+            providers.append(("Cerebras",    self._call_cerebras))
         if self.gemini_key:
-            providers.append(("Gemini",     self._call_gemini))
+            providers.append(("Gemini",      self._call_gemini))
         if self.nvidia_key:
-            providers.append(("NVIDIA NIM", self._call_nvidia))
+            providers.append(("NVIDIA NIM",  self._call_nvidia))
 
         if not providers:
             raise Exception(
@@ -592,30 +586,17 @@ class BlogSystem:
                 "NVIDIA_API_KEY, GEMINI_API_KEY."
             )
 
-        async def _guarded(name: str, caller):
+        last_error = None
+        for name, caller in providers:
             try:
                 result = await caller(messages, max_tokens)
                 print(f"API: {name} responded successfully.")
                 return result
             except Exception as e:
-                print(f"{name} failed: {e}")
-                raise
-
-        tasks = {
-            asyncio.create_task(_guarded(name, caller), name=name): name
-            for name, caller in providers
-        }
-        pending = set(tasks)
-        last_error = None
-
-        while pending:
-            done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
-            for task in done:
-                if task.exception() is None:
-                    for p in pending:
-                        p.cancel()
-                    return task.result()
-                last_error = task.exception()
+                last_error = e
+                print(f"{name} error: {e}")
+                if name != providers[-1][0]:
+                    print("Falling back to next provider...")
 
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}")
@@ -709,7 +690,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.cerebras_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "llama3.1-8b", "messages": messages,
+        data = {"model": "qwen-3-235b-a22b-instruct-2507", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
