@@ -442,7 +442,6 @@ def _derive_hashtags_from_keywords(
 # ─────────────────────────────────────────────────────────────────
 
 _MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
-_MISTRAL_MODEL = "mistral-small-latest"
 _MISTRAL_FREE_TIER_DELAY = 1.2
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
@@ -724,14 +723,14 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.mistral_key}",
                    "Content-Type": "application/json"}
-        data = {"model": _MISTRAL_MODEL, "messages": messages,
+        data = {"model": "mistral-small-latest", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [_MISTRAL_FREE_TIER_DELAY, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
-                        _MISTRAL_API_URL, headers=headers, json=data,
+                        "https://api.mistral.ai/v1/chat/completions", headers=headers, json=data,
                         timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
@@ -757,14 +756,14 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.nvidia_key}",
                    "Content-Type": "application/json"}
-        data = {"model": _NVIDIA_MODEL, "messages": messages,
+        data = {"model": "meta/llama-3.3-70b-instruct", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
-                        _NVIDIA_API_URL, headers=headers, json=data,
+                        "https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data,
                         timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
