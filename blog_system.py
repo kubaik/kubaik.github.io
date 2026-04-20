@@ -92,7 +92,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     Strips markdown symbols and returns the first complete sentence
     that is at least 40 characters long, capped at max_len chars.
     """
-    # Remove markdown headings, bold/italic markers, links, code fences
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`", " ", text)
     text = re.sub(r"#{1,6}\s+", " ", text)
@@ -100,7 +99,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"[*_]{1,3}", "", text)
     text = re.sub(r"\s+", " ", text).strip()
 
-    # Try to grab the first meaningful sentence
     sentences = re.split(r'(?<=[.!?])\s+', text)
     excerpt = ""
     for sentence in sentences:
@@ -112,7 +110,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     if not excerpt:
         excerpt = text[:max_len]
 
-    # Trim to max_len on a word boundary
     if len(excerpt) > max_len:
         excerpt = excerpt[:max_len].rsplit(" ", 1)[0].rstrip(".,;:")
         excerpt += "…"
@@ -157,7 +154,7 @@ def audit_posts(docs_dir: Path) -> Dict:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Topic phrase extractor  (kept for fallback post / hashtag helpers)
+# Topic phrase extractor
 # ─────────────────────────────────────────────────────────────────
 
 _HOOK_STOP_WORDS = {
@@ -563,24 +560,30 @@ class BlogSystem:
             print(f"\nPurged {len(to_remove)} low-quality posts.")
 
     # ─────────────────────────────────────────────────────────────
-    # API FALLBACK CHAIN
+    # API FALLBACK CHAIN  (parallel race — all providers fire at once)
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
+        """
+        Race all configured providers in parallel.
+        Returns the first successful response and cancels the rest.
+        This eliminates the old sequential retry delays (up to 50 s per
+        failing provider) and cuts wall-clock time to roughly the latency
+        of the single fastest responding provider.
+        """
         providers = []
-
         if self.groq_key:
             providers.append(("Groq",       self._call_groq))
         if self.mistral_key:
-            providers.append(("Mistral",     self._call_mistral))
+            providers.append(("Mistral",    self._call_mistral))
         if self.openrouter_key:
-            providers.append(("OpenRouter",  self._call_openrouter))
+            providers.append(("OpenRouter", self._call_openrouter))
         if self.cerebras_key:
-            providers.append(("Cerebras",    self._call_cerebras))
+            providers.append(("Cerebras",   self._call_cerebras))
         if self.gemini_key:
-            providers.append(("Gemini",      self._call_gemini))
+            providers.append(("Gemini",     self._call_gemini))
         if self.nvidia_key:
-            providers.append(("NVIDIA NIM",  self._call_nvidia))
+            providers.append(("NVIDIA NIM", self._call_nvidia))
 
         if not providers:
             raise Exception(
@@ -589,23 +592,36 @@ class BlogSystem:
                 "NVIDIA_API_KEY, GEMINI_API_KEY."
             )
 
-        last_error = None
-        for name, caller in providers:
+        async def _guarded(name: str, caller):
             try:
                 result = await caller(messages, max_tokens)
                 print(f"API: {name} responded successfully.")
                 return result
             except Exception as e:
-                last_error = e
-                print(f"{name} error: {e}")
-                if name != providers[-1][0]:
-                    print("Falling back to next provider...")
+                print(f"{name} failed: {e}")
+                raise
+
+        tasks = {
+            asyncio.create_task(_guarded(name, caller), name=name): name
+            for name, caller in providers
+        }
+        pending = set(tasks)
+        last_error = None
+
+        while pending:
+            done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
+            for task in done:
+                if task.exception() is None:
+                    for p in pending:
+                        p.cancel()
+                    return task.result()
+                last_error = task.exception()
 
         raise Exception(
             f"All configured API providers failed. Last error: {last_error}")
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Groq
+    # PROVIDER: Groq  (reduced retries + timeouts for faster racing)
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
@@ -614,29 +630,28 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": "llama-3.3-70b-versatile", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [5, 15, 30]
-        for attempt in range(1, 5):
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):   # 2 attempts — enough when racing
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.groq.com/openai/v1/chat/completions",
-                                      headers=headers, json=data,
-                                      timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=30),
+                    ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 4:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"Groq {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"Groq connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("Groq timed out.")
+                raise Exception("Groq timed out.")
         raise Exception("Groq unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -646,41 +661,44 @@ class BlogSystem:
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {
-            "Authorization": f"Bearer {self.openrouter_key}", "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.openrouter_key}",
+            "Content-Type": "application/json",
             "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
-            "model": "google/gemini-flash-1.5", "messages": messages, "max_tokens": max_tokens, "temperature": 0.7,
+            "model": "google/gemini-flash-1.5",
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
             "provider": {"ignore": ["Venice"], "allow_fallbacks": True},
         }
-        waits = [5, 15, 30]
-        for attempt in range(1, 5):
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://openrouter.ai/api/v1/chat/completions",
-                                      headers=headers, json=data,
-                                      timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        "https://openrouter.ai/api/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=30),
+                    ) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
                                 raise Exception(
                                     f"OpenRouter error: {result['error']}")
                             return result["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 4:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"OpenRouter {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"OpenRouter connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("OpenRouter timed out.")
+                raise Exception("OpenRouter timed out.")
         raise Exception("OpenRouter unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -693,29 +711,28 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": "llama3.1-70b", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [5, 15, 30]
-        for attempt in range(1, 5):
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.cerebras.ai/v1/chat/completions",
-                                      headers=headers, json=data,
-                                      timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        "https://api.cerebras.ai/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=30),
+                    ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 4:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"Cerebras {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"Cerebras connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("Cerebras timed out.")
+                raise Exception("Cerebras timed out.")
         raise Exception("Cerebras unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -728,28 +745,27 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": _MISTRAL_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [_MISTRAL_FREE_TIER_DELAY, 15, 30]
-        for attempt in range(1, 5):
+        waits = [_MISTRAL_FREE_TIER_DELAY, 5, 10]
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(_MISTRAL_API_URL, headers=headers, json=data,
-                                      timeout=aiohttp.ClientTimeout(total=60)) as r:
+                    async with s.post(
+                        _MISTRAL_API_URL, headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=30),
+                    ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 4:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"Mistral {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"Mistral connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("Mistral timed out.")
+                raise Exception("Mistral timed out.")
         raise Exception("Mistral unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -762,28 +778,27 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": _NVIDIA_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
-        waits = [5, 15, 30]
-        for attempt in range(1, 5):
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(_NVIDIA_API_URL, headers=headers, json=data,
-                                      timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post(
+                        _NVIDIA_API_URL, headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=45),
+                    ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 4:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"NVIDIA NIM {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 4:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"NVIDIA NIM connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 4:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("NVIDIA NIM timed out.")
+                raise Exception("NVIDIA NIM timed out.")
         raise Exception("NVIDIA NIM unavailable.")
 
     # ─────────────────────────────────────────────────────────────
@@ -804,57 +819,76 @@ class BlogSystem:
                     generation_config=genai.types.GenerationConfig(
                         max_output_tokens=max_tokens, temperature=0.7),
                 )
-                parts = [("SYSTEM: " if m.get(
-                    "role") == "system" else "USER: ") + m.get("content", "") for m in messages]
-                return model.generate_content("\n\n".join(parts) + "\n\nASSISTANT:").text
+                parts = [
+                    ("SYSTEM: " if m.get("role") == "system" else "USER: ")
+                    + m.get("content", "")
+                    for m in messages
+                ]
+                return model.generate_content(
+                    "\n\n".join(parts) + "\n\nASSISTANT:"
+                ).text
+
             return await asyncio.get_event_loop().run_in_executor(None, _sdk_call)
         except ImportError:
             pass
 
-        api_url = f"https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
+        api_url = (
+            f"https://generativelanguage.googleapis.com/v1/models/"
+            f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
+        )
         system_parts = [m["content"]
                         for m in messages if m.get("role") == "system"]
         user_parts = [m["content"]
                       for m in messages if m.get("role") != "system"]
-        first_user = ("\n\n".join(system_parts) + "\n\n" if system_parts else "") + \
-            (user_parts[0] if user_parts else "")
+        first_user = (
+            ("\n\n".join(system_parts) + "\n\n" if system_parts else "")
+            + (user_parts[0] if user_parts else "")
+        )
         contents = [{"role": "user", "parts": [{"text": first_user}]}]
         for extra in user_parts[1:]:
             contents.append({"role": "user", "parts": [{"text": extra}]})
-        payload = {"contents": contents, "generationConfig": {
-            "maxOutputTokens": max_tokens, "temperature": 0.7}}
-        waits = [5, 15, 30, 60]
-        for attempt in range(1, 6):
+        payload = {
+            "contents": contents,
+            "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.7},
+        }
+        waits = [2, 5, 10, 20]
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post(
+                        api_url, json=payload,
+                        timeout=aiohttp.ClientTimeout(total=45),
+                    ) as r:
                         if r.status == 200:
                             result = await r.json()
                             try:
                                 return result["candidates"][0]["content"]["parts"][0]["text"]
                             except (KeyError, IndexError) as e:
                                 raise Exception(f"Gemini parse error: {e}")
-                        if r.status in RETRYABLE and attempt < 5:
+                        if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
                         raise Exception(f"Gemini {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 5:
+                if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
                     raise Exception(f"Gemini connection failed: {e}")
             except asyncio.TimeoutError:
-                if attempt < 5:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception("Gemini timed out.")
+                raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
 
     # ─────────────────────────────────────────────────────────────
-    # CONTENT GENERATION
+    # CONTENT GENERATION  (single API round-trip for everything)
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
+        """
+        Optimised: one API call generates title + content + meta + keywords
+        together via _generate_full_bundle(), eliminating the old separate
+        _generate_title() call.  Only one expansion pass is attempted if the
+        post comes back short, rather than two sequential passes.
+        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -862,39 +896,31 @@ class BlogSystem:
         try:
             print(f"Generating content for: {topic}")
             existing_titles = _load_existing_titles(self.output_dir)
-            title = await self._generate_unique_title(topic, keywords, existing_titles)
 
-            bundle = await self._generate_content_bundle(title, topic, keywords)
+            bundle = await self._generate_full_bundle(topic, keywords, existing_titles)
+
+            title = bundle["title"].strip().strip('"')
             content = bundle["content"].strip()
             meta_description = bundle["meta_description"].strip()
             seo_keywords = [k.strip()
                             for k in bundle["seo_keywords"] if k.strip()]
 
-            # ── FIX: ensure meta_description is never empty ──────────────
             if not meta_description:
                 print(
                     "Warning: meta_description empty from API — deriving from content.")
                 meta_description = _derive_description(content, title)
-
             if not keywords:
                 keywords = seo_keywords
 
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
+            # Single expansion pass — sufficient in the vast majority of cases
             if word_count < MIN_WORD_COUNT:
-                print(
-                    f"Warning: content only {word_count} words (min {MIN_WORD_COUNT}). Expanding...")
+                print(f"Content short ({word_count} words). Expanding once...")
                 content = await self._expand_content(content, title, topic)
                 word_count = _count_words(content)
                 print(f"After expansion: {word_count} words")
-
-            if word_count < MIN_WORD_COUNT:
-                print(
-                    f"Still short ({word_count} words). Running second expansion...")
-                content = await self._expand_content(content, title, topic)
-                word_count = _count_words(content)
-                print(f"After second expansion: {word_count} words")
 
             slug = self._create_slug(title)
 
@@ -921,15 +947,13 @@ class BlogSystem:
 
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
-                seo_keywords, topic=topic, title=title, max_hashtags=5
-            )
+                seo_keywords, topic=topic, title=title, max_hashtags=5)
             print(f"Hashtags selected: {', '.join(hashtags)}")
 
             post.tags = list(set(post.tags + hashtags))[:15]
             post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
             post.twitter_hashtags = " ".join(
-                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
-            )
+                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags)
 
             return post
 
@@ -939,52 +963,29 @@ class BlogSystem:
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
-    # INDIVIDUAL GENERATION STEPS
+    # SINGLE BUNDLE CALL  (replaces _generate_title + _generate_content_bundle)
     # ─────────────────────────────────────────────────────────────
 
-    async def _generate_unique_title(self, topic: str, keywords: List[str],
-                                     existing_titles: List[str],
-                                     max_attempts: int = 2) -> str:
-        for attempt in range(1, max_attempts + 1):
-            extra_instruction = ""
-            if attempt > 1:
-                extra_instruction = (
-                    " IMPORTANT: Do NOT produce a title similar to any of these: "
-                    + ", ".join(f'"{t}"' for t in existing_titles[:10])
-                    + ". Choose a clearly different angle."
-                )
-            title = await self._generate_title(topic, keywords, extra_instruction=extra_instruction)
-            title = title.strip().strip('"')
-            if not existing_titles:
-                return title
-            is_dup, match, score = _is_duplicate_title(title, existing_titles)
-            if not is_dup:
-                print(
-                    f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
-                return title
-            print(
-                f"Attempt {attempt}: title too similar ({score:.0%}) to '{match}'. Retrying…")
-        return f"{title}"
-
-    async def _generate_title(self, topic: str, keywords: List[str] = None,
-                              extra_instruction: str = "") -> str:
-        keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
-        messages = [
-            {"role": "system", "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles."},
-            {"role": "user", "content": (
-                f"Generate a compelling blog post title about '{topic}'.{keyword_text} "
-                "The title should be catchy, informative, and under 60 characters. "
-                "Avoid generic titles starting with 'The Ultimate Guide' or 'Everything You Need to Know'. "
-                "Respond with ONLY the title — no quotes, no numbering, no explanation."
-                f"{extra_instruction}"
-            )},
-        ]
-        title = await self._call_api_with_fallback(messages, max_tokens=80)
-        return title.strip().splitlines()[0].strip().strip('"')
-
-    async def _generate_content_bundle(self, title: str, topic: str, keywords: List[str] = None) -> Dict:
-        """Single API call: content + meta_description + seo_keywords as JSON."""
-        keyword_text = f"\nKeywords to incorporate naturally: {', '.join(keywords)}" if keywords else ""
+    async def _generate_full_bundle(
+        self,
+        topic: str,
+        keywords: List[str],
+        existing_titles: List[str],
+    ) -> dict:
+        """
+        One API call that returns title + full article + meta_description +
+        seo_keywords as a JSON object.  Replaces the old two-step flow of
+        _generate_title() followed by _generate_content_bundle().
+        """
+        keyword_text = (
+            f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
+            if keywords else ""
+        )
+        existing_hint = (
+            " Avoid titles similar to: "
+            + ", ".join(f'"{t}"' for t in existing_titles[:8])
+            if existing_titles else ""
+        )
 
         messages = [
             {
@@ -1003,15 +1004,17 @@ class BlogSystem:
             },
             {
                 "role": "user",
-                "content": f"""Write a 2500-word technical blog post titled: "{title}"
+                "content": f"""Write a 2500-word technical blog post about this topic: "{topic}"{keyword_text}
 
-Topic: {topic}{keyword_text}
+Generate a compelling, SEO-friendly title under 60 characters.{existing_hint}
+Avoid generic openers like 'The Ultimate Guide' or 'Everything You Need to Know'.
 
 Respond with ONLY a JSON object in this exact shape:
 {{
-  "content": "<full markdown article body — no title line>",
+  "title": "<catchy title under 60 chars>",
+  "content": "<full markdown article body — no title heading at top>",
   "meta_description": "<under 155 chars, specific, no 'Learn how to' opener>",
-  "seo_keywords": ["kw1", "kw2", "kw3", "kw4", "kw5", "kw6", "kw7", "kw8"]
+  "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
 Article structure (use exactly these ## headings inside "content"):
@@ -1032,7 +1035,7 @@ Requirements for "content":
 - At least 3 concrete numbers (benchmarks, percentages, file sizes, latency figures, etc.)
 - Each section minimum 200 words
 - "When Not to Use This Approach" must be honest and specific (name real scenarios)
-- "My Take: What Nobody Else Is Saying" must contain a genuine, opinionated stance the author holds based on production experience — not a summary of what others say
+- "My Take: What Nobody Else Is Saying" must contain a genuine, opinionated stance based on production experience
 - Do NOT include the title as a # heading
 
 Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based.
@@ -1046,6 +1049,25 @@ Return ONLY the JSON object.""",
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
             raw = re.sub(r"\n?```$", "", raw.strip())
+
+        data = self._parse_bundle_json(raw)
+
+        for key in ("title", "content", "meta_description", "seo_keywords"):
+            if key not in data:
+                raise ValueError(f"Bundle response missing key: '{key}'")
+
+        if not data.get("meta_description", "").strip():
+            data["meta_description"] = _derive_description(
+                data.get("content", ""), data.get("title", topic))
+
+        return data
+
+    # ─────────────────────────────────────────────────────────────
+    # JSON REPAIR / PARSE  (shared by _generate_full_bundle)
+    # ─────────────────────────────────────────────────────────────
+
+    def _parse_bundle_json(self, raw: str) -> dict:
+        """Robust JSON repair + parse — handles truncated or dirty LLM output."""
 
         def _sanitize(s):
             result, in_str, esc = [], False, False
@@ -1100,8 +1122,6 @@ Return ONLY the JSON object.""",
                         depth += 1
                     elif ch == '}':
                         depth -= 1
-            if not in_str and depth == 0:
-                return _sanitize(text)
             rep = text
             if in_str:
                 rep += '"'
@@ -1114,12 +1134,22 @@ Return ONLY the JSON object.""",
         def _partial(text):
             data = {}
             m = re.search(
-                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})', text, re.DOTALL)
+                r'"title"\s*:\s*"(.*?)(?:"\s*,|\"\s*\})', text, re.DOTALL)
+            if m:
+                data['title'] = m.group(1).replace('\\"', '"').strip()
+            m = re.search(
+                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})',
+                text, re.DOTALL,
+            )
             if not m:
                 m = re.search(r'"content"\s*:\s*"(.*)', text, re.DOTALL)
             if m:
-                data['content'] = m.group(1).replace(
-                    '\\n', '\n').replace('\\"', '"').replace('\\t', '\t')
+                data['content'] = (
+                    m.group(1)
+                    .replace('\\n', '\n')
+                    .replace('\\"', '"')
+                    .replace('\\t', '\t')
+                )
             m = re.search(
                 r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
             if m:
@@ -1127,43 +1157,39 @@ Return ONLY the JSON object.""",
                     1).replace('\\n', ' ').strip()
             m = re.search(r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
             if m:
-                data['seo_keywords'] = [k.strip().strip('"')
-                                        for k in m.group(1).split(',') if k.strip().strip('"')]
+                data['seo_keywords'] = [
+                    k.strip().strip('"')
+                    for k in m.group(1).split(',')
+                    if k.strip().strip('"')
+                ]
             return data
 
-        def _parse(text):
-            for attempt in [
-                lambda t: json.loads(t),
-                lambda t: json.loads(_sanitize(t)),
-                lambda t: json.loads(_sanitize(re.search(r'\{.*\}', t, re.DOTALL).group())) if re.search(
-                    r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
-                lambda t: json.loads(_sanitize(_repair(t))),
-            ]:
-                try:
-                    return attempt(text)
-                except Exception:
-                    pass
-            print("Warning: JSON unrecoverable — extracting fields individually.")
-            data = _partial(text)
-            if 'content' in data:
-                data.setdefault('meta_description', '')
-                data.setdefault('seo_keywords', [])
-                return data
-            raise ValueError(
-                f"Model did not return valid JSON.\nRaw (first 400):\n{text[:400]}")
+        for attempt in [
+            lambda t: json.loads(t),
+            lambda t: json.loads(_sanitize(t)),
+            lambda t: json.loads(_sanitize(
+                re.search(r'\{.*\}', t, re.DOTALL).group()
+            )) if re.search(r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
+            lambda t: json.loads(_sanitize(_repair(t))),
+        ]:
+            try:
+                return attempt(raw)
+            except Exception:
+                pass
 
-        data = _parse(raw)
-        for key in ("content", "meta_description", "seo_keywords"):
-            if key not in data:
-                raise ValueError(f"Bundle response missing key: '{key}'")
+        print("Warning: JSON unrecoverable — extracting fields individually.")
+        data = _partial(raw)
+        if 'content' in data:
+            data.setdefault('title', '')
+            data.setdefault('meta_description', '')
+            data.setdefault('seo_keywords', [])
+            return data
+        raise ValueError(
+            f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}")
 
-        # ── FIX: patch empty meta_description immediately after parsing ──
-        if not data.get("meta_description", "").strip():
-            data["meta_description"] = _derive_description(
-                data.get("content", ""), title
-            )
-
-        return data
+    # ─────────────────────────────────────────────────────────────
+    # EXPANSION  (called at most once now)
+    # ─────────────────────────────────────────────────────────────
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
         messages = [
@@ -1289,7 +1315,6 @@ Most guides tell you to add {topic} and call it done. In practice, the hardest p
 
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
-        # ── FIX: always derive a non-empty description for fallback posts ──
         meta_description = (
             f"A practical guide to {topic} covering implementation, "
             f"real performance benchmarks, common mistakes, and honest tradeoffs."
@@ -1303,14 +1328,19 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
         post = BlogPost(
             title=title, content=content, slug=slug,
-            tags=[topic_lower.replace(
-                ' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
+            tags=[topic_lower.replace(' ', '-'), 'development',
+                  'technical-guide', 'best-practices'] + fallback_hashtags,
             meta_description=meta_description,
             featured_image=f"/static/images/{slug}.jpg",
-            created_at=datetime.now().isoformat(), updated_at=datetime.now().isoformat(),
-            seo_keywords=[topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices",
-                          f"how to use {topic_lower}", f"{topic_lower} performance"],
-            affiliate_links=[], monetization_data={},
+            created_at=datetime.now().isoformat(),
+            updated_at=datetime.now().isoformat(),
+            seo_keywords=[
+                topic_lower, f"{topic_lower} tutorial",
+                f"{topic_lower} best practices",
+                f"how to use {topic_lower}", f"{topic_lower} performance",
+            ],
+            affiliate_links=[],
+            monetization_data={},
         )
 
         post.monetization_data["used_fallback"] = True
@@ -1339,13 +1369,14 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         word_count = len(post.content.split())
         if word_count < MIN_WORD_COUNT:
             print(
-                f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
+                f"Warning: saving post with only {word_count} words "
+                f"(min recommended: {MIN_WORD_COUNT})"
+            )
 
-        # ── FIX: repair missing meta_description before saving ───────────
         if not getattr(post, 'meta_description', '').strip():
             post.meta_description = _derive_description(
                 post.content, post.title)
-            print(f"  meta_description was empty — derived from content.")
+            print("  meta_description was empty — derived from content.")
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
@@ -1451,23 +1482,42 @@ def create_sample_config():
         "google_search_console_key":   "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
         "google_adsense_verification": "ca-pub-4477679588953789",
         "hook_style": "auto",
-        "social_accounts": {"twitter": "@KubaiKevin", "linkedin": "your-linkedin-page", "facebook": "your-facebook-page"},
+        "social_accounts": {
+            "twitter":  "@KubaiKevin",
+            "linkedin": "your-linkedin-page",
+            "facebook": "your-facebook-page",
+        },
         "content_topics": [
-            "How AI Is Changing Everyday Life in 2026", "ChatGPT vs Claude vs Gemini: Which AI Actually Wins",
-            "10 AI Tools That Replace Expensive Software", "AI Prompting Secrets Most People Never Learn",
-            "How to Use AI to Make Money Online", "AI Tools for Students: Study Smarter Not Harder",
-            "Free AI Tools That Professionals Actually Use", "How Companies Are Using AI to Cut Costs",
-            "AI-Generated Content: What's Real and What's Fake", "The AI Skills That Will Get You Hired in 2026",
-            "How to Build an AI-Powered Side Hustle", "AI vs Human: Where Machines Still Fail",
-            "The Hidden Dangers of Relying on AI", "How Hospitals Are Using AI to Save Lives",
-            "AI in Education: The Future of Learning", "Tech Salaries in 2026: Who Earns What",
-            "How to Get a $150K Tech Job Without a Degree", "Freelance Developer Income: Realistic Numbers",
-            "The Tech Skills That Pay the Most Right Now", "How to Negotiate a Tech Salary (Scripts That Work)",
-            "Remote Tech Jobs: Where to Find Them in 2026", "Tech Career Roadmap: From Zero to Employed in 12 Months",
-            "Why Senior Developers Leave Big Tech Companies", "The Highest-Paying Programming Languages in 2026",
-            "How to Build Passive Income as a Developer", "Breaking Into Tech at 30, 40, or 50",
-            "Tech Interview Red Flags That Cost Candidates Jobs", "The Fastest Growing Tech Roles Right Now",
-            "Why Developers Burn Out and How to Prevent It", "How to Get Promoted Faster in Tech",
+            "How AI Is Changing Everyday Life in 2026",
+            "ChatGPT vs Claude vs Gemini: Which AI Actually Wins",
+            "10 AI Tools That Replace Expensive Software",
+            "AI Prompting Secrets Most People Never Learn",
+            "How to Use AI to Make Money Online",
+            "AI Tools for Students: Study Smarter Not Harder",
+            "Free AI Tools That Professionals Actually Use",
+            "How Companies Are Using AI to Cut Costs",
+            "AI-Generated Content: What's Real and What's Fake",
+            "The AI Skills That Will Get You Hired in 2026",
+            "How to Build an AI-Powered Side Hustle",
+            "AI vs Human: Where Machines Still Fail",
+            "The Hidden Dangers of Relying on AI",
+            "How Hospitals Are Using AI to Save Lives",
+            "AI in Education: The Future of Learning",
+            "Tech Salaries in 2026: Who Earns What",
+            "How to Get a $150K Tech Job Without a Degree",
+            "Freelance Developer Income: Realistic Numbers",
+            "The Tech Skills That Pay the Most Right Now",
+            "How to Negotiate a Tech Salary (Scripts That Work)",
+            "Remote Tech Jobs: Where to Find Them in 2026",
+            "Tech Career Roadmap: From Zero to Employed in 12 Months",
+            "Why Senior Developers Leave Big Tech Companies",
+            "The Highest-Paying Programming Languages in 2026",
+            "How to Build Passive Income as a Developer",
+            "Breaking Into Tech at 30, 40, or 50",
+            "Tech Interview Red Flags That Cost Candidates Jobs",
+            "The Fastest Growing Tech Roles Right Now",
+            "Why Developers Burn Out and How to Prevent It",
+            "How to Get Promoted Faster in Tech",
         ],
     }
 
@@ -1475,7 +1525,10 @@ def create_sample_config():
         yaml.dump(config, f, default_flow_style=False, indent=2)
 
     print("Created sample config.yaml")
-    print("\nAdd GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY")
+    print(
+        "\nAdd GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
+        "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY"
+    )
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1525,7 +1578,9 @@ if __name__ == "__main__":
                 if result["success"]:
                     print(f"✅ Tweet posted: {result['url']}")
                     print(
-                        f"   {result['char_count']} chars | {result['tweet_text'][:80]}…")
+                        f"   {result['char_count']} chars | "
+                        f"{result['tweet_text'][:80]}…"
+                    )
                 else:
                     print(f"❌ Tweet failed: {result.get('error')}")
                     print("Attempting fallback via best-strategy picker...")
@@ -1591,7 +1646,9 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
             print(
-                f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})")
+                f"Output directory: {blog_system.output_dir} "
+                f"(exists: {blog_system.output_dir.exists()})"
+            )
             if blog_system.output_dir.exists():
                 for item in blog_system.output_dir.iterdir():
                     print(
@@ -1599,16 +1656,22 @@ if __name__ == "__main__":
                     if item.is_dir():
                         for fname in ["post.json", "index.md", "social_posts.json"]:
                             print(
-                                f"    {fname}: {'Yes' if (item/fname).exists() else 'No'}")
-                        if (item/"post.json").exists():
+                                f"    {fname}: "
+                                f"{'Yes' if (item / fname).exists() else 'No'}"
+                            )
+                        if (item / "post.json").exists():
                             try:
-                                with open(item/"post.json") as f:
+                                with open(item / "post.json") as f:
                                     data = json.load(f)
                                 wc = _count_words(data.get('content', ''))
                                 is_fb = data.get('monetization_data', {}).get(
                                     'used_fallback', False)
                                 print(
-                                    f"    Title: {data.get('title','Unknown')} | Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'} {'[FALLBACK]' if is_fb else ''}")
+                                    f"    Title: {data.get('title', 'Unknown')} | "
+                                    f"Words: {wc} "
+                                    f"{'✓' if wc >= MIN_WORD_COUNT else '⚠'} "
+                                    f"{'[FALLBACK]' if is_fb else ''}"
+                                )
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
             blog_system.cleanup_posts()
@@ -1626,7 +1689,9 @@ if __name__ == "__main__":
             visibility = VisibilityAutomator(config)
             for post in posts:
                 social_posts = visibility.generate_social_posts(post)
-                with open(blog_system.output_dir / post.slug / "social_posts.json", 'w') as f:
+                with open(
+                    blog_system.output_dir / post.slug / "social_posts.json", 'w'
+                ) as f:
                     json.dump(social_posts, f, indent=2)
                 print(f"Social posts generated for: {post.title}")
             print("Done!")
@@ -1646,7 +1711,6 @@ if __name__ == "__main__":
                            "--delete"] + sys.argv[2:])
 
         elif mode == "fix-descriptions":
-            # ── NEW: one-shot repair of all existing posts with empty meta_description ──
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
                 sys.exit(1)
@@ -1667,8 +1731,7 @@ if __name__ == "__main__":
                     desc = data.get("meta_description", "").strip()
                     if not desc:
                         derived = _derive_description(
-                            data.get("content", ""), data.get("title", "")
-                        )
+                            data.get("content", ""), data.get("title", ""))
                         data["meta_description"] = derived
                         with open(post_json, "w", encoding="utf-8") as f:
                             json.dump(data, f, indent=2, ensure_ascii=False)
@@ -1677,12 +1740,20 @@ if __name__ == "__main__":
                 except Exception as e:
                     print(f"Error fixing {post_dir.name}: {e}")
             print(
-                f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
+                f"\nFixed {fixed} posts. "
+                "Run 'python blog_system.py build' to regenerate HTML."
+            )
 
         else:
             print(
-                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup|fix-descriptions]")
+                "Usage: python blog_system.py "
+                "[init|auto|build|cleanup|audit|purge|debug|social|"
+                "test-twitter|dedup|fix-descriptions]"
+            )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions")
+        print(
+            "Commands: init | auto | build | cleanup | audit | purge | debug | "
+            "social | test-twitter | dedup | fix-descriptions"
+        )

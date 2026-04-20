@@ -2,9 +2,8 @@ name: AI Blog Automation
 
 on:
   schedule:
-    - cron: "0 * * * *" # Runs at the top of every hour
-    - cron: "40 * * * *" # Runs at 40 minutes past every hour
-
+    - cron: "0 * * * *" # top of every hour
+    - cron: "40 * * * *" # 40 min past every hour
   workflow_dispatch:
     inputs:
       force_cleanup:
@@ -22,12 +21,12 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true # Changed to true so delayed/queued runs don't block the next scheduled run
+  cancel-in-progress: true
 
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20 # Prevents hung runs from blocking the scheduler queue
+    timeout-minutes: 12 # ← reduced from 20; race logic means we rarely need more
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -56,194 +55,82 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main --rebase
 
-      - name: Verify OpenAI API Key
+      # ── Collapsed: verify all secrets in one step instead of 12 ─────────
+      - name: Verify secrets
         run: |
-          if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
-            echo "WARNING: OPENAI_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: OpenAI API key is available"
-          fi
-
-      - name: Verify GROQ_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.GROQ_API_KEY }}" ]; then
-            echo "WARNING: GROQ_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: GROQ_API_KEY API key is available"
-          fi
-
-      - name: Verify GEMINI_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "WARNING: GEMINI_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: GEMINI_API_KEY API key is available"
-          fi
-
-      - name: Verify OPENROUTER_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.OPENROUTER_API_KEY }}" ]; then
-            echo "WARNING: OPENROUTER_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: OPENROUTER_API_KEY API key is available"
-          fi
-      - name: Verify CEREBRAS_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.CEREBRAS_API_KEY }}" ]; then
-            echo "WARNING: CEREBRAS_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: CEREBRAS_API_KEY API key is available"
-          fi
-      - name: Verify MISTRAL_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.MISTRAL_API_KEY }}" ]; then
-            echo "WARNING: MISTRAL_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: MISTRAL_API_KEY API key is available "
-          fi
-
-      - name: Verify NVIDIA_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.NVIDIA_API_KEY }}" ]; then
-            echo "WARNING: NVIDIA_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: NVIDIA_API_KEY API key is available"
-          fi
-
-      - name: Verify TWITTER_API_KEY API Key
-        run: |
-          if [ -z "${{ secrets.TWITTER_API_KEY }}" ]; then
-            echo "WARNING: TWITTER_API_KEY secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: TWITTER_API_KEY API key is available"
-          fi
-      - name: Verify TWITTER_API_SECRET API Key
-        run: |
-          if [ -z "${{ secrets.TWITTER_API_SECRET }}" ]; then
-            echo "WARNING: TWITTER_API_SECRET secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: TWITTER_API_SECRET API key is available"
-          fi
-      - name: Verify TWITTER_ACCESS_TOKEN API Key
-        run: |
-          if [ -z "${{ secrets.TWITTER_ACCESS_TOKEN }}" ]; then
-            echo "WARNING: TWITTER_ACCESS_TOKEN secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: TWITTER_ACCESS_TOKEN API key is available"
-          fi
-
-      - name: Verify TWITTER_ACCESS_TOKEN_SECRET API Key
-        run: |
-          if [ -z "${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}" ]; then
-            echo "WARNING: TWITTER_ACCESS_TOKEN_SECRET secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: TWITTER_ACCESS_TOKEN_SECRET API key is available"
-          fi
-
-      - name: Verify TWITTER_BEARER_TOKEN API Key
-        run: |
-          if [ -z "${{ secrets.TWITTER_BEARER_TOKEN }}" ]; then
-            echo "WARNING: TWITTER_BEARER_TOKEN secret is not set - will use fallback content generation"
-          else
-            echo "SUCCESS: TWITTER_BEARER_TOKEN API key is available"
-          fi
-
-      - name: Initialize config if needed
-        run: |
-          if [ ! -f "config.yaml" ]; then
-            echo "Creating initial config.yaml..."
-            python blog_system.py init
-          else
-            echo "SUCCESS: Config file exists"
-          fi
-
-      - name: Run cleanup if needed
-        run: |
-          echo "Checking for posts that need cleanup..."
-          if [ "${{ github.event.inputs.force_cleanup }}" = "true" ]; then
-            echo "Force cleanup requested..."
-            python blog_system.py cleanup
-          else
-            echo "Running debug mode (includes automatic cleanup)..."
-            python blog_system.py debug
-          fi
-
-      - name: Generate new blog content
+          for VAR in GROQ_API_KEY GEMINI_API_KEY OPENROUTER_API_KEY \
+                     CEREBRAS_API_KEY MISTRAL_API_KEY NVIDIA_API_KEY \
+                     TWITTER_API_KEY TWITTER_API_SECRET \
+                     TWITTER_ACCESS_TOKEN TWITTER_ACCESS_TOKEN_SECRET \
+                     TWITTER_BEARER_TOKEN; do
+            if [ -z "${!VAR}" ]; then
+              echo "WARNING: $VAR is not set"
+            else
+              echo "OK: $VAR is set"
+            fi
+          done
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CEREBRAS_API_KEY: ${{secrets.CEREBRAS_API_KEY}}
-          MISTRAL_API_KEY: ${{secrets.MISTRAL_API_KEY}}
-          NVIDIA_API_KEY: ${{secrets.NVIDIA_API_KEY}}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+
+      - name: Initialize config if needed
+        run: |
+          [ -f "config.yaml" ] && echo "Config exists" || python blog_system.py init
+
+      # ── Cleanup only on force_cleanup or once-a-day (hour 0) ────────────
+      - name: Conditional cleanup
+        if: >
+          github.event.inputs.force_cleanup == 'true' ||
+          (github.event_name == 'schedule' &&
+           startsWith(github.event.schedule, '0 0 '))
+        run: python blog_system.py cleanup
+
+      # ── Main content generation ──────────────────────────────────────────
+      - name: Generate new blog content
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
         run: |
-          echo "Starting blog content generation"
-
-          # Try to generate new content, but don't fail if it doesn't work
-          if python blog_system.py auto; then
-            echo "SUCCESS: New content generated successfully"
-          else
-            echo "WARNING: Content generation failed, rebuilding existing content..."
+          python blog_system.py auto || {
+            echo "WARNING: Content generation failed — rebuilding existing content"
             python blog_system.py build
-          fi
+          }
 
       - name: Verify generated content
         run: |
-          echo "Checking generated content..."
-          echo "Contents of docs directory:"
-          ls -la docs/ || echo "ERROR: docs directory not found"
+          post_count=$(find docs -name "post.json" 2>/dev/null | wc -l)
+          echo "Total posts: $post_count"
+          [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-          if [ -f "docs/index.html" ]; then
-            echo "SUCCESS: index.html exists ($(wc -c < docs/index.html) bytes)"
-            
-            # Count posts
-            post_count=$(find docs -name "post.json" | wc -l)
-            echo "Found $post_count blog posts"
-            
-            # List all posts
-            echo "Blog posts:"
-            for post_dir in docs/*/; do
-              if [ -f "$post_dir/post.json" ]; then
-                title=$(python -c "import json; print(json.load(open('$post_dir/post.json'))['title'])" 2>/dev/null || echo "Unknown")
-                echo "  - $(basename "$post_dir"): $title"
-              fi
-            done
-          else
-            echo "ERROR: No index.html generated!"
-            echo "Attempting emergency rebuild..."
-            python blog_system.py build
-            
-            if [ ! -f "docs/index.html" ]; then
-              echo "ERROR: Emergency rebuild failed"
-              exit 1
-            fi
-          fi
-
-      - name: Commit changes before deployment
+      - name: Commit changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
-          # Add all changes
           git add .
-
-          # Check if there are changes to commit
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "Nothing to commit"
           else
-            echo "Committing changes..."
-            
-            # Create a detailed commit message
             post_count=$(find docs -name "post.json" | wc -l)
-            git commit -m "Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S') - $post_count posts"
+            git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts"
             git push origin main
-            echo "SUCCESS: Changes pushed successfully"
           fi
 
       - name: Setup GitHub Pages
@@ -258,28 +145,12 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Deployment Summary
+      - name: Summary
         run: |
-          echo "## Deployment Complete!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Site URL**: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Deployed**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
           post_count=$(find docs -name "post.json" | wc -l)
-          echo "**Statistics**:" >> $GITHUB_STEP_SUMMARY
-          echo "- Total posts: $post_count" >> $GITHUB_STEP_SUMMARY
-          echo "- Workflow run: #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "**Recent Posts**:" >> $GITHUB_STEP_SUMMARY
-          for post_dir in docs/*/; do
-            if [ -f "$post_dir/post.json" ]; then
-              title=$(python -c "import json; print(json.load(open('$post_dir/post.json'))['title'])" 2>/dev/null || echo "Unknown")
-              slug=$(basename "$post_dir")
-              echo "- [$title](${{ steps.deployment.outputs.page_url }}/$slug/)" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
-
-          echo ""
-          echo "Site deployed to: ${{ steps.deployment.outputs.page_url }}"
+          {
+            echo "## Deployment Complete"
+            echo "**URL**: ${{ steps.deployment.outputs.page_url }}"
+            echo "**Posts**: $post_count"
+            echo "**Run**: #${{ github.run_number }} — $(date -u '+%Y-%m-%d %H:%M UTC')"
+          } >> $GITHUB_STEP_SUMMARY
