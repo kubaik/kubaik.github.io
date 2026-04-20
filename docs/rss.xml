@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 19:09:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 22:29:43 +0000</lastBuildDate>
     <item>
       <title>Stop Chasing Alerts: Monitor Proactively</title>
       <link>https://kubaik.github.io/stop-chasing-alerts-monitor-proactively/</link>
@@ -19,27 +19,6 @@
       <description>Practical cloud security: stop misconfigurations, enforce least-privilege IAM, rotate secrets, and audit with real AWS numbers and code.</description>
       <pubDate>Mon, 20 Apr 2026 19:06:32 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/</guid>
-    </item>
-    <item>
-      <title>10 AI Tools That Replace Expensive Software: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</link>
-      <description>A practical guide to 10 AI Tools That Replace Expensive Software covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 20 Apr 2026 18:58:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</guid>
-    </item>
-    <item>
-      <title>How Big Tech Makes Money From Your Data: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-big-tech-makes-money-from-your-data-a-practica/</link>
-      <description>A practical guide to How Big Tech Makes Money From Your Data covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 20 Apr 2026 18:42:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-big-tech-makes-money-from-your-data-a-practica/</guid>
-    </item>
-    <item>
-      <title>WebAssembly: When JavaScript Isn&apos;t Fast Enough: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/webassembly-when-javascript-isnt-fast-enough-a-pra/</link>
-      <description>A practical guide to WebAssembly: When JavaScript Isn&apos;t Fast Enough covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 20 Apr 2026 18:20:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/webassembly-when-javascript-isnt-fast-enough-a-pra/</guid>
     </item>
     <item>
       <title>AI Prompting</title>
@@ -70,13 +49,6 @@
       <guid>https://kubaik.github.io/vs-code-setup-that-2x-your-speed/</guid>
     </item>
     <item>
-      <title>Terraform IaC</title>
-      <link>https://kubaik.github.io/terraform-iac/</link>
-      <description>Terraform IaC for infrastructure management</description>
-      <pubDate>Mon, 20 Apr 2026 15:56:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-iac/</guid>
-    </item>
-    <item>
       <title>SRE: Fixing What Breaks Silent</title>
       <link>https://kubaik.github.io/sre-fixing-what-breaks-silent/</link>
       <description>SRE isn&apos;t about preventing outages—it&apos;s about controlling failure. Learn how error budgets, burn rates, and automation actually work in production.</description>
@@ -96,13 +68,6 @@
       <description>ASO isn&apos;t about keywords. Real ranking gains come from retention, engagement, and Apple&apos;s hidden behavioral signals. Data from 17 app campaigns.</description>
       <pubDate>Mon, 20 Apr 2026 14:20:35 +0000</pubDate>
       <guid>https://kubaik.github.io/aso-that-actually-moves-rankings/</guid>
-    </item>
-    <item>
-      <title>Go Concurrency</title>
-      <link>https://kubaik.github.io/go-concurrency/</link>
-      <description>Go concurrency with goroutines and channels</description>
-      <pubDate>Mon, 20 Apr 2026 14:12:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/go-concurrency/</guid>
     </item>
     <item>
       <title>Solo Dev? Scale Like a Pro</title>
@@ -126,13 +91,6 @@
       <guid>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</guid>
     </item>
     <item>
-      <title>Bug-Free Pipelines</title>
-      <link>https://kubaik.github.io/bug-free-pipelines/</link>
-      <description>Prevent bugs in CI/CD pipelines with code reviews, automated testing, and continuous integration</description>
-      <pubDate>Mon, 20 Apr 2026 13:15:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/bug-free-pipelines/</guid>
-    </item>
-    <item>
       <title>Mobile App Security</title>
       <link>https://kubaik.github.io/mobile-app-security/</link>
       <description>Mobile app security vulnerabilities can compromise user data, with 75% of apps having at least one vulnerability</description>
@@ -140,11 +98,53 @@
       <guid>https://kubaik.github.io/mobile-app-security/</guid>
     </item>
     <item>
-      <title>Code Read</title>
-      <link>https://kubaik.github.io/code-read/</link>
-      <description>Improve code reading skills with a structured approach</description>
-      <pubDate>Mon, 20 Apr 2026 12:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-read/</guid>
+      <title>Create Your AI Butler</title>
+      <link>https://kubaik.github.io/create-your-ai-butler/</link>
+      <description>Build a personal AI assistant with a user-centric approach</description>
+      <pubDate>Mon, 20 Apr 2026 08:55:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/create-your-ai-butler/</guid>
+    </item>
+    <item>
+      <title>AI Widens Wealth Gap</title>
+      <link>https://kubaik.github.io/ai-widens-wealth-gap/</link>
+      <description>AI widens wealth gap, exacerbating inequality</description>
+      <pubDate>Mon, 20 Apr 2026 08:12:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-widens-wealth-gap/</guid>
+    </item>
+    <item>
+      <title>2026 Data Breach Disasters</title>
+      <link>https://kubaik.github.io/2026-data-breach-disasters/</link>
+      <description>2026 data breach disasters: causes, effects, and prevention</description>
+      <pubDate>Mon, 20 Apr 2026 07:42:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-data-breach-disasters/</guid>
+    </item>
+    <item>
+      <title>AI Showdown: GPT vs Claude vs Gemini</title>
+      <link>https://kubaik.github.io/ai-showdown-gpt-vs-claude-vs-gemini/</link>
+      <description>GPT vs Claude vs Gemini: AI showdown</description>
+      <pubDate>Mon, 20 Apr 2026 06:33:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-showdown-gpt-vs-claude-vs-gemini/</guid>
+    </item>
+    <item>
+      <title>Stripe&apos;s Rise to Fame</title>
+      <link>https://kubaik.github.io/stripes-rise-to-fame/</link>
+      <description>Stripe revolutionized online payments by prioritizing developer experience. Learn how it works, common pitfalls, and the hidden tradeoffs of its simplified API.</description>
+      <pubDate>Mon, 20 Apr 2026 05:25:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/stripes-rise-to-fame/</guid>
+    </item>
+    <item>
+      <title>Tech Fail: Why Most Never Profit</title>
+      <link>https://kubaik.github.io/tech-fail-why-most-never-profit/</link>
+      <description>Tech companies often fail to become profitable</description>
+      <pubDate>Mon, 20 Apr 2026 03:52:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-fail-why-most-never-profit/</guid>
+    </item>
+    <item>
+      <title>GitOps Simplified</title>
+      <link>https://kubaik.github.io/gitops-simplified/</link>
+      <description>Simplify deployment with GitOps</description>
+      <pubDate>Mon, 20 Apr 2026 02:07:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-simplified/</guid>
     </item>
   </channel>
 </rss>
