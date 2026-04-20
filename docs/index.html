@@ -110,6 +110,7 @@
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: #6366f1; color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .post-lead { font-size: 1.05rem; color: #555; line-height: 1.6; margin: 0.25rem 0 1rem; font-style: italic; }
     </style>
 </head>
 <body>
@@ -160,6 +161,7 @@
                    data-description="AI widens wealth gap, exacerbating inequality"
                    data-tags="automation,TechJobs,machine learning,Ai,AI,ArtificialIntelligence,WealthGap,fairness,wealth gap">
                     <h3>AI Widens Wealth Gap</h3>
+                    
                     <p class="post-excerpt">AI widens wealth gap, exacerbating inequality</p>
                     
                     <p class="post-reading-time">12 min read</p>
@@ -182,6 +184,7 @@
                    data-description="2026 data breach disasters: causes, effects, and prevention"
                    data-tags="data breaches,OwaspZap,Cybersecurity,cybersecurity,web application security,OWASP ZAP,WebDev,Burp Suite,DataBreaches,CyberSecurity">
                     <h3>2026 Data Breach Disasters</h3>
+                    
                     <p class="post-excerpt">2026 data breach disasters: causes, effects, and prevention</p>
                     
                     <p class="post-reading-time">11 min read</p>
@@ -204,6 +207,7 @@
                    data-description="GPT vs Claude vs Gemini: AI showdown"
                    data-tags="AI,AI model comparison,natural language processing,ChatGPT,ArtificialIntelligence,OpenAI,GPT-4,Gpt4,Claude AI,Gemini AI">
                     <h3>AI Showdown: GPT vs Claude vs Gemini</h3>
+                    
                     <p class="post-excerpt">GPT vs Claude vs Gemini: AI showdown</p>
                     
                     <p class="post-reading-time">11 min read</p>
@@ -226,6 +230,7 @@
                    data-description="Stripe revolutionized online payments by prioritizing developer experience. Learn how it works, common pitfalls, and the hidden tradeoffs of its simplified API."
                    data-tags="PCI compliance Stripe,Stripe,PaymentGateway,Stripe API implementation,Payment Gateway,Stripe webhooks best practices,APIs">
                     <h3>Stripe's Rise to Fame</h3>
+                    
                     <p class="post-excerpt">Stripe revolutionized online payments by prioritizing developer experience. Learn how it works, common pitfalls, and the hidden tradeoffs of its simplified API.</p>
                     
                     <p class="post-reading-time">11 min read</p>
@@ -248,6 +253,7 @@
                    data-description="A practical guide to Fine-Tuning LLMs Without a GPU covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs."
                    data-tags="fine-tuning-llms-without-a-gpu,development,technical-guide,best-practices,LLM,GenerativeAI,FineTuning">
                     <h3>Fine-Tuning LLMs Without a GPU: A Practical Technical Guide</h3>
+                    
                     <p class="post-excerpt">A practical guide to Fine-Tuning LLMs Without a GPU covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</p>
                     
                     <p class="post-reading-time">4 min read</p>
@@ -270,6 +276,7 @@
                    data-description="Tech companies often fail to become profitable"
                    data-tags="customer feedback,Entrepreneurship,profitable business,Tech,ProfitableBusiness,TechCompanies,market research,innovation and R&amp;D,Technology,tech companies">
                     <h3>Tech Fail: Why Most Never Profit</h3>
+                    
                     <p class="post-excerpt">Tech companies often fail to become profitable</p>
                     
                     <p class="post-reading-time">11 min read</p>
@@ -292,6 +299,7 @@
                    data-description="Simplify deployment with GitOps"
                    data-tags="Argo CD,ArgoCd,Kubernetes,Gitops,What is GitOps,GitOps,K8s,Terraform">
                     <h3>GitOps Simplified</h3>
+                    
                     <p class="post-excerpt">Simplify deployment with GitOps</p>
                     
                     <p class="post-reading-time">10 min read</p>
@@ -314,6 +322,7 @@
                    data-description="Slack vs Teams: Why Slack Lost"
                    data-tags="Microsoft Teams,Slack vs Teams,SlackIntegration,Microsoft Office 365,What is Slack used for,MicrosoftTeams,Slack integration">
                     <h3>Slack vs Teams: Why Slack Lost</h3>
+                    
                     <p class="post-excerpt">Slack vs Teams: Why Slack Lost</p>
                     
                     <p class="post-reading-time">12 min read</p>
@@ -336,6 +345,7 @@
                    data-description="Master essential CLI tools like jq, ripgrep, tmux, and kubectl. Boost efficiency, debug faster, and automate complex tasks with concrete examples and real-world performance data."
                    data-tags="command line,CliTools,SoftwareEngineering,Linux command line productivity,shell scripting best practices,CommandLine,CLI tools,Coding,developer efficiency tools">
                     <h3>Essential CLI Tools</h3>
+                    
                     <p class="post-excerpt">Master essential CLI tools like jq, ripgrep, tmux, and kubectl. Boost efficiency, debug faster, and automate complex tasks with concrete examples and real-world performance data.</p>
                     
                     <p class="post-reading-time">15 min read</p>
@@ -358,6 +368,7 @@
                    data-description="Container security in Kubernetes"
                    data-tags="secret management,container security,CyberSecurity,InfoSec,KubernetesSecurity,network policies,production environments,Kubernetes,Kubernetes security,K8s">
                     <h3>Kubernetes Security Locked</h3>
+                    
                     <p class="post-excerpt">Container security in Kubernetes</p>
                     
                     <p class="post-reading-time">12 min read</p>
@@ -452,13 +463,25 @@
             var a       = document.createElement('a');
             a.className = 'post-card';
             a.href      = BASE_PATH + '/' + post.slug + '/';
+
             var h3         = document.createElement('h3');
             h3.textContent = post.title;
             a.appendChild(h3);
-            var p         = document.createElement('p');
-            p.className   = 'post-excerpt';
-            p.textContent = post.meta_description || '';
-            a.appendChild(p);
+
+            // ── FIX: use meta_description from posts.json (already safe-excerpted) ──
+            var excerpt = (post.meta_description || '').trim();
+            if (!excerpt && post.content) {
+                // client-side last resort: first 155 chars of content
+                excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
+            }
+            if (excerpt) {
+                var p         = document.createElement('p');
+                p.className   = 'post-excerpt';
+                p.textContent = excerpt;
+                a.appendChild(p);
+            }
+
             if (post.reading_time) {
                 var rt         = document.createElement('p');
                 rt.className   = 'post-reading-time';

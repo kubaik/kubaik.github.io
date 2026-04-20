@@ -11,6 +11,46 @@ from visibility_automator import VisibilityAutomator
 from monetization_manager import MonetizationManager
 
 
+# ─────────────────────────────────────────────────────────────────
+# FIX: module-level excerpt helper used by templates + Python code
+# ─────────────────────────────────────────────────────────────────
+
+def _safe_excerpt(meta_description: str, content: str, title: str = "",
+                  max_len: int = 155) -> str:
+    """
+    Return a non-empty excerpt string for display.
+    Priority: meta_description → first meaningful sentence in content → title.
+    """
+    import re
+
+    desc = (meta_description or "").strip()
+    if desc:
+        return desc
+
+    # Strip markdown and extract plain text
+    text = re.sub(r"```[\s\S]*?```", " ", content or "")
+    text = re.sub(r"`[^`]+`", " ", text)
+    text = re.sub(r"#{1,6}\s+", " ", text)
+    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+    text = re.sub(r"[*_]{1,3}", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
+
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if len(sentence) >= 40:
+            if len(sentence) > max_len:
+                sentence = sentence[:max_len].rsplit(
+                    " ", 1)[0].rstrip(".,;:") + "…"
+            return sentence
+
+    # Last resort: use first max_len chars of plain text or the title
+    fallback = text[:max_len] if text else (title or "")
+    if len(fallback) == max_len:
+        fallback = fallback.rsplit(" ", 1)[0] + "…"
+    return fallback
+
+
 class StaticSiteGenerator:
     def __init__(self, blog_system):
         self.blog_system = blog_system
@@ -93,6 +133,10 @@ Sitemap: {base_url}/rss.xml
             post_dict['display_date'] = self._format_display_date(p.created_at)
             post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
+            # ── FIX: guarantee excerpt is never empty on the homepage card ──
+            post_dict['meta_description'] = _safe_excerpt(
+                p.meta_description, p.content, p.title
+            )
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -134,7 +178,6 @@ Sitemap: {base_url}/rss.xml
                 extensions=['extra', 'fenced_code', 'toc'])
             content_html = markdown_converter.convert(post.content)
 
-            # ── CHANGE: build related posts (up to 3, by shared tags) ──────
             related = self._find_related_posts(post, posts, max_count=3)
 
             post_dict = post.to_dict()
@@ -146,6 +189,10 @@ Sitemap: {base_url}/rss.xml
             post_dict['reading_time'] = self._reading_time_minutes(
                 post.content)
             post_dict['word_count'] = len(post.content.split())
+            # ── FIX: guarantee meta_description is populated on post pages ──
+            post_dict['meta_description'] = _safe_excerpt(
+                post.meta_description, post.content, post.title
+            )
             context = {
                 'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
@@ -165,7 +212,6 @@ Sitemap: {base_url}/rss.xml
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html)
 
-    # ── CHANGE: new helper to find related posts by tag overlap ──────────
     def _find_related_posts(self, current: BlogPost, all_posts: List[BlogPost],
                             max_count: int = 3) -> List[Dict]:
         current_tags = set(t.lower() for t in current.tags)
@@ -179,10 +225,13 @@ Sitemap: {base_url}/rss.xml
         scored.sort(key=lambda x: x[0], reverse=True)
         result = []
         for _, p in scored[:max_count]:
+            # ── FIX: related-post cards also get a guaranteed excerpt ──
+            excerpt = _safe_excerpt(
+                p.meta_description, p.content, p.title, max_len=120)
             result.append({
                 'title': p.title,
                 'slug': p.slug,
-                'meta_description': p.meta_description[:120] + ('…' if len(p.meta_description) > 120 else ''),
+                'meta_description': excerpt,
                 'reading_time': self._reading_time_minutes(p.content),
                 'display_date': self._format_display_date(p.created_at),
                 'short_tags': sorted(p.tags, key=len)[:2],
@@ -219,10 +268,13 @@ Sitemap: {base_url}/rss.xml
         base_url = config.get('base_url', '')
         rss_items = []
         for post in posts[:20]:
+            # ── FIX: RSS description also gets the safe excerpt ──
+            desc = _safe_excerpt(post.meta_description,
+                                 post.content, post.title)
             item = f"""    <item>
       <title>{self._escape_xml(post.title)}</title>
       <link>{base_url}/{post.slug}/</link>
-      <description>{self._escape_xml(post.meta_description)}</description>
+      <description>{self._escape_xml(desc)}</description>
       <pubDate>{self._format_rss_date(post.created_at)}</pubDate>
       <guid>{base_url}/{post.slug}/</guid>
     </item>"""
@@ -272,6 +324,10 @@ Sitemap: {base_url}/rss.xml
         for p in posts:
             d = p.to_dict()
             d['reading_time'] = self._reading_time_minutes(p.content)
+            # ── FIX: posts.json (used by JS infinite scroll) also gets safe excerpt ──
+            d['meta_description'] = _safe_excerpt(
+                p.meta_description, p.content, p.title
+            )
             posts_data.append(d)
         with open("./docs/posts.json", 'w', encoding='utf-8') as f:
             json.dump(posts_data, f, indent=2)
@@ -298,14 +354,6 @@ Sitemap: {base_url}/rss.xml
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
-    # ─────────────────────────────────────────────────────────────
-    # POST TEMPLATE
-    # CHANGES:
-    #   • Author byline block below post header (name + bio + link to About)
-    #   • Word count and updated date shown in post meta
-    #   • Related posts section at bottom
-    #   • Breadcrumb nav for site structure signals
-    # ─────────────────────────────────────────────────────────────
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -338,7 +386,6 @@ def _build_templates() -> dict:
     </header>
     <main class="container">
 
-        {# ── Breadcrumb ── #}
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="{{ base_path }}/">Home</a>
             <span>›</span>
@@ -349,7 +396,11 @@ def _build_templates() -> dict:
             <header class="post-header">
                 <h1 itemprop="headline">{{ post.title }}</h1>
 
-                {# ── Post meta row: date, updated, read time, word count ── #}
+                {# ── FIX: show meta_description as a lead paragraph on the post page ── #}
+                {% if post.meta_description %}
+                <p class="post-lead">{{ post.meta_description }}</p>
+                {% endif %}
+
                 <div class="post-meta-row">
                     <span>
                         <time datetime="{{ post.created_at }}" itemprop="datePublished">
@@ -381,7 +432,6 @@ def _build_templates() -> dict:
                 {% endif %}
             </header>
 
-            {# ── CHANGE: Author block — visible E-E-A-T signal ── #}
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -407,7 +457,6 @@ def _build_templates() -> dict:
             </div>
             {% endif %}
 
-            {# ── CHANGE: Related posts section ── #}
             {% if related_posts %}
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -437,9 +486,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ─────────────────────────────────────────────────────────────
-    # INDEX TEMPLATE  (unchanged from original)
-    # ─────────────────────────────────────────────────────────────
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -486,6 +532,7 @@ def _build_templates() -> dict:
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: #6366f1; color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .post-lead { font-size: 1.05rem; color: #555; line-height: 1.6; margin: 0.25rem 0 1rem; font-style: italic; }
     </style>
 </head>
 <body>
@@ -536,6 +583,7 @@ def _build_templates() -> dict:
                    data-description="{{ post.meta_description | e }}"
                    data-tags="{{ post.tags | join(',') | e }}">
                     <h3>{{ post.title }}</h3>
+                    {# ── FIX: meta_description is guaranteed non-empty by _generate_homepage ── #}
                     <p class="post-excerpt">{{ post.meta_description }}</p>
                     {% if post.reading_time %}
                     <p class="post-reading-time">{{ post.reading_time }} min read</p>
@@ -624,13 +672,25 @@ def _build_templates() -> dict:
             var a       = document.createElement('a');
             a.className = 'post-card';
             a.href      = BASE_PATH + '/' + post.slug + '/';
+
             var h3         = document.createElement('h3');
             h3.textContent = post.title;
             a.appendChild(h3);
-            var p         = document.createElement('p');
-            p.className   = 'post-excerpt';
-            p.textContent = post.meta_description || '';
-            a.appendChild(p);
+
+            // ── FIX: use meta_description from posts.json (already safe-excerpted) ──
+            var excerpt = (post.meta_description || '').trim();
+            if (!excerpt && post.content) {
+                // client-side last resort: first 155 chars of content
+                excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
+            }
+            if (excerpt) {
+                var p         = document.createElement('p');
+                p.className   = 'post-excerpt';
+                p.textContent = excerpt;
+                a.appendChild(p);
+            }
+
             if (post.reading_time) {
                 var rt         = document.createElement('p');
                 rt.className   = 'post-reading-time';
@@ -854,11 +914,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ─────────────────────────────────────────────────────────────
-    # ABOUT TEMPLATE
-    # CHANGE: Expanded with more personal detail, credentials, writing process,
-    # and a clear editorial policy — all key E-E-A-T signals for AdSense reviewers.
-    # ─────────────────────────────────────────────────────────────
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
