@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 14:20:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 14:24:19 +0000</lastBuildDate>
+    <item>
+      <title>How Hackers Really Breach Systems</title>
+      <link>https://kubaik.github.io/how-hackers-really-breach-systems/</link>
+      <description>Hackers exploit misconfigurations and logic flaws, not magic. See how breaches happen and how to stop them with real tools and data.</description>
+      <pubDate>Mon, 20 Apr 2026 14:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-hackers-really-breach-systems/</guid>
+    </item>
     <item>
       <title>ASO That Actually Moves Rankings</title>
       <link>https://kubaik.github.io/aso-that-actually-moves-rankings/</link>
@@ -138,13 +145,6 @@
       <description>AI widens wealth gap, exacerbating inequality</description>
       <pubDate>Mon, 20 Apr 2026 08:12:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-widens-wealth-gap/</guid>
-    </item>
-    <item>
-      <title>2026 Data Breach Disasters</title>
-      <link>https://kubaik.github.io/2026-data-breach-disasters/</link>
-      <description>2026 data breach disasters: causes, effects, and prevention</description>
-      <pubDate>Mon, 20 Apr 2026 07:42:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-data-breach-disasters/</guid>
     </item>
   </channel>
 </rss>
