@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 15:21:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 12:25:06 +0000</lastBuildDate>
+    <item>
+      <title>Code Read</title>
+      <link>https://kubaik.github.io/code-read/</link>
+      <description>Improve code reading skills with a structured approach</description>
+      <pubDate>Mon, 20 Apr 2026 12:25:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-read/</guid>
+    </item>
+    <item>
+      <title>Skills to Abandon Before 2027</title>
+      <link>https://kubaik.github.io/skills-to-abandon-before-2027/</link>
+      <description>Discover the skills that will become obsolete in 5 years and learn how to stay ahead of the curve</description>
+      <pubDate>Mon, 20 Apr 2026 11:56:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/skills-to-abandon-before-2027/</guid>
+    </item>
     <item>
       <title>Web Accessibility: Code, Laws, and Reality Checks</title>
       <link>https://kubaik.github.io/web-accessibility-code-laws-and-reality-checks/</link>
@@ -131,13 +145,6 @@
       <description>Master essential CLI tools like jq, ripgrep, tmux, and kubectl. Boost efficiency, debug faster, and automate complex tasks with concrete examples and real-world performance data.</description>
       <pubDate>Sun, 19 Apr 2026 23:36:50 +0000</pubDate>
       <guid>https://kubaik.github.io/essential-cli-tools/</guid>
-    </item>
-    <item>
-      <title>Kubernetes Security Locked</title>
-      <link>https://kubaik.github.io/kubernetes-security-locked/</link>
-      <description>Container security in Kubernetes</description>
-      <pubDate>Sun, 19 Apr 2026 23:15:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/kubernetes-security-locked/</guid>
     </item>
   </channel>
 </rss>
