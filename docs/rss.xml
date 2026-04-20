@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 04:08:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 05:25:52 +0000</lastBuildDate>
+    <item>
+      <title>Stripe&apos;s Rise to Fame</title>
+      <link>https://kubaik.github.io/stripes-rise-to-fame/</link>
+      <description>Stripe revolutionized online payments by prioritizing developer experience. Learn how it works, common pitfalls, and the hidden tradeoffs of its simplified API.</description>
+      <pubDate>Mon, 20 Apr 2026 05:25:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/stripes-rise-to-fame/</guid>
+    </item>
     <item>
       <title>Fine-Tuning LLMs Without a GPU: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-a-practical-technic/</link>
@@ -138,13 +145,6 @@
       <description>Demystify neural network learning. Understand backpropagation, gradient descent, optimizers (Adam, SGD), and real-world tradeoffs. Avoid common pitfalls.</description>
       <pubDate>Sun, 19 Apr 2026 16:39:01 +0000</pubDate>
       <guid>https://kubaik.github.io/neural-networks-uncovered/</guid>
-    </item>
-    <item>
-      <title>AI Revolutionizes Life</title>
-      <link>https://kubaik.github.io/ai-revolutionizes-life/</link>
-      <description>AI revolutionizes life in 2026</description>
-      <pubDate>Sun, 19 Apr 2026 16:13:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolutionizes-life/</guid>
     </item>
   </channel>
 </rss>
