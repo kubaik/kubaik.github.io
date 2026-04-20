@@ -40,5 +40,6 @@
   "Go Concurrency: Why Gophers Love Goroutines",
   "App Store Optimization: What Actually Moves Rankings",
   "How Hackers Actually Break Into Systems",
-  "Site Reliability Engineering Principles That Matter"
+  "Site Reliability Engineering Principles That Matter",
+  "Infrastructure as Code with Terraform: The Real Guide"
 ]
