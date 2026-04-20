@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 19:06:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 19:09:02 +0000</lastBuildDate>
+    <item>
+      <title>Stop Chasing Alerts: Monitor Proactively</title>
+      <link>https://kubaik.github.io/stop-chasing-alerts-monitor-proactively/</link>
+      <description>Synthetic monitoring cuts incident detection from 28 minutes to 90 seconds. Real-world metrics, code samples, and tools that prevent outages before users notice.</description>
+      <pubDate>Mon, 20 Apr 2026 19:09:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-chasing-alerts-monitor-proactively/</guid>
+    </item>
     <item>
       <title>Secure Your Cloud Apps: Dev-Friendly Guide</title>
       <link>https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/</link>
@@ -138,13 +145,6 @@
       <description>Improve code reading skills with a structured approach</description>
       <pubDate>Mon, 20 Apr 2026 12:25:04 +0000</pubDate>
       <guid>https://kubaik.github.io/code-read/</guid>
-    </item>
-    <item>
-      <title>Skills to Abandon Before 2027</title>
-      <link>https://kubaik.github.io/skills-to-abandon-before-2027/</link>
-      <description>Discover the skills that will become obsolete in 5 years and learn how to stay ahead of the curve</description>
-      <pubDate>Mon, 20 Apr 2026 11:56:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/skills-to-abandon-before-2027/</guid>
     </item>
   </channel>
 </rss>
