@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 00:10:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 02:07:17 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Simplified</title>
+      <link>https://kubaik.github.io/gitops-simplified/</link>
+      <description>Simplify deployment with GitOps</description>
+      <pubDate>Mon, 20 Apr 2026 02:07:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-simplified/</guid>
+    </item>
     <item>
       <title>Slack vs Teams: Why Slack Lost</title>
       <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
@@ -138,13 +145,6 @@
       <description></description>
       <pubDate>Sun, 19 Apr 2026 15:29:32 +0000</pubDate>
       <guid>https://kubaik.github.io/data-warehouses-vs-lakes-vs-lakehouses/</guid>
-    </item>
-    <item>
-      <title>Digital Nomad Costs Exposed</title>
-      <link>https://kubaik.github.io/digital-nomad-costs-exposed/</link>
-      <description>Exposing hidden digital nomad costs for tech pros: taxes, currency fees, healthcare, and the cognitive load nobody mentions. Real budgets, tools, and pitfalls revealed.</description>
-      <pubDate>Sun, 19 Apr 2026 14:04:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-nomad-costs-exposed/</guid>
     </item>
   </channel>
 </rss>
