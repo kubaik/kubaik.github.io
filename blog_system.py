@@ -81,6 +81,45 @@ def _count_words(text: str) -> int:
     return len(text.split())
 
 
+# ─────────────────────────────────────────────────────────────────
+# FIX: derive a description from content when meta_description is empty
+# ─────────────────────────────────────────────────────────────────
+
+def _derive_description(content: str, title: str, max_len: int = 155) -> str:
+    """
+    Extract a meaningful excerpt from the post content to use as
+    meta_description when the AI omits or truncates it.
+    Strips markdown symbols and returns the first complete sentence
+    that is at least 40 characters long, capped at max_len chars.
+    """
+    # Remove markdown headings, bold/italic markers, links, code fences
+    text = re.sub(r"```[\s\S]*?```", " ", content)
+    text = re.sub(r"`[^`]+`", " ", text)
+    text = re.sub(r"#{1,6}\s+", " ", text)
+    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+    text = re.sub(r"[*_]{1,3}", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
+
+    # Try to grab the first meaningful sentence
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    excerpt = ""
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if len(sentence) >= 40:
+            excerpt = sentence
+            break
+
+    if not excerpt:
+        excerpt = text[:max_len]
+
+    # Trim to max_len on a word boundary
+    if len(excerpt) > max_len:
+        excerpt = excerpt[:max_len].rsplit(" ", 1)[0].rstrip(".,;:")
+        excerpt += "…"
+
+    return excerpt
+
+
 def audit_posts(docs_dir: Path) -> Dict:
     """
     Scan all saved posts and return counts + slugs of:
@@ -831,6 +870,12 @@ class BlogSystem:
             seo_keywords = [k.strip()
                             for k in bundle["seo_keywords"] if k.strip()]
 
+            # ── FIX: ensure meta_description is never empty ──────────────
+            if not meta_description:
+                print(
+                    "Warning: meta_description empty from API — deriving from content.")
+                meta_description = _derive_description(content, title)
+
             if not keywords:
                 keywords = seo_keywords
 
@@ -1111,6 +1156,13 @@ Return ONLY the JSON object.""",
         for key in ("content", "meta_description", "seo_keywords"):
             if key not in data:
                 raise ValueError(f"Bundle response missing key: '{key}'")
+
+        # ── FIX: patch empty meta_description immediately after parsing ──
+        if not data.get("meta_description", "").strip():
+            data["meta_description"] = _derive_description(
+                data.get("content", ""), title
+            )
+
         return data
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
@@ -1237,6 +1289,12 @@ Most guides tell you to add {topic} and call it done. In practice, the hardest p
 
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
+        # ── FIX: always derive a non-empty description for fallback posts ──
+        meta_description = (
+            f"A practical guide to {topic} covering implementation, "
+            f"real performance benchmarks, common mistakes, and honest tradeoffs."
+        )
+
         fallback_hashtags = _derive_hashtags_from_keywords(
             [topic_lower, f"{topic_lower} tutorial",
                 f"{topic_lower} best practices"],
@@ -1247,7 +1305,7 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
             title=title, content=content, slug=slug,
             tags=[topic_lower.replace(
                 ' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
-            meta_description=f"A practical guide to {topic} covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.",
+            meta_description=meta_description,
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(), updated_at=datetime.now().isoformat(),
             seo_keywords=[topic_lower, f"{topic_lower} tutorial", f"{topic_lower} best practices",
@@ -1282,6 +1340,12 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         if word_count < MIN_WORD_COUNT:
             print(
                 f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
+
+        # ── FIX: repair missing meta_description before saving ───────────
+        if not getattr(post, 'meta_description', '').strip():
+            post.meta_description = _derive_description(
+                post.content, post.title)
+            print(f"  meta_description was empty — derived from content.")
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
@@ -1386,8 +1450,6 @@ def create_sample_config():
         "google_adsense_id":           "ca-pub-4477679588953789",
         "google_search_console_key":   "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
         "google_adsense_verification": "ca-pub-4477679588953789",
-        # Options: auto | confession | contrarian | curiosity |
-        #          before_after | challenge | observation
         "hook_style": "auto",
         "social_accounts": {"twitter": "@KubaiKevin", "linkedin": "your-linkedin-page", "facebook": "your-facebook-page"},
         "content_topics": [
@@ -1406,116 +1468,6 @@ def create_sample_config():
             "How to Build Passive Income as a Developer", "Breaking Into Tech at 30, 40, or 50",
             "Tech Interview Red Flags That Cost Candidates Jobs", "The Fastest Growing Tech Roles Right Now",
             "Why Developers Burn Out and How to Prevent It", "How to Get Promoted Faster in Tech",
-            "How to Build a SaaS Product as a Solo Developer", "The Tech Stack for Bootstrapped Startups in 2026",
-            "How Indie Hackers Are Making $10K/Month", "No-Code vs Code: When to Use Each",
-            "From Idea to Launch: Building an MVP in 30 Days", "How to Validate a Startup Idea Before Building",
-            "The Cheapest Way to Deploy a Web App in 2026", "Why Most Side Projects Fail (And How to Fix It)",
-            "How to Find Your First 100 Customers as a Developer", "Building in Public: What Works and What Doesn't",
-            "Open Source Projects That Made Millions", "How to Price Your SaaS Product",
-            "What VCs Actually Look for in Tech Startups", "Startup Failure Lessons from Founders Who Lost Everything",
-            "The Solo Developer's Guide to Scaling", "The AI Workflow That Saves 10 Hours a Week",
-            "Best AI Coding Assistants Compared: Copilot vs Cursor vs Others",
-            "How to Use AI for Content Creation (Without It Sounding Robotic)",
-            "AI for Data Analysis: No Coding Required", "The Best AI Image Tools in 2026",
-            "How Developers Are Using AI to 10x Their Output", "Automating Your Life with AI and Python",
-            "AI Tools That Write Better Code Than Most Juniors", "How to Build a Personal AI Assistant",
-            "The Prompt Engineering Techniques That Actually Work", "AI Agents: What They Are and Why They Matter",
-            "How to Use AI to Learn Any Skill Faster", "The Best Free AI APIs for Developers",
-            "Building AI-Powered Apps Without Machine Learning Knowledge", "AI for Personal Finance: Tools and Strategies",
-            "Will AI Replace Software Developers? The Honest Answer", "Remote Work vs Office: What the Data Actually Shows",
-            "The 4-Day Work Week in Tech: Companies Trying It", "Why So Many Developers Are Leaving Big Tech",
-            "Tech Layoffs 2026: What's Really Happening", "The Skills That Will Be Worthless in 5 Years",
-            "How Social Media Algorithms Work (And How to Beat Them)", "The Dark Side of Big Tech: What Insiders Say",
-            "Why Everyone Should Learn to Code (And Why That's Wrong)", "How AI Is Making Wealth Inequality Worse",
-            "The Countries Winning the AI Race", "Digital Nomad Life: The Real Costs Nobody Mentions",
-            "Why Junior Developer Jobs Are Disappearing", "The Tech Industry's Mental Health Crisis",
-            "How Technology Is Changing Human Relationships", "Why Most Digital Transformations Fail",
-            "How Netflix Decides What to Build Next", "The Tech Behind Amazon's One-Click Empire",
-            "How Stripe Became the Internet's Payment System", "Why WhatsApp Was Worth $19 Billion",
-            "The Engineering Culture That Built Google", "How Apple Maintains Premium Pricing in a Competitive Market",
-            "The Lessons Startups Learn Too Late", "How Big Tech Makes Money From Your Data",
-            "The Open Source Business Models That Work", "Why Slack Failed to Beat Microsoft Teams",
-            "How Figma Was Built and Why Adobe Tried to Buy It", "The API Economy: How Twilio and Stripe Print Money",
-            "Why Most Tech Companies Never Become Profitable", "Platform Business Models Explained",
-            "Generative AI and Large Language Models Explained", "How Neural Networks Actually Learn",
-            "Prompt Engineering for Real-World Applications", "Vector Databases and Embeddings: A Practical Guide",
-            "Building AI Agents That Actually Work", "MLOps: Deploying AI Models Without Breaking Everything",
-            "Fine-Tuning LLMs Without a GPU", "AI Model Monitoring: Catching Drift Before It Hurts",
-            "Retrieval-Augmented Generation (RAG) Explained Simply", "Multi-Modal AI: When Models See, Hear, and Read",
-            "AI Ethics: The Problems Big Tech Doesn't Want to Discuss", "Federated Learning: AI That Respects Privacy",
-            "AI for Time Series Forecasting in Practice", "Explainable AI: Making Black Boxes Transparent",
-            "Computer Vision Applications in the Real World", "How Hackers Actually Break Into Systems",
-            "The Biggest Data Breaches of 2026 and What Went Wrong", "Zero Trust Security: Why Perimeter Defense Is Dead",
-            "How to Protect Your Personal Data from Corporations", "Password Security: What Actually Works in 2026",
-            "How Ransomware Attacks Work and How to Survive One", "API Security Mistakes That Got Companies Hacked",
-            "OAuth 2.0 and JWT Authentication Deep Dive", "Penetration Testing: How Ethical Hackers Think",
-            "Social Engineering: The Human Side of Cybersecurity", "Cloud Security Best Practices for Developers",
-            "How to Run a Security Audit on Your Web App", "DDoS Attacks: How They Work and How to Stop Them",
-            "Container Security in Production Kubernetes", "The Security Vulnerabilities in Most Mobile Apps",
-            "React vs Next.js vs Remix: Choosing the Right Tool", "Full-Stack Development in 2026: The Best Stack",
-            "Building Real-Time Apps with WebSockets", "Web Performance: Why Your Site Loads Slow and How to Fix It",
-            "TypeScript Patterns That Actually Save Time", "CSS Tricks That Senior Developers Actually Use",
-            "Building a Production-Ready App with Supabase", "The Jamstack in 2026: Still Worth It?",
-            "Web Accessibility: The Laws and the Code", "GraphQL vs REST vs tRPC in 2026",
-            "Progressive Web Apps: When They Beat Native", "Server Components vs Client Components Explained",
-            "WebAssembly: When JavaScript Isn't Fast Enough", "Building a Micro-Frontend Architecture",
-            "Modern Authentication Patterns for Web Apps", "System Design Interview: How to Think Like a Senior Engineer",
-            "How Netflix Handles 200 Million Concurrent Streams", "Designing a URL Shortener That Handles Billions of Requests",
-            "Microservices vs Monolith: The Honest Comparison", "Event-Driven Architecture in Practice",
-            "Database Indexing: The Hidden Performance Secret", "Redis in Production: Patterns That Scale",
-            "Building an API That Can Handle a Million Requests", "The CAP Theorem Explained Simply",
-            "How Stripe Processes Payments Without Losing Data", "Designing a Chat System Like WhatsApp",
-            "Rate Limiting Strategies That Actually Work", "Message Queues: Kafka vs RabbitMQ vs SQS",
-            "Database Sharding: When and How to Do It", "Serverless Architecture: Real Costs and Real Limits",
-            "The DevOps Mistakes That Cause Outages", "Kubernetes: When It Helps and When It Hurts",
-            "Docker in Production: What No One Tells You", "CI/CD Pipelines That Actually Prevent Bugs",
-            "Cloud Cost Optimization: Cutting Your AWS Bill in Half", "Infrastructure as Code with Terraform: The Real Guide",
-            "GitOps: The Deployment Strategy Worth Understanding", "Monitoring Your Application Before Users Complain",
-            "The On-Call Engineer's Survival Guide", "Blue-Green vs Canary Deployments: Which and When",
-            "Log Management at Scale: What Works", "Site Reliability Engineering Principles That Matter",
-            "Multi-Cloud Strategy: Smart or Overkill", "Secrets Management: Keeping Credentials Safe",
-            "Platform Engineering: Building Internal Developer Platforms",
-            "Building Your First Data Pipeline That Doesn't Break", "Apache Kafka for Developers Who Aren't Data Engineers",
-            "Data Warehouse vs Data Lake vs Lakehouse: Which One", "Real-Time Data Processing at Scale",
-            "Data Quality: Why Your Analytics Are Lying to You", "Apache Spark Without the Headaches",
-            "Snowflake vs BigQuery vs Redshift in 2026", "A/B Testing: How to Run Experiments That Mean Something",
-            "Data Mesh Architecture Explained", "Business Intelligence Tools for Engineering Teams",
-            "React Native vs Flutter in 2026: Final Answer", "Building a Mobile App That Users Don't Delete",
-            "Mobile Performance: Why Your App Feels Slow", "Push Notifications Done Right",
-            "App Store Optimization: What Actually Moves Rankings", "Swift for iOS: Patterns That Scale",
-            "Kotlin for Android: Modern Development Guide", "Mobile Security Vulnerabilities and Fixes",
-            "Cross-Platform vs Native: The Real Trade-offs", "Mobile CI/CD Automation in Practice",
-            "Blockchain Beyond the Hype: Real Use Cases", "Web3 Development: What It Actually Takes",
-            "IoT Architecture for Developers", "Edge Computing: Why It Matters for Your App",
-            "Quantum Computing for Software Engineers", "AR Development with Apple Vision Pro",
-            "Digital Twin Technology in Industry", "5G's Real Impact on Application Development",
-            "Low-Code Platforms: Threat or Tool for Developers", "Robotics Process Automation in Enterprise",
-            "Clean Code: The Rules That Actually Matter", "SOLID Principles Applied to Real Projects",
-            "Test-Driven Development That Doesn't Slow You Down", "Code Review: How to Give Feedback That Improves Code",
-            "Refactoring Legacy Code Without Breaking Everything", "Technical Debt: How to Measure and Pay It Down",
-            "Design Patterns You'll Actually Use", "Documentation That Developers Actually Read",
-            "Agile in Practice: What Works, What's Theatre", "Pair Programming: When It's Worth It",
-            "How Senior Developers Think Differently", "The Mental Models Every Developer Needs",
-            "How to Learn a New Programming Language Fast", "Debugging Mindset: How Experts Find Bugs",
-            "How to Read Other People's Code Effectively", "Technical Writing for Developers",
-            "Building a Second Brain as a Developer", "How to Contribute to Open Source Projects",
-            "Developer Productivity: What Research Actually Shows", "Managing Up: How Developers Build Influence",
-            "Python in 2026: What's New and What Changed", "JavaScript Features That Changed How We Code",
-            "TypeScript Advanced Patterns Worth Learning", "Go Concurrency: Why Gophers Love Goroutines",
-            "Rust for Developers Coming from Python or JavaScript", "Java in 2026: Still Relevant or Time to Move On",
-            "Functional Programming Concepts in Practical Code", "SQL Tricks That Replace Complex Application Code",
-            "Bash Scripting for Developers Who Avoid the Terminal", "Python vs Go vs Rust: Choosing for Your Use Case",
-            "VS Code Setup That Makes You 2x Faster", "Git Commands That Senior Developers Use Daily",
-            "Terminal Productivity for Developers", "Debugging Techniques That Find Bugs in Minutes",
-            "API Testing: Beyond Basic Postman Requests", "Database Tools Worth Having in 2026",
-            "The Developer's Guide to Time Management", "Automating Repetitive Dev Tasks with Python",
-            "Command Line Tools Every Developer Should Know", "Building a Development Environment That Doesn't Frustrate",
-            "Application Performance Monitoring That Prevents Incidents",
-            "Database Query Optimization: Finding and Fixing Slow Queries",
-            "Frontend Performance: Core Web Vitals Explained", "Image Optimization for Web in 2026",
-            "Lazy Loading and Code Splitting in Practice", "Memory Leaks: How to Find and Fix Them",
-            "Profiling Python Applications for Speed", "Network Performance Optimization for APIs",
-            "Algorithm Optimization: Practical Big O Analysis", "Caching Strategies That Actually Improve Performance",
         ],
     }
 
@@ -1566,7 +1518,6 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
-                # ── Single-tweet posting ───────────────────────────────
                 visibility = VisibilityAutomator(config)
                 print("\nPosting single tweet...")
                 result = visibility.post_single_tweet(blog_post)
@@ -1577,7 +1528,6 @@ if __name__ == "__main__":
                         f"   {result['char_count']} chars | {result['tweet_text'][:80]}…")
                 else:
                     print(f"❌ Tweet failed: {result.get('error')}")
-                    # Fallback: try EnhancedTweetGenerator best-strategy
                     print("Attempting fallback via best-strategy picker...")
                     fallback = visibility.post_with_best_strategy(blog_post)
                     if fallback["success"]:
@@ -1695,10 +1645,44 @@ if __name__ == "__main__":
             subprocess.run(["python", "deduplicate_posts.py",
                            "--delete"] + sys.argv[2:])
 
+        elif mode == "fix-descriptions":
+            # ── NEW: one-shot repair of all existing posts with empty meta_description ──
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            blog_system = BlogSystem(config)
+            docs_dir = blog_system.output_dir
+            fixed = 0
+            for post_dir in docs_dir.iterdir():
+                if not post_dir.is_dir() or post_dir.name == "static":
+                    continue
+                post_json = post_dir / "post.json"
+                if not post_json.exists():
+                    continue
+                try:
+                    with open(post_json, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    desc = data.get("meta_description", "").strip()
+                    if not desc:
+                        derived = _derive_description(
+                            data.get("content", ""), data.get("title", "")
+                        )
+                        data["meta_description"] = derived
+                        with open(post_json, "w", encoding="utf-8") as f:
+                            json.dump(data, f, indent=2, ensure_ascii=False)
+                        print(f"Fixed: {post_dir.name} → {derived[:80]}…")
+                        fixed += 1
+                except Exception as e:
+                    print(f"Error fixing {post_dir.name}: {e}")
+            print(
+                f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
+
         else:
             print(
-                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup]")
+                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup|fix-descriptions]")
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup")
+        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions")
