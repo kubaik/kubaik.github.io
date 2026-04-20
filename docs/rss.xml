@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 17:08:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 14:12:24 +0000</lastBuildDate>
+    <item>
+      <title>Go Concurrency</title>
+      <link>https://kubaik.github.io/go-concurrency/</link>
+      <description>Go concurrency with goroutines and channels</description>
+      <pubDate>Mon, 20 Apr 2026 14:12:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-concurrency/</guid>
+    </item>
     <item>
       <title>Solo Dev? Scale Like a Pro</title>
       <link>https://kubaik.github.io/solo-dev-scale-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>GPT vs Claude vs Gemini: AI showdown</description>
       <pubDate>Mon, 20 Apr 2026 06:33:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-showdown-gpt-vs-claude-vs-gemini/</guid>
-    </item>
-    <item>
-      <title>Stripe&apos;s Rise to Fame</title>
-      <link>https://kubaik.github.io/stripes-rise-to-fame/</link>
-      <description>Stripe revolutionized online payments by prioritizing developer experience. Learn how it works, common pitfalls, and the hidden tradeoffs of its simplified API.</description>
-      <pubDate>Mon, 20 Apr 2026 05:25:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/stripes-rise-to-fame/</guid>
     </item>
   </channel>
 </rss>
