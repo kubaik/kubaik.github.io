@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 17:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 17:40:26 +0000</lastBuildDate>
+    <item>
+      <title>Git Commands Senior Devs Swear By</title>
+      <link>https://kubaik.github.io/git-commands-senior-devs-swear-by/</link>
+      <description>Senior developers use specific Git commands daily to maintain clean history, debug faster, and prevent merge chaos. Real-world performance data included.</description>
+      <pubDate>Mon, 20 Apr 2026 17:40:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-commands-senior-devs-swear-by/</guid>
+    </item>
     <item>
       <title>Web App Security Audit: What Actually Works</title>
       <link>https://kubaik.github.io/web-app-security-audit-what-actually-works/</link>
@@ -138,13 +145,6 @@
       <description>A deep dive into the pitfalls and payoffs of building in public, including tools, platforms, and strategies for success.</description>
       <pubDate>Mon, 20 Apr 2026 10:19:20 +0000</pubDate>
       <guid>https://kubaik.github.io/building-in-public-pitfalls-and-payoffs/</guid>
-    </item>
-    <item>
-      <title>How Companies Are Using AI to Cut Costs: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-companies-are-using-ai-to-cut-costs-a-practica/</link>
-      <description>A practical guide to How Companies Are Using AI to Cut Costs covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
-      <pubDate>Mon, 20 Apr 2026 09:54:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-companies-are-using-ai-to-cut-costs-a-practica/</guid>
     </item>
   </channel>
 </rss>
