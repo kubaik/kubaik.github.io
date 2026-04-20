@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 16:53:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 13:56:33 +0000</lastBuildDate>
+    <item>
+      <title>Fix Slow Queries: Real Database Wins</title>
+      <link>https://kubaik.github.io/fix-slow-queries-real-database-wins/</link>
+      <description>Slow queries waste resources and hurt UX. Real fixes using PostgreSQL, indexes, and monitoring—backed by 94% performance gains and production war stories.</description>
+      <pubDate>Mon, 20 Apr 2026 13:56:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-slow-queries-real-database-wins/</guid>
+    </item>
     <item>
       <title>Why Your Code Docs Fail and How to Fix Them</title>
       <link>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</link>
@@ -138,13 +145,6 @@
       <description>A practical guide to Fine-Tuning LLMs Without a GPU covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
       <pubDate>Mon, 20 Apr 2026 04:08:57 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-a-practical-technic/</guid>
-    </item>
-    <item>
-      <title>Tech Fail: Why Most Never Profit</title>
-      <link>https://kubaik.github.io/tech-fail-why-most-never-profit/</link>
-      <description>Tech companies often fail to become profitable</description>
-      <pubDate>Mon, 20 Apr 2026 03:52:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-fail-why-most-never-profit/</guid>
     </item>
   </channel>
 </rss>
