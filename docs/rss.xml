@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 23:36:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 00:10:38 +0000</lastBuildDate>
+    <item>
+      <title>Slack vs Teams: Why Slack Lost</title>
+      <link>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</link>
+      <description>Slack vs Teams: Why Slack Lost</description>
+      <pubDate>Mon, 20 Apr 2026 00:10:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/slack-vs-teams-why-slack-lost/</guid>
+    </item>
     <item>
       <title>Essential CLI Tools</title>
       <link>https://kubaik.github.io/essential-cli-tools/</link>
@@ -138,13 +145,6 @@
       <description>Exposing hidden digital nomad costs for tech pros: taxes, currency fees, healthcare, and the cognitive load nobody mentions. Real budgets, tools, and pitfalls revealed.</description>
       <pubDate>Sun, 19 Apr 2026 14:04:02 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-nomad-costs-exposed/</guid>
-    </item>
-    <item>
-      <title>Secure Your Phone</title>
-      <link>https://kubaik.github.io/secure-your-phone/</link>
-      <description>Mobile security vulnerabilities and fixes</description>
-      <pubDate>Sun, 19 Apr 2026 13:45:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-phone/</guid>
     </item>
   </channel>
 </rss>
