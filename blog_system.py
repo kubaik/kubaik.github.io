@@ -618,7 +618,7 @@ class BlogSystem:
                     async with s.post(
                         "https://api.groq.com/openai/v1/chat/completions",
                         headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=30),
+                        timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
@@ -661,7 +661,7 @@ class BlogSystem:
                     async with s.post(
                         "https://openrouter.ai/api/v1/chat/completions",
                         headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=30),
+                        timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
                             result = await r.json()
@@ -699,7 +699,7 @@ class BlogSystem:
                     async with s.post(
                         "https://api.cerebras.ai/v1/chat/completions",
                         headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=30),
+                        timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
@@ -732,7 +732,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         _MISTRAL_API_URL, headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=30),
+                        timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
@@ -765,7 +765,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         _NVIDIA_API_URL, headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=45),
+                        timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
@@ -838,7 +838,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
                         api_url, json=payload,
-                        timeout=aiohttp.ClientTimeout(total=45),
+                        timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
                             result = await r.json()
@@ -1025,7 +1025,7 @@ Return ONLY the JSON object.""",
             },
         ]
 
-        raw = await self._call_api_with_fallback(messages, max_tokens=8000)
+        raw = await self._call_api_with_fallback(messages, max_tokens=6000)
         raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
