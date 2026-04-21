@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2026 23:38:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 00:11:12 +0000</lastBuildDate>
+    <item>
+      <title>Tech Debt</title>
+      <link>https://kubaik.github.io/tech-debt/</link>
+      <description>Measure and pay down technical debt with SonarQube and CodeCoverage</description>
+      <pubDate>Tue, 21 Apr 2026 00:11:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-debt/</guid>
+    </item>
     <item>
       <title>Netflix&apos;s Build Next</title>
       <link>https://kubaik.github.io/netflixs-build-next/</link>
@@ -138,13 +145,6 @@
       <description>Solo devs can scale apps to thousands of users. Real benchmarks, code examples, and tools like Fly.io, Postgres, and Redis.</description>
       <pubDate>Mon, 20 Apr 2026 14:03:25 +0000</pubDate>
       <guid>https://kubaik.github.io/solo-dev-scale-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Fix Slow Queries: Real Database Wins</title>
-      <link>https://kubaik.github.io/fix-slow-queries-real-database-wins/</link>
-      <description>Slow queries waste resources and hurt UX. Real fixes using PostgreSQL, indexes, and monitoring—backed by 94% performance gains and production war stories.</description>
-      <pubDate>Mon, 20 Apr 2026 13:56:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-slow-queries-real-database-wins/</guid>
     </item>
   </channel>
 </rss>
