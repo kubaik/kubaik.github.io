@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 01:10:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 01:56:39 +0000</lastBuildDate>
+    <item>
+      <title>Dev Income</title>
+      <link>https://kubaik.github.io/dev-income/</link>
+      <description>Developers can create passive income streams</description>
+      <pubDate>Tue, 21 Apr 2026 01:56:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-income/</guid>
+    </item>
     <item>
       <title>Big Tech Exodus</title>
       <link>https://kubaik.github.io/big-tech-exodus/</link>
@@ -138,13 +145,6 @@
       <description>Hackers exploit misconfigurations and logic flaws, not magic. See how breaches happen and how to stop them with real tools and data.</description>
       <pubDate>Mon, 20 Apr 2026 14:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/how-hackers-really-breach-systems/</guid>
-    </item>
-    <item>
-      <title>ASO That Actually Moves Rankings</title>
-      <link>https://kubaik.github.io/aso-that-actually-moves-rankings/</link>
-      <description>ASO isn&apos;t about keywords. Real ranking gains come from retention, engagement, and Apple&apos;s hidden behavioral signals. Data from 17 app campaigns.</description>
-      <pubDate>Mon, 20 Apr 2026 14:20:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/aso-that-actually-moves-rankings/</guid>
     </item>
   </channel>
 </rss>
