@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 10:07:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 10:15:33 +0000</lastBuildDate>
+    <item>
+      <title>JS Rev</title>
+      <link>https://kubaik.github.io/js-rev/</link>
+      <description>Discover how JavaScript features like async/await and classes simplify coding</description>
+      <pubDate>Tue, 21 Apr 2026 10:15:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/js-rev/</guid>
+    </item>
     <item>
       <title>Tech Exit</title>
       <link>https://kubaik.github.io/tech-exit/</link>
@@ -138,13 +145,6 @@
       <description>SaaS pricing strategy and implementation</description>
       <pubDate>Mon, 20 Apr 2026 19:44:28 +0000</pubDate>
       <guid>https://kubaik.github.io/saas-pricing/</guid>
-    </item>
-    <item>
-      <title>API Speed: Beyond Caching and Compression</title>
-      <link>https://kubaik.github.io/api-speed-beyond-caching-and-compression/</link>
-      <description>Real-world API performance gains come from protobuf, HTTP/2, and edge caching. See 66% smaller payloads and 50% lower latency with gRPC-Web.</description>
-      <pubDate>Mon, 20 Apr 2026 19:31:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-speed-beyond-caching-and-compression/</guid>
     </item>
   </channel>
 </rss>
