@@ -2,9 +2,7 @@ name: Watchdog - Blog Automation Monitor
 
 on:
   schedule:
-    - cron: "15 * * * *" # Runs 15 mins past every hour
-    - cron: "30 * * * *" # Runs 30 minutes past every hour
-    - cron: "45 * * * *" # Runs 45 minutes past every hour
+    - cron: "55 * * * *" # Runs 55 mins past every hour
 
   workflow_dispatch: # Allow manual trigger for testing
 
@@ -15,7 +13,7 @@ permissions:
 jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 5 # Watchdog itself should complete quickly
+    timeout-minutes: 5
 
     steps:
       - name: Check last blog automation run
@@ -25,7 +23,6 @@ jobs:
         run: |
           echo "Fetching last run info for blog-automation.yml..."
 
-          # Get the last run details
           LAST_RUN_JSON=$(gh run list \
             --repo ${{ github.repository }} \
             --workflow=blog-automation.yml \
@@ -34,7 +31,6 @@ jobs:
 
           echo "Last run data: $LAST_RUN_JSON"
 
-          # Extract fields
           LAST_UPDATED=$(echo "$LAST_RUN_JSON" | python3 -c "import json,sys; runs=json.load(sys.stdin); print(runs[0]['updatedAt']) if runs else print('')")
           LAST_STATUS=$(echo "$LAST_RUN_JSON"  | python3 -c "import json,sys; runs=json.load(sys.stdin); print(runs[0]['status']) if runs else print('unknown')")
           LAST_CONCLUSION=$(echo "$LAST_RUN_JSON" | python3 -c "import json,sys; runs=json.load(sys.stdin); print(runs[0]['conclusion']) if runs else print('unknown')")
@@ -45,11 +41,10 @@ jobs:
           echo "Last conclusion: $LAST_CONCLUSION"
           echo "Last run ID  : $LAST_RUN_ID"
 
-          # Export for next steps
-          echo "last_updated=$LAST_UPDATED"   >> $GITHUB_OUTPUT
-          echo "last_status=$LAST_STATUS"     >> $GITHUB_OUTPUT
+          echo "last_updated=$LAST_UPDATED"       >> $GITHUB_OUTPUT
+          echo "last_status=$LAST_STATUS"         >> $GITHUB_OUTPUT
           echo "last_conclusion=$LAST_CONCLUSION" >> $GITHUB_OUTPUT
-          echo "last_run_id=$LAST_RUN_ID"     >> $GITHUB_OUTPUT
+          echo "last_run_id=$LAST_RUN_ID"         >> $GITHUB_OUTPUT
 
       - name: Calculate staleness
         id: staleness
@@ -72,12 +67,12 @@ jobs:
           echo "age_minutes=$DIFF" >> $GITHUB_OUTPUT
 
           # Flag as stale if:
-          # - Last run was more than 40 minutes ago (covers both 30-min windows), OR
-          # - Last run is still in_progress/queued AND is older than 25 minutes (likely hung)
+          # - Last run completed more than 55 minutes ago, OR
+          # - Last run has been in_progress for more than 25 minutes (likely hung)
           IS_STALE="false"
 
-          if [ "$DIFF" -gt 40 ]; then
-            echo "STALE: Last completed run is $DIFF minutes old (threshold: 40 min)"
+          if [ "$DIFF" -gt 55 ]; then
+            echo "STALE: Last completed run is $DIFF minutes old (threshold: 55 min)"
             IS_STALE="true"
           elif [ "$LAST_STATUS" = "in_progress" ] && [ "$DIFF" -gt 25 ]; then
             echo "STALE: Run has been in_progress for $DIFF minutes — likely hung"
@@ -98,8 +93,6 @@ jobs:
           RUN_ID="${{ steps.check_run.outputs.last_run_id }}"
           echo "Cancelling hung run ID: $RUN_ID"
           gh run cancel "$RUN_ID" --repo ${{ github.repository }} || echo "Cancel failed or run already finished."
-
-          # Brief pause to let GitHub process the cancellation
           sleep 10
 
       - name: Re-trigger blog automation
