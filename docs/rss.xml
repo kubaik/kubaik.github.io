@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 05:10:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 06:56:19 +0000</lastBuildDate>
+    <item>
+      <title>Spark Simplified</title>
+      <link>https://kubaik.github.io/spark-simplified/</link>
+      <description>Simplify Apache Spark development with these tips and tools</description>
+      <pubDate>Tue, 21 Apr 2026 06:56:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-simplified/</guid>
+    </item>
     <item>
       <title>Quantum Leap</title>
       <link>https://kubaik.github.io/quantum-leap/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI prompting secrets for 25% accuracy boost</description>
       <pubDate>Mon, 20 Apr 2026 17:59:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-prompting/</guid>
-    </item>
-    <item>
-      <title>Git Commands Senior Devs Swear By</title>
-      <link>https://kubaik.github.io/git-commands-senior-devs-swear-by/</link>
-      <description>Senior developers use specific Git commands daily to maintain clean history, debug faster, and prevent merge chaos. Real-world performance data included.</description>
-      <pubDate>Mon, 20 Apr 2026 17:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-commands-senior-devs-swear-by/</guid>
     </item>
   </channel>
 </rss>
