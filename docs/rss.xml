@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 17:56:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 19:03:05 +0000</lastBuildDate>
+    <item>
+      <title>AB Test</title>
+      <link>https://kubaik.github.io/ab-test/</link>
+      <description>A/B testing for business metrics optimization</description>
+      <pubDate>Tue, 21 Apr 2026 19:03:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ab-test/</guid>
+    </item>
     <item>
       <title>$10K Indie</title>
       <link>https://kubaik.github.io/10k-indie/</link>
@@ -138,13 +145,6 @@
       <description>Redis scaling patterns for production environments</description>
       <pubDate>Tue, 21 Apr 2026 03:56:09 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-scaling/</guid>
-    </item>
-    <item>
-      <title>RPA Boost</title>
-      <link>https://kubaik.github.io/rpa-boost/</link>
-      <description>RPA boosts productivity by 30%</description>
-      <pubDate>Tue, 21 Apr 2026 03:45:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-boost/</guid>
     </item>
   </channel>
 </rss>
