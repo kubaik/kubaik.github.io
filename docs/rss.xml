@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 04:46:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 05:10:20 +0000</lastBuildDate>
+    <item>
+      <title>Quantum Leap</title>
+      <link>https://kubaik.github.io/quantum-leap/</link>
+      <description>Quantum computing for software engineers</description>
+      <pubDate>Tue, 21 Apr 2026 05:10:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-leap/</guid>
+    </item>
     <item>
       <title>Low-Code Dilemma</title>
       <link>https://kubaik.github.io/low-code-dilemma/</link>
@@ -138,13 +145,6 @@
       <description>Senior developers use specific Git commands daily to maintain clean history, debug faster, and prevent merge chaos. Real-world performance data included.</description>
       <pubDate>Mon, 20 Apr 2026 17:40:24 +0000</pubDate>
       <guid>https://kubaik.github.io/git-commands-senior-devs-swear-by/</guid>
-    </item>
-    <item>
-      <title>Web App Security Audit: What Actually Works</title>
-      <link>https://kubaik.github.io/web-app-security-audit-what-actually-works/</link>
-      <description>Real-world web app security audit process with Burp, Semgrep, and manual testing. 70% attack surface reduction, 40-hour case study, CSP and IDOR fixes.</description>
-      <pubDate>Mon, 20 Apr 2026 16:59:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-app-security-audit-what-actually-works/</guid>
     </item>
   </channel>
 </rss>
