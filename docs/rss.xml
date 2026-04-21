@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 21:40:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 22:34:21 +0000</lastBuildDate>
+    <item>
+      <title>Data Shield</title>
+      <link>https://kubaik.github.io/data-shield/</link>
+      <description>Protect user data from corporations with encryption, access controls, and secure storage</description>
+      <pubDate>Tue, 21 Apr 2026 22:34:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-shield/</guid>
+    </item>
     <item>
       <title>Design Like Pro</title>
       <link>https://kubaik.github.io/design-like-pro/</link>
@@ -138,13 +145,6 @@
       <description>Simplify Apache Spark development with these tips and tools</description>
       <pubDate>Tue, 21 Apr 2026 06:56:17 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-simplified/</guid>
-    </item>
-    <item>
-      <title>Quantum Leap</title>
-      <link>https://kubaik.github.io/quantum-leap/</link>
-      <description>Quantum computing for software engineers</description>
-      <pubDate>Tue, 21 Apr 2026 05:10:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-leap/</guid>
     </item>
   </channel>
 </rss>
