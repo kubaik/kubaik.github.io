@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 15:08:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 16:41:11 +0000</lastBuildDate>
+    <item>
+      <title>Slow Apps</title>
+      <link>https://kubaik.github.io/slow-apps/</link>
+      <description>Improve mobile app performance by 20-50% with these steps</description>
+      <pubDate>Tue, 21 Apr 2026 16:41:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/slow-apps/</guid>
+    </item>
     <item>
       <title>Web App on a Dime</title>
       <link>https://kubaik.github.io/web-app-on-a-dime/</link>
@@ -138,13 +145,6 @@
       <description>Measure and pay down technical debt with SonarQube and CodeCoverage</description>
       <pubDate>Tue, 21 Apr 2026 00:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-debt/</guid>
-    </item>
-    <item>
-      <title>Netflix&apos;s Build Next</title>
-      <link>https://kubaik.github.io/netflixs-build-next/</link>
-      <description>Netflix&apos;s build process</description>
-      <pubDate>Mon, 20 Apr 2026 23:38:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/netflixs-build-next/</guid>
     </item>
   </channel>
 </rss>
