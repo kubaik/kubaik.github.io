@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 10:15:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 11:45:27 +0000</lastBuildDate>
+    <item>
+      <title>Startups&apos; Late Lessons</title>
+      <link>https://kubaik.github.io/startups-late-lessons/</link>
+      <description>Startups often learn lessons too late, neglecting the bigger picture and prioritizing short-term gains</description>
+      <pubDate>Tue, 21 Apr 2026 11:45:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/startups-late-lessons/</guid>
+    </item>
     <item>
       <title>JS Rev</title>
       <link>https://kubaik.github.io/js-rev/</link>
@@ -138,13 +145,6 @@
       <description>Detect AI model drift with real-time monitoring</description>
       <pubDate>Mon, 20 Apr 2026 20:27:52 +0000</pubDate>
       <guid>https://kubaik.github.io/drift-detective/</guid>
-    </item>
-    <item>
-      <title>SaaS Pricing</title>
-      <link>https://kubaik.github.io/saas-pricing/</link>
-      <description>SaaS pricing strategy and implementation</description>
-      <pubDate>Mon, 20 Apr 2026 19:44:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/saas-pricing/</guid>
     </item>
   </channel>
 </rss>
