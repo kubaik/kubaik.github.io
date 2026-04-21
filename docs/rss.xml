@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 03:45:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 03:56:11 +0000</lastBuildDate>
+    <item>
+      <title>Redis Scaling</title>
+      <link>https://kubaik.github.io/redis-scaling/</link>
+      <description>Redis scaling patterns for production environments</description>
+      <pubDate>Tue, 21 Apr 2026 03:56:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-scaling/</guid>
+    </item>
     <item>
       <title>RPA Boost</title>
       <link>https://kubaik.github.io/rpa-boost/</link>
@@ -138,13 +145,6 @@
       <description>Real-world VS Code optimizations that cut edit-to-commit time from 8.4 to 3.1 minutes. Includes config, extensions, and team rollout strategy.</description>
       <pubDate>Mon, 20 Apr 2026 16:42:17 +0000</pubDate>
       <guid>https://kubaik.github.io/vs-code-setup-that-2x-your-speed/</guid>
-    </item>
-    <item>
-      <title>SRE: Fixing What Breaks Silent</title>
-      <link>https://kubaik.github.io/sre-fixing-what-breaks-silent/</link>
-      <description>SRE isn&apos;t about preventing outages—it&apos;s about controlling failure. Learn how error budgets, burn rates, and automation actually work in production.</description>
-      <pubDate>Mon, 20 Apr 2026 15:14:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-fixing-what-breaks-silent/</guid>
     </item>
   </channel>
 </rss>
