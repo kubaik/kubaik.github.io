@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 17:34:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 17:56:23 +0000</lastBuildDate>
+    <item>
+      <title>$10K Indie</title>
+      <link>https://kubaik.github.io/10k-indie/</link>
+      <description>Indie hackers making $10K/month with niche products</description>
+      <pubDate>Tue, 21 Apr 2026 17:56:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/10k-indie/</guid>
+    </item>
     <item>
       <title>Tech Stack 2026</title>
       <link>https://kubaik.github.io/tech-stack-2026/</link>
@@ -138,13 +145,6 @@
       <description>RPA boosts productivity by 30%</description>
       <pubDate>Tue, 21 Apr 2026 03:45:46 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-boost/</guid>
-    </item>
-    <item>
-      <title>Dev Income</title>
-      <link>https://kubaik.github.io/dev-income/</link>
-      <description>Developers can create passive income streams</description>
-      <pubDate>Tue, 21 Apr 2026 01:56:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-income/</guid>
     </item>
   </channel>
 </rss>
