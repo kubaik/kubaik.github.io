@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 18:00:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 15:02:31 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twin Technology in Industry: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/digital-twin-technology-in-industry-a-practical-te/</link>
+      <description>A practical guide to Digital Twin Technology in Industry covering implementation, real performance benchmarks, common mistakes, and honest tradeoffs.</description>
+      <pubDate>Tue, 21 Apr 2026 15:02:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twin-technology-in-industry-a-practical-te/</guid>
+    </item>
     <item>
       <title>RTDP</title>
       <link>https://kubaik.github.io/rtdp/</link>
@@ -138,13 +145,6 @@
       <description>Learn a new programming language fast with these steps</description>
       <pubDate>Mon, 20 Apr 2026 23:25:46 +0000</pubDate>
       <guid>https://kubaik.github.io/codefast/</guid>
-    </item>
-    <item>
-      <title>Tech Skills Pay</title>
-      <link>https://kubaik.github.io/tech-skills-pay/</link>
-      <description>High-demand tech skills can boost salaries</description>
-      <pubDate>Mon, 20 Apr 2026 22:27:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-skills-pay/</guid>
     </item>
   </channel>
 </rss>
