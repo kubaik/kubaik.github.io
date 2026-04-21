@@ -562,7 +562,7 @@ class BlogSystem:
     # API FALLBACK CHAIN
     # ─────────────────────────────────────────────────────────────
 
-    async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 4000) -> str:
+    async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
         if self.groq_key:
@@ -1185,7 +1185,7 @@ Return ONLY the JSON object.""",
                 "Do not include the title line. Be specific — name tools, versions, and metrics."
             )},
         ]
-        return await self._call_api_with_fallback(messages, max_tokens=5000)
+        return await self._call_api_with_fallback(messages, max_tokens=6000)
 
     # ─────────────────────────────────────────────────────────────
     # LOCAL FALLBACK
