@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 19:03:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 20:43:27 +0000</lastBuildDate>
+    <item>
+      <title>API Cash</title>
+      <link>https://kubaik.github.io/api-cash/</link>
+      <description>Twilio and Stripe&apos;s API revenue models</description>
+      <pubDate>Tue, 21 Apr 2026 20:43:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-cash/</guid>
+    </item>
     <item>
       <title>AB Test</title>
       <link>https://kubaik.github.io/ab-test/</link>
@@ -138,13 +145,6 @@
       <description>Low-code platforms: benefits, drawbacks, and trade-offs</description>
       <pubDate>Tue, 21 Apr 2026 04:45:58 +0000</pubDate>
       <guid>https://kubaik.github.io/low-code-dilemma/</guid>
-    </item>
-    <item>
-      <title>Redis Scaling</title>
-      <link>https://kubaik.github.io/redis-scaling/</link>
-      <description>Redis scaling patterns for production environments</description>
-      <pubDate>Tue, 21 Apr 2026 03:56:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-scaling/</guid>
     </item>
   </channel>
 </rss>
