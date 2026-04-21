@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 00:11:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 01:10:10 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech Exodus</title>
+      <link>https://kubaik.github.io/big-tech-exodus/</link>
+      <description>Big tech companies face high developer turnover due to bureaucracy</description>
+      <pubDate>Tue, 21 Apr 2026 01:10:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus/</guid>
+    </item>
     <item>
       <title>Tech Debt</title>
       <link>https://kubaik.github.io/tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>ASO isn&apos;t about keywords. Real ranking gains come from retention, engagement, and Apple&apos;s hidden behavioral signals. Data from 17 app campaigns.</description>
       <pubDate>Mon, 20 Apr 2026 14:20:35 +0000</pubDate>
       <guid>https://kubaik.github.io/aso-that-actually-moves-rankings/</guid>
-    </item>
-    <item>
-      <title>Solo Dev? Scale Like a Pro</title>
-      <link>https://kubaik.github.io/solo-dev-scale-like-a-pro/</link>
-      <description>Solo devs can scale apps to thousands of users. Real benchmarks, code examples, and tools like Fly.io, Postgres, and Redis.</description>
-      <pubDate>Mon, 20 Apr 2026 14:03:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/solo-dev-scale-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
