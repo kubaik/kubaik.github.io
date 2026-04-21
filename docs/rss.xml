@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 16:41:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 16:53:26 +0000</lastBuildDate>
+    <item>
+      <title>AI Ethics</title>
+      <link>https://kubaik.github.io/ai-ethics/</link>
+      <description>AI ethics requires transparency, accountability, and diversity</description>
+      <pubDate>Tue, 21 Apr 2026 16:53:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ethics/</guid>
+    </item>
     <item>
       <title>Slow Apps</title>
       <link>https://kubaik.github.io/slow-apps/</link>
@@ -138,13 +145,6 @@
       <description>Big tech companies face high developer turnover due to bureaucracy</description>
       <pubDate>Tue, 21 Apr 2026 01:10:08 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus/</guid>
-    </item>
-    <item>
-      <title>Tech Debt</title>
-      <link>https://kubaik.github.io/tech-debt/</link>
-      <description>Measure and pay down technical debt with SonarQube and CodeCoverage</description>
-      <pubDate>Tue, 21 Apr 2026 00:11:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-debt/</guid>
     </item>
   </channel>
 </rss>
