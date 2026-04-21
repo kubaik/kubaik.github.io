@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 15:02:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 15:08:01 +0000</lastBuildDate>
+    <item>
+      <title>Web App on a Dime</title>
+      <link>https://kubaik.github.io/web-app-on-a-dime/</link>
+      <description>Deploy a web app on Heroku for $25-50/month</description>
+      <pubDate>Tue, 21 Apr 2026 15:07:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-app-on-a-dime/</guid>
+    </item>
     <item>
       <title>Digital Twin Technology in Industry: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/digital-twin-technology-in-industry-a-practical-te/</link>
@@ -138,13 +145,6 @@
       <description>Netflix&apos;s build process</description>
       <pubDate>Mon, 20 Apr 2026 23:38:02 +0000</pubDate>
       <guid>https://kubaik.github.io/netflixs-build-next/</guid>
-    </item>
-    <item>
-      <title>CodeFast</title>
-      <link>https://kubaik.github.io/codefast/</link>
-      <description>Learn a new programming language fast with these steps</description>
-      <pubDate>Mon, 20 Apr 2026 23:25:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/codefast/</guid>
     </item>
   </channel>
 </rss>
