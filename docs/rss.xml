@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 11:57:29 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 13:10:20 +0000</lastBuildDate>
+    <item>
+      <title>Secrets Safe</title>
+      <link>https://kubaik.github.io/secrets-safe/</link>
+      <description>Secure credentials with secrets management</description>
+      <pubDate>Tue, 21 Apr 2026 13:10:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-safe/</guid>
+    </item>
     <item>
       <title>AI Models</title>
       <link>https://kubaik.github.io/ai-models/</link>
@@ -138,13 +145,6 @@
       <description>Amazon&apos;s one-click empire relies on session management and caching</description>
       <pubDate>Mon, 20 Apr 2026 21:29:34 +0000</pubDate>
       <guid>https://kubaik.github.io/1-click-tech/</guid>
-    </item>
-    <item>
-      <title>AI Devs?</title>
-      <link>https://kubaik.github.io/ai-devs/</link>
-      <description>AI won&apos;t replace developers, but augment them</description>
-      <pubDate>Mon, 20 Apr 2026 20:39:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-devs/</guid>
     </item>
   </channel>
 </rss>
