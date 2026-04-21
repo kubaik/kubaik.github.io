@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 17:36:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 14:39:11 +0000</lastBuildDate>
+    <item>
+      <title>RTDP</title>
+      <link>https://kubaik.github.io/rtdp/</link>
+      <description>Real-time data processing at scale with Apache Kafka, Flink, and Storm</description>
+      <pubDate>Tue, 21 Apr 2026 14:39:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/rtdp/</guid>
+    </item>
     <item>
       <title>Mobile App Retention</title>
       <link>https://kubaik.github.io/mobile-app-retention/</link>
@@ -138,13 +145,6 @@
       <description>High-demand tech skills can boost salaries</description>
       <pubDate>Mon, 20 Apr 2026 22:27:31 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-skills-pay/</guid>
-    </item>
-    <item>
-      <title>TDD Done Right</title>
-      <link>https://kubaik.github.io/tdd-done-right/</link>
-      <description>Improve code quality with TDD, reducing bugs by 40% and development time by 25%</description>
-      <pubDate>Mon, 20 Apr 2026 21:41:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-done-right/</guid>
     </item>
   </channel>
 </rss>
