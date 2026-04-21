@@ -974,10 +974,10 @@ def _build_templates() -> dict:
                         <p itemprop="description">
                             Software Engineer building production systems since 2014, with experience in the financial services industry. 
                             I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
-
-                            My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
-                            with an emphasis on performance, cost, and scalability.
-
+                            <p> 
+                                My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
+                                with an emphasis on performance, cost, and scalability.
+                            </p>
                             I write about real-world engineering tradeoffs and what actually works in production.
                             <p>   
                                 <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">
