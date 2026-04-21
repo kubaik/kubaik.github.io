@@ -647,7 +647,7 @@ class BlogSystem:
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
-            "model": "qwen/qwen3.6-plus",
+            "model": "openai/gpt-oss-120b:free",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,
