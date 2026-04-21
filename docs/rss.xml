@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 20:43:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 21:40:15 +0000</lastBuildDate>
+    <item>
+      <title>Design Like Pro</title>
+      <link>https://kubaik.github.io/design-like-pro/</link>
+      <description>System design interview tips and best practices</description>
+      <pubDate>Tue, 21 Apr 2026 21:40:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-like-pro/</guid>
+    </item>
     <item>
       <title>API Cash</title>
       <link>https://kubaik.github.io/api-cash/</link>
@@ -138,13 +145,6 @@
       <description>Quantum computing for software engineers</description>
       <pubDate>Tue, 21 Apr 2026 05:10:18 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-leap/</guid>
-    </item>
-    <item>
-      <title>Low-Code Dilemma</title>
-      <link>https://kubaik.github.io/low-code-dilemma/</link>
-      <description>Low-code platforms: benefits, drawbacks, and trade-offs</description>
-      <pubDate>Tue, 21 Apr 2026 04:45:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/low-code-dilemma/</guid>
     </item>
   </channel>
 </rss>
