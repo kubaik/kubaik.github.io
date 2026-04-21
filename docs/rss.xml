@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 06:56:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 08:30:29 +0000</lastBuildDate>
+    <item>
+      <title>Dev Prod</title>
+      <link>https://kubaik.github.io/dev-prod/</link>
+      <description>Improve dev productivity with the right tools and workflows</description>
+      <pubDate>Tue, 21 Apr 2026 08:30:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-prod/</guid>
+    </item>
     <item>
       <title>Spark Simplified</title>
       <link>https://kubaik.github.io/spark-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Practical cloud security: stop misconfigurations, enforce least-privilege IAM, rotate secrets, and audit with real AWS numbers and code.</description>
       <pubDate>Mon, 20 Apr 2026 19:06:32 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/</guid>
-    </item>
-    <item>
-      <title>AI Prompting</title>
-      <link>https://kubaik.github.io/ai-prompting/</link>
-      <description>Unlock AI prompting secrets for 25% accuracy boost</description>
-      <pubDate>Mon, 20 Apr 2026 17:59:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompting/</guid>
     </item>
   </channel>
 </rss>
