@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 22:34:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 23:31:03 +0000</lastBuildDate>
+    <item>
+      <title>Cross-Platform</title>
+      <link>https://kubaik.github.io/cross-platform/</link>
+      <description>Cross-platform vs native development trade-offs</description>
+      <pubDate>Tue, 21 Apr 2026 23:31:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/cross-platform/</guid>
+    </item>
     <item>
       <title>Data Shield</title>
       <link>https://kubaik.github.io/data-shield/</link>
@@ -138,13 +145,6 @@
       <description>Improve dev productivity with the right tools and workflows</description>
       <pubDate>Tue, 21 Apr 2026 08:30:27 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-prod/</guid>
-    </item>
-    <item>
-      <title>Spark Simplified</title>
-      <link>https://kubaik.github.io/spark-simplified/</link>
-      <description>Simplify Apache Spark development with these tips and tools</description>
-      <pubDate>Tue, 21 Apr 2026 06:56:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-simplified/</guid>
     </item>
   </channel>
 </rss>
