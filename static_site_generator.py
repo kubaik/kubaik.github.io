@@ -971,7 +971,7 @@ def _build_templates() -> dict:
                             Software Developer · Nairobi, Kenya
                         </p>
 
-                        <p itemprop="description">
+                        <p itemprop="description" class="p_about" >
                                 Software Engineer building production systems since 2014, with experience in the financial services industry. 
                                 I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
                             </p>

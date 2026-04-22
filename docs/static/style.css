@@ -818,6 +818,10 @@ footer {
     .search-input::placeholder {
         font-size: 14px;
     }
+
+    .p_about {
+        margin-bottom: 16px;
+    }
 }
 
 @media (max-width: 480px) {
