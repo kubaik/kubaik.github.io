@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 12:17:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 12:40:18 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: Embeddings in Practice</title>
+      <link>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</link>
+      <description>Practical guide to vector databases and embeddings for developers</description>
+      <pubDate>Wed, 22 Apr 2026 12:40:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</guid>
+    </item>
     <item>
       <title>Deploying AI Models Without Breaking Anything</title>
       <link>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</link>
@@ -138,13 +145,6 @@
       <description>Apple&apos;s pricing strategy is rooted in its ability to create a seamless user experience</description>
       <pubDate>Wed, 22 Apr 2026 03:39:56 +0000</pubDate>
       <guid>https://kubaik.github.io/apples-pricing-edge/</guid>
-    </item>
-    <item>
-      <title>DB Tools</title>
-      <link>https://kubaik.github.io/db-tools/</link>
-      <description>Essential database tools for optimizing performance and reducing downtime</description>
-      <pubDate>Wed, 22 Apr 2026 01:55:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-tools/</guid>
     </item>
   </channel>
 </rss>
