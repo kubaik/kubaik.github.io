@@ -107,5 +107,6 @@
   "AI Tools That Write Better Code Than Most Juniors",
   "Building Your First Data Pipeline That Doesn't Break",
   "Building a Micro-Frontend Architecture",
-  "Lazy Loading and Code Splitting in Practice"
+  "Lazy Loading and Code Splitting in Practice",
+  "Message Queues: Kafka vs RabbitMQ vs SQS"
 ]

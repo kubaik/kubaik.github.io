@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 15:01:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 12:03:22 +0000</lastBuildDate>
+    <item>
+      <title>MQ Showdown</title>
+      <link>https://kubaik.github.io/mq-showdown/</link>
+      <description>Kafka, RabbitMQ, and SQS compared</description>
+      <pubDate>Wed, 22 Apr 2026 12:03:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/mq-showdown/</guid>
+    </item>
     <item>
       <title>Lazy Load</title>
       <link>https://kubaik.github.io/lazy-load/</link>
@@ -138,13 +145,6 @@
       <description>Cross-platform vs native development trade-offs</description>
       <pubDate>Tue, 21 Apr 2026 23:31:01 +0000</pubDate>
       <guid>https://kubaik.github.io/cross-platform/</guid>
-    </item>
-    <item>
-      <title>Data Shield</title>
-      <link>https://kubaik.github.io/data-shield/</link>
-      <description>Protect user data from corporations with encryption, access controls, and secure storage</description>
-      <pubDate>Tue, 21 Apr 2026 22:34:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-shield/</guid>
     </item>
   </channel>
 </rss>
