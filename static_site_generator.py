@@ -943,6 +943,7 @@ def _build_templates() -> dict:
         .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
         .author-avatar-lg {width: 100px;height: 100px;border-radius: 50%;overflow: hidden;flex-shrink: 0;}
         .author-photo {width: 100%;height: 100%;object-fit: cover;}
+        .p_about {margin-bottom: 16px;}
     </style>
 </head>
 <body>
