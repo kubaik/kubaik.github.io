@@ -10,18 +10,22 @@ Hook philosophy
   • The link + hashtags sit at the END, never in the hook line.
   • Every template is tested to stay under 280 chars with a typical title.
 
-FIXES (2026-04-16):
-  - Removed post_thread() / _build_thread_tweets() entirely.
-  - Added post_single_tweet() with 6 rotating human-feeling hook templates.
-  - _get_hashtags_for_post() deduplicates, caps at 5, never double-hashes.
-  - _TOPIC_OVERRIDES covers AI Ethics, AI Tools, Side Projects, etc.
-  - Year tokens (2024-2026) stripped from topic phrases.
+CHANGES (2026-04-22):
+  - Added _fetch_daily_trending_hashtag() — hits Twitter API once per day,
+    caches result in .trending_hashtag_cache.json.
+  - _get_hashtags_for_post() now injects the trending tag as the 5th slot
+    (replacing the last keyword-derived tag) so the total never exceeds 5.
+  - _build_single_tweet() passes post + config through to the hashtag resolver.
+  - Trending tag is only fetched when ENABLE_TWITTER_POSTING=true, matching
+    the same guard used for actual posting.
 """
 
 import datetime
+import json
 import os
 import re
 import time
+from pathlib import Path
 from typing import Dict, List, Optional
 
 import tweepy
@@ -45,6 +49,20 @@ TRENDING_TECH_KEYWORDS = [
 MIN_AUTHOR_FOLLOWERS = 500
 MAX_REPLIES_PER_RUN = 3
 SEARCH_RESULT_LIMIT = 20
+
+# Cache file lives next to the working directory — one entry per calendar day.
+_TRENDING_CACHE_FILE = Path(".trending_hashtag_cache.json")
+
+# Tech-related keywords that flag a trending topic as relevant enough to use.
+_TECH_RELEVANCE_SIGNALS = {
+    "ai", "ml", "python", "javascript", "typescript", "react", "node",
+    "cloud", "aws", "gcp", "azure", "kubernetes", "docker", "devops",
+    "security", "cyber", "data", "llm", "gpt", "openai", "tech", "code",
+    "coding", "dev", "software", "startup", "saas", "api", "web", "mobile",
+    "android", "ios", "swift", "kotlin", "rust", "golang", "java", "linux",
+    "github", "programming", "engineer", "developer", "backend", "frontend",
+    "database", "sql", "nosql", "redis", "kafka", "blockchain", "crypto",
+}
 
 # ─────────────────────────────────────────────────────────────────
 # Stop-word set for topic-phrase extraction
@@ -129,9 +147,9 @@ _TOPIC_OVERRIDES = {
     "data pipeline":    "Data Pipelines",
     "data engineer":    "Data Engineering",
     "mlops":            "MLOps",
-    "burn out":          "Developer Burnout",
-    "burnout":           "Developer Burnout",
-    "remote work":       "Remote Work",
+    "burn out":         "Developer Burnout",
+    "burnout":          "Developer Burnout",
+    "remote work":      "Remote Work",
     "tech salar":       "Tech Salaries",
     "negotiate":        "Salary Negotiation",
     "ai ethics":        "AI Ethics",
@@ -183,27 +201,185 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
+# Daily trending hashtag — fetch once, cache for 24 h
+# ─────────────────────────────────────────────────────────────────
+
+def _load_trending_cache() -> Optional[str]:
+    """
+    Read the cache file.  Returns the stored hashtag string (e.g. '#OpenAI')
+    if it was written today, otherwise None.
+    """
+    if not _TRENDING_CACHE_FILE.exists():
+        return None
+    try:
+        with open(_TRENDING_CACHE_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        stored_date = data.get("date", "")
+        today = datetime.date.today().isoformat()
+        if stored_date == today:
+            tag = data.get("hashtag", "")
+            if tag:
+                print(f"📦 Trending hashtag loaded from cache: {tag}")
+                return tag
+    except Exception as e:
+        print(f"⚠️  Could not read trending cache: {e}")
+    return None
+
+
+def _save_trending_cache(hashtag: str) -> None:
+    """Persist today's trending hashtag to the cache file."""
+    try:
+        with open(_TRENDING_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(
+                {"date": datetime.date.today().isoformat(), "hashtag": hashtag},
+                f,
+            )
+        print(f"💾 Trending hashtag cached: {hashtag}")
+    except Exception as e:
+        print(f"⚠️  Could not write trending cache: {e}")
+
+
+def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
+    """
+    Return one tech-relevant trending hashtag for today.
+
+    Strategy
+    ────────
+    1. Return the cached value if it was fetched earlier today.
+    2. Search recent tweets for a rotating set of broad tech keywords,
+       collect all hashtags used in those tweets, score them by frequency,
+       and pick the highest-frequency tag whose name overlaps with
+       _TECH_RELEVANCE_SIGNALS.
+    3. Fall back to None if the API call fails or no relevant tag is found —
+       callers must handle None gracefully (just skip the trending slot).
+
+    Rate-limit impact
+    ─────────────────
+    One search_recent_tweets call per day (max_results=100).
+    The Twitter Basic / Free tier allows 500k tweets/month read; a single
+    100-tweet search is negligible.  We never call this more than once per
+    calendar day because of the cache.
+    """
+    # 1. Cache hit
+    cached = _load_trending_cache()
+    if cached:
+        return cached
+
+    if twitter_client is None:
+        print("⚠️  No Twitter client — cannot fetch trending hashtag.")
+        return None
+
+    # 2. Search recent tweets across a few high-signal tech queries
+    search_queries = [
+        "#AI OR #MachineLearning OR #Python lang:en -is:retweet",
+        "#WebDev OR #JavaScript OR #TypeScript lang:en -is:retweet",
+        "#DevOps OR #CloudComputing OR #Kubernetes lang:en -is:retweet",
+    ]
+
+    hashtag_counts: Dict[str, int] = {}
+
+    for query in search_queries:
+        try:
+            response = twitter_client.search_recent_tweets(
+                query=query,
+                max_results=100,
+                tweet_fields=["text"],
+            )
+            if not response.data:
+                continue
+            for tweet in response.data:
+                for match in re.findall(r"#(\w+)", tweet.text):
+                    tag = match  # without the #
+                    hashtag_counts[tag] = hashtag_counts.get(tag, 0) + 1
+            # Respect rate limits between queries
+            time.sleep(1.5)
+        except Exception as e:
+            print(f"⚠️  Trending search error ({query[:40]}…): {e}")
+            continue
+
+    if not hashtag_counts:
+        print("⚠️  No hashtag data retrieved — skipping trending tag.")
+        return None
+
+    # 3. Score: frequency × relevance bonus
+    #    A tag scores +2 if its lowercased name appears in _TECH_RELEVANCE_SIGNALS,
+    #    +1 if any signal word is a substring of the tag.
+    def _relevance_score(tag: str, freq: int) -> float:
+        t = tag.lower()
+        if t in _TECH_RELEVANCE_SIGNALS:
+            return freq * 3
+        if any(sig in t for sig in _TECH_RELEVANCE_SIGNALS):
+            return freq * 2
+        return 0  # non-tech tags get zero — we won't pick them
+
+    scored = [
+        (tag, _relevance_score(tag, freq))
+        for tag, freq in hashtag_counts.items()
+        if _relevance_score(tag, freq) > 0
+        and 3 <= len(tag) <= 30          # reasonable length
+        and not tag.isdigit()            # skip pure-number tags
+    ]
+
+    if not scored:
+        print("⚠️  No tech-relevant trending tags found — skipping trending tag.")
+        return None
+
+    scored.sort(key=lambda x: x[1], reverse=True)
+    best_tag = f"#{scored[0][0]}"
+
+    print(f"🔥 Trending hashtag selected: {best_tag} "
+          f"(from {len(hashtag_counts)} unique tags observed)")
+
+    _save_trending_cache(best_tag)
+    return best_tag
+
+
+# ─────────────────────────────────────────────────────────────────
 # Hashtag resolver
 # ─────────────────────────────────────────────────────────────────
 
-def _get_hashtags_for_post(post) -> str:
+def _get_hashtags_for_post(post, trending_tag: Optional[str] = None) -> str:
     """
-    Reliably retrieve a hashtag string from a post object.
+    Reliably retrieve a hashtag string from a post object and optionally
+    inject today's trending tag as the final slot.
 
     Resolution order:
       1. post.twitter_hashtags  (set during generation, persisted to JSON)
-      2. post.tags              (camelCased, deduped, max 5)
-      3. post.seo_keywords      (camelCased, deduped, max 5)
+      2. post.tags              (camelCased, deduped, max 4 + trending)
+      3. post.seo_keywords      (camelCased, deduped, max 4 + trending)
       4. Title-derived fallback
 
-    Never produces ##DoublePound or more than 5 tags (X suppresses 6+).
+    Trending tag injection
+    ──────────────────────
+    If *trending_tag* is provided and not already in the tag list, it
+    replaces the 5th slot (or is appended if fewer than 5 tags exist).
+    Total count is always capped at 5 — X suppresses posts with 6+ tags.
+
+    Never produces ##DoublePound.
     """
+
+    def _inject_trending(tags_str: str, trending: Optional[str]) -> str:
+        """Replace or append the trending tag, keeping total ≤ 5."""
+        if not trending:
+            return tags_str
+        trending_clean = trending if trending.startswith(
+            "#") else f"#{trending}"
+        parts = tags_str.split()
+        # Deduplicate: skip if already present (case-insensitive)
+        if any(p.lower() == trending_clean.lower() for p in parts):
+            return tags_str
+        if len(parts) >= 5:
+            parts[-1] = trending_clean   # replace last slot
+        else:
+            parts.append(trending_clean)
+        return " ".join(parts)
+
     if (
         hasattr(post, "twitter_hashtags")
         and post.twitter_hashtags
         and post.twitter_hashtags.strip()
     ):
-        return post.twitter_hashtags.strip()
+        return _inject_trending(post.twitter_hashtags.strip(), trending_tag)
 
     if hasattr(post, "tags") and post.tags:
         seen: set = set()
@@ -219,10 +395,10 @@ def _get_hashtags_for_post(post) -> str:
                 continue
             seen.add(key)
             clean.append(f"#{raw}")
-            if len(clean) == 5:
+            if len(clean) == 4:   # leave slot 5 for trending
                 break
         if clean:
-            return " ".join(clean)
+            return _inject_trending(" ".join(clean), trending_tag)
 
     if hasattr(post, "seo_keywords") and post.seo_keywords:
         seen = set()
@@ -238,40 +414,25 @@ def _get_hashtags_for_post(post) -> str:
                 if tag and tag.lower() not in seen:
                     seen.add(tag.lower())
                     tags.append(f"#{tag}")
-            if len(tags) == 5:
+            if len(tags) == 4:   # leave slot 5 for trending
                 break
         if tags:
-            return " ".join(tags)
+            return _inject_trending(" ".join(tags), trending_tag)
 
     if hasattr(post, "title") and post.title:
         phrase = _extract_topic_phrase(post.title, max_words=2)
         tag = phrase.replace(" ", "")
-        return f"#{tag} #Programming #SoftwareEngineering"
+        base = f"#{tag} #Programming #SoftwareEngineering"
+        return _inject_trending(base, trending_tag)
 
-    return "#Programming #SoftwareEngineering #TechBlog"
+    base = "#Programming #SoftwareEngineering #TechBlog"
+    return _inject_trending(base, trending_tag)
 
 
 # ─────────────────────────────────────────────────────────────────
 # Single-tweet hook templates
 # ─────────────────────────────────────────────────────────────────
-#
-# Rules for every template:
-#   • First line = the hook — must create tension, curiosity, or mild
-#     controversy without sounding like ad copy.
-#   • Middle = one concrete promise (what they'll learn / gain).
-#   • End = link + hashtags — ALWAYS last, never in the hook.
-#   • Total target: 240–270 chars so there's buffer for long slugs.
-#   • Placeholders:  {topic}  {teaser}  {url}  {tags}
-#
-# Six templates rotate by (post_id % 6) so consecutive posts feel varied.
-# ─────────────────────────────────────────────────────────────────
 
-# Design constraint: each template must stay ≤ 280 chars when rendered with:
-#   topic  ≤ 25 chars  (enforced by _extract_topic_phrase max_words=3)
-#   teaser ≤ 60 chars  (enforced inside _build_single_tweet)
-#   url    ≤ 60 chars  (e.g. https://kubaik.github.io/some-slug-here-50ch)
-#   tags   ≤ 50 chars  (5 × ~10 chars each)
-# Fixed text per template is ≤ 85 chars, giving comfortable headroom.
 _TWEET_TEMPLATES = [
     # 0 — confession
     "Spent months doing {topic} wrong.\n\n{teaser}\n\nWrote it down so you skip my mistakes 👇\n{url}\n\n{tags}",
@@ -288,35 +449,31 @@ _TWEET_TEMPLATES = [
 ]
 
 
-def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
+def _build_single_tweet(
+    post,
+    base_url: str,
+    hook_style: str = "auto",
+    trending_tag: Optional[str] = None,
+) -> str:
     """
     Compose one high-engagement tweet for *post*.
 
-    hook_style:
-      "auto"       → rotate by slug hash (consistent per post, varied across posts)
-      "confession" → template 0
-      "contrarian" → template 1
-      "curiosity"  → template 2
-      "before_after"→ template 3
-      "challenge"  → template 4
-      "observation"→ template 5
-      "knowledge_gap", "specific_number", "pattern_interrupt"
-                   → mapped to closest template for back-compat
+    trending_tag — if provided, is injected into the hashtag block as the
+                   5th tag, replacing the last keyword-derived one.
     """
     _style_map = {
-        "confession":     0,
-        "contrarian":     1,
-        "knowledge_gap":  1,
-        "curiosity":      2,
+        "confession":        0,
+        "contrarian":        1,
+        "knowledge_gap":     1,
+        "curiosity":         2,
         "pattern_interrupt": 2,
-        "before_after":   3,
-        "challenge":      4,
-        "specific_number": 4,
-        "observation":    5,
+        "before_after":      3,
+        "challenge":         4,
+        "specific_number":   4,
+        "observation":       5,
     }
 
     if hook_style == "auto" or hook_style not in _style_map:
-        # Deterministic rotation: same post always gets same template
         idx = hash(post.slug) % len(_TWEET_TEMPLATES)
     else:
         idx = _style_map[hook_style]
@@ -325,15 +482,13 @@ def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
 
     topic = _extract_topic_phrase(post.title, max_words=3)
 
-    # Build a short teaser from meta_description (≤ 60 chars, ends cleanly)
-    # 60 chars gives all 6 templates comfortable headroom under 280.
     raw_desc = getattr(post, "meta_description", "") or ""
     teaser = raw_desc[:60].rstrip()
     if len(raw_desc) > 60:
         teaser = teaser.rsplit(" ", 1)[0] + "…"
 
     post_url = f"{base_url}/{post.slug}"
-    hashtags = _get_hashtags_for_post(post)
+    hashtags = _get_hashtags_for_post(post, trending_tag=trending_tag)
 
     tweet = template.format(
         topic=topic,
@@ -342,15 +497,12 @@ def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
         tags=hashtags,
     )
 
-    # Hard cap — X rejects anything over 280 chars
     if len(tweet) > 280:
-        # Shorten teaser first
         budget = 280 - len(tweet) + len(teaser)
         teaser = teaser[:max(budget - 3, 20)].rsplit(" ", 1)[0] + "…"
         tweet = template.format(
             topic=topic, teaser=teaser, url=post_url, tags=hashtags
         )
-        # Last resort: hard truncate
         if len(tweet) > 280:
             tweet = tweet[:277] + "..."
 
@@ -367,6 +519,7 @@ class VisibilityAutomator:
         self.twitter_client = None
         self.tweet_generator = EnhancedTweetGenerator()
         self._username = None
+        self._trending_tag: Optional[str] = None   # populated lazily
         self._init_twitter()
 
     # ── Init ──────────────────────────────────────────────────────
@@ -408,11 +561,29 @@ class VisibilityAutomator:
             print(f"❌ Twitter initialization failed: {e}")
             self.twitter_client = None
 
+    # ── Trending hashtag (lazy, cached per process) ───────────────
+
+    def _get_trending_tag(self) -> Optional[str]:
+        """
+        Fetch and cache the daily trending tag within this process.
+        The underlying fetch_daily_trending_hashtag() further caches to disk
+        so the Twitter API is called at most once per calendar day.
+        """
+        if self._trending_tag is None:
+            self._trending_tag = fetch_daily_trending_hashtag(
+                self.twitter_client)
+            if self._trending_tag:
+                print(f"🔥 Trending tag for today: {self._trending_tag}")
+            else:
+                print("ℹ️  No trending tag available — proceeding without it.")
+        return self._trending_tag
+
     # ── Single-tweet posting (primary method) ─────────────────────
 
     def post_single_tweet(self, post) -> Dict:
         """
-        Compose and post ONE engaging tweet for *post*.
+        Compose and post ONE engaging tweet for *post*, including today's
+        trending hashtag in the tag block for extra reach.
 
         Returns:
             {
@@ -421,6 +592,7 @@ class VisibilityAutomator:
                 'url': str,
                 'tweet_text': str,
                 'char_count': int,
+                'trending_tag': str | None,
             }
         """
         if not self.twitter_client:
@@ -428,11 +600,17 @@ class VisibilityAutomator:
 
         base_url = self.config.get("base_url", "https://kubaik.github.io")
         hook_style = self.config.get("hook_style", "auto")
+        trending = self._get_trending_tag()
 
-        tweet_text = _build_single_tweet(post, base_url, hook_style)
+        tweet_text = _build_single_tweet(
+            post, base_url, hook_style, trending_tag=trending
+        )
 
         print(
-            f"📝 Tweet preview ({len(tweet_text)} chars):\n{'-'*60}\n{tweet_text}\n{'-'*60}")
+            f"📝 Tweet preview ({len(tweet_text)} chars)"
+            + (f" [trending: {trending}]" if trending else "")
+            + f":\n{'-'*60}\n{tweet_text}\n{'-'*60}"
+        )
 
         try:
             response = self.twitter_client.create_tweet(text=tweet_text)
@@ -441,15 +619,21 @@ class VisibilityAutomator:
             url = f"https://twitter.com/{username}/status/{tweet_id}"
             print(f"✅ Tweet posted: {url}")
             return {
-                "success":    True,
-                "tweet_id":   tweet_id,
-                "url":        url,
-                "tweet_text": tweet_text,
-                "char_count": len(tweet_text),
+                "success":      True,
+                "tweet_id":     tweet_id,
+                "url":          url,
+                "tweet_text":   tweet_text,
+                "char_count":   len(tweet_text),
+                "trending_tag": trending,
             }
         except Exception as e:
             print(f"❌ Tweet failed: {e}")
-            return {"success": False, "error": str(e), "tweet_text": tweet_text}
+            return {
+                "success":      False,
+                "error":        str(e),
+                "tweet_text":   tweet_text,
+                "trending_tag": trending,
+            }
 
     # ── Helpers: peak-time awareness ─────────────────────────────
 
@@ -549,8 +733,8 @@ class VisibilityAutomator:
             ]
             filtered.sort(
                 key=lambda t: (
-                    t.public_metrics.get(
-                        "like_count", 0) if t.public_metrics else 0
+                    t.public_metrics.get("like_count", 0)
+                    if t.public_metrics else 0
                 ),
                 reverse=True,
             )
@@ -592,12 +776,11 @@ class VisibilityAutomator:
                 self._my_id = None
         return self._my_id
 
-    # ── Existing single-post helpers (kept for EnhancedTweetGenerator compat) ──
+    # ── Existing helpers (kept for EnhancedTweetGenerator compat) ─
 
     def post_to_twitter(
         self, tweet_text: str = None, post=None, strategy: str = "auto"
     ) -> Dict:
-        """Low-level: post a raw string, or let EnhancedTweetGenerator build one."""
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
         try:
@@ -628,7 +811,6 @@ class VisibilityAutomator:
             return {"success": False, "error": str(e)}
 
     def post_with_best_strategy(self, post) -> Dict:
-        """Pick the highest-scoring variation from EnhancedTweetGenerator and post it."""
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized"}
         variations = self.tweet_generator.create_multiple_variations(
@@ -641,7 +823,8 @@ class VisibilityAutomator:
         score = self.tweet_generator.analyze_tweet_quality(best["tweet"])[
             "score"]
         print(f"🎯 Strategy: {best['strategy']} | Score: {score}")
-        return self.post_to_twitter(tweet_text=best["tweet"], strategy=best["strategy"])
+        return self.post_to_twitter(
+            tweet_text=best["tweet"], strategy=best["strategy"])
 
     def generate_tweet_preview(self, post, strategy: str = "auto") -> Dict:
         tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
@@ -755,26 +938,32 @@ if __name__ == "__main__":
     visibility = VisibilityAutomator(config)
 
     base_url = config.get("base_url", "https://kubaik.github.io")
-    print(f"\n🔍 Topic phrase : '{_extract_topic_phrase(post.title)}'")
-    print(f"🏷️  Hashtags     : '{_get_hashtags_for_post(post)}'")
+    trending_tag = visibility._get_trending_tag()
+
+    print(f"\n🔍 Topic phrase  : '{_extract_topic_phrase(post.title)}'")
+    print(
+        f"🏷️  Hashtags       : '{_get_hashtags_for_post(post, trending_tag)}'")
+    print(f"🔥 Trending tag   : '{trending_tag}'")
 
     print("\n📱 ALL 6 HOOK TEMPLATES")
     print("=" * 70)
-    for i, tmpl in enumerate(_TWEET_TEMPLATES):
-        tweet = _build_single_tweet.__wrapped__(post, base_url) if hasattr(
-            _build_single_tweet, "__wrapped__") else None
-        # Direct render for preview
+    for i, _ in enumerate(_TWEET_TEMPLATES):
+        rendered = _build_single_tweet(post, base_url,
+                                       hook_style="auto",
+                                       trending_tag=trending_tag)
+        # Override index for preview
         topic = _extract_topic_phrase(post.title)
-        teaser = post.meta_description[:100]
+        teaser = post.meta_description[:60]
         url = f"{base_url}/{post.slug}"
-        tags = _get_hashtags_for_post(post)
+        tags = _get_hashtags_for_post(post, trending_tag)
         rendered = _TWEET_TEMPLATES[i].format(
             topic=topic, teaser=teaser, url=url, tags=tags)
         print(f"\n--- Template {i} ({len(rendered)} chars) ---\n{rendered}")
 
     print("\n\n🎯 SELECTED TWEET (auto-rotation by slug hash)")
     print("=" * 70)
-    selected = _build_single_tweet(post, base_url, hook_style="auto")
+    selected = _build_single_tweet(
+        post, base_url, hook_style="auto", trending_tag=trending_tag)
     print(f"\n{selected}\n\n({len(selected)} chars)")
 
     if visibility.twitter_client:
@@ -783,6 +972,7 @@ if __name__ == "__main__":
             result = visibility.post_single_tweet(post)
             if result["success"]:
                 print(f"✅ Posted: {result['url']}")
+                print(f"   Trending tag used: {result.get('trending_tag')}")
             else:
                 print(f"❌ Failed: {result['error']}")
     else:

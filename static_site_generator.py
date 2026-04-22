@@ -985,7 +985,6 @@ def _build_templates() -> dict:
                             <p class="paragraph-spacing >
                                 I write about real-world engineering tradeoffs and what actually works in production.
                             </p>
-                            <br>
                             <p>
                             <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">
                                 View full experience on LinkedIn →
