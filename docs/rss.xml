@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 12:03:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 12:17:26 +0000</lastBuildDate>
+    <item>
+      <title>Deploying AI Models Without Breaking Anything</title>
+      <link>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</link>
+      <description>Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.</description>
+      <pubDate>Wed, 22 Apr 2026 12:17:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</guid>
+    </item>
     <item>
       <title>MQ Showdown</title>
       <link>https://kubaik.github.io/mq-showdown/</link>
@@ -138,13 +145,6 @@
       <description>Essential database tools for optimizing performance and reducing downtime</description>
       <pubDate>Wed, 22 Apr 2026 01:55:28 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>Cross-Platform</title>
-      <link>https://kubaik.github.io/cross-platform/</link>
-      <description>Cross-platform vs native development trade-offs</description>
-      <pubDate>Tue, 21 Apr 2026 23:31:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/cross-platform/</guid>
     </item>
   </channel>
 </rss>

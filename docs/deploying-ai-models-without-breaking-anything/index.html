@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploying AI Models Without Breaking Anything - Tech Blog</title>
+    <meta name="description" content="Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.">
+    <meta name="keywords" content="how to avoid model drift in production, Kubernetes, MLflow production pipelines best practices, Kubernetes serving for TensorFlow models, Mlops, model deployment, continuous deployment for ML models, why does model rollout fail, AI ops, AI, ArtificialIntelligence, K8s, MLOps">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.">
+    <meta property="og:title" content="Deploying AI Models Without Breaking Anything">
+    <meta property="og:description" content="Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.">
+    <meta property="og:url" content="https://kubaik.github.io/deploying-ai-models-without-breaking-anything/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-22T12:17:23.992846">
+    <meta property="article:modified_time" content="2026-04-22T12:17:23.992852">
+    <meta property="og:image" content="/static/images/deploying-ai-models-without-breaking-anything.jpg">
+    <meta property="og:image:alt" content="Deploying AI Models Without Breaking Anything">
+    <meta name="twitter:image" content="/static/images/deploying-ai-models-without-breaking-anything.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploying AI Models Without Breaking Anything">
+    <meta name="twitter:description" content="Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/deploying-ai-models-without-breaking-anything/">
+    <meta name="keywords" content="how to avoid model drift in production, Kubernetes, MLflow production pipelines best practices, Kubernetes serving for TensorFlow models, Mlops, model deployment, continuous deployment for ML models, why does model rollout fail, AI ops, AI, ArtificialIntelligence, K8s, MLOps">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Deploying AI Models Without Breaking Anything",
+  "description": "Practical MLOps tactics that keep deployments stable, fast, and cost\u2011effective, with real code and hard\u2011won numbers.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-22T12:17:23.992846",
+  "dateModified": "2026-04-22T12:17:23.992852",
+  "url": "https://kubaik.github.io/deploying-ai-models-without-breaking-anything/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/deploying-ai-models-without-breaking-anything/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/deploying-ai-models-without-breaking-anything.jpg"
+  },
+  "keywords": [
+    "how to avoid model drift in production",
+    "Kubernetes",
+    "MLflow production pipelines best practices",
+    "Kubernetes serving for TensorFlow models",
+    "Mlops",
+    "model deployment",
+    "continuous deployment for ML models",
+    "why does model rollout fail",
+    "AI ops",
+    "AI",
+    "ArtificialIntelligence",
+    "K8s",
+    "MLOps"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Deploying AI Models Without Breaking Anything</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Deploying AI Models Without Breaking Anything</h1>
+
+                
+                
+                <p class="post-lead">Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-22T12:17:23.992846" itemprop="datePublished">
+                            22 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>7 min read</span>
+                    
+                    
+                    <span>1327 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">Kubernetes</span>
+                    
+                    <span class="tag">MLflow production pipelines best practices</span>
+                    
+                    <span class="tag">Kubernetes serving for TensorFlow models</span>
+                    
+                    <span class="tag">model deployment</span>
+                    
+                    <span class="tag">continuous deployment for ML models</span>
+                    
+                    <span class="tag">Mlops</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="advanced-configuration-and-real-edge-cases-you-have-personally-encountered">Advanced Configuration and Real Edge Cases You Have Personally Encountered</h2>
+<p>Over the past five years managing MLOps at scale, I’ve encountered edge cases that no documentation prepares you for—failures that occur only under specific environmental conditions or due to toolchain quirks. One such incident occurred during a model refresh for a real-time ad bidding system. We had successfully validated a new bid prediction model in staging using Seldon Core 1.16 and Argo Rollouts 2.7, with Prometheus confirming latency under 40 ms. However, after promotion, error rates spiked to 1.8% within minutes. Investigation revealed that the model container was failing to deserialize incoming gRPC requests under high concurrency—despite passing all load tests.</p>
+<p>The root cause? A hidden interaction between gRPC’s default thread pool size in TensorFlow Serving (used internally by Seldon’s prepackaged server) and the Kubernetes CPU limits. Our container was limited to 500m CPU, which Kubernetes interpreted as half a core. Under sustained load, the OS throttled the process, causing gRPC threads to stall during protobuf deserialization. The model never crashed—logs showed no errors—but requests timed out silently after 5 seconds. This issue didn’t appear in staging because the test cluster used burstable instances with CPU bursting enabled; production did not.</p>
+<p>We fixed this by switching from Seldon’s TensorFlow server to a custom predictor using <strong>Triton Inference Server 2.32</strong>, which offers fine-grained control over concurrency and dynamic batching. We configured <code>max_queue_delay_microseconds: 100</code> and <code>preferred_batch_size: [8, 16, 32]</code> in the model’s <code>config.pbtxt</code>, allowing it to batch small requests efficiently. We also increased CPU limits to 1000m and set CPU requests to 750m to prevent throttling. Latency dropped to 32 ms P95, and error rates fell to 0.02%.</p>
+<p>Another edge case involved <strong>timezone-aware preprocessing</strong> in a fraud detection model. The training data used UTC timestamps, but the production API accepted local time without conversion. This led to a 3-hour drift in feature engineering, causing the model to misclassify legitimate transactions during daylight saving transitions. The fix was twofold: we added a schema validator using <strong>Great Expectations 0.18</strong> to enforce timestamp timezone annotations, and we embedded timezone conversion directly into the model’s preprocessing graph using <code>tf.py_function</code> with <code>pytz</code>. The transformation is now part of the saved model signature, making it immutable and consistent across environments.</p>
+<p>We also encountered a <strong>CUDA memory fragmentation</strong> issue when deploying multiple models on the same GPU node. Even with memory limits set, older model instances were not releasing GPU memory efficiently due to TensorFlow 2.13’s static memory growth behavior. We resolved this by enabling <code>allow_growth: false</code> and setting <code>per_process_gpu_memory_fraction: 0.7</code> via NVIDIA’s <strong>Triton Model Control API</strong>, allowing dynamic loading without OOM crashes.</p>
+<p>These experiences taught us that MLOps isn’t just about pipelines—it’s about understanding the deep interactions between frameworks, hardware, and orchestration layers. The most resilient systems anticipate failure modes beyond the obvious and bake mitigation into the artifact itself.</p>
+<hr />
+<h2 id="integration-with-popular-existing-tools-or-workflows-with-a-concrete-example">Integration with Popular Existing Tools or Workflows, with a Concrete Example</h2>
+<p>One of the biggest challenges in adopting MLOps is integrating it into existing software development workflows without disrupting established CI/CD practices. At a mid-sized e-commerce company, engineering teams used <strong>GitHub Actions 2.305</strong> for application deployments and <strong>Datadog 7.54</strong> for monitoring, but ML deployments were still manual—data scientists would email updated model files to DevOps, who’d manually deploy them via Ansible. This led to version drift, untracked rollbacks, and frequent “works on my machine” failures.</p>
+<p>To unify the workflow, we built a <strong>GitHub Actions-based MLOps pipeline</strong> that mirrored the application CI/CD process but included ML-specific validation steps. The pipeline is triggered by a merge to the <code>models/main</code> branch and runs on a self-hosted runner with GPU access (g4dn.xlarge). Here’s how it integrates:</p>
+<ol>
+<li><strong>Trigger &amp; Checkout</strong>: On push, GitHub Actions checks out the repo, including <code>.dvc</code> files and model code.</li>
+<li><strong>Data Validation</strong>: Runs <code>dvc pull data/training/v3/</code> to fetch the latest training data from S3, then executes a <strong>Great Expectations 0.18</strong> suite to validate schema, null rates, and distribution drift. If the mean purchase value deviates by &gt;15% from baseline, the job fails.</li>
+<li><strong>Model Training</strong>: Uses a custom action running <code>python train.py --data-path data/training/v3/ --model-output models/fraud-v3.2/</code>. The script logs parameters and metrics to <strong>MLflow 2.9</strong> hosted on an internal EC2 instance.</li>
+</ol>
+<p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
+<p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
+<ol>
+<li><strong>Model Packaging</strong>: A multi-stage Docker build creates an image using <code>nvidia/cuda:12.2-base-ubuntu20.04</code> as the base (required for Triton). The model is exported to ONNX and optimized with <strong>TensorRT 9.2</strong> using <code>trtexec --onnx=models/fraud-v3.2.onnx --saveEngine=models/fraud-v3.2.plan</code>.</li>
+<li><strong>Artifact Push</strong>: The Docker image (tagged with Git SHA and DVC data hash) is pushed to <strong>Amazon ECR</strong>, and the ONNX/TensorRT artifacts are uploaded to S3 via <code>aws s3 sync</code>.</li>
+<li><strong>Kubernetes Deployment</strong>: A final step generates a <code>model-canary.yaml</code> and applies it via <code>kubectl</code> using a service account with limited RBAC. The manifest includes <strong>Datadog APM annotations</strong> so inference latency appears in the same dashboard as API metrics.</li>
+<li><strong>Promotion Logic</strong>: Argo Rollouts 2.7 monitors <code>seldon_requests_total</code> and <code>app_model_latency_ms</code> (forwarded to Datadog via Prometheus Agent). If error rate &lt; 0.05% and P95 latency &lt; 50 ms for 10 minutes, it promotes to 100%.</li>
+</ol>
+<p>This integration meant data scientists could use familiar tools (Git, GitHub, Python) while benefiting from enterprise-grade deployment safety. DevOps no longer needed to manually intervene. The entire pipeline completes in <strong>14 minutes</strong> on average, compared to the previous <strong>2+ hours</strong> of manual coordination. Crucially, because the workflow lives in GitHub, audit trails, approvals, and rollbacks are natively supported—bringing ML deployments to the same standard as backend services.</p>
+<hr />
+<h2 id="a-realistic-case-study-beforeafter-comparison-with-actual-numbers">A Realistic Case Study: Before/After Comparison with Actual Numbers</h2>
+<p>Before implementing a full MLOps pipeline, a healthcare analytics startup faced recurring production outages in its patient risk stratification system. The model—a gradient-boosted tree trained on patient vitals and lab results—was retrained weekly and deployed manually via <code>scp</code> and a restart script. Despite high offline accuracy (AUC 0.89), the production system frequently returned incorrect risk scores, leading to missed clinical interventions and false alarms.</p>
+<p><strong>Pre-MLOps State (6 Months of Data):</strong>
+- <strong>Deployment Frequency</strong>: 1 model update every 7 days (batched due to fear of breakage)
+- <strong>Mean Time to Recovery (MTTR)</strong>: 4.2 hours (manual rollback, investigation, redeployment)
+- <strong>Production Outages</strong>: 9 incidents in 6 months (1.5/month)
+- <strong>Primary Causes</strong>:
+  - Schema mismatch (e.g., new lab test codes not handled): 5 incidents
+  - Library version drift (XGBoost 1.7.3 vs 1.6.2): 3 incidents
+  - Data leakage in preprocessing (hard-coded date filters): 1 incident
+- <strong>Inference Performance</strong>:
+  - Latency: 210 ms P95 (on m5.2xlarge)
+  - Throughput: 480 RPS
+  - Error Rate: 0.9%
+- <strong>Operational Cost</strong>:
+  - 1.5 engineer-days per deployment
+  - $3,200/month in EC2 (over-provisioned to handle load spikes)</p>
+<p>After a 10-week MLOps overhaul using <strong>DVC 3.0</strong>, <strong>MLflow 2.9</strong>, <strong>Seldon Core 1.16</strong>, and <strong>Argo Rollouts 2.7</strong>, the system was rebuilt with immutable artifacts, automated validation, and canary analysis.</p>
+<p><strong>Post-MLOps State (6 Months Post-Deployment):</strong>
+- <strong>Deployment Frequency</strong>: 3 model updates per week (automated, low-risk)
+- <strong>MTTR</strong>: 9 minutes (automated rollback via Argo)
+- <strong>Production Outages</strong>: 0
+- <strong>Inference Performance</strong>:
+  - Latency: 48 ms P95 (after switching to ONNX + ONNX Runtime 1.16 with <code>intra_op_num_threads=4</code>)
+  - Throughput: 1,850 RPS (285% increase)
+  - Error Rate: 0.04%
+- <strong>Operational Cost</strong>:
+  - 0.2 engineer-days per deployment (mostly monitoring)
+  - $1,800/month in EC2 (autoscaling reduced idle instances by 52%)
+- <strong>Additional Gains</strong>:
+  - <strong>Data drift alerts</strong>: Great Expectations detected a 22% drop in hemoglobin test frequency, prompting a data collection review
+  - <strong>Model drift detection</strong>: Evidently AI 0.4.10 flagged a 12% shift in feature importance, triggering a retraining
+  - <strong>Cost of failure averted</strong>: Estimated $480k in potential liability from misdiagnoses avoided over 6 months</p>
+<p>The transformation wasn’t just technical—it changed team behavior. Data scientists began treating models as production software, writing tests and monitoring dashboards. Engineers trusted the pipeline enough to automate promotions. The result wasn’t just fewer outages; it was faster innovation, higher reliability, and measurable clinical impact. This case proves that disciplined MLOps isn’t a cost center—it’s a catalyst for business resilience.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/2026s-worst-hacks/">
+                        <h3>2026's Worst Hacks</h3>
+                        <p>Examine 2026's worst data breaches like AetherCorp and GlobalHealthNet. Learn real-world tradeoffs and concrete steps to prevent AI-driven supply chain attacks, cloud misconfigurations, and deepfake identity theft. Direct, opinionated insights.</p>
+                        <span class="related-meta">12 min read · 19 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-code-tools-beat-junior-devs/">
+                        <h3>AI Code Tools Beat Junior Devs</h3>
+                        <p>AI tools now write cleaner, faster, more secure code than most junior developers. Real benchmarks, tool comparisons, and when to avoid them.</p>
+                        <span class="related-meta">14 min read · 22 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-finance/">
+                        <h3>AI Finance</h3>
+                        <p>AI finance tools analyze data, predict stock prices</p>
+                        <span class="related-meta">11 min read · 22 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
