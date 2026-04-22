@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 12:40:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 12:59:44 +0000</lastBuildDate>
+    <item>
+      <title>Limit Smart: 5 Rate Limiting Strategies</title>
+      <link>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</link>
+      <description>Rate limiting strategies for APIs, including algorithm selection, implementation, and performance optimization.</description>
+      <pubDate>Wed, 22 Apr 2026 12:59:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</guid>
+    </item>
     <item>
       <title>Vector DBs: Embeddings in Practice</title>
       <link>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</link>
@@ -138,13 +145,6 @@
       <description>Solo developers can build successful SaaS products by prioritizing simplicity and focusing on customer needs</description>
       <pubDate>Wed, 22 Apr 2026 04:43:03 +0000</pubDate>
       <guid>https://kubaik.github.io/solo-saas/</guid>
-    </item>
-    <item>
-      <title>Apple&apos;s Pricing Edge</title>
-      <link>https://kubaik.github.io/apples-pricing-edge/</link>
-      <description>Apple&apos;s pricing strategy is rooted in its ability to create a seamless user experience</description>
-      <pubDate>Wed, 22 Apr 2026 03:39:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/apples-pricing-edge/</guid>
     </item>
   </channel>
 </rss>

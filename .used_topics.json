@@ -110,5 +110,6 @@
   "Lazy Loading and Code Splitting in Practice",
   "Message Queues: Kafka vs RabbitMQ vs SQS",
   "MLOps: Deploying AI Models Without Breaking Everything",
-  "Vector Databases and Embeddings: A Practical Guide"
+  "Vector Databases and Embeddings: A Practical Guide",
+  "Rate Limiting Strategies That Actually Work"
 ]
