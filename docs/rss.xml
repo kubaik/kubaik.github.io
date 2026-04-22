@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 12:21:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 09:25:16 +0000</lastBuildDate>
+    <item>
+      <title>Platform Engineering: Beyond Internal Tooling</title>
+      <link>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</link>
+      <description>Internal developer platforms reduce cognitive load by 50%+—here’s how we cut onboarding from 4.2 days to 37 minutes using Backstage, Argo CD, and OPA.</description>
+      <pubDate>Wed, 22 Apr 2026 09:25:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</guid>
+    </item>
     <item>
       <title>Open Source Projects That Made Millions: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/open-source-projects-that-made-millions-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Lean tech stack for bootstrapped startups</description>
       <pubDate>Tue, 21 Apr 2026 17:34:56 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-stack-2026/</guid>
-    </item>
-    <item>
-      <title>AI Ethics</title>
-      <link>https://kubaik.github.io/ai-ethics/</link>
-      <description>AI ethics requires transparency, accountability, and diversity</description>
-      <pubDate>Tue, 21 Apr 2026 16:53:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ethics/</guid>
     </item>
   </channel>
 </rss>
