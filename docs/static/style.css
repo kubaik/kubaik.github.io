@@ -203,38 +203,26 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
-    /* stretch makes every cell in a row the same height */
     align-items: stretch;
 }
 
-/*
- * .post-card is now the ONLY element per card — it IS the clickable surface.
- * We use <a class="post-card"> in the HTML so the whole card is a link.
- * display:flex + flex-direction:column lets the card stretch to row height.
- */
 .post-card {
-    /* layout */
     display: flex;
     flex-direction: column;
     height: 100%;
-    /* fill the grid cell */
     padding: 2rem;
-    /* visuals */
     border: 1px solid #e9ecef;
     border-radius: 12px;
     background: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* link reset */
     text-decoration: none;
     color: inherit;
-    /* interaction */
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
 
-/* gradient top-bar that slides in on hover */
 .post-card::before {
     content: '';
     position: absolute;
@@ -276,10 +264,8 @@ main {
     color: #6c757d;
     margin-bottom: 1.5rem;
     line-height: 1.6;
-    /* grow to push tags to the bottom */
     flex: 1;
     transition: color 0.3s ease;
-    /* Clamp to 3 lines */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -299,7 +285,6 @@ main {
     font-size: 0.9rem;
 }
 
-/* Tags on post cards */
 .post-card .tags {
     display: flex;
     justify-content: flex-start;
@@ -310,7 +295,6 @@ main {
     position: relative;
 }
 
-/* Fade out at the right edge when tags overflow */
 .post-card .tags::after {
     content: '';
     position: absolute;
@@ -322,7 +306,6 @@ main {
     pointer-events: none;
 }
 
-/* Uniform tag sizing — no wrapping inside tag */
 .post-card .tag {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -343,7 +326,6 @@ main {
     font-weight: 500;
 }
 
-/* Post content link hover (inside blog post body) */
 .post-content a:hover {
     border-bottom-color: #764ba2;
 }
@@ -352,7 +334,6 @@ main {
    LOAD MORE / INFINITE SCROLL
    ============================================ */
 
-/* Loading Spinner */
 .loading-spinner {
     display: flex;
     flex-direction: column;
@@ -381,13 +362,28 @@ main {
     }
 }
 
-/* Infinite Scroll Toggle — hidden */
 .scroll-options {
     display: none !important;
 }
 
 .toggle-switch {
     display: none !important;
+}
+
+/* ============================================
+   READING PROGRESS BAR  (post pages only)
+   ============================================ */
+
+#reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    z-index: 9999;
+    transition: width 0.1s linear;
+    pointer-events: none;
 }
 
 /* ============================================
@@ -408,14 +404,25 @@ main {
     font-size: 1.2rem;
     font-weight: bold;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Hidden by default — JS adds .visible class */
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .back-to-top:hover {
+    background: linear-gradient(135deg, #5558e3 0%, #6a3d9a 100%);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
@@ -651,7 +658,6 @@ footer {
     transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
-/* When the class is removed the card transitions to its natural state */
 .post-card:not(.post-card--entering) {
     opacity: 1;
     transform: translateY(0);
@@ -818,8 +824,6 @@ footer {
     .search-input::placeholder {
         font-size: 14px;
     }
-
-
 }
 
 @media (max-width: 480px) {
@@ -847,6 +851,7 @@ footer {
 @media print {
 
     .back-to-top,
+    #reading-progress,
     .loading-spinner,
     .ad-header,
     .ad-middle,
@@ -890,5 +895,9 @@ footer {
     .back-to-top:hover,
     nav a:hover {
         transform: none;
+    }
+
+    #reading-progress {
+        transition: none;
     }
 }
