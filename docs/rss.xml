@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 13:20:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 14:16:01 +0000</lastBuildDate>
+    <item>
+      <title>Rust For Devs</title>
+      <link>https://kubaik.github.io/rust-for-devs/</link>
+      <description>Rust for Python and JavaScript developers, with performance benchmarks and real-world examples</description>
+      <pubDate>Wed, 22 Apr 2026 14:15:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-for-devs/</guid>
+    </item>
     <item>
       <title>EDA Insights</title>
       <link>https://kubaik.github.io/eda-insights/</link>
@@ -138,13 +145,6 @@
       <description>Design a URL shortener that handles billions of requests</description>
       <pubDate>Wed, 22 Apr 2026 07:28:34 +0000</pubDate>
       <guid>https://kubaik.github.io/shorturl/</guid>
-    </item>
-    <item>
-      <title>AI Finance</title>
-      <link>https://kubaik.github.io/ai-finance/</link>
-      <description>AI finance tools analyze data, predict stock prices</description>
-      <pubDate>Wed, 22 Apr 2026 06:55:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-finance/</guid>
     </item>
   </channel>
 </rss>
