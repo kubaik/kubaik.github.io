@@ -625,7 +625,7 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 429, 500, 502, 504}
+        RETRYABLE = {503, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.groq_key}",
                    "Content-Type": "application/json"}
         data = {"model": "llama-3.3-70b-versatile", "messages": messages,
