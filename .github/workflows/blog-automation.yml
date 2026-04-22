@@ -81,6 +81,35 @@ jobs:
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
           ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
+      # ── Resolve the effective Twitter posting flag ──────────────────────
+      # Rules:
+      #   schedule  → ALWAYS post (cron runs should never be silenced by
+      #               a dev flag set during a code-change session)
+      #   push      → respect ENABLE_TWITTER_POSTING (dev may have set
+      #               it to false while iterating on code)
+      #   workflow_dispatch → respect ENABLE_TWITTER_POSTING (manual
+      #               triggers should behave like push for safety)
+      - name: Resolve Twitter posting flag
+        id: twitter_flag
+        run: |
+          EVENT="${{ github.event_name }}"
+          SECRET_FLAG="${{ secrets.ENABLE_TWITTER_POSTING }}"
+
+          if [ "$EVENT" = "schedule" ]; then
+            echo "Trigger: scheduled cron — Twitter posting FORCED ON"
+            echo "effective_flag=true" >> $GITHUB_OUTPUT
+          else
+            # push or workflow_dispatch — honour the secret
+            NORMALISED=$(echo "$SECRET_FLAG" | tr '[:upper:]' '[:lower:]' | xargs)
+            if [ "$NORMALISED" = "true" ]; then
+              echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=true → posting ON"
+              echo "effective_flag=true" >> $GITHUB_OUTPUT
+            else
+              echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=${SECRET_FLAG:-<not set>} → posting OFF"
+              echo "effective_flag=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
       - name: Initialize config if needed
         run: |
           [ -f "config.yaml" ] && echo "Config exists" || python blog_system.py init
@@ -105,7 +134,9 @@ jobs:
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-          ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
+          # Pass the RESOLVED flag — not the raw secret — so blog_system.py
+          # sees the correct value regardless of how the workflow was triggered.
+          ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
         run: |
           python blog_system.py auto || {
             echo "WARNING: Content generation failed — rebuilding existing content"
@@ -150,5 +181,7 @@ jobs:
             echo "## Deployment Complete"
             echo "**URL**: ${{ steps.deployment.outputs.page_url }}"
             echo "**Posts**: $post_count"
+            echo "**Trigger**: ${{ github.event_name }}"
+            echo "**Twitter posting**: ${{ steps.twitter_flag.outputs.effective_flag }}"
             echo "**Run**: #${{ github.run_number }} — $(date -u '+%Y-%m-%d %H:%M UTC')"
           } >> $GITHUB_STEP_SUMMARY
