@@ -1582,6 +1582,17 @@ if __name__ == "__main__":
                     trending = visibility._get_trending_tag()
                     if trending:
                         print(f"🔥 Today's trending tag: {trending}")
+                        # Prepend trending tag so it appears FIRST in the tweet
+                        trending_tag = f"#{trending.lstrip('#')}"
+                        existing = blog_post.twitter_hashtags or ""
+                        # Strip it out if already present to avoid duplication
+                        other_tags = " ".join(
+                            t for t in existing.split()
+                            if t.lower() != trending_tag.lower()
+                        )
+                        blog_post.twitter_hashtags = (
+                            f"{trending_tag} {other_tags}".strip()
+                        )
 
                     print("\nPosting single tweet...")
                     result = visibility.post_single_tweet(blog_post)
