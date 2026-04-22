@@ -106,5 +106,6 @@
   "How Social Media Algorithms Work (And How to Beat Them)",
   "AI Tools That Write Better Code Than Most Juniors",
   "Building Your First Data Pipeline That Doesn't Break",
-  "Building a Micro-Frontend Architecture"
+  "Building a Micro-Frontend Architecture",
+  "Lazy Loading and Code Splitting in Practice"
 ]
