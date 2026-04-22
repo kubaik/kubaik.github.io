@@ -628,7 +628,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.groq_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "meta-llama/llama-4-scout-17b-16e-instruct", "messages": messages,
+        data = {"model": "llama-3.3-70b-versatile", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):   # 2 attempts — enough when racing
