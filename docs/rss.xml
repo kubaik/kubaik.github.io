@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 18:04:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 19:04:23 +0000</lastBuildDate>
+    <item>
+      <title>Machines Fail</title>
+      <link>https://kubaik.github.io/machines-fail/</link>
+      <description>AI systems still struggle with tasks requiring human intuition and empathy</description>
+      <pubDate>Wed, 22 Apr 2026 19:04:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/machines-fail/</guid>
+    </item>
     <item>
       <title>AI Forecasts</title>
       <link>https://kubaik.github.io/ai-forecasts/</link>
@@ -138,13 +145,6 @@
       <description>Junior dev jobs are vanishing not because of AI, but due to rising system complexity and broken onboarding. Real data, tools, and a path forward.</description>
       <pubDate>Wed, 22 Apr 2026 08:27:58 +0000</pubDate>
       <guid>https://kubaik.github.io/why-junior-dev-roles-are-vanishing/</guid>
-    </item>
-    <item>
-      <title>Terminal Mastery: Beyond Basic CLI Hacks</title>
-      <link>https://kubaik.github.io/terminal-mastery-beyond-basic-cli-hacks/</link>
-      <description>Terminal productivity isn&apos;t about shortcuts—it&apos;s reducing cognitive load. Real numbers, tools, and a contrarian take on why your shell setup might be holding you back.</description>
-      <pubDate>Wed, 22 Apr 2026 08:24:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/terminal-mastery-beyond-basic-cli-hacks/</guid>
     </item>
   </channel>
 </rss>
