@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 03:39:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 04:43:06 +0000</lastBuildDate>
+    <item>
+      <title>Solo SaaS</title>
+      <link>https://kubaik.github.io/solo-saas/</link>
+      <description>Solo developers can build successful SaaS products by prioritizing simplicity and focusing on customer needs</description>
+      <pubDate>Wed, 22 Apr 2026 04:43:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/solo-saas/</guid>
+    </item>
     <item>
       <title>Apple&apos;s Pricing Edge</title>
       <link>https://kubaik.github.io/apples-pricing-edge/</link>
@@ -138,13 +145,6 @@
       <description>Discover how JavaScript features like async/await and classes simplify coding</description>
       <pubDate>Tue, 21 Apr 2026 10:15:31 +0000</pubDate>
       <guid>https://kubaik.github.io/js-rev/</guid>
-    </item>
-    <item>
-      <title>Tech Exit</title>
-      <link>https://kubaik.github.io/tech-exit/</link>
-      <description>Senior developers leave big tech due to lack of challenge and poor culture</description>
-      <pubDate>Tue, 21 Apr 2026 10:07:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-exit/</guid>
     </item>
   </channel>
 </rss>
