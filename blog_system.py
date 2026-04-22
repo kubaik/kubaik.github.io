@@ -82,6 +82,26 @@ def _count_words(text: str) -> int:
 
 
 # ─────────────────────────────────────────────────────────────────
+# Twitter posting flag
+# ─────────────────────────────────────────────────────────────────
+
+def _twitter_posting_enabled() -> bool:
+    """
+    Reads the ENABLE_TWITTER_POSTING GitHub secret (exposed as an env var).
+    Returns True only when the value is explicitly 'true' (case-insensitive).
+    Defaults to False so a missing or empty secret is always safe.
+    """
+    raw = os.getenv("ENABLE_TWITTER_POSTING", "false").strip().lower()
+    enabled = raw == "true"
+    if not enabled:
+        print(
+            f"Twitter posting DISABLED "
+            f"(ENABLE_TWITTER_POSTING={os.getenv('ENABLE_TWITTER_POSTING', '<not set>')})"
+        )
+    return enabled
+
+
+# ─────────────────────────────────────────────────────────────────
 # FIX: derive a description from content when meta_description is empty
 # ─────────────────────────────────────────────────────────────────
 
@@ -1551,25 +1571,32 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
-                visibility = VisibilityAutomator(config)
-                print("\nPosting single tweet...")
-                result = visibility.post_single_tweet(blog_post)
-
-                if result["success"]:
-                    print(f"✅ Tweet posted: {result['url']}")
-                    print(
-                        f"   {result['char_count']} chars | "
-                        f"{result['tweet_text'][:80]}…"
-                    )
+                # ── Twitter posting gate ──────────────────────────────────
+                if not _twitter_posting_enabled():
+                    print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
                 else:
-                    print(f"❌ Tweet failed: {result.get('error')}")
-                    print("Attempting fallback via best-strategy picker...")
-                    fallback = visibility.post_with_best_strategy(blog_post)
-                    if fallback["success"]:
-                        print(f"✅ Fallback tweet posted: {fallback['url']}")
-                    else:
+                    visibility = VisibilityAutomator(config)
+                    print("\nPosting single tweet...")
+                    result = visibility.post_single_tweet(blog_post)
+
+                    if result["success"]:
+                        print(f"✅ Tweet posted: {result['url']}")
                         print(
-                            f"❌ Fallback also failed: {fallback.get('error')}")
+                            f"   {result['char_count']} chars | "
+                            f"{result['tweet_text'][:80]}…"
+                        )
+                    else:
+                        print(f"❌ Tweet failed: {result.get('error')}")
+                        print("Attempting fallback via best-strategy picker...")
+                        fallback = visibility.post_with_best_strategy(
+                            blog_post)
+                        if fallback["success"]:
+                            print(
+                                f"✅ Fallback tweet posted: {fallback['url']}")
+                        else:
+                            print(
+                                f"❌ Fallback also failed: {fallback.get('error')}")
+                # ─────────────────────────────────────────────────────────
 
             except Exception as e:
                 print(f"Error: {e}")
