@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 14:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 11:56:30 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load</title>
+      <link>https://kubaik.github.io/lazy-load/</link>
+      <description>Improve web app performance with lazy loading and code splitting</description>
+      <pubDate>Wed, 22 Apr 2026 11:56:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load/</guid>
+    </item>
     <item>
       <title>Micro-FE</title>
       <link>https://kubaik.github.io/micro-fe/</link>
@@ -138,13 +145,6 @@
       <description>Protect user data from corporations with encryption, access controls, and secure storage</description>
       <pubDate>Tue, 21 Apr 2026 22:34:18 +0000</pubDate>
       <guid>https://kubaik.github.io/data-shield/</guid>
-    </item>
-    <item>
-      <title>Design Like Pro</title>
-      <link>https://kubaik.github.io/design-like-pro/</link>
-      <description>System design interview tips and best practices</description>
-      <pubDate>Tue, 21 Apr 2026 21:40:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-like-pro/</guid>
     </item>
   </channel>
 </rss>
