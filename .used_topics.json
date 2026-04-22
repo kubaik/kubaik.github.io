@@ -111,5 +111,6 @@
   "Message Queues: Kafka vs RabbitMQ vs SQS",
   "MLOps: Deploying AI Models Without Breaking Everything",
   "Vector Databases and Embeddings: A Practical Guide",
-  "Rate Limiting Strategies That Actually Work"
+  "Rate Limiting Strategies That Actually Work",
+  "Kubernetes: When It Helps and When It Hurts"
 ]
