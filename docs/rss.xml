@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 13:11:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 13:20:28 +0000</lastBuildDate>
+    <item>
+      <title>EDA Insights</title>
+      <link>https://kubaik.github.io/eda-insights/</link>
+      <description>EDA insights for scalable systems</description>
+      <pubDate>Wed, 22 Apr 2026 13:20:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-insights/</guid>
+    </item>
     <item>
       <title>Kubernetes: Pain Points and Performance</title>
       <link>https://kubaik.github.io/kubernetes-pain-points-and-performance/</link>
@@ -138,13 +145,6 @@
       <description>AI finance tools analyze data, predict stock prices</description>
       <pubDate>Wed, 22 Apr 2026 06:55:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-finance/</guid>
-    </item>
-    <item>
-      <title>WebSocket Power</title>
-      <link>https://kubaik.github.io/websocket-power/</link>
-      <description>WebSocket-based apps achieve 10-20ms latency</description>
-      <pubDate>Wed, 22 Apr 2026 06:09:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/websocket-power/</guid>
     </item>
   </channel>
 </rss>
