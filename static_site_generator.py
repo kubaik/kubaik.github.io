@@ -943,7 +943,7 @@ def _build_templates() -> dict:
         .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
         .author-avatar-lg {width: 100px;height: 100px;border-radius: 50%;overflow: hidden;flex-shrink: 0;}
         .author-photo {width: 100%;height: 100%;object-fit: cover;}
-        .p_about {margin-bottom: 16px;}
+        .paragraph-spacing {margin-bottom: 16px;}
     </style>
 </head>
 <body>
@@ -972,21 +972,21 @@ def _build_templates() -> dict:
                             Software Developer · Nairobi, Kenya
                         </p>
 
-                        <p itemprop="description" class="p_about" >
+                        <p itemprop="description" class="paragraph-spacing" >
                                 Software Engineer building production systems since 2014, with experience in the financial services industry. 
                                 I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
                             </p>
 
-                            <p>
+                            <p class="paragraph-spacing >
                                 My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
                                 with an emphasis on performance, cost, and scalability.
                             </p>
 
-                            <p>
+                            <p class="paragraph-spacing >
                                 I write about real-world engineering tradeoffs and what actually works in production.
                             </p>
 
-                            <p>
+                            <p class="paragraph-spacing>
                             <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer">
                                 View full experience on LinkedIn →
                             </a>
