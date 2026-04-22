@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 12:59:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 13:11:25 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes: Pain Points and Performance</title>
+      <link>https://kubaik.github.io/kubernetes-pain-points-and-performance/</link>
+      <description>Kubernetes pain points, performance, and use cases</description>
+      <pubDate>Wed, 22 Apr 2026 13:11:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/kubernetes-pain-points-and-performance/</guid>
+    </item>
     <item>
       <title>Limit Smart: 5 Rate Limiting Strategies</title>
       <link>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</link>
@@ -138,13 +145,6 @@
       <description>WebSocket-based apps achieve 10-20ms latency</description>
       <pubDate>Wed, 22 Apr 2026 06:09:56 +0000</pubDate>
       <guid>https://kubaik.github.io/websocket-power/</guid>
-    </item>
-    <item>
-      <title>Solo SaaS</title>
-      <link>https://kubaik.github.io/solo-saas/</link>
-      <description>Solo developers can build successful SaaS products by prioritizing simplicity and focusing on customer needs</description>
-      <pubDate>Wed, 22 Apr 2026 04:43:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/solo-saas/</guid>
     </item>
   </channel>
 </rss>
