@@ -625,7 +625,7 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 500, 502, 504}
+        RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.groq_key}",
                    "Content-Type": "application/json"}
         data = {"model": "llama-3.3-70b-versatile", "messages": messages,
@@ -1576,6 +1576,13 @@ if __name__ == "__main__":
                     print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
                 else:
                     visibility = VisibilityAutomator(config)
+
+                    # Trending hashtag fetched once (cached to disk for the
+                    # rest of the day) so the tweet gains extra reach.
+                    trending = visibility._get_trending_tag()
+                    if trending:
+                        print(f"🔥 Today's trending tag: {trending}")
+
                     print("\nPosting single tweet...")
                     result = visibility.post_single_tweet(blog_post)
 
@@ -1585,6 +1592,9 @@ if __name__ == "__main__":
                             f"   {result['char_count']} chars | "
                             f"{result['tweet_text'][:80]}…"
                         )
+                        if result.get("trending_tag"):
+                            print(
+                                f"   Trending tag injected: {result['trending_tag']}")
                     else:
                         print(f"❌ Tweet failed: {result.get('error')}")
                         print("Attempting fallback via best-strategy picker...")
