@@ -23,15 +23,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Fetching last run info for blog-automation.yml..."
+          echo "Fetching last SCHEDULED run info for blog-automation.yml..."
 
           LAST_RUN_JSON=$(gh run list \
             --repo ${{ github.repository }} \
             --workflow=blog-automation.yml \
+            --event schedule \
             --limit=1 \
             --json updatedAt,status,conclusion,databaseId)
 
-          echo "Last run data: $LAST_RUN_JSON"
+          echo "Last scheduled run data: $LAST_RUN_JSON"
 
           LAST_UPDATED=$(echo "$LAST_RUN_JSON" | python3 -c "import json,sys; runs=json.load(sys.stdin); print(runs[0]['updatedAt']) if runs else print('')")
           LAST_STATUS=$(echo "$LAST_RUN_JSON"  | python3 -c "import json,sys; runs=json.load(sys.stdin); print(runs[0]['status']) if runs else print('unknown')")
