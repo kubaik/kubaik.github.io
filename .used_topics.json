@@ -108,5 +108,6 @@
   "Building Your First Data Pipeline That Doesn't Break",
   "Building a Micro-Frontend Architecture",
   "Lazy Loading and Code Splitting in Practice",
-  "Message Queues: Kafka vs RabbitMQ vs SQS"
+  "Message Queues: Kafka vs RabbitMQ vs SQS",
+  "MLOps: Deploying AI Models Without Breaking Everything"
 ]
