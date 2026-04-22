@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 16:53:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 17:56:13 +0000</lastBuildDate>
+    <item>
+      <title>AutoLife</title>
+      <link>https://kubaik.github.io/autolife/</link>
+      <description>Automate tasks with AI and Python</description>
+      <pubDate>Wed, 22 Apr 2026 17:56:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/autolife/</guid>
+    </item>
     <item>
       <title>OS Biz Models</title>
       <link>https://kubaik.github.io/os-biz-models/</link>
@@ -138,13 +145,6 @@
       <description>How WhatsApp-scale chat systems work: real-time delivery, E2E encryption, and performance numbers from production systems.</description>
       <pubDate>Wed, 22 Apr 2026 08:01:07 +0000</pubDate>
       <guid>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</guid>
-    </item>
-    <item>
-      <title>VC Insights</title>
-      <link>https://kubaik.github.io/vc-insights/</link>
-      <description>VC funding insights for tech startups</description>
-      <pubDate>Wed, 22 Apr 2026 07:54:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/vc-insights/</guid>
     </item>
   </channel>
 </rss>
