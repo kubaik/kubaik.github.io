@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 21:45:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 22:42:11 +0000</lastBuildDate>
+    <item>
+      <title>Data Wars</title>
+      <link>https://kubaik.github.io/data-wars/</link>
+      <description>Data warehouse vs data lake vs lakehouse: which one to choose</description>
+      <pubDate>Wed, 22 Apr 2026 22:42:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-wars/</guid>
+    </item>
     <item>
       <title>BI for Devs</title>
       <link>https://kubaik.github.io/bi-for-devs/</link>
@@ -138,13 +145,6 @@
       <description>Beat social media algorithms with high-quality content</description>
       <pubDate>Wed, 22 Apr 2026 09:46:13 +0000</pubDate>
       <guid>https://kubaik.github.io/beat-algos/</guid>
-    </item>
-    <item>
-      <title>Platform Engineering: Beyond Internal Tooling</title>
-      <link>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</link>
-      <description>Internal developer platforms reduce cognitive load by 50%+—here’s how we cut onboarding from 4.2 days to 37 minutes using Backstage, Argo CD, and OPA.</description>
-      <pubDate>Wed, 22 Apr 2026 09:25:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</guid>
     </item>
   </channel>
 </rss>
