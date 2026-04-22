@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 13:12:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 10:15:41 +0000</lastBuildDate>
+    <item>
+      <title>Data Pipelines That Survive Production</title>
+      <link>https://kubaik.github.io/data-pipelines-that-survive-production/</link>
+      <description>Real-world tactics for building data pipelines that survive production. Includes code, benchmarks, and tools that prevent silent failures.</description>
+      <pubDate>Wed, 22 Apr 2026 10:15:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-pipelines-that-survive-production/</guid>
+    </item>
     <item>
       <title>AI Code Tools Beat Junior Devs</title>
       <link>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</link>
@@ -138,13 +145,6 @@
       <description>Twilio and Stripe&apos;s API revenue models</description>
       <pubDate>Tue, 21 Apr 2026 20:43:24 +0000</pubDate>
       <guid>https://kubaik.github.io/api-cash/</guid>
-    </item>
-    <item>
-      <title>AB Test</title>
-      <link>https://kubaik.github.io/ab-test/</link>
-      <description>A/B testing for business metrics optimization</description>
-      <pubDate>Tue, 21 Apr 2026 19:03:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ab-test/</guid>
     </item>
   </channel>
 </rss>
