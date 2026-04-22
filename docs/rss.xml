@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2026 22:42:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 23:41:33 +0000</lastBuildDate>
+    <item>
+      <title>React Showdown</title>
+      <link>https://kubaik.github.io/react-showdown/</link>
+      <description>React vs Next.js vs Remix: Choose the right tool</description>
+      <pubDate>Wed, 22 Apr 2026 23:41:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-showdown/</guid>
+    </item>
     <item>
       <title>Data Wars</title>
       <link>https://kubaik.github.io/data-wars/</link>
@@ -138,13 +145,6 @@
       <description>AI tools now write cleaner, faster, more secure code than most junior developers. Real benchmarks, tool comparisons, and when to avoid them.</description>
       <pubDate>Wed, 22 Apr 2026 10:10:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</guid>
-    </item>
-    <item>
-      <title>Beat Algos</title>
-      <link>https://kubaik.github.io/beat-algos/</link>
-      <description>Beat social media algorithms with high-quality content</description>
-      <pubDate>Wed, 22 Apr 2026 09:46:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/beat-algos/</guid>
     </item>
   </channel>
 </rss>
