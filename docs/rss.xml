@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 22:39:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 23:39:37 +0000</lastBuildDate>
+    <item>
+      <title>Tech Interview Red Flags vs Green Lights: What Actually Gets You Hired</title>
+      <link>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</link>
+      <description>Option B cuts false positives by 60% and speeds up hiring by 50%—here’s the data and the repo template to replicate it.</description>
+      <pubDate>Thu, 23 Apr 2026 23:39:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</guid>
+    </item>
     <item>
       <title>Android Studio Koans: Fix Kotlin Build Errors Like a Pro</title>
       <link>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</link>
@@ -138,13 +145,6 @@
       <description>Simplify application code with SQL</description>
       <pubDate>Thu, 23 Apr 2026 02:00:10 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-simplifies-code/</guid>
-    </item>
-    <item>
-      <title>React Showdown</title>
-      <link>https://kubaik.github.io/react-showdown/</link>
-      <description>React vs Next.js vs Remix: Choose the right tool</description>
-      <pubDate>Wed, 22 Apr 2026 23:41:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-showdown/</guid>
     </item>
   </channel>
 </rss>
