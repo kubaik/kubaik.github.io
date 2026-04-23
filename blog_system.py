@@ -6,6 +6,7 @@ import yaml
 import asyncio
 import aiohttp
 import requests
+import hashlib
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List
@@ -469,6 +470,239 @@ _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
 
 # ─────────────────────────────────────────────────────────────────
+# Six rotating article structures
+# Each entry is (format_name, heading_list, format_note)
+# ─────────────────────────────────────────────────────────────────
+
+_STRUCTURE_SETS = [
+    # 0 — deep-dive / how-it-works
+    (
+        "deep_dive",
+        [
+            "## The gap between what the docs say and what production needs",
+            "## How {topic} actually works under the hood",
+            "## Step-by-step implementation with real code",
+            "## Performance numbers from a live system",
+            "## The failure modes nobody warns you about",
+            "## Tools and libraries worth your time",
+            "## When this approach is the wrong choice",
+            "## My honest take after using this in production",
+            "## What to do next",
+        ],
+        (
+            "Write like a practitioner explaining to a colleague, not a textbook author. "
+            "Include at least one moment where you say what surprised you or contradicted your expectations."
+        ),
+    ),
+    # 1 — tutorial / step-by-step
+    (
+        "tutorial",
+        [
+            "## Why I wrote this (the problem I kept hitting)",
+            "## Prerequisites and what you'll build",
+            "## Step 1 — set up the environment",
+            "## Step 2 — core implementation",
+            "## Step 3 — handle edge cases and errors",
+            "## Step 4 — add observability and tests",
+            "## Real results from running this",
+            "## Common questions and variations",
+            "## Where to go from here",
+        ],
+        (
+            "Write in tutorial voice — direct, numbered, action-oriented. "
+            "Each step should explain WHY before showing HOW. "
+            "Include at least one 'gotcha' you discovered while writing or testing this."
+        ),
+    ),
+    # 2 — opinion / contrarian take
+    (
+        "opinion",
+        [
+            "## The conventional wisdom (and why it's incomplete)",
+            "## What actually happens when you follow the standard advice",
+            "## A different mental model",
+            "## Evidence and examples from real systems",
+            "## The cases where the conventional wisdom IS right",
+            "## How to decide which approach fits your situation",
+            "## Objections I've heard and my responses",
+            "## What I'd do differently if starting over",
+            "## Summary",
+        ],
+        (
+            "This is an opinion piece. Take a clear, defensible stance in the opening paragraph. "
+            "Steelman the opposing view before rebutting it. "
+            "Use phrases like 'in my experience', 'I've seen this fail when', 'the honest answer is'. "
+            "Avoid hedging — readers come to opinion pieces for conviction."
+        ),
+    ),
+    # 3 — comparison / versus
+    (
+        "comparison",
+        [
+            "## Why this comparison matters right now",
+            "## Option A — how it works and where it shines",
+            "## Option B — how it works and where it shines",
+            "## Head-to-head: performance",
+            "## Head-to-head: developer experience",
+            "## Head-to-head: operational cost",
+            "## The decision framework I use",
+            "## My recommendation (and when to ignore it)",
+            "## Final verdict",
+        ],
+        (
+            "Structure this as a genuine comparison, not a sponsored review. "
+            "Lead each 'head-to-head' section with a concrete number or test result. "
+            "The recommendation must be conditional — 'use X if Y, use Z if W'. "
+            "Acknowledge weaknesses in your preferred option."
+        ),
+    ),
+    # 4 — case study / story-driven
+    (
+        "case_study",
+        [
+            "## The situation (what we were trying to solve)",
+            "## What we tried first and why it didn't work",
+            "## The approach that worked",
+            "## Implementation details",
+            "## Results — the numbers before and after",
+            "## What we'd do differently",
+            "## The broader lesson",
+            "## How to apply this to your situation",
+            "## Resources that helped",
+        ],
+        (
+            "Write this as a narrative — there should be a problem, an attempt, a failure or complication, "
+            "and a resolution. Use past tense for the story sections. "
+            "Every claim about results must include a number (latency, cost, lines of code, time saved, etc.). "
+            "The 'broader lesson' section is where you zoom out — make it a principle, not just a summary."
+        ),
+    ),
+    # 5 — explainer / concept clarity
+    (
+        "explainer",
+        [
+            "## The one-paragraph version (read this first)",
+            "## Why this concept confuses people",
+            "## The mental model that makes it click",
+            "## A concrete worked example",
+            "## How this connects to things you already know",
+            "## Common misconceptions, corrected",
+            "## The advanced version (once the basics are solid)",
+            "## Quick reference",
+            "## Further reading worth your time",
+        ],
+        (
+            "Start with the simplest possible accurate explanation. Build complexity gradually. "
+            "Use analogies freely — name them as analogies ('think of it like a...') so they don't mislead. "
+            "The 'quick reference' section should be a scannable table or bullet list a reader can bookmark."
+        ),
+    ),
+]
+
+
+def _pick_structure(topic: str) -> tuple:
+    """
+    Deterministic structure selection — same topic always gets same format,
+    but different topics get varied formats across the blog.
+    """
+    idx = int(hashlib.md5(topic.encode()).hexdigest(),
+              16) % len(_STRUCTURE_SETS)
+    return _STRUCTURE_SETS[idx]
+
+
+# ─────────────────────────────────────────────────────────────────
+# Author persona contexts for humanization
+# ─────────────────────────────────────────────────────────────────
+
+_AUTHOR_CONTEXTS = [
+    (
+        "You are Kubai Kevin, a software engineer in Nairobi with 10+ years building "
+        "production Python and Node.js backends in fintech. You write from direct experience — "
+        "name specific AWS services you've used, recall a real incident, mention a library version "
+        "that bit you. Never claim to work at a company you didn't. Write like you're explaining "
+        "to a smart colleague at a Nairobi tech meetup."
+    ),
+    (
+        "You are Kubai Kevin, a developer who spends a lot of time reading GitHub issues, "
+        "production postmortems, and Hacker News comment threads. You're opinionated and specific. "
+        "You've seen hype cycles come and go. Write with earned skepticism — praise what deserves "
+        "praise, call out what's overrated. Your audience respects directness."
+    ),
+    (
+        "You are Kubai Kevin, a self-taught developer who learned by breaking things in production. "
+        "You write the guide you wished existed when you were learning this topic. "
+        "Include at least one thing that took you longer than it should have to figure out. "
+        "Acknowledge when something is genuinely hard, not just 'initially confusing'."
+    ),
+    (
+        "You are Kubai Kevin, a developer who reviews a lot of code and sees the same mistakes repeatedly. "
+        "This post is your attempt to address the root cause, not just the symptom. "
+        "Be empathetic — most mistakes come from following outdated tutorials, not incompetence. "
+        "Name the outdated pattern before showing the better one."
+    ),
+]
+
+
+def _build_humanization_note(topic: str) -> str:
+    """Pick an author framing note deterministically based on topic."""
+    idx = int(hashlib.sha256(topic.encode()).hexdigest(),
+              16) % len(_AUTHOR_CONTEXTS)
+    return _AUTHOR_CONTEXTS[idx]
+
+
+# ─────────────────────────────────────────────────────────────────
+# Personal intro injection
+# ─────────────────────────────────────────────────────────────────
+
+_PERSONAL_INTROS = [
+    (
+        "I ran into this problem while building a payment integration for a client "
+        "in Nairobi. The official docs covered the happy path well. This post covers everything else."
+    ),
+    (
+        "This took me about three days to figure out properly. Most of the answers "
+        "I found online were either outdated or skipped the parts that actually matter in production. "
+        "Here's what I learned."
+    ),
+    (
+        "A colleague asked me about this last week and I realised I couldn't explain it cleanly. "
+        "Writing this post forced me to think it through properly — which is usually how it goes."
+    ),
+    (
+        "I've seen this done wrong in more codebases than I can count, including my own early work. "
+        "This is the post I wish I'd had when I started."
+    ),
+    (
+        "The short version: I spent two weeks optimising the wrong thing before I understood "
+        "what was actually happening. The longer version is below."
+    ),
+    (
+        "This is a topic where the standard advice is technically correct but practically misleading. "
+        "Here's the fuller picture, based on what I've seen work at scale."
+    ),
+]
+
+
+def inject_personal_intro(post, topic: str) -> None:
+    """
+    Prepend a short personal intro paragraph to post.content.
+    Call this after generate_blog_post() and before save_post().
+
+    Usage in auto mode:
+        blog_post = asyncio.run(blog_system.generate_blog_post(topic))
+        inject_personal_intro(blog_post, topic)   # <-- add this line
+        blog_system.save_post(blog_post)
+    """
+    idx = int(hashlib.md5(topic.encode()).hexdigest(),
+              16) % len(_PERSONAL_INTROS)
+    intro = _PERSONAL_INTROS[idx]
+
+    # Only inject if not already present (avoid double-injection on reruns)
+    if intro[:30] not in post.content:
+        post.content = f"{intro}\n\n{post.content}"
+
+
+# ─────────────────────────────────────────────────────────────────
 # BlogSystem
 # ─────────────────────────────────────────────────────────────────
 
@@ -621,7 +855,7 @@ class BlogSystem:
             f"All configured API providers failed. Last error: {last_error}")
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Groq  (reduced retries + timeouts for faster racing)
+    # PROVIDER: Groq
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
@@ -631,7 +865,7 @@ class BlogSystem:
         data = {"model": "llama-3.3-70b-versatile", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
-        for attempt in range(1, 3):   # 2 attempts — enough when racing
+        for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
@@ -879,15 +1113,14 @@ class BlogSystem:
         raise Exception("Gemini unavailable.")
 
     # ─────────────────────────────────────────────────────────────
-    # CONTENT GENERATION  (single API round-trip for everything)
+    # CONTENT GENERATION
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         """
-        Optimised: one API call generates title + content + meta + keywords
-        together via _generate_full_bundle(), eliminating the old separate
-        _generate_title() call.  Only one expansion pass is attempted if the
-        post comes back short, rather than two sequential passes.
+        One API call generates title + content + meta + keywords together via
+        _generate_full_bundle(). Only one expansion pass is attempted if the
+        post comes back short.
         """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
@@ -915,7 +1148,7 @@ class BlogSystem:
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
-            # Single expansion pass — sufficient in the vast majority of cases
+            # Single expansion pass
             if word_count < MIN_WORD_COUNT:
                 print(f"Content short ({word_count} words). Expanding once...")
                 content = await self._expand_content(content, title, topic)
@@ -963,7 +1196,7 @@ class BlogSystem:
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
-    # SINGLE BUNDLE CALL  (replaces _generate_title + _generate_content_bundle)
+    # SINGLE BUNDLE CALL — with rotating structures + author voice
     # ─────────────────────────────────────────────────────────────
 
     async def _generate_full_bundle(
@@ -973,10 +1206,22 @@ class BlogSystem:
         existing_titles: List[str],
     ) -> dict:
         """
-        One API call that returns title + full article + meta_description +
-        seo_keywords as a JSON object.  Replaces the old two-step flow of
-        _generate_title() followed by _generate_content_bundle().
+        One API call returns title + full article + meta_description +
+        seo_keywords as a JSON object.
+
+        Improvements over the original:
+          - 6 rotating article structures (no two posts look the same)
+          - First-person author voice injected via persona framing
+          - Format-specific writing guidance per structure type
+          - MIN_WORD_COUNT raised to 2000 for AdSense quality
         """
+        format_name, headings, format_note = _pick_structure(topic)
+        author_note = _build_humanization_note(topic)
+
+        # Substitute {topic} placeholder in headings
+        resolved_headings = [h.replace("{topic}", topic) for h in headings]
+        heading_block = "\n".join(resolved_headings)
+
         keyword_text = (
             f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
             if keywords else ""
@@ -987,64 +1232,65 @@ class BlogSystem:
             if existing_titles else ""
         )
 
+        # Format-specific title guidance
+        title_guidance = {
+            "deep_dive":  "Title should promise a real technical revelation, not just a topic name.",
+            "tutorial":   "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
+            "opinion":    "Title should take a stance — controversial is fine if honest.",
+            "comparison": "Title should name both options being compared.",
+            "case_study": "Title should hint at the result, e.g. 'How we cut X by 40%'.",
+            "explainer":  "Title should address the confusion, e.g. 'X finally explained'.",
+        }.get(format_name, "Write a specific, benefit-driven title.")
+
         messages = [
             {
                 "role": "system",
                 "content": (
-                    "You are an experienced tech professional with 10+ years of hands-on experience. "
-                    "Write in a direct, opinionated voice — share specific insights, real tradeoffs, and concrete numbers. "
-                    "Never use filler phrases like 'in today's fast-paced world', 'crucial aspect', or 'it is important to note'. "
-                    "Every paragraph must deliver concrete value. Be specific: name actual tools, libraries, companies, and version numbers. "
-                    "Take clear stances. Acknowledge tradeoffs honestly. "
-                    "IMPORTANT: Every article must include at least one original opinion or counterintuitive insight "
-                    "not commonly found in documentation or generic blog posts. "
-                    "Draw on real-world production experience, not just theory. "
-                    "You MUST respond with ONLY a valid JSON object — no markdown fences, no preamble, no trailing commentary."
+                    f"{author_note}\n\n"
+                    "Write with a specific, personal voice. Use 'I' and 'we' where natural. "
+                    "Avoid: 'in today's fast-paced world', 'it is important to note', 'crucial aspect', "
+                    "'dive into', 'delve into', 'In conclusion', 'leverage', 'unleash', 'game-changer'. "
+                    "Every paragraph must make a specific claim — no filler. "
+                    "Be willing to say 'I got this wrong at first' or 'this surprised me'. "
+                    "Name actual tools, actual version numbers, actual failure scenarios. "
+                    f"Format type for this post: {format_name.upper()}. {format_note}\n\n"
+                    "IMPORTANT: Respond with ONLY a valid JSON object — no markdown fences, "
+                    "no preamble, no trailing commentary."
                 ),
             },
             {
                 "role": "user",
-                "content": f"""Write a 2500-word technical blog post about this topic: "{topic}"{keyword_text}
+                "content": f"""Write a 2500-word {format_name} blog post about: "{topic}"{keyword_text}
 
-Generate a compelling, SEO-friendly title under 60 characters.{existing_hint}
-Avoid generic openers like 'The Ultimate Guide' or 'Everything You Need to Know'.
+{title_guidance}{existing_hint}
 
 Respond with ONLY a JSON object in this exact shape:
 {{
-  "title": "<catchy title under 60 chars>",
-  "content": "<full markdown article body — no title heading at top>",
-  "meta_description": "<under 155 chars, specific, no 'Learn how to' opener>",
+  "title": "<specific title under 60 chars>",
+  "content": "<full markdown article — no title heading at top>",
+  "meta_description": "<under 155 chars — state the specific value or insight, no generic openers>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
-Article structure (use exactly these ## headings inside "content"):
-## The Problem Most Developers Miss
-## How [Topic] Actually Works Under the Hood
-## Step-by-Step Implementation
-## Real-World Performance Numbers
-## Common Mistakes and How to Avoid Them
-## Tools and Libraries Worth Using
-## When Not to Use This Approach
-## My Take: What Nobody Else Is Saying
-## Conclusion and Next Steps
+Use EXACTLY these ## headings inside "content" (in order):
+{heading_block}
 
-Requirements for "content":
-- Markdown format
-- At least 2 realistic code examples (with language tag, e.g. ```python)
-- Specific tool names with version numbers where relevant
-- At least 3 concrete numbers (benchmarks, percentages, file sizes, latency figures, etc.)
+Hard requirements for "content":
+- Minimum 2200 words
+- At least 2 code examples with language tags (```python, ```javascript, etc.)
+- At least 3 concrete numbers (benchmarks, latency figures, percentages, cost figures)
+- At least 1 first-person observation: something that surprised you, a mistake you made, or a result you measured
 - Each section minimum 200 words
-- "When Not to Use This Approach" must be honest and specific (name real scenarios)
-- "My Take: What Nobody Else Is Saying" must contain a genuine, opinionated stance based on production experience
-- Do NOT include the title as a # heading
+- Do NOT include the title as a # heading at the top
+- The final section must end with a specific, actionable next step — not a generic "start today"
 
-Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based.
-Avoid in content: vague phrases, padding, lists over 6 items, "dive into", "delve into", "In conclusion", "Overall".
+Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based ("how to...", "why does...").
+
 Return ONLY the JSON object.""",
             },
         ]
 
-        raw = await self._call_api_with_fallback(messages, max_tokens=6000)
+        raw = await self._call_api_with_fallback(messages, max_tokens=6500)
         raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
@@ -1060,10 +1306,13 @@ Return ONLY the JSON object.""",
             data["meta_description"] = _derive_description(
                 data.get("content", ""), data.get("title", topic))
 
+        # Tag the post with its format type for debugging / future filtering
+        data["_format"] = format_name
+
         return data
 
     # ─────────────────────────────────────────────────────────────
-    # JSON REPAIR / PARSE  (shared by _generate_full_bundle)
+    # JSON REPAIR / PARSE
     # ─────────────────────────────────────────────────────────────
 
     def _parse_bundle_json(self, raw: str) -> dict:
@@ -1188,24 +1437,39 @@ Return ONLY the JSON object.""",
             f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}")
 
     # ─────────────────────────────────────────────────────────────
-    # EXPANSION  (called at most once now)
+    # EXPANSION — called at most once, maintains author voice
     # ─────────────────────────────────────────────────────────────
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
+        """
+        Expand short posts — called at most once after _generate_full_bundle().
+        The expansion maintains the same author voice and adds concrete, specific content.
+        """
+        author_note = _build_humanization_note(topic)
         messages = [
-            {"role": "system", "content": "You are a technical writer expanding existing blog content."},
-            {"role": "user", "content": (
-                f"The following blog post about '{topic}' is too short. "
-                "Add 3 additional detailed sections at the end (each 250+ words) covering:\n"
-                "1. Advanced configuration and real edge cases you have personally encountered\n"
-                "2. Integration with popular existing tools or workflows, with a concrete example\n"
-                "3. A realistic case study or before/after comparison with actual numbers\n\n"
-                f"Existing content:\n{existing_content}\n\n"
-                "Return the complete article including original content plus the new sections. "
-                "Do not include the title line. Be specific — name tools, versions, and metrics."
-            )},
+            {
+                "role": "system",
+                "content": (
+                    f"{author_note}\n\n"
+                    "You are expanding an existing blog post. Match the voice and style exactly. "
+                    "No generic padding — every sentence must add specific value."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"The following blog post about '{topic}' needs more depth. "
+                    "Add 3 additional sections at the end (each 300+ words):\n"
+                    "1. Advanced edge cases you personally encountered — name them specifically\n"
+                    "2. Integration with 2–3 real tools (name versions), with a working code snippet\n"
+                    "3. A before/after comparison with actual numbers (latency, cost, lines of code, etc.)\n\n"
+                    f"Existing content:\n{existing_content}\n\n"
+                    "Return the complete article (original + new sections). "
+                    "Do not repeat the title. Keep the same author voice throughout."
+                ),
+            },
         ]
-        return await self._call_api_with_fallback(messages, max_tokens=6000)
+        return await self._call_api_with_fallback(messages, max_tokens=6500)
 
     # ─────────────────────────────────────────────────────────────
     # LOCAL FALLBACK
@@ -1488,36 +1752,40 @@ def create_sample_config():
             "facebook": "your-facebook-page",
         },
         "content_topics": [
-            "How AI Is Changing Everyday Life in 2026",
-            "ChatGPT vs Claude vs Gemini: Which AI Actually Wins",
-            "10 AI Tools That Replace Expensive Software",
-            "AI Prompting Secrets Most People Never Learn",
-            "How to Use AI to Make Money Online",
-            "AI Tools for Students: Study Smarter Not Harder",
-            "Free AI Tools That Professionals Actually Use",
-            "How Companies Are Using AI to Cut Costs",
-            "AI-Generated Content: What's Real and What's Fake",
-            "The AI Skills That Will Get You Hired in 2026",
-            "How to Build an AI-Powered Side Hustle",
-            "AI vs Human: Where Machines Still Fail",
-            "The Hidden Dangers of Relying on AI",
-            "How Hospitals Are Using AI to Save Lives",
-            "AI in Education: The Future of Learning",
-            "Tech Salaries in 2026: Who Earns What",
-            "How to Get a $150K Tech Job Without a Degree",
-            "Freelance Developer Income: Realistic Numbers",
-            "The Tech Skills That Pay the Most Right Now",
-            "How to Negotiate a Tech Salary (Scripts That Work)",
-            "Remote Tech Jobs: Where to Find Them in 2026",
-            "Tech Career Roadmap: From Zero to Employed in 12 Months",
-            "Why Senior Developers Leave Big Tech Companies",
-            "The Highest-Paying Programming Languages in 2026",
-            "How to Build Passive Income as a Developer",
-            "Breaking Into Tech at 30, 40, or 50",
-            "Tech Interview Red Flags That Cost Candidates Jobs",
-            "The Fastest Growing Tech Roles Right Now",
-            "Why Developers Burn Out and How to Prevent It",
-            "How to Get Promoted Faster in Tech",
+            # AI — specific angles, not generic overviews
+            "Copilot vs Cursor: which actually speeds up Python backend work",
+            "How I use Claude to review my own code (and where it fails)",
+            "RAG pipelines in production: what the tutorials skip",
+            "Fine-tuning vs prompt engineering: when each one wins",
+            "AI tools that replaced paid software in my workflow",
+            "Why most AI-generated code breaks in edge cases",
+            "Building a local LLM setup that actually runs on a laptop",
+            "How vector databases work (and when you don't need one)",
+            # Career — specific and Kenya/Africa-relevant
+            "Getting a remote tech job from Nairobi: what actually worked",
+            "Tech salaries in Kenya in 2026: what the data shows",
+            "How I went from junior to senior without a CS degree",
+            "Freelance developer rates in Africa: a realistic breakdown",
+            "Why senior developers leave big tech (it's not always the money)",
+            "Negotiating a remote salary when you're in a lower-cost country",
+            # Backend / systems — specific comparisons
+            "PostgreSQL vs MySQL in 2026: the decision I keep making",
+            "Redis vs Memcached: a benchmark that actually matters",
+            "When to use a message queue (and when it's overkill)",
+            "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month",
+            "How I cut AWS costs by 40% without changing the architecture",
+            "API rate limiting patterns that don't break your clients",
+            "Database connection pooling: the setting everyone gets wrong",
+            # Python / JavaScript
+            "Python async: where it helps and where it makes things worse",
+            "TypeScript mistakes that slip through even with strict mode",
+            "FastAPI vs Django REST: after building both in production",
+            "Node.js memory leaks: how to find and fix them",
+            "Python packaging in 2026: what to actually use",
+            # Developer wellbeing / meta
+            "Burnout as a freelance developer: what helped me recover",
+            "How I manage client work and side projects without losing weekends",
+            "The tools that save me the most time as a solo developer",
         ],
     }
 
@@ -1563,6 +1831,8 @@ if __name__ == "__main__":
             try:
                 topic = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
+                # humanization injection
+                inject_personal_intro(blog_post, topic)
                 blog_system.save_post(blog_post)
 
                 generator = StaticSiteGenerator(blog_system)
@@ -1577,15 +1847,11 @@ if __name__ == "__main__":
                 else:
                     visibility = VisibilityAutomator(config)
 
-                    # Trending hashtag fetched once (cached to disk for the
-                    # rest of the day) so the tweet gains extra reach.
                     trending = visibility._get_trending_tag()
                     if trending:
                         print(f"🔥 Today's trending tag: {trending}")
-                        # Prepend trending tag so it appears FIRST in the tweet
                         trending_tag = f"#{trending.lstrip('#')}"
                         existing = blog_post.twitter_hashtags or ""
-                        # Strip it out if already present to avoid duplication
                         other_tags = " ".join(
                             t for t in existing.split()
                             if t.lower() != trending_tag.lower()
