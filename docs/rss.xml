@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 18:30:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 19:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Debugging Techniques That Find Bugs in Minutes</title>
+      <link>https://kubaik.github.io/debugging-techniques-that-find-bugs-in-minutes/</link>
+      <description>Learn a five‑step method that turns days‑long hunts into 5‑minute bug fixes using binary search, cheap observability, and hypothesis testing.</description>
+      <pubDate>Thu, 23 Apr 2026 18:59:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-techniques-that-find-bugs-in-minutes/</guid>
+    </item>
     <item>
       <title>Postman vs RestAssured: API Testing Beyond the Basics</title>
       <link>https://kubaik.github.io/postman-vs-restassured-api-testing-beyond-the-basi/</link>
@@ -138,13 +145,6 @@
       <description>Internal developer platforms reduce cognitive load by 50%+—here’s how we cut onboarding from 4.2 days to 37 minutes using Backstage, Argo CD, and OPA.</description>
       <pubDate>Wed, 22 Apr 2026 09:25:13 +0000</pubDate>
       <guid>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</guid>
-    </item>
-    <item>
-      <title>Why Junior Dev Roles Are Vanishing</title>
-      <link>https://kubaik.github.io/why-junior-dev-roles-are-vanishing/</link>
-      <description>Junior dev jobs are vanishing not because of AI, but due to rising system complexity and broken onboarding. Real data, tools, and a path forward.</description>
-      <pubDate>Wed, 22 Apr 2026 08:27:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-junior-dev-roles-are-vanishing/</guid>
     </item>
   </channel>
 </rss>
