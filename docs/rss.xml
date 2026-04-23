@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 06:28:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 07:00:06 +0000</lastBuildDate>
+    <item>
+      <title>AI Skill Boost</title>
+      <link>https://kubaik.github.io/ai-skill-boost/</link>
+      <description>AI-powered learning tools boost skills by 25%</description>
+      <pubDate>Thu, 23 Apr 2026 07:00:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skill-boost/</guid>
+    </item>
     <item>
       <title>Prompt Engineering</title>
       <link>https://kubaik.github.io/prompt-engineering/</link>
@@ -138,13 +145,6 @@
       <description>Practical guide to vector databases and embeddings for developers</description>
       <pubDate>Wed, 22 Apr 2026 12:40:15 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</guid>
-    </item>
-    <item>
-      <title>Deploying AI Models Without Breaking Anything</title>
-      <link>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</link>
-      <description>Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.</description>
-      <pubDate>Wed, 22 Apr 2026 12:17:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</guid>
     </item>
   </channel>
 </rss>
