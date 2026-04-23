@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 14:54:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 15:47:49 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Isn&apos;t for Data: It&apos;s for Distributed State Sync</title>
+      <link>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</link>
+      <description>Kafka isn&apos;t a message queue—it&apos;s a distributed state journal. Learn how to use it for coordination, not just streaming.</description>
+      <pubDate>Thu, 23 Apr 2026 15:47:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</guid>
+    </item>
     <item>
       <title>Manual vs Automated Penetration Testing</title>
       <link>https://kubaik.github.io/manual-vs-automated-penetration-testing/</link>
@@ -138,13 +145,6 @@
       <description>Design a URL shortener that handles billions of requests</description>
       <pubDate>Wed, 22 Apr 2026 07:28:34 +0000</pubDate>
       <guid>https://kubaik.github.io/shorturl/</guid>
-    </item>
-    <item>
-      <title>AI Finance</title>
-      <link>https://kubaik.github.io/ai-finance/</link>
-      <description>AI finance tools analyze data, predict stock prices</description>
-      <pubDate>Wed, 22 Apr 2026 06:55:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-finance/</guid>
     </item>
   </channel>
 </rss>
