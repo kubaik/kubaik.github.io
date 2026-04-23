@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 19:52:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 20:08:22 +0000</lastBuildDate>
+    <item>
+      <title>RAG in Production: Why Your LLM Keeps Hallucinating (and How to Fix It)</title>
+      <link>https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/</link>
+      <description>How to build a RAG system that doesn’t hallucinate in production, with real code, benchmarks, and the mistakes I made first.</description>
+      <pubDate>Thu, 23 Apr 2026 20:08:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/</guid>
+    </item>
     <item>
       <title>Ship production-grade tools in 90 minutes with the best AI coding assistants</title>
       <link>https://kubaik.github.io/ship-production-grade-tools-in-90-minutes-with-the/</link>
@@ -138,13 +145,6 @@
       <description>Micro-frontend architecture for scalable apps</description>
       <pubDate>Wed, 22 Apr 2026 11:22:23 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-fe/</guid>
-    </item>
-    <item>
-      <title>Data Pipelines That Survive Production</title>
-      <link>https://kubaik.github.io/data-pipelines-that-survive-production/</link>
-      <description>Real-world tactics for building data pipelines that survive production. Includes code, benchmarks, and tools that prevent silent failures.</description>
-      <pubDate>Wed, 22 Apr 2026 10:15:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-pipelines-that-survive-production/</guid>
     </item>
   </channel>
 </rss>
