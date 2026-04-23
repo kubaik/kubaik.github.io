@@ -121,6 +121,10 @@ jobs:
            startsWith(github.event.schedule, '0 0 '))
         run: python blog_system.py cleanup
 
+      - name: Restore trending hashtag cache
+        run: |
+          git checkout origin/main -- .trending_hashtag_cache.json 2>/dev/null || true
+
       - name: Generate new blog content
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}

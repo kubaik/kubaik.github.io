@@ -819,12 +819,12 @@ class BlogSystem:
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
+        if self.mistral_key:
+            providers.append(("Mistral",     self._call_mistral))
         if self.openrouter_key:
             providers.append(("OpenRouter",  self._call_openrouter))
         if self.groq_key:
             providers.append(("Groq",       self._call_groq))
-        if self.mistral_key:
-            providers.append(("Mistral",     self._call_mistral))
         if self.cerebras_key:
             providers.append(("Cerebras",    self._call_cerebras))
         if self.gemini_key:

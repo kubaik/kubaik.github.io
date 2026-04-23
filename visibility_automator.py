@@ -10,14 +10,19 @@ Hook philosophy
   • The link + hashtags sit at the END, never in the hook line.
   • Every template is tested to stay under 280 chars with a typical title.
 
-CHANGES (2026-04-22):
-  - Added _fetch_daily_trending_hashtag() — hits Twitter API once per day,
-    caches result in .trending_hashtag_cache.json.
-  - _get_hashtags_for_post() now injects the trending tag as the 5th slot
-    (replacing the last keyword-derived tag) so the total never exceeds 5.
-  - _build_single_tweet() passes post + config through to the hashtag resolver.
-  - Trending tag is only fetched when ENABLE_TWITTER_POSTING=true, matching
-    the same guard used for actual posting.
+CHANGES (2026-04-23):
+  - fetch_daily_trending_hashtag() is now called unconditionally at
+    VisibilityAutomator.__init__() — completely decoupled from the
+    ENABLE_TWITTER_POSTING flag.  The fetch is a read-only API call;
+    only create_tweet() is gated by the flag.
+  - _get_trending_tag() is now a simple accessor (no lazy fetch) because
+    the fetch already happened at init time.
+  - Cache file (.trending_hashtag_cache.json) is committed to the repo
+    by the GitHub Actions workflow so it survives between ephemeral runners.
+    First run of each calendar day warms the cache; every subsequent run
+    that day loads from the committed file — zero extra API calls.
+  - _build_single_tweet() and post_single_tweet() are unchanged in
+    behaviour; they simply receive the already-fetched trending tag.
 """
 
 import datetime
@@ -50,7 +55,7 @@ MIN_AUTHOR_FOLLOWERS = 500
 MAX_REPLIES_PER_RUN = 3
 SEARCH_RESULT_LIMIT = 20
 
-# Cache file lives next to the working directory — one entry per calendar day.
+# Cache file lives in the repo root so it can be committed between runs.
 _TRENDING_CACHE_FILE = Path(".trending_hashtag_cache.json")
 
 # Tech-related keywords that flag a trending topic as relevant enough to use.
@@ -101,70 +106,70 @@ _HOOK_STOP_WORDS = {
 # ─────────────────────────────────────────────────────────────────
 
 _TOPIC_OVERRIDES = {
-    "database index":   "Database Indexing",
-    "indexing":         "Database Indexing",
-    "query optimiz":    "Query Optimization",
-    "sql ":             "SQL Optimization",
-    "redis":            "Redis",
-    "kafka":            "Apache Kafka",
-    "postgres":         "PostgreSQL",
-    "kubernetes":       "Kubernetes",
-    "docker":           "Docker",
-    "system design":    "System Design",
-    "machine learning": "Machine Learning",
-    "deep learning":    "Deep Learning",
-    "neural network":   "Neural Networks",
-    "large language":   "LLMs",
-    "llm":              "LLMs",
-    "generative ai":    "Generative AI",
-    "prompt engineer":  "Prompt Engineering",
-    "rag ":             "RAG",
-    "vector db":        "Vector Databases",
-    "microservice":     "Microservices",
-    "serverless":       "Serverless",
-    "ci/cd":            "CI/CD",
-    "devops":           "DevOps",
-    "terraform":        "Terraform",
-    "passive income":   "Passive Income",
-    "side hustle":      "Side Hustle",
-    "side project":     "Side Projects",
-    "indie hacker":     "Indie Hacking",
-    "saas":             "SaaS",
-    "web performance":  "Web Performance",
-    "core web vital":   "Core Web Vitals",
-    "websocket":        "WebSockets",
-    "graphql":          "GraphQL",
-    "typescript":       "TypeScript",
-    "react native":     "React Native",
-    "next.js":          "Next.js",
-    "nextjs":           "Next.js",
-    "cybersecurity":    "Cybersecurity",
-    "penetration":      "Pen Testing",
-    "zero trust":       "Zero Trust",
-    "rate limit":       "Rate Limiting",
-    "caching":          "Caching",
-    "load balanc":      "Load Balancing",
-    "data pipeline":    "Data Pipelines",
-    "data engineer":    "Data Engineering",
-    "mlops":            "MLOps",
-    "burn out":         "Developer Burnout",
-    "burnout":          "Developer Burnout",
-    "remote work":      "Remote Work",
-    "tech salar":       "Tech Salaries",
-    "negotiate":        "Salary Negotiation",
-    "ai ethics":        "AI Ethics",
-    "ai tool":          "AI Tools",
-    "netflix":          "Netflix Architecture",
+    "database index":    "Database Indexing",
+    "indexing":          "Database Indexing",
+    "query optimiz":     "Query Optimization",
+    "sql ":              "SQL Optimization",
+    "redis":             "Redis",
+    "kafka":             "Apache Kafka",
+    "postgres":          "PostgreSQL",
+    "kubernetes":        "Kubernetes",
+    "docker":            "Docker",
+    "system design":     "System Design",
+    "machine learning":  "Machine Learning",
+    "deep learning":     "Deep Learning",
+    "neural network":    "Neural Networks",
+    "large language":    "LLMs",
+    "llm":               "LLMs",
+    "generative ai":     "Generative AI",
+    "prompt engineer":   "Prompt Engineering",
+    "rag ":              "RAG",
+    "vector db":         "Vector Databases",
+    "microservice":      "Microservices",
+    "serverless":        "Serverless",
+    "ci/cd":             "CI/CD",
+    "devops":            "DevOps",
+    "terraform":         "Terraform",
+    "passive income":    "Passive Income",
+    "side hustle":       "Side Hustle",
+    "side project":      "Side Projects",
+    "indie hacker":      "Indie Hacking",
+    "saas":              "SaaS",
+    "web performance":   "Web Performance",
+    "core web vital":    "Core Web Vitals",
+    "websocket":         "WebSockets",
+    "graphql":           "GraphQL",
+    "typescript":        "TypeScript",
+    "react native":      "React Native",
+    "next.js":           "Next.js",
+    "nextjs":            "Next.js",
+    "cybersecurity":     "Cybersecurity",
+    "penetration":       "Pen Testing",
+    "zero trust":        "Zero Trust",
+    "rate limit":        "Rate Limiting",
+    "caching":           "Caching",
+    "load balanc":       "Load Balancing",
+    "data pipeline":     "Data Pipelines",
+    "data engineer":     "Data Engineering",
+    "mlops":             "MLOps",
+    "burn out":          "Developer Burnout",
+    "burnout":           "Developer Burnout",
+    "remote work":       "Remote Work",
+    "tech salar":        "Tech Salaries",
+    "negotiate":         "Salary Negotiation",
+    "ai ethics":         "AI Ethics",
+    "ai tool":           "AI Tools",
+    "netflix":           "Netflix Architecture",
     "concurrent stream": "Concurrent Streaming",
-    "ai agent":         "AI Agents",
-    "ai model":         "AI Models",
-    "ai workflow":      "AI Workflows",
-    "ai skill":         "AI Skills",
-    "ai-powered":       "AI-Powered Apps",
-    "chatgpt":          "ChatGPT",
-    "openai":           "OpenAI",
-    "fine-tun":         "Fine-Tuning LLMs",
-    "artificial int":   "Artificial Intelligence",
+    "ai agent":          "AI Agents",
+    "ai model":          "AI Models",
+    "ai workflow":       "AI Workflows",
+    "ai skill":          "AI Skills",
+    "ai-powered":        "AI-Powered Apps",
+    "chatgpt":           "ChatGPT",
+    "openai":            "OpenAI",
+    "fine-tun":          "Fine-Tuning LLMs",
+    "artificial int":    "Artificial Intelligence",
 }
 
 
@@ -201,13 +206,16 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Daily trending hashtag — fetch once, cache for 24 h
+# Daily trending hashtag — fetch once per day, cache to disk
 # ─────────────────────────────────────────────────────────────────
 
 def _load_trending_cache() -> Optional[str]:
     """
     Read the cache file.  Returns the stored hashtag string (e.g. '#OpenAI')
     if it was written today, otherwise None.
+
+    The cache file is committed to the repo by the workflow so it survives
+    between ephemeral GitHub Actions runners.
     """
     if not _TRENDING_CACHE_FILE.exists():
         return None
@@ -243,24 +251,25 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
     """
     Return one tech-relevant trending hashtag for today.
 
+    This function is intentionally decoupled from ENABLE_TWITTER_POSTING.
+    It is a read-only operation (search_recent_tweets) that costs nothing
+    beyond a small API quota.  The result is cached to disk so subsequent
+    calls within the same calendar day are free.
+
     Strategy
     ────────
     1. Return the cached value if it was fetched earlier today.
-    2. Search recent tweets for a rotating set of broad tech keywords,
-       collect all hashtags used in those tweets, score them by frequency,
-       and pick the highest-frequency tag whose name overlaps with
-       _TECH_RELEVANCE_SIGNALS.
-    3. Fall back to None if the API call fails or no relevant tag is found —
-       callers must handle None gracefully (just skip the trending slot).
+    2. Search recent tweets for broad tech keywords, collect all hashtags,
+       score by frequency × tech-relevance, and pick the winner.
+    3. Fall back to None if the API call fails or no relevant tag is found.
 
     Rate-limit impact
     ─────────────────
-    One search_recent_tweets call per day (max_results=100).
-    The Twitter Basic / Free tier allows 500k tweets/month read; a single
-    100-tweet search is negligible.  We never call this more than once per
-    calendar day because of the cache.
+    One batch of search_recent_tweets calls per calendar day (max 3 queries,
+    100 tweets each).  With the cache committed to the repo, even the first-
+    run cost is paid only once across ALL hourly workflow runs that day.
     """
-    # 1. Cache hit
+    # 1. Cache hit — free
     cached = _load_trending_cache()
     if cached:
         return cached
@@ -269,7 +278,7 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
         print("⚠️  No Twitter client — cannot fetch trending hashtag.")
         return None
 
-    # 2. Search recent tweets across a few high-signal tech queries
+    # 2. Search recent tweets across high-signal tech queries
     search_queries = [
         "#AI OR #MachineLearning OR #Python lang:en -is:retweet",
         "#WebDev OR #JavaScript OR #TypeScript lang:en -is:retweet",
@@ -289,10 +298,8 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
                 continue
             for tweet in response.data:
                 for match in re.findall(r"#(\w+)", tweet.text):
-                    tag = match  # without the #
-                    hashtag_counts[tag] = hashtag_counts.get(tag, 0) + 1
-            # Respect rate limits between queries
-            time.sleep(1.5)
+                    hashtag_counts[match] = hashtag_counts.get(match, 0) + 1
+            time.sleep(1.5)  # respect rate limits between queries
         except Exception as e:
             print(f"⚠️  Trending search error ({query[:40]}…): {e}")
             continue
@@ -302,22 +309,20 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
         return None
 
     # 3. Score: frequency × relevance bonus
-    #    A tag scores +2 if its lowercased name appears in _TECH_RELEVANCE_SIGNALS,
-    #    +1 if any signal word is a substring of the tag.
     def _relevance_score(tag: str, freq: int) -> float:
         t = tag.lower()
         if t in _TECH_RELEVANCE_SIGNALS:
             return freq * 3
         if any(sig in t for sig in _TECH_RELEVANCE_SIGNALS):
             return freq * 2
-        return 0  # non-tech tags get zero — we won't pick them
+        return 0  # non-tech tags score zero
 
     scored = [
         (tag, _relevance_score(tag, freq))
         for tag, freq in hashtag_counts.items()
         if _relevance_score(tag, freq) > 0
-        and 3 <= len(tag) <= 30          # reasonable length
-        and not tag.isdigit()            # skip pure-number tags
+        and 3 <= len(tag) <= 30
+        and not tag.isdigit()
     ]
 
     if not scored:
@@ -327,8 +332,10 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
     scored.sort(key=lambda x: x[1], reverse=True)
     best_tag = f"#{scored[0][0]}"
 
-    print(f"🔥 Trending hashtag selected: {best_tag} "
-          f"(from {len(hashtag_counts)} unique tags observed)")
+    print(
+        f"🔥 Trending hashtag selected: {best_tag} "
+        f"(from {len(hashtag_counts)} unique tags observed)"
+    )
 
     _save_trending_cache(best_tag)
     return best_tag
@@ -359,17 +366,15 @@ def _get_hashtags_for_post(post, trending_tag: Optional[str] = None) -> str:
     """
 
     def _inject_trending(tags_str: str, trending: Optional[str]) -> str:
-        """Replace or append the trending tag, keeping total ≤ 5."""
         if not trending:
             return tags_str
         trending_clean = trending if trending.startswith(
             "#") else f"#{trending}"
         parts = tags_str.split()
-        # Deduplicate: skip if already present (case-insensitive)
         if any(p.lower() == trending_clean.lower() for p in parts):
             return tags_str
         if len(parts) >= 5:
-            parts[-1] = trending_clean   # replace last slot
+            parts[-1] = trending_clean
         else:
             parts.append(trending_clean)
         return " ".join(parts)
@@ -395,7 +400,7 @@ def _get_hashtags_for_post(post, trending_tag: Optional[str] = None) -> str:
                 continue
             seen.add(key)
             clean.append(f"#{raw}")
-            if len(clean) == 4:   # leave slot 5 for trending
+            if len(clean) == 4:
                 break
         if clean:
             return _inject_trending(" ".join(clean), trending_tag)
@@ -414,7 +419,7 @@ def _get_hashtags_for_post(post, trending_tag: Optional[str] = None) -> str:
                 if tag and tag.lower() not in seen:
                     seen.add(tag.lower())
                     tags.append(f"#{tag}")
-            if len(tags) == 4:   # leave slot 5 for trending
+            if len(tags) == 4:
                 break
         if tags:
             return _inject_trending(" ".join(tags), trending_tag)
@@ -458,8 +463,8 @@ def _build_single_tweet(
     """
     Compose one high-engagement tweet for *post*.
 
-    trending_tag — if provided, is injected into the hashtag block as the
-                   5th tag, replacing the last keyword-derived one.
+    trending_tag — already fetched at init time; passed in here so the
+                   hashtag block stays current without any extra API calls.
     """
     _style_map = {
         "confession":        0,
@@ -479,7 +484,6 @@ def _build_single_tweet(
         idx = _style_map[hook_style]
 
     template = _TWEET_TEMPLATES[idx]
-
     topic = _extract_topic_phrase(post.title, max_words=3)
 
     raw_desc = getattr(post, "meta_description", "") or ""
@@ -490,12 +494,8 @@ def _build_single_tweet(
     post_url = f"{base_url}/{post.slug}"
     hashtags = _get_hashtags_for_post(post, trending_tag=trending_tag)
 
-    tweet = template.format(
-        topic=topic,
-        teaser=teaser,
-        url=post_url,
-        tags=hashtags,
-    )
+    tweet = template.format(topic=topic, teaser=teaser,
+                            url=post_url, tags=hashtags)
 
     if len(tweet) > 280:
         budget = 280 - len(tweet) + len(teaser)
@@ -516,11 +516,32 @@ def _build_single_tweet(
 class VisibilityAutomator:
     def __init__(self, config):
         self.config = config
-        self.twitter_client = None
         self.tweet_generator = EnhancedTweetGenerator()
+        self.twitter_client = None
         self._username = None
-        self._trending_tag: Optional[str] = None   # populated lazily
+
+        # Step 1: build the Tweepy client (credentials check only, no API calls)
         self._init_twitter()
+
+        # Step 2: fetch today's trending hashtag unconditionally.
+        #
+        # KEY DESIGN DECISION — this is deliberately NOT gated by
+        # ENABLE_TWITTER_POSTING.  Reasoning:
+        #   • fetch_daily_trending_hashtag() is a read-only search call.
+        #   • The flag is meant to prevent *posting* on manual pushes, not
+        #     to prevent reading public trend data.
+        #   • Fetching here (at init) means the cache file gets written on
+        #     every run type (schedule, push, dispatch) so the cache is always
+        #     warm for the day's first posting run.
+        #   • The actual create_tweet() call is still gated by the flag in
+        #     blog_system.py — concerns are cleanly separated.
+        self._trending_tag: Optional[str] = fetch_daily_trending_hashtag(
+            self.twitter_client
+        )
+        if self._trending_tag:
+            print(f"🔥 Today's trending tag: {self._trending_tag}")
+        else:
+            print("ℹ️  No trending tag available for today — proceeding without it.")
 
     # ── Init ──────────────────────────────────────────────────────
 
@@ -561,21 +582,13 @@ class VisibilityAutomator:
             print(f"❌ Twitter initialization failed: {e}")
             self.twitter_client = None
 
-    # ── Trending hashtag (lazy, cached per process) ───────────────
+    # ── Trending hashtag accessor ─────────────────────────────────
 
     def _get_trending_tag(self) -> Optional[str]:
         """
-        Fetch and cache the daily trending tag within this process.
-        The underlying fetch_daily_trending_hashtag() further caches to disk
-        so the Twitter API is called at most once per calendar day.
+        Return the trending tag fetched at __init__ time.
+        Simple attribute access — no API calls, no lazy logic.
         """
-        if self._trending_tag is None:
-            self._trending_tag = fetch_daily_trending_hashtag(
-                self.twitter_client)
-            if self._trending_tag:
-                print(f"🔥 Trending tag for today: {self._trending_tag}")
-            else:
-                print("ℹ️  No trending tag available — proceeding without it.")
         return self._trending_tag
 
     # ── Single-tweet posting (primary method) ─────────────────────
@@ -584,6 +597,10 @@ class VisibilityAutomator:
         """
         Compose and post ONE engaging tweet for *post*, including today's
         trending hashtag in the tag block for extra reach.
+
+        ENABLE_TWITTER_POSTING is checked by the caller (blog_system.py)
+        before this method is invoked — not here.  That keeps concerns
+        clearly separated: trending fetch = always on; posting = flag-gated.
 
         Returns:
             {
@@ -600,15 +617,14 @@ class VisibilityAutomator:
 
         base_url = self.config.get("base_url", "https://kubaik.github.io")
         hook_style = self.config.get("hook_style", "auto")
-        trending = self._get_trending_tag()
 
         tweet_text = _build_single_tweet(
-            post, base_url, hook_style, trending_tag=trending
+            post, base_url, hook_style, trending_tag=self._trending_tag
         )
 
         print(
             f"📝 Tweet preview ({len(tweet_text)} chars)"
-            + (f" [trending: {trending}]" if trending else "")
+            + (f" [trending: {self._trending_tag}]" if self._trending_tag else "")
             + f":\n{'-'*60}\n{tweet_text}\n{'-'*60}"
         )
 
@@ -624,7 +640,7 @@ class VisibilityAutomator:
                 "url":          url,
                 "tweet_text":   tweet_text,
                 "char_count":   len(tweet_text),
-                "trending_tag": trending,
+                "trending_tag": self._trending_tag,
             }
         except Exception as e:
             print(f"❌ Tweet failed: {e}")
@@ -632,7 +648,7 @@ class VisibilityAutomator:
                 "success":      False,
                 "error":        str(e),
                 "tweet_text":   tweet_text,
-                "trending_tag": trending,
+                "trending_tag": self._trending_tag,
             }
 
     # ── Helpers: peak-time awareness ─────────────────────────────
@@ -733,8 +749,8 @@ class VisibilityAutomator:
             ]
             filtered.sort(
                 key=lambda t: (
-                    t.public_metrics.get("like_count", 0)
-                    if t.public_metrics else 0
+                    t.public_metrics.get(
+                        "like_count", 0) if t.public_metrics else 0
                 ),
                 reverse=True,
             )
@@ -935,8 +951,8 @@ if __name__ == "__main__":
     except Exception:
         config = {}
 
+    # VisibilityAutomator.__init__() now fetches the trending tag automatically
     visibility = VisibilityAutomator(config)
-
     base_url = config.get("base_url", "https://kubaik.github.io")
     trending_tag = visibility._get_trending_tag()
 
@@ -948,10 +964,6 @@ if __name__ == "__main__":
     print("\n📱 ALL 6 HOOK TEMPLATES")
     print("=" * 70)
     for i, _ in enumerate(_TWEET_TEMPLATES):
-        rendered = _build_single_tweet(post, base_url,
-                                       hook_style="auto",
-                                       trending_tag=trending_tag)
-        # Override index for preview
         topic = _extract_topic_phrase(post.title)
         teaser = post.meta_description[:60]
         url = f"{base_url}/{post.slug}"
