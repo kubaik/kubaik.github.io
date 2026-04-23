@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 20:08:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 20:21:45 +0000</lastBuildDate>
+    <item>
+      <title>Mental Models for Developers — Finally Explained</title>
+      <link>https://kubaik.github.io/mental-models-for-developers-finally-explained/</link>
+      <description>How five mental models—queueing theory, negative feedback, opportunity cost, Pareto, and amortized analysis—turn reactive firefighting into proactive system design, with real benchmarks and fixes.</description>
+      <pubDate>Thu, 23 Apr 2026 20:21:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/mental-models-for-developers-finally-explained/</guid>
+    </item>
     <item>
       <title>RAG in Production: Why Your LLM Keeps Hallucinating (and How to Fix It)</title>
       <link>https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/</link>
@@ -138,13 +145,6 @@
       <description>Improve web app performance with lazy loading and code splitting</description>
       <pubDate>Wed, 22 Apr 2026 11:56:27 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load/</guid>
-    </item>
-    <item>
-      <title>Micro-FE</title>
-      <link>https://kubaik.github.io/micro-fe/</link>
-      <description>Micro-frontend architecture for scalable apps</description>
-      <pubDate>Wed, 22 Apr 2026 11:22:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-fe/</guid>
     </item>
   </channel>
 </rss>
