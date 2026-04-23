@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 07:07:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 08:55:05 +0000</lastBuildDate>
+    <item>
+      <title>5G Dev Shift</title>
+      <link>https://kubaik.github.io/5g-dev-shift/</link>
+      <description>5G networks enable new use cases and business models</description>
+      <pubDate>Thu, 23 Apr 2026 08:55:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-dev-shift/</guid>
+    </item>
     <item>
       <title>Layoff Trends</title>
       <link>https://kubaik.github.io/layoff-trends/</link>
@@ -138,13 +145,6 @@
       <description>Kubernetes pain points, performance, and use cases</description>
       <pubDate>Wed, 22 Apr 2026 13:11:22 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-pain-points-and-performance/</guid>
-    </item>
-    <item>
-      <title>Limit Smart: 5 Rate Limiting Strategies</title>
-      <link>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</link>
-      <description>Rate limiting strategies for APIs, including algorithm selection, implementation, and performance optimization.</description>
-      <pubDate>Wed, 22 Apr 2026 12:59:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</guid>
     </item>
   </channel>
 </rss>
