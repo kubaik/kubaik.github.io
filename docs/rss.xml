@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 17:14:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 17:43:22 +0000</lastBuildDate>
+    <item>
+      <title>How Hackers Bypass Your Firewall Without Touching Code</title>
+      <link>https://kubaik.github.io/how-hackers-bypass-your-firewall-without-touching-/</link>
+      <description>How I automated social engineering attacks to expose the real weak link in cybersecurity—your own team’s behavior—and what the numbers from 45 live campaigns reveal about human vulnerability.</description>
+      <pubDate>Thu, 23 Apr 2026 17:43:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-hackers-bypass-your-firewall-without-touching-/</guid>
+    </item>
     <item>
       <title>AI Assist vs AI Automate</title>
       <link>https://kubaik.github.io/ai-assist-vs-ai-automate/</link>
@@ -138,13 +145,6 @@
       <description>Terminal productivity isn&apos;t about shortcuts—it&apos;s reducing cognitive load. Real numbers, tools, and a contrarian take on why your shell setup might be holding you back.</description>
       <pubDate>Wed, 22 Apr 2026 08:24:40 +0000</pubDate>
       <guid>https://kubaik.github.io/terminal-mastery-beyond-basic-cli-hacks/</guid>
-    </item>
-    <item>
-      <title>Building WhatsApp-Like Chats That Scale</title>
-      <link>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</link>
-      <description>How WhatsApp-scale chat systems work: real-time delivery, E2E encryption, and performance numbers from production systems.</description>
-      <pubDate>Wed, 22 Apr 2026 08:01:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</guid>
     </item>
   </channel>
 </rss>
