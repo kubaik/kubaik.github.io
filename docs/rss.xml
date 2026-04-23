@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 04:39:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 04:53:33 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents</title>
+      <link>https://kubaik.github.io/ai-agents/</link>
+      <description>AI agents automate tasks, make decisions, and interact with humans</description>
+      <pubDate>Thu, 23 Apr 2026 04:53:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents/</guid>
+    </item>
     <item>
       <title>MVP in 30</title>
       <link>https://kubaik.github.io/mvp-in-30/</link>
@@ -138,13 +145,6 @@
       <description>Kafka, RabbitMQ, and SQS compared</description>
       <pubDate>Wed, 22 Apr 2026 12:03:20 +0000</pubDate>
       <guid>https://kubaik.github.io/mq-showdown/</guid>
-    </item>
-    <item>
-      <title>Lazy Load</title>
-      <link>https://kubaik.github.io/lazy-load/</link>
-      <description>Improve web app performance with lazy loading and code splitting</description>
-      <pubDate>Wed, 22 Apr 2026 11:56:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load/</guid>
     </item>
   </channel>
 </rss>
