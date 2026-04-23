@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 11:57:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 13:19:10 +0000</lastBuildDate>
+    <item>
+      <title>React Native vs Flutter: 2026 Verdict</title>
+      <link>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</link>
+      <description>React Native vs Flutter in 2026: real performance data, team impact, and a blunt take on why one still wins for most apps.</description>
+      <pubDate>Thu, 23 Apr 2026 13:19:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</guid>
+    </item>
     <item>
       <title>BreakIn Tech</title>
       <link>https://kubaik.github.io/breakin-tech/</link>
@@ -138,13 +145,6 @@
       <description>Open source business models can generate significant revenue with the right approach</description>
       <pubDate>Wed, 22 Apr 2026 16:53:38 +0000</pubDate>
       <guid>https://kubaik.github.io/os-biz-models/</guid>
-    </item>
-    <item>
-      <title>AI-Powered Apps</title>
-      <link>https://kubaik.github.io/ai-powered-apps/</link>
-      <description>Build AI-powered apps without ML knowledge using pre-trained models and APIs</description>
-      <pubDate>Wed, 22 Apr 2026 14:23:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-powered-apps/</guid>
     </item>
   </channel>
 </rss>
