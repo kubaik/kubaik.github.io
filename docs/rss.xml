@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 04:53:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 06:28:44 +0000</lastBuildDate>
+    <item>
+      <title>Prompt Engineering</title>
+      <link>https://kubaik.github.io/prompt-engineering/</link>
+      <description>Improve language model accuracy with prompt engineering techniques</description>
+      <pubDate>Thu, 23 Apr 2026 06:28:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-engineering/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Practical MLOps tactics that keep deployments stable, fast, and cost‑effective, with real code and hard‑won numbers.</description>
       <pubDate>Wed, 22 Apr 2026 12:17:23 +0000</pubDate>
       <guid>https://kubaik.github.io/deploying-ai-models-without-breaking-anything/</guid>
-    </item>
-    <item>
-      <title>MQ Showdown</title>
-      <link>https://kubaik.github.io/mq-showdown/</link>
-      <description>Kafka, RabbitMQ, and SQS compared</description>
-      <pubDate>Wed, 22 Apr 2026 12:03:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/mq-showdown/</guid>
     </item>
   </channel>
 </rss>
