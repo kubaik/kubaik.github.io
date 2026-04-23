@@ -821,10 +821,10 @@ class BlogSystem:
 
         if self.groq_key:
             providers.append(("Groq",       self._call_groq))
-        if self.cerebras_key:
-            providers.append(("Cerebras",    self._call_cerebras))
         if self.mistral_key:
             providers.append(("Mistral",     self._call_mistral))
+        if self.cerebras_key:
+            providers.append(("Cerebras",    self._call_cerebras))
         if self.openrouter_key:
             providers.append(("OpenRouter",  self._call_openrouter))
         if self.gemini_key:
