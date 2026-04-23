@@ -31,7 +31,7 @@ _STOP_WORDS = {
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
-MIN_WORD_COUNT = 2000
+MIN_WORD_COUNT = 1500
 
 
 def _tokenise(text: str) -> set:
