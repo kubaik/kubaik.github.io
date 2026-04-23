@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 12:37:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 09:41:44 +0000</lastBuildDate>
+    <item>
+      <title>Docs That Don’t Suck: A Dev’s Guide</title>
+      <link>https://kubaik.github.io/docs-that-dont-suck-a-devs-guide/</link>
+      <description>Developers skip docs because they&apos;re broken, not because they&apos;re lazy. Here&apos;s how to build documentation that&apos;s actually used — with real tools, metrics, and incentives.</description>
+      <pubDate>Thu, 23 Apr 2026 09:41:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/docs-that-dont-suck-a-devs-guide/</guid>
+    </item>
+    <item>
+      <title>5G Dev Shift</title>
+      <link>https://kubaik.github.io/5g-dev-shift/</link>
+      <description>5G networks enable new use cases and business models</description>
+      <pubDate>Thu, 23 Apr 2026 08:55:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-dev-shift/</guid>
+    </item>
     <item>
       <title>Layoff Trends</title>
       <link>https://kubaik.github.io/layoff-trends/</link>
@@ -131,20 +145,6 @@
       <description>Kubernetes pain points, performance, and use cases</description>
       <pubDate>Wed, 22 Apr 2026 13:11:22 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-pain-points-and-performance/</guid>
-    </item>
-    <item>
-      <title>Limit Smart: 5 Rate Limiting Strategies</title>
-      <link>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</link>
-      <description>Rate limiting strategies for APIs, including algorithm selection, implementation, and performance optimization.</description>
-      <pubDate>Wed, 22 Apr 2026 12:59:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-smart-5-rate-limiting-strategies/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: Embeddings in Practice</title>
-      <link>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</link>
-      <description>Practical guide to vector databases and embeddings for developers</description>
-      <pubDate>Wed, 22 Apr 2026 12:40:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-embeddings-in-practice/</guid>
     </item>
   </channel>
 </rss>
