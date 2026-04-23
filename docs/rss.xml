@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 20:21:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 21:41:18 +0000</lastBuildDate>
+    <item>
+      <title>How Linear, GitLab &amp; Bolt Cut 4-Day Weeks Without Crashing Production</title>
+      <link>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</link>
+      <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
+      <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
+    </item>
     <item>
       <title>Mental Models for Developers — Finally Explained</title>
       <link>https://kubaik.github.io/mental-models-for-developers-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>AI systems still struggle with tasks requiring human intuition and empathy</description>
       <pubDate>Wed, 22 Apr 2026 19:04:20 +0000</pubDate>
       <guid>https://kubaik.github.io/machines-fail/</guid>
-    </item>
-    <item>
-      <title>Lazy Load</title>
-      <link>https://kubaik.github.io/lazy-load/</link>
-      <description>Improve web app performance with lazy loading and code splitting</description>
-      <pubDate>Wed, 22 Apr 2026 11:56:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load/</guid>
     </item>
   </channel>
 </rss>
