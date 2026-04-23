@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 21:41:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 22:39:29 +0000</lastBuildDate>
+    <item>
+      <title>Android Studio Koans: Fix Kotlin Build Errors Like a Pro</title>
+      <link>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</link>
+      <description>Learn how to fix Kotlin Android build errors with real fixes, version matrices, and benchmarks from a Nairobi fintech engineer.</description>
+      <pubDate>Thu, 23 Apr 2026 22:39:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</guid>
+    </item>
     <item>
       <title>How Linear, GitLab &amp; Bolt Cut 4-Day Weeks Without Crashing Production</title>
       <link>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</link>
@@ -138,13 +145,6 @@
       <description>React vs Next.js vs Remix: Choose the right tool</description>
       <pubDate>Wed, 22 Apr 2026 23:41:30 +0000</pubDate>
       <guid>https://kubaik.github.io/react-showdown/</guid>
-    </item>
-    <item>
-      <title>Machines Fail</title>
-      <link>https://kubaik.github.io/machines-fail/</link>
-      <description>AI systems still struggle with tasks requiring human intuition and empathy</description>
-      <pubDate>Wed, 22 Apr 2026 19:04:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/machines-fail/</guid>
     </item>
   </channel>
 </rss>
