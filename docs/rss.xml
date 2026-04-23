@@ -5,27 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 14:41:10 +0000</lastBuildDate>
-    <item>
-      <title>Revealing PBM</title>
-      <link>https://kubaik.github.io/revealing-pbm/</link>
-      <description>Learn how to build a scalable platform business model</description>
-      <pubDate>Thu, 23 Apr 2026 14:41:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/revealing-pbm/</guid>
-    </item>
+    <lastBuildDate>Thu, 23 Apr 2026 17:48:47 +0000</lastBuildDate>
     <item>
       <title>React Native vs Flutter: 2026 Verdict</title>
       <link>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</link>
       <description>React Native vs Flutter in 2026: real performance data, team impact, and a blunt take on why one still wins for most apps.</description>
       <pubDate>Thu, 23 Apr 2026 13:19:08 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</guid>
-    </item>
-    <item>
-      <title>BreakIn Tech</title>
-      <link>https://kubaik.github.io/breakin-tech/</link>
-      <description>Break into tech at 30, 40, or 50 with the right skills and strategy</description>
-      <pubDate>Thu, 23 Apr 2026 11:57:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/breakin-tech/</guid>
     </item>
     <item>
       <title>Tech Role Boom</title>
@@ -42,25 +28,11 @@
       <guid>https://kubaik.github.io/docs-that-dont-suck-a-devs-guide/</guid>
     </item>
     <item>
-      <title>5G Dev Shift</title>
-      <link>https://kubaik.github.io/5g-dev-shift/</link>
-      <description>5G networks enable new use cases and business models</description>
-      <pubDate>Thu, 23 Apr 2026 08:55:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-dev-shift/</guid>
-    </item>
-    <item>
       <title>Layoff Trends</title>
       <link>https://kubaik.github.io/layoff-trends/</link>
       <description>Tech layoffs: 30% of jobs automated by 2028</description>
       <pubDate>Thu, 23 Apr 2026 07:07:43 +0000</pubDate>
       <guid>https://kubaik.github.io/layoff-trends/</guid>
-    </item>
-    <item>
-      <title>AI Skill Boost</title>
-      <link>https://kubaik.github.io/ai-skill-boost/</link>
-      <description>AI-powered learning tools boost skills by 25%</description>
-      <pubDate>Thu, 23 Apr 2026 07:00:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skill-boost/</guid>
     </item>
     <item>
       <title>Prompt Engineering</title>
@@ -77,25 +49,11 @@
       <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
     <item>
-      <title>MVP in 30</title>
-      <link>https://kubaik.github.io/mvp-in-30/</link>
-      <description>Build an MVP in 30 days with a structured approach</description>
-      <pubDate>Thu, 23 Apr 2026 04:39:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/mvp-in-30/</guid>
-    </item>
-    <item>
       <title>SQL Simplifies Code</title>
       <link>https://kubaik.github.io/sql-simplifies-code/</link>
       <description>Simplify application code with SQL</description>
       <pubDate>Thu, 23 Apr 2026 02:00:10 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-simplifies-code/</guid>
-    </item>
-    <item>
-      <title>Auth Revamp</title>
-      <link>https://kubaik.github.io/auth-revamp/</link>
-      <description>Improve security and scalability with modern authentication patterns</description>
-      <pubDate>Thu, 23 Apr 2026 01:14:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/auth-revamp/</guid>
     </item>
     <item>
       <title>React Showdown</title>
@@ -105,27 +63,6 @@
       <guid>https://kubaik.github.io/react-showdown/</guid>
     </item>
     <item>
-      <title>Data Wars</title>
-      <link>https://kubaik.github.io/data-wars/</link>
-      <description>Data warehouse vs data lake vs lakehouse: which one to choose</description>
-      <pubDate>Wed, 22 Apr 2026 22:42:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-wars/</guid>
-    </item>
-    <item>
-      <title>BI for Devs</title>
-      <link>https://kubaik.github.io/bi-for-devs/</link>
-      <description>Improve engineering team efficiency with business intelligence tools</description>
-      <pubDate>Wed, 22 Apr 2026 21:45:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-for-devs/</guid>
-    </item>
-    <item>
-      <title>Cut AWS Bill</title>
-      <link>https://kubaik.github.io/cut-aws-bill/</link>
-      <description>Cut AWS costs by 50% with these optimization techniques</description>
-      <pubDate>Wed, 22 Apr 2026 20:46:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-bill/</guid>
-    </item>
-    <item>
       <title>Machines Fail</title>
       <link>https://kubaik.github.io/machines-fail/</link>
       <description>AI systems still struggle with tasks requiring human intuition and empathy</description>
@@ -133,18 +70,81 @@
       <guid>https://kubaik.github.io/machines-fail/</guid>
     </item>
     <item>
-      <title>AI Forecasts</title>
-      <link>https://kubaik.github.io/ai-forecasts/</link>
-      <description>AI for time series forecasting achieves 30% higher accuracy</description>
-      <pubDate>Wed, 22 Apr 2026 18:04:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasts/</guid>
+      <title>Lazy Load</title>
+      <link>https://kubaik.github.io/lazy-load/</link>
+      <description>Improve web app performance with lazy loading and code splitting</description>
+      <pubDate>Wed, 22 Apr 2026 11:56:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load/</guid>
     </item>
     <item>
-      <title>AutoLife</title>
-      <link>https://kubaik.github.io/autolife/</link>
-      <description>Automate tasks with AI and Python</description>
-      <pubDate>Wed, 22 Apr 2026 17:56:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/autolife/</guid>
+      <title>Micro-FE</title>
+      <link>https://kubaik.github.io/micro-fe/</link>
+      <description>Micro-frontend architecture for scalable apps</description>
+      <pubDate>Wed, 22 Apr 2026 11:22:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-fe/</guid>
+    </item>
+    <item>
+      <title>Data Pipelines That Survive Production</title>
+      <link>https://kubaik.github.io/data-pipelines-that-survive-production/</link>
+      <description>Real-world tactics for building data pipelines that survive production. Includes code, benchmarks, and tools that prevent silent failures.</description>
+      <pubDate>Wed, 22 Apr 2026 10:15:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-pipelines-that-survive-production/</guid>
+    </item>
+    <item>
+      <title>AI Code Tools Beat Junior Devs</title>
+      <link>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</link>
+      <description>AI tools now write cleaner, faster, more secure code than most junior developers. Real benchmarks, tool comparisons, and when to avoid them.</description>
+      <pubDate>Wed, 22 Apr 2026 10:10:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</guid>
+    </item>
+    <item>
+      <title>Platform Engineering: Beyond Internal Tooling</title>
+      <link>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</link>
+      <description>Internal developer platforms reduce cognitive load by 50%+—here’s how we cut onboarding from 4.2 days to 37 minutes using Backstage, Argo CD, and OPA.</description>
+      <pubDate>Wed, 22 Apr 2026 09:25:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-engineering-beyond-internal-tooling/</guid>
+    </item>
+    <item>
+      <title>Why Junior Dev Roles Are Vanishing</title>
+      <link>https://kubaik.github.io/why-junior-dev-roles-are-vanishing/</link>
+      <description>Junior dev jobs are vanishing not because of AI, but due to rising system complexity and broken onboarding. Real data, tools, and a path forward.</description>
+      <pubDate>Wed, 22 Apr 2026 08:27:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-junior-dev-roles-are-vanishing/</guid>
+    </item>
+    <item>
+      <title>Terminal Mastery: Beyond Basic CLI Hacks</title>
+      <link>https://kubaik.github.io/terminal-mastery-beyond-basic-cli-hacks/</link>
+      <description>Terminal productivity isn&apos;t about shortcuts—it&apos;s reducing cognitive load. Real numbers, tools, and a contrarian take on why your shell setup might be holding you back.</description>
+      <pubDate>Wed, 22 Apr 2026 08:24:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/terminal-mastery-beyond-basic-cli-hacks/</guid>
+    </item>
+    <item>
+      <title>Building WhatsApp-Like Chats That Scale</title>
+      <link>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</link>
+      <description>How WhatsApp-scale chat systems work: real-time delivery, E2E encryption, and performance numbers from production systems.</description>
+      <pubDate>Wed, 22 Apr 2026 08:01:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</guid>
+    </item>
+    <item>
+      <title>ShortURL</title>
+      <link>https://kubaik.github.io/shorturl/</link>
+      <description>Design a URL shortener that handles billions of requests</description>
+      <pubDate>Wed, 22 Apr 2026 07:28:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/shorturl/</guid>
+    </item>
+    <item>
+      <title>AI Finance</title>
+      <link>https://kubaik.github.io/ai-finance/</link>
+      <description>AI finance tools analyze data, predict stock prices</description>
+      <pubDate>Wed, 22 Apr 2026 06:55:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-finance/</guid>
+    </item>
+    <item>
+      <title>WebSocket Power</title>
+      <link>https://kubaik.github.io/websocket-power/</link>
+      <description>WebSocket-based apps achieve 10-20ms latency</description>
+      <pubDate>Wed, 22 Apr 2026 06:09:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/websocket-power/</guid>
     </item>
   </channel>
 </rss>
