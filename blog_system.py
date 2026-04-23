@@ -31,7 +31,7 @@ _STOP_WORDS = {
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
-MIN_WORD_COUNT = 1500
+MIN_WORD_COUNT = 2000
 
 
 def _tokenise(text: str) -> set:
@@ -597,6 +597,52 @@ _STRUCTURE_SETS = [
             "The 'quick reference' section should be a scannable table or bullet list a reader can bookmark."
         ),
     ),
+    # 6 — listicle / tools roundup (highest CTR for display ads)
+    (
+        "listicle",
+        [
+            "## Why this list exists (what I was actually trying to solve)",
+            "## How I evaluated each option",
+            "## {topic} — the full ranked list",
+            "## The top pick and why it won",
+            "## Honorable mentions worth knowing about",
+            "## The ones I tried and dropped (and why)",
+            "## How to choose based on your situation",
+            "## Frequently asked questions",
+            "## Final recommendation",
+        ],
+        (
+            "Write each list item as a mini-review, not a bullet. "
+            "Each item needs: what it does, one concrete strength, one concrete weakness, "
+            "and who it's best for. "
+            "The FAQ section must have at least 4 real questions — write the questions "
+            "a beginner would actually search, not the ones an expert would ask. "
+            "This format performs well for search — optimise the headings for question-based queries."
+        ),
+    ),
+
+    # 7 — troubleshooting / error guide (captures high-intent search traffic)
+    (
+        "troubleshooting",
+        [
+            "## The error and why it's confusing",
+            "## What's actually causing it (the real reason, not the surface symptom)",
+            "## Fix 1 — the most common cause",
+            "## Fix 2 — the less obvious cause",
+            "## Fix 3 — the environment-specific cause",
+            "## How to verify the fix worked",
+            "## How to prevent this from happening again",
+            "## Related errors you might hit next",
+            "## When none of these work: escalation path",
+        ],
+        (
+            "Write this as a diagnostic guide, not a tutorial. "
+            "Start each 'Fix' section by describing the symptom pattern that indicates this cause — "
+            "so the reader can self-triage before reading the solution. "
+            "Include the exact error message text where relevant (AdSense loves exact-match search content). "
+            "The 'related errors' section is important for internal linking — name them specifically."
+        ),
+    ),
 ]
 
 
@@ -777,10 +823,7 @@ def _build_humanization_note(topic: str) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 _PERSONAL_INTROS = [
-    (
-        "I ran into this problem while building a payment integration for a client "
-        "in Nairobi. The official docs covered the happy path well. This post covers everything else."
-    ),
+    # Keep — specific but universally relatable
     (
         "This took me about three days to figure out properly. Most of the answers "
         "I found online were either outdated or skipped the parts that actually matter in production. "
@@ -801,6 +844,19 @@ _PERSONAL_INTROS = [
     (
         "This is a topic where the standard advice is technically correct but practically misleading. "
         "Here's the fuller picture, based on what I've seen work at scale."
+    ),
+    # Replace the Nairobi payment integration one with globally relatable equivalents
+    (
+        "I ran into this while migrating a production service under a hard deadline. "
+        "The official docs covered the happy path well. This post covers everything else."
+    ),
+    (
+        "I've answered versions of this question in Slack, code reviews, and one-on-ones "
+        "more times than I can count. Writing it down properly felt overdue."
+    ),
+    (
+        "The thing that frustrated me most when learning this was that every tutorial "
+        "assumed a clean slate. Real systems never are. Here's how it actually goes."
     ),
 ]
 
@@ -1398,14 +1454,23 @@ Use EXACTLY these ## headings inside "content" (in order):
 {heading_block}
 
 Hard requirements for "content":
-- Minimum 2200 words
+- Minimum 2000 words
 - At least 2 code examples with language tags (```python, ```javascript, etc.)
 - At least 3 concrete numbers (benchmarks, latency figures, percentages, cost figures)
 - At least 1 first-person observation: something that surprised you, a mistake you made, or a result you measured
 - Each section minimum 200 words
 - Do NOT include the title as a # heading at the top
 - The final section must end with a specific, actionable next step — not a generic "start today"
-
+- Include a "## Frequently Asked Questions" section near the end with 3–4 questions 
+  written as real search queries (e.g. "How do I fix X", "What is the difference between X and Y").
+  Answer each in 3–5 sentences. This improves featured snippet eligibility.
+- At least one comparison table using markdown table syntax (| col | col |) — 
+  structured content increases dwell time and ad viewability.
+- Each major section should have a 1–2 sentence summary at the end 
+  ("The key takeaway here is...") — this improves content scannability and reduces bounce rate.
+- Vary sentence length deliberately: mix short punchy sentences with longer technical ones.
+  Walls of uniform-length sentences increase bounce rate.
+  
 Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based ("how to...", "why does...").
 
 Return ONLY the JSON object.""",
