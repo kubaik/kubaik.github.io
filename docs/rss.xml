@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 15:47:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 17:14:07 +0000</lastBuildDate>
+    <item>
+      <title>AI Assist vs AI Automate</title>
+      <link>https://kubaik.github.io/ai-assist-vs-ai-automate/</link>
+      <description>AI Assist vs AI Automate: which approach is best for your application?</description>
+      <pubDate>Thu, 23 Apr 2026 17:14:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-assist-vs-ai-automate/</guid>
+    </item>
     <item>
       <title>Kafka Isn&apos;t for Data: It&apos;s for Distributed State Sync</title>
       <link>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</link>
@@ -138,13 +145,6 @@
       <description>How WhatsApp-scale chat systems work: real-time delivery, E2E encryption, and performance numbers from production systems.</description>
       <pubDate>Wed, 22 Apr 2026 08:01:07 +0000</pubDate>
       <guid>https://kubaik.github.io/building-whatsapp-like-chats-that-scale/</guid>
-    </item>
-    <item>
-      <title>ShortURL</title>
-      <link>https://kubaik.github.io/shorturl/</link>
-      <description>Design a URL shortener that handles billions of requests</description>
-      <pubDate>Wed, 22 Apr 2026 07:28:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/shorturl/</guid>
     </item>
   </channel>
 </rss>
