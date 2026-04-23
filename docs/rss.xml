@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Apr 2026 19:27:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 19:52:18 +0000</lastBuildDate>
+    <item>
+      <title>Ship production-grade tools in 90 minutes with the best AI coding assistants</title>
+      <link>https://kubaik.github.io/ship-production-grade-tools-in-90-minutes-with-the/</link>
+      <description>Measure Copilot, Cursor, Claude Code, Codeium and Tabnine on a real Go CLI; includes token counts, edits, CI minutes and binary sizes.</description>
+      <pubDate>Thu, 23 Apr 2026 19:52:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-production-grade-tools-in-90-minutes-with-the/</guid>
+    </item>
     <item>
       <title>The Salary Script That Broke My Bangalore Interview Loop</title>
       <link>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</link>
@@ -138,13 +145,6 @@
       <description>Real-world tactics for building data pipelines that survive production. Includes code, benchmarks, and tools that prevent silent failures.</description>
       <pubDate>Wed, 22 Apr 2026 10:15:38 +0000</pubDate>
       <guid>https://kubaik.github.io/data-pipelines-that-survive-production/</guid>
-    </item>
-    <item>
-      <title>AI Code Tools Beat Junior Devs</title>
-      <link>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</link>
-      <description>AI tools now write cleaner, faster, more secure code than most junior developers. Real benchmarks, tool comparisons, and when to avoid them.</description>
-      <pubDate>Wed, 22 Apr 2026 10:10:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-tools-beat-junior-devs/</guid>
     </item>
   </channel>
 </rss>
