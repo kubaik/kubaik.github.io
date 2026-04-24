@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 16:51:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 17:46:10 +0000</lastBuildDate>
+    <item>
+      <title>SOLID vs STUPID Code: Which Keeps Projects Alive?</title>
+      <link>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</link>
+      <description>Cut tech debt by 60% using SOLID principles — real-world benchmarks, concrete code examples, and the mistakes that cause STUPID projects to collapse under donor pressure.</description>
+      <pubDate>Fri, 24 Apr 2026 17:46:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</guid>
+    </item>
     <item>
       <title>AI Coding Assistants vs Custom AI Agents: Output Gains and Pitfalls</title>
       <link>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency by 55x using Big O analysis — reduced median response time from 2.1s to 38ms, saved $60/month, and fixed Black Friday traffic spikes with RedisSearch and NumPy vectorization.</description>
       <pubDate>Fri, 24 Apr 2026 08:20:25 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</guid>
-    </item>
-    <item>
-      <title>Push Notifications Are a Security Hole Unless You Do This</title>
-      <link>https://kubaik.github.io/push-notifications-are-a-security-hole-unless-you-/</link>
-      <description>Cut FCM/APNs costs by 65% and eliminate PII leakage in push notifications by never sending user data in payloads — design a secure remote execution channel with per-user encryption keys and token rotation. Push notifications security guide for fintech and healthtech apps.</description>
-      <pubDate>Fri, 24 Apr 2026 07:21:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-notifications-are-a-security-hole-unless-you-/</guid>
     </item>
   </channel>
 </rss>
