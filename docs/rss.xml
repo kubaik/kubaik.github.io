@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 15:05:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 16:36:01 +0000</lastBuildDate>
+    <item>
+      <title>Remote Tech Jobs in 2026: The Only 5 Places That Won’t Screw You Over</title>
+      <link>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</link>
+      <description>Land remote tech roles in 2026 without job boards: build a newsletter, launch OSS, or host virtual meetups to attract $150K offers—real systems, real outcomes, no fluff.</description>
+      <pubDate>Fri, 24 Apr 2026 16:35:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</guid>
+    </item>
     <item>
       <title>Python profiling shows 98% time in &apos;unknown&apos; with cProfile — here&apos;s why</title>
       <link>https://kubaik.github.io/python-profiling-shows-98-time-in-unknown-with-cpr/</link>
@@ -138,13 +145,6 @@
       <description>A ranked list of 8 ways to automate tasks with Bash—tested on 2,847 CSV files across Cape Town, Tallinn, and Manila—with code, benchmarks, and the one option most solo founders should pick first.</description>
       <pubDate>Fri, 24 Apr 2026 07:04:27 +0000</pubDate>
       <guid>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</guid>
-    </item>
-    <item>
-      <title>AI Agents Fail Unless You Treat Them Like Bad Hires</title>
-      <link>https://kubaik.github.io/ai-agents-fail-unless-you-treat-them-like-bad-hire/</link>
-      <description>Why most AI agents fail in production, with real examples, cost figures, and a checklist to build reliable systems from day one.</description>
-      <pubDate>Fri, 24 Apr 2026 04:57:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-fail-unless-you-treat-them-like-bad-hire/</guid>
     </item>
   </channel>
 </rss>
