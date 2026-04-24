@@ -1,6 +1,9 @@
 name: Watchdog - Blog Automation Monitor
 
 on:
+  schedule:
+    - cron: "15 * * * *"
+    - cron: "45 * * * *"
   workflow_dispatch: # Allow manual trigger for testing
 
 permissions:
