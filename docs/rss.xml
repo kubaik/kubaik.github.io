@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 15:08:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 12:14:59 +0000</lastBuildDate>
+    <item>
+      <title>Automate Your Daily Dev Tasks in 60 Lines of Python</title>
+      <link>https://kubaik.github.io/automate-your-daily-dev-tasks-in-60-lines-of-pytho/</link>
+      <description>Automate 45-minute dev tasks in 2 minutes with 60 lines of Python — real benchmarks, CLI flags, and the mistakes that break scripts across teams</description>
+      <pubDate>Fri, 24 Apr 2026 12:14:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/automate-your-daily-dev-tasks-in-60-lines-of-pytho/</guid>
+    </item>
+    <item>
+      <title>No-code AI data analysis crashes when loading CSV files over 10MB</title>
+      <link>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</link>
+      <description>Fix silent CSV upload failures with no-code AI tools in under 5 minutes. Stop guessing why 15 MB files fail while 1 MB ones work. Includes Google Drive bypass, Nginx tuning, and chunking scripts for bootstrappers and enterprises.</description>
+      <pubDate>Fri, 24 Apr 2026 12:08:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</guid>
+    </item>
     <item>
       <title>Why Figma kept growing when Adobe tried to buy it</title>
       <link>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</link>
@@ -131,20 +145,6 @@
       <description>Nairobi fintech salary negotiation scripts with real AWS dashboards, Python 3.11 counters, and 68% acceptance rates. Includes step-by-step code, failure modes, and tools used in 4 live negotiations.</description>
       <pubDate>Thu, 23 Apr 2026 19:27:10 +0000</pubDate>
       <guid>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</guid>
-    </item>
-    <item>
-      <title>Postman vs RestAssured: API Testing Beyond the Basics</title>
-      <link>https://kubaik.github.io/postman-vs-restassured-api-testing-beyond-the-basi/</link>
-      <description>Compare Postman and RestAssured for API testing, with real benchmarks, cost analysis, and a conditional recommendation for different team needs.</description>
-      <pubDate>Thu, 23 Apr 2026 18:30:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/postman-vs-restassured-api-testing-beyond-the-basi/</guid>
-    </item>
-    <item>
-      <title>Your dev environment is lying to you — here’s how to fix it</title>
-      <link>https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/</link>
-      <description>How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.</description>
-      <pubDate>Thu, 23 Apr 2026 17:56:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/</guid>
     </item>
   </channel>
 </rss>
