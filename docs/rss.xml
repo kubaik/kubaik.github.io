@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 21:43:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 22:25:06 +0000</lastBuildDate>
+    <item>
+      <title>Why promotions take forever — and how to force the issue</title>
+      <link>https://kubaik.github.io/why-promotions-take-forever-and-how-to-force-the-i/</link>
+      <description>Cut promotion wait time from 18 months to 90 days with a promotion packet—reverse-engineered rubrics, concrete artifacts, and real case studies from Brazil, Colombia, and Mexico. Learn the exact artifacts reviewers expect and how to pre-sell them before the cycle opens.</description>
+      <pubDate>Fri, 24 Apr 2026 22:25:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-promotions-take-forever-and-how-to-force-the-i/</guid>
+    </item>
     <item>
       <title>Memory leaks finally explained</title>
       <link>https://kubaik.github.io/memory-leaks-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Figma survived Adobe’s $20B buyout by building a web-first, CRDT-powered design tool with built-in GDPR compliance—cutting onboarding time from hours to minutes and enabling 50 designers on one file.</description>
       <pubDate>Fri, 24 Apr 2026 11:58:13 +0000</pubDate>
       <guid>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</guid>
-    </item>
-    <item>
-      <title>The 7 Best Multi-Modal AI Tools in 2024</title>
-      <link>https://kubaik.github.io/the-7-best-multi-modal-ai-tools-in-2024/</link>
-      <description>Discover the 7 best multi-modal AI tools in 2024. Compare performance, cost, and use cases to find the perfect fit for your project needs.</description>
-      <pubDate>Fri, 24 Apr 2026 11:26:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-7-best-multi-modal-ai-tools-in-2024/</guid>
     </item>
   </channel>
 </rss>
