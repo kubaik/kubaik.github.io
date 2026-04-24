@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 11:58:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 12:08:21 +0000</lastBuildDate>
+    <item>
+      <title>No-code AI data analysis crashes when loading CSV files over 10MB</title>
+      <link>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</link>
+      <description>Fix silent CSV upload failures with no-code AI tools in under 5 minutes. Stop guessing why 15 MB files fail while 1 MB ones work. Includes Google Drive bypass, Nginx tuning, and chunking scripts for bootstrappers and enterprises.</description>
+      <pubDate>Fri, 24 Apr 2026 12:08:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</guid>
+    </item>
     <item>
       <title>Why Figma kept growing when Adobe tried to buy it</title>
       <link>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</link>
@@ -138,13 +145,6 @@
       <description>Option B cuts false positives by 60% and speeds up hiring by 50%—here’s the data and the repo template to replicate it.</description>
       <pubDate>Thu, 23 Apr 2026 23:39:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</guid>
-    </item>
-    <item>
-      <title>Android Studio Koans: Fix Kotlin Build Errors Like a Pro</title>
-      <link>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</link>
-      <description>Learn how to fix Kotlin Android build errors with real fixes, version matrices, and benchmarks from a Nairobi fintech engineer.</description>
-      <pubDate>Thu, 23 Apr 2026 22:39:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</guid>
     </item>
   </channel>
 </rss>
