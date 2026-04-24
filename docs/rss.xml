@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 02:00:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 04:57:47 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents Fail Unless You Treat Them Like Bad Hires</title>
+      <link>https://kubaik.github.io/ai-agents-fail-unless-you-treat-them-like-bad-hire/</link>
+      <description>Why most AI agents fail in production, with real examples, cost figures, and a checklist to build reliable systems from day one.</description>
+      <pubDate>Fri, 24 Apr 2026 04:57:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-fail-unless-you-treat-them-like-bad-hire/</guid>
+    </item>
     <item>
       <title>Why ‘Everyone Should Learn to Code’ is a lie (and the truth)</title>
       <link>https://kubaik.github.io/why-everyone-should-learn-to-code-is-a-lie-and-the/</link>
@@ -138,13 +145,6 @@
       <description>Improve language model accuracy with prompt engineering techniques</description>
       <pubDate>Thu, 23 Apr 2026 06:28:41 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-engineering/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>AI agents automate tasks, make decisions, and interact with humans</description>
-      <pubDate>Thu, 23 Apr 2026 04:53:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
