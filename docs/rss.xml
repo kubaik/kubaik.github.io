@@ -5,34 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 12:08:21 +0000</lastBuildDate>
-    <item>
-      <title>No-code AI data analysis crashes when loading CSV files over 10MB</title>
-      <link>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</link>
-      <description>Fix silent CSV upload failures with no-code AI tools in under 5 minutes. Stop guessing why 15 MB files fail while 1 MB ones work. Includes Google Drive bypass, Nginx tuning, and chunking scripts for bootstrappers and enterprises.</description>
-      <pubDate>Fri, 24 Apr 2026 12:08:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</guid>
-    </item>
+    <lastBuildDate>Fri, 24 Apr 2026 15:08:50 +0000</lastBuildDate>
     <item>
       <title>Why Figma kept growing when Adobe tried to buy it</title>
       <link>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</link>
       <description>Learn how Figma survived Adobe’s $20B buyout by building a web-first, CRDT-powered design tool with built-in GDPR compliance—cutting onboarding time from hours to minutes and enabling 50 designers on one file.</description>
       <pubDate>Fri, 24 Apr 2026 11:58:13 +0000</pubDate>
       <guid>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</guid>
-    </item>
-    <item>
-      <title>Why Server Components Break in React (and How to Fix It)</title>
-      <link>https://kubaik.github.io/why-server-components-break-in-react-and-how-to-fi/</link>
-      <description>Fix React Server Components errors and cut debugging time by 50%. Learn the real causes of issues like hydration mismatches and duplicate API calls.</description>
-      <pubDate>Fri, 24 Apr 2026 11:45:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-server-components-break-in-react-and-how-to-fi/</guid>
-    </item>
-    <item>
-      <title>Cut DevOps Costs 40%</title>
-      <link>https://kubaik.github.io/cut-devops-costs-40/</link>
-      <description>Cut API response time by 60% with Redis caching — connection pooling, eviction policies, and the mistakes that cause cache stampedes. Improve DevOps efficiency with cost optimization strategies.</description>
-      <pubDate>Fri, 24 Apr 2026 11:40:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-devops-costs-40/</guid>
     </item>
     <item>
       <title>The 7 Best Multi-Modal AI Tools in 2024</title>
@@ -70,13 +49,6 @@
       <guid>https://kubaik.github.io/api-at-1m-rpm-with-200month-the-stack-we-chose/</guid>
     </item>
     <item>
-      <title>The Countries Winning the AI Race: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/the-countries-winning-the-ai-race-a-practical-tech/</link>
-      <description>Cut The Countries Winning the AI Race failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by-ste…</description>
-      <pubDate>Fri, 24 Apr 2026 09:44:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-countries-winning-the-ai-race-a-practical-tech/</guid>
-    </item>
-    <item>
       <title>IoT Architecture Explained at Last</title>
       <link>https://kubaik.github.io/iot-architecture-explained-at-last/</link>
       <description>Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.</description>
@@ -98,25 +70,11 @@
       <guid>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</guid>
     </item>
     <item>
-      <title>Refactoring Legacy Code Without Breaking Everything: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/refactoring-legacy-code-without-breaking-everythin/</link>
-      <description>Cut Refactoring Legacy Code Without Breaking Everything failures by understanding connection pooling and retry logic — real benchmarks, common mistakes,…</description>
-      <pubDate>Fri, 24 Apr 2026 07:29:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactoring-legacy-code-without-breaking-everythin/</guid>
-    </item>
-    <item>
       <title>Push Notifications Are a Security Hole Unless You Do This</title>
       <link>https://kubaik.github.io/push-notifications-are-a-security-hole-unless-you-/</link>
       <description>Cut FCM/APNs costs by 65% and eliminate PII leakage in push notifications by never sending user data in payloads — design a secure remote execution channel with per-user encryption keys and token rotation. Push notifications security guide for fintech and healthtech apps.</description>
       <pubDate>Fri, 24 Apr 2026 07:21:13 +0000</pubDate>
       <guid>https://kubaik.github.io/push-notifications-are-a-security-hole-unless-you-/</guid>
-    </item>
-    <item>
-      <title>The Engineering Culture That Built Google: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/the-engineering-culture-that-built-google-a-practi/</link>
-      <description>Cut The Engineering Culture That Built Google failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a ste…</description>
-      <pubDate>Fri, 24 Apr 2026 07:18:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-engineering-culture-that-built-google-a-practi/</guid>
     </item>
     <item>
       <title>Write Bash Scripts Without Wanting to Die (2024)</title>
@@ -145,6 +103,48 @@
       <description>Option B cuts false positives by 60% and speeds up hiring by 50%—here’s the data and the repo template to replicate it.</description>
       <pubDate>Thu, 23 Apr 2026 23:39:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</guid>
+    </item>
+    <item>
+      <title>How Linear, GitLab &amp; Bolt Cut 4-Day Weeks Without Crashing Production</title>
+      <link>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</link>
+      <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
+      <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
+    </item>
+    <item>
+      <title>Mental Models for Developers — Finally Explained</title>
+      <link>https://kubaik.github.io/mental-models-for-developers-finally-explained/</link>
+      <description>How five mental models—queueing theory, negative feedback, opportunity cost, Pareto, and amortized analysis—turn reactive firefighting into proactive system design, with real benchmarks and fixes.</description>
+      <pubDate>Thu, 23 Apr 2026 20:21:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/mental-models-for-developers-finally-explained/</guid>
+    </item>
+    <item>
+      <title>RAG in Production: Why Your LLM Keeps Hallucinating (and How to Fix It)</title>
+      <link>https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/</link>
+      <description>How to build a RAG system that doesn’t hallucinate in production, with real code, benchmarks, and the mistakes I made first.</description>
+      <pubDate>Thu, 23 Apr 2026 20:08:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/</guid>
+    </item>
+    <item>
+      <title>The Salary Script That Broke My Bangalore Interview Loop</title>
+      <link>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</link>
+      <description>Nairobi fintech salary negotiation scripts with real AWS dashboards, Python 3.11 counters, and 68% acceptance rates. Includes step-by-step code, failure modes, and tools used in 4 live negotiations.</description>
+      <pubDate>Thu, 23 Apr 2026 19:27:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</guid>
+    </item>
+    <item>
+      <title>Postman vs RestAssured: API Testing Beyond the Basics</title>
+      <link>https://kubaik.github.io/postman-vs-restassured-api-testing-beyond-the-basi/</link>
+      <description>Compare Postman and RestAssured for API testing, with real benchmarks, cost analysis, and a conditional recommendation for different team needs.</description>
+      <pubDate>Thu, 23 Apr 2026 18:30:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/postman-vs-restassured-api-testing-beyond-the-basi/</guid>
+    </item>
+    <item>
+      <title>Your dev environment is lying to you — here’s how to fix it</title>
+      <link>https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/</link>
+      <description>How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.</description>
+      <pubDate>Thu, 23 Apr 2026 17:56:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/</guid>
     </item>
   </channel>
 </rss>
