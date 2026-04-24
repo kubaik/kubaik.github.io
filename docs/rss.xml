@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 07:04:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 07:18:27 +0000</lastBuildDate>
+    <item>
+      <title>The Engineering Culture That Built Google: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/the-engineering-culture-that-built-google-a-practi/</link>
+      <description>Cut The Engineering Culture That Built Google failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a ste…</description>
+      <pubDate>Fri, 24 Apr 2026 07:18:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-engineering-culture-that-built-google-a-practi/</guid>
+    </item>
     <item>
       <title>Write Bash Scripts Without Wanting to Die (2024)</title>
       <link>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</link>
@@ -138,13 +145,6 @@
       <description>Developers skip docs because they&apos;re broken, not because they&apos;re lazy. Here&apos;s how to build documentation that&apos;s actually used — with real tools, metrics, and incentives.</description>
       <pubDate>Thu, 23 Apr 2026 09:41:41 +0000</pubDate>
       <guid>https://kubaik.github.io/docs-that-dont-suck-a-devs-guide/</guid>
-    </item>
-    <item>
-      <title>Layoff Trends</title>
-      <link>https://kubaik.github.io/layoff-trends/</link>
-      <description>Tech layoffs: 30% of jobs automated by 2028</description>
-      <pubDate>Thu, 23 Apr 2026 07:07:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/layoff-trends/</guid>
     </item>
   </channel>
 </rss>
