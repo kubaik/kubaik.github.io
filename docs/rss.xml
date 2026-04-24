@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 18:42:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 19:33:21 +0000</lastBuildDate>
+    <item>
+      <title>Developers Burn Out Because They’re Treated Like Plug-and-Play Batteries</title>
+      <link>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</link>
+      <description>Reduce burnout by 60% with system stability — incident frequency, on-call load, and deployment lead time metrics that actually prevent hero culture. Choose automation over slogans.</description>
+      <pubDate>Fri, 24 Apr 2026 19:33:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</guid>
+    </item>
     <item>
       <title>How API Security Mistakes Finally Got These 7 Companies Hacked</title>
       <link>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</link>
@@ -138,13 +145,6 @@
       <description>Built an API that handled 1 million requests per minute on a $200 budget using FastAPI, Redis Streams, and SQLite. Cut latency by 90% and saved 14% on costs with a queue-first architecture.</description>
       <pubDate>Fri, 24 Apr 2026 09:52:50 +0000</pubDate>
       <guid>https://kubaik.github.io/api-at-1m-rpm-with-200month-the-stack-we-chose/</guid>
-    </item>
-    <item>
-      <title>IoT Architecture Explained at Last</title>
-      <link>https://kubaik.github.io/iot-architecture-explained-at-last/</link>
-      <description>Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.</description>
-      <pubDate>Fri, 24 Apr 2026 09:26:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-architecture-explained-at-last/</guid>
     </item>
   </channel>
 </rss>
