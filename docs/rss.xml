@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 19:33:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 19:48:44 +0000</lastBuildDate>
+    <item>
+      <title>23 CSS tricks seniors actually use (and which ones to ignore)</title>
+      <link>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</link>
+      <description>Cut CSS maintenance time by 67% with 23 battle-tested tricks seniors actually use — bundle impact, Safari 15 fixes, and production metrics included.</description>
+      <pubDate>Fri, 24 Apr 2026 19:48:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</guid>
+    </item>
     <item>
       <title>Developers Burn Out Because They’re Treated Like Plug-and-Play Batteries</title>
       <link>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</link>
@@ -138,13 +145,6 @@
       <description>Cut runtime errors by 94% and boost integration velocity by 89% using TypeScript contracts that define both types and schemas. Includes benchmarks, code examples, and a 312-line codegen tool to sync compile-time and runtime safety.</description>
       <pubDate>Fri, 24 Apr 2026 10:46:33 +0000</pubDate>
       <guid>https://kubaik.github.io/how-typescript-snuck-20-more-features-into-the-sam/</guid>
-    </item>
-    <item>
-      <title>API at 1M RPM with $200/month: The stack we chose</title>
-      <link>https://kubaik.github.io/api-at-1m-rpm-with-200month-the-stack-we-chose/</link>
-      <description>Built an API that handled 1 million requests per minute on a $200 budget using FastAPI, Redis Streams, and SQLite. Cut latency by 90% and saved 14% on costs with a queue-first architecture.</description>
-      <pubDate>Fri, 24 Apr 2026 09:52:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-at-1m-rpm-with-200month-the-stack-we-chose/</guid>
     </item>
   </channel>
 </rss>
