@@ -1073,10 +1073,10 @@ class BlogSystem:
         """
         providers = []
 
-        if self.github_token:
-            providers.append(("GitHub Models",    self._call_github))
         if self.cloudflare_token and self.cloudflare_account_id:
             providers.append(("Cloudflare AI",    self._call_cloudflare))
+        if self.github_token:
+            providers.append(("GitHub Models",    self._call_github))
         if self.mistral_key:
             providers.append(("Mistral",         self._call_mistral))
         if self.openrouter_key:
