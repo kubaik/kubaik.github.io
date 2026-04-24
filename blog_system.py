@@ -31,7 +31,8 @@ _STOP_WORDS = {
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
-MIN_WORD_COUNT = 2000
+# ✅ CHANGE: raised from 2000 → 2200 for stronger AdSense content quality signal
+MIN_WORD_COUNT = 2200
 
 
 def _tokenise(text: str) -> set:
@@ -104,22 +105,100 @@ def _twitter_posting_enabled() -> bool:
 
 # ─────────────────────────────────────────────────────────────────
 # FIX: derive a description from content when meta_description is empty
+# ✅ CHANGE: Full replacement — now uses 4-strategy AdSense CTR formula
+#   (outcome + keyword + benefit) instead of naive first-sentence extraction
 # ─────────────────────────────────────────────────────────────────
+
+def _extract_numbers(text: str) -> str:
+    """
+    Pull the first percentage, time saving, multiplier, or latency figure
+    from content and return a short phrase around it.
+    Used as the 'outcome' component of the meta_description formula.
+    """
+    patterns = [
+        r'\d+\s*%',                                      # 40%
+        r'\d+x\s+(?:faster|cheaper|more|improvement)',   # 3x faster
+        r'(?:cut|reduce|save|improve)\w*\s+(?:by\s+)?\d+',  # cut by 60
+        r'\d+\s*ms',                                     # 120ms
+        r'\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)',   # 2 seconds faster
+        r'under\s+\d+\s*ms',                             # under 10ms
+        # 1000 req/s
+        r'\d+\s*(?:req|requests?)(?:/|\s+per\s+)(?:s|sec|second|min|minute)',
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, text, re.IGNORECASE)
+        if m:
+            start = max(0, m.start() - 10)
+            end = min(len(text), m.end() + 30)
+            snippet = text[start:end].strip()
+            snippet = re.sub(r'\s+', ' ', snippet)
+            snippet = re.sub(r'[,;:\s]+$', '', snippet)
+            return snippet
+    return ""
+
 
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     """
-    Extract a meaningful excerpt from the post content to use as
-    meta_description when the AI omits or truncates it.
-    Strips markdown symbols and returns the first complete sentence
-    that is at least 40 characters long, capped at max_len chars.
-    """
-    text = re.sub(r"```[\s\S]*?```", " ", content)
-    text = re.sub(r"`[^`]+`", " ", text)
-    text = re.sub(r"#{1,6}\s+", " ", text)
-    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
-    text = re.sub(r"[*_]{1,3}", "", text)
-    text = re.sub(r"\s+", " ", text).strip()
+    Build a meta_description that follows the AdSense CTR formula:
+      (1) a specific number or outcome  — extracted from content
+      (2) the primary keyword           — extracted from title
+      (3) an implied benefit            — extracted from early content
 
+    Falls back through four strategies, then to first-sentence extraction
+    only as a last resort. Result is always ≤ max_len characters.
+    """
+    # ── Strip markdown noise ──────────────────────────────────────
+    text = re.sub(r"```[\s\S]*?```", " ", content)
+    text = re.sub(r"`[^`]+`",        " ", text)
+    text = re.sub(r"#{1,6}\s+",      " ", text)
+    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+    text = re.sub(r"[*_]{1,3}",      "",  text)
+    text = re.sub(r"\s+",            " ", text).strip()
+
+    # ── 1. Pull a real outcome / number from the content ─────────
+    outcome = _extract_numbers(text)
+
+    # ── 2. Extract primary keyword from title ─────────────────────
+    keyword = _extract_topic_phrase(title, max_words=4)
+
+    # ── 3. Pull a benefit clause from the first 600 chars ─────────
+    benefit = ""
+    benefit_patterns = [
+        r'so (?:you|your team) can ([^.!?]{10,60})',
+        r'without ([^.!?]{10,50})',
+        r'that (?:lets?|allows?) you ([^.!?]{10,50})',
+        r'to (?:help you\s+)?([a-z][^.!?]{10,50})',
+    ]
+    for pat in benefit_patterns:
+        m = re.search(pat, text[:600], re.IGNORECASE)
+        if m:
+            benefit = m.group(1).strip().rstrip('.,;:')
+            break
+
+    # ── 4. Assemble using outcome + keyword + benefit when available ──
+    # Strategy A: full three-part formula
+    if outcome and keyword and benefit:
+        candidate = f"{outcome} with {keyword} — {benefit}."
+        if len(candidate) <= max_len:
+            return candidate
+        # too long — drop the benefit clause
+        candidate = f"{outcome} with {keyword}."
+        if len(candidate) <= max_len:
+            return candidate
+
+    # Strategy B: outcome + keyword only
+    if outcome and keyword:
+        candidate = f"{keyword}: {outcome}. Practical guide with real examples."
+        if len(candidate) <= max_len:
+            return candidate
+
+    # Strategy C: keyword + benefit only
+    if keyword and benefit:
+        candidate = f"{keyword} — {benefit}. Includes code, benchmarks, and common mistakes."
+        if len(candidate) <= max_len:
+            return candidate
+
+    # Strategy D: last resort — first clean sentence from content
     sentences = re.split(r'(?<=[.!?])\s+', text)
     excerpt = ""
     for sentence in sentences:
@@ -470,7 +549,7 @@ _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
 
 # ─────────────────────────────────────────────────────────────────
-# Six rotating article structures
+# Eight rotating article structures
 # Each entry is (format_name, heading_list, format_note)
 # ─────────────────────────────────────────────────────────────────
 
@@ -620,7 +699,6 @@ _STRUCTURE_SETS = [
             "This format performs well for search — optimise the headings for question-based queries."
         ),
     ),
-
     # 7 — troubleshooting / error guide (captures high-intent search traffic)
     (
         "troubleshooting",
@@ -823,7 +901,6 @@ def _build_humanization_note(topic: str) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 _PERSONAL_INTROS = [
-    # Keep — specific but universally relatable
     (
         "This took me about three days to figure out properly. Most of the answers "
         "I found online were either outdated or skipped the parts that actually matter in production. "
@@ -845,7 +922,6 @@ _PERSONAL_INTROS = [
         "This is a topic where the standard advice is technically correct but practically misleading. "
         "Here's the fuller picture, based on what I've seen work at scale."
     ),
-    # Replace the Nairobi payment integration one with globally relatable equivalents
     (
         "I ran into this while migrating a production service under a hard deadline. "
         "The official docs covered the happy path well. This post covers everything else."
@@ -1320,6 +1396,17 @@ class BlogSystem:
                 print(
                     "Warning: meta_description empty from API — deriving from content.")
                 meta_description = _derive_description(content, title)
+
+            # ✅ CHANGE: catch weak descriptions that slipped through from the API
+            _weak_openers = (
+                "this post", "in this article", "a guide to",
+                "learn about", "an overview", "this tutorial",
+                "this article", "we will", "you will learn",
+            )
+            if any(meta_description.lower().startswith(w) for w in _weak_openers):
+                print("Warning: meta_description has weak opener — re-deriving.")
+                meta_description = _derive_description(content, title)
+
             if not keywords:
                 keywords = seo_keywords
 
@@ -1386,12 +1473,6 @@ class BlogSystem:
         """
         One API call returns title + full article + meta_description +
         seo_keywords as a JSON object.
-
-        Improvements over the original:
-          - 6 rotating article structures (no two posts look the same)
-          - First-person author voice injected via persona framing
-          - Format-specific writing guidance per structure type
-          - MIN_WORD_COUNT raised to 2000 for AdSense quality
         """
         format_name, headings, format_note = _pick_structure(topic)
         author_note = _build_humanization_note(topic)
@@ -1410,14 +1491,16 @@ class BlogSystem:
             if existing_titles else ""
         )
 
-        # Format-specific title guidance
+        # ✅ CHANGE: title_guidance now includes listicle and troubleshooting
         title_guidance = {
-            "deep_dive":  "Title should promise a real technical revelation, not just a topic name.",
-            "tutorial":   "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
-            "opinion":    "Title should take a stance — controversial is fine if honest.",
-            "comparison": "Title should name both options being compared.",
-            "case_study": "Title should hint at the result, e.g. 'How we cut X by 40%'.",
-            "explainer":  "Title should address the confusion, e.g. 'X finally explained'.",
+            "deep_dive":      "Title should promise a real technical revelation, not just a topic name.",
+            "tutorial":       "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
+            "opinion":        "Title should take a stance — controversial is fine if honest.",
+            "comparison":     "Title should name both options being compared.",
+            "case_study":     "Title should hint at the result, e.g. 'How we cut X by 40%'.",
+            "explainer":      "Title should address the confusion, e.g. 'X finally explained'.",
+            "listicle":       "Title should name the number of items and promise a ranked or curated list, e.g. 'The 7 best X tools in 2026'.",
+            "troubleshooting": "Title should name the specific error or symptom, e.g. 'Why X fails with Y (and how to fix it)'.",
         }.get(format_name, "Write a specific, benefit-driven title.")
 
         messages = [
@@ -1438,6 +1521,7 @@ class BlogSystem:
             },
             {
                 "role": "user",
+                # ✅ CHANGE: meta_description instruction replaced with full AdSense CTR formula
                 "content": f"""Write a 2500-word {format_name} blog post about: "{topic}"{keyword_text}
 
 {title_guidance}{existing_hint}
@@ -1446,7 +1530,13 @@ Respond with ONLY a JSON object in this exact shape:
 {{
   "title": "<specific title under 60 chars>",
   "content": "<full markdown article — no title heading at top>",
-  "meta_description": "<under 155 chars — state the specific value or insight, no generic openers>",
+  "meta_description": "<under 155 chars — must include all three: \
+(1) a specific number or outcome e.g. 'Cut latency by 40%' or 'under 10ms response time', \
+(2) the primary keyword from the title, \
+(3) an implied reader benefit. \
+Bad example: 'A guide to Redis caching.' \
+Good example: 'Cut API response time by 60% with Redis caching — connection pooling, eviction policies, and the mistakes that cause cache stampedes.' \
+Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'.>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
@@ -1454,23 +1544,23 @@ Use EXACTLY these ## headings inside "content" (in order):
 {heading_block}
 
 Hard requirements for "content":
-- Minimum 2000 words
+- Minimum 2200 words
 - At least 2 code examples with language tags (```python, ```javascript, etc.)
 - At least 3 concrete numbers (benchmarks, latency figures, percentages, cost figures)
 - At least 1 first-person observation: something that surprised you, a mistake you made, or a result you measured
 - Each section minimum 200 words
 - Do NOT include the title as a # heading at the top
 - The final section must end with a specific, actionable next step — not a generic "start today"
-- Include a "## Frequently Asked Questions" section near the end with 3–4 questions 
+- Include a "## Frequently Asked Questions" section near the end with 3–4 questions
   written as real search queries (e.g. "How do I fix X", "What is the difference between X and Y").
   Answer each in 3–5 sentences. This improves featured snippet eligibility.
-- At least one comparison table using markdown table syntax (| col | col |) — 
+- At least one comparison table using markdown table syntax (| col | col |) —
   structured content increases dwell time and ad viewability.
-- Each major section should have a 1–2 sentence summary at the end 
+- Each major section should have a 1–2 sentence summary at the end
   ("The key takeaway here is...") — this improves content scannability and reduces bounce rate.
 - Vary sentence length deliberately: mix short punchy sentences with longer technical ones.
   Walls of uniform-length sentences increase bounce rate.
-  
+
 Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based ("how to...", "why does...").
 
 Return ONLY the JSON object.""",
@@ -1734,9 +1824,11 @@ Step 5: Load test with realistic traffic before going live.
 
 ## Real-World Performance Numbers
 
-- **Under 1,000 req/min:** Default config works. Focus on correctness.
-- **1,000–50,000 req/min:** Connection pooling is critical. Without it, expect 20–35% latency increase.
-- **50,000+ req/min:** Single-node coordinators bottleneck. 40% throughput gain moving to clustered setup.
+| Traffic Level | Without Tuning | With Tuning | Key Difference |
+|---|---|---|---|
+| Under 1,000 req/min | Baseline | Baseline | Default config works |
+| 1,000–50,000 req/min | +20–35% latency | +2–5% latency | Connection pooling |
+| 50,000+ req/min | Bottlenecked | +40% throughput | Clustered setup |
 
 ## Common Mistakes and How to Avoid Them
 
@@ -1762,14 +1854,31 @@ Skip it for low, predictable traffic (under 100 req/min). Skip it without observ
 
 Most guides tell you to add {topic} and call it done. In practice, the hardest part is not the setup — it's the operational burden. Every abstraction you add is a thing your team needs to understand at 2am when it breaks. Start simpler than you think you need to, instrument everything from day one, and only add complexity when metrics prove you need it.
 
+## Frequently Asked Questions
+
+**What is {topic} and why does it matter?**
+{topic} is a core concept in modern software development that directly affects reliability, performance, and maintainability. Understanding it properly prevents the most common class of production incidents in this area. Most developers encounter it indirectly — through a slow query, a timeout, or a cascade failure — before they understand the root cause.
+
+**How long does it take to implement {topic} correctly?**
+A basic implementation takes a few hours. A production-ready one — with monitoring, error handling, and load testing — typically takes 1–2 days. The difference matters: most outages happen in the gap between those two. Treat the first implementation as a draft, not a final version.
+
+**What are the most common mistakes when using {topic}?**
+The three most common mistakes are: skipping timeout configuration, treating all errors the same way, and not instrumenting the integration before going live. Each is covered in detail above. The good news is that all three are detectable before you ship if you load test against a staging environment.
+
+**When should I NOT use {topic}?**
+If your traffic is low and predictable (under a few hundred requests per minute), the operational overhead may not be worth it. Start simpler, measure, and add complexity only when your metrics demand it. The best architecture is the simplest one that meets your actual requirements — not your imagined future scale.
+
 ## Conclusion and Next Steps
 
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
+        # ✅ CHANGE: meta_description now uses the AdSense CTR formula for fallback too
         meta_description = (
-            f"A practical guide to {topic} covering implementation, "
-            f"real performance benchmarks, common mistakes, and honest tradeoffs."
+            f"Cut {topic} failures by understanding connection pooling and retry logic — "
+            f"real benchmarks, common mistakes, and a step-by-step implementation guide."
         )
+        if len(meta_description) > 155:
+            meta_description = meta_description[:152] + "…"
 
         fallback_hashtags = _derive_hashtags_from_keywords(
             [topic_lower, f"{topic_lower} tutorial",
@@ -1818,6 +1927,10 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
     def save_post(self, post):
         word_count = len(post.content.split())
+        # ✅ CHANGE: reading time and content-type flags added for StaticSiteGenerator schema use
+        # ~200 wpm average reader
+        reading_time = max(1, round(word_count / 200))
+
         if word_count < MIN_WORD_COUNT:
             print(
                 f"Warning: saving post with only {word_count} words "
@@ -1833,6 +1946,13 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         post_dir.mkdir(exist_ok=True)
 
         post_data = post.to_dict()
+
+        # ✅ CHANGE: schema/SEO metadata added to every saved post.json
+        post_data['word_count'] = word_count
+        post_data['reading_time_minutes'] = reading_time
+        post_data['has_code'] = '```' in post.content
+        post_data['has_table'] = '|' in post.content
+
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             post_data['twitter_hashtags'] = post.twitter_hashtags
 
@@ -1842,13 +1962,16 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
 
-        print(f"Saved post: {post.title} ({post.slug}) — {word_count} words")
+        print(
+            f"Saved post: {post.title} ({post.slug}) — {word_count} words / ~{reading_time} min read")
         if post.affiliate_links:
             print(f"  - {len(post.affiliate_links)} affiliate links added")
         print(
             f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             print(f"  - Twitter hashtags: {post.twitter_hashtags}")
+        print(
+            f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1948,11 +2071,11 @@ def create_sample_config():
             "Why most AI-generated code breaks in edge cases",
             "Building a local LLM setup that actually runs on a laptop",
             "How vector databases work (and when you don't need one)",
-            # Career — specific and Kenya/Africa-relevant
-            "Getting a remote tech job from Nairobi: what actually worked",
-            "Tech salaries in Kenya in 2026: what the data shows",
+            # Career — specific and globally relevant
+            "Getting a remote tech job: what actually worked",
+            "Tech salaries in 2026: what the data shows",
             "How I went from junior to senior without a CS degree",
-            "Freelance developer rates in Africa: a realistic breakdown",
+            "Freelance developer rates: a realistic breakdown",
             "Why senior developers leave big tech (it's not always the money)",
             "Negotiating a remote salary when you're in a lower-cost country",
             # Backend / systems — specific comparisons
@@ -2210,13 +2333,25 @@ if __name__ == "__main__":
                     with open(post_json, "r", encoding="utf-8") as f:
                         data = json.load(f)
                     desc = data.get("meta_description", "").strip()
-                    if not desc:
+                    # ✅ CHANGE: fix-descriptions now also catches weak openers, not just empty
+                    _weak_openers = (
+                        "this post", "in this article", "a guide to",
+                        "learn about", "an overview", "this tutorial",
+                        "this article", "we will", "you will learn",
+                    )
+                    needs_fix = (
+                        not desc
+                        or any(desc.lower().startswith(w) for w in _weak_openers)
+                    )
+                    if needs_fix:
                         derived = _derive_description(
                             data.get("content", ""), data.get("title", ""))
                         data["meta_description"] = derived
                         with open(post_json, "w", encoding="utf-8") as f:
                             json.dump(data, f, indent=2, ensure_ascii=False)
-                        print(f"Fixed: {post_dir.name} → {derived[:80]}…")
+                        reason = "empty" if not desc else "weak opener"
+                        print(
+                            f"Fixed ({reason}): {post_dir.name} → {derived[:80]}…")
                         fixed += 1
                 except Exception as e:
                     print(f"Error fixing {post_dir.name}: {e}")
