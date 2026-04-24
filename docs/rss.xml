@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 11:45:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 11:58:15 +0000</lastBuildDate>
+    <item>
+      <title>Why Figma kept growing when Adobe tried to buy it</title>
+      <link>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</link>
+      <description>Learn how Figma survived Adobe’s $20B buyout by building a web-first, CRDT-powered design tool with built-in GDPR compliance—cutting onboarding time from hours to minutes and enabling 50 designers on one file.</description>
+      <pubDate>Fri, 24 Apr 2026 11:58:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-figma-kept-growing-when-adobe-tried-to-buy-it/</guid>
+    </item>
     <item>
       <title>Why Server Components Break in React (and How to Fix It)</title>
       <link>https://kubaik.github.io/why-server-components-break-in-react-and-how-to-fi/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to fix Kotlin Android build errors with real fixes, version matrices, and benchmarks from a Nairobi fintech engineer.</description>
       <pubDate>Thu, 23 Apr 2026 22:39:26 +0000</pubDate>
       <guid>https://kubaik.github.io/android-studio-koans-fix-kotlin-build-errors-like-/</guid>
-    </item>
-    <item>
-      <title>How Linear, GitLab &amp; Bolt Cut 4-Day Weeks Without Crashing Production</title>
-      <link>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</link>
-      <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
-      <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
     </item>
   </channel>
 </rss>
