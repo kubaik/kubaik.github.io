@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 22:36:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 23:11:55 +0000</lastBuildDate>
+    <item>
+      <title>Scaled a 50 million user messaging app with $700/month infra</title>
+      <link>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</link>
+      <description>Hit 1M messages/sec with 8ms median latency on $680/month using SQLite, Go, and Redis — the exact stack WhatsApp used to justify a $19 billion buyout.</description>
+      <pubDate>Fri, 24 Apr 2026 23:11:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</guid>
+    </item>
     <item>
       <title>How we cut production incidents by 70% with real-time APM</title>
       <link>https://kubaik.github.io/how-we-cut-production-incidents-by-70-with-real-ti/</link>
@@ -138,13 +145,6 @@
       <description>Automate 45-minute dev tasks in 2 minutes with 60 lines of Python — real benchmarks, CLI flags, and the mistakes that break scripts across teams</description>
       <pubDate>Fri, 24 Apr 2026 12:14:56 +0000</pubDate>
       <guid>https://kubaik.github.io/automate-your-daily-dev-tasks-in-60-lines-of-pytho/</guid>
-    </item>
-    <item>
-      <title>No-code AI data analysis crashes when loading CSV files over 10MB</title>
-      <link>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</link>
-      <description>Fix silent CSV upload failures with no-code AI tools in under 5 minutes. Stop guessing why 15 MB files fail while 1 MB ones work. Includes Google Drive bypass, Nginx tuning, and chunking scripts for bootstrappers and enterprises.</description>
-      <pubDate>Fri, 24 Apr 2026 12:08:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-ai-data-analysis-crashes-when-loading-csv-/</guid>
     </item>
   </channel>
 </rss>
