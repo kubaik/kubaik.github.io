@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 21:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 21:43:33 +0000</lastBuildDate>
+    <item>
+      <title>Memory leaks finally explained</title>
+      <link>https://kubaik.github.io/memory-leaks-finally-explained/</link>
+      <description>Cut process memory growth by 70% in 30 minutes with the right profiler — memory leaks finally explained with concrete tools, benchmarks, and the mistakes that waste hours.</description>
+      <pubDate>Fri, 24 Apr 2026 21:43:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/memory-leaks-finally-explained/</guid>
+    </item>
     <item>
       <title>Python vs Go vs Rust: Why One Crashes at 100ms and the Other Runs for 3 Years</title>
       <link>https://kubaik.github.io/python-vs-go-vs-rust-why-one-crashes-at-100ms-and-/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 7 best multi-modal AI tools in 2024. Compare performance, cost, and use cases to find the perfect fit for your project needs.</description>
       <pubDate>Fri, 24 Apr 2026 11:26:31 +0000</pubDate>
       <guid>https://kubaik.github.io/the-7-best-multi-modal-ai-tools-in-2024/</guid>
-    </item>
-    <item>
-      <title>2026 Full-Stack Stack: 40% faster dev cycles with 3x uptime</title>
-      <link>https://kubaik.github.io/2026-full-stack-stack-40-faster-dev-cycles-with-3x/</link>
-      <description>es and 99.7% uptime—acceptable for a 2022 with Full-Stack Stack faster dev — weeks of compliance engineering.</description>
-      <pubDate>Fri, 24 Apr 2026 11:02:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-full-stack-stack-40-faster-dev-cycles-with-3x/</guid>
     </item>
   </channel>
 </rss>
