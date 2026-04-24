@@ -31,8 +31,7 @@ _STOP_WORDS = {
 }
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
-# ✅ CHANGE: raised from 2000 → 2200 for stronger AdSense content quality signal
-MIN_WORD_COUNT = 2200
+MIN_WORD_COUNT = 2000
 
 
 def _tokenise(text: str) -> set:
@@ -1544,7 +1543,7 @@ Use EXACTLY these ## headings inside "content" (in order):
 {heading_block}
 
 Hard requirements for "content":
-- Minimum 2200 words
+- Minimum 2000 words
 - At least 2 code examples with language tags (```python, ```javascript, etc.)
 - At least 3 concrete numbers (benchmarks, latency figures, percentages, cost figures)
 - At least 1 first-person observation: something that surprised you, a mistake you made, or a result you measured
