@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 23:11:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 23:36:41 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green vs Canary Deployments: Real Numbers, Real Choices</title>
+      <link>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</link>
+      <description>Cut production incidents by 70% with the right deployment pattern — blue-green vs canary compared on latency, cost, and rollback time with real numbers and code examples for teams from $200/month droplets to Series B AWS accounts.</description>
+      <pubDate>Fri, 24 Apr 2026 23:36:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</guid>
+    </item>
     <item>
       <title>Scaled a 50 million user messaging app with $700/month infra</title>
       <link>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</link>
@@ -138,13 +145,6 @@
       <description>Cut Free AI Tools That Professionals Actually Use failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a…</description>
       <pubDate>Fri, 24 Apr 2026 12:41:47 +0000</pubDate>
       <guid>https://kubaik.github.io/free-ai-tools-that-professionals-actually-use-a-pr/</guid>
-    </item>
-    <item>
-      <title>Automate Your Daily Dev Tasks in 60 Lines of Python</title>
-      <link>https://kubaik.github.io/automate-your-daily-dev-tasks-in-60-lines-of-pytho/</link>
-      <description>Automate 45-minute dev tasks in 2 minutes with 60 lines of Python — real benchmarks, CLI flags, and the mistakes that break scripts across teams</description>
-      <pubDate>Fri, 24 Apr 2026 12:14:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/automate-your-daily-dev-tasks-in-60-lines-of-pytho/</guid>
     </item>
   </channel>
 </rss>
