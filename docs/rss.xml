@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 18:10:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 18:42:26 +0000</lastBuildDate>
+    <item>
+      <title>How API Security Mistakes Finally Got These 7 Companies Hacked</title>
+      <link>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</link>
+      <description>6 companies lost 80M+ records to API flaws like missing rate limits, hardcoded keys, and weak auth checks. Learn the exact mistakes, fixes, and tools to avoid the same fate.</description>
+      <pubDate>Fri, 24 Apr 2026 18:42:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</guid>
+    </item>
     <item>
       <title>Why Object Detection Models Fail in Real-World Scenarios</title>
       <link>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.</description>
       <pubDate>Fri, 24 Apr 2026 09:26:35 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-architecture-explained-at-last/</guid>
-    </item>
-    <item>
-      <title>Earn with AI Tools: Build vs Buy AI Agents</title>
-      <link>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</link>
-      <description>Cut monthly AI costs by 80% with custom agents vs hosted platforms. Choose FastAPI + LiteLLM for scale or Voiceflow for speed using real latency, cost, and engineering benchmarks.</description>
-      <pubDate>Fri, 24 Apr 2026 09:16:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</guid>
     </item>
   </channel>
 </rss>
