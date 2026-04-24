@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 09:26:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 09:44:49 +0000</lastBuildDate>
+    <item>
+      <title>The Countries Winning the AI Race: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/the-countries-winning-the-ai-race-a-practical-tech/</link>
+      <description>Cut The Countries Winning the AI Race failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by-ste…</description>
+      <pubDate>Fri, 24 Apr 2026 09:44:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-countries-winning-the-ai-race-a-practical-tech/</guid>
+    </item>
     <item>
       <title>IoT Architecture Explained at Last</title>
       <link>https://kubaik.github.io/iot-architecture-explained-at-last/</link>
@@ -138,13 +145,6 @@
       <description>How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.</description>
       <pubDate>Thu, 23 Apr 2026 17:56:58 +0000</pubDate>
       <guid>https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/</guid>
-    </item>
-    <item>
-      <title>How Hackers Bypass Your Firewall Without Touching Code</title>
-      <link>https://kubaik.github.io/how-hackers-bypass-your-firewall-without-touching-/</link>
-      <description>How I automated social engineering attacks to expose the real weak link in cybersecurity—your own team’s behavior—and what the numbers from 45 live campaigns reveal about human vulnerability.</description>
-      <pubDate>Thu, 23 Apr 2026 17:43:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-hackers-bypass-your-firewall-without-touching-/</guid>
     </item>
   </channel>
 </rss>
