@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 07:29:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 08:20:28 +0000</lastBuildDate>
+    <item>
+      <title>How we halved API latency with Big O analysis</title>
+      <link>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</link>
+      <description>Cut API latency by 55x using Big O analysis — reduced median response time from 2.1s to 38ms, saved $60/month, and fixed Black Friday traffic spikes with RedisSearch and NumPy vectorization.</description>
+      <pubDate>Fri, 24 Apr 2026 08:20:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</guid>
+    </item>
     <item>
       <title>Refactoring Legacy Code Without Breaking Everything: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/refactoring-legacy-code-without-breaking-everythin/</link>
@@ -138,13 +145,6 @@
       <description>Manual vs automated penetration testing: which catches more critical flaws? I compared time, cost, and real breach data from Nairobi fintech projects.</description>
       <pubDate>Thu, 23 Apr 2026 14:53:58 +0000</pubDate>
       <guid>https://kubaik.github.io/manual-vs-automated-penetration-testing/</guid>
-    </item>
-    <item>
-      <title>React Native vs Flutter: 2026 Verdict</title>
-      <link>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</link>
-      <description>React Native vs Flutter in 2026: real performance data, team impact, and a blunt take on why one still wins for most apps.</description>
-      <pubDate>Thu, 23 Apr 2026 13:19:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-vs-flutter-2026-verdict/</guid>
     </item>
   </channel>
 </rss>
