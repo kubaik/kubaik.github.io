@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 04:57:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 07:04:30 +0000</lastBuildDate>
+    <item>
+      <title>Write Bash Scripts Without Wanting to Die (2024)</title>
+      <link>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</link>
+      <description>A ranked list of 8 ways to automate tasks with Bash—tested on 2,847 CSV files across Cape Town, Tallinn, and Manila—with code, benchmarks, and the one option most solo founders should pick first.</description>
+      <pubDate>Fri, 24 Apr 2026 07:04:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</guid>
+    </item>
     <item>
       <title>AI Agents Fail Unless You Treat Them Like Bad Hires</title>
       <link>https://kubaik.github.io/ai-agents-fail-unless-you-treat-them-like-bad-hire/</link>
@@ -138,13 +145,6 @@
       <description>Tech layoffs: 30% of jobs automated by 2028</description>
       <pubDate>Thu, 23 Apr 2026 07:07:43 +0000</pubDate>
       <guid>https://kubaik.github.io/layoff-trends/</guid>
-    </item>
-    <item>
-      <title>Prompt Engineering</title>
-      <link>https://kubaik.github.io/prompt-engineering/</link>
-      <description>Improve language model accuracy with prompt engineering techniques</description>
-      <pubDate>Thu, 23 Apr 2026 06:28:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-engineering/</guid>
     </item>
   </channel>
 </rss>
