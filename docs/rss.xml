@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 08:20:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 09:16:29 +0000</lastBuildDate>
+    <item>
+      <title>Earn with AI Tools: Build vs Buy AI Agents</title>
+      <link>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</link>
+      <description>Cut monthly AI costs by 80% with custom agents vs hosted platforms. Choose FastAPI + LiteLLM for scale or Voiceflow for speed using real latency, cost, and engineering benchmarks.</description>
+      <pubDate>Fri, 24 Apr 2026 09:16:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</guid>
+    </item>
     <item>
       <title>How we halved API latency with Big O analysis</title>
       <link>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</link>
@@ -138,13 +145,6 @@
       <description>Kafka isn&apos;t a message queue—it&apos;s a distributed state journal. Learn how to use it for coordination, not just streaming.</description>
       <pubDate>Thu, 23 Apr 2026 15:47:47 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</guid>
-    </item>
-    <item>
-      <title>Manual vs Automated Penetration Testing</title>
-      <link>https://kubaik.github.io/manual-vs-automated-penetration-testing/</link>
-      <description>Manual vs automated penetration testing: which catches more critical flaws? I compared time, cost, and real breach data from Nairobi fintech projects.</description>
-      <pubDate>Thu, 23 Apr 2026 14:53:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/manual-vs-automated-penetration-testing/</guid>
     </item>
   </channel>
 </rss>
