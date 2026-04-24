@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 16:36:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 16:51:00 +0000</lastBuildDate>
+    <item>
+      <title>AI Coding Assistants vs Custom AI Agents: Output Gains and Pitfalls</title>
+      <link>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</link>
+      <description>Cut feature delivery time by 2x using AI: Copilot achieved 3.2 features/engineer vs custom agents at 6.8—with real benchmarks, AWS costs, and fintech lessons from Nairobi to help you choose safely.</description>
+      <pubDate>Fri, 24 Apr 2026 16:50:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</guid>
+    </item>
     <item>
       <title>Remote Tech Jobs in 2026: The Only 5 Places That Won’t Screw You Over</title>
       <link>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</link>
@@ -138,13 +145,6 @@
       <description>Cut FCM/APNs costs by 65% and eliminate PII leakage in push notifications by never sending user data in payloads — design a secure remote execution channel with per-user encryption keys and token rotation. Push notifications security guide for fintech and healthtech apps.</description>
       <pubDate>Fri, 24 Apr 2026 07:21:13 +0000</pubDate>
       <guid>https://kubaik.github.io/push-notifications-are-a-security-hole-unless-you-/</guid>
-    </item>
-    <item>
-      <title>Write Bash Scripts Without Wanting to Die (2024)</title>
-      <link>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</link>
-      <description>A ranked list of 8 ways to automate tasks with Bash—tested on 2,847 CSV files across Cape Town, Tallinn, and Manila—with code, benchmarks, and the one option most solo founders should pick first.</description>
-      <pubDate>Fri, 24 Apr 2026 07:04:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-bash-scripts-without-wanting-to-die-2024/</guid>
     </item>
   </channel>
 </rss>
