@@ -1700,13 +1700,32 @@ Return ONLY the JSON object.""",
 
         data = self._parse_bundle_json(raw)
 
-        for key in ("title", "content", "meta_description", "seo_keywords"):
+        # AFTER — only title + content are truly required; derive the rest
+        for key in ("title", "content"):
             if key not in data:
-                raise ValueError(f"Bundle response missing key: '{key}'")
+                raise ValueError(
+                    f"Bundle response missing required key: '{key}'")
 
+        # Gracefully fill optional keys that models sometimes omit
         if not data.get("meta_description", "").strip():
+            print(
+                "Note: meta_description missing from API response — deriving from content.")
             data["meta_description"] = _derive_description(
-                data.get("content", ""), data.get("title", topic))
+                data.get("content", ""), data.get("title", topic)
+            )
+
+        if not data.get("seo_keywords"):
+            print("Note: seo_keywords missing — extracting from title/topic.")
+            data["seo_keywords"] = [
+                topic.lower(),
+                f"{topic.lower()} tutorial",
+                f"{topic.lower()} guide",
+                f"how to use {topic.lower()}",
+                f"{topic.lower()} best practices",
+                f"{topic.lower()} examples",
+                f"what is {topic.lower()}",
+                f"{topic.lower()} vs alternatives",
+            ]
 
         data["_format"] = format_name
         return data
