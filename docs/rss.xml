@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 17:46:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 18:10:37 +0000</lastBuildDate>
+    <item>
+      <title>Why Object Detection Models Fail in Real-World Scenarios</title>
+      <link>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</link>
+      <description>Boost real-world object detection accuracy by up to 25%. Learn why models fail in production and fix dataset diversity, class imbalance, and environment mismatch.</description>
+      <pubDate>Fri, 24 Apr 2026 18:10:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</guid>
+    </item>
     <item>
       <title>SOLID vs STUPID Code: Which Keeps Projects Alive?</title>
       <link>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</link>
@@ -138,13 +145,6 @@
       <description>Cut monthly AI costs by 80% with custom agents vs hosted platforms. Choose FastAPI + LiteLLM for scale or Voiceflow for speed using real latency, cost, and engineering benchmarks.</description>
       <pubDate>Fri, 24 Apr 2026 09:16:26 +0000</pubDate>
       <guid>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</guid>
-    </item>
-    <item>
-      <title>How we halved API latency with Big O analysis</title>
-      <link>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</link>
-      <description>Cut API latency by 55x using Big O analysis — reduced median response time from 2.1s to 38ms, saved $60/month, and fixed Black Friday traffic spikes with RedisSearch and NumPy vectorization.</description>
-      <pubDate>Fri, 24 Apr 2026 08:20:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-halved-api-latency-with-big-o-analysis/</guid>
     </item>
   </channel>
 </rss>
