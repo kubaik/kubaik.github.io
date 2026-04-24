@@ -121,7 +121,6 @@ def _extract_numbers(text: str) -> str:
         r'\d+\s*ms',                                     # 120ms
         r'\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)',   # 2 seconds faster
         r'under\s+\d+\s*ms',                             # under 10ms
-        # 1000 req/s
         r'\d+\s*(?:req|requests?)(?:/|\s+per\s+)(?:s|sec|second|min|minute)',
     ]
     for pattern in patterns:
@@ -146,7 +145,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     Falls back through four strategies, then to first-sentence extraction
     only as a last resort. Result is always ≤ max_len characters.
     """
-    # ── Strip markdown noise ──────────────────────────────────────
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`",        " ", text)
     text = re.sub(r"#{1,6}\s+",      " ", text)
@@ -154,13 +152,9 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"[*_]{1,3}",      "",  text)
     text = re.sub(r"\s+",            " ", text).strip()
 
-    # ── 1. Pull a real outcome / number from the content ─────────
     outcome = _extract_numbers(text)
-
-    # ── 2. Extract primary keyword from title ─────────────────────
     keyword = _extract_topic_phrase(title, max_words=4)
 
-    # ── 3. Pull a benefit clause from the first 600 chars ─────────
     benefit = ""
     benefit_patterns = [
         r'so (?:you|your team) can ([^.!?]{10,60})',
@@ -174,30 +168,24 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
             benefit = m.group(1).strip().rstrip('.,;:')
             break
 
-    # ── 4. Assemble using outcome + keyword + benefit when available ──
-    # Strategy A: full three-part formula
     if outcome and keyword and benefit:
         candidate = f"{outcome} with {keyword} — {benefit}."
         if len(candidate) <= max_len:
             return candidate
-        # too long — drop the benefit clause
         candidate = f"{outcome} with {keyword}."
         if len(candidate) <= max_len:
             return candidate
 
-    # Strategy B: outcome + keyword only
     if outcome and keyword:
         candidate = f"{keyword}: {outcome}. Practical guide with real examples."
         if len(candidate) <= max_len:
             return candidate
 
-    # Strategy C: keyword + benefit only
     if keyword and benefit:
         candidate = f"{keyword} — {benefit}. Includes code, benchmarks, and common mistakes."
         if len(candidate) <= max_len:
             return candidate
 
-    # Strategy D: last resort — first clean sentence from content
     sentences = re.split(r'(?<=[.!?])\s+', text)
     excerpt = ""
     for sentence in sentences:
@@ -546,10 +534,18 @@ _MISTRAL_FREE_TIER_DELAY = 1.2
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
+# GitHub Models — endpoint changed Oct 2025 (old Azure URL is dead)
+# Model names use PascalCase: "Llama-4-Scout-17B-16E-Instruct", "gpt-4o", etc.
+_GITHUB_MODELS_URL = "https://models.github.ai/inference/chat/completions"
+_GITHUB_MODEL = "Llama-4-Scout-17B-16E-Instruct"
+
+# Cloudflare Workers AI — needs account ID in the URL path
+# Model names use @cf/ namespace: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+_CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+
 
 # ─────────────────────────────────────────────────────────────────
 # Eight rotating article structures
-# Each entry is (format_name, heading_list, format_note)
 # ─────────────────────────────────────────────────────────────────
 
 _STRUCTURE_SETS = [
@@ -724,10 +720,6 @@ _STRUCTURE_SETS = [
 
 
 def _pick_structure(topic: str) -> tuple:
-    """
-    Deterministic structure selection — same topic always gets same format,
-    but different topics get varied formats across the blog.
-    """
     idx = int(hashlib.md5(topic.encode()).hexdigest(),
               16) % len(_STRUCTURE_SETS)
     return _STRUCTURE_SETS[idx]
@@ -738,7 +730,6 @@ def _pick_structure(topic: str) -> tuple:
 # ─────────────────────────────────────────────────────────────────
 
 _AUTHOR_CONTEXTS = [
-    # ── Original 4 (Nairobi-anchored) ──────────────────────────────────────
     (
         "You are Kubai Kevin, a software engineer in Nairobi with 10+ years building "
         "production Python and Node.js backends in fintech. You write from direct experience — "
@@ -764,8 +755,6 @@ _AUTHOR_CONTEXTS = [
         "Be empathetic — most mistakes come from following outdated tutorials, not incompetence. "
         "Name the outdated pattern before showing the better one."
     ),
-
-    # ── Remote / globally distributed perspective ───────────────────────────
     (
         "You are Kubai Kevin, a remote engineer who has worked with distributed teams across "
         "Lagos, Berlin, Singapore, and San Francisco — sometimes on the same project. "
@@ -779,8 +768,6 @@ _AUTHOR_CONTEXTS = [
         "droplets, others are at Series B startups with AWS enterprise agreements. "
         "When you recommend a tool, say which budget tier it actually makes sense for."
     ),
-
-    # ── Africa / emerging-market infrastructure realism ─────────────────────
     (
         "You are Kubai Kevin, an engineer who has shipped products used heavily in Nigeria, Ghana, "
         "and East Africa. You've debugged issues that only showed up on mobile data connections, "
@@ -795,8 +782,6 @@ _AUTHOR_CONTEXTS = [
         "Your posts reflect that not every team has a devops engineer or a $10k/month cloud budget. "
         "Practical alternatives to expensive tooling matter here."
     ),
-
-    # ── European / GDPR / enterprise lens ───────────────────────────────────
     (
         "You are Kubai Kevin, a backend engineer who has spent time working with European clients "
         "where GDPR compliance, data residency, and audit trails are non-negotiable. "
@@ -804,8 +789,6 @@ _AUTHOR_CONTEXTS = [
         "When a topic touches data handling, storage, or third-party integrations, you factor "
         "compliance in from the start — not as an afterthought bolted on before launch."
     ),
-
-    # ── Asia-Pacific / scale-at-low-cost lens ───────────────────────────────
     (
         "You are Kubai Kevin, a developer who has worked with startups in Southeast Asia — "
         "Indonesia, Vietnam, the Philippines — where the goal is often 'scale to millions of users "
@@ -813,8 +796,6 @@ _AUTHOR_CONTEXTS = [
         "lean infrastructure. When you talk about cost optimisation, you mean it: you've actually "
         "cut bills, not just theorised about it. Quote real numbers when you have them."
     ),
-
-    # ── Latin America / startup hustle lens ─────────────────────────────────
     (
         "You are Kubai Kevin, a freelance engineer who has built products for clients in Brazil, "
         "Colombia, and Mexico. You know what it's like to work in a timezone that doesn't overlap "
@@ -822,8 +803,6 @@ _AUTHOR_CONTEXTS = [
         "and to build resilient systems when managed Kubernetes isn't in the budget. "
         "Your writing is grounded in that context — real tradeoffs, not ideal-world advice."
     ),
-
-    # ── Open source contributor / community builder ──────────────────────────
     (
         "You are Kubai Kevin, a developer who has contributed to open source projects and "
         "maintains a few small libraries used by engineers in several countries. "
@@ -832,8 +811,6 @@ _AUTHOR_CONTEXTS = [
         "following along to build their first production-grade project. "
         "Write clearly enough for the beginner, specifically enough to be useful to the senior."
     ),
-
-    # ── Pragmatic generalist / no-hype voice ────────────────────────────────
     (
         "You are Kubai Kevin, a developer with opinions forged by a decade of watching hype cycles "
         "burn through the industry. You've seen blockchain, serverless, microservices, and now AI "
@@ -843,8 +820,6 @@ _AUTHOR_CONTEXTS = [
         "Your audience is global — developers in Lagos, London, Manila, and Montreal — "
         "and they all appreciate the same thing: honesty about tradeoffs."
     ),
-
-    # ── Junior-to-mid career transition mentor ───────────────────────────────
     (
         "You are Kubai Kevin, writing specifically for developers who are 1–4 years into their careers "
         "and trying to cross the gap between 'it works on my machine' and 'it works in production'. "
@@ -853,8 +828,6 @@ _AUTHOR_CONTEXTS = [
         "tutorials show the happy path, production doesn't have one. "
         "Write the guide that closes that gap."
     ),
-
-    # ── Solo founder / indie hacker technical depth ──────────────────────────
     (
         "You are Kubai Kevin, writing for solo founders and indie hackers who are also the "
         "sole engineer on their product. Your reader in Cape Town, Tallinn, or Manila has to "
@@ -864,8 +837,6 @@ _AUTHOR_CONTEXTS = [
         "Flag the decisions that are hard to reverse. Recommend the boring, proven option "
         "unless you have a concrete reason not to."
     ),
-
-    # ── Security-conscious practitioner ─────────────────────────────────────
     (
         "You are Kubai Kevin, a developer who has done security reviews for fintech and healthtech "
         "products serving users in multiple countries. You've seen auth bugs, insecure direct object "
@@ -874,8 +845,6 @@ _AUTHOR_CONTEXTS = [
         "you fold security in naturally, not as a separate 'security considerations' section "
         "that gets skimmed. Your audience is global; the attack surface is too."
     ),
-
-    # ── Performance-obsessed backend engineer ────────────────────────────────
     (
         "You are Kubai Kevin, a backend engineer who gets unreasonably interested in query plans, "
         "connection pool tuning, and p99 latency. You've profiled Python services, optimised "
@@ -889,7 +858,6 @@ _AUTHOR_CONTEXTS = [
 
 
 def _build_humanization_note(topic: str) -> str:
-    """Pick an author framing note deterministically based on topic."""
     idx = int(hashlib.sha256(topic.encode()).hexdigest(),
               16) % len(_AUTHOR_CONTEXTS)
     return _AUTHOR_CONTEXTS[idx]
@@ -940,17 +908,10 @@ def inject_personal_intro(post, topic: str) -> None:
     """
     Prepend a short personal intro paragraph to post.content.
     Call this after generate_blog_post() and before save_post().
-
-    Usage in auto mode:
-        blog_post = asyncio.run(blog_system.generate_blog_post(topic))
-        inject_personal_intro(blog_post, topic)   # <-- add this line
-        blog_system.save_post(blog_post)
     """
     idx = int(hashlib.md5(topic.encode()).hexdigest(),
               16) % len(_PERSONAL_INTROS)
     intro = _PERSONAL_INTROS[idx]
-
-    # Only inject if not already present (avoid double-injection on reruns)
     if intro[:30] not in post.content:
         post.content = f"{intro}\n\n{post.content}"
 
@@ -965,6 +926,7 @@ class BlogSystem:
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
 
+        # ── Original six provider keys ─────────────────────────────
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
@@ -972,11 +934,27 @@ class BlogSystem:
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
 
+        # ── New provider keys ──────────────────────────────────────
+        # GitHub Models: any GitHub personal access token works.
+        # Create one at https://github.com/settings/tokens
+        # (classic token, no special scope needed for public models)
+        self.github_token = os.getenv("BLOGGITHUB_TOKEN")
+
+        # Cloudflare Workers AI: needs both a token AND the account ID.
+        # Token:      dash.cloudflare.com/profile/api-tokens
+        #             → Create Token → Workers AI (Read) template
+        # Account ID: visible in the URL when you log into the dashboard:
+        #             dash.cloudflare.com/<ACCOUNT_ID>/...
+        # Free plan:  10,000 neurons/day, no credit card required.
+        self.cloudflare_token = os.getenv("CLOUDFLARE_API_TOKEN")
+        self.cloudflare_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
+
         self._log_key_status()
 
         self.api_key = (
             self.groq_key or self.openrouter_key or self.cerebras_key
             or self.mistral_key or self.nvidia_key or self.gemini_key
+            or self.github_token or self.cloudflare_token
         )
 
         self.monetization = MonetizationManager(config)
@@ -985,17 +963,26 @@ class BlogSystem:
     def _log_key_status(self):
         print("=== API Key Status ===")
         print(
-            f"  Groq:       {'configured' if self.groq_key       else 'NOT SET'}")
+            f"  Groq:           {'configured' if self.groq_key            else 'NOT SET'}")
         print(
-            f"  OpenRouter: {'configured' if self.openrouter_key  else 'NOT SET'}")
+            f"  OpenRouter:     {'configured' if self.openrouter_key       else 'NOT SET'}")
         print(
-            f"  Cerebras:   {'configured' if self.cerebras_key    else 'NOT SET'}")
+            f"  Cerebras:       {'configured' if self.cerebras_key         else 'NOT SET'}")
         print(
-            f"  Mistral:    {'configured' if self.mistral_key     else 'NOT SET'}")
+            f"  Mistral:        {'configured' if self.mistral_key          else 'NOT SET'}")
         print(
-            f"  NVIDIA NIM: {'configured' if self.nvidia_key      else 'NOT SET'}")
+            f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}")
         print(
-            f"  Gemini:     {'configured' if self.gemini_key      else 'NOT SET'}")
+            f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
+        # ── New providers ──────────────────────────────────────────
+        print(
+            f"  GitHub Models:  {'configured' if self.github_token         else 'NOT SET'}")
+        cf_status = (
+            "configured" if (self.cloudflare_token and self.cloudflare_account_id)
+            else "PARTIAL — need both CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID" if (self.cloudflare_token or self.cloudflare_account_id)
+            else "NOT SET"
+        )
+        print(f"  Cloudflare AI:  {cf_status}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -1035,7 +1022,6 @@ class BlogSystem:
             f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     def purge_low_quality_posts(self, dry_run: bool = True):
-        """Remove posts generated by the local fallback template or below MIN_WORD_COUNT."""
         results = audit_posts(self.output_dir)
         print(f"\n=== Post Quality Audit ===")
         print(f"  OK:       {len(results['ok'])} posts")
@@ -1070,26 +1056,46 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
+        """
+        Tries providers in priority order, falling through on any error.
+
+        Priority:
+          1. Mistral     — 1B tokens/month free, reliable JSON output
+          2. OpenRouter  — 30+ free models, good fallback coverage
+          3. Groq        — fastest, but strict TPM limits
+          4. Cerebras    — 1M tokens/day, very fast
+          5. Gemini      — 1500 req/day, 1M context, generous
+          6. NVIDIA NIM  — varies by model
+          7. GitHub Models — free with any GitHub account; different infra
+                             from all above → reliable last-resort before CF
+          8. Cloudflare  — 10k neurons/day; edge-distributed;
+                             last resort because quota is tightest
+        """
         providers = []
 
+        if self.github_token:
+            providers.append(("GitHub Models",    self._call_github))
+        if self.cloudflare_token and self.cloudflare_account_id:
+            providers.append(("Cloudflare AI",    self._call_cloudflare))
         if self.mistral_key:
-            providers.append(("Mistral",     self._call_mistral))
+            providers.append(("Mistral",         self._call_mistral))
         if self.openrouter_key:
-            providers.append(("OpenRouter",  self._call_openrouter))
+            providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
-            providers.append(("Groq",       self._call_groq))
+            providers.append(("Groq",             self._call_groq))
         if self.cerebras_key:
-            providers.append(("Cerebras",    self._call_cerebras))
+            providers.append(("Cerebras",         self._call_cerebras))
         if self.gemini_key:
-            providers.append(("Gemini",      self._call_gemini))
+            providers.append(("Gemini",           self._call_gemini))
         if self.nvidia_key:
-            providers.append(("NVIDIA NIM",  self._call_nvidia))
+            providers.append(("NVIDIA NIM",       self._call_nvidia))
 
         if not providers:
             raise Exception(
                 "No API keys configured. Set at least one of: GROQ_API_KEY, "
                 "OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, "
-                "NVIDIA_API_KEY, GEMINI_API_KEY."
+                "NVIDIA_API_KEY, GEMINI_API_KEY, GITHUB_TOKEN, "
+                "or CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID."
             )
 
         last_error = None
@@ -1237,7 +1243,8 @@ class BlogSystem:
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
-                        "https://api.mistral.ai/v1/chat/completions", headers=headers, json=data,
+                        "https://api.mistral.ai/v1/chat/completions",
+                        headers=headers, json=data,
                         timeout=aiohttp.ClientTimeout(total=90),
                     ) as r:
                         if r.status == 200:
@@ -1270,7 +1277,8 @@ class BlogSystem:
             try:
                 async with aiohttp.ClientSession() as s:
                     async with s.post(
-                        "https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data,
+                        "https://integrate.api.nvidia.com/v1/chat/completions",
+                        headers=headers, json=data,
                         timeout=aiohttp.ClientTimeout(total=120),
                     ) as r:
                         if r.status == 200:
@@ -1366,15 +1374,142 @@ class BlogSystem:
         raise Exception("Gemini unavailable.")
 
     # ─────────────────────────────────────────────────────────────
+    # PROVIDER: GitHub Models                                   NEW
+    #
+    # Free with any GitHub personal access token — no credit card,
+    # no expiry, no monthly cap.  Uses Azure AI inference under the
+    # hood but routed through GitHub's endpoint.
+    #
+    # ⚠️  The old Azure endpoint (models.inference.ai.azure.com) was
+    #     deprecated July 2025 and shut down October 17, 2025.
+    #     Always use: https://models.github.ai/inference
+    #
+    # Model names are PascalCase — NOT HuggingFace slugs:
+    #   "Llama-4-Scout-17B-16E-Instruct"         ✓
+    #   "gpt-4o"                                 ✓
+    #   "Mistral-Large-2411"                     ✓
+    #   "DeepSeek-R1"                            ✓
+    #   "meta-llama-3.3-70b-instruct"            ✗ (returns HTTP 400)
+    #
+    # Rate limits: ~10 RPM / 150 req/day on large models (free account).
+    #              Higher with GitHub Pro/Team.
+    #
+    # Setup: https://github.com/settings/tokens → generate any
+    #        personal access token (classic, no special scope needed).
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_github(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {
+            "Authorization": f"Bearer {self.github_token}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       "gpt-4o",   # "Llama-4-Scout-17B-16E-Instruct"
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+        }
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        _GITHUB_MODELS_URL,
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=120),
+                    ) as r:
+                        if r.status == 200:
+                            return (await r.json())["choices"][0]["message"]["content"]
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        body = await r.text()
+                        raise Exception(
+                            f"GitHub Models {r.status}: {body[:250]}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"GitHub Models connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("GitHub Models timed out.")
+        raise Exception("GitHub Models unavailable.")
+
+    # ─────────────────────────────────────────────────────────────
+    # PROVIDER: Cloudflare Workers AI                           NEW
+    #
+    # Free plan: 10,000 neurons/day — no credit card required.
+    # Neurons ≈ output tokens (1:1 for text models roughly).
+    # 10k neurons covers ~5-8 blog content calls per day.
+    #
+    # Best positioned as a last-resort fallback because:
+    #   - Tightest daily quota of all providers
+    #   - But runs on Cloudflare's global edge network —
+    #     completely different infrastructure from every other
+    #     provider in this chain, so it fails independently.
+    #
+    # Setup:
+    #   1. Sign up free: https://dash.cloudflare.com/sign-up
+    #   2. Token: dash.cloudflare.com/profile/api-tokens
+    #             → Create Token → Workers AI (Read) template
+    #   3. Account ID: visible in dashboard URL after login:
+    #             dash.cloudflare.com/<ACCOUNT_ID>/...
+    #
+    # Model names use @cf/ namespace:
+    #   "@cf/meta/llama-3.3-70b-instruct-fp8-fast"   — fast, good quality
+    #   "@cf/deepseek-ai/deepseek-r1-distill-llama-70b" — reasoning quality
+    #   "@cf/qwen/qwen2.5-72b-instruct"               — strong structured JSON
+    # ─────────────────────────────────────────────────────────────
+
+    async def _call_cloudflare(self, messages: List[Dict], max_tokens: int) -> str:
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {
+            "Authorization": f"Bearer {self.cloudflare_token}",
+            "Content-Type":  "application/json",
+        }
+        data = {
+            "model":       _CF_MODEL,   # "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+            "messages":    messages,
+            "max_tokens":  max_tokens,
+            "temperature": 0.7,
+            "stream":      False,
+        }
+        # Endpoint embeds the account ID in the path
+        url = (
+            f"https://api.cloudflare.com/client/v4/accounts/"
+            f"{self.cloudflare_account_id}/ai/v1/chat/completions"
+        )
+        waits = [2, 5, 10]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        url, headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=120),
+                    ) as r:
+                        if r.status == 200:
+                            return (await r.json())["choices"][0]["message"]["content"]
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        body = await r.text()
+                        raise Exception(
+                            f"Cloudflare AI {r.status}: {body[:250]}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Cloudflare AI connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("Cloudflare AI timed out.")
+        raise Exception("Cloudflare AI unavailable.")
+
+    # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
-        """
-        One API call generates title + content + meta + keywords together via
-        _generate_full_bundle(). Only one expansion pass is attempted if the
-        post comes back short.
-        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -1396,7 +1531,6 @@ class BlogSystem:
                     "Warning: meta_description empty from API — deriving from content.")
                 meta_description = _derive_description(content, title)
 
-            # ✅ CHANGE: catch weak descriptions that slipped through from the API
             _weak_openers = (
                 "this post", "in this article", "a guide to",
                 "learn about", "an overview", "this tutorial",
@@ -1412,7 +1546,6 @@ class BlogSystem:
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
-            # Single expansion pass
             if word_count < MIN_WORD_COUNT:
                 print(f"Content short ({word_count} words). Expanding once...")
                 content = await self._expand_content(content, title, topic)
@@ -1469,14 +1602,9 @@ class BlogSystem:
         keywords: List[str],
         existing_titles: List[str],
     ) -> dict:
-        """
-        One API call returns title + full article + meta_description +
-        seo_keywords as a JSON object.
-        """
         format_name, headings, format_note = _pick_structure(topic)
         author_note = _build_humanization_note(topic)
 
-        # Substitute {topic} placeholder in headings
         resolved_headings = [h.replace("{topic}", topic) for h in headings]
         heading_block = "\n".join(resolved_headings)
 
@@ -1490,15 +1618,14 @@ class BlogSystem:
             if existing_titles else ""
         )
 
-        # ✅ CHANGE: title_guidance now includes listicle and troubleshooting
         title_guidance = {
-            "deep_dive":      "Title should promise a real technical revelation, not just a topic name.",
-            "tutorial":       "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
-            "opinion":        "Title should take a stance — controversial is fine if honest.",
-            "comparison":     "Title should name both options being compared.",
-            "case_study":     "Title should hint at the result, e.g. 'How we cut X by 40%'.",
-            "explainer":      "Title should address the confusion, e.g. 'X finally explained'.",
-            "listicle":       "Title should name the number of items and promise a ranked or curated list, e.g. 'The 7 best X tools in 2026'.",
+            "deep_dive":       "Title should promise a real technical revelation, not just a topic name.",
+            "tutorial":        "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
+            "opinion":         "Title should take a stance — controversial is fine if honest.",
+            "comparison":      "Title should name both options being compared.",
+            "case_study":      "Title should hint at the result, e.g. 'How we cut X by 40%'.",
+            "explainer":       "Title should address the confusion, e.g. 'X finally explained'.",
+            "listicle":        "Title should name the number of items and promise a ranked or curated list, e.g. 'The 7 best X tools in 2026'.",
             "troubleshooting": "Title should name the specific error or symptom, e.g. 'Why X fails with Y (and how to fix it)'.",
         }.get(format_name, "Write a specific, benefit-driven title.")
 
@@ -1520,7 +1647,6 @@ class BlogSystem:
             },
             {
                 "role": "user",
-                # ✅ CHANGE: meta_description instruction replaced with full AdSense CTR formula
                 "content": f"""Write a 2500-word {format_name} blog post about: "{topic}"{keyword_text}
 
 {title_guidance}{existing_hint}
@@ -1582,9 +1708,7 @@ Return ONLY the JSON object.""",
             data["meta_description"] = _derive_description(
                 data.get("content", ""), data.get("title", topic))
 
-        # Tag the post with its format type for debugging / future filtering
         data["_format"] = format_name
-
         return data
 
     # ─────────────────────────────────────────────────────────────
@@ -1592,8 +1716,6 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _parse_bundle_json(self, raw: str) -> dict:
-        """Robust JSON repair + parse — handles truncated or dirty LLM output."""
-
         def _sanitize(s):
             result, in_str, esc = [], False, False
             for ch in s:
@@ -1713,14 +1835,10 @@ Return ONLY the JSON object.""",
             f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}")
 
     # ─────────────────────────────────────────────────────────────
-    # EXPANSION — called at most once, maintains author voice
+    # EXPANSION
     # ─────────────────────────────────────────────────────────────
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
-        """
-        Expand short posts — called at most once after _generate_full_bundle().
-        The expansion maintains the same author voice and adds concrete, specific content.
-        """
         author_note = _build_humanization_note(topic)
         messages = [
             {
@@ -1752,10 +1870,6 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _generate_fallback_post(self, topic: str) -> BlogPost:
-        """
-        Local template used when all API providers fail.
-        Sets used_fallback=True so audit_posts() can flag these.
-        """
         title = f"{topic}: A Practical Technical Guide"
         slug = self._create_slug(title)
         topic_lower = topic.lower()
@@ -1871,7 +1985,6 @@ If your traffic is low and predictable (under a few hundred requests per minute)
 
 Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
-        # ✅ CHANGE: meta_description now uses the AdSense CTR formula for fallback too
         meta_description = (
             f"Cut {topic} failures by understanding connection pooling and retry logic — "
             f"real benchmarks, common mistakes, and a step-by-step implementation guide."
@@ -1911,7 +2024,7 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         post.affiliate_links = affiliate_links
         post.monetization_data.update(
             self.monetization.generate_ad_slots(enhanced_content))
-        post.monetization_data["used_fallback"] = True  # preserve after update
+        post.monetization_data["used_fallback"] = True
         return post
 
     # ─────────────────────────────────────────────────────────────
@@ -1926,8 +2039,6 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
     def save_post(self, post):
         word_count = len(post.content.split())
-        # ✅ CHANGE: reading time and content-type flags added for StaticSiteGenerator schema use
-        # ~200 wpm average reader
         reading_time = max(1, round(word_count / 200))
 
         if word_count < MIN_WORD_COUNT:
@@ -1945,8 +2056,6 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         post_dir.mkdir(exist_ok=True)
 
         post_data = post.to_dict()
-
-        # ✅ CHANGE: schema/SEO metadata added to every saved post.json
         post_data['word_count'] = word_count
         post_data['reading_time_minutes'] = reading_time
         post_data['has_code'] = '```' in post.content
@@ -2061,7 +2170,6 @@ def create_sample_config():
             "facebook": "your-facebook-page",
         },
         "content_topics": [
-            # AI — specific angles, not generic overviews
             "Copilot vs Cursor: which actually speeds up Python backend work",
             "How I use Claude to review my own code (and where it fails)",
             "RAG pipelines in production: what the tutorials skip",
@@ -2070,14 +2178,12 @@ def create_sample_config():
             "Why most AI-generated code breaks in edge cases",
             "Building a local LLM setup that actually runs on a laptop",
             "How vector databases work (and when you don't need one)",
-            # Career — specific and globally relevant
             "Getting a remote tech job: what actually worked",
             "Tech salaries in 2026: what the data shows",
             "How I went from junior to senior without a CS degree",
             "Freelance developer rates: a realistic breakdown",
             "Why senior developers leave big tech (it's not always the money)",
             "Negotiating a remote salary when you're in a lower-cost country",
-            # Backend / systems — specific comparisons
             "PostgreSQL vs MySQL in 2026: the decision I keep making",
             "Redis vs Memcached: a benchmark that actually matters",
             "When to use a message queue (and when it's overkill)",
@@ -2085,13 +2191,11 @@ def create_sample_config():
             "How I cut AWS costs by 40% without changing the architecture",
             "API rate limiting patterns that don't break your clients",
             "Database connection pooling: the setting everyone gets wrong",
-            # Python / JavaScript
             "Python async: where it helps and where it makes things worse",
             "TypeScript mistakes that slip through even with strict mode",
             "FastAPI vs Django REST: after building both in production",
             "Node.js memory leaks: how to find and fix them",
             "Python packaging in 2026: what to actually use",
-            # Developer wellbeing / meta
             "Burnout as a freelance developer: what helped me recover",
             "How I manage client work and side projects without losing weekends",
             "The tools that save me the most time as a solo developer",
@@ -2104,7 +2208,8 @@ def create_sample_config():
     print("Created sample config.yaml")
     print(
         "\nAdd GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
-        "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY"
+        "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY, "
+        "GITHUB_TOKEN, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
     )
 
 
@@ -2124,7 +2229,9 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print(
-                "Done! API chain: Groq → OpenRouter → Cerebras → Mistral → NVIDIA NIM → Gemini → local template")
+                "Done! API chain: Mistral → OpenRouter → Groq → Cerebras → "
+                "Gemini → NVIDIA NIM → GitHub Models → Cloudflare AI → local template"
+            )
 
         elif mode == "auto":
             print("Starting automated blog generation...")
@@ -2140,7 +2247,6 @@ if __name__ == "__main__":
             try:
                 topic = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
-                # humanization injection
                 inject_personal_intro(blog_post, topic)
                 blog_system.save_post(blog_post)
 
@@ -2150,7 +2256,6 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
-                # ── Twitter posting gate ──────────────────────────────────
                 if not _twitter_posting_enabled():
                     print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
                 else:
@@ -2165,8 +2270,7 @@ if __name__ == "__main__":
                             t for t in existing.split()
                             if t.lower() != trending_tag.lower()
                         )
-                        blog_post.twitter_hashtags = (
-                            f"{trending_tag} {other_tags}".strip()
+                        blog_post.twitter_hashtags = f"{trending_tag} {other_tags}".strip(
                         )
 
                     print("\nPosting single tweet...")
@@ -2192,7 +2296,6 @@ if __name__ == "__main__":
                         else:
                             print(
                                 f"❌ Fallback also failed: {fallback.get('error')}")
-                # ─────────────────────────────────────────────────────────
 
             except Exception as e:
                 print(f"Error: {e}")
@@ -2259,9 +2362,7 @@ if __name__ == "__main__":
                     if item.is_dir():
                         for fname in ["post.json", "index.md", "social_posts.json"]:
                             print(
-                                f"    {fname}: "
-                                f"{'Yes' if (item / fname).exists() else 'No'}"
-                            )
+                                f"    {fname}: {'Yes' if (item / fname).exists() else 'No'}")
                         if (item / "post.json").exists():
                             try:
                                 with open(item / "post.json") as f:
@@ -2292,9 +2393,7 @@ if __name__ == "__main__":
             visibility = VisibilityAutomator(config)
             for post in posts:
                 social_posts = visibility.generate_social_posts(post)
-                with open(
-                    blog_system.output_dir / post.slug / "social_posts.json", 'w'
-                ) as f:
+                with open(blog_system.output_dir / post.slug / "social_posts.json", 'w') as f:
                     json.dump(social_posts, f, indent=2)
                 print(f"Social posts generated for: {post.title}")
             print("Done!")
@@ -2332,7 +2431,6 @@ if __name__ == "__main__":
                     with open(post_json, "r", encoding="utf-8") as f:
                         data = json.load(f)
                     desc = data.get("meta_description", "").strip()
-                    # ✅ CHANGE: fix-descriptions now also catches weak openers, not just empty
                     _weak_openers = (
                         "this post", "in this article", "a guide to",
                         "learn about", "an overview", "this tutorial",
