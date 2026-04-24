@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 10:46:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 10:50:35 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that paid off: how we built a 6-figure pipeline in 12 months</title>
+      <link>https://kubaik.github.io/ai-skills-that-paid-off-how-we-built-a-6-figure-pi/</link>
+      <description>Cut model deployment time by 75% and costs by 65% with a hybrid AI pipeline — the real AI skills for 2026 and the tools that made the difference.</description>
+      <pubDate>Fri, 24 Apr 2026 10:50:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-paid-off-how-we-built-a-6-figure-pi/</guid>
+    </item>
     <item>
       <title>How TypeScript snuck 20% more features into the same sprint</title>
       <link>https://kubaik.github.io/how-typescript-snuck-20-more-features-into-the-sam/</link>
@@ -138,13 +145,6 @@
       <description>Nairobi fintech salary negotiation scripts with real AWS dashboards, Python 3.11 counters, and 68% acceptance rates. Includes step-by-step code, failure modes, and tools used in 4 live negotiations.</description>
       <pubDate>Thu, 23 Apr 2026 19:27:10 +0000</pubDate>
       <guid>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</guid>
-    </item>
-    <item>
-      <title>Debugging Techniques That Find Bugs in Minutes</title>
-      <link>https://kubaik.github.io/debugging-techniques-that-find-bugs-in-minutes/</link>
-      <description>Learn a five‑step method that turns days‑long hunts into 5‑minute bug fixes using binary search, cheap observability, and hypothesis testing.</description>
-      <pubDate>Thu, 23 Apr 2026 18:59:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/debugging-techniques-that-find-bugs-in-minutes/</guid>
     </item>
   </channel>
 </rss>
