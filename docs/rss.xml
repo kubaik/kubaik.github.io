@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 11:40:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 11:45:33 +0000</lastBuildDate>
+    <item>
+      <title>Why Server Components Break in React (and How to Fix It)</title>
+      <link>https://kubaik.github.io/why-server-components-break-in-react-and-how-to-fi/</link>
+      <description>Fix React Server Components errors and cut debugging time by 50%. Learn the real causes of issues like hydration mismatches and duplicate API calls.</description>
+      <pubDate>Fri, 24 Apr 2026 11:45:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-server-components-break-in-react-and-how-to-fi/</guid>
+    </item>
     <item>
       <title>Cut DevOps Costs 40%</title>
       <link>https://kubaik.github.io/cut-devops-costs-40/</link>
@@ -138,13 +145,6 @@
       <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
       <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
       <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
-    </item>
-    <item>
-      <title>Mental Models for Developers — Finally Explained</title>
-      <link>https://kubaik.github.io/mental-models-for-developers-finally-explained/</link>
-      <description>How five mental models—queueing theory, negative feedback, opportunity cost, Pareto, and amortized analysis—turn reactive firefighting into proactive system design, with real benchmarks and fixes.</description>
-      <pubDate>Thu, 23 Apr 2026 20:21:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/mental-models-for-developers-finally-explained/</guid>
     </item>
   </channel>
 </rss>
