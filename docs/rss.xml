@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 10:50:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 11:02:39 +0000</lastBuildDate>
+    <item>
+      <title>2026 Full-Stack Stack: 40% faster dev cycles with 3x uptime</title>
+      <link>https://kubaik.github.io/2026-full-stack-stack-40-faster-dev-cycles-with-3x/</link>
+      <description>es and 99.7% uptime—acceptable for a 2022 with Full-Stack Stack faster dev — weeks of compliance engineering.</description>
+      <pubDate>Fri, 24 Apr 2026 11:02:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-full-stack-stack-40-faster-dev-cycles-with-3x/</guid>
+    </item>
     <item>
       <title>AI skills that paid off: how we built a 6-figure pipeline in 12 months</title>
       <link>https://kubaik.github.io/ai-skills-that-paid-off-how-we-built-a-6-figure-pi/</link>
@@ -138,13 +145,6 @@
       <description>Measure Copilot, Cursor, Claude Code, Codeium and Tabnine on a real Go CLI; includes token counts, edits, CI minutes and binary sizes.</description>
       <pubDate>Thu, 23 Apr 2026 19:52:16 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-production-grade-tools-in-90-minutes-with-the/</guid>
-    </item>
-    <item>
-      <title>The Salary Script That Broke My Bangalore Interview Loop</title>
-      <link>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</link>
-      <description>Nairobi fintech salary negotiation scripts with real AWS dashboards, Python 3.11 counters, and 68% acceptance rates. Includes step-by-step code, failure modes, and tools used in 4 live negotiations.</description>
-      <pubDate>Thu, 23 Apr 2026 19:27:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-salary-script-that-broke-my-bangalore-intervie/</guid>
     </item>
   </channel>
 </rss>
