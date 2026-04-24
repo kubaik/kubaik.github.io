@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 19:48:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 20:41:23 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript Advanced Patterns: Branded Types vs Nominal Typing</title>
+      <link>https://kubaik.github.io/typescript-advanced-patterns-branded-types-vs-nomi/</link>
+      <description>Cut type-related incidents by 80% with TypeScript advanced patterns — branded types vs nominal typing benchmarks, real code examples, and the maintenance surprises that cost days of refactoring.</description>
+      <pubDate>Fri, 24 Apr 2026 20:41:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-advanced-patterns-branded-types-vs-nomi/</guid>
+    </item>
     <item>
       <title>23 CSS tricks seniors actually use (and which ones to ignore)</title>
       <link>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</link>
@@ -138,13 +145,6 @@
       <description>Cut model deployment time by 75% and costs by 65% with a hybrid AI pipeline — the real AI skills for 2026 and the tools that made the difference.</description>
       <pubDate>Fri, 24 Apr 2026 10:50:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-paid-off-how-we-built-a-6-figure-pi/</guid>
-    </item>
-    <item>
-      <title>How TypeScript snuck 20% more features into the same sprint</title>
-      <link>https://kubaik.github.io/how-typescript-snuck-20-more-features-into-the-sam/</link>
-      <description>Cut runtime errors by 94% and boost integration velocity by 89% using TypeScript contracts that define both types and schemas. Includes benchmarks, code examples, and a 312-line codegen tool to sync compile-time and runtime safety.</description>
-      <pubDate>Fri, 24 Apr 2026 10:46:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-typescript-snuck-20-more-features-into-the-sam/</guid>
     </item>
   </channel>
 </rss>
