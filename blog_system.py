@@ -1056,27 +1056,13 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
-        """
-        Tries providers in priority order, falling through on any error.
 
-        Priority:
-          1. Mistral     — 1B tokens/month free, reliable JSON output
-          2. OpenRouter  — 30+ free models, good fallback coverage
-          3. Groq        — fastest, but strict TPM limits
-          4. Cerebras    — 1M tokens/day, very fast
-          5. Gemini      — 1500 req/day, 1M context, generous
-          6. NVIDIA NIM  — varies by model
-          7. GitHub Models — free with any GitHub account; different infra
-                             from all above → reliable last-resort before CF
-          8. Cloudflare  — 10k neurons/day; edge-distributed;
-                             last resort because quota is tightest
-        """
         providers = []
 
-        if self.github_token:
-            providers.append(("GitHub Models",    self._call_github))
         if self.mistral_key:
             providers.append(("Mistral",         self._call_mistral))
+        if self.github_token:
+            providers.append(("GitHub Models",    self._call_github))
         if self.openrouter_key:
             providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
