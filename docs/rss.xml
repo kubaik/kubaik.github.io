@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 09:16:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 09:26:38 +0000</lastBuildDate>
+    <item>
+      <title>IoT Architecture Explained at Last</title>
+      <link>https://kubaik.github.io/iot-architecture-explained-at-last/</link>
+      <description>Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.</description>
+      <pubDate>Fri, 24 Apr 2026 09:26:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-architecture-explained-at-last/</guid>
+    </item>
     <item>
       <title>Earn with AI Tools: Build vs Buy AI Agents</title>
       <link>https://kubaik.github.io/earn-with-ai-tools-build-vs-buy-ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>How I automated social engineering attacks to expose the real weak link in cybersecurity—your own team’s behavior—and what the numbers from 45 live campaigns reveal about human vulnerability.</description>
       <pubDate>Thu, 23 Apr 2026 17:43:20 +0000</pubDate>
       <guid>https://kubaik.github.io/how-hackers-bypass-your-firewall-without-touching-/</guid>
-    </item>
-    <item>
-      <title>Kafka Isn&apos;t for Data: It&apos;s for Distributed State Sync</title>
-      <link>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</link>
-      <description>Kafka isn&apos;t a message queue—it&apos;s a distributed state journal. Learn how to use it for coordination, not just streaming.</description>
-      <pubDate>Thu, 23 Apr 2026 15:47:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-isnt-for-data-its-for-distributed-state-sync/</guid>
     </item>
   </channel>
 </rss>
