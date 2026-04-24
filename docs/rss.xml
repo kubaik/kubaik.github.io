@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 13:10:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 14:09:19 +0000</lastBuildDate>
+    <item>
+      <title>Supabase in production: how we hit 12ms p99 reads at 10k RPS</title>
+      <link>https://kubaik.github.io/supabase-in-production-how-we-hit-12ms-p99-reads-a/</link>
+      <description>Cut API latency to 12ms p99 at 10k RPS with Supabase — connection pools, RLS indexing, and autovacuum tuning that the docs don’t cover.</description>
+      <pubDate>Fri, 24 Apr 2026 14:09:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/supabase-in-production-how-we-hit-12ms-p99-reads-a/</guid>
+    </item>
     <item>
       <title>The 9 best tools to build a Second Brain as a developer in 2025</title>
       <link>https://kubaik.github.io/the-9-best-tools-to-build-a-second-brain-as-a-deve/</link>
@@ -138,13 +145,6 @@
       <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
       <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
       <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
-    </item>
-    <item>
-      <title>Mental Models for Developers — Finally Explained</title>
-      <link>https://kubaik.github.io/mental-models-for-developers-finally-explained/</link>
-      <description>How five mental models—queueing theory, negative feedback, opportunity cost, Pareto, and amortized analysis—turn reactive firefighting into proactive system design, with real benchmarks and fixes.</description>
-      <pubDate>Thu, 23 Apr 2026 20:21:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/mental-models-for-developers-finally-explained/</guid>
     </item>
   </channel>
 </rss>
