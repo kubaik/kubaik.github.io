@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 14:21:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 14:56:09 +0000</lastBuildDate>
+    <item>
+      <title>Python 3.13 in 2026: New syntax, speed, and what you can drop</title>
+      <link>https://kubaik.github.io/python-313-in-2026-new-syntax-speed-and-what-you-c/</link>
+      <description>Cut API response time by 61% and memory use by 12.5% in Python 3.13: new syntax, new timing API, and dropping legacy packages — benchmarks, fixes, and a deploy-ready example.</description>
+      <pubDate>Fri, 24 Apr 2026 14:56:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-313-in-2026-new-syntax-speed-and-what-you-c/</guid>
+    </item>
     <item>
       <title>Why AI Fails to Personalize Education (and Fixes)</title>
       <link>https://kubaik.github.io/why-ai-fails-to-personalize-education-and-fixes/</link>
@@ -138,13 +145,6 @@
       <description>How a $22 VM served 10,000 RPM and why the ‘learn to code’ mantra ignores the hidden cost of production.</description>
       <pubDate>Fri, 24 Apr 2026 02:00:10 +0000</pubDate>
       <guid>https://kubaik.github.io/why-everyone-should-learn-to-code-is-a-lie-and-the/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Red Flags vs Green Lights: What Actually Gets You Hired</title>
-      <link>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</link>
-      <description>Option B cuts false positives by 60% and speeds up hiring by 50%—here’s the data and the repo template to replicate it.</description>
-      <pubDate>Thu, 23 Apr 2026 23:39:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</guid>
     </item>
   </channel>
 </rss>
