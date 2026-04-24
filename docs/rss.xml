@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 14:09:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 14:21:51 +0000</lastBuildDate>
+    <item>
+      <title>Why AI Fails to Personalize Education (and Fixes)</title>
+      <link>https://kubaik.github.io/why-ai-fails-to-personalize-education-and-fixes/</link>
+      <description>Fix AI education personalization failures: reduce churn by 15%, improve lesson relevance by 30%. Diagnose data, feedback loops, and model design issues.</description>
+      <pubDate>Fri, 24 Apr 2026 14:21:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-ai-fails-to-personalize-education-and-fixes/</guid>
+    </item>
     <item>
       <title>Supabase in production: how we hit 12ms p99 reads at 10k RPS</title>
       <link>https://kubaik.github.io/supabase-in-production-how-we-hit-12ms-p99-reads-a/</link>
@@ -138,13 +145,6 @@
       <description>Option B cuts false positives by 60% and speeds up hiring by 50%—here’s the data and the repo template to replicate it.</description>
       <pubDate>Thu, 23 Apr 2026 23:39:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-lights-what-actu/</guid>
-    </item>
-    <item>
-      <title>How Linear, GitLab &amp; Bolt Cut 4-Day Weeks Without Crashing Production</title>
-      <link>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</link>
-      <description>Linear, GitLab &amp; Bolt cut workweeks without crashing production. Real code, benchmarks, and failure modes from a Berlin-to-Lagos stack.</description>
-      <pubDate>Thu, 23 Apr 2026 21:41:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-linear-gitlab-bolt-cut-4-day-weeks-without-cra/</guid>
     </item>
   </channel>
 </rss>
