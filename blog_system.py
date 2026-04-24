@@ -1073,8 +1073,6 @@ class BlogSystem:
         """
         providers = []
 
-        if self.cloudflare_token and self.cloudflare_account_id:
-            providers.append(("Cloudflare AI",    self._call_cloudflare))
         if self.github_token:
             providers.append(("GitHub Models",    self._call_github))
         if self.mistral_key:
@@ -1083,6 +1081,8 @@ class BlogSystem:
             providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
             providers.append(("Groq",             self._call_groq))
+        if self.cloudflare_token and self.cloudflare_account_id:
+            providers.append(("Cloudflare AI",    self._call_cloudflare))
         if self.cerebras_key:
             providers.append(("Cerebras",         self._call_cerebras))
         if self.gemini_key:
