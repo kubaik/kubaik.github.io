@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 10:27:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 10:39:34 +0000</lastBuildDate>
+    <item>
+      <title>The 9 open-source projects that banked millions (and what you can learn)</title>
+      <link>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</link>
+      <description>Cut infra costs 40 % and slash build times 80 % with these 9 open-source projects that scaled to millions in revenue while remaining free to use. Real benchmarks, failure modes, and deployment scripts included.</description>
+      <pubDate>Sat, 25 Apr 2026 10:39:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</guid>
+    </item>
     <item>
       <title>Push Notifications Are Broken — Here’s How to Fix Them</title>
       <link>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents by 70% with real-time APM — trace volume down 94%, detection time from 45 to 3 minutes, and SLO burn rate alerting that reduced false pages by 84%. Learn how we did it with OpenTelemetry, New Relic, and error-budget alerting, including the tools, code, and failures that shaped the solution.</description>
       <pubDate>Fri, 24 Apr 2026 22:36:08 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-cut-production-incidents-by-70-with-real-ti/</guid>
-    </item>
-    <item>
-      <title>Why promotions take forever — and how to force the issue</title>
-      <link>https://kubaik.github.io/why-promotions-take-forever-and-how-to-force-the-i/</link>
-      <description>Cut promotion wait time from 18 months to 90 days with a promotion packet—reverse-engineered rubrics, concrete artifacts, and real case studies from Brazil, Colombia, and Mexico. Learn the exact artifacts reviewers expect and how to pre-sell them before the cycle opens.</description>
-      <pubDate>Fri, 24 Apr 2026 22:25:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-promotions-take-forever-and-how-to-force-the-i/</guid>
     </item>
   </channel>
 </rss>
