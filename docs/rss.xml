@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 20:34:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 21:08:52 +0000</lastBuildDate>
+    <item>
+      <title>2026’s Breaches Proved One Thing: Compliance ≠ Security</title>
+      <link>https://kubaik.github.io/2026s-breaches-proved-one-thing-compliance-securit/</link>
+      <description>In 2026, 88% of breaches exploited misconfigured trust boundaries after initial compromise—learn the fixes that cut dwell time from 204 days to 2.3 hours. Compliance ≠ security: SOC 2, ISO 27001, and PCI DSS reports failed to stop 3.8 billion customer records from leaking in the Snowflake breach.</description>
+      <pubDate>Sat, 25 Apr 2026 21:08:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026s-breaches-proved-one-thing-compliance-securit/</guid>
+    </item>
     <item>
       <title>12 lessons startups learn too late (and how to unlearn them)</title>
       <link>https://kubaik.github.io/12-lessons-startups-learn-too-late-and-how-to-unle/</link>
@@ -138,13 +145,6 @@
       <description>AI assistant under month: if CPU &gt; 80% for 30 seconds, preventing ca. Practical guide with real examples.</description>
       <pubDate>Sat, 25 Apr 2026 11:25:13 +0000</pubDate>
       <guid>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</guid>
-    </item>
-    <item>
-      <title>The 9 open-source projects that banked millions (and what you can learn)</title>
-      <link>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</link>
-      <description>Cut infra costs 40 % and slash build times 80 % with these 9 open-source projects that scaled to millions in revenue while remaining free to use. Real benchmarks, failure modes, and deployment scripts included.</description>
-      <pubDate>Sat, 25 Apr 2026 10:39:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</guid>
     </item>
   </channel>
 </rss>
