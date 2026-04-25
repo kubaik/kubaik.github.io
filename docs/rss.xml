@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 09:11:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 09:31:37 +0000</lastBuildDate>
+    <item>
+      <title>Go, Scala, and Rust topped 2026 paychecks — here’s why</title>
+      <link>https://kubaik.github.io/go-scala-and-rust-topped-2026-paychecks-heres-why/</link>
+      <description>Cut cloud costs by 44% and engineering payroll by 17% by migrating from Node to Go and Scala — concrete latency, cost, and salary numbers for 2026’s highest-paying languages.</description>
+      <pubDate>Sat, 25 Apr 2026 09:31:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-scala-and-rust-topped-2026-paychecks-heres-why/</guid>
+    </item>
     <item>
       <title>How we cut incident costs 70% with real-time APM</title>
       <link>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</link>
@@ -138,13 +145,6 @@
       <description>nute with 40% failure. Docs promise &quot;Rust i with Python Rust One Crashes — find their M-Pesa payment callback dies at 1000 req.</description>
       <pubDate>Fri, 24 Apr 2026 21:28:57 +0000</pubDate>
       <guid>https://kubaik.github.io/python-vs-go-vs-rust-why-one-crashes-at-100ms-and-/</guid>
-    </item>
-    <item>
-      <title>TypeScript Advanced Patterns: Branded Types vs Nominal Typing</title>
-      <link>https://kubaik.github.io/typescript-advanced-patterns-branded-types-vs-nomi/</link>
-      <description>Cut type-related incidents by 80% with TypeScript advanced patterns — branded types vs nominal typing benchmarks, real code examples, and the maintenance surprises that cost days of refactoring.</description>
-      <pubDate>Fri, 24 Apr 2026 20:41:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-advanced-patterns-branded-types-vs-nomi/</guid>
     </item>
   </channel>
 </rss>
