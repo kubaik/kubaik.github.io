@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 12:05:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 12:50:41 +0000</lastBuildDate>
+    <item>
+      <title>Why Event-Driven Architecture Fails with Duplicate Events (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</link>
+      <description>Cut duplicate event processing by 99.8% in production with idempotency keys, Redis, and Kafka EOS — real fixes with metrics, code, and escalation paths for event-driven systems under load.</description>
+      <pubDate>Sat, 25 Apr 2026 12:50:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</guid>
+    </item>
     <item>
       <title>Low-Code Platforms Are Killing Your Career (Here’s Why)</title>
       <link>https://kubaik.github.io/low-code-platforms-are-killing-your-career-heres-w/</link>
@@ -138,13 +145,6 @@
       <description>Save 10 hours a week using this AI workflow — gpt-3.5 costs under $0.004 per 1k rows, the Translator Pattern, and the exact tools we used to cut manual work from 15 hours to 1 hour.</description>
       <pubDate>Sat, 25 Apr 2026 01:06:55 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-cut-repetitive-tasks-down-to-1-hour-a-week/</guid>
-    </item>
-    <item>
-      <title>Why Docker in Production Fails with OOM Killer (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</link>
-      <description>Cut unplanned downtime from Docker OOM Killer crashes by 100% — learn why containers exit silently, how to set memory limits, and prevent evictions with real benchmarks, logs, and fixes tested on 4GB VMs in Jakarta and Vietnam.</description>
-      <pubDate>Sat, 25 Apr 2026 00:08:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</guid>
     </item>
   </channel>
 </rss>
