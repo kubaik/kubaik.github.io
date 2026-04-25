@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 08:04:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 09:11:58 +0000</lastBuildDate>
+    <item>
+      <title>How we cut incident costs 70% with real-time APM</title>
+      <link>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</link>
+      <description>Cut incident response time by 78% and saved $15k/month with real-time APM—OpenTelemetry, anomaly detection, and synthetic monitoring that prevent outages before users notice. Includes code, benchmarks, and pitfalls.</description>
+      <pubDate>Sat, 25 Apr 2026 09:11:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</guid>
+    </item>
     <item>
       <title>2026 Stack Showdown: Ruby on Rails vs Next.js for Bootstrapped Startups</title>
       <link>https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/</link>
@@ -138,13 +145,6 @@
       <description>Cut type-related incidents by 80% with TypeScript advanced patterns — branded types vs nominal typing benchmarks, real code examples, and the maintenance surprises that cost days of refactoring.</description>
       <pubDate>Fri, 24 Apr 2026 20:41:20 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-advanced-patterns-branded-types-vs-nomi/</guid>
-    </item>
-    <item>
-      <title>23 CSS tricks seniors actually use (and which ones to ignore)</title>
-      <link>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</link>
-      <description>Cut CSS maintenance time by 67% with 23 battle-tested tricks seniors actually use — bundle impact, Safari 15 fixes, and production metrics included.</description>
-      <pubDate>Fri, 24 Apr 2026 19:48:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</guid>
     </item>
   </channel>
 </rss>
