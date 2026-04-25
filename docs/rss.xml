@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 06:00:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 06:10:06 +0000</lastBuildDate>
+    <item>
+      <title>Why Rust, Go, and Zig paid 30% more in 2026</title>
+      <link>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</link>
+      <description>Cut cloud costs by 77% by switching from Python and Node.js to Rust, Zig, and Go in 2026 — benchmarks, memory leaks, and the languages that paid off most</description>
+      <pubDate>Sat, 25 Apr 2026 06:10:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</guid>
+    </item>
     <item>
       <title>Remote beats office for dev velocity: here’s the raw data from 3M builds</title>
       <link>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</link>
@@ -138,13 +145,6 @@
       <description>Cut tech debt by 60% using SOLID principles — real-world benchmarks, concrete code examples, and the mistakes that cause STUPID projects to collapse under donor pressure.</description>
       <pubDate>Fri, 24 Apr 2026 17:46:07 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</guid>
-    </item>
-    <item>
-      <title>AI Coding Assistants vs Custom AI Agents: Output Gains and Pitfalls</title>
-      <link>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</link>
-      <description>Cut feature delivery time by 2x using AI: Copilot achieved 3.2 features/engineer vs custom agents at 6.8—with real benchmarks, AWS costs, and fintech lessons from Nairobi to help you choose safely.</description>
-      <pubDate>Fri, 24 Apr 2026 16:50:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</guid>
     </item>
   </channel>
 </rss>
