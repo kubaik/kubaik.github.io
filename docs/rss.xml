@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 23:09:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 23:33:31 +0000</lastBuildDate>
+    <item>
+      <title>How to Build Passive Income as a Developer: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/how-to-build-passive-income-as-a-developer-a-pract/</link>
+      <description>Cut How to Build Passive Income as a Developer failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a st…</description>
+      <pubDate>Sat, 25 Apr 2026 23:33:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-to-build-passive-income-as-a-developer-a-pract/</guid>
+    </item>
     <item>
       <title>TypeScript: Branded Types vs Nominal Typing Patterns</title>
       <link>https://kubaik.github.io/typescript-branded-types-vs-nominal-typing-pattern/</link>
@@ -138,13 +145,6 @@
       <description>Cut new-hire onboarding time by 60% with a top-down code reading strategy — architecture maps, READMEs, and the mistakes that waste days debugging legacy code.</description>
       <pubDate>Sat, 25 Apr 2026 14:02:11 +0000</pubDate>
       <guid>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</guid>
-    </item>
-    <item>
-      <title>Supabase in Production: One Query to Rule Them All</title>
-      <link>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</link>
-      <description>pike from 12% to 87% when the pool tipped o with Supabase Production One Query — Supabase and watched our p95 latency jump from 32ms.</description>
-      <pubDate>Sat, 25 Apr 2026 13:47:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</guid>
     </item>
   </channel>
 </rss>
