@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2026 23:36:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 00:08:28 +0000</lastBuildDate>
+    <item>
+      <title>Why Docker in Production Fails with OOM Killer (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</link>
+      <description>Cut unplanned downtime from Docker OOM Killer crashes by 100% — learn why containers exit silently, how to set memory limits, and prevent evictions with real benchmarks, logs, and fixes tested on 4GB VMs in Jakarta and Vietnam.</description>
+      <pubDate>Sat, 25 Apr 2026 00:08:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</guid>
+    </item>
     <item>
       <title>Blue-Green vs Canary Deployments: Real Numbers, Real Choices</title>
       <link>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</link>
@@ -138,13 +145,6 @@
       <description>Cut Second Brain setup time by 60% with Logseq and Git-native tools — plain text, offline search under 0.1s, and a $5/month VPS tier for freelancers and startups</description>
       <pubDate>Fri, 24 Apr 2026 13:10:14 +0000</pubDate>
       <guid>https://kubaik.github.io/the-9-best-tools-to-build-a-second-brain-as-a-deve/</guid>
-    </item>
-    <item>
-      <title>Free AI Tools That Professionals Actually Use: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/free-ai-tools-that-professionals-actually-use-a-pr/</link>
-      <description>Cut Free AI Tools That Professionals Actually Use failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a…</description>
-      <pubDate>Fri, 24 Apr 2026 12:41:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/free-ai-tools-that-professionals-actually-use-a-pr/</guid>
     </item>
   </channel>
 </rss>
