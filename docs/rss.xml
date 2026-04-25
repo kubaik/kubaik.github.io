@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 06:10:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 06:19:33 +0000</lastBuildDate>
+    <item>
+      <title>Pair Programming: When It’s Worth It in 2024</title>
+      <link>https://kubaik.github.io/pair-programming-when-its-worth-it-in-2024/</link>
+      <description>Reduce bug escape rate by 61% and cut time to resolution by 68% by pairing on small features for 30 minutes. Learn when pair programming is worth it and how to start with Python and Node.js examples.</description>
+      <pubDate>Sat, 25 Apr 2026 06:19:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/pair-programming-when-its-worth-it-in-2024/</guid>
+    </item>
     <item>
       <title>Why Rust, Go, and Zig paid 30% more in 2026</title>
       <link>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Boost real-world object detection accuracy by up to 25%. Learn why models fail in production and fix dataset diversity, class imbalance, and environment mismatch.</description>
       <pubDate>Fri, 24 Apr 2026 18:10:34 +0000</pubDate>
       <guid>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</guid>
-    </item>
-    <item>
-      <title>SOLID vs STUPID Code: Which Keeps Projects Alive?</title>
-      <link>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</link>
-      <description>Cut tech debt by 60% using SOLID principles — real-world benchmarks, concrete code examples, and the mistakes that cause STUPID projects to collapse under donor pressure.</description>
-      <pubDate>Fri, 24 Apr 2026 17:46:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-vs-stupid-code-which-keeps-projects-alive/</guid>
     </item>
   </channel>
 </rss>
