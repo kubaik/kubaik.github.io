@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 13:47:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 14:02:14 +0000</lastBuildDate>
+    <item>
+      <title>Top-down vs Bottom-up: Two Ways to Read Code</title>
+      <link>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</link>
+      <description>Cut new-hire onboarding time by 60% with a top-down code reading strategy — architecture maps, READMEs, and the mistakes that waste days debugging legacy code.</description>
+      <pubDate>Sat, 25 Apr 2026 14:02:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</guid>
+    </item>
     <item>
       <title>Supabase in Production: One Query to Rule Them All</title>
       <link>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</link>
@@ -138,13 +145,6 @@
       <description>Cut production outages by 60% with a debugging mindset that treats bugs as data points, not verdicts. Learn the Layered Hypothesis model, a real-world Python cache bug fix, and the eBPF tool that found a 400ms delay in a Go app.</description>
       <pubDate>Sat, 25 Apr 2026 03:34:00 +0000</pubDate>
       <guid>https://kubaik.github.io/debugging-mindset-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Freelance Developer Income: Realistic Numbers: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/freelance-developer-income-realistic-numbers-a-pra/</link>
-      <description>Cut Freelance Developer Income: Realistic Numbers failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a…</description>
-      <pubDate>Sat, 25 Apr 2026 01:54:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-developer-income-realistic-numbers-a-pra/</guid>
     </item>
   </channel>
 </rss>
