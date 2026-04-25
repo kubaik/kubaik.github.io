@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 15:36:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 16:09:10 +0000</lastBuildDate>
+    <item>
+      <title>How we raised our starting offers by 25% with one spreadsheet</title>
+      <link>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</link>
+      <description>Raised starting offers by 25% with one spreadsheet — market data failed, but a Risk Ledger linking power outages to unpaid overtime worked. Uptime rose from 82% to 96% in six months.</description>
+      <pubDate>Sat, 25 Apr 2026 16:09:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</guid>
+    </item>
     <item>
       <title>The Tech Industry&apos;s Mental Health Crisis: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/the-tech-industrys-mental-health-crisis-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs by 77% by switching from Python and Node.js to Rust, Zig, and Go in 2026 — benchmarks, memory leaks, and the languages that paid off most</description>
       <pubDate>Sat, 25 Apr 2026 06:10:03 +0000</pubDate>
       <guid>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</guid>
-    </item>
-    <item>
-      <title>Remote beats office for dev velocity: here’s the raw data from 3M builds</title>
-      <link>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</link>
-      <description>Cut build time by 66% with remote runners: 4m 12s local vs 1m 22s remote, plus MTTR drops 12% and energy use falls 93% — real data from 14 months and 1M builds.</description>
-      <pubDate>Sat, 25 Apr 2026 06:00:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</guid>
     </item>
   </channel>
 </rss>
