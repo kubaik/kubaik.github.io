@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 17:12:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 17:35:18 +0000</lastBuildDate>
+    <item>
+      <title>iTerm2 vs Warp: Terminals for Speed and Sanity</title>
+      <link>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</link>
+      <description>Cut tab switching latency from 110ms to 35ms and reduce RAM usage from 600MB to 180MB with Warp vs iTerm2 — compare stability, SSH speed, and AI command suggestions to pick the right terminal for your workflow.</description>
+      <pubDate>Sat, 25 Apr 2026 17:35:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</guid>
+    </item>
     <item>
       <title>Why AI-generated personalized study plans stall at 100 users (and how to scale to 1M)</title>
       <link>https://kubaik.github.io/why-ai-generated-personalized-study-plans-stall-at/</link>
@@ -138,13 +145,6 @@
       <description>Cut ANR crash rate by 95% after Android 15 upgrade — exact alarm permissions, WorkManager fixes, and Samsung-specific enforcement for apps targeting API 35, with budget tiers and CI checks to prevent regressions</description>
       <pubDate>Sat, 25 Apr 2026 07:53:44 +0000</pubDate>
       <guid>https://kubaik.github.io/app-crashes-after-android-15-upgrade-why-x-fails-w/</guid>
-    </item>
-    <item>
-      <title>CDN vs Local Cache: Which cuts latency for your API?</title>
-      <link>https://kubaik.github.io/cdn-vs-local-cache-which-cuts-latency-for-your-api/</link>
-      <description>Cut API latency by 88–97 % with CDN vs local cache — real benchmarks, bandwidth costs, and the cache stampede mistakes that break both under load.</description>
-      <pubDate>Sat, 25 Apr 2026 07:47:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/cdn-vs-local-cache-which-cuts-latency-for-your-api/</guid>
     </item>
   </channel>
 </rss>
