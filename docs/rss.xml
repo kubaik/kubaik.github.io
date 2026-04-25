@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 06:19:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 07:47:04 +0000</lastBuildDate>
+    <item>
+      <title>CDN vs Local Cache: Which cuts latency for your API?</title>
+      <link>https://kubaik.github.io/cdn-vs-local-cache-which-cuts-latency-for-your-api/</link>
+      <description>Cut API latency by 88–97 % with CDN vs local cache — real benchmarks, bandwidth costs, and the cache stampede mistakes that break both under load.</description>
+      <pubDate>Sat, 25 Apr 2026 07:47:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/cdn-vs-local-cache-which-cuts-latency-for-your-api/</guid>
+    </item>
     <item>
       <title>Pair Programming: When It’s Worth It in 2024</title>
       <link>https://kubaik.github.io/pair-programming-when-its-worth-it-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>6 companies lost 80M+ records to API flaws like missing rate limits, hardcoded keys, and weak auth checks. Learn the exact mistakes, fixes, and tools to avoid the same fate.</description>
       <pubDate>Fri, 24 Apr 2026 18:42:24 +0000</pubDate>
       <guid>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</guid>
-    </item>
-    <item>
-      <title>Why Object Detection Models Fail in Real-World Scenarios</title>
-      <link>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</link>
-      <description>Boost real-world object detection accuracy by up to 25%. Learn why models fail in production and fix dataset diversity, class imbalance, and environment mismatch.</description>
-      <pubDate>Fri, 24 Apr 2026 18:10:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-object-detection-models-fail-in-real-world-sce/</guid>
     </item>
   </channel>
 </rss>
