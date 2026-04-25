@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 07:53:46 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 08:04:25 +0000</lastBuildDate>
+    <item>
+      <title>2026 Stack Showdown: Ruby on Rails vs Next.js for Bootstrapped Startups</title>
+      <link>https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/</link>
+      <description>Cut cloud costs by 63% and ship twice as fast: compare Rails 8 vs Next.js 15 for bootstrapped startups in 2026. Real benchmarks, concrete numbers, and the mistakes that cost weeks of runway.</description>
+      <pubDate>Sat, 25 Apr 2026 08:04:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/</guid>
+    </item>
     <item>
       <title>App crashes after Android 15 upgrade: why X fails with Y</title>
       <link>https://kubaik.github.io/app-crashes-after-android-15-upgrade-why-x-fails-w/</link>
@@ -138,13 +145,6 @@
       <description>Cut CSS maintenance time by 67% with 23 battle-tested tricks seniors actually use — bundle impact, Safari 15 fixes, and production metrics included.</description>
       <pubDate>Fri, 24 Apr 2026 19:48:41 +0000</pubDate>
       <guid>https://kubaik.github.io/23-css-tricks-seniors-actually-use-and-which-ones-/</guid>
-    </item>
-    <item>
-      <title>Developers Burn Out Because They’re Treated Like Plug-and-Play Batteries</title>
-      <link>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</link>
-      <description>Reduce burnout by 60% with system stability — incident frequency, on-call load, and deployment lead time metrics that actually prevent hero culture. Choose automation over slogans.</description>
-      <pubDate>Fri, 24 Apr 2026 19:33:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</guid>
     </item>
   </channel>
 </rss>
