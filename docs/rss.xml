@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 18:42:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 19:29:50 +0000</lastBuildDate>
+    <item>
+      <title>How we went from 300ms to 12ms writes on Ethereum with calldata compression</title>
+      <link>https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/</link>
+      <description>Cut Ethereum calldata writes from 3,100 bytes to 1,860 bytes with zlib compression, reducing confirmation time from 18 seconds to 1.2 seconds and halving gas costs — plus the on-chain zlib address and fallback code you need.</description>
+      <pubDate>Sat, 25 Apr 2026 19:29:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/</guid>
+    </item>
     <item>
       <title>How Stripe Uses Idempotency Keys vs Exactly-Once Queues to Avoid Lost Payments</title>
       <link>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs by 44% and engineering payroll by 17% by migrating from Node to Go and Scala — concrete latency, cost, and salary numbers for 2026’s highest-paying languages.</description>
       <pubDate>Sat, 25 Apr 2026 09:31:34 +0000</pubDate>
       <guid>https://kubaik.github.io/go-scala-and-rust-topped-2026-paychecks-heres-why/</guid>
-    </item>
-    <item>
-      <title>How we cut incident costs 70% with real-time APM</title>
-      <link>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</link>
-      <description>Cut incident response time by 78% and saved $15k/month with real-time APM—OpenTelemetry, anomaly detection, and synthetic monitoring that prevent outages before users notice. Includes code, benchmarks, and pitfalls.</description>
-      <pubDate>Sat, 25 Apr 2026 09:11:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</guid>
     </item>
   </channel>
 </rss>
