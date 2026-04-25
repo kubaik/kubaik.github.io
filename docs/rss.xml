@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 19:41:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 20:07:40 +0000</lastBuildDate>
+    <item>
+      <title>Why my phone’s Wi‑Fi keeps dropping when I’m on public hotspots (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-my-phones-wifi-keeps-dropping-when-im-on-publi/</link>
+      <description>Cut captive-portal stalls by 68% with Wi‑Fi scan throttling and BSSID locking — tested on Android 14 and iOS 17 across $200 and $700 phones.</description>
+      <pubDate>Sat, 25 Apr 2026 20:07:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-my-phones-wifi-keeps-dropping-when-im-on-publi/</guid>
+    </item>
     <item>
       <title>The 11 scaling steps no solo dev talks about</title>
       <link>https://kubaik.github.io/the-11-scaling-steps-no-solo-dev-talks-about/</link>
@@ -138,13 +145,6 @@
       <description>Reduce duplicate push notifications by 80% with event-based delivery, Redis deduplication, and minimal payloads — measured on 2 fintech and healthtech apps with 1.2M+ users. Push notifications done right</description>
       <pubDate>Sat, 25 Apr 2026 10:27:52 +0000</pubDate>
       <guid>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</guid>
-    </item>
-    <item>
-      <title>WhatsApp scaled to 1M users on $50/month servers in 2013</title>
-      <link>https://kubaik.github.io/whatsapp-scaled-to-1m-users-on-50month-servers-in-/</link>
-      <description>Reduce your messaging server bill by 98% and hit 1M concurrent connections with Erlang, SQLite, and WebSocket on a $50/month VPS — the stack WhatsApp used before their $19B exit.</description>
-      <pubDate>Sat, 25 Apr 2026 09:46:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/whatsapp-scaled-to-1m-users-on-50month-servers-in-/</guid>
     </item>
   </channel>
 </rss>
