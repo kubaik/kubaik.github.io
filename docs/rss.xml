@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 22:32:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 23:09:23 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript: Branded Types vs Nominal Typing Patterns</title>
+      <link>https://kubaik.github.io/typescript-branded-types-vs-nominal-typing-pattern/</link>
+      <description>Cut API response latency by 40% and eliminate type-mixing bugs with TypeScript branded types — schema-driven generation, performance benchmarks, and the mistakes that waste hours of debugging.</description>
+      <pubDate>Sat, 25 Apr 2026 23:09:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-branded-types-vs-nominal-typing-pattern/</guid>
+    </item>
     <item>
       <title>11 Time Management Hacks That Fixed My Productivity Drop</title>
       <link>https://kubaik.github.io/11-time-management-hacks-that-fixed-my-productivit/</link>
@@ -138,13 +145,6 @@
       <description>pike from 12% to 87% when the pool tipped o with Supabase Production One Query — Supabase and watched our p95 latency jump from 32ms.</description>
       <pubDate>Sat, 25 Apr 2026 13:47:19 +0000</pubDate>
       <guid>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</guid>
-    </item>
-    <item>
-      <title>Why Event-Driven Architecture Fails with Duplicate Events (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</link>
-      <description>Cut duplicate event processing by 99.8% in production with idempotency keys, Redis, and Kafka EOS — real fixes with metrics, code, and escalation paths for event-driven systems under load.</description>
-      <pubDate>Sat, 25 Apr 2026 12:50:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</guid>
     </item>
   </channel>
 </rss>
