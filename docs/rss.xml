@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 09:46:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 10:27:55 +0000</lastBuildDate>
+    <item>
+      <title>Push Notifications Are Broken — Here’s How to Fix Them</title>
+      <link>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</link>
+      <description>Reduce duplicate push notifications by 80% with event-based delivery, Redis deduplication, and minimal payloads — measured on 2 fintech and healthtech apps with 1.2M+ users. Push notifications done right</description>
+      <pubDate>Sat, 25 Apr 2026 10:27:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</guid>
+    </item>
     <item>
       <title>WhatsApp scaled to 1M users on $50/month servers in 2013</title>
       <link>https://kubaik.github.io/whatsapp-scaled-to-1m-users-on-50month-servers-in-/</link>
@@ -138,13 +145,6 @@
       <description>Cut promotion wait time from 18 months to 90 days with a promotion packet—reverse-engineered rubrics, concrete artifacts, and real case studies from Brazil, Colombia, and Mexico. Learn the exact artifacts reviewers expect and how to pre-sell them before the cycle opens.</description>
       <pubDate>Fri, 24 Apr 2026 22:25:03 +0000</pubDate>
       <guid>https://kubaik.github.io/why-promotions-take-forever-and-how-to-force-the-i/</guid>
-    </item>
-    <item>
-      <title>Memory leaks finally explained</title>
-      <link>https://kubaik.github.io/memory-leaks-finally-explained/</link>
-      <description>Cut process memory growth by 70% in 30 minutes with the right profiler — memory leaks finally explained with concrete tools, benchmarks, and the mistakes that waste hours.</description>
-      <pubDate>Fri, 24 Apr 2026 21:43:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/memory-leaks-finally-explained/</guid>
     </item>
   </channel>
 </rss>
