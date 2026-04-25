@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 11:36:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 12:05:40 +0000</lastBuildDate>
+    <item>
+      <title>Low-Code Platforms Are Killing Your Career (Here’s Why)</title>
+      <link>https://kubaik.github.io/low-code-platforms-are-killing-your-career-heres-w/</link>
+      <description>Cut low-code app response time from 5.8s to 200ms by replacing auto-generated queries and self-hosting the backend — specific fixes for Retool, Appsmith, and Power Apps plus verification metrics and CI budgets.</description>
+      <pubDate>Sat, 25 Apr 2026 12:05:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/low-code-platforms-are-killing-your-career-heres-w/</guid>
+    </item>
     <item>
       <title>We monitored our app before users complained — here’s what worked</title>
       <link>https://kubaik.github.io/we-monitored-our-app-before-users-complained-heres/</link>
@@ -138,13 +145,6 @@
       <description>Cut unplanned downtime from Docker OOM Killer crashes by 100% — learn why containers exit silently, how to set memory limits, and prevent evictions with real benchmarks, logs, and fixes tested on 4GB VMs in Jakarta and Vietnam.</description>
       <pubDate>Sat, 25 Apr 2026 00:08:25 +0000</pubDate>
       <guid>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</guid>
-    </item>
-    <item>
-      <title>Blue-Green vs Canary Deployments: Real Numbers, Real Choices</title>
-      <link>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</link>
-      <description>Cut production incidents by 70% with the right deployment pattern — blue-green vs canary compared on latency, cost, and rollback time with real numbers and code examples for teams from $200/month droplets to Series B AWS accounts.</description>
-      <pubDate>Fri, 24 Apr 2026 23:36:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</guid>
     </item>
   </channel>
 </rss>
