@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 16:09:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 16:36:10 +0000</lastBuildDate>
+    <item>
+      <title>Algorithm Optimization: Practical Big O Analysis: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</link>
+      <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
+      <pubDate>Sat, 25 Apr 2026 16:36:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
+    </item>
     <item>
       <title>How we raised our starting offers by 25% with one spreadsheet</title>
       <link>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</link>
@@ -138,13 +145,6 @@
       <description>Reduce bug escape rate by 61% and cut time to resolution by 68% by pairing on small features for 30 minutes. Learn when pair programming is worth it and how to start with Python and Node.js examples.</description>
       <pubDate>Sat, 25 Apr 2026 06:19:30 +0000</pubDate>
       <guid>https://kubaik.github.io/pair-programming-when-its-worth-it-in-2024/</guid>
-    </item>
-    <item>
-      <title>Why Rust, Go, and Zig paid 30% more in 2026</title>
-      <link>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</link>
-      <description>Cut cloud costs by 77% by switching from Python and Node.js to Rust, Zig, and Go in 2026 — benchmarks, memory leaks, and the languages that paid off most</description>
-      <pubDate>Sat, 25 Apr 2026 06:10:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/</guid>
     </item>
   </channel>
 </rss>
