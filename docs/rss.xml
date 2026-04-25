@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 04:33:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 06:00:50 +0000</lastBuildDate>
+    <item>
+      <title>Remote beats office for dev velocity: here’s the raw data from 3M builds</title>
+      <link>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</link>
+      <description>Cut build time by 66% with remote runners: 4m 12s local vs 1m 22s remote, plus MTTR drops 12% and energy use falls 93% — real data from 14 months and 1M builds.</description>
+      <pubDate>Sat, 25 Apr 2026 06:00:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</guid>
+    </item>
     <item>
       <title>Why your phone now knows who you’ll argue with next</title>
       <link>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</link>
@@ -138,13 +145,6 @@
       <description>Cut feature delivery time by 2x using AI: Copilot achieved 3.2 features/engineer vs custom agents at 6.8—with real benchmarks, AWS costs, and fintech lessons from Nairobi to help you choose safely.</description>
       <pubDate>Fri, 24 Apr 2026 16:50:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-assistants-vs-custom-ai-agents-output-ga/</guid>
-    </item>
-    <item>
-      <title>Remote Tech Jobs in 2026: The Only 5 Places That Won’t Screw You Over</title>
-      <link>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</link>
-      <description>Land remote tech roles in 2026 without job boards: build a newsletter, launch OSS, or host virtual meetups to attract $150K offers—real systems, real outcomes, no fluff.</description>
-      <pubDate>Fri, 24 Apr 2026 16:35:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</guid>
     </item>
   </channel>
 </rss>
