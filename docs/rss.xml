@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 07:47:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 07:53:46 +0000</lastBuildDate>
+    <item>
+      <title>App crashes after Android 15 upgrade: why X fails with Y</title>
+      <link>https://kubaik.github.io/app-crashes-after-android-15-upgrade-why-x-fails-w/</link>
+      <description>Cut ANR crash rate by 95% after Android 15 upgrade — exact alarm permissions, WorkManager fixes, and Samsung-specific enforcement for apps targeting API 35, with budget tiers and CI checks to prevent regressions</description>
+      <pubDate>Sat, 25 Apr 2026 07:53:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-crashes-after-android-15-upgrade-why-x-fails-w/</guid>
+    </item>
     <item>
       <title>CDN vs Local Cache: Which cuts latency for your API?</title>
       <link>https://kubaik.github.io/cdn-vs-local-cache-which-cuts-latency-for-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Reduce burnout by 60% with system stability — incident frequency, on-call load, and deployment lead time metrics that actually prevent hero culture. Choose automation over slogans.</description>
       <pubDate>Fri, 24 Apr 2026 19:33:18 +0000</pubDate>
       <guid>https://kubaik.github.io/developers-burn-out-because-theyre-treated-like-pl/</guid>
-    </item>
-    <item>
-      <title>How API Security Mistakes Finally Got These 7 Companies Hacked</title>
-      <link>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</link>
-      <description>6 companies lost 80M+ records to API flaws like missing rate limits, hardcoded keys, and weak auth checks. Learn the exact mistakes, fixes, and tools to avoid the same fate.</description>
-      <pubDate>Fri, 24 Apr 2026 18:42:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-api-security-mistakes-finally-got-these-7-comp/</guid>
     </item>
   </channel>
 </rss>
