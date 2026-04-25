@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 03:34:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 03:43:10 +0000</lastBuildDate>
+    <item>
+      <title>Write human-sounding AI content in 4 steps — tested on 10 blogs</title>
+      <link>https://kubaik.github.io/write-human-sounding-ai-content-in-4-steps-tested-/</link>
+      <description>Reduce post-editing time by 65% with a 4-step AI pipeline tested on 50 posts — median cost $0.0037 per draft, bounce rate down 28%. Use this prompt template and observability stack to keep AI content human-sounding.</description>
+      <pubDate>Sat, 25 Apr 2026 03:43:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-human-sounding-ai-content-in-4-steps-tested-/</guid>
+    </item>
     <item>
       <title>Debugging Mindset finally explained</title>
       <link>https://kubaik.github.io/debugging-mindset-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Cut Python profiling time by 75% after fixing cProfile&apos;s &apos;???&apos; bug — learn the three real causes, how to rebuild Python with frame pointers, and how to prevent this in CI. Step-by-step diagnostic guide.</description>
       <pubDate>Fri, 24 Apr 2026 15:05:09 +0000</pubDate>
       <guid>https://kubaik.github.io/python-profiling-shows-98-time-in-unknown-with-cpr/</guid>
-    </item>
-    <item>
-      <title>Python 3.13 in 2026: New syntax, speed, and what you can drop</title>
-      <link>https://kubaik.github.io/python-313-in-2026-new-syntax-speed-and-what-you-c/</link>
-      <description>Cut API response time by 61% and memory use by 12.5% in Python 3.13: new syntax, new timing API, and dropping legacy packages — benchmarks, fixes, and a deploy-ready example.</description>
-      <pubDate>Fri, 24 Apr 2026 14:56:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-313-in-2026-new-syntax-speed-and-what-you-c/</guid>
     </item>
   </channel>
 </rss>
