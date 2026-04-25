@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 00:08:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 01:06:58 +0000</lastBuildDate>
+    <item>
+      <title>How we cut repetitive tasks down to 1 hour a week</title>
+      <link>https://kubaik.github.io/how-we-cut-repetitive-tasks-down-to-1-hour-a-week/</link>
+      <description>Save 10 hours a week using this AI workflow — gpt-3.5 costs under $0.004 per 1k rows, the Translator Pattern, and the exact tools we used to cut manual work from 15 hours to 1 hour.</description>
+      <pubDate>Sat, 25 Apr 2026 01:06:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-cut-repetitive-tasks-down-to-1-hour-a-week/</guid>
+    </item>
     <item>
       <title>Why Docker in Production Fails with OOM Killer (and how to fix it)</title>
       <link>https://kubaik.github.io/why-docker-in-production-fails-with-oom-killer-and/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency to 12ms p99 at 10k RPS with Supabase — connection pools, RLS indexing, and autovacuum tuning that the docs don’t cover.</description>
       <pubDate>Fri, 24 Apr 2026 14:09:16 +0000</pubDate>
       <guid>https://kubaik.github.io/supabase-in-production-how-we-hit-12ms-p99-reads-a/</guid>
-    </item>
-    <item>
-      <title>The 9 best tools to build a Second Brain as a developer in 2025</title>
-      <link>https://kubaik.github.io/the-9-best-tools-to-build-a-second-brain-as-a-deve/</link>
-      <description>Cut Second Brain setup time by 60% with Logseq and Git-native tools — plain text, offline search under 0.1s, and a $5/month VPS tier for freelancers and startups</description>
-      <pubDate>Fri, 24 Apr 2026 13:10:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-9-best-tools-to-build-a-second-brain-as-a-deve/</guid>
     </item>
   </channel>
 </rss>
