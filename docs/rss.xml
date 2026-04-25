@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 09:31:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 09:46:36 +0000</lastBuildDate>
+    <item>
+      <title>WhatsApp scaled to 1M users on $50/month servers in 2013</title>
+      <link>https://kubaik.github.io/whatsapp-scaled-to-1m-users-on-50month-servers-in-/</link>
+      <description>Reduce your messaging server bill by 98% and hit 1M concurrent connections with Erlang, SQLite, and WebSocket on a $50/month VPS — the stack WhatsApp used before their $19B exit.</description>
+      <pubDate>Sat, 25 Apr 2026 09:46:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/whatsapp-scaled-to-1m-users-on-50month-servers-in-/</guid>
+    </item>
     <item>
       <title>Go, Scala, and Rust topped 2026 paychecks — here’s why</title>
       <link>https://kubaik.github.io/go-scala-and-rust-topped-2026-paychecks-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Cut process memory growth by 70% in 30 minutes with the right profiler — memory leaks finally explained with concrete tools, benchmarks, and the mistakes that waste hours.</description>
       <pubDate>Fri, 24 Apr 2026 21:43:30 +0000</pubDate>
       <guid>https://kubaik.github.io/memory-leaks-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Python vs Go vs Rust: Why One Crashes at 100ms and the Other Runs for 3 Years</title>
-      <link>https://kubaik.github.io/python-vs-go-vs-rust-why-one-crashes-at-100ms-and-/</link>
-      <description>nute with 40% failure. Docs promise &quot;Rust i with Python Rust One Crashes — find their M-Pesa payment callback dies at 1000 req.</description>
-      <pubDate>Fri, 24 Apr 2026 21:28:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-vs-go-vs-rust-why-one-crashes-at-100ms-and-/</guid>
     </item>
   </channel>
 </rss>
