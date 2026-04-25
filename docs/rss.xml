@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 15:12:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 15:36:39 +0000</lastBuildDate>
+    <item>
+      <title>The Tech Industry&apos;s Mental Health Crisis: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/the-tech-industrys-mental-health-crisis-a-practica/</link>
+      <description>Cut The Tech Industry&apos;s Mental Health Crisis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step…</description>
+      <pubDate>Sat, 25 Apr 2026 15:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-tech-industrys-mental-health-crisis-a-practica/</guid>
+    </item>
     <item>
       <title>TypeScript patterns that cut bugs by 60% in 3 months</title>
       <link>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</link>
@@ -138,13 +145,6 @@
       <description>Cut build time by 66% with remote runners: 4m 12s local vs 1m 22s remote, plus MTTR drops 12% and energy use falls 93% — real data from 14 months and 1M builds.</description>
       <pubDate>Sat, 25 Apr 2026 06:00:47 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-beats-office-for-dev-velocity-heres-the-raw/</guid>
-    </item>
-    <item>
-      <title>Why your phone now knows who you’ll argue with next</title>
-      <link>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</link>
-      <description>Cut notification fatigue by 68% with a real-time social graph that respects attention budgets — 3.8 alerts/day, $40/month stack, and the failure modes that break the promise of tech changing human relationships.</description>
-      <pubDate>Sat, 25 Apr 2026 04:33:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</guid>
     </item>
   </channel>
 </rss>
