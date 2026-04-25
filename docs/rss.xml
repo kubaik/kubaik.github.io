@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 12:50:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 13:47:22 +0000</lastBuildDate>
+    <item>
+      <title>Supabase in Production: One Query to Rule Them All</title>
+      <link>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</link>
+      <description>pike from 12% to 87% when the pool tipped o with Supabase Production One Query — Supabase and watched our p95 latency jump from 32ms.</description>
+      <pubDate>Sat, 25 Apr 2026 13:47:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</guid>
+    </item>
     <item>
       <title>Why Event-Driven Architecture Fails with Duplicate Events (and how to fix it)</title>
       <link>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</link>
@@ -138,13 +145,6 @@
       <description>Cut Freelance Developer Income: Realistic Numbers failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a…</description>
       <pubDate>Sat, 25 Apr 2026 01:54:17 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-developer-income-realistic-numbers-a-pra/</guid>
-    </item>
-    <item>
-      <title>How we cut repetitive tasks down to 1 hour a week</title>
-      <link>https://kubaik.github.io/how-we-cut-repetitive-tasks-down-to-1-hour-a-week/</link>
-      <description>Save 10 hours a week using this AI workflow — gpt-3.5 costs under $0.004 per 1k rows, the Translator Pattern, and the exact tools we used to cut manual work from 15 hours to 1 hour.</description>
-      <pubDate>Sat, 25 Apr 2026 01:06:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-cut-repetitive-tasks-down-to-1-hour-a-week/</guid>
     </item>
   </channel>
 </rss>
