@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 11:25:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 11:36:09 +0000</lastBuildDate>
+    <item>
+      <title>We monitored our app before users complained — here’s what worked</title>
+      <link>https://kubaik.github.io/we-monitored-our-app-before-users-complained-heres/</link>
+      <description>Cut user-reported issues by 88% with proactive monitoring — Prometheus alerts, synthetic checks, and a focus on user flows instead of infrastructure metrics</description>
+      <pubDate>Sat, 25 Apr 2026 11:36:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/we-monitored-our-app-before-users-complained-heres/</guid>
+    </item>
     <item>
       <title>Run your own AI assistant for under $5/month — the real stack</title>
       <link>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents by 70% with the right deployment pattern — blue-green vs canary compared on latency, cost, and rollback time with real numbers and code examples for teams from $200/month droplets to Series B AWS accounts.</description>
       <pubDate>Fri, 24 Apr 2026 23:36:39 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-vs-canary-deployments-real-numbers-real/</guid>
-    </item>
-    <item>
-      <title>Scaled a 50 million user messaging app with $700/month infra</title>
-      <link>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</link>
-      <description>Hit 1M messages/sec with 8ms median latency on $680/month using SQLite, Go, and Redis — the exact stack WhatsApp used to justify a $19 billion buyout.</description>
-      <pubDate>Fri, 24 Apr 2026 23:11:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</guid>
     </item>
   </channel>
 </rss>
