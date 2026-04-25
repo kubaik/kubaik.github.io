@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 01:54:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 03:34:03 +0000</lastBuildDate>
+    <item>
+      <title>Debugging Mindset finally explained</title>
+      <link>https://kubaik.github.io/debugging-mindset-finally-explained/</link>
+      <description>Cut production outages by 60% with a debugging mindset that treats bugs as data points, not verdicts. Learn the Layered Hypothesis model, a real-world Python cache bug fix, and the eBPF tool that found a 400ms delay in a Go app.</description>
+      <pubDate>Sat, 25 Apr 2026 03:34:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-mindset-finally-explained/</guid>
+    </item>
     <item>
       <title>Freelance Developer Income: Realistic Numbers: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/freelance-developer-income-realistic-numbers-a-pra/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 61% and memory use by 12.5% in Python 3.13: new syntax, new timing API, and dropping legacy packages — benchmarks, fixes, and a deploy-ready example.</description>
       <pubDate>Fri, 24 Apr 2026 14:56:06 +0000</pubDate>
       <guid>https://kubaik.github.io/python-313-in-2026-new-syntax-speed-and-what-you-c/</guid>
-    </item>
-    <item>
-      <title>Why AI Fails to Personalize Education (and Fixes)</title>
-      <link>https://kubaik.github.io/why-ai-fails-to-personalize-education-and-fixes/</link>
-      <description>Fix AI education personalization failures: reduce churn by 15%, improve lesson relevance by 30%. Diagnose data, feedback loops, and model design issues.</description>
-      <pubDate>Fri, 24 Apr 2026 14:21:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-ai-fails-to-personalize-education-and-fixes/</guid>
     </item>
   </channel>
 </rss>
