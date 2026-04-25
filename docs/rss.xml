@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 03:43:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 04:33:58 +0000</lastBuildDate>
+    <item>
+      <title>Why your phone now knows who you’ll argue with next</title>
+      <link>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</link>
+      <description>Cut notification fatigue by 68% with a real-time social graph that respects attention budgets — 3.8 alerts/day, $40/month stack, and the failure modes that break the promise of tech changing human relationships.</description>
+      <pubDate>Sat, 25 Apr 2026 04:33:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</guid>
+    </item>
     <item>
       <title>Write human-sounding AI content in 4 steps — tested on 10 blogs</title>
       <link>https://kubaik.github.io/write-human-sounding-ai-content-in-4-steps-tested-/</link>
@@ -138,13 +145,6 @@
       <description>Land remote tech roles in 2026 without job boards: build a newsletter, launch OSS, or host virtual meetups to attract $150K offers—real systems, real outcomes, no fluff.</description>
       <pubDate>Fri, 24 Apr 2026 16:35:58 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-tech-jobs-in-2026-the-only-5-places-that-wo/</guid>
-    </item>
-    <item>
-      <title>Python profiling shows 98% time in &apos;unknown&apos; with cProfile — here&apos;s why</title>
-      <link>https://kubaik.github.io/python-profiling-shows-98-time-in-unknown-with-cpr/</link>
-      <description>Cut Python profiling time by 75% after fixing cProfile&apos;s &apos;???&apos; bug — learn the three real causes, how to rebuild Python with frame pointers, and how to prevent this in CI. Step-by-step diagnostic guide.</description>
-      <pubDate>Fri, 24 Apr 2026 15:05:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-profiling-shows-98-time-in-unknown-with-cpr/</guid>
     </item>
   </channel>
 </rss>
