@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 18:08:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 18:42:21 +0000</lastBuildDate>
+    <item>
+      <title>How Stripe Uses Idempotency Keys vs Exactly-Once Queues to Avoid Lost Payments</title>
+      <link>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</link>
+      <description>Process 1.7 billion requests/day with 280ms median latency — idempotency keys vs exactly-once queues compared for solo founders. Learn which pattern prevents lost payments and scales to 10K req/day without hiring an SRE.</description>
+      <pubDate>Sat, 25 Apr 2026 18:42:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</guid>
+    </item>
     <item>
       <title>Python 3.13 in 2026: Build a real-time API with 9ms latency</title>
       <link>https://kubaik.github.io/python-313-in-2026-build-a-real-time-api-with-9ms-/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident response time by 78% and saved $15k/month with real-time APM—OpenTelemetry, anomaly detection, and synthetic monitoring that prevent outages before users notice. Includes code, benchmarks, and pitfalls.</description>
       <pubDate>Sat, 25 Apr 2026 09:11:55 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-cut-incident-costs-70-with-real-time-apm/</guid>
-    </item>
-    <item>
-      <title>2026 Stack Showdown: Ruby on Rails vs Next.js for Bootstrapped Startups</title>
-      <link>https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/</link>
-      <description>Cut cloud costs by 63% and ship twice as fast: compare Rails 8 vs Next.js 15 for bootstrapped startups in 2026. Real benchmarks, concrete numbers, and the mistakes that cost weeks of runway.</description>
-      <pubDate>Sat, 25 Apr 2026 08:04:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/</guid>
     </item>
   </channel>
 </rss>
