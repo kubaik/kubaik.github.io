@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 20:07:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 20:34:11 +0000</lastBuildDate>
+    <item>
+      <title>12 lessons startups learn too late (and how to unlearn them)</title>
+      <link>https://kubaik.github.io/12-lessons-startups-learn-too-late-and-how-to-unle/</link>
+      <description>Cut user churn by 15% and reduce MTTR by 85% with these 12 production lessons startups learn too late — latency percentiles, connection pooling, staging realism, and more. Learn from real failures in Nairobi, Jakarta, and São Paulo.</description>
+      <pubDate>Sat, 25 Apr 2026 20:34:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/12-lessons-startups-learn-too-late-and-how-to-unle/</guid>
+    </item>
     <item>
       <title>Why my phone’s Wi‑Fi keeps dropping when I’m on public hotspots (and how to fix it)</title>
       <link>https://kubaik.github.io/why-my-phones-wifi-keeps-dropping-when-im-on-publi/</link>
@@ -138,13 +145,6 @@
       <description>Cut infra costs 40 % and slash build times 80 % with these 9 open-source projects that scaled to millions in revenue while remaining free to use. Real benchmarks, failure modes, and deployment scripts included.</description>
       <pubDate>Sat, 25 Apr 2026 10:39:31 +0000</pubDate>
       <guid>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</guid>
-    </item>
-    <item>
-      <title>Push Notifications Are Broken — Here’s How to Fix Them</title>
-      <link>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</link>
-      <description>Reduce duplicate push notifications by 80% with event-based delivery, Redis deduplication, and minimal payloads — measured on 2 fintech and healthtech apps with 1.2M+ users. Push notifications done right</description>
-      <pubDate>Sat, 25 Apr 2026 10:27:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-notifications-are-broken-heres-how-to-fix-the/</guid>
     </item>
   </channel>
 </rss>
