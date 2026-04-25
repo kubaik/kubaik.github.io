@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 15:02:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 15:12:29 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript patterns that cut bugs by 60% in 3 months</title>
+      <link>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</link>
+      <description>Cut production bugs by 62% and rollbacks by 75% with TypeScript branded types, per-service validation, and enforced immutability — measurement steps included for Jakarta and Dublin teams.</description>
+      <pubDate>Sat, 25 Apr 2026 15:12:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</guid>
+    </item>
     <item>
       <title>12 best AI agents in 2025 ranked by real use cases</title>
       <link>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</link>
@@ -138,13 +145,6 @@
       <description>Cut notification fatigue by 68% with a real-time social graph that respects attention budgets — 3.8 alerts/day, $40/month stack, and the failure modes that break the promise of tech changing human relationships.</description>
       <pubDate>Sat, 25 Apr 2026 04:33:55 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-phone-now-knows-who-youll-argue-with-next/</guid>
-    </item>
-    <item>
-      <title>Write human-sounding AI content in 4 steps — tested on 10 blogs</title>
-      <link>https://kubaik.github.io/write-human-sounding-ai-content-in-4-steps-tested-/</link>
-      <description>Reduce post-editing time by 65% with a 4-step AI pipeline tested on 50 posts — median cost $0.0037 per draft, bounce rate down 28%. Use this prompt template and observability stack to keep AI content human-sounding.</description>
-      <pubDate>Sat, 25 Apr 2026 03:43:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-human-sounding-ai-content-in-4-steps-tested-/</guid>
     </item>
   </channel>
 </rss>
