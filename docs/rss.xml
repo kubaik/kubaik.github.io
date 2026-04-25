@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 10:39:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 11:25:16 +0000</lastBuildDate>
+    <item>
+      <title>Run your own AI assistant for under $5/month — the real stack</title>
+      <link>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</link>
+      <description>AI assistant under month: if CPU &gt; 80% for 30 seconds, preventing ca. Practical guide with real examples.</description>
+      <pubDate>Sat, 25 Apr 2026 11:25:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</guid>
+    </item>
     <item>
       <title>The 9 open-source projects that banked millions (and what you can learn)</title>
       <link>https://kubaik.github.io/the-9-open-source-projects-that-banked-millions-an/</link>
@@ -138,13 +145,6 @@
       <description>Hit 1M messages/sec with 8ms median latency on $680/month using SQLite, Go, and Redis — the exact stack WhatsApp used to justify a $19 billion buyout.</description>
       <pubDate>Fri, 24 Apr 2026 23:11:52 +0000</pubDate>
       <guid>https://kubaik.github.io/scaled-a-50-million-user-messaging-app-with-700mon/</guid>
-    </item>
-    <item>
-      <title>How we cut production incidents by 70% with real-time APM</title>
-      <link>https://kubaik.github.io/how-we-cut-production-incidents-by-70-with-real-ti/</link>
-      <description>Cut production incidents by 70% with real-time APM — trace volume down 94%, detection time from 45 to 3 minutes, and SLO burn rate alerting that reduced false pages by 84%. Learn how we did it with OpenTelemetry, New Relic, and error-budget alerting, including the tools, code, and failures that shaped the solution.</description>
-      <pubDate>Fri, 24 Apr 2026 22:36:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-cut-production-incidents-by-70-with-real-ti/</guid>
     </item>
   </channel>
 </rss>
