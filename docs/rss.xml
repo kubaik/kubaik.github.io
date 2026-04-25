@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 21:08:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Apr 2026 21:32:42 +0000</lastBuildDate>
+    <item>
+      <title>AI Automation vs Process Mining: Cutting Costs in 2024</title>
+      <link>https://kubaik.github.io/ai-automation-vs-process-mining-cutting-costs-in-2/</link>
+      <description>AI automation cut invoice approval time from 14 days to 5 days but missed a 20-hour hidden loop in ERP logs, while process mining found it in two weeks. Learn how to choose between AI automation and process mining for cost cutting with real benchmarks, code examples, and ROI models.</description>
+      <pubDate>Sat, 25 Apr 2026 21:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-automation-vs-process-mining-cutting-costs-in-2/</guid>
+    </item>
     <item>
       <title>2026’s Breaches Proved One Thing: Compliance ≠ Security</title>
       <link>https://kubaik.github.io/2026s-breaches-proved-one-thing-compliance-securit/</link>
@@ -138,13 +145,6 @@
       <description>Cut user-reported issues by 88% with proactive monitoring — Prometheus alerts, synthetic checks, and a focus on user flows instead of infrastructure metrics</description>
       <pubDate>Sat, 25 Apr 2026 11:36:05 +0000</pubDate>
       <guid>https://kubaik.github.io/we-monitored-our-app-before-users-complained-heres/</guid>
-    </item>
-    <item>
-      <title>Run your own AI assistant for under $5/month — the real stack</title>
-      <link>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</link>
-      <description>AI assistant under month: if CPU &gt; 80% for 30 seconds, preventing ca. Practical guide with real examples.</description>
-      <pubDate>Sat, 25 Apr 2026 11:25:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/run-your-own-ai-assistant-for-under-5month-the-rea/</guid>
     </item>
   </channel>
 </rss>
