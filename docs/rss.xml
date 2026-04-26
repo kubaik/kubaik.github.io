@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 14:03:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 15:04:17 +0000</lastBuildDate>
+    <item>
+      <title>Automated 50 daily tasks with Python in 3 weeks — here’s what broke</title>
+      <link>https://kubaik.github.io/automated-50-daily-tasks-with-python-in-3-weeks-he/</link>
+      <description>Cut weekly manual work from 11.5 hours to 2.3 hours with Python automation on a $12 VM — idempotency keys, Redis Streams, and the mistakes that almost broke it.</description>
+      <pubDate>Sun, 26 Apr 2026 15:04:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/automated-50-daily-tasks-with-python-in-3-weeks-he/</guid>
+    </item>
     <item>
       <title>We scaled a URL shortener to 2 billion daily hits — here’s the blueprint</title>
       <link>https://kubaik.github.io/we-scaled-a-url-shortener-to-2-billion-daily-hits-/</link>
@@ -138,13 +145,6 @@
       <description>Reduced industrial downtime by 38% with digital twin technology — physics-based simulation, real-time calibration, and prescriptive guidance delivered 150ms response time and saved €420,000 annually in maintenance costs.</description>
       <pubDate>Sun, 26 Apr 2026 00:07:34 +0000</pubDate>
       <guid>https://kubaik.github.io/we-reduced-industrial-downtime-by-38-with-digital-/</guid>
-    </item>
-    <item>
-      <title>How to Build Passive Income as a Developer: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-to-build-passive-income-as-a-developer-a-pract/</link>
-      <description>Cut How to Build Passive Income as a Developer failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a st…</description>
-      <pubDate>Sat, 25 Apr 2026 23:33:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-to-build-passive-income-as-a-developer-a-pract/</guid>
     </item>
   </channel>
 </rss>
