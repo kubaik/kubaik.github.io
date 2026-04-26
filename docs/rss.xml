@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 04:05:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 05:35:01 +0000</lastBuildDate>
+    <item>
+      <title>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11%</title>
+      <link>https://kubaik.github.io/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/</link>
+      <description>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11% — compare eight cities with city-level PPP, rent, and equity using a single API endpoint and a $5 Fly.io instance.</description>
+      <pubDate>Sun, 26 Apr 2026 05:34:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/</guid>
+    </item>
     <item>
       <title>Why GitLab’s async-first teams ship 42% faster than everyone else</title>
       <link>https://kubaik.github.io/why-gitlabs-async-first-teams-ship-42-faster-than-/</link>
@@ -138,13 +145,6 @@
       <description>Cut personalized study plan latency from 6.8s to 420ms at 1M users — with exact Redis configs, connection pooling, and Kubernetes tuning — and prevent the cache storm that kills edtech platforms before Series A.</description>
       <pubDate>Sat, 25 Apr 2026 17:12:55 +0000</pubDate>
       <guid>https://kubaik.github.io/why-ai-generated-personalized-study-plans-stall-at/</guid>
-    </item>
-    <item>
-      <title>Algorithm Optimization: Practical Big O Analysis: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</link>
-      <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
-      <pubDate>Sat, 25 Apr 2026 16:36:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
     </item>
   </channel>
 </rss>
