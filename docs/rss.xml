@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 03:57:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 04:05:49 +0000</lastBuildDate>
+    <item>
+      <title>Why GitLab’s async-first teams ship 42% faster than everyone else</title>
+      <link>https://kubaik.github.io/why-gitlabs-async-first-teams-ship-42-faster-than-/</link>
+      <description>Ship code 42% faster with async-first workflows — real metrics from 45 engineers over 18 months, with GitHub automation and Slack SLA rules that cut lead time from 3.2 days to 1.9 days.</description>
+      <pubDate>Sun, 26 Apr 2026 04:05:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-gitlabs-async-first-teams-ship-42-faster-than-/</guid>
+    </item>
     <item>
       <title>13 hard-won lessons from building 3 SaaS products solo</title>
       <link>https://kubaik.github.io/13-hard-won-lessons-from-building-3-saas-products-/</link>
@@ -138,13 +145,6 @@
       <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
       <pubDate>Sat, 25 Apr 2026 16:36:07 +0000</pubDate>
       <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
-    </item>
-    <item>
-      <title>How we raised our starting offers by 25% with one spreadsheet</title>
-      <link>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</link>
-      <description>Raised starting offers by 25% with one spreadsheet — market data failed, but a Risk Ledger linking power outages to unpaid overtime worked. Uptime rose from 82% to 96% in six months.</description>
-      <pubDate>Sat, 25 Apr 2026 16:09:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</guid>
     </item>
   </channel>
 </rss>
