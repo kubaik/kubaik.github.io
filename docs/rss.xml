@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 11:24:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 11:37:03 +0000</lastBuildDate>
+    <item>
+      <title>Why GitHub Copilot writes code with 30% more bugs than a junior in 2024</title>
+      <link>https://kubaik.github.io/why-github-copilot-writes-code-with-30-more-bugs-t/</link>
+      <description>Cut production bugs by 30% by fixing Copilot’s loose types and token limits — exact prompts, version pinning, and CI gates that stop AI regressions before deployment.</description>
+      <pubDate>Sun, 26 Apr 2026 11:37:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-github-copilot-writes-code-with-30-more-bugs-t/</guid>
+    </item>
     <item>
       <title>Turn 5 hours of study into 90 minutes with these AI tools</title>
       <link>https://kubaik.github.io/turn-5-hours-of-study-into-90-minutes-with-these-a/</link>
@@ -138,13 +145,6 @@
       <description>AI automation cut invoice approval time from 14 days to 5 days but missed a 20-hour hidden loop in ERP logs, while process mining found it in two weeks. Learn how to choose between AI automation and process mining for cost cutting with real benchmarks, code examples, and ROI models.</description>
       <pubDate>Sat, 25 Apr 2026 21:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-automation-vs-process-mining-cutting-costs-in-2/</guid>
-    </item>
-    <item>
-      <title>2026’s Breaches Proved One Thing: Compliance ≠ Security</title>
-      <link>https://kubaik.github.io/2026s-breaches-proved-one-thing-compliance-securit/</link>
-      <description>In 2026, 88% of breaches exploited misconfigured trust boundaries after initial compromise—learn the fixes that cut dwell time from 204 days to 2.3 hours. Compliance ≠ security: SOC 2, ISO 27001, and PCI DSS reports failed to stop 3.8 billion customer records from leaking in the Snowflake breach.</description>
-      <pubDate>Sat, 25 Apr 2026 21:08:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-breaches-proved-one-thing-compliance-securit/</guid>
     </item>
   </channel>
 </rss>
