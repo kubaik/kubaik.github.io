@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 16:10:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 16:37:39 +0000</lastBuildDate>
+    <item>
+      <title>GitHub Copilot vs Cursor: Which AI Pair-Programmer Wins in 2025?</title>
+      <link>https://kubaik.github.io/github-copilot-vs-cursor-which-ai-pair-programmer-/</link>
+      <description>Cursor cuts debugging time by 30% and cloud costs by KES 200K/month — local embeddings, offline resilience, and fewer rejected lines compared to GitHub Copilot’s cloud model.</description>
+      <pubDate>Sun, 26 Apr 2026 16:37:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/github-copilot-vs-cursor-which-ai-pair-programmer-/</guid>
+    </item>
     <item>
       <title>What VCs Actually Look For When They Invest In Your Tech Startup</title>
       <link>https://kubaik.github.io/what-vcs-actually-look-for-when-they-invest-in-you/</link>
@@ -138,13 +145,6 @@
       <description>Ship code 42% faster with async-first workflows — real metrics from 45 engineers over 18 months, with GitHub automation and Slack SLA rules that cut lead time from 3.2 days to 1.9 days.</description>
       <pubDate>Sun, 26 Apr 2026 04:05:45 +0000</pubDate>
       <guid>https://kubaik.github.io/why-gitlabs-async-first-teams-ship-42-faster-than-/</guid>
-    </item>
-    <item>
-      <title>13 hard-won lessons from building 3 SaaS products solo</title>
-      <link>https://kubaik.github.io/13-hard-won-lessons-from-building-3-saas-products-/</link>
-      <description>Ship a SaaS in 15 minutes with these 13 solo-founder-tested tools — latency under 150ms, $50/month budget, no ops at 100 users</description>
-      <pubDate>Sun, 26 Apr 2026 03:57:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/13-hard-won-lessons-from-building-3-saas-products-/</guid>
     </item>
   </channel>
 </rss>
