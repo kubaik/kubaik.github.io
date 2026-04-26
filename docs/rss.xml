@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 00:07:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 01:14:47 +0000</lastBuildDate>
+    <item>
+      <title>Will AI Replace Software Developers? The Honest Answer: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/will-ai-replace-software-developers-the-honest-ans/</link>
+      <description>Cut Will AI Replace Software Developers? The Honest Answer failures by understanding connection pooling and retry logic — real benchmarks, common mistak…</description>
+      <pubDate>Sun, 26 Apr 2026 01:14:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/will-ai-replace-software-developers-the-honest-ans/</guid>
+    </item>
     <item>
       <title>We reduced industrial downtime by 38% with digital twins</title>
       <link>https://kubaik.github.io/we-reduced-industrial-downtime-by-38-with-digital-/</link>
@@ -138,13 +145,6 @@
       <description>Cut production bugs by 62% and rollbacks by 75% with TypeScript branded types, per-service validation, and enforced immutability — measurement steps included for Jakarta and Dublin teams.</description>
       <pubDate>Sat, 25 Apr 2026 15:12:25 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</guid>
-    </item>
-    <item>
-      <title>12 best AI agents in 2025 ranked by real use cases</title>
-      <link>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</link>
-      <description>Cut agent development time by 60% with 12 production-ready AI agent frameworks ranked by real use cases — latency, cost, and failure rate benchmarks included for Lagos, London, Manila, and Montreal teams.</description>
-      <pubDate>Sat, 25 Apr 2026 15:02:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</guid>
     </item>
   </channel>
 </rss>
