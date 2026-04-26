@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 19:31:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 19:43:38 +0000</lastBuildDate>
+    <item>
+      <title>Why Your 2026 Smart Home Keeps Guessing Wrong (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-your-2026-smart-home-keeps-guessing-wrong-and-/</link>
+      <description>Cut smart home AI failure rates by 75% with sensor drift fixes — occupancy prediction accuracy, persistent buffers, and federated learning under 10ms response time for users in Lagos, Nairobi, and Accra.</description>
+      <pubDate>Sun, 26 Apr 2026 19:43:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-2026-smart-home-keeps-guessing-wrong-and-/</guid>
+    </item>
     <item>
       <title>AI finally explained: use it to learn anything faster</title>
       <link>https://kubaik.github.io/ai-finally-explained-use-it-to-learn-anything-fast/</link>
@@ -138,13 +145,6 @@
       <description>Career changers over 30 land tech jobs 2.3x faster by swapping generic demos for real problems and reframing experience as value—not 12 months faster with the right portfolio projects and resume narratives for mid-career transitions</description>
       <pubDate>Sun, 26 Apr 2026 09:34:45 +0000</pubDate>
       <guid>https://kubaik.github.io/switching-careers-into-tech-later-in-life-and-why-/</guid>
-    </item>
-    <item>
-      <title>GitOps fails with &apos;ImagePullBackOff&apos; in Argo CD — and how to fix it</title>
-      <link>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</link>
-      <description>Fix Argo CD ImagePullBackOff with &apos;unauthorized&apos; errors in 60% of clusters by debugging secrets, not tokens — registry URL typos and missing RBAC cause 80% of cases. Automate GitOps credential rotation to cut deployment outages by 60% with Argo CD v2.9.3 and argocd-image-updater v0.12.2.</description>
-      <pubDate>Sun, 26 Apr 2026 08:55:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</guid>
     </item>
   </channel>
 </rss>
