@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 18:43:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 19:31:36 +0000</lastBuildDate>
+    <item>
+      <title>AI finally explained: use it to learn anything faster</title>
+      <link>https://kubaik.github.io/ai-finally-explained-use-it-to-learn-anything-fast/</link>
+      <description>Cut skill-learning time by 30–50% using AI as a personalized tutor — worked examples, 3 concrete benchmarks, and the prompts that actually work, not the ones that waste time.</description>
+      <pubDate>Sun, 26 Apr 2026 19:31:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-finally-explained-use-it-to-learn-anything-fast/</guid>
+    </item>
     <item>
       <title>Junior dev jobs are dead — here&apos;s the receipts</title>
       <link>https://kubaik.github.io/junior-dev-jobs-are-dead-heres-the-receipts/</link>
@@ -138,13 +145,6 @@
       <description>Fix Argo CD ImagePullBackOff with &apos;unauthorized&apos; errors in 60% of clusters by debugging secrets, not tokens — registry URL typos and missing RBAC cause 80% of cases. Automate GitOps credential rotation to cut deployment outages by 60% with Argo CD v2.9.3 and argocd-image-updater v0.12.2.</description>
       <pubDate>Sun, 26 Apr 2026 08:55:17 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</guid>
-    </item>
-    <item>
-      <title>Why your vector search returns empty results at scale (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-your-vector-search-returns-empty-results-at-sc/</link>
-      <description>Cut vector search recall failures by 90% with these fixes — normalization drift, index sharding, and quantization artifacts exposed with real numbers and tools like Milvus 2.3.3 and Sentence-BERT.</description>
-      <pubDate>Sun, 26 Apr 2026 08:06:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-vector-search-returns-empty-results-at-sc/</guid>
     </item>
   </channel>
 </rss>
