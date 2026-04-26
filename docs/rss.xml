@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 21:34:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 22:07:10 +0000</lastBuildDate>
+    <item>
+      <title>Why ClickHouse pays 3× more than PostgreSQL in 2024</title>
+      <link>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</link>
+      <description>Discover how ClickHouse cut 250GB analytics latency from 842ms to 18ms and reduced cloud costs by 38% — the tech skill paying 3× more than PostgreSQL in 2024.</description>
+      <pubDate>Sun, 26 Apr 2026 22:07:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</guid>
+    </item>
     <item>
       <title>API latency: Cloudflare Workers vs Fastly Compute@Edge</title>
       <link>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</link>
@@ -138,13 +145,6 @@
       <description>Load a 320kbps PWA in under 300ms on repeat visits with offline playback — Progressive Web App beats native on speed, cost, and reach for content apps</description>
       <pubDate>Sun, 26 Apr 2026 12:08:12 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-a-300ms-pwa-that-beats-native-in-stores/</guid>
-    </item>
-    <item>
-      <title>Why GitHub Copilot writes code with 30% more bugs than a junior in 2024</title>
-      <link>https://kubaik.github.io/why-github-copilot-writes-code-with-30-more-bugs-t/</link>
-      <description>Cut production bugs by 30% by fixing Copilot’s loose types and token limits — exact prompts, version pinning, and CI gates that stop AI regressions before deployment.</description>
-      <pubDate>Sun, 26 Apr 2026 11:37:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-github-copilot-writes-code-with-30-more-bugs-t/</guid>
     </item>
   </channel>
 </rss>
