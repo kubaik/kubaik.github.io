@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 11:37:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 12:08:15 +0000</lastBuildDate>
+    <item>
+      <title>Ship a 300ms PWA that beats native in stores</title>
+      <link>https://kubaik.github.io/ship-a-300ms-pwa-that-beats-native-in-stores/</link>
+      <description>Load a 320kbps PWA in under 300ms on repeat visits with offline playback — Progressive Web App beats native on speed, cost, and reach for content apps</description>
+      <pubDate>Sun, 26 Apr 2026 12:08:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-a-300ms-pwa-that-beats-native-in-stores/</guid>
+    </item>
     <item>
       <title>Why GitHub Copilot writes code with 30% more bugs than a junior in 2024</title>
       <link>https://kubaik.github.io/why-github-copilot-writes-code-with-30-more-bugs-t/</link>
@@ -138,13 +145,6 @@
       <description>Cut engineering velocity by 60% with 10-year-old monoliths — the real reasons senior devs quit Big Tech and how to spot them before joining, with concrete metrics from exit interviews and postmortems.</description>
       <pubDate>Sat, 25 Apr 2026 22:05:03 +0000</pubDate>
       <guid>https://kubaik.github.io/5-reasons-senior-devs-quit-big-tech-ranked-by-impa/</guid>
-    </item>
-    <item>
-      <title>AI Automation vs Process Mining: Cutting Costs in 2024</title>
-      <link>https://kubaik.github.io/ai-automation-vs-process-mining-cutting-costs-in-2/</link>
-      <description>AI automation cut invoice approval time from 14 days to 5 days but missed a 20-hour hidden loop in ERP logs, while process mining found it in two weeks. Learn how to choose between AI automation and process mining for cost cutting with real benchmarks, code examples, and ROI models.</description>
-      <pubDate>Sat, 25 Apr 2026 21:32:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-automation-vs-process-mining-cutting-costs-in-2/</guid>
     </item>
   </channel>
 </rss>
