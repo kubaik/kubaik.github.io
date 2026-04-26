@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 20:34:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 21:09:08 +0000</lastBuildDate>
+    <item>
+      <title>How Google’s SRE culture cut downtime by 90% — here’s the code</title>
+      <link>https://kubaik.github.io/how-googles-sre-culture-cut-downtime-by-90-heres-t/</link>
+      <description>Cut downtime by 91% with Google’s SRE culture — error budgets, progressive rollouts, and GitOps code you can run today. Includes real benchmarks, 2 code examples, and failure modes nobody mentions.</description>
+      <pubDate>Sun, 26 Apr 2026 21:09:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-googles-sre-culture-cut-downtime-by-90-heres-t/</guid>
+    </item>
     <item>
       <title>How RAG cut our hallucination rate from 18% to 2%</title>
       <link>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</link>
@@ -138,13 +145,6 @@
       <description>ime by 25–35% if you follow the process exa with AI Tools — use and when to use them.</description>
       <pubDate>Sun, 26 Apr 2026 11:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/turn-5-hours-of-study-into-90-minutes-with-these-a/</guid>
-    </item>
-    <item>
-      <title>Fine-tuning LLMs without a GPU finally explained</title>
-      <link>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-finally-explained/</link>
-      <description>Fine-tune a 7B LLM in 112 minutes on a $0 GPU: 4-bit quantization, LoRA, ONNX Runtime, and real benchmarks without CUDA</description>
-      <pubDate>Sun, 26 Apr 2026 10:41:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-finally-explained/</guid>
     </item>
   </channel>
 </rss>
