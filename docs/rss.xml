@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 07:22:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 08:06:39 +0000</lastBuildDate>
+    <item>
+      <title>Why your vector search returns empty results at scale (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-your-vector-search-returns-empty-results-at-sc/</link>
+      <description>Cut vector search recall failures by 90% with these fixes — normalization drift, index sharding, and quantization artifacts exposed with real numbers and tools like Milvus 2.3.3 and Sentence-BERT.</description>
+      <pubDate>Sun, 26 Apr 2026 08:06:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-vector-search-returns-empty-results-at-sc/</guid>
+    </item>
     <item>
       <title>Kafka isn&apos;t just for streams: a backend dev&apos;s survival guide</title>
       <link>https://kubaik.github.io/kafka-isnt-just-for-streams-a-backend-devs-surviva/</link>
@@ -138,13 +145,6 @@
       <description>Process 1.7 billion requests/day with 280ms median latency — idempotency keys vs exactly-once queues compared for solo founders. Learn which pattern prevents lost payments and scales to 10K req/day without hiring an SRE.</description>
       <pubDate>Sat, 25 Apr 2026 18:42:17 +0000</pubDate>
       <guid>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</guid>
-    </item>
-    <item>
-      <title>Python 3.13 in 2026: Build a real-time API with 9ms latency</title>
-      <link>https://kubaik.github.io/python-313-in-2026-build-a-real-time-api-with-9ms-/</link>
-      <description>Build a real-time Python 3.13 API with 9ms latency using FastAPI and a local LLM — verified benchmarks, Dockerfile, and observability tips that cut memory by 29% and cold starts by 45%.</description>
-      <pubDate>Sat, 25 Apr 2026 18:08:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-313-in-2026-build-a-real-time-api-with-9ms-/</guid>
     </item>
   </channel>
 </rss>
