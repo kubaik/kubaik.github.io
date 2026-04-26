@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 08:55:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 09:34:48 +0000</lastBuildDate>
+    <item>
+      <title>Switching Careers into Tech Later in Life (and Why You’re Not Too Late)</title>
+      <link>https://kubaik.github.io/switching-careers-into-tech-later-in-life-and-why-/</link>
+      <description>Career changers over 30 land tech jobs 2.3x faster by swapping generic demos for real problems and reframing experience as value—not 12 months faster with the right portfolio projects and resume narratives for mid-career transitions</description>
+      <pubDate>Sun, 26 Apr 2026 09:34:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/switching-careers-into-tech-later-in-life-and-why-/</guid>
+    </item>
     <item>
       <title>GitOps fails with &apos;ImagePullBackOff&apos; in Argo CD — and how to fix it</title>
       <link>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 75% and hosting cost by 80% using 11 scaling steps solo devs actually need — pagination, async queues, CDN moves, and when to swap SQLite for PostgreSQL.</description>
       <pubDate>Sat, 25 Apr 2026 19:41:48 +0000</pubDate>
       <guid>https://kubaik.github.io/the-11-scaling-steps-no-solo-dev-talks-about/</guid>
-    </item>
-    <item>
-      <title>How we went from 300ms to 12ms writes on Ethereum with calldata compression</title>
-      <link>https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/</link>
-      <description>Cut Ethereum calldata writes from 3,100 bytes to 1,860 bytes with zlib compression, reducing confirmation time from 18 seconds to 1.2 seconds and halving gas costs — plus the on-chain zlib address and fallback code you need.</description>
-      <pubDate>Sat, 25 Apr 2026 19:29:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/</guid>
     </item>
   </channel>
 </rss>
