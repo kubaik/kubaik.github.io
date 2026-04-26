@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 20:08:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 20:34:02 +0000</lastBuildDate>
+    <item>
+      <title>How RAG cut our hallucination rate from 18% to 2%</title>
+      <link>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</link>
+      <description>Cut hallucination rate from 18% to 2% with Retrieval-Augmented Generation — versioned pipelines, open-source models, and the exact stack that worked in production.</description>
+      <pubDate>Sun, 26 Apr 2026 20:33:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</guid>
+    </item>
     <item>
       <title>The 11 best multi-modal AI models in 2024</title>
       <link>https://kubaik.github.io/the-11-best-multi-modal-ai-models-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tune a 7B LLM in 112 minutes on a $0 GPU: 4-bit quantization, LoRA, ONNX Runtime, and real benchmarks without CUDA</description>
       <pubDate>Sun, 26 Apr 2026 10:41:06 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-finally-explained/</guid>
-    </item>
-    <item>
-      <title>We refactored legacy Python code with zero downtime — here’s how</title>
-      <link>https://kubaik.github.io/we-refactored-legacy-python-code-with-zero-downtim/</link>
-      <description>Cut deployment time by 87% and API latency by 82% while adding tests to a 300k-line legacy Python healthtech app — here’s how we did it with observability, blue-green deployments, and surgical refactoring.</description>
-      <pubDate>Sun, 26 Apr 2026 09:49:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/we-refactored-legacy-python-code-with-zero-downtim/</guid>
     </item>
   </channel>
 </rss>
