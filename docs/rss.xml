@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 06:27:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 07:22:40 +0000</lastBuildDate>
+    <item>
+      <title>Kafka isn&apos;t just for streams: a backend dev&apos;s survival guide</title>
+      <link>https://kubaik.github.io/kafka-isnt-just-for-streams-a-backend-devs-surviva/</link>
+      <description>U usage | 55% | | Broker memory usage | 6.2 with Apache Kafka — a consumer group, and that&apos;s technically true — unt.</description>
+      <pubDate>Sun, 26 Apr 2026 07:22:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-isnt-just-for-streams-a-backend-devs-surviva/</guid>
+    </item>
     <item>
       <title>Developer mental models finally explained</title>
       <link>https://kubaik.github.io/developer-mental-models-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Build a real-time Python 3.13 API with 9ms latency using FastAPI and a local LLM — verified benchmarks, Dockerfile, and observability tips that cut memory by 29% and cold starts by 45%.</description>
       <pubDate>Sat, 25 Apr 2026 18:08:27 +0000</pubDate>
       <guid>https://kubaik.github.io/python-313-in-2026-build-a-real-time-api-with-9ms-/</guid>
-    </item>
-    <item>
-      <title>iTerm2 vs Warp: Terminals for Speed and Sanity</title>
-      <link>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</link>
-      <description>Cut tab switching latency from 110ms to 35ms and reduce RAM usage from 600MB to 180MB with Warp vs iTerm2 — compare stability, SSH speed, and AI command suggestions to pick the right terminal for your workflow.</description>
-      <pubDate>Sat, 25 Apr 2026 17:35:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</guid>
     </item>
   </channel>
 </rss>
