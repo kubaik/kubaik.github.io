@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 08:06:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 08:55:21 +0000</lastBuildDate>
+    <item>
+      <title>GitOps fails with &apos;ImagePullBackOff&apos; in Argo CD — and how to fix it</title>
+      <link>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</link>
+      <description>Fix Argo CD ImagePullBackOff with &apos;unauthorized&apos; errors in 60% of clusters by debugging secrets, not tokens — registry URL typos and missing RBAC cause 80% of cases. Automate GitOps credential rotation to cut deployment outages by 60% with Argo CD v2.9.3 and argocd-image-updater v0.12.2.</description>
+      <pubDate>Sun, 26 Apr 2026 08:55:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-fails-with-imagepullbackoff-in-argo-cd-and-/</guid>
+    </item>
     <item>
       <title>Why your vector search returns empty results at scale (and how to fix it)</title>
       <link>https://kubaik.github.io/why-your-vector-search-returns-empty-results-at-sc/</link>
@@ -138,13 +145,6 @@
       <description>Cut Ethereum calldata writes from 3,100 bytes to 1,860 bytes with zlib compression, reducing confirmation time from 18 seconds to 1.2 seconds and halving gas costs — plus the on-chain zlib address and fallback code you need.</description>
       <pubDate>Sat, 25 Apr 2026 19:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/</guid>
-    </item>
-    <item>
-      <title>How Stripe Uses Idempotency Keys vs Exactly-Once Queues to Avoid Lost Payments</title>
-      <link>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</link>
-      <description>Process 1.7 billion requests/day with 280ms median latency — idempotency keys vs exactly-once queues compared for solo founders. Learn which pattern prevents lost payments and scales to 10K req/day without hiring an SRE.</description>
-      <pubDate>Sat, 25 Apr 2026 18:42:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</guid>
     </item>
   </channel>
 </rss>
