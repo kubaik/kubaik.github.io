@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 15:13:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 15:38:45 +0000</lastBuildDate>
+    <item>
+      <title>AI Side Hustles: Selling Prompts vs Fine-Tuning Models</title>
+      <link>https://kubaik.github.io/ai-side-hustles-selling-prompts-vs-fine-tuning-mod/</link>
+      <description>Sell prompts for $9 and earn $45/hr in 7 days or fine-tune a model for $25k/month if you already have a paying customer — real numbers from Kenya, Rwanda, and Nigeria side hustles.</description>
+      <pubDate>Sun, 26 Apr 2026 15:38:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-side-hustles-selling-prompts-vs-fine-tuning-mod/</guid>
+    </item>
     <item>
       <title>Remote tech jobs in 2026 are a scam unless you know this</title>
       <link>https://kubaik.github.io/remote-tech-jobs-in-2026-are-a-scam-unless-you-kno/</link>
@@ -138,13 +145,6 @@
       <description>Ship 40% faster with Test-Driven Development — write failing tests first, then minimal code to pass them, using pytest, Jest, and fast local feedback loops. Cut CI time by 75% with parallel runs and behavioral contracts that gate deployments.</description>
       <pubDate>Sun, 26 Apr 2026 02:07:48 +0000</pubDate>
       <guid>https://kubaik.github.io/test-driven-development-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Will AI Replace Software Developers? The Honest Answer: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/will-ai-replace-software-developers-the-honest-ans/</link>
-      <description>Cut Will AI Replace Software Developers? The Honest Answer failures by understanding connection pooling and retry logic — real benchmarks, common mistak…</description>
-      <pubDate>Sun, 26 Apr 2026 01:14:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/will-ai-replace-software-developers-the-honest-ans/</guid>
     </item>
   </channel>
 </rss>
