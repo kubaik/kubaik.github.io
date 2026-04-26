@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 09:49:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 10:41:10 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tuning LLMs without a GPU finally explained</title>
+      <link>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-finally-explained/</link>
+      <description>Fine-tune a 7B LLM in 112 minutes on a $0 GPU: 4-bit quantization, LoRA, ONNX Runtime, and real benchmarks without CUDA</description>
+      <pubDate>Sun, 26 Apr 2026 10:41:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tuning-llms-without-a-gpu-finally-explained/</guid>
+    </item>
     <item>
       <title>We refactored legacy Python code with zero downtime — here’s how</title>
       <link>https://kubaik.github.io/we-refactored-legacy-python-code-with-zero-downtim/</link>
@@ -138,13 +145,6 @@
       <description>Cut user churn by 15% and reduce MTTR by 85% with these 12 production lessons startups learn too late — latency percentiles, connection pooling, staging realism, and more. Learn from real failures in Nairobi, Jakarta, and São Paulo.</description>
       <pubDate>Sat, 25 Apr 2026 20:34:07 +0000</pubDate>
       <guid>https://kubaik.github.io/12-lessons-startups-learn-too-late-and-how-to-unle/</guid>
-    </item>
-    <item>
-      <title>Why my phone’s Wi‑Fi keeps dropping when I’m on public hotspots (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-my-phones-wifi-keeps-dropping-when-im-on-publi/</link>
-      <description>Cut captive-portal stalls by 68% with Wi‑Fi scan throttling and BSSID locking — tested on Android 14 and iOS 17 across $200 and $700 phones.</description>
-      <pubDate>Sat, 25 Apr 2026 20:07:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-my-phones-wifi-keeps-dropping-when-im-on-publi/</guid>
     </item>
   </channel>
 </rss>
