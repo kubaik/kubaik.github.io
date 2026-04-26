@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 17:13:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 17:35:38 +0000</lastBuildDate>
+    <item>
+      <title>Why Your FP Code Fails with Impure Functions (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-your-fp-code-fails-with-impure-functions-and-h/</link>
+      <description>Reduce functional programming errors by 80% with async purity rules — avoid 12ms latency spikes and 15 errors/month. functional programming concepts in practical code with promise handling and array methods</description>
+      <pubDate>Sun, 26 Apr 2026 17:35:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-fp-code-fails-with-impure-functions-and-h/</guid>
+    </item>
     <item>
       <title>What Silicon Valley Engineers Really Think About Big Tech</title>
       <link>https://kubaik.github.io/what-silicon-valley-engineers-really-think-about-b/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)</description>
       <pubDate>Sun, 26 Apr 2026 06:26:59 +0000</pubDate>
       <guid>https://kubaik.github.io/developer-mental-models-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11%</title>
-      <link>https://kubaik.github.io/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/</link>
-      <description>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11% — compare eight cities with city-level PPP, rent, and equity using a single API endpoint and a $5 Fly.io instance.</description>
-      <pubDate>Sun, 26 Apr 2026 05:34:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/</guid>
     </item>
   </channel>
 </rss>
