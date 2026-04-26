@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 19:43:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 20:08:42 +0000</lastBuildDate>
+    <item>
+      <title>The 11 best multi-modal AI models in 2024</title>
+      <link>https://kubaik.github.io/the-11-best-multi-modal-ai-models-in-2024/</link>
+      <description>Cut end-to-end latency from 47 seconds to 1.8 seconds with multi-modal AI models — compare 11 options for text, image, and audio processing, with real benchmarks and costs for 2024.</description>
+      <pubDate>Sun, 26 Apr 2026 20:08:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-11-best-multi-modal-ai-models-in-2024/</guid>
+    </item>
     <item>
       <title>Why Your 2026 Smart Home Keeps Guessing Wrong (and how to fix it)</title>
       <link>https://kubaik.github.io/why-your-2026-smart-home-keeps-guessing-wrong-and-/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment time by 87% and API latency by 82% while adding tests to a 300k-line legacy Python healthtech app — here’s how we did it with observability, blue-green deployments, and surgical refactoring.</description>
       <pubDate>Sun, 26 Apr 2026 09:49:54 +0000</pubDate>
       <guid>https://kubaik.github.io/we-refactored-legacy-python-code-with-zero-downtim/</guid>
-    </item>
-    <item>
-      <title>Switching Careers into Tech Later in Life (and Why You’re Not Too Late)</title>
-      <link>https://kubaik.github.io/switching-careers-into-tech-later-in-life-and-why-/</link>
-      <description>Career changers over 30 land tech jobs 2.3x faster by swapping generic demos for real problems and reframing experience as value—not 12 months faster with the right portfolio projects and resume narratives for mid-career transitions</description>
-      <pubDate>Sun, 26 Apr 2026 09:34:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/switching-careers-into-tech-later-in-life-and-why-/</guid>
     </item>
   </channel>
 </rss>
