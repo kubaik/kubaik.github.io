@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 12:56:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 13:49:55 +0000</lastBuildDate>
+    <item>
+      <title>Technical Writing finally explained</title>
+      <link>https://kubaik.github.io/technical-writing-finally-explained/</link>
+      <description>Cut onboarding time by 50% with executable technical writing — README-first, ADRs that live in the repo, and the 15-minute audit that fixes the most broken step first.</description>
+      <pubDate>Sun, 26 Apr 2026 13:49:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/technical-writing-finally-explained/</guid>
+    </item>
     <item>
       <title>Why Kotlin UI fails with &apos;Unresolved reference&apos; errors</title>
       <link>https://kubaik.github.io/why-kotlin-ui-fails-with-unresolved-reference-erro/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response latency by 40% and eliminate type-mixing bugs with TypeScript branded types — schema-driven generation, performance benchmarks, and the mistakes that waste hours of debugging.</description>
       <pubDate>Sat, 25 Apr 2026 23:09:20 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-branded-types-vs-nominal-typing-pattern/</guid>
-    </item>
-    <item>
-      <title>11 Time Management Hacks That Fixed My Productivity Drop</title>
-      <link>https://kubaik.github.io/11-time-management-hacks-that-fixed-my-productivit/</link>
-      <description>Cut context switches by 60% with these 11 time management hacks for developers—Linear + GitHub sync, Obsidian Tasks, GitLens, and the mistakes that break workflows.</description>
-      <pubDate>Sat, 25 Apr 2026 22:32:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/11-time-management-hacks-that-fixed-my-productivit/</guid>
     </item>
   </channel>
 </rss>
