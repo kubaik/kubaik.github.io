@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 05:35:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 06:27:03 +0000</lastBuildDate>
+    <item>
+      <title>Developer mental models finally explained</title>
+      <link>https://kubaik.github.io/developer-mental-models-finally-explained/</link>
+      <description>Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)</description>
+      <pubDate>Sun, 26 Apr 2026 06:26:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/developer-mental-models-finally-explained/</guid>
+    </item>
     <item>
       <title>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11%</title>
       <link>https://kubaik.github.io/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/</link>
@@ -138,13 +145,6 @@
       <description>Cut tab switching latency from 110ms to 35ms and reduce RAM usage from 600MB to 180MB with Warp vs iTerm2 — compare stability, SSH speed, and AI command suggestions to pick the right terminal for your workflow.</description>
       <pubDate>Sat, 25 Apr 2026 17:35:15 +0000</pubDate>
       <guid>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</guid>
-    </item>
-    <item>
-      <title>Why AI-generated personalized study plans stall at 100 users (and how to scale to 1M)</title>
-      <link>https://kubaik.github.io/why-ai-generated-personalized-study-plans-stall-at/</link>
-      <description>Cut personalized study plan latency from 6.8s to 420ms at 1M users — with exact Redis configs, connection pooling, and Kubernetes tuning — and prevent the cache storm that kills edtech platforms before Series A.</description>
-      <pubDate>Sat, 25 Apr 2026 17:12:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-ai-generated-personalized-study-plans-stall-at/</guid>
     </item>
   </channel>
 </rss>

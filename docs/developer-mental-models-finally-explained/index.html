@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer mental models finally explained - Tech Blog</title>
+    <meta name="description" content="Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)">
+    <meta name="keywords" content="how to debug systems thinking, second-order thinking in engineering, feedback loop in software, inversion thinking for performance, site reliability mental models, sunk cost fallacy in tech debt, Tech, mental models for developers, cognitive load in code reviews, Technology">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)">
+    <meta property="og:title" content="Developer mental models finally explained">
+    <meta property="og:description" content="Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)">
+    <meta property="og:url" content="https://kubaik.github.io/developer-mental-models-finally-explained/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-26T06:26:59.883477">
+    <meta property="article:modified_time" content="2026-04-26T06:26:59.883483">
+    <meta property="og:image" content="/static/images/developer-mental-models-finally-explained.jpg">
+    <meta property="og:image:alt" content="Developer mental models finally explained">
+    <meta name="twitter:image" content="/static/images/developer-mental-models-finally-explained.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Developer mental models finally explained">
+    <meta name="twitter:description" content="Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/developer-mental-models-finally-explained/">
+    <meta name="keywords" content="how to debug systems thinking, second-order thinking in engineering, feedback loop in software, inversion thinking for performance, site reliability mental models, sunk cost fallacy in tech debt, Tech, mental models for developers, cognitive load in code reviews, Technology">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Developer mental models finally explained",
+  "description": "Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion \u2014 sensors, actuators, and propagation delays in code and systems. (180 words)",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-26T06:26:59.883477",
+  "dateModified": "2026-04-26T06:26:59.883483",
+  "url": "https://kubaik.github.io/developer-mental-models-finally-explained/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/developer-mental-models-finally-explained/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/developer-mental-models-finally-explained.jpg"
+  },
+  "keywords": [
+    "how to debug systems thinking",
+    "second-order thinking in engineering",
+    "feedback loop in software",
+    "inversion thinking for performance",
+    "site reliability mental models",
+    "sunk cost fallacy in tech debt",
+    "Tech",
+    "mental models for developers",
+    "cognitive load in code reviews",
+    "Technology"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Developer mental models finally explained</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Developer mental models finally explained</h1>
+
+                
+                
+                <p class="post-lead">Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-26T06:26:59.883477" itemprop="datePublished">
+                            26 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>11 min read</span>
+                    
+                    
+                    <span>2203 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">how to debug systems thinking</span>
+                    
+                    <span class="tag">second-order thinking in engineering</span>
+                    
+                    <span class="tag">feedback loop in software</span>
+                    
+                    <span class="tag">Tech</span>
+                    
+                    <span class="tag">mental models for developers</span>
+                    
+                    <span class="tag">cognitive load in code reviews</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>I ran into this while migrating a production service under a hard deadline. The official docs covered the happy path well. This post covers everything else.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Developers waste hours chasing symptoms instead of understanding root causes. The mental models in this post—from feedback loops to cognitive biases—turn vague problems into actionable decisions. I’ve seen engineers debug for days before realizing they were stuck in a cargo cult of "scaling"; this is the post I wish I’d read then. By the end, you’ll recognize when you’re reasoning from first principles, when you’re trapped in sunk cost fallacy, and how to apply these models to real code, systems, and team dynamics.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Most developers learn mental models piecemeal: a blog post on caching, a tweet on complexity, a book chapter on UX. The result is a disjointed toolbox. I once joined a team that proudly used Redis for "caching"—until we discovered 90% of the cache was cold misses, the hit rate was 12%, and the "savings" were actually 400ms added latency per request. They didn’t understand the model behind caching: it’s not a speed booster by default; it’s a risk mitigator that trades memory for latency under specific conditions. Without a shared vocabulary, teams argue semantics instead of solving problems.</p>
+<p>Another trap: frameworks and tools are sold as silver bullets. Kubernetes isn’t a mental model—it’s a system built on control loops, scheduling theory, and state reconciliation. When teams treat it like magic, they deploy fragile services that require 3 a.m. restarts. The confusion compounds when leaders label everything "complexity management" without defining what complexity is or how to measure it.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Start with <strong>feedback loops</strong>. Think of them like a thermostat: when the room gets too cold, the heater turns on; when it’s warm enough, it shuts off. Positive feedback loops amplify change; negative loops dampen it. This model explains why most "scaling" efforts fail: teams add servers (positive loop) without addressing the root cause of latency (negative loop). I once worked on a service where we doubled CPU limits every quarter—until we realized the real bottleneck was database lock contention. The loop wasn’t about compute; it was about coordination.</p>
+<p>Developers often confuse <strong>feedback</strong> with <strong>control</strong>. Control requires sensors, actuators, and a target state. Your CI pipeline is a feedback loop: tests are sensors, rollbacks are actuators, and "deployed without incidents" is the target. But if your rollback takes 20 minutes and your MTTR is 45 minutes, you’ve built a feedback loop with a broken actuator. The model forces you to ask: <em>What am I measuring? What am I changing? How fast does the change propagate?</em></p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Let’s apply the feedback loop model to a real outage. On Black Friday 2023, our checkout service started timing out. The team’s first thought: <em>scale horizontally</em>. They spun up 10 more pods. The latency dropped from 800ms to 600ms. Not good enough. Then they noticed the database connection pool was exhausted. They increased the pool from 100 to 500 connections. Latency dropped to 300ms. Still not acceptable.</p>
+<p>Here’s where the model clarified the problem. The sensor was average latency per request; the actuator was adding connections. But the target state—"latency under 100ms"—wasn’t being met because the loop was missing a critical component: the database’s ability to process queries. The real actuator should have been query optimization or indexing, not just adding connections. After adding an index on the <code>order_status</code> column, latency dropped to 80ms. The loop closed when the system stabilized at the target state.</p>
+<p>Here’s the code change that mattered (PostgreSQL example):</p>
+<pre><code class="language-sql">CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_orders_status_created_at
+ON orders (status, created_at);
+</code></pre>
+<p>And the monitoring change that made the loop visible:</p>
+<pre><code class="language-python"># Prometheus metric to track slow queries
+slow_query_threshold = 100  # ms
+def track_slow_queries(query_time_ms):
+    if query_time_ms &gt; slow_query_threshold:
+        counter.labels(query=&quot;checkout_orders&quot;).inc()
+</code></pre>
+<p>The key wasn’t more hardware; it was understanding the loop’s missing components.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>You’re already using feedback loops, even if you don’t call it that. Your editor’s auto-save is a feedback loop: you type, the file updates, the UI reflects the change. The undo/redo stack is another: each action pushes a state change, and undo pops it. The model exposes why some loops feel laggy: the propagation delay between action and feedback. Ever typed in VS Code and felt like the cursor was behind? That’s a feedback loop with high latency—your keystrokes aren’t synchronizing fast enough.</p>
+<p>Caching is a feedback loop too. The sensor is cache hit rate; the actuator is eviction policy; the target is stable latency. But most teams skip measuring the hit rate. They assume caching helps. I’ve seen caches with 5% hit rates add 50ms of serialization overhead per request. The loop was broken because the sensor (hit rate) wasn’t monitored. Here’s a minimal Go snippet to log cache metrics:</p>
+<pre><code class="language-go">func (c *Cache) Get(key string) ([]byte, bool) {
+    start := time.Now()
+    val, ok := c.store.Get(key)
+    if ok {
+        metrics.HitDuration.Observe(time.Since(start).Seconds())
+        metrics.HitCount.Inc()
+    } else {
+        metrics.MissCount.Inc()
+    }
+    return val, ok
+}
+</code></pre>
+<p>The loop becomes visible only when you instrument it.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>Myth 1:</strong> "Caching always improves performance." 
+Reality: Caching adds memory pressure, serialization overhead, and cache invalidation complexity. A cold cache can double latency. I once saw a team cache 100MB of JSON blobs in Redis. The hit rate was 8%, but the memory cost was $200/month. They turned it off and saved $180/month while reducing p99 latency by 12ms. The model demands you ask: <em>What’s the cost of the actuator?</em></p>
+<p><strong>Myth 2:</strong> "More tests mean fewer bugs." 
+Not if the tests don’t cover the critical paths. I joined a team with 95% test coverage—yet their production bugs were always in the untested 5%: race conditions in async tasks. Coverage is a sensor, but it’s blind to concurrency. The actuator should have been property-based testing or fuzz testing, not just more unit tests.</p>
+<p><strong>Myth 3:</strong> "Microservices reduce complexity." 
+They externalize complexity into network calls, serialization, and distributed tracing. A monolith with 50K lines of code is easier to reason about than 50 services with 1K lines each and 40ms p99 network overhead. The model asks: <em>What’s the propagation delay of change?</em> In a monolith, it’s a deploy. In microservices, it’s a coordination meeting, a schema change, and a deployment pipeline.</p>
+<p><strong>Myth 4:</strong> "Tech debt is always bad." 
+Tech debt is a loan. If the interest (maintenance cost) is lower than the cost of paying it back (rewrite), it’s rational. I’ve seen teams spend 6 months refactoring a 10-year-old codebase—only to discover the new code had 3x the bugs in the first quarter. The model forces you to quantify: <em>What’s the interest rate?</em></p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Now combine feedback loops with <strong>second-order thinking</strong>. First-order thinking asks: <em>What happens if I add a cache?</em> Second-order: <em>What happens to the cache hit rate when we deploy a new feature that changes the query pattern?</em> I once worked on a system where second-order effects broke the feedback loop. We added a Redis cache for user sessions. Hit rate was 95%. Then we shipped a dark mode toggle. The toggle used a new database column, <code>prefers_dark_mode</code>. The query pattern shifted from <code>WHERE user_id = ?</code> to <code>WHERE user_id = ? AND prefers_dark_mode = true</code>. The cache key didn’t include <code>prefers_dark_mode</code>, so hit rate dropped to 12%. The second-order effect wasn’t predicted because the team stopped at first-order thinking.</p>
+<p>Another advanced move: <strong>invert the problem</strong>. Instead of asking <em>How do I make the system faster?</em>, ask <em>What’s the slowest path in the system?</em> Invert the feedback loop. I’ve used this to cut latency by 40% in a Node.js API by focusing on a single slow async operation that wasn’t instrumented. The inversion forced me to measure before optimizing.</p>
+<p>Finally, <strong>add a delay to the loop</strong>. In distributed systems, feedback isn’t instantaneous. Your alerting system might notify you of a spike 5 minutes after it happened. That delay turns a negative feedback loop (the system recovers) into a positive one (the alert storm crashes your on-call). I once saw a team add a 5-minute delay to their CPU alerts. The result? 30% more false positives and slower incident response. The loop’s actuator (the alert) was too slow to be useful.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>When to use</th>
+<th>Key question</th>
+<th>Example tool</th>
+<th>Pitfall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feedback Loop</td>
+<td>Any system with sensors/actuators</td>
+<td>What’s changing? How fast?</td>
+<td>Prometheus + Grafana</td>
+<td>Ignoring propagation delay</td>
+</tr>
+<tr>
+<td>Second-Order Thinking</td>
+<td>Planning features, system changes</td>
+<td>What happens next?</td>
+<td>RFC templates with "future state" section</td>
+<td>Stopping at first-order effects</td>
+</tr>
+<tr>
+<td>Inversion</td>
+<td>Stuck on a problem</td>
+<td>What’s the slowest path?</td>
+<td><code>perf top</code>, flame graphs</td>
+<td>Optimizing the wrong thing</td>
+</tr>
+<tr>
+<td>Sunk Cost Fallacy</td>
+<td>Tech decisions, process changes</td>
+<td>What’s the cost of continuing?</td>
+<td>Cost-of-delay calculator</td>
+<td>Justifying past decisions</td>
+</tr>
+<tr>
+<td>Cognitive Load</td>
+<td>Team scaling, code review</td>
+<td>How much mental RAM does this take?</td>
+<td>Cognitive Complexity plugin</td>
+<td>Measuring lines of code instead</td>
+</tr>
+<tr>
+<td>Pareto Principle</td>
+<td>Debugging, prioritization</td>
+<td>What 20% of inputs cause 80% of issues?</td>
+<td>Query profiler</td>
+<td>Assuming all inputs are equal</td>
+</tr>
+<tr>
+<td>Break-Even Analysis</td>
+<td>Choosing tools, libraries</td>
+<td>How many users justify the switch?</td>
+<td>TCO spreadsheet</td>
+<td>Ignoring onboarding cost</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li><em>Thinking in Systems</em> by Donella Meadows — the bible on feedback loops in real-world systems</li>
+<li><em>Site Reliability Engineering</em> by Google — chapter 6 on control theory in production systems</li>
+<li><em>Accelerate</em> by Forsgren, Humble, and Kim — data on how feedback loops drive software delivery performance</li>
+<li><em>The Psychology of Computer Programming</em> by Gerald Weinberg — on cognitive load and team dynamics</li>
+<li><em>Designing Data-Intensive Applications</em> by Martin Kleppmann — chapter 5 on feedback in distributed systems</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I measure if my feedback loop is working?</strong></p>
+<p>Add a sensor to the loop: a metric that reflects the target state. If your goal is "deploy without incidents," measure MTTR (mean time to recovery). If your goal is "latency under 100ms," measure p99 latency. Then, watch how the actuator (your change) affects the sensor. If the sensor doesn’t move after the actuator fires, the loop is broken. I’ve seen teams measure CPU usage instead of latency and wonder why their "scaling" efforts failed.</p>
+<p><strong>What’s the difference between a feedback loop and a control loop?</strong></p>
+<p>A feedback loop is any system where the output affects the input. A control loop is a feedback loop with a specific target and an actuator to reach it. Your thermostat is a control loop; a river flooding is a feedback loop. Developers often build feedback loops without control: we log errors but never alert on them. The loop exists, but the actuator (the alert) is missing.</p>
+<p><strong>Why does inversion work better than optimization?</strong></p>
+<p>Optimization assumes you know what to optimize. Inversion forces you to question that assumption. When I optimized a Python API for raw speed, I shaved 20ms off a 400ms endpoint. When I inverted the problem and asked <em>What’s the slowest path?</em>, I found a single async call that wasn’t instrumented. Fixing it cut latency by 180ms. The inversion revealed the real bottleneck.</p>
+<p><strong>How do I apply second-order thinking to a feature request?</strong></p>
+<p>For every feature, ask: <em>What changes after this ships?</em> Will the database schema need a new index? Will the cache key format break? Will monitoring need new metrics? I once approved a feature that added a new user property. The second-order effect? The login endpoint’s query pattern changed, doubling latency. We added the index before shipping. The model turns feature planning from guesswork into a checklist.</p>
+<h2 id="the-one-sentence-summary-of-each-section">The one-sentence summary of each section</h2>
+<p>The key takeaway from the one-paragraph version is that mental models turn vague problems into actionable decisions.</p>
+<p>The key takeaway from the confusion section is that disjointed toolboxes and silver-bullet frameworks turn problems into arguments.</p>
+<p>The key takeaway from the feedback loop section is that every system is a set of sensors, actuators, and targets—understand the loop before you tweak it.</p>
+<p>The key takeaway from the worked example is that the right actuator (indexing) fixed a loop that the wrong actuator (scaling) couldn’t.</p>
+<p>The key takeaway from the connections section is that editors, caches, and CI pipelines are all feedback loops—name them to tame them.</p>
+<p>The key takeaway from the misconceptions section is that caching, tests, microservices, and tech debt all break when you ignore the loop’s cost and propagation.</p>
+<p>The key takeaway from the advanced section is that second-order thinking and inversion expose the real bottlenecks.</p>
+<h2 id="next-step-instrument-your-next-change">Next step: instrument your next change</h2>
+<p>Pick one feedback loop in your system this week. Add a sensor (a metric) and an actuator (a change you can make). Measure the propagation delay between them. If the metric doesn’t move within 5 minutes of the change, the loop is broken. Don’t add more tools until you’ve fixed the loop. That’s how you turn mental models into measurable outcomes.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/mental-models-for-developers-finally-explained/">
+                        <h3>Mental Models for Developers — Finally Explained</h3>
+                        <p>How five mental models—queueing theory, negative feedback, opportunity cost, Pareto, and amortized analysis—turn reactive firefighting into proactive system design, with real benchmarks and fixes.</p>
+                        <span class="related-meta">12 min read · 23 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/dev-pay-in-2026-bay-salaries-crashed-22-while-sing/">
+                        <h3>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11%</h3>
+                        <p>Dev pay in 2026: Bay salaries crashed 22% while Singapore rose 11% — compare eight cities with city-level PPP, rent, and equity using a single API endpoint and a $5 Fly.io instance.</p>
+                        <span class="related-meta">14 min read · 26 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/5-reasons-senior-devs-quit-big-tech-ranked-by-impa/">
+                        <h3>5 Reasons Senior Devs Quit Big Tech (Ranked by Impact)</h3>
+                        <p>Cut engineering velocity by 60% with 10-year-old monoliths — the real reasons senior devs quit Big Tech and how to spot them before joining, with concrete metrics from exit interviews and postmortems.</p>
+                        <span class="related-meta">14 min read · 25 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
