@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 17:35:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 18:09:14 +0000</lastBuildDate>
+    <item>
+      <title>Write blog posts 80% faster with AI that still sound human</title>
+      <link>https://kubaik.github.io/write-blog-posts-80-faster-with-ai-that-still-soun/</link>
+      <description>Cut draft time by 80% and edit time by 77% with AI that still sounds human — comparison table, code samples, and a free CLI tool included. AI voice cloning for content creation without robotic tone.</description>
+      <pubDate>Sun, 26 Apr 2026 18:09:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-blog-posts-80-faster-with-ai-that-still-soun/</guid>
+    </item>
     <item>
       <title>Why Your FP Code Fails with Impure Functions (and how to fix it)</title>
       <link>https://kubaik.github.io/why-your-fp-code-fails-with-impure-functions-and-h/</link>
@@ -138,13 +145,6 @@
       <description>U usage | 55% | | Broker memory usage | 6.2 with Apache Kafka — a consumer group, and that&apos;s technically true — unt.</description>
       <pubDate>Sun, 26 Apr 2026 07:22:36 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-isnt-just-for-streams-a-backend-devs-surviva/</guid>
-    </item>
-    <item>
-      <title>Developer mental models finally explained</title>
-      <link>https://kubaik.github.io/developer-mental-models-finally-explained/</link>
-      <description>Cut incident MTTR by 40% using feedback loops, second-order thinking, and inversion — sensors, actuators, and propagation delays in code and systems. (180 words)</description>
-      <pubDate>Sun, 26 Apr 2026 06:26:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/developer-mental-models-finally-explained/</guid>
     </item>
   </channel>
 </rss>
