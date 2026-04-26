@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Apr 2026 23:33:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 00:07:37 +0000</lastBuildDate>
+    <item>
+      <title>We reduced industrial downtime by 38% with digital twins</title>
+      <link>https://kubaik.github.io/we-reduced-industrial-downtime-by-38-with-digital-/</link>
+      <description>Reduced industrial downtime by 38% with digital twin technology — physics-based simulation, real-time calibration, and prescriptive guidance delivered 150ms response time and saved €420,000 annually in maintenance costs.</description>
+      <pubDate>Sun, 26 Apr 2026 00:07:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/we-reduced-industrial-downtime-by-38-with-digital-/</guid>
+    </item>
     <item>
       <title>How to Build Passive Income as a Developer: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-to-build-passive-income-as-a-developer-a-pract/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent development time by 60% with 12 production-ready AI agent frameworks ranked by real use cases — latency, cost, and failure rate benchmarks included for Lagos, London, Manila, and Montreal teams.</description>
       <pubDate>Sat, 25 Apr 2026 15:02:38 +0000</pubDate>
       <guid>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</guid>
-    </item>
-    <item>
-      <title>Top-down vs Bottom-up: Two Ways to Read Code</title>
-      <link>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</link>
-      <description>Cut new-hire onboarding time by 60% with a top-down code reading strategy — architecture maps, READMEs, and the mistakes that waste days debugging legacy code.</description>
-      <pubDate>Sat, 25 Apr 2026 14:02:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</guid>
     </item>
   </channel>
 </rss>
