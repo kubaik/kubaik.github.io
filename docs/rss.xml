@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 02:07:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 03:57:46 +0000</lastBuildDate>
+    <item>
+      <title>13 hard-won lessons from building 3 SaaS products solo</title>
+      <link>https://kubaik.github.io/13-hard-won-lessons-from-building-3-saas-products-/</link>
+      <description>Ship a SaaS in 15 minutes with these 13 solo-founder-tested tools — latency under 150ms, $50/month budget, no ops at 100 users</description>
+      <pubDate>Sun, 26 Apr 2026 03:57:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-hard-won-lessons-from-building-3-saas-products-/</guid>
+    </item>
     <item>
       <title>Test-Driven Development finally explained</title>
       <link>https://kubaik.github.io/test-driven-development-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Raised starting offers by 25% with one spreadsheet — market data failed, but a Risk Ledger linking power outages to unpaid overtime worked. Uptime rose from 82% to 96% in six months.</description>
       <pubDate>Sat, 25 Apr 2026 16:09:06 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</guid>
-    </item>
-    <item>
-      <title>The Tech Industry&apos;s Mental Health Crisis: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/the-tech-industrys-mental-health-crisis-a-practica/</link>
-      <description>Cut The Tech Industry&apos;s Mental Health Crisis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step…</description>
-      <pubDate>Sat, 25 Apr 2026 15:36:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-tech-industrys-mental-health-crisis-a-practica/</guid>
     </item>
   </channel>
 </rss>
