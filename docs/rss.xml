@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 22:07:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 22:33:44 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech is a dead end for most engineers</title>
+      <link>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</link>
+      <description>Big Tech engineers quit for &apos;better culture&apos; but end up debugging memory leaks in Rust for three customers. Here’s how 12 engineers I mentored chose wisely—and how to pick your next move with data, not hype.</description>
+      <pubDate>Sun, 26 Apr 2026 22:33:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</guid>
+    </item>
     <item>
       <title>Why ClickHouse pays 3× more than PostgreSQL in 2024</title>
       <link>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Fix &apos;Unresolved reference&apos; errors in Kotlin Android projects. Enable View Binding, clear build cache, and avoid XML typos to ensure smooth development.</description>
       <pubDate>Sun, 26 Apr 2026 12:56:00 +0000</pubDate>
       <guid>https://kubaik.github.io/why-kotlin-ui-fails-with-unresolved-reference-erro/</guid>
-    </item>
-    <item>
-      <title>Ship a 300ms PWA that beats native in stores</title>
-      <link>https://kubaik.github.io/ship-a-300ms-pwa-that-beats-native-in-stores/</link>
-      <description>Load a 320kbps PWA in under 300ms on repeat visits with offline playback — Progressive Web App beats native on speed, cost, and reach for content apps</description>
-      <pubDate>Sun, 26 Apr 2026 12:08:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-300ms-pwa-that-beats-native-in-stores/</guid>
     </item>
   </channel>
 </rss>

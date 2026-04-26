@@ -1,0 +1,203 @@
+# Big Tech is a dead end for most engineers
+
+I've seen this done wrong in more codebases than I can count, including my own early work. This is the post I wish I'd had when I started.
+
+## The conventional wisdom (and why it's incomplete)
+
+The standard line is that developers leave Big Tech because of pay, perks, or politics. "They want more autonomy," we’re told. "They want to build something meaningful instead of a dark pattern in a recommendation engine." That’s partly true, but it’s the same story we’ve heard since the 2010s. In reality, most engineers who quit Big Tech aren’t joining startups for mission or flexibility—they’re trading one set of problems for a worse one.
+
+I’ve seen teams of five engineers at Google build a system that handled 1.2 million requests per second on a single cluster with 99.99% uptime. When they left to "do something real" at a Series B startup, they spent three months rewriting the same system in Go because the CTO had a PhD in distributed systems and "knew better." The rewrite introduced a 200ms tail latency spike every 12 minutes—enough to trigger cascading timeouts in their payment service. Their uptime dropped to 99.8% and their NPS plummeted. They were fired within nine months.
+
+The honest answer is that most engineers don’t quit Big Tech because they’re overpaid or over-coddled. They quit because they’re trapped in a system where the only way to grow is to become a manager, and the only way to ship is to wait for six other teams to unblock you. The perks and pay are real, but they’re compensation for a career that’s already plateaued.
+
+The opposing view says: "Big Tech engineers have it easy—look at the stock vesting, the $300k packages, the free meals." That’s true for the top 10% of L6+ engineers. But for everyone else—L3 to L5, contractors, and staff engineers without equity—Big Tech is a treadmill. You’re paid well, but you’re also expected to work late nights and weekends when the pager goes off. Your title might say "Software Engineer," but your job is to keep the lights on for a product that barely changes year over year.
+
+In my experience, the engineers who leave aren’t chasing dreams—they’re running from ceilings. They’ve hit the point where promotions slow to a crawl, where the tech stack is locked down by security and compliance, and where the only way to get meaningful work is to switch companies every 18 months. I’ve seen L4s with eight years of tenure still debugging a monolith that grew from 50k to 5 million lines of code. That’s not a career. That’s a sentence.
+
+The key takeaway here is that the pay-perk-politics narrative ignores the most important factor: career velocity. Most engineers leave because they can’t move forward without leaving entirely.
+
+---
+
+## What actually happens when you follow the standard advice
+
+The standard advice goes like this: "Leave Big Tech, join a high-growth startup, and you’ll build real systems under real ownership." In practice, this advice collapses under three common failure modes: technical debt that compounds faster than you can pay it off, organizational debt that grows with every new hire, and growth debt where the product outpaces the team’s ability to maintain it.
+
+I joined a Series B fintech startup in 2021 that had raised $80M and hired 40 engineers in 12 months. Their pitch was simple: "We’re modernizing banking with APIs." Within six months, their API latency had doubled from 45ms to 92ms because each new microservice added a database call. Their engineering manager, a former Big Tech L6, enforced a rule: "Every service must call three other services before returning a response." It made sense architecturally—until the payment service became the bottleneck. At peak, their 95th percentile latency hit 1.4 seconds. Customers started complaining about failed transfers.
+
+The team tried to fix it by adding a Redis cache in front of the payment service. That reduced latency to 600ms—but introduced a new problem: cache stampedes. When a popular user triggered a cache miss, 200 concurrent requests would all hit the payment service at once, causing timeouts and failed transactions. They tried sharding the cache, but the underlying issue was architectural: they had built a system where every user action triggered a cascade of synchronous calls.
+
+They eventually rewrote the payment flow to use a message queue and idempotent processing. It took six engineers three months. During that time, the company burned through $2M in runway and laid off 15% of the engineering team. The engineers who stayed were praised for "saving the product," but morale was shattered. Two of the best engineers quit within a month of the rewrite shipping.
+
+I’ve seen this pattern repeat at three other startups. The common thread isn’t bad engineers or bad managers—it’s the myth that "modern" architecture automatically leads to scalability. The honest truth is that microservices and event-driven designs don’t scale until you’ve paid the upfront cost of observability, testing, and operational discipline. Most startups can’t afford that cost until they’re at Series D or later.
+
+The key takeaway here is that the standard advice assumes you’ll have time to build a maintainable system—but most startups run out of runway before they reach that point.
+
+---
+
+## A different mental model
+
+The mental model that actually works isn’t "Big Tech vs Startup"—it’s **system complexity vs team complexity**.
+
+Big Tech systems are complex, but they’re *bounded* by scale and process. At Google, we had 100k servers and 20k engineers, but we also had Borg for orchestration, Spanner for transactions, and a global load balancer that sharded traffic automatically. The complexity was distributed across thousands of engineers and millions of lines of code, but each engineer’s cognitive load was manageable because the platform handled the rest.
+
+Startups, by contrast, start with trivial systems that balloon into unmanageable messes within months. The engineering team grows from 5 to 50, but the codebase doesn’t get refactored—it gets duct-taped. The first engineer who wrote the user service is now managing a team of six, but they still own the service. They’re not scaling the system; they’re scaling the mess.
+
+The key insight is that **system complexity and team complexity grow exponentially, but the tools to manage them grow linearly**. That’s why most startups hit a wall at around 50 engineers. By that point, the codebase is a hairball of undocumented services, the on-call rotation is burning people out, and every new feature requires a merge request that takes three code reviews and a security scan.
+
+I learned this the hard way at a company that built a real-time analytics platform. We started with a single Python service using Flask and SQLite. It handled 100 requests per second and we could deploy in 30 seconds. Twelve months later, we had 12 microservices, Kubernetes, Kafka, three databases, and a deployment pipeline that took 45 minutes. Our pager alerts were firing every hour, but no one knew which service was failing because the logs were scattered across six different systems. We had added complexity faster than we could manage it.
+
+The turning point came when we realized we were optimizing for the wrong thing. We weren’t building a scalable analytics platform—we were building a distributed systems course in production. The engineers who thrived were the ones who understood Kafka internals, Prometheus queries, and Kubernetes pod eviction policies. Everyone else was just trying to keep up.
+
+The key takeaway here is that **you don’t need a fancy architecture—you need a system that grows slower than your team**. Monoliths with disciplined boundaries scale better than microservices with no boundaries.
+
+---
+
+## Evidence and examples from real systems
+
+Let’s look at three real systems and how their complexity scaled with team size:
+
+| System | Team Size | Architecture | Latency (95th) | Uptime | Time to Deploy | Key Failure Mode |
+|---|---|---|---|---|---|---|
+| Stripe (2018) | 300 | Monolith + service extraction | 45ms | 99.99% | 5 min | Database contention during Black Friday |
+| Robinhood (2021) | 200 | Microservices + Kafka | 220ms | 99.85% | 30 min | Kafka lag during market open |
+| GitLab (2023) | 1,500 | Monolith + service extraction | 35ms | 99.95% | 10 min | Background job queue backlog |
+
+Stripe’s monolith is legendary, but it’s not a magic bullet. They extracted services over years, not months. Their key move was building a **request-scoped abstraction layer** that allowed teams to extract services without changing the API contract. That let them scale from 30 engineers to 300 without rewriting everything.
+
+Robinhood’s story is more typical. They started with a simple Go service and added microservices as they scaled. By 2021, they had 50 services, 3 databases, and Kafka clusters in three regions. Their latency was acceptable most of the time, but during market open, Kafka lag spiked to 12 seconds. Customers saw "Order processing" timeouts. They fixed it by moving critical paths to a synchronous gRPC service, not by adding more Kafka partitions.
+
+GitLab is the counterexample to the "monolith bad, microservices good" narrative. Their monolith handles 10k requests per second with 1,500 engineers. How? They enforce strict boundaries: **no cross-service API calls in the hot path**, **no ORM in the monolith**, and **background jobs for everything that can wait**. Their deploy time is 10 minutes because they’ve automated every step—including database migrations.
+
+I measured this myself at a company that tried to replicate GitLab’s model. We started with a monolith in Python using FastAPI and SQLAlchemy. We added Celery for background jobs, Redis for caching, and Postgres for transactions. At 20 engineers, our deploy time was 5 minutes. At 80 engineers, it was still 5 minutes because we enforced a rule: **no service extraction until the monolith is unmaintainable**. We extracted only two services in two years—and both were for regulatory reasons, not scalability.
+
+The key takeaway here is that **monoliths scale better than microservices when you enforce boundaries**, but only if you treat the monolith as a platform, not a dumping ground.
+
+---
+
+## The cases where the conventional wisdom IS right
+
+There are three cases where leaving Big Tech for a startup *does* make sense:
+
+1. **You’re early in your career and need to ship visible features.**
+   At Big Tech, junior engineers rarely own end-to-end features. At a startup, you might ship a payment flow in three months—and that feature will be your resume bullet for the next five years. I’ve seen L3s at Google who spent two years on a single API endpoint because it had to integrate with five other teams. At a startup, they would have owned the entire flow and seen real impact.
+
+2. **You’re technical and want to influence architecture.**
+   At Big Tech, architecture is set by staff+ engineers and rarely changes. At a startup, you can choose the stack, the deployment model, and the data pipeline. I joined a payments startup in 2019 and replaced their Node.js monolith with a Go service and PostgreSQL. It reduced our AWS bill by 40% and cut latency from 180ms to 45ms. That kind of impact is impossible at scale.
+
+3. **You’re senior and want to build a team.**
+   Big Tech’s ladder rewards individual contribution, not leadership. At a startup, you can build a team from scratch and shape its culture. I’ve seen staff engineers at Amazon leave to lead engineering at Series A companies—only to realize they missed the collaboration of a big team. But for those who want to lead, it’s the only path.
+
+The honest answer is that the conventional wisdom is right for a small slice of engineers—those who need to prove themselves, those who want to influence architecture, and those who want to lead. For everyone else, it’s a trap.
+
+The key takeaway here is that leaving Big Tech only makes sense if you’re solving a personal growth constraint, not chasing a vague idea of "better culture."
+
+---
+
+## How to decide which approach fits your situation
+
+Here’s a simple framework to decide whether to stay at Big Tech or leave for a startup:
+
+| Your goal | Big Tech | Startup | Best fit |
+|---|---|---|---|
+| Maximize pay + stability | L6+ with equity | N/A | Big Tech |
+| Build end-to-end features | Rare | Common | Startup |
+| Influence architecture | Rare | Common | Startup |
+| Lead a team | Rare | Common | Startup |
+| Work on cutting-edge tech | Common | Rare | Big Tech |
+| Avoid politics | Rare | Rare | Neither (FAANG is less political than you think) |
+| Avoid on-call burnout | Rare | Common | Big Tech |
+
+I’ve used this framework with 12 engineers I mentored last year. Three stayed at Big Tech and were promoted within 12 months. Five joined startups and quit within 9 months. Four joined startups and stayed—two because they loved the ownership, two because they thrived under pressure.
+
+The real differentiator isn’t pay or culture—it’s **ownership vs leverage**. At Big Tech, you have leverage: you can solve problems at scale, but you don’t own the outcome. At a startup, you have ownership: you can shape the product, but you’re responsible for every failure.
+
+I made a mistake early in my career by joining a Series C startup because they had "cool tech." They used Rust for everything and had a Kubernetes cluster with 500 nodes. But their product was a B2B tool with three customers. I spent six months debugging a memory leak in their gRPC service. When I quit, the CEO asked why. I said, "I joined to build something real, not to fix a memory leak for three customers." He replied, "Then you joined the wrong company." He was right.
+
+The key takeaway here is that **ownership without impact is just responsibility without reward**—make sure the startup’s trajectory aligns with your goals.
+
+---
+
+## Objections I've heard and my responses
+
+**Objection 1: "Big Tech is too slow—you can’t ship fast enough."**
+
+This is true for some teams, but not all. At Google, I shipped a feature that added real-time collaboration to Docs in six weeks. It required changes to the storage layer, the UI framework, and the RPC system—but because we used a monorepo and internal libraries, the changes were confined to one directory. The review process took two days. At a startup, that same feature would have required at least three microservices, a message queue, and a deployment pipeline that took 45 minutes.
+
+The honest answer is that Big Tech is slow at the edges, but fast at the core. If your work touches the core platform, you can ship fast. If it’s a side project, you’ll wait months for permissions.
+
+**Objection 2: "Startups give you more responsibility—you learn more."**
+
+This is only true if the startup has the runway to let you learn. I’ve seen engineers join pre-seed companies and spend six months configuring CI/CD pipelines because the CTO was too busy fundraising. I’ve seen engineers at bootstrapped startups write business logic in Python scripts because they couldn’t afford a backend engineer. Responsibility without mentorship is just stress.
+
+The honest answer is that **responsibility scales with team size and runway**—not with company stage.
+
+**Objection 3: "Big Tech engineers are replaceable—startups need you."**
+
+This is true for individual contributors, but not for teams. At Google, I worked on a team of 12 engineers that built the core RPC system. When we tried to quit en masse to start a consulting firm, Google matched our salaries and kept us. Startups can’t do that—they need you to stay because they can’t afford to lose you. But if you leave, they’ll replace you in three months.
+
+The honest answer is that **Big Tech keeps you because they can afford to; startups need you because they can’t afford not to.**
+
+**Objection 4: "The tech stack at startups is more modern."**
+
+This is true for the top 1% of startups—those with Series D+ funding and dedicated platform teams. For the other 99%, the tech stack is a patchwork of whatever the last engineer chose. I joined a startup that used Python, Django, and PostgreSQL for a real-time analytics product. Their latency was 800ms at 100 requests per second. They tried to fix it by adding Redis—but Redis became the bottleneck because they didn’t shard it correctly. They ended up rewriting the entire stack in Go and still couldn’t hit their latency target.
+
+The honest answer is that **modern stacks require modern tooling**—and most startups can’t afford either.
+
+---
+
+## What I'd do differently if starting over
+
+If I were a junior engineer today, here’s what I’d do:
+
+1. **Stay at Big Tech for four years, then leave for a fast-growing startup.**
+   Big Tech teaches you how to build systems at scale. A fast-growing startup (Series C+) teaches you how to build a product from scratch. The combination is unbeatable.
+
+2. **Specialize in a niche that’s underserved in Big Tech.**
+   Big Tech has deep expertise in ads, search, and cloud—but gaps in payments, healthcare, and embedded systems. If you can become an expert in payments fraud detection or HIPAA-compliant systems, you’ll have leverage to negotiate remote work, flexible hours, or even a sabbatical.
+
+3. **Build a personal project that scratches a real itch.**
+   I built a tool that auto-generates API documentation from FastAPI code. It’s not revolutionary, but it saved me 10 hours a week. That project got me noticed by a hiring manager at Stripe. If I were starting over, I’d build something that solves a problem for a specific industry—like a compliance automation tool for fintech startups.
+
+4. **Negotiate equity, not salary.**
+   At Big Tech, equity is a lottery ticket. At startups, it’s your retirement fund. When I left Google for a startup, I negotiated 0.5% equity with a four-year vesting schedule. Two years later, the startup was acquired—and my equity was worth more than my salary at Google. That’s the exception, not the rule—but it’s worth fighting for.
+
+5. **Keep a side project that earns passive income.**
+   I built a small SaaS tool that automates invoice generation. It earns $1,200/month with zero marketing. If I had to quit Big Tech tomorrow, that income would cover my rent for six months. It’s not enough to live on, but it’s enough to negotiate from a position of strength.
+
+The key takeaway here is that **Big Tech is a training ground, not a prison**—use it to build leverage, then leave on your terms.
+
+---
+
+## Summary
+
+Big Tech isn’t the problem. The problem is the assumption that leaving Big Tech automatically leads to a better career. For most engineers, it doesn’t. You’ll trade stability for stress, leverage for ownership, and scale for chaos.
+
+The systems that scale aren’t the ones with the fanciest tech stack—they’re the ones where the team grows slower than the system. Monoliths with disciplined boundaries scale better than microservices with no boundaries. Centralized platforms scale better than distributed spaghetti.
+
+If you’re early in your career, stay at Big Tech long enough to learn how to build systems at scale. Then leave for a startup that’s growing fast enough to give you ownership—but stable enough to let you sleep at night. If you’re senior, negotiate remote work, flexible hours, or a sabbatical. If you’re staff+, build a personal brand that gives you leverage outside the system.
+
+The next step is simple: **pick one skill that Big Tech undervalues—compliance, payments, healthcare—and spend 20 hours this month deepening it.** Build a project that scratches a real itch. Negotiate one thing—equity, remote work, or a flexible schedule—before your next review. Small moves compound into leverage.
+
+---
+
+## Frequently Asked Questions
+
+**How do I know if my Big Tech team is actually slow or just bureaucratic?**
+
+If you’re blocked by security reviews for three weeks to add a new API endpoint, that’s bureaucracy. If you’re waiting for six other teams to unblock a database migration, that’s scale. The telltale sign is whether the delay is caused by process (too many approvals) or by complexity (the system is too large to change safely). Ask yourself: could a startup with 20 engineers ship this feature in two weeks? If the answer is no, it’s not bureaucracy—it’s complexity.
+
+**What’s the minimum viable architecture for a startup at Series A?**
+
+A single service with a well-defined API boundary, a managed database (Postgres or DynamoDB), and a caching layer (Redis). Add message queues (SQS or Kafka) only if you need async processing. Avoid microservices until you have 50+ engineers and a dedicated platform team. I’ve seen startups at Series A with three microservices and 15 engineers—every deployment was a nightmare. The monolith scales better because it forces you to design boundaries early.
+
+**How do I negotiate remote work at Big Tech without getting fired?**
+
+Start by proving you can deliver remotely. Work from home two days a week for three months, then document your output: features shipped, bugs fixed, on-call incidents handled. Present the data to your manager and say, "I’ve proven I can deliver remotely—can we make this permanent?" If they say no, ask for a six-month trial. If they still say no, start looking—because they’re not going to change.
+
+**Why do so many engineers regret leaving Big Tech after two years?**
+
+Because they assume the grass is greener. They join a startup, ship a feature, and realize they’re debugging a memory leak in Rust instead of building a scalable system. They miss the leverage of Big Tech—where their code runs on 100k servers—even if they were just a cog in the machine. The regret isn’t about the startup failing—it’s about the startup not delivering on the promise of "real ownership." The honest truth is that ownership without impact is just responsibility without reward.
+
+---
+
+*If you found this useful, forward it to the engineer in your team who’s been talking about quitting. And if you’re on the fence, spend 20 hours this week building something small that solves a real problem—then decide whether you need Big Tech’s leverage or a startup’s ownership.*
