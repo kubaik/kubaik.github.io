@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 23:11:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2026 23:35:27 +0000</lastBuildDate>
+    <item>
+      <title>From Idea to Launch: Building an MVP in 30 Days: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/from-idea-to-launch-building-an-mvp-in-30-days-a-p/</link>
+      <description>Cut From Idea to Launch: Building an MVP in 30 Days failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and…</description>
+      <pubDate>Sun, 26 Apr 2026 23:35:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/from-idea-to-launch-building-an-mvp-in-30-days-a-p/</guid>
+    </item>
     <item>
       <title>Analytics lie when NULLs masquerade as zeros — here’s the proof</title>
       <link>https://kubaik.github.io/analytics-lie-when-nulls-masquerade-as-zeros-heres/</link>
@@ -138,13 +145,6 @@
       <description>scaled URL shortener billion: onds, and 8% of connections timed out befo. Practical guide with real examples.</description>
       <pubDate>Sun, 26 Apr 2026 14:03:30 +0000</pubDate>
       <guid>https://kubaik.github.io/we-scaled-a-url-shortener-to-2-billion-daily-hits-/</guid>
-    </item>
-    <item>
-      <title>Technical Writing finally explained</title>
-      <link>https://kubaik.github.io/technical-writing-finally-explained/</link>
-      <description>Cut onboarding time by 50% with executable technical writing — README-first, ADRs that live in the repo, and the 15-minute audit that fixes the most broken step first.</description>
-      <pubDate>Sun, 26 Apr 2026 13:49:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/technical-writing-finally-explained/</guid>
     </item>
   </channel>
 </rss>
