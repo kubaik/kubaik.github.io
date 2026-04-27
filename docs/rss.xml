@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 17:11:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 17:18:53 +0000</lastBuildDate>
+    <item>
+      <title>What happens when Python, Go, and Rust meet Nigeria’s 3G networks</title>
+      <link>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</link>
+      <description>tlined at 100% on one core while the others with happens Python Rust meet — Celery with Redis.</description>
+      <pubDate>Mon, 27 Apr 2026 17:18:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</guid>
+    </item>
     <item>
       <title>The 9 best Explainable AI tools to lift the lid on black boxes</title>
       <link>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</link>
@@ -138,13 +145,6 @@
       <description>Cut bug tickets 42% and FX-widget latency to 280ms using async/await, destructuring &amp; optional chaining — plus the mistakes that nearly derailed the rollout</description>
       <pubDate>Mon, 27 Apr 2026 04:02:03 +0000</pubDate>
       <guid>https://kubaik.github.io/how-asyncawait-destructuring-optional-chaining-cut/</guid>
-    </item>
-    <item>
-      <title>Debugging Mindset Finally Explained: Why 90% of Bugs Die in 3 Steps</title>
-      <link>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</link>
-      <description>Fixed a $1,200 silent failure in 20 minutes by asking &apos;what changed&apos; instead of reading logs — here’s the exact debugging mindset that turns chaotic bugs into repeatable investigations with real code examples and failure scenarios.</description>
-      <pubDate>Mon, 27 Apr 2026 02:10:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</guid>
     </item>
   </channel>
 </rss>
