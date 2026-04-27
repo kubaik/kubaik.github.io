@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 21:57:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 22:45:58 +0000</lastBuildDate>
+    <item>
+      <title>The 9 cheapest ways to deploy a web app in 2026</title>
+      <link>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</link>
+      <description>Launch a production web app for $3.50/month with Hetzner CX11, SQLite, and Nginx—measure real latency, CPU throttling, and idle costs for 2026 deployments.</description>
+      <pubDate>Mon, 27 Apr 2026 22:45:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</guid>
+    </item>
     <item>
       <title>Go concurrency in 30 minutes: 100K goroutines under 2s</title>
       <link>https://kubaik.github.io/go-concurrency-in-30-minutes-100k-goroutines-under/</link>
@@ -138,13 +145,6 @@
       <description>Cut brute-force bypass risk by 80% with atomic lockout state — real Django, Node.js and Redis fixes, pitfalls, and chaos tests that caught our mistakes in Nairobi fintech stacks.</description>
       <pubDate>Mon, 27 Apr 2026 12:13:16 +0000</pubDate>
       <guid>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</guid>
-    </item>
-    <item>
-      <title>Zero-to-Hired in 12 Months: Tech Career Roadmap finally explained</title>
-      <link>https://kubaik.github.io/zero-to-hired-in-12-months-tech-career-roadmap-fin/</link>
-      <description>Land a $35k–$50k tech job in 12 months with zero prior experience — exact 4-layer roadmap, tools, and 30-second demo videos that got interviews. Includes Python, React, Node, PostgreSQL, and free tiers used by real hires in Lagos, Nairobi, Chicago and Berlin.</description>
-      <pubDate>Mon, 27 Apr 2026 12:01:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-to-hired-in-12-months-tech-career-roadmap-fin/</guid>
     </item>
   </channel>
 </rss>
