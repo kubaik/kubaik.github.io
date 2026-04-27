@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 12:21:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 17:25:25 +0000</lastBuildDate>
     <item>
       <title>Kubernetes: 13 times it helps and 6 times it hurts — ranked</title>
       <link>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</link>
@@ -33,13 +33,6 @@
       <description>Build real dev influence in 30 days with 13 ranked tactics — measured outcomes, code templates, and the one-page post-mortem that cut interrupt-driven work by 30% in Nairobi fintech teams.</description>
       <pubDate>Mon, 27 Apr 2026 10:58:39 +0000</pubDate>
       <guid>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</guid>
-    </item>
-    <item>
-      <title>Building an API That Can Handle a Million Requests: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/building-an-api-that-can-handle-a-million-requests/</link>
-      <description>Cut Building an API That Can Handle a Million Requests failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, …</description>
-      <pubDate>Mon, 27 Apr 2026 10:36:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/building-an-api-that-can-handle-a-million-requests/</guid>
     </item>
     <item>
       <title>Turn your personal data into $2,800/month without selling it</title>
@@ -126,13 +119,6 @@
       <guid>https://kubaik.github.io/docker-in-production-fails-with-container-out-of-m/</guid>
     </item>
     <item>
-      <title>From Idea to Launch: Building an MVP in 30 Days: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/from-idea-to-launch-building-an-mvp-in-30-days-a-p/</link>
-      <description>Cut From Idea to Launch: Building an MVP in 30 Days failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and…</description>
-      <pubDate>Sun, 26 Apr 2026 23:35:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-idea-to-launch-building-an-mvp-in-30-days-a-p/</guid>
-    </item>
-    <item>
       <title>Analytics lie when NULLs masquerade as zeros — here’s the proof</title>
       <link>https://kubaik.github.io/analytics-lie-when-nulls-masquerade-as-zeros-heres/</link>
       <description>Reduce false alerts by 70% by stopping NULLs from turning into zeros in SQL and BI tools — see actual BigQuery, Spark, and Stripe failures we debugged and the fixes that worked.</description>
@@ -145,6 +131,20 @@
       <description>Big Tech engineers quit for &apos;better culture&apos; but end up debugging memory leaks in Rust for three customers. Here’s how 12 engineers I mentored chose wisely—and how to pick your next move with data, not hype.</description>
       <pubDate>Sun, 26 Apr 2026 22:33:40 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</guid>
+    </item>
+    <item>
+      <title>Why ClickHouse pays 3× more than PostgreSQL in 2024</title>
+      <link>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</link>
+      <description>Discover how ClickHouse cut 250GB analytics latency from 842ms to 18ms and reduced cloud costs by 38% — the tech skill paying 3× more than PostgreSQL in 2024.</description>
+      <pubDate>Sun, 26 Apr 2026 22:07:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</guid>
+    </item>
+    <item>
+      <title>API latency: Cloudflare Workers vs Fastly Compute@Edge</title>
+      <link>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</link>
+      <description>Cut API latency under 10 ms globally with Cloudflare Workers vs Fastly Compute@Edge — real benchmarks, code samples, and the mistakes that cost us 12 % of state during cache evictions.</description>
+      <pubDate>Sun, 26 Apr 2026 21:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</guid>
     </item>
   </channel>
 </rss>
