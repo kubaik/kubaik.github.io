@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 09:41:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 10:36:32 +0000</lastBuildDate>
+    <item>
+      <title>Building an API That Can Handle a Million Requests: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/building-an-api-that-can-handle-a-million-requests/</link>
+      <description>Cut Building an API That Can Handle a Million Requests failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, …</description>
+      <pubDate>Mon, 27 Apr 2026 10:36:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-an-api-that-can-handle-a-million-requests/</guid>
+    </item>
     <item>
       <title>Turn your personal data into $2,800/month without selling it</title>
       <link>https://kubaik.github.io/turn-your-personal-data-into-2800month-without-sel/</link>
@@ -138,13 +145,6 @@
       <description>Cut hallucination rate from 18% to 2% with Retrieval-Augmented Generation — versioned pipelines, open-source models, and the exact stack that worked in production.</description>
       <pubDate>Sun, 26 Apr 2026 20:33:58 +0000</pubDate>
       <guid>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</guid>
-    </item>
-    <item>
-      <title>The 11 best multi-modal AI models in 2024</title>
-      <link>https://kubaik.github.io/the-11-best-multi-modal-ai-models-in-2024/</link>
-      <description>Cut end-to-end latency from 47 seconds to 1.8 seconds with multi-modal AI models — compare 11 options for text, image, and audio processing, with real benchmarks and costs for 2024.</description>
-      <pubDate>Sun, 26 Apr 2026 20:08:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-11-best-multi-modal-ai-models-in-2024/</guid>
     </item>
   </channel>
 </rss>
