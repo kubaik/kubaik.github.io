@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 10:36:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 10:58:43 +0000</lastBuildDate>
+    <item>
+      <title>13 ways developers can build real influence at work</title>
+      <link>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</link>
+      <description>Build real dev influence in 30 days with 13 ranked tactics — measured outcomes, code templates, and the one-page post-mortem that cut interrupt-driven work by 30% in Nairobi fintech teams.</description>
+      <pubDate>Mon, 27 Apr 2026 10:58:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</guid>
+    </item>
     <item>
       <title>Building an API That Can Handle a Million Requests: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/building-an-api-that-can-handle-a-million-requests/</link>
@@ -138,13 +145,6 @@
       <description>Cut downtime by 91% with Google’s SRE culture — error budgets, progressive rollouts, and GitOps code you can run today. Includes real benchmarks, 2 code examples, and failure modes nobody mentions.</description>
       <pubDate>Sun, 26 Apr 2026 21:09:04 +0000</pubDate>
       <guid>https://kubaik.github.io/how-googles-sre-culture-cut-downtime-by-90-heres-t/</guid>
-    </item>
-    <item>
-      <title>How RAG cut our hallucination rate from 18% to 2%</title>
-      <link>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</link>
-      <description>Cut hallucination rate from 18% to 2% with Retrieval-Augmented Generation — versioned pipelines, open-source models, and the exact stack that worked in production.</description>
-      <pubDate>Sun, 26 Apr 2026 20:33:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-rag-cut-our-hallucination-rate-from-18-to-2/</guid>
     </item>
   </channel>
 </rss>
