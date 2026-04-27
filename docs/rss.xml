@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 19:10:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 20:20:44 +0000</lastBuildDate>
+    <item>
+      <title>WhatsApp’s chat system finally explained</title>
+      <link>https://kubaik.github.io/whatsapps-chat-system-finally-explained/</link>
+      <description>Cut end-to-end chat latency to 250 ms and $0.0000015 per message with WebSocket edges, Kafka queues, and Signal encryption — the same stack WhatsApp uses.</description>
+      <pubDate>Mon, 27 Apr 2026 20:20:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/whatsapps-chat-system-finally-explained/</guid>
+    </item>
     <item>
       <title>Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency</title>
       <link>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency by 77% and 5xx errors by 95% by tuning the exact connection pool and lock knobs the fastest-growing tech roles use every day — Platform Reliability Engineer and Database Reliability Engineer roles are exploding because the docs won’t save you from cloud throttling, lock contention, and connection pool exhaustion.</description>
       <pubDate>Mon, 27 Apr 2026 09:31:34 +0000</pubDate>
       <guid>https://kubaik.github.io/the-3-tech-roles-quietly-dominating-backend-hiring/</guid>
-    </item>
-    <item>
-      <title>React Server Components fail when hydration skips state — here&apos;s why</title>
-      <link>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</link>
-      <description>Cut hydration mismatch warnings by 94% in React Server Components — serialization patterns, environment traps, and CI checks that work in Next.js 13.4+ for apps in Lagos, London, Manila, and Montreal.</description>
-      <pubDate>Mon, 27 Apr 2026 08:12:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</guid>
     </item>
   </channel>
 </rss>
