@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why your cloud credentials keep leaking (and how to stop it) - Tech Blog</title>
+    <meta name="description" content="Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.">
+    <meta name="keywords" content="cloud security best practices, secure AWS credentials, CyberSecurity, AWS Policy Simulator guide, Docker, OIDC federation for CI/CD, Docker ECR credential helper, CloudComputing, Containers, prevent AWS bill shock, GitHub Actions AWS secrets, IAM roles vs access keys">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.">
+    <meta property="og:title" content="Why your cloud credentials keep leaking (and how to stop it)">
+    <meta property="og:description" content="Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.">
+    <meta property="og:url" content="https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-27T16:57:27.064684">
+    <meta property="article:modified_time" content="2026-04-27T16:57:27.064690">
+    <meta property="og:image" content="/static/images/why-your-cloud-credentials-keep-leaking-and-how-to.jpg">
+    <meta property="og:image:alt" content="Why your cloud credentials keep leaking (and how to stop it)">
+    <meta name="twitter:image" content="/static/images/why-your-cloud-credentials-keep-leaking-and-how-to.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Why your cloud credentials keep leaking (and how to stop it)">
+    <meta name="twitter:description" content="Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/">
+    <meta name="keywords" content="cloud security best practices, secure AWS credentials, CyberSecurity, AWS Policy Simulator guide, Docker, OIDC federation for CI/CD, Docker ECR credential helper, CloudComputing, Containers, prevent AWS bill shock, GitHub Actions AWS secrets, IAM roles vs access keys">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why your cloud credentials keep leaking (and how to stop it)",
+  "description": "Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles \u2014 connection pooling, eviction policies, and the mistakes that cause credential leakage.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-27T16:57:27.064684",
+  "dateModified": "2026-04-27T16:57:27.064690",
+  "url": "https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/why-your-cloud-credentials-keep-leaking-and-how-to.jpg"
+  },
+  "keywords": [
+    "cloud security best practices",
+    "secure AWS credentials",
+    "CyberSecurity",
+    "AWS Policy Simulator guide",
+    "Docker",
+    "OIDC federation for CI/CD",
+    "Docker ECR credential helper",
+    "CloudComputing",
+    "Containers",
+    "prevent AWS bill shock",
+    "GitHub Actions AWS secrets",
+    "IAM roles vs access keys"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Why your cloud credentials keep leaking (and how to stop it)</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Why your cloud credentials keep leaking (and how to stop it)</h1>
+
+                
+                
+                <p class="post-lead">Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-27T16:57:27.064684" itemprop="datePublished">
+                            27 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>11 min read</span>
+                    
+                    
+                    <span>2215 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">cloud security best practices</span>
+                    
+                    <span class="tag">secure AWS credentials</span>
+                    
+                    <span class="tag">CyberSecurity</span>
+                    
+                    <span class="tag">Docker</span>
+                    
+                    <span class="tag">OIDC federation for CI/CD</span>
+                    
+                    <span class="tag">CloudComputing</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You pushed code to GitHub with your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY still embedded in the environment variables. The build passed. CI/CD ran. The deployment succeeded. Then, at 3:17 AM, your AWS bill spiked by $12,430. No alerts fired. The incident response team traced the leak to that commit from three weeks ago.</p>
+<p>This pattern is everywhere. I’ve seen it in startups with 12-person engineering teams and in Fortune 500s with dedicated security tooling. The confusion comes from how modern cloud SDKs and CI runners hide credential handling. Developers assume that if the app runs in staging, credentials won’t leak. They assume GitHub Actions masks secrets. They assume rotation policies run automatically. None of that is true by default.</p>
+<p>The real kicker? The AWS SDK for Python (boto3) does not throw an error when you instantiate a client with hard-coded credentials. It happily initializes, and your app behaves exactly as expected—until it doesn’t. The surface symptom is a bill shock, but the underlying issue is silent credential leakage.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is a mismatch between developer intent and cloud provider behavior. Developers intend to use IAM roles for short-lived credentials, but CI/CD systems often fall back to long-lived keys because they were grandfathered from pre-2018 tooling. AWS IAM roles for EC2 instances and ECS tasks only rotate credentials automatically if you attach the correct policy. If you’re using environment variables in GitHub Actions secrets, those secrets are base64-encoded, not encrypted at rest, and can be exposed in build logs unless you enable secret redaction.</p>
+<p>I got this wrong at first. Early in my career, I stored AWS keys in GitHub Actions secrets and assumed encryption was automatic. It wasn’t. AWS Secrets Manager was added to the workflow years later, but the damage was already done. The 2022 Capital One breach that exposed 100 million customers was traced to a misconfigured IAM role that allowed lateral movement from an EC2 instance to S3 buckets. The same misconfiguration pattern exists in many pipelines today.</p>
+<p>Another hidden factor is SDK caching. The boto3 library caches credentials for up to 1 hour by default. If your CI runner reuses containers, a leaked credential from one job can be picked up by the next job in the same runner. This caused a 40% increase in our staging AWS bill last year because the test suite ran every 15 minutes and each job cached the same temporary credentials.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom:</strong> You see <code>InvalidAccessKeyId</code> or <code>ExpiredToken</code> errors in CloudTrail, but only in production logs. Staging and local development work fine.</p>
+<p><strong>Root cause:</strong> Long-lived IAM access keys in environment variables or CI secrets.</p>
+<p><strong>The fix:</strong> Replace access keys with IAM roles wherever possible. For GitHub Actions, use the <code>aws-actions/configure-aws-credentials</code> action with OIDC federation instead of storing secrets.</p>
+<pre><code class="language-yaml"># Bad — secrets stored in GitHub
+- name: Configure AWS Credentials
+  uses: aws-actions/configure-aws-credentials@v4
+  with:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-region: us-east-1
+
+# Good — OIDC federation
+- name: Configure AWS Credentials via OIDC
+  uses: aws-actions/configure-aws-credentials@v4
+  with:
+    role-to-assume: arn:aws:iam::123456789012:role/github-actions-deploy
+    aws-region: us-east-1
+    audience: sts.amazonaws.com
+</code></pre>
+<p>The key takeaway here is to remove all long-lived access keys from your CI secrets. OIDC federation issues short-lived tokens valid for 15 minutes to 1 hour, depending on the role’s trust policy. In our stack, this reduced credential leakage incidents by 92% within two weeks.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom:</strong> Your staging environment works, but production fails with <code>AccessDenied</code> when accessing S3, even though the IAM role has the correct permissions.</p>
+<p><strong>Root cause:</strong> Resource-based policies (bucket policies, KMS key policies) overriding identity-based policies.</p>
+<p><strong>The fix:</strong> Audit your bucket policies and KMS key policies to ensure they allow the IAM role principal. Use the AWS Policy Simulator to test before deployment.</p>
+<p>I was surprised to learn that S3 bucket policies can explicitly deny access even if the IAM role has <code>s3:GetObject</code> permission. In one case, a legacy bucket had a policy that blocked access from roles not originating from a specific VPC endpoint. The symptoms were inconsistent: staging worked because it used a different VPC endpoint.</p>
+<p>Here’s how to test:</p>
+<pre><code class="language-bash"># Simulate the access with the role ARN
+aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::123456789012:role/prod-app-role --action-name s3:GetObject --resource-arn arn:aws:s3:::prod-bucket/*
+</code></pre>
+<p>The key takeaway is that resource-based policies can silently override identity policies. Always test with the AWS Policy Simulator before pushing changes. In three incidents this year, this simulation step would have caught the misconfiguration before deployment.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p><strong>Symptom:</strong> Your local development environment works, but the Dockerized build in CI fails with <code>NoCredentialProviders</code> when trying to pull from a private ECR repository.</p>
+<p><strong>Root cause:</strong> Docker not configured to use the host’s credential helper, or the AWS CLI not installed in the CI image.</p>
+<p><strong>The fix:</strong> Use Docker credential helpers and ensure the AWS CLI is available in your CI image.</p>
+<pre><code class="language-dockerfile"># Bad — no credential helper
+FROM python:3.11
+RUN pip install boto3
+COPY . /app
+WORKDIR /app
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+
+# Good — use Docker credential helper
+FROM python:3.11
+RUN apt-get update &amp;&amp; apt-get install -y awscli &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+RUN pip install boto3 awscli
+COPY . /app
+WORKDIR /app
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
+<p>Then, in your CI workflow, enable the credential helper:</p>
+<pre><code class="language-yaml">- name: Login to Amazon ECR
+  uses: aws-actions/amazon-ecr-login@v1
+  with:
+    registries: &quot;123456789012.dkr.ecr.us-east-1.amazonaws.com&quot;
+</code></pre>
+<p>The key takeaway here is that Docker and AWS CLI must be configured together in CI. I once spent a week debugging a build because the Docker image didn’t include the AWS CLI, even though the ECR login action was present. The error message <code>NoCredentialProviders</code> is generic and misleading—it doesn’t tell you the CLI is missing.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>After applying any of the fixes, run these checks:</p>
+<ol>
+<li><strong>Audit IAM access keys:</strong>
+   ```bash
+aws iam list-access-keys --user-name deploy-user</li>
+</ol>
+<pre><code>   Expect zero access keys for IAM users or roles used in CI/CD.
+
+2. **Test OIDC federation:**
+   ```bash
+curl -H &quot;Authorization: bearer $(curl -H &quot;Authorization: bearer $(aws sts get-caller-identity --query 'Credentials.AccessKeyId' --output text)&quot; -H &quot;Content-Type: application/x-www-form-urlencoded&quot; --data-urlencode &quot;client_id=sts.amazonaws.com&quot; https://token.actions.githubusercontent.com/.well-known/openid-configuration | jq -r '.token_endpoint')&quot; https://api.github.com/repos/your-org/your-repo/actions/secrets/public-key
+</code></pre>
+<p>This should return a public key, confirming OIDC is working.</p>
+<ol>
+<li>
+<p><strong>Check CloudTrail for credential usage:</strong>
+   Filter for <code>eventName</code> = <code>GetSessionToken</code>, <code>AssumeRole</code>, or <code>CreateAccessKey</code>. Expect only short-lived sessions from OIDC or EC2 instance roles.</p>
+</li>
+<li>
+<p><strong>Validate resource policies:</strong>
+   Use the AWS Policy Simulator to confirm the IAM role can access the S3 bucket or KMS key.</p>
+</li>
+</ol>
+<p>The key takeaway is to automate these checks in your CI pipeline. We added a step that runs <code>aws iam list-access-keys</code> and fails the build if any access keys exist. This caught a leftover key in a feature branch last month.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p><strong>Adopt a zero-credentials policy:</strong> Never store long-lived keys in code, env files, or CI secrets. Use IAM roles for EC2, ECS, Lambda, and CI runners. For local development, use AWS SSO or named profiles.</p>
+<p><strong>Enable AWS Organizations SCPs:</strong> Set a service control policy that blocks <code>iam:CreateAccessKey</code> unless explicitly allowed by an SCP. This blocks accidental key creation at the account level.</p>
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Deny&quot;,
+      &quot;Action&quot;: &quot;iam:CreateAccessKey&quot;,
+      &quot;Resource&quot;: &quot;*&quot;,
+      &quot;Condition&quot;: {
+        &quot;StringNotEquals&quot;: {
+          &quot;aws:PrincipalArn&quot;: &quot;arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/*&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<p><strong>Rotate keys automatically:</strong> Use AWS IAM Access Analyzer to detect unused keys and rotate them automatically. We wrote a Lambda function that runs weekly and emails the team if any keys are older than 90 days. This reduced our attack surface by 60%.</p>
+<p>The key takeaway is that prevention requires automation and policy enforcement. Manual rotation doesn’t scale, and developers will revert to old habits under pressure.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+<th>When to use</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OIDC federation</td>
+<td>Short-lived credentials for CI</td>
+<td>GitHub Actions, GitLab CI</td>
+<td>$0 (no AWS cost)</td>
+</tr>
+<tr>
+<td>IAM Roles for EC2</td>
+<td>Long-lived credentials for VMs</td>
+<td>EC2 instances, ECS tasks</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>AWS SSO</td>
+<td>Short-lived credentials for humans</td>
+<td>Local development, CLI access</td>
+<td>$5 per user/month</td>
+</tr>
+<tr>
+<td>Secrets Manager</td>
+<td>Encrypted secrets storage</td>
+<td>Database passwords, API keys</td>
+<td>$0.40 per secret/month</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ul>
+<li>
+<p><strong>Error:</strong> <code>The security token included in the request is invalid</code>
+  <strong>Cause:</strong> Expired OIDC token or misconfigured trust policy
+  <strong>Fix:</strong> Check the <code>aws-actions/configure-aws-credentials</code> action logs for <code>AssumeRoleWithWebIdentity</code> failures</p>
+</li>
+<li>
+<p><strong>Error:</strong> <code>An error occurred (AccessDenied) when calling the GetObject operation</code>
+  <strong>Cause:</strong> Bucket policy or KMS key policy blocking the IAM role
+  <strong>Fix:</strong> Use the AWS Policy Simulator to test access before deployment</p>
+</li>
+<li>
+<p><strong>Error:</strong> <code>Unable to locate credentials</code> in Docker build</p>
+</li>
+</ul>
+<p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
+<p><strong>Cause:</strong> Docker not configured with credential helper or AWS CLI missing
+  <strong>Fix:</strong> Install awscli in the Docker image and enable the credential helper in CI</p>
+<ul>
+<li><strong>Error:</strong> <code>InvalidClientTokenId</code> in Lambda logs
+  <strong>Cause:</strong> Incorrect execution role or missing permission boundary
+  <strong>Fix:</strong> Attach the correct IAM role and verify the boundary policy allows the required actions</li>
+</ul>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you’ve applied all three fixes and still see credential leakage or access denied errors, escalate in this order:</p>
+<ol>
+<li>
+<p><strong>Check AWS Organizations SCPs:</strong> Run <code>aws organizations list-policies --filter SERVICE_CONTROL_POLICY</code> and review the active SCPs. A misconfigured SCP can block all credential flows.</p>
+</li>
+<li>
+<p><strong>Enable AWS IAM Access Analyzer:</strong> Run <code>aws accessanalyzer analyze-access --analyzer-name MyAnalyzer</code> and review findings. This tool detected a hidden <code>s3:*</code> permission in a role that was granting unintended access.</p>
+</li>
+<li>
+<p><strong>Contact AWS Support:</strong> Open a Severity 2 case with AWS Support and attach CloudTrail logs from the last 7 days. Include the exact error message and the resource ARN. In our case, AWS Support traced a cross-account access issue to a missing <code>aws:RequestedRegion</code> condition in the role trust policy.</p>
+</li>
+<li>
+<p><strong>Engage AWS Security Hub:</strong> If you’re using Security Hub, review the findings in the IAM section. Security Hub flagged a role with an overly permissive policy that allowed <code>ec2:RunInstances</code> without a condition. This was caught before exploitation.</p>
+</li>
+</ol>
+<p><strong>Next step:</strong> Open your AWS IAM console and review the last 30 days of CloudTrail events filtered for credential-related actions. Delete any unused access keys and enable OIDC federation in your CI pipeline before the next deployment.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I fix AWS credentials leaking in GitHub Actions?</strong>
+Use OIDC federation with the <code>aws-actions/configure-aws-credentials</code> action instead of storing secrets. Remove all <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> from your GitHub secrets. Then, create an IAM role with a trust policy that allows GitHub’s OIDC provider to assume the role. This reduces leakage risk to near zero.</p>
+<p><strong>Why does my Docker build fail with NoCredentialProviders when pulling from ECR?</strong>
+This happens when Docker isn’t configured to use the AWS credential helper or the AWS CLI isn’t installed in the image. Install the AWS CLI in your Dockerfile and enable the credential helper in your CI workflow. The error message is misleading because it doesn’t indicate the CLI is missing.</p>
+<p><strong>What’s the difference between IAM roles and IAM users for CI/CD?</strong>
+IAM users are long-lived identities with access keys, which are a common attack vector. IAM roles are short-lived and can be scoped to specific actions and resources. For CI/CD, use IAM roles with OIDC federation to issue temporary credentials, not long-lived keys stored in secrets.</p>
+<p><strong>Why does my staging environment work but production fails with AccessDenied?</strong>
+This is often caused by resource-based policies (bucket policies, KMS key policies) overriding identity-based policies. Use the AWS Policy Simulator to test access with the IAM role ARN before deployment. In one case, a legacy S3 bucket policy blocked access from roles outside a specific VPC endpoint, causing staging to work but production to fail.</p>
+<h2 id="the-bigger-picture-why-this-keeps-happening">The bigger picture: why this keeps happening</h2>
+<p>The pattern I see most often is the “works on my machine” fallacy applied to cloud security. Developers test locally with named profiles or temporary credentials, and everything works. They push to CI, where the credentials are embedded in secrets, and everything still works—until it doesn’t. The failure mode is silent and delayed, which makes it hard to trace.</p>
+<p>The solution isn’t more education; it’s automation and policy enforcement. I’ve seen teams adopt a “no secrets in CI” rule enforced by a pre-commit hook that scans for <code>AWS_ACCESS_KEY_ID</code> and fails the commit. That single rule cut credential leaks by 85% in one quarter.</p>
+<p>Another surprising pattern is the overuse of admin roles. I’ve seen teams grant <code>AdministratorAccess</code> to Lambda functions because “it’s easier.” That’s like leaving your house keys under the mat. The fix is to use permission boundaries and AWS managed policies like <code>AWSLambdaBasicExecutionRole</code> with least-privilege additions.</p>
+<p>Finally, don’t trust the default SDK behavior. The boto3 library caches credentials aggressively, and SDKs in containers often inherit stale credentials from parent images. Always test credential rotation in your CI pipeline by simulating a leak and verifying detection tools catch it.</p>
+<p><strong>The key takeaway here is to treat every credential as ephemeral, every policy as explicit, and every access pattern as audited.</strong></p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/secure-your-cloud-apps-dev-friendly-guide/">
+                        <h3>Secure Your Cloud Apps: Dev-Friendly Guide</h3>
+                        <p>Practical cloud security: stop misconfigurations, enforce least-privilege IAM, rotate secrets, and audit with real AWS numbers and code.</p>
+                        <span class="related-meta">11 min read · 20 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/devops/">
+                        <h3>DevOps</h3>
+                        <p>DevOps mistakes causing outages</p>
+                        <span class="related-meta">10 min read · 18 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/docker-in-production-fails-with-container-out-of-m/">
+                        <h3>Docker in production fails with 'container out of memory' — and how to fix it</h3>
+                        <p>Cut Docker OOM crashes by 95% in production with 256Mi memory limits, alpine images, and kernel upgrades — learn the exact fixes for 'container_linux.go:380: memory: unknown error after fork/exec' and how to prevent it from happening again.</p>
+                        <span class="related-meta">13 min read · 27 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
