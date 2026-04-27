@@ -508,6 +508,12 @@ footer {
     margin-top: 3rem;
 }
 
+footer a {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .social-links {
     margin-top: 1rem;
     display: flex;
