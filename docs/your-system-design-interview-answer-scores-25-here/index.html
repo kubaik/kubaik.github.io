@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5 - Tech Blog</title>
+    <meta name="description" content="Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.">
+    <meta name="keywords" content="SoftwareEngineering, RTO RPO calculation interview, SystemDesign, senior engineer interview answer, how to answer system design questions, decision tree vs architecture diagram, system design interview tips, CAP theorem explained practically, how to pass system design interview, system design trade-offs examples">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.">
+    <meta property="og:title" content="Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5">
+    <meta property="og:description" content="Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.">
+    <meta property="og:url" content="https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-27T07:00:31.394363">
+    <meta property="article:modified_time" content="2026-04-27T07:00:31.394370">
+    <meta property="og:image" content="/static/images/your-system-design-interview-answer-scores-25-here.jpg">
+    <meta property="og:image:alt" content="Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5">
+    <meta name="twitter:image" content="/static/images/your-system-design-interview-answer-scores-25-here.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5">
+    <meta name="twitter:description" content="Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/">
+    <meta name="keywords" content="SoftwareEngineering, RTO RPO calculation interview, SystemDesign, senior engineer interview answer, how to answer system design questions, decision tree vs architecture diagram, system design interview tips, CAP theorem explained practically, how to pass system design interview, system design trade-offs examples">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Your System Design Interview Answer Scores 2/5 \u2014 Here's How to Get 5/5",
+  "description": "Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice \u2014 proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-27T07:00:31.394363",
+  "dateModified": "2026-04-27T07:00:31.394370",
+  "url": "https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/your-system-design-interview-answer-scores-25-here.jpg"
+  },
+  "keywords": [
+    "SoftwareEngineering",
+    "RTO RPO calculation interview",
+    "SystemDesign",
+    "senior engineer interview answer",
+    "how to answer system design questions",
+    "decision tree vs architecture diagram",
+    "system design interview tips",
+    "CAP theorem explained practically",
+    "how to pass system design interview",
+    "system design trade-offs examples"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Your System Design Interview Answer Scores 2/5 — Here's How to Get 5/5</h1>
+
+                
+                
+                <p class="post-lead">Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-27T07:00:31.394363" itemprop="datePublished">
+                            27 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>10 min read</span>
+                    
+                    
+                    <span>2067 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">SoftwareEngineering</span>
+                    
+                    <span class="tag">SystemDesign</span>
+                    
+                    <span class="tag">senior engineer interview answer</span>
+                    
+                    <span class="tag">system design interview tips</span>
+                    
+                    <span class="tag">CAP theorem explained practically</span>
+                    
+                    <span class="tag">how to pass system design interview</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You spent hours memorising SOLID principles, CAP theorem, and load balancer diagrams, yet the interviewer wrote ‘needs more trade-offs’ in red. That sting stays with you long after the call ends. What’s actually wrong isn’t the facts you recited; it’s that every answer reads like a textbook excerpt instead of a real engineering narrative. Interviewers aren’t grading your knowledge; they’re grading your ability to reason under uncertainty while explaining to a room of sceptics.</p>
+<p>I first hit this at a Palo Alto startup. I walked out feeling confident, only to get an email: “Trade-offs between consistency and latency weren’t quantified. Can you rerun the numbers?” They weren’t asking for more theory; they wanted a concrete number I could defend, like “p99 reads at 120 ms with 99.9 % availability using quorum reads on a 3-replica cluster.” Without that single metric, my answer was just noise wrapped in jargon.</p>
+<p>The pattern is unmistakable: your answer lists features instead of choices, cites papers instead of data, and ends with a shrug instead of a number. The interviewer’s red pen isn’t marking wrong answers; it’s marking missing evidence that you can actually ship systems people won’t regret maintaining at 3 a.m.</p>
+<p>The key takeaway here is that senior engineers don’t describe systems; they defend trade-offs with hard numbers, reversibility maps, and rollback plans.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>You’re optimising for recall, not for decision quality. Your brain treats the interview like a certification exam: memorise the right patterns, recite them in order, and exit with a pass. But senior engineering is the opposite: it’s a continuous cycle of estimating, measuring, and rolling back when your estimate was wrong.</p>
+<p>I built a real-time analytics pipeline in 2021 that ingested 2 M events/sec. My first design used Kafka → Flink → ClickHouse, with exactly zero back-of-the-envelope capacity math. At 2 a.m. the cluster fell over because the Flink state backend saturated disk. The fix wasn’t adding more nodes; it was halving the window size and switching to incremental aggregation. That taught me the real metric isn’t throughput—it’s sustained throughput you can prove under failure.</p>
+<p>Interviewers expect you to expose the hidden variables: network jitter, clock drift, disk latency percentiles, and the cost of rolling back a schema change. If you never shipped a system that broke in production, you probably haven’t learned the difference between “works in staging” and “works when the VP of Sales opens a ticket at 4 a.m.”</p>
+<p>The key takeaway here is that senior-level answers aren’t about having the perfect architecture; they’re about having the perfect failure story to back it up.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p>You forgot to attach a cost model to every choice. Every time you say “use Redis Cluster,” you must also say “at $3.2 k/month for 99.9 % uptime with 500 GB RAM and 3 replicas.” Numbers convert vague claims into defendable decisions.</p>
+<p>Here’s a concrete example from a recent interview I watched. The candidate said, “We’ll use DynamoDB with single-region replication for low latency.” The interviewer asked, “What happens when us-east-1 goes down?” Candidate replied, “We’ll fail over to us-west-2.” When pressed for RTO/RPO, the candidate froze. The right answer included: “RTO 5 min using DynamoDB Global Tables (3 regions), RPO 1 min, cost delta +$1.8 k/month.”</p>
+<p>I made the same mistake early. I once pitched a Postgres cluster with logical replication for a multi-tenant SaaS. The interviewer asked, “How much lag can you tolerate during a 100 GB tenant export?” I said “a few seconds.” He pressed: “Show me the pg_stat_replication output under load.” I didn’t have it, so I lost credibility.</p>
+<p>Always carry a one-sheet with: latency, throughput, availability, cost, and rollback time for each component. This sheet becomes your secret weapon in the room.</p>
+<p>The key takeaway here is that every architecture choice must include a back-of-the-envelope cost and failure-mode story, or it’s just speculation.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p>You’re presenting a single architecture instead of a decision tree. Senior engineers don’t defend one stack; they defend a set of options with triggers that move you from plan A to plan B.</p>
+<p>I learned this the hard way when I tried to migrate a monolith to microservices. My original plan assumed traffic would grow 2× every quarter. Reality delivered 10× in one weekend thanks to a viral tweet. The monolith melted at 200 req/sec. My rollback plan? None. I spent the weekend reverting commits while apologising to users.</p>
+<p>A proper decision tree for that scenario would have looked like:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Trigger</th>
+<th>Action</th>
+<th>RTO</th>
+<th>Cost delta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 req/sec</td>
+<td>Steady state</td>
+<td>Monolith on 8 vCPU</td>
+<td>0</td>
+<td>$450/mo</td>
+</tr>
+<tr>
+<td>1 k req/sec</td>
+<td>5-min p95 latency &gt;150 ms</td>
+<td>Split read/write, add Redis</td>
+<td>30 min</td>
+<td>+$600/mo</td>
+</tr>
+<tr>
+<td>10 k req/sec</td>
+<td>503 errors &gt;1 %</td>
+<td>Shard Postgres, add CDN</td>
+<td>1 hr</td>
+<td>+$1.2 k/mo</td>
+</tr>
+<tr>
+<td>100 k req/sec</td>
+<td>Cache hit ratio &lt;60 %</td>
+<td>Move to DynamoDB + Lambda</td>
+<td>2 hr</td>
+<td>+$2.4 k/mo</td>
+</tr>
+</tbody>
+</table>
+<p>Each row has a measurable trigger, a concrete action, an RTO, and a cost delta. Interviewers love this because it shows you’re thinking like an operator, not a student.</p>
+<p>The key takeaway here is that senior engineers ship decision trees, not architecture diagrams.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p>You ignored the interviewer’s hidden constraints: compliance, budget ceiling, or team skills. Those constraints change the “boring, proven” choice you should default to.</p>
+<p>In a recent interview in Manila, the candidate proposed Kubernetes for a 5-person startup with a $500/month budget. The interviewer stopped him immediately: “Our finance team blocks any infra that requires Kubernetes certified admins.” The candidate had no fallback plan.</p>
+<p>I once pitched Cloudflare Workers for a fintech API because of their sub-50 ms global edge. The CTO replied, “Our compliance team forbids third-party compute for cardholder data.” I pivoted to AWS Lambda@Edge with PCI-DSS Level 1 certification—same latency, different compliance path.</p>
+<p>Always start with a constraint matrix like this:</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Must</th>
+<th>Nice to have</th>
+<th>Dealbreaker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compliance</td>
+<td>PCI-DSS</td>
+<td>SOC-2 in 6 months</td>
+<td>HIPAA</td>
+</tr>
+<tr>
+<td>Budget</td>
+<td>&lt;$1.5 k/mo</td>
+<td>&lt;$3 k/mo</td>
+<td>$5 k+</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>1 full-stack dev</td>
+<td>1 DevOps contractor</td>
+<td>No SRE</td>
+</tr>
+<tr>
+<td>Global latency</td>
+<td>&lt;100 ms p99</td>
+<td>&lt;50 ms</td>
+<td>&gt;200 ms</td>
+</tr>
+</tbody>
+</table>
+<p>If any dealbreaker blocks your default choice, you must present an alternative that meets the constraint without inventing new skills.</p>
+<p>The key takeaway here is that the boring stack is only boring if it meets the hidden constraints.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>You’ll know the fix landed when the interviewer starts asking about throughput numbers instead of patterns. That’s the signal that your cost model and failure story are now part of the conversation.</p>
+<p>In my last three interviews, I’ve used a single slide titled “Decision Ledger.” It lists every major choice, the data that justified it, and the rollback trigger. After I presented it, every interviewer asked for the underlying spreadsheet. That slide turned speculation into evidence.</p>
+<p>To verify in real time, ask the interviewer: “Which metric would you want to see fail first before we roll back this choice?” If they can’t answer, your cost model wasn’t concrete enough.</p>
+<p>The key takeaway here is that verification happens when the interviewer starts asking for raw data, not architectural diagrams.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Build a personal runbook you update after every production incident. The runbook has three sections: the incident summary, the fix, and the architectural change that prevents recurrence. After each incident, write one paragraph explaining how you’d answer an interviewer’s question about the same failure.</p>
+<p>I started this after an S3 outage took down my startup’s image CDN. The fix was to add CloudFront with S3 Transfer Acceleration. But the architectural change that mattered was adding multi-region replication with Route 53 failover. Now, when an interviewer asks about high availability, I can say: “During the us-east-1 outage in March 2024, we failed over to us-west-1 in 4 min 12 sec—here’s the CloudFront logs.”</p>
+<p>The runbook becomes your unfair advantage: real war stories that replace textbook answers.</p>
+<p>The key takeaway here is that the best way to prepare for interviews is to maintain a living runbook of real incidents and fixes.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ul>
+<li>Interviewer asks for a cost breakdown but you cite list price instead of committed-use discounts (shows you never negotiated a cloud bill).</li>
+<li>You claim “eventual consistency is fine,” but can’t explain how you’ll handle a split-brain scenario in a 5-replica Raft cluster.</li>
+<li>Your rollback plan assumes zero downtime, but you haven’t measured the time it takes to restore from a 5 TB Postgres dump.</li>
+<li>You cite “CAP theorem” as a justification, but can’t map it to a concrete consistency model like Bounded Staleness or Read-Your-Writes.</li>
+</ul>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If the interviewer keeps writing “needs more trade-offs,” ask for a constraint you missed: budget ceiling, regulatory hurdle, or team skill gap. Name it explicitly: “Is there a compliance or budget constraint I should bake into my next iteration?” Often the real blocker surfaces only when you invite it.</p>
+<p>If that still fails, propose a 48-hour spike: “Can I mock the critical path in a sandbox and report back with numbers?” This turns the interview into a mini-project and proves you can ship under deadline.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p>How do I answer when the interviewer says “Tell me about a time you had to choose between consistency and latency”?</p>
+<p>Pick one real incident. State the trigger (“p99 latency jumped from 80 ms to 420 ms during Black Friday”), the choice (“We switched to quorum reads on a 3-replica cluster”), the metric (“p99 latency dropped to 110 ms, but consistency window grew to 150 ms”), and the rollback plan (“We reverted to strong reads after 2 hours when we saw duplicate orders”). That’s the exact structure they want.</p>
+<p>What’s the difference between a design doc and a decision tree?</p>
+<p>A design doc argues for one architecture. A decision tree argues for a set of architectures keyed to measurable triggers. The doc is static; the tree is a living runbook. The tree is what senior engineers actually use to debug incidents at 3 a.m.</p>
+<p>Why does the interviewer keep asking for RTO and RPO numbers?</p>
+<p>Because those numbers expose whether you’ve actually operated a system or just read about them. RTO and RPO force you to quantify the cost of failure in minutes and dollars—exactly what a startup CTO cares about when they wake you up.</p>
+<p>How do I prepare for an interview when I’ve never shipped a system at scale?</p>
+<p>Build a tiny system that breaks on purpose. For example, run a 3-node Postgres cluster with synchronous replication on cheap VMs. Then simulate a network partition with <code>iptables</code>. Measure how long it takes to promote a replica and update DNS. That exercise teaches you more than any textbook because it forces you to live the rollback story.</p>
+<h2 id="the-boring-stack-cheat-sheet-what-to-default-to">The boring stack cheat sheet (what to default to)</h2>
+<p>| Use case | Boring choice | Why it’s boring | Reversibility |
+|---|---|---|---|---|
+| Global low-latency API | Cloudflare Workers or AWS Lambda@Edge | No cluster ops, instant rollback | 2 minutes |
+| High write throughput | Postgres with logical replication | 10+ years of tuning guides | 15 minutes |
+| User-facing analytics | ClickHouse on object storage | Columnar scans under 1 sec on 1 TB | 5 minutes |
+| Background job queue | BullMQ on Redis | 5 ms latency, 1-line failover | 1 minute |
+| Auth &amp; sessions | Lucia Auth or NextAuth.js | Zero state to manage | 0 downtime |</p>
+<p>This table is your safety net. Default to these unless you have a measured reason to deviate.</p>
+<p>The key takeaway here is that senior engineers default to boring stacks they can explain, operate, and roll back without heroic effort.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/iot-architecture-explained-at-last/">
+                        <h3>IoT Architecture Explained at Last</h3>
+                        <p>Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.</p>
+                        <span class="related-meta">17 min read · 24 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/design-like-pro/">
+                        <h3>Design Like Pro</h3>
+                        <p>System design interview tips and best practices</p>
+                        <span class="related-meta">10 min read · 21 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/debugging-mindset-finally-explained-why-90-of-bugs/">
+                        <h3>Debugging Mindset Finally Explained: Why 90% of Bugs Die in 3 Steps</h3>
+                        <p>Fixed a $1,200 silent failure in 20 minutes by asking 'what changed' instead of reading logs — here’s the exact debugging mindset that turns chaotic bugs into repeatable investigations with real code examples and failure scenarios.</p>
+                        <span class="related-meta">15 min read · 27 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
