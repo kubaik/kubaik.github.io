@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 10:58:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 12:01:52 +0000</lastBuildDate>
+    <item>
+      <title>Zero-to-Hired in 12 Months: Tech Career Roadmap finally explained</title>
+      <link>https://kubaik.github.io/zero-to-hired-in-12-months-tech-career-roadmap-fin/</link>
+      <description>Land a $35k–$50k tech job in 12 months with zero prior experience — exact 4-layer roadmap, tools, and 30-second demo videos that got interviews. Includes Python, React, Node, PostgreSQL, and free tiers used by real hires in Lagos, Nairobi, Chicago and Berlin.</description>
+      <pubDate>Mon, 27 Apr 2026 12:01:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-to-hired-in-12-months-tech-career-roadmap-fin/</guid>
+    </item>
     <item>
       <title>13 ways developers can build real influence at work</title>
       <link>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency under 10 ms globally with Cloudflare Workers vs Fastly Compute@Edge — real benchmarks, code samples, and the mistakes that cost us 12 % of state during cache evictions.</description>
       <pubDate>Sun, 26 Apr 2026 21:34:03 +0000</pubDate>
       <guid>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</guid>
-    </item>
-    <item>
-      <title>How Google’s SRE culture cut downtime by 90% — here’s the code</title>
-      <link>https://kubaik.github.io/how-googles-sre-culture-cut-downtime-by-90-heres-t/</link>
-      <description>Cut downtime by 91% with Google’s SRE culture — error budgets, progressive rollouts, and GitOps code you can run today. Includes real benchmarks, 2 code examples, and failure modes nobody mentions.</description>
-      <pubDate>Sun, 26 Apr 2026 21:09:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-googles-sre-culture-cut-downtime-by-90-heres-t/</guid>
     </item>
   </channel>
 </rss>
