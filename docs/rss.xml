@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 04:11:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 04:53:40 +0000</lastBuildDate>
+    <item>
+      <title>How Nigerian Prince scams still work: a 2024 teardown of social engineering</title>
+      <link>https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/</link>
+      <description>Cut social engineering success rate from 12% to 0.8% with a 60-second pause, voice verification, and regional tweaks — no magic, just cognitive load engineering.</description>
+      <pubDate>Mon, 27 Apr 2026 04:53:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/</guid>
+    </item>
     <item>
       <title>AWS bill halved — here’s how we did it</title>
       <link>https://kubaik.github.io/aws-bill-halved-heres-how-we-did-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident-related outages by 70% with this 200-line tracker used by ex-Big Tech engineers — SQLite, FastAPI, Prometheus metrics, and the discipline rules they don’t teach you</description>
       <pubDate>Sun, 26 Apr 2026 17:13:12 +0000</pubDate>
       <guid>https://kubaik.github.io/what-silicon-valley-engineers-really-think-about-b/</guid>
-    </item>
-    <item>
-      <title>GitHub Copilot vs Cursor: Which AI Pair-Programmer Wins in 2025?</title>
-      <link>https://kubaik.github.io/github-copilot-vs-cursor-which-ai-pair-programmer-/</link>
-      <description>Cursor cuts debugging time by 30% and cloud costs by KES 200K/month — local embeddings, offline resilience, and fewer rejected lines compared to GitHub Copilot’s cloud model.</description>
-      <pubDate>Sun, 26 Apr 2026 16:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/github-copilot-vs-cursor-which-ai-pair-programmer-/</guid>
     </item>
   </channel>
 </rss>
