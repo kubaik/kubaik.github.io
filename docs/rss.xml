@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 07:57:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 08:12:53 +0000</lastBuildDate>
+    <item>
+      <title>React Server Components fail when hydration skips state — here&apos;s why</title>
+      <link>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</link>
+      <description>Cut hydration mismatch warnings by 94% in React Server Components — serialization patterns, environment traps, and CI checks that work in Next.js 13.4+ for apps in Lagos, London, Manila, and Montreal.</description>
+      <pubDate>Mon, 27 Apr 2026 08:12:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</guid>
+    </item>
     <item>
       <title>AI skills paying 50% more by 2026 — what we measured</title>
       <link>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</link>
@@ -138,13 +145,6 @@
       <description>Cut skill-learning time by 30–50% using AI as a personalized tutor — worked examples, 3 concrete benchmarks, and the prompts that actually work, not the ones that waste time.</description>
       <pubDate>Sun, 26 Apr 2026 19:31:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-finally-explained-use-it-to-learn-anything-fast/</guid>
-    </item>
-    <item>
-      <title>Junior dev jobs are dead — here&apos;s the receipts</title>
-      <link>https://kubaik.github.io/junior-dev-jobs-are-dead-heres-the-receipts/</link>
-      <description>Junior dev jobs dead: hat’s a 0.057% acceptance rate. Even if ever. Practical guide with real examples.</description>
-      <pubDate>Sun, 26 Apr 2026 18:43:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/junior-dev-jobs-are-dead-heres-the-receipts/</guid>
     </item>
   </channel>
 </rss>
