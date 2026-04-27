@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 17:54:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 18:22:28 +0000</lastBuildDate>
+    <item>
+      <title>Automate 10 enterprise workflows in 3 hours with Python RPA</title>
+      <link>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</link>
+      <description>ll shared 70% of its data via email attachm with Automate enterprise workflows hours — one master sheet.</description>
+      <pubDate>Mon, 27 Apr 2026 18:22:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</guid>
+    </item>
     <item>
       <title>13 Bash tricks every non-terminal developer needs to ship faster</title>
       <link>https://kubaik.github.io/13-bash-tricks-every-non-terminal-developer-needs-/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.</description>
       <pubDate>Mon, 27 Apr 2026 07:00:31 +0000</pubDate>
       <guid>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</guid>
-    </item>
-    <item>
-      <title>Why your retail product detection model fails on new shelves (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-your-retail-product-detection-model-fails-on-n/</link>
-      <description>Cut on-shelf availability false positives by 80% with store-level holdouts, lighting augmentation, and geometric augmentation — the retail product detection failures we measured and the fixes that worked in production.</description>
-      <pubDate>Mon, 27 Apr 2026 05:49:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-retail-product-detection-model-fails-on-n/</guid>
     </item>
   </channel>
 </rss>
