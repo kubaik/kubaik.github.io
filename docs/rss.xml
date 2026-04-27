@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 00:09:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 01:16:11 +0000</lastBuildDate>
+    <item>
+      <title>You’re choosing the wrong mobile stack — here’s the proof</title>
+      <link>https://kubaik.github.io/youre-choosing-the-wrong-mobile-stack-heres-the-pr/</link>
+      <description>odule was 70% of the business logic, but th with You choosing mobile stack — build iOS and Android Studio to build Android.</description>
+      <pubDate>Mon, 27 Apr 2026 01:16:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/youre-choosing-the-wrong-mobile-stack-heres-the-pr/</guid>
+    </item>
     <item>
       <title>Docker in production fails with &apos;container out of memory&apos; — and how to fix it</title>
       <link>https://kubaik.github.io/docker-in-production-fails-with-container-out-of-m/</link>
@@ -138,13 +145,6 @@
       <description>Find 3 high-paying remote tech jobs in 2026 without job boards or recruiters — using niche portfolios, async-first companies, and value networks. Includes 1 benchmark, 3 salary figures, and a step-by-step next action.</description>
       <pubDate>Sun, 26 Apr 2026 15:13:36 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-tech-jobs-in-2026-are-a-scam-unless-you-kno/</guid>
-    </item>
-    <item>
-      <title>Automated 50 daily tasks with Python in 3 weeks — here’s what broke</title>
-      <link>https://kubaik.github.io/automated-50-daily-tasks-with-python-in-3-weeks-he/</link>
-      <description>Cut weekly manual work from 11.5 hours to 2.3 hours with Python automation on a $12 VM — idempotency keys, Redis Streams, and the mistakes that almost broke it.</description>
-      <pubDate>Sun, 26 Apr 2026 15:04:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/automated-50-daily-tasks-with-python-in-3-weeks-he/</guid>
     </item>
   </channel>
 </rss>
