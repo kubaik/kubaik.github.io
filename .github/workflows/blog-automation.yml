@@ -3,7 +3,6 @@ name: AI Blog Automation
 on:
   schedule:
     - cron: "0 * * * *"
-    - cron: "30 * * * *"
   workflow_dispatch:
     inputs:
       force_cleanup:
