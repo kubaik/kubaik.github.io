@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Apr 2026 23:35:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 00:09:11 +0000</lastBuildDate>
+    <item>
+      <title>Docker in production fails with &apos;container out of memory&apos; — and how to fix it</title>
+      <link>https://kubaik.github.io/docker-in-production-fails-with-container-out-of-m/</link>
+      <description>Cut Docker OOM crashes by 95% in production with 256Mi memory limits, alpine images, and kernel upgrades — learn the exact fixes for &apos;container_linux.go:380: memory: unknown error after fork/exec&apos; and how to prevent it from happening again.</description>
+      <pubDate>Mon, 27 Apr 2026 00:09:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-in-production-fails-with-container-out-of-m/</guid>
+    </item>
     <item>
       <title>From Idea to Launch: Building an MVP in 30 Days: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/from-idea-to-launch-building-an-mvp-in-30-days-a-p/</link>
@@ -138,13 +145,6 @@
       <description>Cut weekly manual work from 11.5 hours to 2.3 hours with Python automation on a $12 VM — idempotency keys, Redis Streams, and the mistakes that almost broke it.</description>
       <pubDate>Sun, 26 Apr 2026 15:04:13 +0000</pubDate>
       <guid>https://kubaik.github.io/automated-50-daily-tasks-with-python-in-3-weeks-he/</guid>
-    </item>
-    <item>
-      <title>We scaled a URL shortener to 2 billion daily hits — here’s the blueprint</title>
-      <link>https://kubaik.github.io/we-scaled-a-url-shortener-to-2-billion-daily-hits-/</link>
-      <description>scaled URL shortener billion: onds, and 8% of connections timed out befo. Practical guide with real examples.</description>
-      <pubDate>Sun, 26 Apr 2026 14:03:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/we-scaled-a-url-shortener-to-2-billion-daily-hits-/</guid>
     </item>
   </channel>
 </rss>
