@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 05:49:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 07:00:35 +0000</lastBuildDate>
+    <item>
+      <title>Your System Design Interview Answer Scores 2/5 — Here&apos;s How to Get 5/5</title>
+      <link>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</link>
+      <description>Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.</description>
+      <pubDate>Mon, 27 Apr 2026 07:00:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</guid>
+    </item>
     <item>
       <title>Why your retail product detection model fails on new shelves (and how to fix it)</title>
       <link>https://kubaik.github.io/why-your-retail-product-detection-model-fails-on-n/</link>
@@ -138,13 +145,6 @@
       <description>Cut draft time by 80% and edit time by 77% with AI that still sounds human — comparison table, code samples, and a free CLI tool included. AI voice cloning for content creation without robotic tone.</description>
       <pubDate>Sun, 26 Apr 2026 18:09:11 +0000</pubDate>
       <guid>https://kubaik.github.io/write-blog-posts-80-faster-with-ai-that-still-soun/</guid>
-    </item>
-    <item>
-      <title>Why Your FP Code Fails with Impure Functions (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-your-fp-code-fails-with-impure-functions-and-h/</link>
-      <description>Reduce functional programming errors by 80% with async purity rules — avoid 12ms latency spikes and 15 errors/month. functional programming concepts in practical code with promise handling and array methods</description>
-      <pubDate>Sun, 26 Apr 2026 17:35:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-fp-code-fails-with-impure-functions-and-h/</guid>
     </item>
   </channel>
 </rss>
