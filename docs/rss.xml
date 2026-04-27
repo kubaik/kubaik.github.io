@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 02:10:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 04:02:07 +0000</lastBuildDate>
+    <item>
+      <title>How async/await, destructuring &amp; optional chaining cut bugs 42% in 6 weeks</title>
+      <link>https://kubaik.github.io/how-asyncawait-destructuring-optional-chaining-cut/</link>
+      <description>Cut bug tickets 42% and FX-widget latency to 280ms using async/await, destructuring &amp; optional chaining — plus the mistakes that nearly derailed the rollout</description>
+      <pubDate>Mon, 27 Apr 2026 04:02:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-asyncawait-destructuring-optional-chaining-cut/</guid>
+    </item>
     <item>
       <title>Debugging Mindset Finally Explained: Why 90% of Bugs Die in 3 Steps</title>
       <link>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</link>
@@ -138,13 +145,6 @@
       <description>Learn exactly what 3 VCs look for in startup unit economics with a real dashboard that reduced AWS costs from $12 to $0.02 per user and raised $26M in Series A. Includes code, benchmarks, and investor-tested scripts.</description>
       <pubDate>Sun, 26 Apr 2026 16:10:00 +0000</pubDate>
       <guid>https://kubaik.github.io/what-vcs-actually-look-for-when-they-invest-in-you/</guid>
-    </item>
-    <item>
-      <title>AI Side Hustles: Selling Prompts vs Fine-Tuning Models</title>
-      <link>https://kubaik.github.io/ai-side-hustles-selling-prompts-vs-fine-tuning-mod/</link>
-      <description>Sell prompts for $9 and earn $45/hr in 7 days or fine-tune a model for $25k/month if you already have a paying customer — real numbers from Kenya, Rwanda, and Nigeria side hustles.</description>
-      <pubDate>Sun, 26 Apr 2026 15:38:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-side-hustles-selling-prompts-vs-fine-tuning-mod/</guid>
     </item>
   </channel>
 </rss>
