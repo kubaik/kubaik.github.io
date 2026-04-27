@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 16:57:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 17:11:13 +0000</lastBuildDate>
+    <item>
+      <title>The 9 best Explainable AI tools to lift the lid on black boxes</title>
+      <link>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</link>
+      <description>Cut API latency by 60% and reduce auditor questions to zero with SHAP TreeExplainer — open-source, exact attributions, and real numbers from Indonesian e-commerce and Vietnamese fintech deployments.</description>
+      <pubDate>Mon, 27 Apr 2026 17:11:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</guid>
+    </item>
     <item>
       <title>Why your cloud credentials keep leaking (and how to stop it)</title>
       <link>https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/</link>
@@ -138,13 +145,6 @@
       <description>Fixed a $1,200 silent failure in 20 minutes by asking &apos;what changed&apos; instead of reading logs — here’s the exact debugging mindset that turns chaotic bugs into repeatable investigations with real code examples and failure scenarios.</description>
       <pubDate>Mon, 27 Apr 2026 02:10:09 +0000</pubDate>
       <guid>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</guid>
-    </item>
-    <item>
-      <title>You’re choosing the wrong mobile stack — here’s the proof</title>
-      <link>https://kubaik.github.io/youre-choosing-the-wrong-mobile-stack-heres-the-pr/</link>
-      <description>odule was 70% of the business logic, but th with You choosing mobile stack — build iOS and Android Studio to build Android.</description>
-      <pubDate>Mon, 27 Apr 2026 01:16:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/youre-choosing-the-wrong-mobile-stack-heres-the-pr/</guid>
     </item>
   </channel>
 </rss>
