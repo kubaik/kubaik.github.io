@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 01:16:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 02:10:13 +0000</lastBuildDate>
+    <item>
+      <title>Debugging Mindset Finally Explained: Why 90% of Bugs Die in 3 Steps</title>
+      <link>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</link>
+      <description>Fixed a $1,200 silent failure in 20 minutes by asking &apos;what changed&apos; instead of reading logs — here’s the exact debugging mindset that turns chaotic bugs into repeatable investigations with real code examples and failure scenarios.</description>
+      <pubDate>Mon, 27 Apr 2026 02:10:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</guid>
+    </item>
     <item>
       <title>You’re choosing the wrong mobile stack — here’s the proof</title>
       <link>https://kubaik.github.io/youre-choosing-the-wrong-mobile-stack-heres-the-pr/</link>
@@ -138,13 +145,6 @@
       <description>Sell prompts for $9 and earn $45/hr in 7 days or fine-tune a model for $25k/month if you already have a paying customer — real numbers from Kenya, Rwanda, and Nigeria side hustles.</description>
       <pubDate>Sun, 26 Apr 2026 15:38:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-side-hustles-selling-prompts-vs-fine-tuning-mod/</guid>
-    </item>
-    <item>
-      <title>Remote tech jobs in 2026 are a scam unless you know this</title>
-      <link>https://kubaik.github.io/remote-tech-jobs-in-2026-are-a-scam-unless-you-kno/</link>
-      <description>Find 3 high-paying remote tech jobs in 2026 without job boards or recruiters — using niche portfolios, async-first companies, and value networks. Includes 1 benchmark, 3 salary figures, and a step-by-step next action.</description>
-      <pubDate>Sun, 26 Apr 2026 15:13:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-tech-jobs-in-2026-are-a-scam-unless-you-kno/</guid>
     </item>
   </channel>
 </rss>
