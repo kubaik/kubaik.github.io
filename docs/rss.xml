@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 18:22:28 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 18:52:46 +0000</lastBuildDate>
+    <item>
+      <title>Time series forecasting with AI is overrated — here’s what works instead</title>
+      <link>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</link>
+      <description>Reduce AI time series forecasting costs by 80% with classical models — Prophet, seasonal naive, and XGBoost outperform deep learning in 80% of cases, with MAE improvements up to 15% when operational constraints are considered.</description>
+      <pubDate>Mon, 27 Apr 2026 18:52:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</guid>
+    </item>
     <item>
       <title>Automate 10 enterprise workflows in 3 hours with Python RPA</title>
       <link>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI cloud bills by 74% and latency by 79% by 2026 — the exact skills, tools, and code that hiring managers now demand for AI roles. Includes Rust middleware, Prometheus metrics, and drift detection with numbers.</description>
       <pubDate>Mon, 27 Apr 2026 07:57:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</guid>
-    </item>
-    <item>
-      <title>Your System Design Interview Answer Scores 2/5 — Here&apos;s How to Get 5/5</title>
-      <link>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</link>
-      <description>Cut interview scores from 2/5 to 5/5 by attaching cost and rollback stories to every choice — proven frameworks, real incident war stories, and a boring-stack cheat sheet with RTO/RPO numbers.</description>
-      <pubDate>Mon, 27 Apr 2026 07:00:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</guid>
     </item>
   </channel>
 </rss>
