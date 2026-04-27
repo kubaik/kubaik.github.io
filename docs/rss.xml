@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 17:18:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 17:44:01 +0000</lastBuildDate>
+    <item>
+      <title>The 7 Best Tools for Building a Frustration-Free Dev Environment</title>
+      <link>https://kubaik.github.io/the-7-best-tools-for-building-a-frustration-free-d/</link>
+      <description>Build a development environment under 30 minutes with the 7 best tools for coding, debugging, and collaboration — cut setup time and reduce frustration.</description>
+      <pubDate>Mon, 27 Apr 2026 17:43:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-7-best-tools-for-building-a-frustration-free-d/</guid>
+    </item>
     <item>
       <title>What happens when Python, Go, and Rust meet Nigeria’s 3G networks</title>
       <link>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS bill by 53% in six months with concrete steps, benchmarks, and automation — orphaned data, Savings Plans, Spot, and real dashboards included. Optimize your AWS bill today.</description>
       <pubDate>Mon, 27 Apr 2026 04:10:58 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-bill-halved-heres-how-we-did-it/</guid>
-    </item>
-    <item>
-      <title>How async/await, destructuring &amp; optional chaining cut bugs 42% in 6 weeks</title>
-      <link>https://kubaik.github.io/how-asyncawait-destructuring-optional-chaining-cut/</link>
-      <description>Cut bug tickets 42% and FX-widget latency to 280ms using async/await, destructuring &amp; optional chaining — plus the mistakes that nearly derailed the rollout</description>
-      <pubDate>Mon, 27 Apr 2026 04:02:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-asyncawait-destructuring-optional-chaining-cut/</guid>
     </item>
   </channel>
 </rss>
