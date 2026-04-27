@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 12:01:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 12:13:20 +0000</lastBuildDate>
+    <item>
+      <title>Ethical Hacker Mindset: How Pen Tests Actually Find Flaws</title>
+      <link>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</link>
+      <description>Cut brute-force bypass risk by 80% with atomic lockout state — real Django, Node.js and Redis fixes, pitfalls, and chaos tests that caught our mistakes in Nairobi fintech stacks.</description>
+      <pubDate>Mon, 27 Apr 2026 12:13:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</guid>
+    </item>
     <item>
       <title>Zero-to-Hired in 12 Months: Tech Career Roadmap finally explained</title>
       <link>https://kubaik.github.io/zero-to-hired-in-12-months-tech-career-roadmap-fin/</link>
@@ -138,13 +145,6 @@
       <description>Discover how ClickHouse cut 250GB analytics latency from 842ms to 18ms and reduced cloud costs by 38% — the tech skill paying 3× more than PostgreSQL in 2024.</description>
       <pubDate>Sun, 26 Apr 2026 22:07:06 +0000</pubDate>
       <guid>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</guid>
-    </item>
-    <item>
-      <title>API latency: Cloudflare Workers vs Fastly Compute@Edge</title>
-      <link>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</link>
-      <description>Cut API latency under 10 ms globally with Cloudflare Workers vs Fastly Compute@Edge — real benchmarks, code samples, and the mistakes that cost us 12 % of state during cache evictions.</description>
-      <pubDate>Sun, 26 Apr 2026 21:34:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-latency-cloudflare-workers-vs-fastly-computeed/</guid>
     </item>
   </channel>
 </rss>
