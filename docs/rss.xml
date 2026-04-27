@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 18:52:46 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 19:10:53 +0000</lastBuildDate>
+    <item>
+      <title>Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency</title>
+      <link>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</link>
+      <description>ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.</description>
+      <pubDate>Mon, 27 Apr 2026 19:10:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</guid>
+    </item>
     <item>
       <title>Time series forecasting with AI is overrated — here’s what works instead</title>
       <link>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</link>
@@ -138,13 +145,6 @@
       <description>Cut hydration mismatch warnings by 94% in React Server Components — serialization patterns, environment traps, and CI checks that work in Next.js 13.4+ for apps in Lagos, London, Manila, and Montreal.</description>
       <pubDate>Mon, 27 Apr 2026 08:12:49 +0000</pubDate>
       <guid>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</guid>
-    </item>
-    <item>
-      <title>AI skills paying 50% more by 2026 — what we measured</title>
-      <link>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</link>
-      <description>Cut AI cloud bills by 74% and latency by 79% by 2026 — the exact skills, tools, and code that hiring managers now demand for AI roles. Includes Rust middleware, Prometheus metrics, and drift detection with numbers.</description>
-      <pubDate>Mon, 27 Apr 2026 07:57:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</guid>
     </item>
   </channel>
 </rss>
