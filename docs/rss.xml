@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 14:29:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 14:39:55 +0000</lastBuildDate>
+    <item>
+      <title>The 9 data systems Netflix uses to pick what to build next</title>
+      <link>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</link>
+      <description>Cut feature churn by 60% with Netflix’s 9 data systems — A/B experiments, CLV models, graph affinity, and the exact tools, versions, and costs for bootstrappers to series B startups</description>
+      <pubDate>Mon, 27 Apr 2026 14:39:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</guid>
+    </item>
     <item>
       <title>11 A/B Test Tools That Give Real Answers (Ranked and Tested)</title>
       <link>https://kubaik.github.io/11-ab-test-tools-that-give-real-answers-ranked-and/</link>
@@ -138,13 +145,6 @@
       <description>Big Tech engineers quit for &apos;better culture&apos; but end up debugging memory leaks in Rust for three customers. Here’s how 12 engineers I mentored chose wisely—and how to pick your next move with data, not hype.</description>
       <pubDate>Sun, 26 Apr 2026 22:33:40 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</guid>
-    </item>
-    <item>
-      <title>Why ClickHouse pays 3× more than PostgreSQL in 2024</title>
-      <link>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</link>
-      <description>Discover how ClickHouse cut 250GB analytics latency from 842ms to 18ms and reduced cloud costs by 38% — the tech skill paying 3× more than PostgreSQL in 2024.</description>
-      <pubDate>Sun, 26 Apr 2026 22:07:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</guid>
     </item>
   </channel>
 </rss>
