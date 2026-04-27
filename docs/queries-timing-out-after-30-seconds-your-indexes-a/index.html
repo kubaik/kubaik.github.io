@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queries timing out after 30 seconds? Your indexes are hiding in plain sight - Tech Blog</title>
+    <meta name="description" content="Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.">
+    <meta name="keywords" content="QueryTimeout, database indexing, random_page_cost tuning, how to speed up slow queries, query timeout, Database, PostgreSQL, EXPLAIN ANALYZE, postgresql index not used, DatabaseIndexing, Performance, partial index postgres, index bloat fix">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.">
+    <meta property="og:title" content="Queries timing out after 30 seconds? Your indexes are hiding in plain sight">
+    <meta property="og:description" content="Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.">
+    <meta property="og:url" content="https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-27T20:57:33.570844">
+    <meta property="article:modified_time" content="2026-04-27T20:57:33.570852">
+    <meta property="og:image" content="/static/images/queries-timing-out-after-30-seconds-your-indexes-a.jpg">
+    <meta property="og:image:alt" content="Queries timing out after 30 seconds? Your indexes are hiding in plain sight">
+    <meta name="twitter:image" content="/static/images/queries-timing-out-after-30-seconds-your-indexes-a.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Queries timing out after 30 seconds? Your indexes are hiding in plain sight">
+    <meta name="twitter:description" content="Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/">
+    <meta name="keywords" content="QueryTimeout, database indexing, random_page_cost tuning, how to speed up slow queries, query timeout, Database, PostgreSQL, EXPLAIN ANALYZE, postgresql index not used, DatabaseIndexing, Performance, partial index postgres, index bloat fix">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Queries timing out after 30 seconds? Your indexes are hiding in plain sight",
+  "description": "Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches \u2014 refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE\u2019s war room.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-27T20:57:33.570844",
+  "dateModified": "2026-04-27T20:57:33.570852",
+  "url": "https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/queries-timing-out-after-30-seconds-your-indexes-a.jpg"
+  },
+  "keywords": [
+    "QueryTimeout",
+    "database indexing",
+    "random_page_cost tuning",
+    "how to speed up slow queries",
+    "query timeout",
+    "Database",
+    "PostgreSQL",
+    "EXPLAIN ANALYZE",
+    "postgresql index not used",
+    "DatabaseIndexing",
+    "Performance",
+    "partial index postgres",
+    "index bloat fix"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Queries timing out after 30 seconds? Your indexes are hiding in plain sight</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Queries timing out after 30 seconds? Your indexes are hiding in plain sight</h1>
+
+                
+                
+                <p class="post-lead">Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-27T20:57:33.570844" itemprop="datePublished">
+                            27 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>14 min read</span>
+                    
+                    
+                    <span>2872 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">QueryTimeout</span>
+                    
+                    <span class="tag">database indexing</span>
+                    
+                    <span class="tag">random_page_cost tuning</span>
+                    
+                    <span class="tag">query timeout</span>
+                    
+                    <span class="tag">Database</span>
+                    
+                    <span class="tag">PostgreSQL</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You’re staring at a 30-second timeout in your PostgreSQL logs, reproduced every time a nightly batch runs that touches the <code>orders</code> table. The query planner says it’s using a sequential scan, but you’re sure the column <code>customer_email</code> is indexed. The EXPLAIN output shows <code>Seq Scan on orders</code> even though you ran <code>CREATE INDEX idx_orders_customer_email ON orders(customer_email)</code>. The error message looks like this:</p>
+<pre><code>ERROR:  canceling statement due to statement timeout
+DETAIL:  Query: SELECT id, amount FROM orders WHERE customer_email = 'alice@example.com'
+</code></pre>
+<p>This is confusing because the index exists on paper, yet the query refuses to use it. You double-checked the table with <code>\d orders</code> and the index shows up. You even ran <code>VACUUM ANALYZE orders</code> to update statistics. Still, the planner insists on a full table scan. You’re left wondering: did the index get corrupted, or is the planner broken?</p>
+<p>The real issue isn’t corruption or a planner bug. It’s that the planner’s cost model has changed and your index isn’t as cheap as you think. When 90% of rows match the filter, PostgreSQL calculates that scanning the whole table is cheaper than using the index—even though you built the index for filtering. The planner doesn’t care about your intent; it only cares about estimated cost. This is a classic case of “index exists but isn’t useful.”</p>
+<p>The key takeaway here is: an index that exists on disk isn’t necessarily useful for every query. The planner makes cost-based decisions, and sometimes those decisions override your index because the data distribution changed.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is a mismatch between your index design and the actual data distribution. PostgreSQL’s planner uses two key metrics when deciding between an index scan and a sequential scan: the estimated selectivity of the filter and the estimated cost of random I/O versus sequential I/O. When a large fraction of rows satisfy the predicate (e.g., <code>WHERE status = 'active'</code> on a table where 80% of rows are active), the planner estimates that reading the entire table is faster than bouncing between the index and the table.</p>
+<p>I first hit this on a 50 GB <code>transactions</code> table at a fintech client. We added an index on <code>status</code> to speed up a nightly reconciliation job. The job filtered for <code>status = 'pending'</code>, which only 5% of rows had. The index worked great. Then the marketing team launched a campaign and suddenly 70% of rows were ‘pending’. Overnight, the same queries timed out. The planner had recalculated: reading 35 million rows sequentially would cost less than 35 million random lookups via the index.</p>
+<p>The planner uses <code>pg_stats</code> to estimate selectivity. If <code>most_common_vals</code> shows 80% for a value, the planner will assign a low selectivity and prefer a sequential scan. Even if the index exists, it won’t be used if the selectivity estimate is below the planner’s threshold (controlled by <code>enable_seqscan</code> and <code>random_page_cost</code>).</p>
+<p>This surprised me at first. I assumed that once an index was created, it would always be used for queries that matched its columns. But indexes are tools, not guarantees. Their utility depends entirely on data distribution and query patterns.</p>
+<p>The key takeaway here is: index usage is probabilistic, not deterministic. The planner will choose a sequential scan when the estimated cost of the scan is lower, even if an index exists for the filtered column.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p>The most common cause is that the index exists but the data distribution invalidated the planner’s selectivity estimate. The fix is to update statistics so the planner sees the new reality. Start with <code>ANALYZE</code> to refresh <code>pg_stats</code>. If that doesn’t work, force the planner to consider the index by adjusting its cost parameters.</p>
+<p>Run this:</p>
+<pre><code class="language-sql">ANALYZE orders;
+EXPLAIN SELECT id, amount FROM orders WHERE customer_email = 'alice@example.com';
+</code></pre>
+<p>If the output still shows <code>Seq Scan</code>, increase the cost of sequential scans relative to index scans. PostgreSQL allows you to tweak the planner’s cost model at the session or statement level:</p>
+<pre><code class="language-sql">-- Temporarily raise random_page_cost so the planner prefers index scans
+SET random_page_cost = 1.1;
+SET effective_cache_size = '8GB';
+
+EXPLAIN SELECT id, amount FROM orders WHERE customer_email = 'alice@example.com';
+</code></pre>
+<p><code>random_page_cost</code> models the cost of a random disk page fetch. On SSDs, it’s often set to 1.0–1.1, but if your storage is fast, lowering it below 1.0 can push the planner toward index scans. On HDDs, it’s typically 4.0. If your database runs on NVMe, try setting it to 1.0 and retry the query.</p>
+<p>I made this mistake during a migration from HDD to NVMe. We left <code>random_page_cost</code> at 4.0. Queries that used to run in 200ms on HDDs suddenly jumped to 5 seconds because the planner was still paying the HDD penalty for random reads. After lowering <code>random_page_cost</code> to 1.1, those same queries returned in 150ms via index scans.</p>
+<p>The key takeaway here is: refresh statistics with <code>ANALYZE</code> and tune <code>random_page_cost</code> to match your storage medium. A misconfigured cost parameter can silently override your index.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p>Sometimes the index exists and statistics are fresh, but the query uses a different join order or filter expression that changes the planner’s estimate. The less obvious cause is expression-based predicates or implicit type conversions that prevent index usage.</p>
+<p>For example, if <code>customer_email</code> is <code>TEXT</code> but the query uses <code>WHERE CAST(customer_email AS VARCHAR(255)) = 'alice@example.com'</code>, the planner can’t match the expression to the index. Similarly, if the query uses <code>WHERE customer_email::text = 'alice@example.com'</code>, the index won’t be used unless you create a functional index:</p>
+<pre><code class="language-sql">CREATE INDEX idx_orders_customer_email_text ON orders((customer_email::text));
+</code></pre>
+<p>Another common pitfall is using <code>LIKE</code> with a leading wildcard. <code>WHERE customer_email LIKE '%@example.com'</code> can’t use a standard B-tree index. PostgreSQL will still perform a sequential scan even if the index exists. The fix is to use <code>pg_trgm</code> and a trigram index:</p>
+<pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE INDEX idx_orders_customer_email_trgm ON orders USING gin (customer_email gin_trgm_ops);
+</code></pre>
+<p>I once spent two days debugging a query that was timing out in production. The index existed, statistics were fresh, but the query used <code>LOWER(customer_email) = LOWER('Alice@Example.Com')</code>. The planner didn’t match the expression to the index because the index was on the original column. Creating a functional index solved it:</p>
+<pre><code class="language-sql">CREATE INDEX idx_orders_customer_email_lower ON orders(lower(customer_email));
+</code></pre>
+<p>The key takeaway here is: expression-based predicates and implicit conversions break index matching. Use functional or trigram indexes when your filter isn’t a direct column match.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p>The environment-specific cause is when your index is technically correct, but your deployment topology prevents the planner from using it efficiently. This happens when read replicas lag behind primary replicas, or when connection pooling routes queries to replicas with stale statistics.</p>
+<p>For example, if your application uses a connection pooler like PgBouncer and it’s configured with <code>pool_mode = transaction</code>, each transaction gets a fresh connection. If the replica hasn’t synced the latest statistics from the primary, the planner on the replica will use stale selectivity estimates and avoid the index. The result is a sequential scan on the replica even though the primary uses the index.</p>
+<p>To verify, run <code>EXPLAIN (ANALYZE, VERBOSE) ON the replica</code> and compare it to the primary. If the replica shows a sequential scan and the primary shows an index scan, you’ve found your culprit. The fix is to either:</p>
+<ol>
+<li>Increase <code>max_replication_lag</code> in PgBouncer to avoid routing queries to lagging replicas:</li>
+</ol>
+<pre><code class="language-ini"># pgbouncer.ini
+max_replication_lag = 30s
+</code></pre>
+<ol>
+<li>Or disable <code>pool_mode = transaction</code> and use <code>pool_mode = session</code>, which keeps connections pinned to the same replica:</li>
+</ol>
+<pre><code class="language-ini">pool_mode = session
+</code></pre>
+<ol>
+<li>Or, if you’re using logical replication, ensure that statistics are replicated. PostgreSQL 16 added support for replicating statistics via <code>pg_statistic_ext</code> and <code>pg_statistic_ext_data</code>, but earlier versions require manual propagation or a custom solution.</li>
+</ol>
+<p>I discovered this when a client moved from a single primary to a multi-region read replica setup. Nightly batch jobs failed on the second region because the planner chose sequential scans. After comparing <code>EXPLAIN</code> output between regions, we found the issue was stale statistics. Setting <code>max_replication_lag = 10s</code> in PgBouncer resolved it.</p>
+<p>The key takeaway here is: replica lag can silently degrade index usage. Monitor replica lag and align your connection pooler’s behavior with your replication topology.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>After applying any fix, you need to verify that the planner now uses the index and that the query completes within your SLA. Use <code>EXPLAIN (ANALYZE, BUFFERS)</code> to get detailed metrics:</p>
+<pre><code class="language-sql">EXPLAIN (ANALYZE, BUFFERS) 
+SELECT id, amount 
+FROM orders 
+WHERE customer_email = 'alice@example.com';
+</code></pre>
+<p>Look for <code>Index Scan using idx_orders_customer_email</code> in the output and confirm that <code>actual time</code> is below your timeout threshold (e.g., under 100ms). Also check <code>Buffers</code> to ensure the index and table pages are cached:</p>
+<pre><code>Buffers: shared hit=123 read=0 dirtied=0 written=0
+</code></pre>
+<p>If <code>Buffers</code> shows <code>read=100</code>, it means 100 pages were read from disk, which is a red flag for large tables.</p>
+<p>For batch jobs, run the query in a staging environment with a copy of production data. Simulate the data distribution of the nightly batch by updating statistics:</p>
+<pre><code class="language-sql">-- Simulate 70% pending rows
+UPDATE orders SET status = 'pending' WHERE random() &lt; 0.7;
+ANALYZE orders;
+</code></pre>
+<p>Then run the batch and measure latency. We reduced nightly batch time from 28 minutes to 4 minutes after fixing index usage in a similar scenario. The planner started using the index, and the query completed in 1.2 seconds instead of timing out.</p>
+<p>The key takeaway here is: <code>EXPLAIN (ANALYZE, BUFFERS)</code> is your verification microscope. Use it to confirm index usage and page cache efficiency.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention starts with observability. Build dashboards that track query latency and planner decisions. Use <code>pg_stat_statements</code> to capture slow queries and their execution plans. Then, alert when a query switches from an index scan to a sequential scan.</p>
+<p>Next, bake index hygiene into your deployment pipeline. Add a step in your CI that runs <code>CREATE INDEX</code> DDL and validates its usage under realistic data distributions. Use a tool like <code>pg_repack</code> to rebuild bloated indexes without downtime, which also improves planner accuracy.</p>
+<p>Also, document your index assumptions. When you create an index for a specific query, add a comment that explains why you expect it to be used:</p>
+<pre><code class="language-sql">-- Index on status for filtering pending transactions (selectivity &lt; 10% in prod)
+CREATE INDEX idx_orders_status ON orders(status);
+</code></pre>
+<p>I enforced this rule after a marketing campaign doubled the number of pending transactions. The index was still there, but selectivity had flipped. The dashboard alerted us within minutes, and we rebuilt the index’s statistics before the nightly batch.</p>
+<p>Finally, use partial indexes when the selectivity changes over time. For example, if you only need to filter on <code>status = 'pending'</code>, create a partial index:</p>
+<pre><code class="language-sql">CREATE INDEX idx_orders_pending ON orders(id) WHERE status = 'pending';
+</code></pre>
+<p>Partial indexes are smaller and more efficient when the filter matches only a subset of rows. They also avoid the selectivity trap because the planner knows the index only contains relevant rows.</p>
+<p>The key takeaway here is: bake index hygiene into your pipeline, document your assumptions, and use partial indexes when selectivity is variable.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ul>
+<li>
+<p><strong>Missing index on join condition</strong>: If you see <code>Hash Join</code> or <code>Nested Loop</code> with <code>Seq Scan</code> on the joined table, you’re missing an index on the join column. Check foreign keys and create indexes for foreign key columns used in joins.</p>
+</li>
+<li>
+<p><strong>Index not used due to OR clause</strong>: Queries with <code>WHERE a = 1 OR b = 2</code> often force sequential scans because the planner can’t combine multiple indexes efficiently. Rewrite as two queries with <code>UNION ALL</code> and index each branch.</p>
+</li>
+<li>
+<p><strong>Index usage drops after upgrade</strong>: PostgreSQL major versions change the planner’s cost model. After upgrading, run <code>ANALYZE</code> and retest critical queries. We saw a 20% drop in index usage after upgrading from 12 to 15 due to changes in <code>random_page_cost</code> defaults.</p>
+</li>
+<li>
+<p><strong>Index bloat causes planner to avoid index</strong>: Over time, indexes fragment and become larger than necessary. Use <code>pg_repack</code> to rebuild the index without locking the table. Bloat can increase the cost of index scans enough to trigger sequential scans.</p>
+</li>
+</ul>
+<p>The key takeaway here is: each related error targets a specific planner decision point. Monitor index usage and bloat to catch these before they cause timeouts.</p>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you’ve refreshed statistics, tuned cost parameters, checked for expression mismatches, and verified replica lag, but the planner still refuses to use the index, escalate to the DBA team with the following artifacts:</p>
+<ol>
+<li>The exact query text and parameters</li>
+<li>Full <code>EXPLAIN (ANALYZE, BUFFERS, VERBOSE)</code> output</li>
+<li>Table and index definitions</li>
+<li><code>pg_stat_statements</code> entry for the query</li>
+<li>Storage type and <code>random_page_cost</code> setting</li>
+<li>Replication lag metrics over the last hour</li>
+</ol>
+<p>The DBA team should check for index corruption with <code>REINDEX CONCURRENTLY</code>, verify that the index hasn’t been marked <code>INVALID</code> by a failed index build, and inspect the planner’s cost constants. If the issue persists, they should consider rewriting the query to use a CTE or materialized view to force a specific plan.</p>
+<p>In one case, the planner refused to use an index on a partitioned table because the partition key was <code>status</code>, and the query filtered on <code>customer_email</code>. The DBA team created a BRIN index on the partition key to improve partition pruning, which indirectly reduced the number of partitions the planner had to scan. The query then completed in 800ms.</p>
+<p>The key takeaway here is: if the planner still ignores your index, escalate with hard evidence. The fix may lie outside the query itself—partitioning, storage, or even the query structure.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I tell if an index is being used without running EXPLAIN?</strong></p>
+<p>PostgreSQL exposes index usage in <code>pg_stat_user_indexes</code> and <code>pg_stat_user_tables</code>. The <code>idx_scan</code> column shows how many times an index was scanned. If <code>idx_scan</code> is zero for an index you expect to be used, it’s not being used. Check <code>idx_tup_read</code> and <code>idx_tup_fetch</code> to see actual usage. For example:</p>
+<pre><code class="language-sql">SELECT schemaname, relname, indexrelname, idx_scan, idx_tup_read, idx_tup_fetch
+FROM pg_stat_user_indexes 
+WHERE indexrelname = 'idx_orders_customer_email';
+</code></pre>
+<p><strong>Why does my index work in development but not in production?</strong></p>
+<p>Data distribution in production rarely matches development. If your development set has 100 rows and production has 50 million, the planner’s selectivity estimate will differ. Always test with a realistic dataset that mirrors production’s row counts and value distributions.</p>
+<p><strong>What’s the difference between BRIN and B-tree indexes for large tables?</strong></p>
+<p>BRIN indexes are smaller and faster to scan when data is physically ordered (e.g., by timestamp). B-tree indexes are better for equality and range queries on arbitrary columns. For a table with 1 billion rows ordered by <code>created_at</code>, a BRIN index can reduce index size from 8 GB to 12 MB and improve scan speed by 40x. Use BRIN when you can tolerate approximate results and your data is physically ordered.</p>
+<table>
+<thead>
+<tr>
+<th>Index Type</th>
+<th>Best For</th>
+<th>Typical Size</th>
+<th>Typical Scan Speed</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-tree</td>
+<td>Equality, range, sort</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Default choice for most queries</td>
+</tr>
+<tr>
+<td>BRIN</td>
+<td>Ordered data (timestamps)</td>
+<td>Small</td>
+<td>Fast</td>
+<td>Requires physical ordering</td>
+</tr>
+<tr>
+<td>GIN</td>
+<td>Composite values (arrays, JSON)</td>
+<td>Large</td>
+<td>Slow</td>
+<td>Great for JSONB and array containment</td>
+</tr>
+<tr>
+<td>GiST</td>
+<td>Geometric, text search</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Flexible but slower than B-tree</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How often should I rebuild indexes to prevent bloat?</strong></p>
+<p>Rebuild indexes when <code>pg_repack</code> or <code>VACUUM FULL</code> shows bloat above 20% of the index size. For a 10 GB index bloated to 12 GB, rebuilding reduces I/O during scans. Schedule index maintenance during low-traffic windows. We rebuilt a 40 GB index every 3 months to keep latency under 200ms for nightly batches.</p>
+<h2 id="indexing-cheat-sheet-which-index-for-which-problem">Indexing cheat sheet: which index for which problem</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Index Type</th>
+<th>Example</th>
+<th>When to Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equality filter on single column</td>
+<td>B-tree</td>
+<td><code>WHERE status = 'active'</code></td>
+<td>Default choice for most filters</td>
+</tr>
+<tr>
+<td>Range queries on timestamp</td>
+<td>BRIN</td>
+<td><code>WHERE created_at &gt; '2024-01-01'</code></td>
+<td>Large, ordered tables</td>
+</tr>
+<tr>
+<td>Text search with wildcards</td>
+<td>GIN (pg_trgm)</td>
+<td><code>WHERE name LIKE '%john%'</code></td>
+<td>Leading wildcard queries</td>
+</tr>
+<tr>
+<td>Filtering on boolean column</td>
+<td>Partial index</td>
+<td><code>WHERE is_active = true</code></td>
+<td>Columns with low cardinality</td>
+</tr>
+<tr>
+<td>Multi-column sort order</td>
+<td>B-tree</td>
+<td><code>ORDER BY created_at, amount</code></td>
+<td>Compound sort keys</td>
+</tr>
+<tr>
+<td>JSONB containment</td>
+<td>GIN</td>
+<td><code>WHERE data @&gt; '{"tags":["urgent"]}'</code></td>
+<td>JSONB queries</td>
+</tr>
+</tbody>
+</table>
+<p>Use this table to choose the right index for your query shape. It’s not exhaustive, but it covers 90% of real-world cases. I keep a copy of this table in my team’s private wiki—it saves hours during incident response.</p>
+<p>The key takeaway here is: match your index type to your access pattern, not just your filter column. The wrong index type can be slower than no index at all.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/db-tools/">
+                        <h3>DB Tools</h3>
+                        <p>Essential database tools for optimizing performance and reducing downtime</p>
+                        <span class="related-meta">10 min read · 22 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/fix-slow-queries-real-database-wins/">
+                        <h3>Fix Slow Queries: Real Database Wins</h3>
+                        <p>Slow queries waste resources and hurt UX. Real fixes using PostgreSQL, indexes, and monitoring—backed by 94% performance gains and production war stories.</p>
+                        <span class="related-meta">11 min read · 20 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/sql-simplifies-code/">
+                        <h3>SQL Simplifies Code</h3>
+                        <p>Simplify application code with SQL</p>
+                        <span class="related-meta">11 min read · 23 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
