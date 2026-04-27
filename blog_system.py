@@ -1059,10 +1059,10 @@ class BlogSystem:
 
         providers = []
 
-        if self.github_token:
-            providers.append(("GitHub Models",    self._call_github))
         if self.mistral_key:
             providers.append(("Mistral",         self._call_mistral))
+        if self.github_token:
+            providers.append(("GitHub Models",    self._call_github))
         if self.openrouter_key:
             providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
