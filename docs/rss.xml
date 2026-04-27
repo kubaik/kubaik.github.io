@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 18:00:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 15:04:24 +0000</lastBuildDate>
+    <item>
+      <title>Claude 3 Opus cut our dev cost by 37% vs ChatGPT</title>
+      <link>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</link>
+      <description>Cut blended dev cost by 37% and human review time by 89% by switching from GPT-4 to Claude 3 Opus for strict JSON generation — real latency, token, and cost numbers from a live SaaS pipeline.</description>
+      <pubDate>Mon, 27 Apr 2026 15:04:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</guid>
+    </item>
     <item>
       <title>The 9 data systems Netflix uses to pick what to build next</title>
       <link>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</link>
@@ -138,13 +145,6 @@
       <description>Reduce false alerts by 70% by stopping NULLs from turning into zeros in SQL and BI tools — see actual BigQuery, Spark, and Stripe failures we debugged and the fixes that worked.</description>
       <pubDate>Sun, 26 Apr 2026 23:11:12 +0000</pubDate>
       <guid>https://kubaik.github.io/analytics-lie-when-nulls-masquerade-as-zeros-heres/</guid>
-    </item>
-    <item>
-      <title>Big Tech is a dead end for most engineers</title>
-      <link>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</link>
-      <description>Big Tech engineers quit for &apos;better culture&apos; but end up debugging memory leaks in Rust for three customers. Here’s how 12 engineers I mentored chose wisely—and how to pick your next move with data, not hype.</description>
-      <pubDate>Sun, 26 Apr 2026 22:33:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</guid>
     </item>
   </channel>
 </rss>
