@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 17:48:14 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 17:54:45 +0000</lastBuildDate>
+    <item>
+      <title>13 Bash tricks every non-terminal developer needs to ship faster</title>
+      <link>https://kubaik.github.io/13-bash-tricks-every-non-terminal-developer-needs-/</link>
+      <description>ilds were 30% slower than local builds on m with Bash tricks non-terminal needs — solve) I spent two years avoiding the terminal.</description>
+      <pubDate>Mon, 27 Apr 2026 17:54:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-bash-tricks-every-non-terminal-developer-needs-/</guid>
+    </item>
     <item>
       <title>Micro-Frontends at 500ms to 50ms in 30 Days Without Rewriting Everything</title>
       <link>https://kubaik.github.io/micro-frontends-at-500ms-to-50ms-in-30-days-withou/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-shelf availability false positives by 80% with store-level holdouts, lighting augmentation, and geometric augmentation — the retail product detection failures we measured and the fixes that worked in production.</description>
       <pubDate>Mon, 27 Apr 2026 05:49:37 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-retail-product-detection-model-fails-on-n/</guid>
-    </item>
-    <item>
-      <title>How Nigerian Prince scams still work: a 2024 teardown of social engineering</title>
-      <link>https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/</link>
-      <description>Cut social engineering success rate from 12% to 0.8% with a 60-second pause, voice verification, and regional tweaks — no magic, just cognitive load engineering.</description>
-      <pubDate>Mon, 27 Apr 2026 04:53:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/</guid>
     </item>
   </channel>
 </rss>
