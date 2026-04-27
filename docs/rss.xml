@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 22:45:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 23:47:40 +0000</lastBuildDate>
+    <item>
+      <title>How Rwanda, Vietnam and Estonia built AI infra faster than California</title>
+      <link>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</link>
+      <description>Cut AI serving costs by 90% with Rwanda’s RPi + T4 stack — 4 ms edge latency, 220 ms mid-tier, and the real ISP egress tricks nobody mentions. Build it in a day.</description>
+      <pubDate>Mon, 27 Apr 2026 23:47:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</guid>
+    </item>
     <item>
       <title>The 9 cheapest ways to deploy a web app in 2026</title>
       <link>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 40% and 99.99% uptime with Kubernetes — ranked list of 13 help/hurt scenarios, real latency numbers, and cost per 10k requests across Lagos, Berlin, Singapore, and San Francisco.</description>
       <pubDate>Mon, 27 Apr 2026 12:21:28 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</guid>
-    </item>
-    <item>
-      <title>Ethical Hacker Mindset: How Pen Tests Actually Find Flaws</title>
-      <link>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</link>
-      <description>Cut brute-force bypass risk by 80% with atomic lockout state — real Django, Node.js and Redis fixes, pitfalls, and chaos tests that caught our mistakes in Nairobi fintech stacks.</description>
-      <pubDate>Mon, 27 Apr 2026 12:13:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</guid>
     </item>
   </channel>
 </rss>
