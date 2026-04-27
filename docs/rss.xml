@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 20:20:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 20:42:21 +0000</lastBuildDate>
+    <item>
+      <title>SOLID vs Anti-Patterns in Real Projects</title>
+      <link>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</link>
+      <description>Cut incident recovery time from 4 hours to 30 seconds with SOLID in real projects while keeping anti-patterns 30% faster to ship. Practical guide to when SOLID works and when to ship messy code.</description>
+      <pubDate>Mon, 27 Apr 2026 20:42:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</guid>
+    </item>
     <item>
       <title>WhatsApp’s chat system finally explained</title>
       <link>https://kubaik.github.io/whatsapps-chat-system-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>ll missed 40% of installs on iOS. I realize with Turn personal data into — run and still missed 40% of installs on iOS.</description>
       <pubDate>Mon, 27 Apr 2026 09:41:48 +0000</pubDate>
       <guid>https://kubaik.github.io/turn-your-personal-data-into-2800month-without-sel/</guid>
-    </item>
-    <item>
-      <title>The 3 tech roles quietly dominating backend hiring in 2024</title>
-      <link>https://kubaik.github.io/the-3-tech-roles-quietly-dominating-backend-hiring/</link>
-      <description>Cut p99 latency by 77% and 5xx errors by 95% by tuning the exact connection pool and lock knobs the fastest-growing tech roles use every day — Platform Reliability Engineer and Database Reliability Engineer roles are exploding because the docs won’t save you from cloud throttling, lock contention, and connection pool exhaustion.</description>
-      <pubDate>Mon, 27 Apr 2026 09:31:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-3-tech-roles-quietly-dominating-backend-hiring/</guid>
     </item>
   </channel>
 </rss>
