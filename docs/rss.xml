@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 15:04:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 16:15:34 +0000</lastBuildDate>
+    <item>
+      <title>When AI predicts your friendships before you do</title>
+      <link>https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/</link>
+      <description>0ms. That 79% drop in latency changed how u with AI predicts friendships you — rebuild the graph after every batch of new enrollme.</description>
+      <pubDate>Mon, 27 Apr 2026 16:15:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/</guid>
+    </item>
     <item>
       <title>Claude 3 Opus cut our dev cost by 37% vs ChatGPT</title>
       <link>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</link>
@@ -138,13 +145,6 @@
       <description>Cut Docker OOM crashes by 95% in production with 256Mi memory limits, alpine images, and kernel upgrades — learn the exact fixes for &apos;container_linux.go:380: memory: unknown error after fork/exec&apos; and how to prevent it from happening again.</description>
       <pubDate>Mon, 27 Apr 2026 00:09:08 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-in-production-fails-with-container-out-of-m/</guid>
-    </item>
-    <item>
-      <title>Analytics lie when NULLs masquerade as zeros — here’s the proof</title>
-      <link>https://kubaik.github.io/analytics-lie-when-nulls-masquerade-as-zeros-heres/</link>
-      <description>Reduce false alerts by 70% by stopping NULLs from turning into zeros in SQL and BI tools — see actual BigQuery, Spark, and Stripe failures we debugged and the fixes that worked.</description>
-      <pubDate>Sun, 26 Apr 2026 23:11:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/analytics-lie-when-nulls-masquerade-as-zeros-heres/</guid>
     </item>
   </channel>
 </rss>
