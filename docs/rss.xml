@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 12:13:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 12:21:33 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes: 13 times it helps and 6 times it hurts — ranked</title>
+      <link>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</link>
+      <description>Cut API response time by 40% and 99.99% uptime with Kubernetes — ranked list of 13 help/hurt scenarios, real latency numbers, and cost per 10k requests across Lagos, Berlin, Singapore, and San Francisco.</description>
+      <pubDate>Mon, 27 Apr 2026 12:21:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</guid>
+    </item>
     <item>
       <title>Ethical Hacker Mindset: How Pen Tests Actually Find Flaws</title>
       <link>https://kubaik.github.io/ethical-hacker-mindset-how-pen-tests-actually-find/</link>
@@ -138,13 +145,6 @@
       <description>Big Tech engineers quit for &apos;better culture&apos; but end up debugging memory leaks in Rust for three customers. Here’s how 12 engineers I mentored chose wisely—and how to pick your next move with data, not hype.</description>
       <pubDate>Sun, 26 Apr 2026 22:33:40 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-is-a-dead-end-for-most-engineers/</guid>
-    </item>
-    <item>
-      <title>Why ClickHouse pays 3× more than PostgreSQL in 2024</title>
-      <link>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</link>
-      <description>Discover how ClickHouse cut 250GB analytics latency from 842ms to 18ms and reduced cloud costs by 38% — the tech skill paying 3× more than PostgreSQL in 2024.</description>
-      <pubDate>Sun, 26 Apr 2026 22:07:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-clickhouse-pays-3-more-than-postgresql-in-2024/</guid>
     </item>
   </channel>
 </rss>
