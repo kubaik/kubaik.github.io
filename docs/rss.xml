@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 07:00:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 07:57:23 +0000</lastBuildDate>
+    <item>
+      <title>AI skills paying 50% more by 2026 — what we measured</title>
+      <link>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</link>
+      <description>Cut AI cloud bills by 74% and latency by 79% by 2026 — the exact skills, tools, and code that hiring managers now demand for AI roles. Includes Rust middleware, Prometheus metrics, and drift detection with numbers.</description>
+      <pubDate>Mon, 27 Apr 2026 07:57:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-paying-50-more-by-2026-what-we-measured/</guid>
+    </item>
     <item>
       <title>Your System Design Interview Answer Scores 2/5 — Here&apos;s How to Get 5/5</title>
       <link>https://kubaik.github.io/your-system-design-interview-answer-scores-25-here/</link>
@@ -138,13 +145,6 @@
       <description>Junior dev jobs dead: hat’s a 0.057% acceptance rate. Even if ever. Practical guide with real examples.</description>
       <pubDate>Sun, 26 Apr 2026 18:43:47 +0000</pubDate>
       <guid>https://kubaik.github.io/junior-dev-jobs-are-dead-heres-the-receipts/</guid>
-    </item>
-    <item>
-      <title>Write blog posts 80% faster with AI that still sound human</title>
-      <link>https://kubaik.github.io/write-blog-posts-80-faster-with-ai-that-still-soun/</link>
-      <description>Cut draft time by 80% and edit time by 77% with AI that still sounds human — comparison table, code samples, and a free CLI tool included. AI voice cloning for content creation without robotic tone.</description>
-      <pubDate>Sun, 26 Apr 2026 18:09:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-blog-posts-80-faster-with-ai-that-still-soun/</guid>
     </item>
   </channel>
 </rss>
