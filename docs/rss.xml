@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 23:47:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 01:23:47 +0000</lastBuildDate>
+    <item>
+      <title>React vs Next.js vs Remix: Choosing the Right Tool: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</link>
+      <description>Cut React vs Next.js vs Remix: Choosing the Right Tool failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, …</description>
+      <pubDate>Tue, 28 Apr 2026 01:23:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</guid>
+    </item>
     <item>
       <title>How Rwanda, Vietnam and Estonia built AI infra faster than California</title>
       <link>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</link>
@@ -138,13 +145,6 @@
       <description>11 A/B test tools compared with real traffic data from Africa — pick the one that won’t break on 2G, respects your budget, and gives real answers, not noise.</description>
       <pubDate>Mon, 27 Apr 2026 14:28:57 +0000</pubDate>
       <guid>https://kubaik.github.io/11-ab-test-tools-that-give-real-answers-ranked-and/</guid>
-    </item>
-    <item>
-      <title>Kubernetes: 13 times it helps and 6 times it hurts — ranked</title>
-      <link>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</link>
-      <description>Cut API response time by 40% and 99.99% uptime with Kubernetes — ranked list of 13 help/hurt scenarios, real latency numbers, and cost per 10k requests across Lagos, Berlin, Singapore, and San Francisco.</description>
-      <pubDate>Mon, 27 Apr 2026 12:21:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/kubernetes-13-times-it-helps-and-6-times-it-hurts-/</guid>
     </item>
   </channel>
 </rss>
