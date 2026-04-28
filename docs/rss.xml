@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 17:44:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 19:27:05 +0000</lastBuildDate>
+    <item>
+      <title>Web Accessibility: The Laws and the Code: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</link>
+      <description>Cut Web Accessibility: The Laws and the Code failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step…</description>
+      <pubDate>Tue, 28 Apr 2026 19:27:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</guid>
+    </item>
     <item>
       <title>11 ways to stop corporations from harvesting your personal data (2026 ranked list)</title>
       <link>https://kubaik.github.io/11-ways-to-stop-corporations-from-harvesting-your-/</link>
@@ -138,13 +145,6 @@
       <description>l fell by 38% because we could now run 10× with concurrency minutes 100K goroutines — cut the 47-second average response time to under 5.</description>
       <pubDate>Mon, 27 Apr 2026 21:56:58 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency-in-30-minutes-100k-goroutines-under/</guid>
-    </item>
-    <item>
-      <title>Queries timing out after 30 seconds? Your indexes are hiding in plain sight</title>
-      <link>https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/</link>
-      <description>Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.</description>
-      <pubDate>Mon, 27 Apr 2026 20:57:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/queries-timing-out-after-30-seconds-your-indexes-a/</guid>
     </item>
   </channel>
 </rss>
