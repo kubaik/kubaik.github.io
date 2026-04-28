@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 19:27:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 19:40:53 +0000</lastBuildDate>
+    <item>
+      <title>Infrastructure as Code vs Manual Scripts: Outage Causes Compared</title>
+      <link>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</link>
+      <description>IaC cuts deployment time by 62% and debugging time by 88% compared to manual scripts — and prevents 80% of drift-related outages. See how Terraform, Pulumi, and AWS CDK compare to Bash scripts for DevOps risk and ROI.</description>
+      <pubDate>Tue, 28 Apr 2026 19:40:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</guid>
+    </item>
     <item>
       <title>Web Accessibility: The Laws and the Code: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Launch a production web app for $3.50/month with Hetzner CX11, SQLite, and Nginx—measure real latency, CPU throttling, and idle costs for 2026 deployments.</description>
       <pubDate>Mon, 27 Apr 2026 22:45:53 +0000</pubDate>
       <guid>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</guid>
-    </item>
-    <item>
-      <title>Go concurrency in 30 minutes: 100K goroutines under 2s</title>
-      <link>https://kubaik.github.io/go-concurrency-in-30-minutes-100k-goroutines-under/</link>
-      <description>l fell by 38% because we could now run 10× with concurrency minutes 100K goroutines — cut the 47-second average response time to under 5.</description>
-      <pubDate>Mon, 27 Apr 2026 21:56:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/go-concurrency-in-30-minutes-100k-goroutines-under/</guid>
     </item>
   </channel>
 </rss>
