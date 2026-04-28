@@ -10,19 +10,16 @@ Hook philosophy
   • The link + hashtags sit at the END, never in the hook line.
   • Every template is tested to stay under 280 chars with a typical title.
 
-CHANGES (2026-04-23):
-  - fetch_daily_trending_hashtag() is now called unconditionally at
-    VisibilityAutomator.__init__() — completely decoupled from the
-    ENABLE_TWITTER_POSTING flag.  The fetch is a read-only API call;
-    only create_tweet() is gated by the flag.
-  - _get_trending_tag() is now a simple accessor (no lazy fetch) because
-    the fetch already happened at init time.
-  - Cache file (.trending_hashtag_cache.json) is committed to the repo
-    by the GitHub Actions workflow so it survives between ephemeral runners.
-    First run of each calendar day warms the cache; every subsequent run
-    that day loads from the committed file — zero extra API calls.
-  - _build_single_tweet() and post_single_tweet() are unchanged in
-    behaviour; they simply receive the already-fetched trending tag.
+CHANGES (2026-04-28):
+  - Trending hashtag is NO LONGER fetched from the Twitter API.
+    _load_trending_cache() is called at __init__ to read the manually
+    maintained .trending_hashtag_cache.json file.  Update that file
+    yourself whenever you want a different trending tag.
+  - fetch_daily_trending_hashtag() is kept for reference but is never
+    called automatically.
+  - Only ONE tweet is posted per run: post_single_tweet().
+    post_with_best_strategy() remains as a fallback only when
+    post_single_tweet() fails (called from blog_system.py).
 """
 
 import datetime
@@ -55,7 +52,8 @@ MIN_AUTHOR_FOLLOWERS = 500
 MAX_REPLIES_PER_RUN = 3
 SEARCH_RESULT_LIMIT = 20
 
-# Cache file lives in the repo root so it can be committed between runs.
+# Cache file lives in the repo root. Update it manually to change the
+# trending tag used in tweets. Format: {"date": "YYYY-MM-DD", "hashtag": "#Tag"}
 _TRENDING_CACHE_FILE = Path(".trending_hashtag_cache.json")
 
 # Tech-related keywords that flag a trending topic as relevant enough to use.
@@ -206,36 +204,45 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Daily trending hashtag — fetch once per day, cache to disk
+# Trending hashtag — cache read only (no API fetch)
 # ─────────────────────────────────────────────────────────────────
 
 def _load_trending_cache() -> Optional[str]:
     """
-    Read the cache file.  Returns the stored hashtag string (e.g. '#OpenAI')
-    if it was written today, otherwise None.
+    Read the trending hashtag from the manually maintained cache file.
 
-    The cache file is committed to the repo by the workflow so it survives
-    between ephemeral GitHub Actions runners.
+    The cache file format: {"date": "YYYY-MM-DD", "hashtag": "#Tag"}
+
+    The date field is IGNORED — whatever hashtag is in the file is used
+    as-is. Update the file manually whenever you want a different tag.
+
+    Returns the hashtag string (e.g. '#TaylorSwift') or None if the file
+    is missing, empty, or malformed.
     """
     if not _TRENDING_CACHE_FILE.exists():
+        print(
+            f"ℹ️  No trending cache file found at {_TRENDING_CACHE_FILE} — proceeding without trending tag.")
         return None
     try:
         with open(_TRENDING_CACHE_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-        stored_date = data.get("date", "")
-        today = datetime.date.today().isoformat()
-        if stored_date == today:
-            tag = data.get("hashtag", "")
-            if tag:
-                print(f"📦 Trending hashtag loaded from cache: {tag}")
-                return tag
+        tag = data.get("hashtag", "").strip()
+        if tag:
+            print(f"📦 Trending hashtag loaded from cache: {tag}")
+            return tag
+        print("ℹ️  Trending cache file exists but 'hashtag' field is empty.")
+        return None
     except Exception as e:
         print(f"⚠️  Could not read trending cache: {e}")
-    return None
+        return None
 
 
 def _save_trending_cache(hashtag: str) -> None:
-    """Persist today's trending hashtag to the cache file."""
+    """
+    Persist a hashtag to the cache file manually.
+    Call this if you want to update the cache from code rather than
+    editing the JSON file directly.
+    """
     try:
         with open(_TRENDING_CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(
@@ -249,36 +256,16 @@ def _save_trending_cache(hashtag: str) -> None:
 
 def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
     """
-    Return one tech-relevant trending hashtag for today.
+    KEPT FOR REFERENCE — no longer called automatically.
 
-    This function is intentionally decoupled from ENABLE_TWITTER_POSTING.
-    It is a read-only operation (search_recent_tweets) that costs nothing
-    beyond a small API quota.  The result is cached to disk so subsequent
-    calls within the same calendar day are free.
-
-    Strategy
-    ────────
-    1. Return the cached value if it was fetched earlier today.
-    2. Search recent tweets for broad tech keywords, collect all hashtags,
-       score by frequency × tech-relevance, and pick the winner.
-    3. Fall back to None if the API call fails or no relevant tag is found.
-
-    Rate-limit impact
-    ─────────────────
-    One batch of search_recent_tweets calls per calendar day (max 3 queries,
-    100 tweets each).  With the cache committed to the repo, even the first-
-    run cost is paid only once across ALL hourly workflow runs that day.
+    If you want to resume automatic fetching, call this manually and pass
+    the result to _save_trending_cache(). The function searches recent
+    tweets for tech-relevant hashtags and picks the highest-scoring one.
     """
-    # 1. Cache hit — free
-    cached = _load_trending_cache()
-    if cached:
-        return cached
-
     if twitter_client is None:
         print("⚠️  No Twitter client — cannot fetch trending hashtag.")
         return None
 
-    # 2. Search recent tweets across high-signal tech queries
     search_queries = [
         "#AI OR #MachineLearning OR #Python lang:en -is:retweet",
         "#WebDev OR #JavaScript OR #TypeScript lang:en -is:retweet",
@@ -299,23 +286,22 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
             for tweet in response.data:
                 for match in re.findall(r"#(\w+)", tweet.text):
                     hashtag_counts[match] = hashtag_counts.get(match, 0) + 1
-            time.sleep(1.5)  # respect rate limits between queries
+            time.sleep(1.5)
         except Exception as e:
             print(f"⚠️  Trending search error ({query[:40]}…): {e}")
             continue
 
     if not hashtag_counts:
-        print("⚠️  No hashtag data retrieved — skipping trending tag.")
+        print("⚠️  No hashtag data retrieved.")
         return None
 
-    # 3. Score: frequency × relevance bonus
     def _relevance_score(tag: str, freq: int) -> float:
         t = tag.lower()
         if t in _TECH_RELEVANCE_SIGNALS:
             return freq * 3
         if any(sig in t for sig in _TECH_RELEVANCE_SIGNALS):
             return freq * 2
-        return 0  # non-tech tags score zero
+        return 0
 
     scored = [
         (tag, _relevance_score(tag, freq))
@@ -326,17 +312,12 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
     ]
 
     if not scored:
-        print("⚠️  No tech-relevant trending tags found — skipping trending tag.")
+        print("⚠️  No tech-relevant trending tags found.")
         return None
 
     scored.sort(key=lambda x: x[1], reverse=True)
     best_tag = f"#{scored[0][0]}"
-
-    print(
-        f"🔥 Trending hashtag selected: {best_tag} "
-        f"(from {len(hashtag_counts)} unique tags observed)"
-    )
-
+    print(f"🔥 Trending hashtag selected: {best_tag}")
     _save_trending_cache(best_tag)
     return best_tag
 
@@ -463,8 +444,8 @@ def _build_single_tweet(
     """
     Compose one high-engagement tweet for *post*.
 
-    trending_tag — already fetched at init time; passed in here so the
-                   hashtag block stays current without any extra API calls.
+    trending_tag — read from the cache file at init time; passed in here
+                   so the hashtag block includes it without any API calls.
     """
     _style_map = {
         "confession":        0,
@@ -523,25 +504,16 @@ class VisibilityAutomator:
         # Step 1: build the Tweepy client (credentials check only, no API calls)
         self._init_twitter()
 
-        # Step 2: fetch today's trending hashtag unconditionally.
+        # Step 2: read the trending hashtag from the manually maintained cache.
         #
-        # KEY DESIGN DECISION — this is deliberately NOT gated by
-        # ENABLE_TWITTER_POSTING.  Reasoning:
-        #   • fetch_daily_trending_hashtag() is a read-only search call.
-        #   • The flag is meant to prevent *posting* on manual pushes, not
-        #     to prevent reading public trend data.
-        #   • Fetching here (at init) means the cache file gets written on
-        #     every run type (schedule, push, dispatch) so the cache is always
-        #     warm for the day's first posting run.
-        #   • The actual create_tweet() call is still gated by the flag in
-        #     blog_system.py — concerns are cleanly separated.
-        self._trending_tag: Optional[str] = fetch_daily_trending_hashtag(
-            self.twitter_client
-        )
+        # NO API call is made here. Update .trending_hashtag_cache.json
+        # manually to change the trending tag used in tweets.
+        # Format: {"date": "YYYY-MM-DD", "hashtag": "#YourTag"}
+        self._trending_tag: Optional[str] = _load_trending_cache()
         if self._trending_tag:
-            print(f"🔥 Today's trending tag: {self._trending_tag}")
+            print(f"🔥 Today's trending tag (from cache): {self._trending_tag}")
         else:
-            print("ℹ️  No trending tag available for today — proceeding without it.")
+            print("ℹ️  No trending tag in cache — proceeding without it.")
 
     # ── Init ──────────────────────────────────────────────────────
 
@@ -586,8 +558,8 @@ class VisibilityAutomator:
 
     def _get_trending_tag(self) -> Optional[str]:
         """
-        Return the trending tag fetched at __init__ time.
-        Simple attribute access — no API calls, no lazy logic.
+        Return the trending tag loaded from cache at __init__ time.
+        Simple attribute access — no API calls.
         """
         return self._trending_tag
 
@@ -595,12 +567,14 @@ class VisibilityAutomator:
 
     def post_single_tweet(self, post) -> Dict:
         """
-        Compose and post ONE engaging tweet for *post*, including today's
-        trending hashtag in the tag block for extra reach.
+        Compose and post ONE tweet for *post*.
+
+        This is the only method that calls twitter_client.create_tweet().
+        It is called once per blog post run from blog_system.py.
+        post_with_best_strategy() is a fallback if this fails.
 
         ENABLE_TWITTER_POSTING is checked by the caller (blog_system.py)
-        before this method is invoked — not here.  That keeps concerns
-        clearly separated: trending fetch = always on; posting = flag-gated.
+        before this method is invoked.
 
         Returns:
             {
@@ -951,7 +925,7 @@ if __name__ == "__main__":
     except Exception:
         config = {}
 
-    # VisibilityAutomator.__init__() now fetches the trending tag automatically
+    # VisibilityAutomator.__init__() now reads the cache only — no API calls.
     visibility = VisibilityAutomator(config)
     base_url = config.get("base_url", "https://kubaik.github.io")
     trending_tag = visibility._get_trending_tag()
