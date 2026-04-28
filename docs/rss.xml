@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 07:43:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 07:53:34 +0000</lastBuildDate>
+    <item>
+      <title>Building in Public vs Keeping it Private: Build or Break</title>
+      <link>https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/</link>
+      <description>Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.</description>
+      <pubDate>Tue, 28 Apr 2026 07:53:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/</guid>
+    </item>
     <item>
       <title>WebAssembly Crashes When JavaScript Chokes on Heavy Loops (and How to Fix It)</title>
       <link>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</link>
@@ -138,13 +145,6 @@
       <description>Build a development environment under 30 minutes with the 7 best tools for coding, debugging, and collaboration — cut setup time and reduce frustration.</description>
       <pubDate>Mon, 27 Apr 2026 17:43:57 +0000</pubDate>
       <guid>https://kubaik.github.io/the-7-best-tools-for-building-a-frustration-free-d/</guid>
-    </item>
-    <item>
-      <title>What happens when Python, Go, and Rust meet Nigeria’s 3G networks</title>
-      <link>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</link>
-      <description>tlined at 100% on one core while the others with happens Python Rust meet — Celery with Redis.</description>
-      <pubDate>Mon, 27 Apr 2026 17:18:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</guid>
     </item>
   </channel>
 </rss>
