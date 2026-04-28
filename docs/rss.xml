@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 22:53:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 23:51:18 +0000</lastBuildDate>
+    <item>
+      <title>My Node.js API leaks memory under 100 req/sec—here’s how I fixed it</title>
+      <link>https://kubaik.github.io/my-nodejs-api-leaks-memory-under-100-reqsecheres-h/</link>
+      <description>Cut Node.js API response time by 40% and eliminate heap OOM crashes under 100 req/sec — async middleware, object pooling, and Kubernetes memory limits that actually work</description>
+      <pubDate>Tue, 28 Apr 2026 23:51:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/my-nodejs-api-leaks-memory-under-100-reqsecheres-h/</guid>
+    </item>
     <item>
       <title>How Senior Developers Think Differently: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</link>
@@ -138,13 +145,6 @@
       <description>Cut API cost by 63% and 429s to zero with a hybrid sliding-window plus token-bucket rate limiter that handled 5M req/min and kept p95 latency under 200 ms during Black Friday. Includes Go code, Redis Streams setup, and staging checklist.</description>
       <pubDate>Tue, 28 Apr 2026 04:08:06 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-cut-api-cost-60-with-rate-limiting-that-sur/</guid>
-    </item>
-    <item>
-      <title>React vs Next.js vs Remix: Choosing the Right Tool: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</link>
-      <description>Cut React vs Next.js vs Remix: Choosing the Right Tool failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, …</description>
-      <pubDate>Tue, 28 Apr 2026 01:23:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</guid>
     </item>
   </channel>
 </rss>
