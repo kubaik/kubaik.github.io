@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 08:36:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 11:01:05 +0000</lastBuildDate>
+    <item>
+      <title>Ship a Mobile App That Stays on Phones for Years</title>
+      <link>https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/</link>
+      <description>Ship a Mobile App That Stays on Phones for Years — learn SQLite retries, background sync survival, and crash-free session rates under 1% with real device tests in Lagos, Bangalore, and São Paulo to cut user churn by 70% and keep apps alive after OS restarts and low memory kills.</description>
+      <pubDate>Tue, 28 Apr 2026 11:01:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/</guid>
+    </item>
     <item>
       <title>The 12 must-have database tools in 2026 (ranked)</title>
       <link>https://kubaik.github.io/the-12-must-have-database-tools-in-2026-ranked/</link>
@@ -138,13 +145,6 @@
       <description>ll shared 70% of its data via email attachm with Automate enterprise workflows hours — one master sheet.</description>
       <pubDate>Mon, 27 Apr 2026 18:22:24 +0000</pubDate>
       <guid>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</guid>
-    </item>
-    <item>
-      <title>13 Bash tricks every non-terminal developer needs to ship faster</title>
-      <link>https://kubaik.github.io/13-bash-tricks-every-non-terminal-developer-needs-/</link>
-      <description>ilds were 30% slower than local builds on m with Bash tricks non-terminal needs — solve) I spent two years avoiding the terminal.</description>
-      <pubDate>Mon, 27 Apr 2026 17:54:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/13-bash-tricks-every-non-terminal-developer-needs-/</guid>
     </item>
   </channel>
 </rss>
