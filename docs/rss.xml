@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 05:04:17 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 05:55:19 +0000</lastBuildDate>
+    <item>
+      <title>Technical Debt: Static Analysis vs Runtime Profiling</title>
+      <link>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</link>
+      <description>Cut technical debt paydown time by 60% with combined static analysis and runtime profiling — SonarQube, Pyroscope, and the mistakes that cost $47K in a single incident.</description>
+      <pubDate>Tue, 28 Apr 2026 05:55:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</guid>
+    </item>
     <item>
       <title>Why Apple’s chips let them charge $1,600 for a phone nobody else can copy</title>
       <link>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</link>
@@ -138,13 +145,6 @@
       <description>Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.</description>
       <pubDate>Mon, 27 Apr 2026 16:57:27 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/</guid>
-    </item>
-    <item>
-      <title>When AI predicts your friendships before you do</title>
-      <link>https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/</link>
-      <description>0ms. That 79% drop in latency changed how u with AI predicts friendships you — rebuild the graph after every batch of new enrollme.</description>
-      <pubDate>Mon, 27 Apr 2026 16:15:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/</guid>
     </item>
   </channel>
 </rss>
