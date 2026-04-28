@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 12:27:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 13:36:09 +0000</lastBuildDate>
+    <item>
+      <title>Python CPU profiling shows 95% idle—here’s why it’s lying</title>
+      <link>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</link>
+      <description>Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.</description>
+      <pubDate>Tue, 28 Apr 2026 13:36:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</guid>
+    </item>
     <item>
       <title>AI apps without machine learning knowledge finally explained</title>
       <link>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</link>
@@ -138,13 +145,6 @@
       <description>ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.</description>
       <pubDate>Mon, 27 Apr 2026 19:10:49 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</guid>
-    </item>
-    <item>
-      <title>Time series forecasting with AI is overrated — here’s what works instead</title>
-      <link>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</link>
-      <description>Reduce AI time series forecasting costs by 80% with classical models — Prophet, seasonal naive, and XGBoost outperform deep learning in 80% of cases, with MAE improvements up to 15% when operational constraints are considered.</description>
-      <pubDate>Mon, 27 Apr 2026 18:52:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</guid>
     </item>
   </channel>
 </rss>
