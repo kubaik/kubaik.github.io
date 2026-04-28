@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 19:40:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 21:04:27 +0000</lastBuildDate>
+    <item>
+      <title>AI Worsens Wealth Inequality: 3 Hidden Feedback Loops Explained</title>
+      <link>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</link>
+      <description>Discover how 3 AI feedback loops turn small advantages into massive wealth gaps — with code to break them. Stop extracting from the poor while claiming to democratize wealth.</description>
+      <pubDate>Tue, 28 Apr 2026 21:04:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</guid>
+    </item>
     <item>
       <title>Infrastructure as Code vs Manual Scripts: Outage Causes Compared</title>
       <link>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI serving costs by 90% with Rwanda’s RPi + T4 stack — 4 ms edge latency, 220 ms mid-tier, and the real ISP egress tricks nobody mentions. Build it in a day.</description>
       <pubDate>Mon, 27 Apr 2026 23:47:36 +0000</pubDate>
       <guid>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</guid>
-    </item>
-    <item>
-      <title>The 9 cheapest ways to deploy a web app in 2026</title>
-      <link>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</link>
-      <description>Launch a production web app for $3.50/month with Hetzner CX11, SQLite, and Nginx—measure real latency, CPU throttling, and idle costs for 2026 deployments.</description>
-      <pubDate>Mon, 27 Apr 2026 22:45:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-9-cheapest-ways-to-deploy-a-web-app-in-2026/</guid>
     </item>
   </channel>
 </rss>
