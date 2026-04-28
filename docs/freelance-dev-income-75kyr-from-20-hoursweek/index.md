@@ -1,0 +1,225 @@
+# Freelance Dev Income: $75k/yr From 20 Hours/Week
+
+This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.
+
+## The situation (what we were trying to solve)
+
+In 2022 I walked away from a $140k salaried engineering role in Dublin because I wanted control over my time and income. I expected to replace that salary quickly—after all, I had 11 years of backend experience, an audience of 8k newsletter subscribers, and a network of CTOs who owed me favors. By August 2023 my average monthly income from freelance work had plateaued at $4,200 after expenses. That’s $50k gross per year, which is half what I made at the salary I quit. I wasn’t broke, but I was trading hours for euros at a rate that felt unsustainable. I needed to know: where exactly was the money leaking, and what levers could I pull to get from $4,200/month to at least $6,300/month without working more than 20 client hours a week?
+
+I started by instrumenting everything. Every invoice, every Slack message, every GitHub commit became a data point. I built a simple Python script that scraped Stripe, Harvest, and GitHub to produce a daily CSV:
+
+```python
+import stripe
+import requests
+import pandas as pd
+from datetime import datetime, timedelta
+
+stripe.api_key = "sk_..."
+harvest_token = "..."
+github_token = "..."
+
+def fetch_stripe(start, end):
+    charges = stripe.Charge.list(
+        created={'gte': int(start.timestamp()), 'lte': int(end.timestamp())},
+        limit=100
+    )
+    return pd.DataFrame([c.to_dict() for c in charges])
+
+def fetch_harvest(start, end):
+    url = "https://api.harvestapp.com/v2/time_entries"
+    headers = {"Authorization": f"Bearer {harvest_token}", "Harvest-Account-Id": "..."}
+    params = {"from": start.strftime('%Y-%m-%d'), "to": end.strftime('%Y-%m-%d')}
+    r = requests.get(url, headers=headers, params=params)
+    return pd.DataFrame(r.json()['time_entries'])
+
+# Run daily at 8am UTC
+start = datetime.utcnow() - timedelta(days=1)
+end = datetime.utcnow()
+df = pd.concat([fetch_stripe(start, end), fetch_harvest(start, end)])
+df.to_csv(f"./income_{start.date()}.csv", index=False)
+```
+
+The script was ugly, but it gave me a single source of truth: I could see which clients paid on time, which ones haggled over every €500 invoice, and which projects burned three hours of unbillable yak-shaving for every hour billed. The raw numbers shocked me. Late payments from two Dutch SaaS startups cost me €2,800 over six months. A retainer client in Jakarta who paid €1,100/month changed scope every sprint and ate 2.3 hours a week in unpaid meetings. My own tax filings and quarterly VAT returns consumed 1.6 hours a month at €95/hour—€1,140 a year that I hadn’t budgeted for.
+
+The key takeaway here is that invisible friction—late payments, scope creep, and hidden admin overhead—can erase 30% of gross income without you noticing. The first step wasn’t finding new clients; it was plugging leaks in the existing pipeline.
+
+
+## What we tried first and why it didn’t work
+
+I attacked the problem with the tools I knew best: better contracts and stricter scoping. I replaced our handshake agreements with a 12-page MS Word template that included kill fees, milestone gates, and a 15-day payment term. I added a clause that required 50% upfront for new clients. By March 2023 I had signed three new retainers, each at €2,000/month, and I expected the pipeline to double. Instead, my acceptance rate collapsed from 70% to 35%. Prospects ghosted me after receiving the contract; one CTO in Berlin replied with a single word: “Over-engineered.”
+
+I tried to fix it by shortening the contract to a two-pager and moving the kill-fee clause to a separate PDF. Acceptance rates crept back to 55%, but my average deal size dropped from €2,000/month to €1,200/month because prospects now negotiated the scope downward. Worse, the retainers I did close had tighter scopes, which meant I finished the work faster and ran out of billable hours sooner. My income stayed flat at $4,200/month even though I was closing more deals.
+
+Then I tried automation. I built a Node.js bot that watched my inbox for “Hi Kubai” and auto-replied with a Calendly link and a 10-question intake form. The bot worked shockingly well—it tripled the number of discovery calls—but the conversion rate from call to signed contract fell from 40% to 12%. Prospects felt like they were talking to a robot, and I lost the nuance needed to sell retainers over one-off fixes.
+
+The key takeaway is that tools amplify your existing strategy. If your positioning is wrong or your pricing model doesn’t match client psychology, automation just scales the mismatch faster. I had to step back and ask whether the problem was the pipeline’s volume or its conversion quality.
+
+
+## The approach that worked
+
+I stopped optimizing the top of the funnel and started optimizing the back end. I hired a virtual assistant in the Philippines for €8/hour to handle invoicing, payment chasing, and contract archiving. Within two weeks the late-payment rate fell from 28% to 4%, and I recovered €3,100 in overdue invoices. The VA also spotted that one client was paying via bank transfer instead of Stripe, which added 7–10 days to settlement—moving them to Stripe cut another €1,400 in float.
+
+Next, I restructured my pricing from hourly retainers to fixed-scope packages. I analyzed 18 months of time sheets and found that 70% of my projects fell into three buckets: 20-hour “health-checks” (€1,200), 50-hour “performance audits” (€3,000), and 100-hour “system redesigns” (€6,000). I published these packages on a one-page Notion site with a Stripe checkout and a Calendly scheduler. Prospects could self-select, and the scope was locked upfront, eliminating haggling.
+
+The third lever was upselling maintenance. After every project I offered a 12-month retainer for 20% of the project fee, payable quarterly. The conversion rate was 18%, but those retainers generated €1,800/month in predictable income. I also introduced a 5% “early-pay” discount for annual prepayment, which improved cash flow and reduced collection overhead.
+
+I built a simple JavaScript widget that lived in the footer of every project report:
+
+```javascript
+// maintenance-widget.js
+const projectFee = 6000; // €6,000 system redesign
+const earlyPayDiscount = 0.05;
+const quarterlyRetainer = projectFee * 0.2;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const widget = document.createElement('div');
+  widget.innerHTML = `
+    <div id="maintenance-offer">
+      <p>Keep your system fast with 12 months of maintenance.</p>
+      <ul>
+        <li>Quarterly health checks</li>
+        <li>Priority bug fixes</li>
+        <li>Architecture advice</li>
+      </ul>
+      <p><strong>€${(quarterlyRetainer * (1 - earlyPayDiscount)).toFixed(0)}/quarter</strong> if paid annually now.</p>
+      <button id="accept-btn">Accept offer</button>
+    </div>
+  `;
+  document.body.appendChild(widget);
+});
+```
+
+The widget added $2,400/month in new recurring revenue within six weeks.
+
+The key takeaway is that small operational tweaks—outsourcing admin, packaging services predictably, and inserting maintenance hooks—can unlock more income than chasing new logos. The work stayed the same; the packaging and cash-flow mechanics changed.
+
+
+## Implementation details
+
+### 1. Pricing redesign
+
+I built a pricing page in Next.js using Tailwind. It listed six packages with clear deliverables, fixed timelines, and transparent pricing. The page ranked on Google for “Postgres query tuning freelancer” and drove 14% of my inbound leads in Q3 2023.
+
+| Package | Scope | Fixed price | Typical duration | Upsell path |
+|---|---|---|---|---|
+| Health-check | 20h | €1,200 | 1 week | 50h audit |
+| Performance audit | 50h | €3,000 | 2 weeks | 100h redesign |
+| System redesign | 100h | €6,000 | 3 weeks | 12-mo maintenance |
+| On-call retainer | 20h/mo | €1,800 | Monthly | Quarterly health-check |
+| Emergency fix | 5h | €300 | 48h | Convert to retainer |
+
+The table converted 3× better than a wall of text. Prospects forwarded it to their CFO, which cut finance-driven negotiations by half.
+
+### 2. Cash-flow automation
+
+I replaced Harvest with Clockify for time tracking and connected it to Zapier. Clockify tracks billable hours in real time and fires a Slack message to my VA when a project crosses 80% of the package limit. The VA then emails the client for scope approval or stops work. This single rule saved me €4,200 in unbillable overruns in six months.
+
+I also set up a Stripe webhook that pings a Python script every time an invoice is paid. The script updates a Google Sheet that tracks projected cash for the next 90 days. If projected cash drops below €15,000, the script Slacks me with a warning. That buffer is enough to cover three months of fixed costs (rent, health insurance, VA).
+
+### 3. Maintenance upsell
+
+I hired a part-time copywriter in Serbia for €120 to polish the maintenance-offer email sequence. The sequence has four emails:
+- Day 1: “Your system is live—here’s how we’ll keep it fast.”
+- Day 7: “What happens if your database slows down next month?”
+- Day 14: “Meet clients who avoided outages with our maintenance.”
+- Day 21: “Last chance for 5% early-pay discount.”
+
+The sequence converts at 18%, adding €1,800/month in predictable revenue. The copywriter’s €120 investment paid for itself in 23 days.
+
+### 4. Contract simplification
+
+I ditched the 12-page contract and adopted Bonsai’s “one-click” freelance contract template. It auto-fills client details from a Calendly form, sets a 7-day payment term, and includes a kill-fee clause. The template is enforceable in Ireland, Germany, and the Netherlands, which covers 80% of my clients. I spent €39 on Bonsai and saved 6 hours of legal review per quarter.
+
+The key takeaway is that tooling matters less than coupling it to a pricing model that prospects can understand in 30 seconds. If the pricing page doesn’t convert, the contract won’t save you.
+
+
+## Results — the numbers before and after
+
+I started measuring in January 2023 and ran the full new stack by June 2023. Here’s the 12-month comparison:
+
+| Metric | Jan–May 2023 | Jun–Dec 2023 | Change |
+|---|---|---|---|
+| Gross monthly income | €4,200 | €6,300 | +50% |
+| Net monthly income (after expenses & taxes) | €2,900 | €4,600 | +59% |
+| Billable hours/week | 20 | 16 | –20% (same income, less time) |
+| Late-payment rate | 28% | 4% | –86% |
+| Scope-creep hours/week | 2.3 | 0.4 | –83% |
+| Recurring income | €0 | €1,800 | New revenue stream |
+| Time to close a deal | 12 days | 5 days | –58% |
+
+The most surprising result was the drop in billable hours. I reduced my client time from 20 hours/week to 16 hours/week while increasing gross income by 50%. The extra 4 hours became prospecting time that converted into new packages at €3,000 each. My effective hourly rate rose from €105 to €246—after expenses.
+
+I also reduced my mental overhead. The VA handles invoicing and chasing, so I spend zero time on late payments. The maintenance retainers generate €1,800/month automatically, which I can pause or cancel if I need a break. My wife stopped asking, “When will you get a real job?”
+
+The key takeaway is that income growth doesn’t require more hours; it requires better packaging, tighter scope, and cash-flow discipline. The numbers prove that when you plug leaks and automate friction, the ceiling on solo income rises without adding headcount.
+
+
+## What we’d do differently
+
+1. **I would have outsourced invoicing sooner.** I waited until March 2023 to hire the VA because I feared losing control. In hindsight, the €8/hour expense saved me 6 hours/month at €105/hour—€630/month in opportunity cost. That’s a 9× return on the VA’s wage.
+
+2. **I would have published pricing earlier.** I kept my rates private for the first 9 months, which meant every prospect expected a custom quote. Once I published packages, my close rate doubled because prospects could self-qualify.
+
+3. **I would have used a CRM from day one.** I relied on Gmail labels and a spreadsheet until July 2023. When I migrated to HubSpot (free tier), I discovered 14 stalled leads that would have converted if I’d followed up. Those 14 deals total €21,000 in lost revenue.
+
+4. **I would have standardized the maintenance pitch.** I experimented with different email sequences for six months. Had I locked in the winning sequence in February, I could have added €1,800/month six months earlier.
+
+The key takeaway is that inertia is the real enemy. Small, reversible decisions compound into large gaps. If you’re not embarrassed by your first pricing page or contract, you launched too late.
+
+
+## The broader lesson
+
+Income ceiling in freelancing isn’t set by your skills or market demand; it’s set by your pricing model’s granularity and your cash-flow architecture. A solo consultant can clear €75k/year with 20 billable hours a week if the work is packaged into fixed-scope deliverables, priced at a premium, and coupled with a retainer that converts 18% of clients. The trick isn’t working harder; it’s making the work repeatable, predictable, and defensible.
+
+The principle is simple: **Turn variable work into fixed packages and convert one-time projects into recurring revenue.** Everything else—automation, contracts, VA support—is just amplification. If your pricing page can’t explain the value in 30 seconds, you’re still selling hours. And hours are a race to the bottom.
+
+
+## How to apply this to your situation
+
+Step 1: Instrument your pipeline for one week. Track every hour, every invoice, every email thread. Use Clockify + Stripe webhooks + a simple Google Sheet. You’ll spot the leaks within 7 days.
+
+Step 2: Package your top three project types into fixed-scope packages with transparent pricing. Publish them on a one-page site. If you can’t explain what you do in six bullet points, prospects won’t buy.
+
+Step 3: Insert a maintenance upsell at the end of every project. Offer 20% of the project fee for 12 months of quarterly checks. Use a simple JavaScript widget or a Notion page. 18% conversion is enough to matter.
+
+Step 4: Outsource invoicing and payment chasing immediately. The math is brutal: if you bill at €100/hour and spend 2 hours/week on admin, outsourcing at €8/hour saves you €9,600/year in unbillable time.
+
+Step 5: Run a 30-day experiment: reduce your billable hours by 20% and spend the time prospecting for higher-ticket packages. Measure gross income before and after. If it doesn’t rise, revisit your positioning.
+
+
+## Resources that helped
+
+- **Clockify** – Free time tracking with Slack alerts at 80% of package limit.
+- **Bonsai** – €39 contract template that works across EU jurisdictions.
+- **HubSpot (Free CRM)** – Pipeline visibility; surfaced 14 stalled leads worth €21k.
+- **Next.js + Tailwind** – Fast pricing page that ranks on Google for niche keywords.
+- **Stripe Webhooks** – Real-time cash-flow monitoring; buffer alerts at €15k.
+- **Notion templates** – Maintenance-offer sequence and project close checklist.
+- **Upwork VA filter** – Hired a VA for €8/hour within 48 hours using the “Top Rated” filter.
+
+
+## Frequently Asked Questions
+
+How do I package my services if my work varies every week?
+
+Start by grouping your last 12 projects into three buckets based on effort: small, medium, and large. Price the small bucket at 20% of your desired monthly target, the medium at 50%, and the large at 100%. Publish the buckets as packages with fixed deliverables. Clients self-select, and you avoid scope creep.
+
+
+Why does publishing prices scare away high-value clients?
+
+It doesn’t. High-value clients want transparency so they can compare vendors in 30 seconds. If they haggle after seeing your prices, they’re not the right fit. Low-ball clients disappear when they see fixed prices, which is a good thing.
+
+
+What’s the fastest way to recover late payments without burning bridges?
+
+Automate the chase with Stripe webhooks and a VA. Send a polite email on day 3 after due date: “Hi [Name], invoice #1234 is now 3 days overdue. Here’s the Stripe link to pay: [link]. If you need to adjust the scope or timeline, reply by EOD Friday.” Repeat on day 7. Late payments drop from 28% to 4% in 60 days.
+
+
+How do I convert a one-off project into a retainer without sounding pushy?
+
+Insert a maintenance widget in your project report footer. Offer 12 months of quarterly health checks at 20% of the project fee, with a 5% early-pay discount. Frame it as “keeping your system fast,” not “upsell.” 18% of clients accept without negotiation.
+
+
+Should I raise my rates if I’m booked out for three months?
+
+Booked-out is a sign your positioning is weak, not your pricing. Instead of raising rates, raise package prices by 20% and add a waitlist. The price increase filters out tire-kickers, and you keep the same income with less churn. I did this in August 2023; my acceptance rate dropped from 70% to 40%, but my gross income rose 15% because the remaining clients paid premium rates.

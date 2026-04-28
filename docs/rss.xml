@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 05:55:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 07:13:46 +0000</lastBuildDate>
+    <item>
+      <title>Freelance Dev Income: $75k/yr From 20 Hours/Week</title>
+      <link>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</link>
+      <description>Freelance dev income jumped from $50k to $75k/year in 6 months by fixing late payments, publishing fixed-scope packages, and inserting maintenance upsells — real numbers and code snippets included.</description>
+      <pubDate>Tue, 28 Apr 2026 07:13:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</guid>
+    </item>
     <item>
       <title>Technical Debt: Static Analysis vs Runtime Profiling</title>
       <link>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency by 60% and reduce auditor questions to zero with SHAP TreeExplainer — open-source, exact attributions, and real numbers from Indonesian e-commerce and Vietnamese fintech deployments.</description>
       <pubDate>Mon, 27 Apr 2026 17:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</guid>
-    </item>
-    <item>
-      <title>Why your cloud credentials keep leaking (and how to stop it)</title>
-      <link>https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/</link>
-      <description>Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.</description>
-      <pubDate>Mon, 27 Apr 2026 16:57:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/</guid>
     </item>
   </channel>
 </rss>
