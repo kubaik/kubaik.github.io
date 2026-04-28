@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 07:13:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 07:43:38 +0000</lastBuildDate>
+    <item>
+      <title>WebAssembly Crashes When JavaScript Chokes on Heavy Loops (and How to Fix It)</title>
+      <link>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</link>
+      <description>WebAssembly Crashes JavaScript Chokes: e flat at 100% for the entire time. You open. Practical guide with real examples.</description>
+      <pubDate>Tue, 28 Apr 2026 07:43:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</guid>
+    </item>
     <item>
       <title>Freelance Dev Income: $75k/yr From 20 Hours/Week</title>
       <link>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</link>
@@ -138,13 +145,6 @@
       <description>tlined at 100% on one core while the others with happens Python Rust meet — Celery with Redis.</description>
       <pubDate>Mon, 27 Apr 2026 17:18:49 +0000</pubDate>
       <guid>https://kubaik.github.io/what-happens-when-python-go-and-rust-meet-nigerias/</guid>
-    </item>
-    <item>
-      <title>The 9 best Explainable AI tools to lift the lid on black boxes</title>
-      <link>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</link>
-      <description>Cut API latency by 60% and reduce auditor questions to zero with SHAP TreeExplainer — open-source, exact attributions, and real numbers from Indonesian e-commerce and Vietnamese fintech deployments.</description>
-      <pubDate>Mon, 27 Apr 2026 17:11:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-9-best-explainable-ai-tools-to-lift-the-lid-on/</guid>
     </item>
   </channel>
 </rss>
