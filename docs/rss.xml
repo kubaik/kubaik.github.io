@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 21:04:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 22:53:06 +0000</lastBuildDate>
+    <item>
+      <title>How Senior Developers Think Differently: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</link>
+      <description>Cut How Senior Developers Think Differently failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-…</description>
+      <pubDate>Tue, 28 Apr 2026 22:53:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</guid>
+    </item>
     <item>
       <title>AI Worsens Wealth Inequality: 3 Hidden Feedback Loops Explained</title>
       <link>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</link>
@@ -138,13 +145,6 @@
       <description>Cut React vs Next.js vs Remix: Choosing the Right Tool failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, …</description>
       <pubDate>Tue, 28 Apr 2026 01:23:40 +0000</pubDate>
       <guid>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</guid>
-    </item>
-    <item>
-      <title>How Rwanda, Vietnam and Estonia built AI infra faster than California</title>
-      <link>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</link>
-      <description>Cut AI serving costs by 90% with Rwanda’s RPi + T4 stack — 4 ms edge latency, 220 ms mid-tier, and the real ISP egress tricks nobody mentions. Build it in a day.</description>
-      <pubDate>Mon, 27 Apr 2026 23:47:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-rwanda-vietnam-and-estonia-built-ai-infra-fast/</guid>
     </item>
   </channel>
 </rss>
