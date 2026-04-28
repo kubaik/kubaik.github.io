@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 02:16:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 04:08:10 +0000</lastBuildDate>
     <item>
-      <title>AI Prompting Secrets Most People Never Learn: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/ai-prompting-secrets-most-people-never-learn-a-pra/</link>
-      <description>Cut AI Prompting Secrets Most People Never Learn failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a …</description>
-      <pubDate>Tue, 28 Apr 2026 02:16:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompting-secrets-most-people-never-learn-a-pra/</guid>
+      <title>How we cut API cost 60% with rate limiting that survived Black Friday</title>
+      <link>https://kubaik.github.io/how-we-cut-api-cost-60-with-rate-limiting-that-sur/</link>
+      <description>Cut API cost by 63% and 429s to zero with a hybrid sliding-window plus token-bucket rate limiter that handled 5M req/min and kept p95 latency under 200 ms during Black Friday. Includes Go code, Redis Streams setup, and staging checklist.</description>
+      <pubDate>Tue, 28 Apr 2026 04:08:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-cut-api-cost-60-with-rate-limiting-that-sur/</guid>
     </item>
     <item>
       <title>React vs Next.js vs Remix: Choosing the Right Tool: A Practical Technical Guide</title>
