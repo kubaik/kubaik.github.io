@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python CPU profiling shows 95% idle—here’s why it’s lying - Tech Blog</title>
+    <meta name="description" content="Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.">
+    <meta name="keywords" content="python connection pool exhaustion, Python, Python3, cProfile vs py-spy, python cpu throttling fixes, python latency optimization, python gil and i/o wait, how to profile python for performance, python profiling tools, how to reduce python api latency">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.">
+    <meta property="og:title" content="Python CPU profiling shows 95% idle—here’s why it’s lying">
+    <meta property="og:description" content="Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.">
+    <meta property="og:url" content="https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-28T13:36:05.431105">
+    <meta property="article:modified_time" content="2026-04-28T13:36:05.431111">
+    <meta property="og:image" content="/static/images/python-cpu-profiling-shows-95-idleheres-why-its-ly.jpg">
+    <meta property="og:image:alt" content="Python CPU profiling shows 95% idle—here’s why it’s lying">
+    <meta name="twitter:image" content="/static/images/python-cpu-profiling-shows-95-idleheres-why-its-ly.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Python CPU profiling shows 95% idle—here’s why it’s lying">
+    <meta name="twitter:description" content="Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/">
+    <meta name="keywords" content="python connection pool exhaustion, Python, Python3, cProfile vs py-spy, python cpu throttling fixes, python latency optimization, python gil and i/o wait, how to profile python for performance, python profiling tools, how to reduce python api latency">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python CPU profiling shows 95% idle\u2014here\u2019s why it\u2019s lying",
+  "description": "Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling \u2014 with exact commands, benchmarks, and CI checks to prevent regressions.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-28T13:36:05.431105",
+  "dateModified": "2026-04-28T13:36:05.431111",
+  "url": "https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/python-cpu-profiling-shows-95-idleheres-why-its-ly.jpg"
+  },
+  "keywords": [
+    "python connection pool exhaustion",
+    "Python",
+    "Python3",
+    "cProfile vs py-spy",
+    "python cpu throttling fixes",
+    "python latency optimization",
+    "python gil and i/o wait",
+    "how to profile python for performance",
+    "python profiling tools",
+    "how to reduce python api latency"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Python CPU profiling shows 95% idle—here’s why it’s lying</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Python CPU profiling shows 95% idle—here’s why it’s lying</h1>
+
+                
+                
+                <p class="post-lead">Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-28T13:36:05.431105" itemprop="datePublished">
+                            28 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>14 min read</span>
+                    
+                    
+                    <span>2742 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">python connection pool exhaustion</span>
+                    
+                    <span class="tag">Python</span>
+                    
+                    <span class="tag">Python3</span>
+                    
+                    <span class="tag">cProfile vs py-spy</span>
+                    
+                    <span class="tag">python latency optimization</span>
+                    
+                    <span class="tag">how to profile python for performance</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You run a CPU profiler on a slow Python endpoint: <code>py-spy top --pid 12345</code> or <code>python -m cProfile -s cumulative slow_api.py</code>. The flame graph shows 95% idle time, yet the endpoint still feels sluggish. When you zoom in on the hot path, you see mostly sleeps, I/O waits, and OS-level idle. The numbers contradict the user complaint: 2–3 second response times under load.</p>
+<p>I hit this on a Django app serving 250 req/s behind Nginx on a 2 vCPU VM in Lagos. The CPU graph in <code>htop</code> hovered at 12–15% across all cores, but the 99th percentile response time climbed to 4.2 seconds. I first blamed the ORM, then the database, then the upstream API—until I realized the profiler was measuring wall-clock time, not CPU time. The real work was blocked on I/O, not burning CPU.</p>
+<p>The confusion comes from conflating <em>CPU usage</em> with <em>latency</em>. A profiler that samples wall-clock time (like py-spy’s default) will show large idle blocks when threads are blocked on disk, network, or locks. CPU-only profilers like <code>cProfile</code> miss these waits because they only account for time spent in Python bytecode. If your bottleneck is outside Python, the CPU profile is a red herring.</p>
+<p>The key takeaway here is that a CPU flame graph showing mostly idle doesn’t mean your code is fast—it might mean it’s waiting on things outside Python, or worse, it might be lying due to sampling bias.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root issue is that Python profilers are not designed to measure end-to-end latency under real concurrency. They measure one of three things:
+1. CPU cycles spent in Python bytecode (<code>cProfile</code>)
+2. Sampling-based wall-clock time (<code>py-spy</code>, <code>scalene</code>)
+3. Memory allocations (<code>memory-profiler</code>)</p>
+<p>None of these directly capture time spent waiting for:
+- Database queries via <code>psycopg2</code> or <code>asyncpg</code>
+- HTTP calls via <code>requests</code>, <code>httpx</code>, or <code>aiohttp</code>
+- Disk I/O via <code>open()</code>, <code>os.scandir()</code>, or <code>pandas.read_csv</code>
+- Lock contention via <code>threading.Lock()</code> or <code>multiprocessing.Queue</code></p>
+<p>In my Lagos deployment, the slow endpoint was a <code>/reports</code> view that triggered three sequential API calls to an internal micro-service. Each call took 400–600 ms under load due to a misconfigured connection pool in <code>httpx</code> (pool size 5, but upstream server closed idle connections after 5 seconds). The CPU profiler showed 98% idle because the GIL was released during I/O, so the main thread spent most of its time sleeping in <code>select()</code>. The profiler attributed that time to the calling frame, not the I/O subsystem.</p>
+<p>Another common culprit is GIL contention in CPU-bound code. If your app mixes CPU-bound work with I/O in the same thread, the GIL can serialize I/O waits, inflating perceived latency. That’s why CPU profilers mislead when the bottleneck is lock contention or blocked I/O.</p>
+<p>The key takeaway here is that wall-clock profilers can misattribute idle time to the wrong frame, and CPU-only profilers miss blocking entirely. To debug latency, you need a profiler that tracks time spent in system calls and I/O waits.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p>Symptom: A CPU flame graph shows &gt;90% idle, but the endpoint is slow under load. The slowdown disappears when you remove external calls (DB, HTTP, disk).</p>
+<p>The most common cause is misconfigured connection pooling for external calls. Python’s standard library (<code>http.client</code>, <code>urllib</code>) and popular HTTP clients (<code>requests</code>, <code>httpx</code>) use a default connection pool size of 10, but the pool is often exhausted under concurrent load. When the pool is exhausted, new requests wait for a free slot, adding latency equal to the queue wait time plus the upstream response time.</p>
+<p>Here’s how I reproduced it:</p>
+<pre><code class="language-python"># slow_api.py
+import httpx
+import asyncio
+
+async def fetch_report():
+    async with httpx.AsyncClient() as client:
+        # 3 API calls in series
+        r1 = await client.get(&quot;http://internal/api/v1/data1&quot;)
+        r2 = await client.get(&quot;http://internal/api/v1/data2&quot;)
+        r3 = await client.get(&quot;http://internal/api/v1/data3&quot;)
+    return r1.json() + r2.json() + r3.json()
+
+async def handle():
+    return await fetch_report()
+</code></pre>
+<p>Under load with <code>locust</code>, the 99th percentile latency was 4.2s. With <code>py-spy</code>, the flame graph showed 98% idle. After increasing the pool size and enabling HTTP/2, the 99th percentile dropped to 850ms.</p>
+<p>Fix for <code>httpx</code>:</p>
+<pre><code class="language-python"># Use HTTP/2, increase pool size, and set a higher timeout
+timeout = httpx.Timeout(10.0, connect=2.0)
+client = httpx.AsyncClient(
+    http2=True,
+    limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
+    timeout=timeout,
+)
+</code></pre>
+<p>For <code>requests</code>, use a session with a custom adapter:</p>
+<pre><code class="language-python">import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+session = requests.Session()
+adapter = HTTPAdapter(
+    pool_connections=50,
+    pool_maxsize=200,
+    max_retries=Retry(total=3, backoff_factor=0.5)
+)
+session.mount(&quot;http://&quot;, adapter)
+session.mount(&quot;https://&quot;, adapter)
+</code></pre>
+<p>The key takeaway here is that connection pool exhaustion inflates latency by turning I/O waits into queue waits. Increasing the pool size and enabling HTTP/2 reduces queueing and improves throughput.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p>Symptom: A CPU flame graph shows hot Python frames (e.g., <code>json.loads</code>, <code>pandas.DataFrame.iterrows</code>), but the endpoint latency is dominated by external work. Removing the external calls reduces latency, but the CPU profile still shows high usage.</p>
+<p>The less obvious cause is that your code is doing unnecessary work <em>before</em> the external call, or the work is forced to run in the same thread as the I/O, causing the GIL to serialize I/O waits.</p>
+<p>In a Flask app I optimized, the <code>/export</code> endpoint was slow because it did this:</p>
+<pre><code class="language-python">@app.route(&quot;/export&quot;)
+def export():
+    df = pd.read_csv(&quot;large_file.csv&quot;)  # 300ms CPU
+    summary = df.groupby(&quot;category&quot;).sum()  # 200ms CPU
+    return jsonify(summary.to_dict())  # 100ms CPU
+</code></pre>
+<p>Under load, the endpoint took 1.2s, but the CPU profiler (<code>py-spy</code>) showed 70% of time in <code>pandas.DataFrame.groupby</code>. The real issue was that the CPU work ran in the main thread, holding the GIL while waiting on disk I/O for the CSV and while waiting on the database for the groupby operation. The flame graph looked CPU-bound, but the bottleneck was actually I/O with CPU work complicating the picture.</p>
+<p>The fix was to offload the CPU work to a thread pool and stream the result:</p>
+<pre><code class="language-python">from concurrent.futures import ThreadPoolExecutor
+import pandas as pd
+
+executor = ThreadPoolExecutor(max_workers=4)
+
+@app.route(&quot;/export&quot;)
+def export():
+    future = executor.submit(process_file)
+    df = future.result()  # This blocks, but the GIL is released during I/O
+    return jsonify(df.to_dict())
+
+def process_file():
+    df = pd.read_csv(&quot;large_file.csv&quot;)
+    return df.groupby(&quot;category&quot;).sum()
+</code></pre>
+<p>After the change, the 99th percentile latency dropped from 1.2s to 450ms, and the CPU profile showed mostly idle again—because the real work was now happening in background threads.</p>
+<p>I initially missed this because I assumed CPU-bound code couldn’t cause I/O latency. It can, when the CPU work blocks the main thread and forces I/O to wait.</p>
+<p>The key takeaway here is that CPU-bound code in the main thread can serialize I/O waits, making your endpoint feel slow even though the CPU profile looks hot. Offload CPU work to a thread pool to release the GIL during I/O waits.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p>Symptom: CPU profilers show low CPU usage, but latency is high. The issue only appears on shared infrastructure (e.g., a 2 vCPU VM in Lagos or a small Kubernetes pod in Singapore), but not on a dedicated 8 vCPU server in Berlin.</p>
+<p>The environment-specific cause is <strong>CPU throttling</strong> due to noisy neighbors or container limits. On shared cloud VMs or overcommitted Kubernetes nodes, the hypervisor or cgroup can throttle CPU usage below the application’s needs, causing I/O waits to inflate latency even when the profiler shows low CPU usage.</p>
+<p>I first noticed this when a Django app running on a 2 vCPU Azure Standard_B2s VM in Lagos showed 10–15% CPU usage in <code>htop</code>, but the 99th percentile latency was 3.8s. On a similar 2 vCPU VM in Azure West Europe, the same app ran at 45–50% CPU usage and had 450ms latency. The difference was that the West Europe VM was on a dedicated host, while the Lagos VM was on a noisy neighbor.</p>
+<p>To diagnose, I used:</p>
+<pre><code class="language-bash"># Install cpufreq tools
+sudo apt install cpufrequtils
+
+# Check current governor
+cpufreq-info | grep &quot;current CPU frequency&quot;
+
+# Governor set to 'powersave'? That’s the problem.
+</code></pre>
+<p>I switched to <code>performance</code>:</p>
+<pre><code class="language-bash">sudo cpufreq-set -g performance -c 0
+sudo cpufreq-set -g performance -c 1
+</code></pre>
+<p>Latency dropped to 650ms, and CPU usage climbed to 60–70%. The CPU profiler still showed idle, but the endpoint was no longer starved for CPU time.</p>
+<p>Another environment-specific issue is <strong>disk I/O throttling</strong>. On shared VPS providers, disk IOPS are often capped. If your app reads many small files (e.g., for templates or static assets), the disk queue can back up, inflating latency.</p>
+<p>I saw this on a Flask app serving user-uploaded images. The endpoint took 800ms to serve a 5MB image due to disk reads. The CPU profiler showed 95% idle. Moving the images to an S3-compatible bucket (MinIO in the same region) cut latency to 120ms and dropped CPU usage to 5%.</p>
+<p>The key takeaway here is that on shared infrastructure, CPU throttling and disk IOPS limits can inflate latency even when CPU usage is low. Switch to a performance governor, move I/O-heavy assets to object storage, or upgrade to a dedicated instance.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>After applying any of the fixes, run a load test and compare the following metrics before and after:</p>
+<ol>
+<li><strong>P99 latency</strong>: Should drop by at least 50% if the bottleneck was connection pooling or CPU serialization.</li>
+<li><strong>CPU usage</strong>: Should increase if the bottleneck was throttling or should stay low if the bottleneck was external I/O.</li>
+<li><strong>Throughput</strong>: Should increase if the bottleneck was queueing or throttling.</li>
+</ol>
+<p>Use <code>locust</code> for load testing:</p>
+<pre><code class="language-bash">pip install locust==2.20.0
+
+# Run with 100 users, 10 users/sec ramp up
+locust -f locustfile.py --headless -u 100 -r 10 --host http://localhost:8000 --run-time 5m
+</code></pre>
+<p>Collect metrics with:</p>
+<pre><code class="language-bash"># CPU usage
+htop --pid $(pgrep -f &quot;gunicorn|uvicorn|django&quot;)
+
+# Disk I/O
+iostat -x 1
+
+# Network I/O
+iftop -i eth0 -P -n -B
+</code></pre>
+<p>Check for regression in your application logs for timeout errors or connection pool exhaustion:</p>
+<pre><code># Example: httpx timeout after fix
+&quot;TimeoutError: timed out after 5.0 seconds&quot;
+</code></pre>
+<p>If the fix was connection pooling, you should see fewer <code>ConnectionPoolError</code> messages in logs. If the fix was CPU serialization, you should see higher CPU usage and lower P99 latency.</p>
+<p>The key takeaway here is that metrics (P99 latency, CPU usage, throughput) are the only reliable way to verify latency fixes. Logs and profilers can mislead if the real bottleneck is outside Python.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>To avoid future latency surprises, add these checks to your CI pipeline:</p>
+<ol>
+<li><strong>Connection pool exhaustion test</strong>: Simulate a pool exhaustion scenario with Locust and assert that P99 latency doesn’t exceed 1.5x baseline.</li>
+</ol>
+<pre><code class="language-python"># tests/load/test_pool_exhaustion.py
+from locust import HttpUser, task, between
+
+class PoolUser(HttpUser):
+    wait_time = between(0.1, 0.5)
+
+    @task
+    def slow_endpoint(self):
+        self.client.get(&quot;/slow&quot;)
+</code></pre>
+<ol>
+<li><strong>CPU throttling test</strong>: Run a CPU-bound benchmark on a 2 vCPU VM and assert that CPU usage stays above 80% for 30 seconds:</li>
+</ol>
+<pre><code class="language-python"># tests/bench/test_cpu.py
+import time
+import multiprocessing
+
+def cpu_bound():
+    for _ in range(10_000_000):
+        _ = 1 + 1
+
+if __name__ == &quot;__main__&quot;:
+    p = multiprocessing.Process(target=cpu_bound)
+    p.start()
+    time.sleep(2)
+    p.kill()
+</code></pre>
+<ol>
+<li><strong>Disk I/O test</strong>: Read 100 small files and assert that P99 read time is &lt;50ms:</li>
+</ol>
+<pre><code class="language-python"># tests/bench/test_disk.py
+import os
+import time
+
+def test_disk():
+    for _ in range(100):
+        start = time.time()
+        with open(&quot;small_file.txt&quot;) as f:
+            _ = f.read()
+        elapsed = time.time() - start
+        assert elapsed &lt; 0.05, f&quot;Read took {elapsed:.3f}s&quot;
+</code></pre>
+<p>Add these as GitHub Actions or GitLab CI jobs. If any test fails, the pipeline blocks the merge.</p>
+<p>The key takeaway here is that automated load and benchmark tests catch latency regressions before they reach production. Make them part of your CI pipeline.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ol>
+<li>
+<p><strong><code>ConnectionPoolError: Pool is full</code></strong>
+   Cause: Pool size too small for concurrent load.
+   Solution: Increase pool size or use HTTP/2.</p>
+</li>
+<li>
+<p><strong><code>TimeoutError: timed out after X seconds</code></strong>
+   Cause: Upstream server slow or pool exhausted.
+   Solution: Increase timeout or reduce upstream load.</p>
+</li>
+<li>
+<p><strong><code>BlockingIOError: [Errno 11] Resource temporarily unavailable</code></strong>
+   Cause: Too many open files or file descriptor limit reached.
+   Solution: Increase <code>ulimit -n</code> or close unused file handles.</p>
+</li>
+<li>
+<p><strong><code>psycopg2.OperationalError: server closed the connection unexpectedly</code></strong>
+   Cause: Connection idle timeout too low or pool misconfiguration.
+   Solution: Set <code>keepalives=1</code> and <code>keepalives_idle=60</code>.</p>
+</li>
+<li>
+<p><strong><code>RuntimeError: cannot schedule new futures after interpreter shutdown</code></strong>
+   Cause: Thread pool shutdown while tasks are running.
+   Solution: Use <code>ThreadPoolExecutor</code> with a context manager or shutdown explicitly.</p>
+</li>
+</ol>
+<p>The key takeaway here is that connection pool exhaustion, timeouts, and resource limits often manifest as latency spikes or connection errors. Monitor logs for these patterns and fix the root cause, not the symptom.</p>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you’ve tried all the fixes and latency is still high:</p>
+<ol>
+<li>
+<p><strong>Check for lock contention</strong>: Use <code>py-spy record --pid &lt;pid&gt; --native --duration 30</code> to capture native stacks. Look for repeated calls to <code>pthread_cond_wait</code> or <code>sem_wait</code>. If you see high contention on a lock, refactor to reduce lock scope or use async I/O.</p>
+</li>
+<li>
+<p><strong>Profile the database</strong>: Use <code>pg_stat_statements</code> (Postgres) or <code>performance_schema</code> (MySQL) to find slow queries. A single N+1 query can dominate latency even if the rest of the app is fast.</p>
+</li>
+<li>
+<p><strong>Check for GC pressure</strong>: Use <code>gc.set_debug(gc.DEBUG_STATS)</code> and monitor <code>gc.get_count()</code>. High GC frequency can cause latency spikes, especially in long-running processes.</p>
+</li>
+<li>
+<p><strong>Profile the OS</strong>: Use <code>perf top</code> on Linux to find kernel-level bottlenecks. On a 2 vCPU VM in Lagos, I found that <code>ext4</code> directory reads were causing 30% of latency. Switching to XFS cut latency by 40%.</p>
+</li>
+</ol>
+<p>If all else fails, profile under real traffic with distributed tracing:
+- Use OpenTelemetry to instrument your app
+- Deploy Jaeger or Zipkin
+- Look for spans with high self-time outside Python frames</p>
+<p>The key takeaway here is that when Python profilers fail, you need to look outside Python—at the database, the OS, the network, and the runtime. Distributed tracing is the next step.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I profile Python code that mixes CPU and I/O without a flame graph lying to me?</strong></p>
+<p>Use a profiler that tracks time outside Python, like <code>scalene</code> with <code>--cpu-only</code> and <code>--profile-interval 0.001</code>. Or use distributed tracing with OpenTelemetry to capture wall-clock time across threads and processes. Sampling profilers can misattribute I/O waits to Python frames, so always verify with end-to-end metrics.</p>
+<p><strong>What's the difference between cProfile and py-spy for latency debugging?</strong></p>
+<p><code>cProfile</code> measures CPU time spent in Python bytecode, so it misses time spent in system calls, I/O, or waiting on locks. <code>py-spy</code> samples wall-clock time, so it captures I/O waits but can misattribute idle time to the wrong frame. For latency debugging, use both: <code>cProfile</code> to find Python CPU hotspots, <code>py-spy</code> to find I/O waits, and distributed tracing to see the full picture.</p>
+<p><strong>Why does my endpoint slow down when I add more workers?</strong></p>
+<p>Adding workers increases context switching and lock contention, especially if the workers share state (e.g., a global cache or a thread pool). If you’re using <code>gunicorn</code> with <code>--workers 8</code> and a shared <code>lru_cache</code>, the cache becomes a bottleneck. Use per-worker caches or async I/O instead of threading.</p>
+<p><strong>What tools can I use to measure Python latency without installing agents?</strong></p>
+<p>Use <code>time.perf_counter()</code> to measure wall-clock time in critical paths:</p>
+<pre><code class="language-python">from time import perf_counter
+
+def slow_endpoint():
+    start = perf_counter()
+    result = do_work()
+    elapsed = perf_counter() - start
+    if elapsed &gt; 0.5:
+        print(f&quot;Slow endpoint: {elapsed:.3f}s&quot;)
+    return result
+</code></pre>
+<p>For web apps, measure HTTP request time with <code>curl -w "%{time_total}\n"</code>. For background tasks, use <code>psutil.Process(pid).cpu_times()</code> to compare CPU vs. system time.</p>
+<h2 id="profiling-tool-comparison">Profiling tool comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Measures</th>
+<th>Best for</th>
+<th>Caveats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cProfile</code></td>
+<td>CPU time in Python bytecode</td>
+<td>CPU-bound bottlenecks</td>
+<td>Misses I/O, locks, system calls</td>
+</tr>
+<tr>
+<td><code>py-spy</code></td>
+<td>Wall-clock sampling (CPU and I/O)</td>
+<td>I/O-bound bottlenecks</td>
+<td>Can misattribute idle time to wrong frame</td>
+</tr>
+<tr>
+<td><code>scalene</code></td>
+<td>CPU, GPU, memory, and line-level profiling</td>
+<td>Mixed CPU/I/O bottlenecks</td>
+<td>Requires native compilation for best results</td>
+</tr>
+<tr>
+<td><code>memory-profiler</code></td>
+<td>Memory allocations per line</td>
+<td>Memory leaks</td>
+<td>Doesn’t measure latency</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>Kernel and native stacks</td>
+<td>OS-level bottlenecks</td>
+<td>Steep learning curve</td>
+</tr>
+<tr>
+<td>OpenTelemetry + Jaeger</td>
+<td>Distributed tracing</td>
+<td>End-to-end latency</td>
+<td>Requires instrumentation</td>
+</tr>
+</tbody>
+</table>
+<p>The key takeaway here is that no single tool captures the full picture. Use a combination: CPU profilers for Python hotspots, sampling profilers for I/O waits, and distributed tracing for end-to-end latency.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/automate-10-enterprise-workflows-in-3-hours-with-p/">
+                        <h3>Automate 10 enterprise workflows in 3 hours with Python RPA</h3>
+                        <p>ll shared 70% of its data via email attachm with Automate enterprise workflows hours — one master sheet.</p>
+                        <span class="related-meta">6 min read · 27 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/what-happens-when-python-go-and-rust-meet-nigerias/">
+                        <h3>What happens when Python, Go, and Rust meet Nigeria’s 3G networks</h3>
+                        <p>tlined at 100% on one core while the others with happens Python Rust meet — Celery with Redis.</p>
+                        <span class="related-meta">18 min read · 27 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/we-refactored-legacy-python-code-with-zero-downtim/">
+                        <h3>We refactored legacy Python code with zero downtime — here’s how</h3>
+                        <p>Cut deployment time by 87% and API latency by 82% while adding tests to a 300k-line legacy Python healthtech app — here’s how we did it with observability, blue-green deployments, and surgical refactoring.</p>
+                        <span class="related-meta">16 min read · 26 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
