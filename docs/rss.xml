@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 11:01:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 12:27:32 +0000</lastBuildDate>
+    <item>
+      <title>AI apps without machine learning knowledge finally explained</title>
+      <link>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</link>
+      <description>Ship AI features in under 1.2s latency and $15/month using cloud APIs and open models — prompt engineering, vector search, and cost tricks that pros use</description>
+      <pubDate>Tue, 28 Apr 2026 12:27:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</guid>
+    </item>
     <item>
       <title>Ship a Mobile App That Stays on Phones for Years</title>
       <link>https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/</link>
@@ -138,13 +145,6 @@
       <description>Reduce AI time series forecasting costs by 80% with classical models — Prophet, seasonal naive, and XGBoost outperform deep learning in 80% of cases, with MAE improvements up to 15% when operational constraints are considered.</description>
       <pubDate>Mon, 27 Apr 2026 18:52:42 +0000</pubDate>
       <guid>https://kubaik.github.io/time-series-forecasting-with-ai-is-overrated-heres/</guid>
-    </item>
-    <item>
-      <title>Automate 10 enterprise workflows in 3 hours with Python RPA</title>
-      <link>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</link>
-      <description>ll shared 70% of its data via email attachm with Automate enterprise workflows hours — one master sheet.</description>
-      <pubDate>Mon, 27 Apr 2026 18:22:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/automate-10-enterprise-workflows-in-3-hours-with-p/</guid>
     </item>
   </channel>
 </rss>
