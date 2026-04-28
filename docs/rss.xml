@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 04:08:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 04:25:22 +0000</lastBuildDate>
+    <item>
+      <title>Tech layoffs 2026 finally explained</title>
+      <link>https://kubaik.github.io/tech-layoffs-2026-finally-explained/</link>
+      <description>Cut tech layoffs in 2026 by 40% with revenue_per_employee tracking, AI infra cost modeling, and furlough programs — benchmarks, benchmarks, and the mistakes that make the difference.</description>
+      <pubDate>Tue, 28 Apr 2026 04:25:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-layoffs-2026-finally-explained/</guid>
+    </item>
     <item>
       <title>How we cut API cost 60% with rate limiting that survived Black Friday</title>
       <link>https://kubaik.github.io/how-we-cut-api-cost-60-with-rate-limiting-that-sur/</link>
@@ -138,13 +145,6 @@
       <description>Cut blended dev cost by 37% and human review time by 89% by switching from GPT-4 to Claude 3 Opus for strict JSON generation — real latency, token, and cost numbers from a live SaaS pipeline.</description>
       <pubDate>Mon, 27 Apr 2026 15:04:20 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</guid>
-    </item>
-    <item>
-      <title>The 9 data systems Netflix uses to pick what to build next</title>
-      <link>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</link>
-      <description>Cut feature churn by 60% with Netflix’s 9 data systems — A/B experiments, CLV models, graph affinity, and the exact tools, versions, and costs for bootstrappers to series B startups</description>
-      <pubDate>Mon, 27 Apr 2026 14:39:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</guid>
     </item>
   </channel>
 </rss>
