@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 07:53:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 08:15:13 +0000</lastBuildDate>
+    <item>
+      <title>MLOps: Deploying AI Models Without Breaking Everything: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/mlops-deploying-ai-models-without-breaking-everyth/</link>
+      <description>Cut MLOps: Deploying AI Models Without Breaking Everything failures by understanding connection pooling and retry logic — real benchmarks, common mistak…</description>
+      <pubDate>Tue, 28 Apr 2026 08:15:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-deploying-ai-models-without-breaking-everyth/</guid>
+    </item>
     <item>
       <title>Building in Public vs Keeping it Private: Build or Break</title>
       <link>https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/</link>
@@ -138,13 +145,6 @@
       <description>Cut user-perceived latency from 1.2s to 500ms with micro-frontends — deployment scripts, CDN edge setup, and the regional gotchas that break the docs’ promises.</description>
       <pubDate>Mon, 27 Apr 2026 17:48:11 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-frontends-at-500ms-to-50ms-in-30-days-withou/</guid>
-    </item>
-    <item>
-      <title>The 7 Best Tools for Building a Frustration-Free Dev Environment</title>
-      <link>https://kubaik.github.io/the-7-best-tools-for-building-a-frustration-free-d/</link>
-      <description>Build a development environment under 30 minutes with the 7 best tools for coding, debugging, and collaboration — cut setup time and reduce frustration.</description>
-      <pubDate>Mon, 27 Apr 2026 17:43:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-7-best-tools-for-building-a-frustration-free-d/</guid>
     </item>
   </channel>
 </rss>
