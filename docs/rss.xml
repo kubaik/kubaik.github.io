@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 13:36:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 15:25:41 +0000</lastBuildDate>
+    <item>
+      <title>Rust in Production: Why Python and JS Devs Are Switching Now</title>
+      <link>https://kubaik.github.io/rust-in-production-why-python-and-js-devs-are-swit/</link>
+      <description>Cut API latency from 420ms to 18ms and memory from 2.1GB to 320MB by rewriting a Node.js app in Rust. Learn the real differences, gotchas, and tools that make Rust worth the switch for Python and JavaScript developers.</description>
+      <pubDate>Tue, 28 Apr 2026 15:25:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-in-production-why-python-and-js-devs-are-swit/</guid>
+    </item>
     <item>
       <title>Python CPU profiling shows 95% idle—here’s why it’s lying</title>
       <link>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</link>
@@ -138,13 +145,6 @@
       <description>Cut end-to-end chat latency to 250 ms and $0.0000015 per message with WebSocket edges, Kafka queues, and Signal encryption — the same stack WhatsApp uses.</description>
       <pubDate>Mon, 27 Apr 2026 20:20:40 +0000</pubDate>
       <guid>https://kubaik.github.io/whatsapps-chat-system-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency</title>
-      <link>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</link>
-      <description>ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.</description>
-      <pubDate>Mon, 27 Apr 2026 19:10:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/</guid>
     </item>
   </channel>
 </rss>
