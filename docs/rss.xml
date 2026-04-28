@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 04:25:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 05:04:17 +0000</lastBuildDate>
+    <item>
+      <title>Why Apple’s chips let them charge $1,600 for a phone nobody else can copy</title>
+      <link>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</link>
+      <description>Cut app latency from 45ms to 18ms by using Metal MPS, Swift Concurrency, and Xcode Cloud on Apple Silicon — real benchmarks and code that prove why iPhones justify $1,600 prices while others can’t copy it.</description>
+      <pubDate>Tue, 28 Apr 2026 05:04:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</guid>
+    </item>
     <item>
       <title>Tech layoffs 2026 finally explained</title>
       <link>https://kubaik.github.io/tech-layoffs-2026-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>0ms. That 79% drop in latency changed how u with AI predicts friendships you — rebuild the graph after every batch of new enrollme.</description>
       <pubDate>Mon, 27 Apr 2026 16:15:30 +0000</pubDate>
       <guid>https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/</guid>
-    </item>
-    <item>
-      <title>Claude 3 Opus cut our dev cost by 37% vs ChatGPT</title>
-      <link>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</link>
-      <description>Cut blended dev cost by 37% and human review time by 89% by switching from GPT-4 to Claude 3 Opus for strict JSON generation — real latency, token, and cost numbers from a live SaaS pipeline.</description>
-      <pubDate>Mon, 27 Apr 2026 15:04:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/</guid>
     </item>
   </channel>
 </rss>
