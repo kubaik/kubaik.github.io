@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 01:23:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 02:16:37 +0000</lastBuildDate>
+    <item>
+      <title>AI Prompting Secrets Most People Never Learn: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/ai-prompting-secrets-most-people-never-learn-a-pra/</link>
+      <description>Cut AI Prompting Secrets Most People Never Learn failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a …</description>
+      <pubDate>Tue, 28 Apr 2026 02:16:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompting-secrets-most-people-never-learn-a-pra/</guid>
+    </item>
     <item>
       <title>React vs Next.js vs Remix: Choosing the Right Tool: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/react-vs-nextjs-vs-remix-choosing-the-right-tool-a/</link>
@@ -138,13 +145,6 @@
       <description>Cut feature churn by 60% with Netflix’s 9 data systems — A/B experiments, CLV models, graph affinity, and the exact tools, versions, and costs for bootstrappers to series B startups</description>
       <pubDate>Mon, 27 Apr 2026 14:39:51 +0000</pubDate>
       <guid>https://kubaik.github.io/the-9-data-systems-netflix-uses-to-pick-what-to-bu/</guid>
-    </item>
-    <item>
-      <title>11 A/B Test Tools That Give Real Answers (Ranked and Tested)</title>
-      <link>https://kubaik.github.io/11-ab-test-tools-that-give-real-answers-ranked-and/</link>
-      <description>11 A/B test tools compared with real traffic data from Africa — pick the one that won’t break on 2G, respects your budget, and gives real answers, not noise.</description>
-      <pubDate>Mon, 27 Apr 2026 14:28:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/11-ab-test-tools-that-give-real-answers-ranked-and/</guid>
     </item>
   </channel>
 </rss>
