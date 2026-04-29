@@ -2,7 +2,19 @@ name: AI Blog Automation
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    # 6 tweets per day at EAT peak hours (UTC times):
+    # 05:00 UTC = 08:00 EAT  (morning peak)
+    # 07:00 UTC = 10:00 EAT  (mid-morning)
+    # 09:00 UTC = 12:00 EAT  (lunch)
+    # 12:00 UTC = 15:00 EAT  (afternoon)
+    # 15:00 UTC = 18:00 EAT  (evening commute)
+    # 18:00 UTC = 21:00 EAT  (night peak)
+    - cron: "0 5 * * *"
+    - cron: "0 7 * * *"
+    - cron: "0 9 * * *"
+    - cron: "0 12 * * *"
+    - cron: "0 15 * * *"
+    - cron: "0 18 * * *"
   workflow_dispatch:
     inputs:
       force_cleanup:
@@ -85,13 +97,9 @@ jobs:
           ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
       # ── Resolve the effective Twitter posting flag ──────────────────────
-      # Rules:
-      #   schedule  → ALWAYS post (cron runs should never be silenced by
-      #               a dev flag set during a code-change session)
-      #   push      → respect ENABLE_TWITTER_POSTING (dev may have set
-      #               it to false while iterating on code)
-      #   workflow_dispatch → respect ENABLE_TWITTER_POSTING (manual
-      #               triggers should behave like push for safety)
+      # schedule  → ALWAYS post
+      # push      → NEVER post (code changes must not burn a tweet)
+      # dispatch  → respect ENABLE_TWITTER_POSTING secret
       - name: Resolve Twitter posting flag
         id: twitter_flag
         run: |
@@ -101,8 +109,10 @@ jobs:
           if [ "$EVENT" = "schedule" ]; then
             echo "Trigger: scheduled cron — Twitter posting FORCED ON"
             echo "effective_flag=true" >> $GITHUB_OUTPUT
+          elif [ "$EVENT" = "push" ]; then
+            echo "Trigger: push — Twitter posting FORCED OFF"
+            echo "effective_flag=false" >> $GITHUB_OUTPUT
           else
-            # push or workflow_dispatch — honour the secret
             NORMALISED=$(echo "$SECRET_FLAG" | tr '[:upper:]' '[:lower:]' | xargs)
             if [ "$NORMALISED" = "true" ]; then
               echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=true → posting ON"
@@ -144,8 +154,6 @@ jobs:
           BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          # Pass the RESOLVED flag — not the raw secret — so blog_system.py
-          # sees the correct value regardless of how the workflow was triggered.
           ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
         run: |
           python blog_system.py auto || {
