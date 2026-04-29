@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 02:26:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 05:50:24 +0000</lastBuildDate>
+    <item>
+      <title>Building AI Agents That Actually Work: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</link>
+      <description>Cut Building AI Agents That Actually Work failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by…</description>
+      <pubDate>Wed, 29 Apr 2026 05:50:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</guid>
+    </item>
     <item>
       <title>How we raised SaaS prices 15% and lost no customers</title>
       <link>https://kubaik.github.io/how-we-raised-saas-prices-15-and-lost-no-customers/</link>
@@ -138,13 +145,6 @@
       <description>Cut app latency from 45ms to 18ms by using Metal MPS, Swift Concurrency, and Xcode Cloud on Apple Silicon — real benchmarks and code that prove why iPhones justify $1,600 prices while others can’t copy it.</description>
       <pubDate>Tue, 28 Apr 2026 05:04:12 +0000</pubDate>
       <guid>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</guid>
-    </item>
-    <item>
-      <title>Tech layoffs 2026 finally explained</title>
-      <link>https://kubaik.github.io/tech-layoffs-2026-finally-explained/</link>
-      <description>Cut tech layoffs in 2026 by 40% with revenue_per_employee tracking, AI infra cost modeling, and furlough programs — benchmarks, benchmarks, and the mistakes that make the difference.</description>
-      <pubDate>Tue, 28 Apr 2026 04:25:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-layoffs-2026-finally-explained/</guid>
     </item>
   </channel>
 </rss>
