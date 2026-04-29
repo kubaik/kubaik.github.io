@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 14:04:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 16:50:38 +0000</lastBuildDate>
+    <item>
+      <title>Agile isn’t a meeting schedule — here’s what we cut instead</title>
+      <link>https://kubaik.github.io/agile-isnt-a-meeting-schedule-heres-what-we-cut-in/</link>
+      <description>Cut cycle time from 18 days to 5 days and reduced production incidents by 75% by replacing Agile theatre with outcome-driven delivery. Learn how we moved from sprints and standups to asynchronous updates and pre-mortems while saving $120k in six months.</description>
+      <pubDate>Wed, 29 Apr 2026 16:50:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-isnt-a-meeting-schedule-heres-what-we-cut-in/</guid>
+    </item>
     <item>
       <title>Free AI tools fail on real files (and what actually works)</title>
       <link>https://kubaik.github.io/free-ai-tools-fail-on-real-files-and-what-actually/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.</description>
       <pubDate>Tue, 28 Apr 2026 07:53:30 +0000</pubDate>
       <guid>https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/</guid>
-    </item>
-    <item>
-      <title>WebAssembly Crashes When JavaScript Chokes on Heavy Loops (and How to Fix It)</title>
-      <link>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</link>
-      <description>WebAssembly Crashes JavaScript Chokes: e flat at 100% for the entire time. You open. Practical guide with real examples.</description>
-      <pubDate>Tue, 28 Apr 2026 07:43:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</guid>
     </item>
   </channel>
 </rss>
