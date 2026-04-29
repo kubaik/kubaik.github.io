@@ -2264,43 +2264,25 @@ if __name__ == "__main__":
                 if not _twitter_posting_enabled():
                     print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
                 else:
+                    # Initialise only when actually posting — avoids a
+                    # get_me() API call on every non-posting run.
                     visibility = VisibilityAutomator(config)
-
-                    trending = visibility._get_trending_tag()
-                    if trending:
-                        print(f"🔥 Today's trending tag: {trending}")
-                        trending_tag = f"#{trending.lstrip('#')}"
-                        existing = blog_post.twitter_hashtags or ""
-                        other_tags = " ".join(
-                            t for t in existing.split()
-                            if t.lower() != trending_tag.lower()
-                        )
-                        blog_post.twitter_hashtags = f"{trending_tag} {other_tags}".strip(
-                        )
 
                     print("\nPosting single tweet...")
                     result = visibility.post_single_tweet(blog_post)
 
+                    # ONE create_tweet() call only — no fallback.
+                    # A failed tweet is logged and skipped; it does NOT
+                    # trigger a second billable API call.
                     if result["success"]:
                         print(f"✅ Tweet posted: {result['url']}")
                         print(
                             f"   {result['char_count']} chars | "
                             f"{result['tweet_text'][:80]}…"
                         )
-                        if result.get("trending_tag"):
-                            print(
-                                f"   Trending tag injected: {result['trending_tag']}")
                     else:
-                        print(f"❌ Tweet failed: {result.get('error')}")
-                        print("Attempting fallback via best-strategy picker...")
-                        fallback = visibility.post_with_best_strategy(
-                            blog_post)
-                        if fallback["success"]:
-                            print(
-                                f"✅ Fallback tweet posted: {fallback['url']}")
-                        else:
-                            print(
-                                f"❌ Fallback also failed: {fallback.get('error')}")
+                        print(
+                            f"❌ Tweet failed: {result.get('error')} — skipping (no retry).")
 
             except Exception as e:
                 print(f"Error: {e}")
