@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 05:50:24 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 08:08:12 +0000</lastBuildDate>
+    <item>
+      <title>Code Review: The Secret Signal Hidden in Good Feedback</title>
+      <link>https://kubaik.github.io/code-review-the-secret-signal-hidden-in-good-feedb/</link>
+      <description>Cut on-call incidents by 57% and latency by 79% with a 4-bucket code review framework — correctness, performance, maintainability, observability. Includes real code, production numbers, and failure modes nobody talks about.</description>
+      <pubDate>Wed, 29 Apr 2026 08:08:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-the-secret-signal-hidden-in-good-feedb/</guid>
+    </item>
     <item>
       <title>Building AI Agents That Actually Work: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</link>
@@ -138,13 +145,6 @@
       <description>Cut technical debt paydown time by 60% with combined static analysis and runtime profiling — SonarQube, Pyroscope, and the mistakes that cost $47K in a single incident.</description>
       <pubDate>Tue, 28 Apr 2026 05:55:14 +0000</pubDate>
       <guid>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</guid>
-    </item>
-    <item>
-      <title>Why Apple’s chips let them charge $1,600 for a phone nobody else can copy</title>
-      <link>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</link>
-      <description>Cut app latency from 45ms to 18ms by using Metal MPS, Swift Concurrency, and Xcode Cloud on Apple Silicon — real benchmarks and code that prove why iPhones justify $1,600 prices while others can’t copy it.</description>
-      <pubDate>Tue, 28 Apr 2026 05:04:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-apples-chips-let-them-charge-1600-for-a-phone-/</guid>
     </item>
   </channel>
 </rss>
