@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 10:48:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 14:04:04 +0000</lastBuildDate>
+    <item>
+      <title>Free AI tools fail on real files (and what actually works)</title>
+      <link>https://kubaik.github.io/free-ai-tools-fail-on-real-files-and-what-actually/</link>
+      <description>ge for 15–20% of the files. One tool even c with AI Tools — a free AI summarizer and it returns a blank page or.</description>
+      <pubDate>Wed, 29 Apr 2026 14:03:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/free-ai-tools-fail-on-real-files-and-what-actually/</guid>
+    </item>
     <item>
       <title>How Twilio and Stripe quietly print $3B a year with APIs you already use</title>
       <link>https://kubaik.github.io/how-twilio-and-stripe-quietly-print-3b-a-year-with/</link>
@@ -138,13 +145,6 @@
       <description>WebAssembly Crashes JavaScript Chokes: e flat at 100% for the entire time. You open. Practical guide with real examples.</description>
       <pubDate>Tue, 28 Apr 2026 07:43:34 +0000</pubDate>
       <guid>https://kubaik.github.io/webassembly-crashes-when-javascript-chokes-on-heav/</guid>
-    </item>
-    <item>
-      <title>Freelance Dev Income: $75k/yr From 20 Hours/Week</title>
-      <link>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</link>
-      <description>Freelance dev income jumped from $50k to $75k/year in 6 months by fixing late payments, publishing fixed-scope packages, and inserting maintenance upsells — real numbers and code snippets included.</description>
-      <pubDate>Tue, 28 Apr 2026 07:13:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</guid>
     </item>
   </channel>
 </rss>
