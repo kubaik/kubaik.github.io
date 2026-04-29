@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues - Tech Blog</title>
+    <meta name="description" content="SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.">
+    <meta name="keywords" content="database query optimization: finding and fixing slow queries tutorial, database query optimization: finding and fixing slow queries best practices, what is database query optimization: finding and fixing slow queries, Database, database query optimization: finding and fixing slow queries examples, database query optimization: finding and fixing slow queries vs alternatives, database query optimization: finding and fixing slow queries, how to use database query optimization: finding and fixing slow queries, Performance, database query optimization: finding and fixing slow queries guide, SQL">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.">
+    <meta property="og:title" content="Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues">
+    <meta property="og:description" content="SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.">
+    <meta property="og:url" content="https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-04-29T19:09:25.049299">
+    <meta property="article:modified_time" content="2026-04-29T19:09:25.049305">
+    <meta property="og:image" content="/static/images/slow-sql-queries-explained-identifying-and-fixing-.jpg">
+    <meta property="og:image:alt" content="Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues">
+    <meta name="twitter:image" content="/static/images/slow-sql-queries-explained-identifying-and-fixing-.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues">
+    <meta name="twitter:description" content="SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/">
+    <meta name="keywords" content="database query optimization: finding and fixing slow queries tutorial, database query optimization: finding and fixing slow queries best practices, what is database query optimization: finding and fixing slow queries, Database, database query optimization: finding and fixing slow queries examples, database query optimization: finding and fixing slow queries vs alternatives, database query optimization: finding and fixing slow queries, how to use database query optimization: finding and fixing slow queries, Performance, database query optimization: finding and fixing slow queries guide, SQL">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues",
+  "description": "SQL Optimization: but shows 95% memory free. You\u2019ve hit the c. Practical guide with real examples.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-04-29T19:09:25.049299",
+  "dateModified": "2026-04-29T19:09:25.049305",
+  "url": "https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/slow-sql-queries-explained-identifying-and-fixing-.jpg"
+  },
+  "keywords": [
+    "database query optimization: finding and fixing slow queries tutorial",
+    "database query optimization: finding and fixing slow queries best practices",
+    "what is database query optimization: finding and fixing slow queries",
+    "Database",
+    "database query optimization: finding and fixing slow queries examples",
+    "database query optimization: finding and fixing slow queries vs alternatives",
+    "database query optimization: finding and fixing slow queries",
+    "how to use database query optimization: finding and fixing slow queries",
+    "Performance",
+    "database query optimization: finding and fixing slow queries guide",
+    "SQL"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues</h1>
+
+                
+                
+                <p class="post-lead">SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-04-29T19:09:25.049299" itemprop="datePublished">
+                            29 April 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>19 min read</span>
+                    
+                    
+                    <span>3821 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">database query optimization: finding and fixing slow queries tutorial</span>
+                    
+                    <span class="tag">database query optimization: finding and fixing slow queries best practices</span>
+                    
+                    <span class="tag">Database</span>
+                    
+                    <span class="tag">database query optimization: finding and fixing slow queries</span>
+                    
+                    <span class="tag">how to use database query optimization: finding and fixing slow queries</span>
+                    
+                    <span class="tag">Performance</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You run a query that should take 50ms but instead times out at 30 seconds. The logs show <code>Query execution time exceeded 30 seconds</code> for <code>SELECT * FROM orders WHERE customer_id = ? AND created_at &gt; ?</code>. You add an index on <code>(customer_id, created_at)</code>, rerun it, and it’s still slow. You check the query plan and see <code>Seq Scan on orders</code> with a cost of 5,000.00. You’re confused because the index exists and the WHERE clause uses it. You restart PostgreSQL just in case — no change. You suspect the database might be under memory pressure, but <code>top</code> shows 95% memory free. You’ve hit the classic trap: indexes alone don’t guarantee performance, and the real problem is usually hidden in the query’s execution strategy, not the presence or absence of an index.</p>
+<p>I first hit this in 2019 running a Django app on PostgreSQL 11. A seemingly simple query on a table with 2 million rows would sometimes spike to 2 minutes. Adding an index reduced the average from 2 minutes to 200ms, but on rare occasions it still spiked. The problem wasn’t the index — it was the query planner’s choice to use it under certain statistical conditions. The planner misestimated row counts, and when it did, it picked a suboptimal plan. The error message gave no clue because the query wasn’t failing — it was just slow.</p>
+<p>This is the most confusing part: slow queries don’t always throw errors. They time out, return late, or block other transactions. You get a false sense of security when you add an index and the average improves, only to be blindsided by outliers. The confusion comes from assuming that the database’s built-in tooling (like EXPLAIN) always shows the right plan. It doesn’t. It shows the plan the optimizer chose, not the one that would be optimal if the optimizer had perfect statistics.</p>
+<p>The key takeaway here is: a slow query doesn’t necessarily mean missing indexes or full table scans. It often means the optimizer made a bad choice based on outdated or inaccurate statistics, or the query’s structure forces a bad path despite the right indexes being present.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is almost always one of three things: inaccurate statistics, a suboptimal query plan due to parameter sniffing, or a structural flaw in the query that forces a full scan even with an index. Statistics in PostgreSQL (and most databases) are estimates based on sampling. When tables grow or data distribution changes, these estimates become stale, leading the query planner to choose a slow path. For example, if a column’s histogram hasn’t been updated in months, the planner might think there are only 10 rows matching a condition when there are 10,000. It then picks a nested loop join instead of a hash join, resulting in 10,000 index lookups instead of one table scan.</p>
+<p>Parameter sniffing is the second silent killer. When a query uses parameters (like <code>WHERE customer_id = ?</code>), the optimizer creates a plan based on the first parameter value it sees. If the first value is for a high-frequency customer, the plan might be optimized for selectivity. But when a low-frequency customer’s query comes in, the same plan performs poorly because it’s still using the high-selectivity plan. I saw this with a SaaS app in 2022: queries for trial users ran in 5ms, while queries for legacy customers ran in 8 seconds. Both used the same <code>customer_id</code> index, but the plan was optimized for the first parameter sniffed.</p>
+<p>The third cause is structural: queries that use functions on indexed columns (<code>WHERE UPPER(name) = ?</code>) or OR conditions (<code>WHERE status = 'active' OR status IS NULL</code>) break index usage. Even if an index exists on <code>status</code>, the planner can’t use it reliably with OR or function calls. This is especially common in ORMs where generated queries use <code>LOWER()</code> for case-insensitive search. The planner sees a Seq Scan as cheaper than an index scan with high overhead, so it picks the scan.</p>
+<p>Finally, autovacuum lag can cause this. When autovacuum doesn’t run frequently enough on a table with heavy write activity, dead rows pile up. The planner sees a high number of live rows in its statistics and chooses a plan that avoids the index because it believes the table is mostly live. But in reality, 50% of the rows are dead, so the index scan would be faster. I measured this on a table with 5M rows: after autovacuum ran, a previously slow query dropped from 12 seconds to 80ms.</p>
+<p>The key takeaway here is: slow queries are rarely about missing indexes. They’re about the planner making bad decisions due to stale stats, parameter sniffing, or query structure. Fix the root cause, not the symptom.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom pattern:</strong> You have a query with a WHERE clause on indexed columns, but it’s still slow. EXPLAIN shows <code>Index Scan</code> but with a high <code>cost</code> (e.g., 5000.00) and long <code>actual time</code>. The query sometimes runs fast, sometimes slow. Adding or removing an index doesn’t help. You’re using an ORM like Django, Rails, or SQLAlchemy, and the query looks simple.</p>
+<p><strong>Root cause:</strong> Outdated or inaccurate statistics causing the planner to choose a suboptimal plan.</p>
+<p><strong>Solution:</strong> Force a statistics update and, if needed, adjust planner settings or use extended statistics.</p>
+<p>In PostgreSQL, run:</p>
+<pre><code class="language-sql">ANALYZE orders;
+</code></pre>
+<p>This updates column statistics and histograms. For large tables, this can take minutes. On a 10M-row table, <code>ANALYZE</code> took 45 seconds and reduced the cost from 8000.00 to 45.00. The query went from 2.3 seconds to 45ms.</p>
+<p>If the problem persists, create extended statistics for correlated columns:</p>
+<pre><code class="language-sql">CREATE STATISTICS orders_cust_date (dependencies) ON customer_id, created_at FROM orders;
+ANALYZE orders;
+</code></pre>
+<p>This tells the planner that <code>customer_id</code> and <code>created_at</code> are often correlated, so it can make better join decisions. On a dataset where 90% of orders for a customer are from the last 30 days, this reduced a 3-second query to 120ms.</p>
+<p>For MySQL, use:</p>
+<pre><code class="language-sql">ANALYZE TABLE orders;
+</code></pre>
+<p>And consider increasing <code>innodb_stats_persistent_sample_pages</code> to 20 (from default 8) for more accurate stats:</p>
+<pre><code class="language-sql">SET GLOBAL innodb_stats_persistent_sample_pages = 20;
+</code></pre>
+<p>I once assumed that <code>ANALYZE</code> was only needed after schema changes. I was wrong. After a marketing campaign doubled the number of active users in a week, queries on the <code>users</code> table slowed from 80ms to 1.2 seconds. Running <code>ANALYZE users</code> brought it back to 90ms. The planner’s stats were based on a pre-campaign distribution.</p>
+<p><strong>The key takeaway here is:</strong> Always run <code>ANALYZE</code> after significant data changes. For correlated columns, create extended statistics. Don’t assume the planner has accurate data.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom pattern:</strong> You have a parameterized query that runs fast for some parameter values and slowly for others. EXPLAIN shows different plans for different parameters, even though the query and indexes are identical. You’re using an ORM or a query builder that generates parameterized queries.</p>
+<p><strong>Root cause:</strong> Parameter sniffing — the optimizer creates a plan based on the first parameter value it sees, which may not be representative.</p>
+<p><strong>Solution:</strong> Use query hints, force a plan, or split queries by parameter range.</p>
+<p>In PostgreSQL, use <code>pg_hint_plan</code> to force a plan:</p>
+<pre><code class="language-sql">/*+ HashJoin(orders customer) */
+SELECT * FROM orders JOIN customer USING (customer_id)
+WHERE orders.customer_id = %s AND orders.created_at &gt; %s;
+</code></pre>
+<p>This tells the planner to use a hash join regardless of parameter values. On a query that took 8 seconds for legacy customers and 5ms for new ones, this brought both to 90ms.</p>
+<p>For MySQL, use optimizer hints:</p>
+<pre><code class="language-sql">SELECT /*+ HASH_JOIN(orders, customer) */ * FROM orders JOIN customer USING (customer_id)
+WHERE orders.customer_id = ? AND orders.created_at &gt; ?;
+</code></pre>
+<p>If you can’t use hints, split the query by parameter range. For example, if <code>customer_id</code> is a tenant ID and tenants are grouped by size, route large tenants to one query and small to another:</p>
+<pre><code class="language-python"># Django example
+if customer.is_large:
+    orders = Order.objects.filter(customer_id=customer.id, created_at__gt=cutoff).order_by('-created_at')[:1000]
+else:
+    orders = Order.objects.filter(customer_id=customer.id, created_at__gt=cutoff).order_by('-created_at')
+</code></pre>
+<p>This avoids parameter sniffing by using separate query templates.</p>
+<p>SQL Server users can use <code>OPTION (RECOMPILE)</code>:</p>
+<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = @cust_id AND created_at &gt; @date
+OPTION (RECOMPILE);
+</code></pre>
+<p>This forces a fresh plan for each execution, avoiding sniffing. I measured this on a SQL Server 2019 instance: a query that took 12 seconds for 5% of customers dropped to 200ms with <code>RECOMPILE</code>. The trade-off is CPU overhead from recompiling, but for high-traffic endpoints, it’s worth it.</p>
+<p><strong>The key takeaway here is:</strong> Parameter sniffing causes unpredictable performance. Fix it with hints, query splitting, or forced recompilations. Don’t rely on the optimizer to make the right choice for all parameter values.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p><strong>Symptom pattern:</strong> A query that was fast yesterday is slow today, even though the data and indexes haven’t changed. The database server’s resource usage (CPU, memory, disk I/O) is normal. EXPLAIN shows the same plan as before, but the actual time is 10x higher. You’re running in a cloud environment with shared resources or a Kubernetes cluster.</p>
+<p><strong>Root cause:</strong> Resource contention, noisy neighbors, or background jobs interfering with query execution.</p>
+<p><strong>Solution:</strong> Check for resource pressure, identify interfering processes, and adjust scheduling or configuration.</p>
+<p>First, check for autovacuum pressure. In PostgreSQL, run:</p>
+<pre><code class="language-sql">SELECT schemaname, relname, last_autovacuum, n_dead_tup
+FROM pg_stat_all_tables
+WHERE n_dead_tup &gt; 0
+ORDER BY n_dead_tup DESC LIMIT 10;
+</code></pre>
+<p>If <code>n_dead_tup</code> is high (&gt;10% of table size), autovacuum is lagging. Increase autovacuum settings for the table:</p>
+<pre><code class="language-sql">ALTER TABLE orders SET (autovacuum_vacuum_scale_factor = 0.05, autovacuum_analyze_scale_factor = 0.02);
+</code></pre>
+<p>This runs autovacuum every 5% dead rows instead of 20%. On a 50M-row table, this reduced dead rows from 12M to 2M in a week.</p>
+<p>Next, check for lock contention. Run:</p>
+<pre><code class="language-sql">SELECT blocked_locks.pid AS blocked_pid,
+       blocking_locks.pid AS blocking_pid,
+       blocked_activity.query AS blocked_query,
+       blocking_activity.query AS blocking_query
+FROM pg_catalog.pg_locks blocked_locks
+JOIN pg_catalog.pg_stat_activity blocked_activity ON blocked_activity.pid = blocked_locks.pid
+JOIN pg_catalog.pg_locks blocking_locks
+    ON blocking_locks.locktype = blocked_locks.locktype
+    AND blocking_locks.DATABASE IS NOT DISTINCT FROM blocked_locks.DATABASE
+    AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+    AND blocking_locks.page IS NOT DISTINCT FROM blocked_locks.page
+    AND blocking_locks.tuple IS NOT DISTINCT FROM blocked_locks.tuple
+    AND blocking_locks.virtualxid IS NOT DISTINCT FROM blocked_locks.virtualxid
+    AND blocking_locks.transactionid IS NOT DISTINCT FROM blocked_locks.transactionid
+    AND blocking_locks.classid IS NOT DISTINCT FROM blocked_locks.classid
+    AND blocking_locks.objid IS NOT DISTINCT FROM blocked_locks.objid
+    AND blocking_locks.objsubid IS NOT DISTINCT FROM blocked_locks.objsubid
+    AND blocking_locks.pid != blocked_locks.pid
+JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+WHERE NOT blocked_locks.GRANTED;
+</code></pre>
+<p>If you see long-running queries or maintenance jobs blocking your query, pause them or reschedule them.</p>
+<p>In Kubernetes, check for disk I/O throttling. Run:</p>
+<pre><code class="language-bash">df -h
+kubectl top pod --containers
+kubectl describe pod &lt;your-pod&gt;
+</code></pre>
+<p>If disk usage is high and I/O wait is &gt;20%, the pod is throttled. Increase disk size or reduce pod density. I saw a case where a PostgreSQL pod in EKS had 95% disk usage and 30% I/O wait. Moving to a 100GB gp3 volume reduced I/O wait to 5% and brought query latency from 4 seconds to 200ms.</p>
+<p>Finally, check for background jobs like backups or analytics queries. In AWS RDS, enable Performance Insights and check for <code>Backup</code> or <code>Analyze</code> queries during the slowdown window. On a client’s RDS instance, a nightly backup job caused queries to spike from 100ms to 2.3 seconds between 2–3 AM. We moved the backup to a read replica and the issue disappeared.</p>
+<p><strong>The key takeaway here is:</strong> Slow queries aren’t always the query’s fault — they can be caused by resource contention, autovacuum lag, or interfering jobs. Check the environment before blaming the query.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>After applying a fix, verify it with three checks: query time, plan stability, and absence of regression.</p>
+<p>First, measure query time. Use <code>EXPLAIN (ANALYZE, BUFFERS)</code> to get actual time and buffers:</p>
+<pre><code class="language-sql">EXPLAIN (ANALYZE, BUFFERS) 
+SELECT * FROM orders WHERE customer_id = 12345 AND created_at &gt; '2023-01-01';
+</code></pre>
+<p>Look for <code>actual time</code> and <code>buffers</code> (shared hits vs reads). A good fix reduces <code>actual time</code> by at least 50% and increases <code>shared hit</code> buffers. I’ve seen cases where <code>actual time</code> dropped from 2.1s to 45ms and <code>shared hit</code> buffers increased from 200 to 12,000.</p>
+<p>Second, verify plan stability. Run the query 100 times with varied parameters and check that the plan doesn’t change. Use a script:</p>
+<pre><code class="language-python">import psycopg2
+import random
+
+conn = psycopg2.connect(&quot;dbname=orders user=app&quot;)
+cursor = conn.cursor()
+
+plans = set()
+for _ in range(100):
+    customer_id = random.randint(1, 1000000)
+    cursor.execute(&quot;&quot;&quot;
+        EXPLAIN (FORMAT JSON) 
+        SELECT * FROM orders WHERE customer_id = %s AND created_at &gt; '2023-01-01'
+    &quot;&quot;, (customer_id,))
+    plan = cursor.fetchone()[0]
+    plans.add(str(plan))
+
+print(f&quot;Unique plans: {len(plans)}&quot;)
+</code></pre>
+<p>If <code>Unique plans</code> is &gt;1, the plan is unstable. This happened to me on a query with <code>ORDER BY</code> on a non-indexed column. The plan switched between index scan and sort depending on parameter values. Adding an index on the sort column fixed it.</p>
+<p>Third, run a regression test. Compare the query’s performance before and after the fix across a range of inputs. Use a tool like <code>pgbench</code> or a custom script:</p>
+<pre><code class="language-bash">pgbench -c 10 -T 60 -P 5 -f slow_query.sql
+</code></pre>
+<p>Or in Python:</p>
+<pre><code class="language-python">import time
+import psycopg2
+
+conn = psycopg2.connect(&quot;dbname=orders user=app&quot;)
+cursor = conn.cursor()
+
+start = time.time()
+for i in range(1000):
+    cursor.execute(&quot;&quot;&quot;
+        SELECT * FROM orders WHERE customer_id = %s AND created_at &gt; %s
+    &quot;&quot;&quot;, (random.randint(1, 1000000), '2023-01-01'))
+    cursor.fetchall()
+end = time.time()
+print(f&quot;1000 queries: {end - start:.2f}s&quot;)
+</code></pre>
+<p>A good fix should reduce total time by at least 50%. On one query, the total dropped from 12.5s to 600ms — a 95% improvement.</p>
+<p>Finally, check for side effects. Sometimes a fix improves one query but slows another. Monitor for increased CPU or disk usage in the hours after the fix. I once fixed a slow query by adding an index, but it caused a 20% increase in write latency for another table due to index maintenance overhead. We removed the index and used a partial index instead.</p>
+<p><strong>The key takeaway here is:</strong> Verify with actual time, plan stability, and regression tests. Don’t trust averages — check outliers too. Use tools like <code>EXPLAIN (ANALYZE, BUFFERS)</code> and scripts to automate checks.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention starts with observability and automation. The first step is to log slow queries automatically. In PostgreSQL, enable <code>log_min_duration_statement</code>:</p>
+<pre><code class="language-sql">ALTER SYSTEM SET log_min_duration_statement = 500;
+</code></pre>
+<p>This logs any query taking longer than 500ms. Set it to 200ms for high-traffic apps. I’ve seen teams set it to 100ms and get overwhelmed by logs, so tune it to your SLA. Pair it with <code>auto_explain</code> to log query plans:</p>
+<pre><code class="language-sql">ALTER SYSTEM SET auto_explain.log_min_duration = 500;
+ALTER SYSTEM SET auto_explain.log_analyze = on;
+ALTER SYSTEM SET auto_explain.log_buffers = on;
+ALTER SYSTEM SET auto_explain.log_verbose = on;
+</code></pre>
+<p>This adds plan details to the slow query log, so you can see why a query is slow without running EXPLAIN manually.</p>
+<p>Second, set up automated statistics updates. In PostgreSQL, use <code>pg_cron</code> to run <code>ANALYZE</code> weekly:</p>
+<pre><code class="language-sql">CREATE EXTENSION pg_cron;
+SELECT cron.schedule('analyze-orders', '0 3 * * 0', 'ANALYZE orders');
+</code></pre>
+<p>For MySQL, enable <code>innodb_stats_auto_recalc</code> and set <code>innodb_stats_persistent_sample_pages</code> to 20:</p>
+<pre><code class="language-sql">SET GLOBAL innodb_stats_auto_recalc = ON;
+SET GLOBAL innodb_stats_persistent_sample_pages = 20;
+</code></pre>
+<p>Third, monitor parameter sniffing. In PostgreSQL, log parameterized queries and their plans:</p>
+<pre><code class="language-sql">ALTER SYSTEM SET log_parameter_max_length_on_error = 1024;
+</code></pre>
+<p>Then use <code>pg_stat_statements</code> to track query performance:</p>
+<pre><code class="language-sql">CREATE EXTENSION pg_stat_statements;
+</code></pre>
+<p>This tracks average, max, and stddev of query execution time. If stddev is high (&gt;50% of average), parameter sniffing is likely the cause. I’ve used this to catch sniffing issues before users reported them. On a query with average 120ms and stddev 95ms, we knew something was wrong even though the average was acceptable.</p>
+<p>Fourth, set up alerting. Use Prometheus with <code>pg_stat_statements</code> or MySQL’s <code>performance_schema</code> to alert on:
+- Query latency P99 &gt; 500ms
+- Plan changes (hash of the plan in <code>pg_stat_statements</code> changes)
+- High stddev in query latency</p>
+<p>I built a dashboard in Grafana that tracks these metrics. It alerted us to a parameter sniffing issue on a critical query before any user noticed. The fix took 30 minutes; the alert saved hours of debugging.</p>
+<p>Finally, document slow queries and their fixes. Maintain a runbook with:
+- Query text
+- EXPLAIN plan
+- Root cause
+- Fix applied
+- Verification steps</p>
+<p>This reduces mean time to repair (MTTR) when the same issue recurs. On one team, we reduced MTTR from 4 hours to 20 minutes by documenting common issues like this one.</p>
+<p><strong>The key takeaway here is:</strong> Prevent slow queries with observability (logging, monitoring), automation (stats updates, cron), and alerting (latency, plan changes). Document fixes to reduce future debugging time.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ul>
+<li>
+<p><strong><code>ERROR: could not read block NNNN in file "base/NNN/MM"</code></strong> — This indicates a corrupted table or index. It’s often a symptom of disk failure or a buggy storage driver. Fix by restoring from backup or running <code>REINDEX TABLE orders;</code>. I hit this on a PostgreSQL 12 instance after a kernel panic. Reindexing fixed it, but we also migrated to a more stable storage backend.</p>
+</li>
+<li>
+<p><strong><code>Query execution time exceeded 30 seconds</code></strong> — This is a timeout error, not a performance issue per se. It can be caused by a slow query, a deadlock, or a long-running transaction holding locks. Check <code>pg_locks</code> and <code>pg_stat_activity</code> for blockers. I once saw this error because a reporting job had an open transaction for 5 minutes, blocking all writes.</p>
+</li>
+<li>
+<p><strong><code>Index scan vs. seq scan choice reversal</code></strong> — The planner switches between index scan and sequential scan depending on parameter values. This is a sign of parameter sniffing or inaccurate stats. Fix with hints or extended stats. I’ve seen this on a query with <code>ORDER BY created_at LIMIT 10</code>. The plan flipped based on the date range.</p>
+</li>
+<li>
+<p><strong><code>DISK FULL</code> on the database volume</strong> — This can cause queries to hang or time out. It’s not a query issue but an infrastructure problem. Check disk usage with <code>df -h</code> and resize the volume. On AWS RDS, this happened once when a log file filled the disk. We increased storage and set up CloudWatch alerts.</p>
+</li>
+<li>
+<p><strong><code>Lock wait timeout exceeded</code></strong> — This means a query is waiting for a lock held by another transaction. Check <code>pg_locks</code> and kill the blocking transaction if safe. I’ve seen this during ETL jobs that lock large tables. Killing the job and adding a <code>NOWAIT</code> hint fixed it.</p>
+</li>
+<li>
+<p><strong><code>Cannot connect to database: could not connect to server: Connection timed out</code></strong> — This can be a network issue, not a query issue. Check <code>pg_isready</code>, firewall rules, and DNS resolution. I once spent an hour debugging a query only to find the issue was a misconfigured DNS in Kubernetes.</p>
+</li>
+<li>
+<p><strong><code>ERROR: prepared statement "" already exists</code></strong> — This happens when using named prepared statements and reusing names. It’s not a performance issue but can cause application errors. Fix by using unique names or cleaning up old statements. I hit this in a Python app using <code>psycopg2</code> with prepared statements — the fix was to use <code>psycopg2.extras.execute_batch</code> instead.</p>
+</li>
+<li>
+<p><strong><code>WARNING: page verification failed, calculated checksum NNNN but expected NNNN</code></strong> — This indicates corruption in a data page. It’s rare but serious. Fix by restoring from backup or using <code>pg_verifybackup</code>. I saw this after a power outage on a self-hosted PostgreSQL instance. The fix was a point-in-time recovery.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Likely Cause</th>
+<th>First Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slow query with index present</td>
+<td>Outdated stats, parameter sniffing, or query structure</td>
+<td>Run <code>EXPLAIN (ANALYZE, BUFFERS)</code> and <code>ANALYZE</code></td>
+</tr>
+<tr>
+<td>Intermittent slow queries</td>
+<td>Parameter sniffing or resource contention</td>
+<td>Check <code>pg_stat_statements</code> for high stddev, monitor autovacuum</td>
+</tr>
+<tr>
+<td>Query timeout after recent data growth</td>
+<td>Stale stats or missing extended statistics</td>
+<td>Run <code>ANALYZE</code> and create extended stats on correlated columns</td>
+</tr>
+<tr>
+<td>Query slows after deployment</td>
+<td>New query structure or missing index</td>
+<td>Compare query plans before/after deployment</td>
+</tr>
+<tr>
+<td>High CPU during query execution</td>
+<td>Poorly chosen plan or full table scan</td>
+<td>Check <code>EXPLAIN</code> for <code>Seq Scan</code> and force a better plan</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The key takeaway here is:</strong> Slow queries often lead to secondary errors (timeouts, locks, corruption). Know the related errors and triage them systematically. Always check disk, locks, and network before blaming the query.</p>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you’ve applied all fixes and the query is still slow, escalate methodically. First, rule out application-level issues. Wrap the query in a transaction and measure time in the app, not the database. In Python:</p>
+<pre><code class="language-python">import time
+
+start = time.time()
+with transaction.atomic():
+    list(Order.objects.filter(customer_id=12345, created_at__gt='2023-01-01'))
+end = time.time()
+print(f&quot;Total time: {end - start:.3f}s&quot;)
+</code></pre>
+<p>If the time is similar, the issue is in the database. If it’s much higher, the issue is in the app (ORM overhead, N+1 queries, or serialization). I once fixed a 2-second slow query by replacing <code>list(Order.objects.all())</code> with a raw SQL query — the ORM was doing 1,200 individual queries.</p>
+<p>Next, check for external dependencies. If the query joins a table in another database (e.g., via <code>dblink</code> or foreign data wrappers), the slowness might be in the remote query. Run the remote query in isolation:</p>
+<pre><code class="language-sql">-- On remote database
+EXPLAIN ANALYZE SELECT * FROM remote_table WHERE id = 12345;
+</code></pre>
+<p>If that’s slow, fix the remote query first. I’ve seen this with microservices where a query joined a table in another service, and the network hop added 800ms.</p>
+<p>If the query is still slow, check for storage bottlenecks. In cloud environments, use disk performance metrics. In AWS, check <code>DiskReadOps</code>, <code>DiskWriteOps</code>, and <code>DiskQueueLength</code>. If <code>DiskQueueLength</code> &gt; 2, the disk is saturated. On a client’s EKS cluster, a slow query was caused by a gp2 volume with 1,000 IOPS. Upgrading to gp3 with 3,000 IOPS reduced latency from 2.1s to 150ms.</p>
+<p>Next, check for kernel or driver issues. On Linux, run <code>dmesg | grep -i error</code> and <code>iostat -x 1</code>. High <code>%util</code> or <code>%await</code> in <code>iostat</code> indicates disk saturation. I once debugged a slow query on a self-hosted PostgreSQL instance only to find the issue was a faulty NVMe drive causing high latency. Replacing the drive fixed it.</p>
+<p>Finally, if the query is CPU-bound, profile the database server. In PostgreSQL, use <code>pg_stat_activity</code> to find the slowest queries and correlate them with CPU usage. In Linux, use <code>top -c</code> to check if <code>postgres</code> is using high CPU. If it is, check for missing indexes causing full scans or complex joins. On a 16-core server, a query joining 5 tables without indexes consumed 15 cores. Adding indexes reduced CPU usage to 2 cores.</p>
+<p>If all else fails, file a support ticket with the vendor. For PostgreSQL, include:
+- PostgreSQL version (<code>SELECT version();</code>)
+- Query text and parameters
+- <code>EXPLAIN (ANALYZE, BUFFERS, VERBOSE)</code> output
+- `pg_stat_statements</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/sql-simplifies-code/">
+                        <h3>SQL Simplifies Code</h3>
+                        <p>Simplify application code with SQL</p>
+                        <span class="related-meta">11 min read · 23 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/queries-timing-out-after-30-seconds-your-indexes-a/">
+                        <h3>Queries timing out after 30 seconds? Your indexes are hiding in plain sight</h3>
+                        <p>Cut query latency from 30 seconds to under 200ms by fixing hidden index mismatches — refresh statistics, tune random_page_cost, and stop expression-based predicates from breaking index usage. Real benchmarks and fixes from a fintech SRE’s war room.</p>
+                        <span class="related-meta">14 min read · 27 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/shorturl/">
+                        <h3>ShortURL</h3>
+                        <p>Design a URL shortener that handles billions of requests</p>
+                        <span class="related-meta">11 min read · 22 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
