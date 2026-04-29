@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 08:16:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 10:48:19 +0000</lastBuildDate>
+    <item>
+      <title>How Twilio and Stripe quietly print $3B a year with APIs you already use</title>
+      <link>https://kubaik.github.io/how-twilio-and-stripe-quietly-print-3b-a-year-with/</link>
+      <description>Twilio and Stripe print $3B+ a year with APIs you already use — cut your API cost to $0.00042 per message with real code, latency under 100ms, and the failure modes that crash systems when you copy-paste a tutorial without reading the fine print.</description>
+      <pubDate>Wed, 29 Apr 2026 10:48:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-twilio-and-stripe-quietly-print-3b-a-year-with/</guid>
+    </item>
     <item>
       <title>How Amazon’s One-Click Patent Changed E-Commerce Tech Forever</title>
       <link>https://kubaik.github.io/how-amazons-one-click-patent-changed-e-commerce-te/</link>
@@ -138,13 +145,6 @@
       <description>Freelance dev income jumped from $50k to $75k/year in 6 months by fixing late payments, publishing fixed-scope packages, and inserting maintenance upsells — real numbers and code snippets included.</description>
       <pubDate>Tue, 28 Apr 2026 07:13:42 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-dev-income-75kyr-from-20-hoursweek/</guid>
-    </item>
-    <item>
-      <title>Technical Debt: Static Analysis vs Runtime Profiling</title>
-      <link>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</link>
-      <description>Cut technical debt paydown time by 60% with combined static analysis and runtime profiling — SonarQube, Pyroscope, and the mistakes that cost $47K in a single incident.</description>
-      <pubDate>Tue, 28 Apr 2026 05:55:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/technical-debt-static-analysis-vs-runtime-profilin/</guid>
     </item>
   </channel>
 </rss>
