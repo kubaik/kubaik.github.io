@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 21:39:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 18:45:44 +0000</lastBuildDate>
+    <item>
+      <title>Caching Strategies That Actually Improve Performance: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/caching-strategies-that-actually-improve-performan/</link>
+      <description>Cut Caching Strategies That Actually Improve Performance failures by understanding connection pooling and retry logic — real benchmarks, common mistakes…</description>
+      <pubDate>Wed, 29 Apr 2026 18:45:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/caching-strategies-that-actually-improve-performan/</guid>
+    </item>
     <item>
       <title>How Indie Hackers Are Making $10K/Month: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/how-indie-hackers-are-making-10kmonth-a-practical-/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 database latency by 53% with the 12 must-have tools in 2026 — concrete benchmarks, setup times, and the mistakes that cost me weeks of debugging.</description>
       <pubDate>Tue, 28 Apr 2026 08:36:52 +0000</pubDate>
       <guid>https://kubaik.github.io/the-12-must-have-database-tools-in-2026-ranked/</guid>
-    </item>
-    <item>
-      <title>MLOps: Deploying AI Models Without Breaking Everything: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/mlops-deploying-ai-models-without-breaking-everyth/</link>
-      <description>Cut MLOps: Deploying AI Models Without Breaking Everything failures by understanding connection pooling and retry logic — real benchmarks, common mistak…</description>
-      <pubDate>Tue, 28 Apr 2026 08:15:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-deploying-ai-models-without-breaking-everyth/</guid>
     </item>
   </channel>
 </rss>
