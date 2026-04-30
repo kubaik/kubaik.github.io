@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 16:28:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 19:06:50 +0000</lastBuildDate>
+    <item>
+      <title>Tech Interview Red Flags vs Green Flags That Matter</title>
+      <link>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</link>
+      <description>Cut interview failure rates by 62% with modern hygiene vs 2018-style code. Learn the exact red flags that cost candidates jobs and the green flags that get offers — with benchmarks, cost data, and actionable fixes.</description>
+      <pubDate>Thu, 30 Apr 2026 19:06:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</guid>
+    </item>
     <item>
       <title>Why your team ignores your docs (and how to make them read it)</title>
       <link>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</link>
@@ -138,13 +145,6 @@
       <description>Cut Web Accessibility: The Laws and the Code failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step…</description>
       <pubDate>Tue, 28 Apr 2026 19:27:00 +0000</pubDate>
       <guid>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</guid>
-    </item>
-    <item>
-      <title>11 ways to stop corporations from harvesting your personal data (2026 ranked list)</title>
-      <link>https://kubaik.github.io/11-ways-to-stop-corporations-from-harvesting-your-/</link>
-      <description>Reduce tracking leakage from 1.2 MB to 0.02 MB with Brave, uBlock Origin, and Firefox containers—no enterprise tools required. Stop corporations from harvesting your personal data with practical, ranked tools for every budget.</description>
-      <pubDate>Tue, 28 Apr 2026 17:44:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/11-ways-to-stop-corporations-from-harvesting-your-/</guid>
     </item>
   </channel>
 </rss>
