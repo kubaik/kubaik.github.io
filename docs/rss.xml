@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 14:02:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 16:28:12 +0000</lastBuildDate>
+    <item>
+      <title>Why your team ignores your docs (and how to make them read it)</title>
+      <link>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</link>
+      <description>Cut repeated onboarding questions by 73% with ritual-focused docs, environment contracts, and lightweight telemetry. Includes Makefile snippets, regional caveats table, and a ‘docs health score’ dashboard you can copy today.</description>
+      <pubDate>Thu, 30 Apr 2026 16:28:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</guid>
+    </item>
     <item>
       <title>Developer Productivity: What Research Actually Shows (and Why Your Metrics Lie)</title>
       <link>https://kubaik.github.io/developer-productivity-what-research-actually-show/</link>
@@ -138,13 +145,6 @@
       <description>Reduce tracking leakage from 1.2 MB to 0.02 MB with Brave, uBlock Origin, and Firefox containers—no enterprise tools required. Stop corporations from harvesting your personal data with practical, ranked tools for every budget.</description>
       <pubDate>Tue, 28 Apr 2026 17:44:29 +0000</pubDate>
       <guid>https://kubaik.github.io/11-ways-to-stop-corporations-from-harvesting-your-/</guid>
-    </item>
-    <item>
-      <title>Automated Tools vs Manual Hacking: Real Attack Paths</title>
-      <link>https://kubaik.github.io/automated-tools-vs-manual-hacking-real-attack-path/</link>
-      <description>Cut incident response time by 70% with automated hacking defenses and save $55k/year vs manual teams — the real attack paths used in Nigeria, Kenya, and East Africa with concrete tools, costs, and benchmarks.</description>
-      <pubDate>Tue, 28 Apr 2026 16:14:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/automated-tools-vs-manual-hacking-real-attack-path/</guid>
     </item>
   </channel>
 </rss>
