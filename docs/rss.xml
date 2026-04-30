@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 09:13:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 10:48:33 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Data Processing at Scale: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</link>
+      <description>Cut Real-Time Data Processing at Scale failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by-st…</description>
+      <pubDate>Thu, 30 Apr 2026 10:48:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</guid>
+    </item>
     <item>
       <title>Redis at scale: How we cut cache misses by 63% and latency by 71%</title>
       <link>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 420ms to 18ms and memory from 2.1GB to 320MB by rewriting a Node.js app in Rust. Learn the real differences, gotchas, and tools that make Rust worth the switch for Python and JavaScript developers.</description>
       <pubDate>Tue, 28 Apr 2026 15:25:36 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-in-production-why-python-and-js-devs-are-swit/</guid>
-    </item>
-    <item>
-      <title>Python CPU profiling shows 95% idle—here’s why it’s lying</title>
-      <link>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</link>
-      <description>Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.</description>
-      <pubDate>Tue, 28 Apr 2026 13:36:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</guid>
     </item>
   </channel>
 </rss>

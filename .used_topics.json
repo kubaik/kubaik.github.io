@@ -137,5 +137,6 @@
   "Caching Strategies That Actually Improve Performance",
   "Database Query Optimization: Finding and Fixing Slow Queries",
   "Mobile Performance: Why Your App Feels Slow",
-  "Redis in Production: Patterns That Scale"
+  "Redis in Production: Patterns That Scale",
+  "Real-Time Data Processing at Scale"
 ]
