@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 07:22:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 09:13:13 +0000</lastBuildDate>
+    <item>
+      <title>Redis at scale: How we cut cache misses by 63% and latency by 71%</title>
+      <link>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</link>
+      <description>Cut Redis cache misses by 63% and P99 latency by 71% — LFU eviction, write-through, client tracking, and chaos testing for production clusters</description>
+      <pubDate>Thu, 30 Apr 2026 09:13:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</guid>
+    </item>
     <item>
       <title>Why your mobile app feels slow even when it shouldn&apos;t</title>
       <link>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</link>
@@ -138,13 +145,6 @@
       <description>Cut Python endpoint latency from 4.2s to 650ms by fixing connection pools, CPU serialization, and CPU throttling — with exact commands, benchmarks, and CI checks to prevent regressions.</description>
       <pubDate>Tue, 28 Apr 2026 13:36:05 +0000</pubDate>
       <guid>https://kubaik.github.io/python-cpu-profiling-shows-95-idleheres-why-its-ly/</guid>
-    </item>
-    <item>
-      <title>AI apps without machine learning knowledge finally explained</title>
-      <link>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</link>
-      <description>Ship AI features in under 1.2s latency and $15/month using cloud APIs and open models — prompt engineering, vector search, and cost tricks that pros use</description>
-      <pubDate>Tue, 28 Apr 2026 12:27:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</guid>
     </item>
   </channel>
 </rss>

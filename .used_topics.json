@@ -136,5 +136,6 @@
   "How Indie Hackers Are Making $10K/Month",
   "Caching Strategies That Actually Improve Performance",
   "Database Query Optimization: Finding and Fixing Slow Queries",
-  "Mobile Performance: Why Your App Feels Slow"
+  "Mobile Performance: Why Your App Feels Slow",
+  "Redis in Production: Patterns That Scale"
 ]
