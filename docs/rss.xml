@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2026 19:09:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 07:22:48 +0000</lastBuildDate>
+    <item>
+      <title>Why your mobile app feels slow even when it shouldn&apos;t</title>
+      <link>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</link>
+      <description>Cut cold-start by 49% and frame time by 32% with these fixes — mobile performance, real device profiling, and the mistakes that hide 200 ms stalls.</description>
+      <pubDate>Thu, 30 Apr 2026 07:22:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</guid>
+    </item>
     <item>
       <title>Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues</title>
       <link>https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/</link>
@@ -138,13 +145,6 @@
       <description>Ship AI features in under 1.2s latency and $15/month using cloud APIs and open models — prompt engineering, vector search, and cost tricks that pros use</description>
       <pubDate>Tue, 28 Apr 2026 12:27:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-apps-without-machine-learning-knowledge-finally/</guid>
-    </item>
-    <item>
-      <title>Ship a Mobile App That Stays on Phones for Years</title>
-      <link>https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/</link>
-      <description>Ship a Mobile App That Stays on Phones for Years — learn SQLite retries, background sync survival, and crash-free session rates under 1% with real device tests in Lagos, Bangalore, and São Paulo to cut user churn by 70% and keep apps alive after OS restarts and low memory kills.</description>
-      <pubDate>Tue, 28 Apr 2026 11:01:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/</guid>
     </item>
   </channel>
 </rss>
