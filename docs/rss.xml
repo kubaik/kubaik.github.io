@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:48:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 14:02:15 +0000</lastBuildDate>
+    <item>
+      <title>Developer Productivity: What Research Actually Shows (and Why Your Metrics Lie)</title>
+      <link>https://kubaik.github.io/developer-productivity-what-research-actually-show/</link>
+      <description>Developer productivity metrics lie 72% of the time — here’s the proof and how to measure what actually matters with concrete numbers and case studies from distributed teams.</description>
+      <pubDate>Thu, 30 Apr 2026 14:02:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/developer-productivity-what-research-actually-show/</guid>
+    </item>
     <item>
       <title>Real-Time Data Processing at Scale: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident response time by 70% with automated hacking defenses and save $55k/year vs manual teams — the real attack paths used in Nigeria, Kenya, and East Africa with concrete tools, costs, and benchmarks.</description>
       <pubDate>Tue, 28 Apr 2026 16:14:18 +0000</pubDate>
       <guid>https://kubaik.github.io/automated-tools-vs-manual-hacking-real-attack-path/</guid>
-    </item>
-    <item>
-      <title>Rust in Production: Why Python and JS Devs Are Switching Now</title>
-      <link>https://kubaik.github.io/rust-in-production-why-python-and-js-devs-are-swit/</link>
-      <description>Cut API latency from 420ms to 18ms and memory from 2.1GB to 320MB by rewriting a Node.js app in Rust. Learn the real differences, gotchas, and tools that make Rust worth the switch for Python and JavaScript developers.</description>
-      <pubDate>Tue, 28 Apr 2026 15:25:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-in-production-why-python-and-js-devs-are-swit/</guid>
     </item>
   </channel>
 </rss>
