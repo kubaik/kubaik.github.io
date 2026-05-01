@@ -144,5 +144,6 @@
   "Tech Interview Red Flags That Cost Candidates Jobs",
   "Infrastructure as Code with Terraform: The Real Guide",
   "AI Ethics: The Problems Big Tech Doesn't Want to Discuss",
-  "Message Queues: Kafka vs RabbitMQ vs SQS"
+  "Message Queues: Kafka vs RabbitMQ vs SQS",
+  "Data Warehouse vs Data Lake vs Lakehouse: Which One"
 ]
