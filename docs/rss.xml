@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 19:06:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 07:22:55 +0000</lastBuildDate>
+    <item>
+      <title>Terraform in 2024: 12 battle-tested setups ranked</title>
+      <link>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</link>
+      <description>Cut cloud bills 18% and plan time 74% with 12 Terraform modules tested on 3G in Nigeria, Ghana, and Kenya — CIDR math, IPv6 egress savings, and the modules that survive intermittent VPNs.</description>
+      <pubDate>Fri, 01 May 2026 07:22:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</guid>
+    </item>
     <item>
       <title>Tech Interview Red Flags vs Green Flags That Matter</title>
       <link>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</link>
@@ -138,13 +145,6 @@
       <description>IaC cuts deployment time by 62% and debugging time by 88% compared to manual scripts — and prevents 80% of drift-related outages. See how Terraform, Pulumi, and AWS CDK compare to Bash scripts for DevOps risk and ROI.</description>
       <pubDate>Tue, 28 Apr 2026 19:40:48 +0000</pubDate>
       <guid>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</guid>
-    </item>
-    <item>
-      <title>Web Accessibility: The Laws and the Code: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</link>
-      <description>Cut Web Accessibility: The Laws and the Code failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step…</description>
-      <pubDate>Tue, 28 Apr 2026 19:27:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-accessibility-the-laws-and-the-code-a-practica/</guid>
     </item>
   </channel>
 </rss>
