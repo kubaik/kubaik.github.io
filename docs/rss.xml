@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 May 2026 09:02:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 10:18:06 +0000</lastBuildDate>
+    <item>
+      <title>Choose a Message Queue in 30 Minutes: Kafka vs RabbitMQ vs SQS</title>
+      <link>https://kubaik.github.io/choose-a-message-queue-in-30-minutes-kafka-vs-rabb/</link>
+      <description>Cut message queue setup time by 80% with this step-by-step comparison of Kafka vs RabbitMQ vs SQS — real latency, RAM, and cost numbers from a 2024 MacBook Pro test run.</description>
+      <pubDate>Fri, 01 May 2026 10:18:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-a-message-queue-in-30-minutes-kafka-vs-rabb/</guid>
+    </item>
     <item>
       <title>AI Ethics is a PR Tour: The 7 Uncomfortable Truths</title>
       <link>https://kubaik.github.io/ai-ethics-is-a-pr-tour-the-7-uncomfortable-truths/</link>
@@ -138,13 +145,6 @@
       <description>Cut How Senior Developers Think Differently failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-…</description>
       <pubDate>Tue, 28 Apr 2026 22:53:02 +0000</pubDate>
       <guid>https://kubaik.github.io/how-senior-developers-think-differently-a-practica/</guid>
-    </item>
-    <item>
-      <title>AI Worsens Wealth Inequality: 3 Hidden Feedback Loops Explained</title>
-      <link>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</link>
-      <description>Discover how 3 AI feedback loops turn small advantages into massive wealth gaps — with code to break them. Stop extracting from the poor while claiming to democratize wealth.</description>
-      <pubDate>Tue, 28 Apr 2026 21:04:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</guid>
     </item>
   </channel>
 </rss>
