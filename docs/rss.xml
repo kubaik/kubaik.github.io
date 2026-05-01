@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 May 2026 13:24:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 16:04:39 +0000</lastBuildDate>
+    <item>
+      <title>VS Code Setup That Cuts Debug Sessions in Half</title>
+      <link>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</link>
+      <description>Cut debug session time by 58% with this VS Code setup — real numbers from Lagos and Berlin, extension list, and the SSH tunnel trick that saved 2+ minutes per session.</description>
+      <pubDate>Fri, 01 May 2026 16:04:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</guid>
+    </item>
     <item>
       <title>Data Warehouse vs Data Lake vs Lakehouse: Which One: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/data-warehouse-vs-data-lake-vs-lakehouse-which-one/</link>
@@ -138,13 +145,6 @@
       <description>Raised SaaS prices 15% and lost no customers — new customer ARPA jumped from $118 to $147, churn dropped from 11% to 4%, and infra costs fell from $18 to $14 per customer by grandfathering existing plans and adding a usage calculator. Pricing page redesign and narrative framing matter more than the number itself.</description>
       <pubDate>Wed, 29 Apr 2026 02:26:30 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-raised-saas-prices-15-and-lost-no-customers/</guid>
-    </item>
-    <item>
-      <title>My Node.js API leaks memory under 100 req/sec—here’s how I fixed it</title>
-      <link>https://kubaik.github.io/my-nodejs-api-leaks-memory-under-100-reqsecheres-h/</link>
-      <description>Cut Node.js API response time by 40% and eliminate heap OOM crashes under 100 req/sec — async middleware, object pooling, and Kubernetes memory limits that actually work</description>
-      <pubDate>Tue, 28 Apr 2026 23:51:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/my-nodejs-api-leaks-memory-under-100-reqsecheres-h/</guid>
     </item>
   </channel>
 </rss>
