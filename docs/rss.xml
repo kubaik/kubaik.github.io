@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 May 2026 07:22:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 09:02:50 +0000</lastBuildDate>
+    <item>
+      <title>AI Ethics is a PR Tour: The 7 Uncomfortable Truths</title>
+      <link>https://kubaik.github.io/ai-ethics-is-a-pr-tour-the-7-uncomfortable-truths/</link>
+      <description>Discover why 7 AI ethics failures happen in production, not the lab — with real examples, code, and trade-offs. Learn what Big Tech won’t tell you about bias, power, and the systems that amplify harm.</description>
+      <pubDate>Fri, 01 May 2026 09:02:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ethics-is-a-pr-tour-the-7-uncomfortable-truths/</guid>
+    </item>
     <item>
       <title>Terraform in 2024: 12 battle-tested setups ranked</title>
       <link>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</link>
@@ -138,13 +145,6 @@
       <description>Discover how 3 AI feedback loops turn small advantages into massive wealth gaps — with code to break them. Stop extracting from the poor while claiming to democratize wealth.</description>
       <pubDate>Tue, 28 Apr 2026 21:04:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-worsens-wealth-inequality-3-hidden-feedback-loo/</guid>
-    </item>
-    <item>
-      <title>Infrastructure as Code vs Manual Scripts: Outage Causes Compared</title>
-      <link>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</link>
-      <description>IaC cuts deployment time by 62% and debugging time by 88% compared to manual scripts — and prevents 80% of drift-related outages. See how Terraform, Pulumi, and AWS CDK compare to Bash scripts for DevOps risk and ROI.</description>
-      <pubDate>Tue, 28 Apr 2026 19:40:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/infrastructure-as-code-vs-manual-scripts-outage-ca/</guid>
     </item>
   </channel>
 </rss>
