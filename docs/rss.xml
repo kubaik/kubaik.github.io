@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 May 2026 16:04:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 18:57:17 +0000</lastBuildDate>
+    <item>
+      <title>Build a Content Algorithm Simulator in 60 Minutes</title>
+      <link>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</link>
+      <description>Simulate a social media algorithm in 60 minutes and increase reach by 70% — content algorithm simulator, platform weights, reach delta, 0.8s replay time for 10k posts</description>
+      <pubDate>Fri, 01 May 2026 18:57:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</guid>
+    </item>
     <item>
       <title>VS Code Setup That Cuts Debug Sessions in Half</title>
       <link>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</link>
@@ -138,13 +145,6 @@
       <description>Cut Building AI Agents That Actually Work failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by…</description>
       <pubDate>Wed, 29 Apr 2026 05:50:19 +0000</pubDate>
       <guid>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</guid>
-    </item>
-    <item>
-      <title>How we raised SaaS prices 15% and lost no customers</title>
-      <link>https://kubaik.github.io/how-we-raised-saas-prices-15-and-lost-no-customers/</link>
-      <description>Raised SaaS prices 15% and lost no customers — new customer ARPA jumped from $118 to $147, churn dropped from 11% to 4%, and infra costs fell from $18 to $14 per customer by grandfathering existing plans and adding a usage calculator. Pricing page redesign and narrative framing matter more than the number itself.</description>
-      <pubDate>Wed, 29 Apr 2026 02:26:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-raised-saas-prices-15-and-lost-no-customers/</guid>
     </item>
   </channel>
 </rss>
