@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 May 2026 09:55:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2026 13:18:05 +0000</lastBuildDate>
+    <item>
+      <title>How we survived a ransomware attack and lost only 3 hours</title>
+      <link>https://kubaik.github.io/how-we-survived-a-ransomware-attack-and-lost-only-/</link>
+      <description>Survived a ransomware attack with only 52 minutes of downtime and zero data loss — here’s the exact backup strategy, restore process, and tools that saved us $280,000 and 3000 customer invoices</description>
+      <pubDate>Sat, 02 May 2026 13:18:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-survived-a-ransomware-attack-and-lost-only-/</guid>
+    </item>
     <item>
       <title>How we turned a $24K loss into $186K profit by switching platform models</title>
       <link>https://kubaik.github.io/how-we-turned-a-24k-loss-into-186k-profit-by-switc/</link>
@@ -138,13 +145,6 @@
       <description>Cut cycle time from 18 days to 5 days and reduced production incidents by 75% by replacing Agile theatre with outcome-driven delivery. Learn how we moved from sprints and standups to asynchronous updates and pre-mortems while saving $120k in six months.</description>
       <pubDate>Wed, 29 Apr 2026 16:50:33 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-isnt-a-meeting-schedule-heres-what-we-cut-in/</guid>
-    </item>
-    <item>
-      <title>Free AI tools fail on real files (and what actually works)</title>
-      <link>https://kubaik.github.io/free-ai-tools-fail-on-real-files-and-what-actually/</link>
-      <description>ge for 15–20% of the files. One tool even c with AI Tools — a free AI summarizer and it returns a blank page or.</description>
-      <pubDate>Wed, 29 Apr 2026 14:03:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/free-ai-tools-fail-on-real-files-and-what-actually/</guid>
     </item>
   </channel>
 </rss>
