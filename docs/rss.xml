@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 May 2026 06:55:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2026 08:22:53 +0000</lastBuildDate>
+    <item>
+      <title>The Open Source Business Models That Work: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/the-open-source-business-models-that-work-a-practi/</link>
+      <description>Cut The Open Source Business Models That Work failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a ste…</description>
+      <pubDate>Sat, 02 May 2026 08:22:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-open-source-business-models-that-work-a-practi/</guid>
+    </item>
     <item>
       <title>How lazy loading cut our page load time by 58% under 3G</title>
       <link>https://kubaik.github.io/how-lazy-loading-cut-our-page-load-time-by-58-unde/</link>
@@ -138,13 +145,6 @@
       <description>Twilio and Stripe print $3B+ a year with APIs you already use — cut your API cost to $0.00042 per message with real code, latency under 100ms, and the failure modes that crash systems when you copy-paste a tutorial without reading the fine print.</description>
       <pubDate>Wed, 29 Apr 2026 10:48:14 +0000</pubDate>
       <guid>https://kubaik.github.io/how-twilio-and-stripe-quietly-print-3b-a-year-with/</guid>
-    </item>
-    <item>
-      <title>How Amazon’s One-Click Patent Changed E-Commerce Tech Forever</title>
-      <link>https://kubaik.github.io/how-amazons-one-click-patent-changed-e-commerce-te/</link>
-      <description>with a 0.0013% oversell rate—mostly due to r with Amazon One-Click Patent Changed — a saved address.</description>
-      <pubDate>Wed, 29 Apr 2026 08:16:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-amazons-one-click-patent-changed-e-commerce-te/</guid>
     </item>
   </channel>
 </rss>
