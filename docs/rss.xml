@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 May 2026 15:57:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2026 18:43:40 +0000</lastBuildDate>
+    <item>
+      <title>Why &apos;command not found&apos; still appears after installing a CLI tool (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-command-not-found-still-appears-after-installi/</link>
+      <description>Cut debugging time by 70% with these command-line tool fixes — command not found, shell hash cache, and PATH issues demystified with exact commands and benchmarks.</description>
+      <pubDate>Sat, 02 May 2026 18:43:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-command-not-found-still-appears-after-installi/</guid>
+    </item>
     <item>
       <title>The 10-hour AI workflow that actually works</title>
       <link>https://kubaik.github.io/the-10-hour-ai-workflow-that-actually-works/</link>
@@ -138,13 +145,6 @@
       <description>Cut Caching Strategies That Actually Improve Performance failures by understanding connection pooling and retry logic — real benchmarks, common mistakes…</description>
       <pubDate>Wed, 29 Apr 2026 18:45:40 +0000</pubDate>
       <guid>https://kubaik.github.io/caching-strategies-that-actually-improve-performan/</guid>
-    </item>
-    <item>
-      <title>How Indie Hackers Are Making $10K/Month: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/how-indie-hackers-are-making-10kmonth-a-practical-/</link>
-      <description>Cut How Indie Hackers Are Making $10K/Month failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-…</description>
-      <pubDate>Wed, 29 Apr 2026 18:36:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-indie-hackers-are-making-10kmonth-a-practical-/</guid>
     </item>
   </channel>
 </rss>
