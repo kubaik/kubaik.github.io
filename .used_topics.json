@@ -147,5 +147,6 @@
   "Message Queues: Kafka vs RabbitMQ vs SQS",
   "Data Warehouse vs Data Lake vs Lakehouse: Which One",
   "VS Code Setup That Makes You 2x Faster",
-  "How Social Media Algorithms Work (And How to Beat Them)"
+  "How Social Media Algorithms Work (And How to Beat Them)",
+  "Lazy Loading and Code Splitting in Practice"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 May 2026 18:57:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2026 06:55:16 +0000</lastBuildDate>
+    <item>
+      <title>How lazy loading cut our page load time by 58% under 3G</title>
+      <link>https://kubaik.github.io/how-lazy-loading-cut-our-page-load-time-by-58-unde/</link>
+      <description>Cut page load time by 58% under 3G with route-level lazy loading and code splitting — real numbers, real devices, and the mistakes that broke first loads.</description>
+      <pubDate>Sat, 02 May 2026 06:55:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-lazy-loading-cut-our-page-load-time-by-58-unde/</guid>
+    </item>
     <item>
       <title>Build a Content Algorithm Simulator in 60 Minutes</title>
       <link>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</link>
@@ -138,13 +145,6 @@
       <description>with a 0.0013% oversell rate—mostly due to r with Amazon One-Click Patent Changed — a saved address.</description>
       <pubDate>Wed, 29 Apr 2026 08:16:45 +0000</pubDate>
       <guid>https://kubaik.github.io/how-amazons-one-click-patent-changed-e-commerce-te/</guid>
-    </item>
-    <item>
-      <title>Building AI Agents That Actually Work: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</link>
-      <description>Cut Building AI Agents That Actually Work failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by…</description>
-      <pubDate>Wed, 29 Apr 2026 05:50:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/building-ai-agents-that-actually-work-a-practical-/</guid>
     </item>
   </channel>
 </rss>
