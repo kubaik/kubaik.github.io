@@ -1,0 +1,221 @@
+# How we turned a $24K loss into $186K profit by switching platform models
+
+This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.
+
+## The situation (what we were trying to solve)
+
+In early 2023, our Lagos-based fintech startup, PayWise, built a two-sided marketplace connecting gig workers with quick micro-loans. We charged borrowers 12% APR and lenders 6% APR, taking a 3% transaction fee on each loan. By Q3 2023, we had 12,000 active users and processed 8,400 loans totaling $1.2M in disbursements. Yet our monthly burn was $24,000 because we were paying out $9,000 in loan defaults, $7,000 in compliance costs, and $8,000 in engineering salaries for a monolithic Rails API that handled everything from KYC to repayments. Our unit economics were upside down: we lost $2.87 on every $100 lent.
+
+The problem wasn’t the interest spread—it was the platform model. We were acting as both a marketplace and a financial intermediary, which meant we bore 100% of the credit risk and 100% of the compliance risk. Meanwhile, our lenders were earning a risk-free 6% because we guaranteed repayments. We were the dumb pipe, not the smart platform.
+
+I joined as the first hire after the seed round. My first task was to model unit economics. I built a spreadsheet that pulled in 12 weeks of loan performance data. The numbers were brutal: 18% default rate on loans >$200, 8% on loans <$200. Our average loan size was $143. The model showed we’d need to cut defaults to 6% to break even at our current fee structure. We couldn’t cut costs further; we’d already moved engineering to Nigeria to save 40% on salaries and used DigitalOcean droplets for $20/month instead of AWS at $200/month. The constraint wasn’t money—it was the model itself.
+
+The key takeaway here is that platform models fail when the platform bears too much risk without capturing enough value from the sides. We needed a model where risk and reward were distributed, not centralized.
+
+
+## What we tried first and why it didn’t work
+
+Our first attempt was to offload credit risk to a third-party insurer. We partnered with Leadway Assurance, a Nigerian insurer, to offer credit default swap policies at 2.5% of loan value. We assumed this would cover defaults and let us keep our 3% fee. We rolled it out to 500 loans in the pilot. Within two weeks, Leadway flagged 87 loans as "high risk" and refused coverage. These were exactly the loans our borrowers needed most—$150–$300 for 30-day terms. Approval rates dropped from 68% to 42% overnight. Our gross revenue fell by $18,000/month, and we still had defaults on the uncovered loans.
+
+Next, we tried dynamic pricing. We built a simple rule engine in Python using pandas that adjusted interest rates based on borrower risk scores. We set a floor of 12% and a ceiling of 24%. We launched it to 1,200 users. The result? APRs jumped from 12% to 18% for 60% of borrowers. Repayment rates dropped from 82% to 65%. Our behavioral data showed borrowers were gaming the system—applying for loans they didn’t need just to test the ceiling. We’d optimized for revenue, not repayment.
+
+Finally, we tried a hybrid model: act as a marketplace for lenders but retain 20% of each loan on our balance sheet for skin in the game. We built a new ledger service in Go that tracked fractional ownership of loans. The idea was to align incentives. After three months, we discovered lenders were cherry-picking only the safest loans (credit scores >700), leaving us with 80% of the risky loans. Our default rate stayed at 17%. We’d solved nothing; we’d just shifted risk around.
+
+The key takeaway here is that risk distribution without proper guardrails creates worse outcomes than centralizing risk. We learned that models must account for behavioral responses, not just financial ones.
+
+*Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a>*
+
+
+
+## The approach that worked
+
+After the hybrid failure, I spent a week reading platform economics papers and interviewing 12 lenders. The common thread: lenders didn’t want risk—they wanted predictability. They were willing to pay for it, but not at the cost of their capital. Meanwhile, borrowers needed access to capital but couldn’t prove creditworthiness with thin files.
+
+The insight was to unbundle the platform into two distinct roles: the marketplace and the balance sheet. We created a new entity, LendTrust Limited, a wholly-owned subsidiary that would buy loans from PayWise and hold them on its books. This separated the marketplace (PayWise) from the balance sheet (LendTrust). We charged PayWise a 1.5% service fee for loan acquisition and another 1.5% for risk management. LendTrust’s job was to price risk accurately and hold capital, not to source borrowers.
+
+We built a real-time risk engine in Rust using Apache Kafka for event streaming. The engine consumed borrower events (application, KYC, repayment history) and output a PD (Probability of Default) score every second. We trained the model on 24 months of historical loan data and external bureau data from CRC Credit Bureau. The model used 15 features: age, income bracket, phone metadata, social graph density, repayment recency, and 10 bureau-derived scores. We deployed it as a gRPC service with protobuf schemas for low-latency scoring (<50ms p99).
+
+We also introduced a skin-in-the-game mechanism: LendTrust retained 5% of each loan’s principal as a loss reserve. This created a buffer for the first 30 days of defaults. If defaults exceeded 5%, LendTrust absorbed the loss; below 5%, the excess went to PayWise as a bonus pool. This aligned incentives without shifting all risk to borrowers.
+
+The key takeaway here is that platform models work when roles are clearly separated and incentives are aligned through shared risk, not just shared revenue.
+
+
+## Implementation details
+
+We rebuilt our stack from a single Rails monolith to a distributed system with four core services:
+
+1. **Frontend**: React SPA hosted on Cloudflare Pages with edge caching. We reduced load times from 2.8s to 800ms by pre-rendering static pages and using Cloudflare Workers for dynamic content.
+2. **Loan Origination**: Go microservice that handles applications, KYC, and disbursement. We used PostgreSQL with pg_partman for time-series partitioning on loan tables. Each partition held 3 months of data; we archived older loans to S3 via TimescaleDB’s continuous aggregates. This cut query times on loan history from 450ms to 32ms.
+3. **Risk Engine**: Rust service using Actix-web and Tokio for async I/O. The model was a gradient-boosted tree (XGBoost) with 200 estimators, trained on 4.2M rows. We quantized the model to 8-bit integers for 4x faster inference. We used Prometheus for metrics and Grafana for dashboards. The engine scored 120 applications/second with 99.9% uptime.
+4. **Balance Sheet**: Go service with a custom double-entry accounting engine. We used CockroachDB for multi-region consistency (we have users in Lagos, Accra, Nairobi) and eventual consistency for ledger snapshots. We implemented a write-ahead log to handle partial failures during disbursement.
+
+We deployed using Kubernetes on DigitalOcean Managed Kubernetes (DOKS) with 3 nodes (2 vCPUs, 4GB RAM each). We used ArgoCD for GitOps and Flux for image promotion. Our CI pipeline ran 1,200 unit tests and 80 integration tests per commit, taking 8 minutes on average. We set up feature flags using LaunchDarkly to control rollout speed. Our first canary release covered 5% of traffic; we monitored for 48 hours before full deployment.
+
+Here’s a snippet of the risk engine’s scoring logic in Rust:
+
+```rust
+use rust_decimal::Decimal;
+use xgboost::Booster;
+
+#[derive(Debug, Clone)]
+pub struct LoanApplication {
+    pub age: u8,
+    pub income_bracket: u8,       // 1–5 scale
+    pub bureau_score: u16,        // 300–850
+    pub phone_metadata: f32,      // social graph density
+    pub repayment_recency: i32,   // days since last repayment
+    pub loan_amount: Decimal,
+}
+
+pub fn score_application(app: &LoanApplication) -> f32 {
+    let features = vec![
+        app.age as f32,
+        app.income_bracket as f32,
+        app.bureau_score as f32,
+        app.phone_metadata,
+        app.repayment_recency as f32,
+        app.loan_amount.to_f32().unwrap(),
+    ];
+    
+    let booster = Booster::load("model.xgb")
+        .expect("Failed to load model");
+    
+    booster.predict_single(&features)
+        .expect("Prediction failed")
+}
+```
+
+
+We also built a reconciliation service in Python that ran daily batch jobs to reconcile PayWise’s marketplace revenue with LendTrust’s loan performance. The service used pandas for data alignment and sent Slack alerts on any mismatch >$100. Here’s a snippet:
+
+*Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a>*
+
+
+```python
+import pandas as pd
+from datetime import date
+
+def reconcile_loans(date_str: str) -> pd.DataFrame:
+    paywise = pd.read_parquet(f"gs://paywise/{date_str}/loans.parquet")
+    lendtrust = pd.read_parquet(f"gs://lendtrust/{date_str}/loans.parquet")
+    
+    merged = paywise.merge(
+        lendtrust,
+        on="loan_id",
+        how="outer",
+        indicator=True
+    )
+    
+    mismatches = merged[merged["_merge"] != "both"]
+    if not mismatches.empty:
+        total = mismatches["amount"].sum()
+        print(f"Mismatch of ${total:.2f} on {date_str}")
+    
+    return mismatches
+```
+
+
+The key takeaway here is that platform models require robust infrastructure for real-time scoring, accounting, and reconciliation. The stack must be distributed, observable, and resilient to partial failures.
+
+
+## Results — the numbers before and after
+
+The switch to the marketplace + balance sheet model went live on March 15, 2024. By July 31, 2024, we had processed 15,200 loans totaling $2.1M in disbursements. Here are the hard numbers:
+
+| Metric | Before (Aug 2023) | After (Jul 2024) | Change |
+|--------|------------------|------------------|--------|
+| Gross Revenue | $36,000/mo | $92,000/mo | +156% |
+| Net Revenue | -$24,000/mo | $73,000/mo | +404% |
+| Default Rate | 18% | 6.2% | -66% |
+| Approval Rate | 68% | 74% | +9% |
+| Cost per Loan | $42 | $18 | -57% |
+| Engineering Cost | $8,000/mo | $6,200/mo | -23% |
+
+Our unit economics flipped: we now earn $3.47 on every $100 lent, up from losing $2.87. The biggest surprise was the approval rate increase despite stricter risk controls. I expected approvals to drop when we raised the bar, but borrowers who were previously rejected at 68% approval now got loans at 74% because LendTrust priced risk more accurately than our initial flat-rate model. The 30-day rolling default rate stabilized at 6.2%, which matched our model’s 90% confidence interval. We only had two days where defaults spiked above 8%, both due to a regional internet outage in Nairobi that delayed repayments by 48 hours.
+
+We also reduced engineering costs by 23% by moving to a distributed stack. Our Rails monolith had 42,000 lines of code; the new system has 18,000 lines across four services. The Go services alone saved 30% on memory usage compared to Rails, cutting our cloud bill from $8,000 to $6,200/month even as traffic doubled.
+
+The key takeaway here is that platform models can turn unprofitable markets into profitable ones by separating roles and aligning incentives through shared risk and revenue.
+
+
+## What we’d do differently
+
+If we rebuilt this today, we’d make three changes:
+
+1. **Start with the balance sheet first.** We assumed the marketplace could exist independently, but the balance sheet (LendTrust) is the core asset. We should have built the risk engine and capital structure before launching the marketplace. Our early pilots failed because the marketplace had no capital to back its promises.
+
+2. **Use a simpler risk model upfront.** Our XGBoost model with 15 features took 6 weeks to tune. A logistic regression with 5 bureau-derived features would have worked just as well for the first 6 months. We overfit to the data we had, not the data we needed. The model’s AUC dropped from 0.89 to 0.82 when we tested it on out-of-time data (loans issued after June 2024).
+
+3. **Avoid Kafka for early-stage startups.** Kafka is powerful but overkill for 120 events/second. We spent 4 weeks debugging consumer lag and ZooKeeper timeouts. Redis Streams or NATS would have sufficed and been easier to operate. Our latency p99 for loan applications dropped from 180ms to 45ms when we switched from Kafka to NATS in May 2024.
+
+We also underestimated the compliance overhead. LendTrust needed to register with the Central Bank of Nigeria as a non-bank financial institution, which took 6 months and cost $12,000 in legal fees. We should have engaged regulators earlier—our first compliance officer joined in month 4, not month 1.
+
+The key takeaway here is that platform models require discipline in timing: build the core (balance sheet) before the edges (marketplace), and avoid over-engineering risk systems early on.
+
+
+## The broader lesson
+
+The mistake we made at PayWise was believing the platform was the marketplace. A platform is only as strong as its weakest role. In our case, the weak role was the balance sheet—it bore all the risk without capturing enough reward. The lesson is that platform models succeed when they unbundle risk and reward into distinct roles and then recombine them through clear contracts.
+
+This isn’t just true for fintech. In logistics, the platform isn’t the app that matches drivers to loads; it’s the insurance fund that covers cargo damage. In e-commerce, the platform isn’t the storefront; it’s the fulfillment center that guarantees delivery times. The platform is the mechanism that distributes risk, not the interface that displays it.
+
+The principle is simple: if your platform model centralizes risk without centralizing reward, it will fail. If it distributes both risk and reward, it will scale. The key is to design the incentives first, then build the technology around them.
+
+
+## How to apply this to your situation
+
+Start by asking three questions:
+
+1. **Who bears the risk today?** If it’s your platform, unbundle it. Create a separate entity or role that specializes in risk-bearing. This could be a subsidiary, a fund, or a guarantee pool.
+2. **How is reward distributed?** If rewards are concentrated at the top (your platform), design a mechanism to share them with the sides. This could be a bonus pool, a revenue share, or a performance fee.
+3. **What’s the smallest experiment you can run?** Don’t rebuild the stack immediately. Start with a paper model: write the contracts between roles, simulate the cash flows, and test the behavioral responses. Only then should you build.
+
+Here’s a checklist to run your experiment:
+
+- **Define the roles**: Marketplace, Balance Sheet, Risk Manager, Compliance Officer.
+- **Write the contracts**: How much revenue goes to each role? Who absorbs losses?
+- **Model the cash flows**: Build a 12-month P&L in a spreadsheet. Include scenarios for 5%, 10%, and 15% default rates.
+- **Test the behavioral response**: Run a pilot with 100 users. Measure approval rates, default rates, and lender satisfaction.
+- **Iterate on incentives**: Adjust the contracts based on pilot results. Double down on what works; kill what doesn’t.
+
+If you’re in logistics, your balance sheet role might be a cargo insurance fund. If you’re in e-commerce, it might be a fulfillment guarantee pool. The mechanism is the same: unbundle risk, align incentives, and recombine.
+
+The key takeaway here is that platform models are incentive machines. Design the incentives first, then build the technology around them.
+
+
+## Resources that helped
+
+- *Matching Markets* by Alvin Roth — The bible for two-sided markets. We referenced Chapter 4 on "repugnant markets" when designing our risk-sharing mechanism.
+- *Platform Revolution* by Geoffrey Parker, Marshall Van Alstyne, and Sangeet Choudary — Chapter 7 on "designing the platform’s core interaction" helped us separate marketplace from balance sheet.
+- *Designing Data-Intensive Applications* by Martin Kleppmann — Chapter 11 on "stream processing" convinced us to switch from Kafka to NATS for our event pipeline.
+- *Credit Risk Scorecards* by Naeem Siddiqi — The only book that gave us a practical framework for building a PD model with sparse data. We used its logistic regression templates for our first model.
+- [XGBoost documentation](https://xgboost.readthedocs.io/) — Our Rust bindings used the official C API. The quantization guide saved us 4x inference time.
+- [CockroachDB Docs](https://www.cockroachlabs.com/docs/) — The multi-region consistency guide helped us handle partial failures during disbursement.
+- [LaunchDarkly Docs](https://docs.launchdarkly.com/) — The feature flag best practices reduced our rollout risk to 5% of users.
+
+
+## Frequently Asked Questions
+
+**How do I know if my platform model is centralized?**
+
+Look at your P&L. If more than 50% of your costs and risks are concentrated in a single line item (e.g., loan defaults, chargebacks, compliance fines), your model is centralized. In our case, 87% of costs were in defaults and compliance. The fix is to unbundle that line item into a separate role or entity.
+
+
+**What’s the smallest viable balance sheet for a platform?**
+
+Start with 3 months of operating expenses. For PayWise, that was $72,000. We funded it with a $100,000 convertible note from our seed investors. The key is to have enough capital to cover the first wave of defaults without killing the marketplace. If you can’t raise 3x your monthly burn, your model isn’t viable.
+
+
+**Why not just use a third-party insurer like we first tried?**
+
+Insurers optimize for their own risk, not yours. They’ll refuse to cover the loans your borrowers need most. A platform’s balance sheet should be designed for the market it serves, not the insurer’s risk appetite. In our case, Leadway capped coverage at $100 loans, which excluded 60% of our pipeline.
+
+
+**How do I prevent lenders from cherry-picking only the safest loans?**
+
+Use a rotation mechanism. At PayWise, we implemented a "loan lottery" where lenders are randomly assigned to loans in their risk tier. This forces them to take on some risk they didn’t choose. We saw cherry-picking drop from 45% to 12% after introducing the lottery.
+
+
+## Next step
+
+Set a 30-day deadline to model your platform’s risk and reward in a spreadsheet. Use the checklist above. If your model shows a path to profitability, commit to a 100-user pilot in the next quarter. If not, redesign the incentives before you build anything.
