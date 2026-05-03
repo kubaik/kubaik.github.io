@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 08:48:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 10:00:46 +0000</lastBuildDate>
+    <item>
+      <title>How we replaced $8k/month in SaaS with free AI tools — and saved 300 hours</title>
+      <link>https://kubaik.github.io/how-we-replaced-8kmonth-in-saas-with-free-ai-tools/</link>
+      <description>Cut monthly SaaS spend from $8,240 to $197 using free AI tools — and saved 300 engineering hours. See the exact prompts, budgets, and latency drops that made it work.</description>
+      <pubDate>Sun, 03 May 2026 10:00:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-we-replaced-8kmonth-in-saas-with-free-ai-tools/</guid>
+    </item>
     <item>
       <title>These 5 Skills Will Make You Obsolete by 2030</title>
       <link>https://kubaik.github.io/these-5-skills-will-make-you-obsolete-by-2030/</link>
@@ -138,13 +145,6 @@
       <description>Cut Redis cache misses by 63% and P99 latency by 71% — LFU eviction, write-through, client tracking, and chaos testing for production clusters</description>
       <pubDate>Thu, 30 Apr 2026 09:13:09 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</guid>
-    </item>
-    <item>
-      <title>Why your mobile app feels slow even when it shouldn&apos;t</title>
-      <link>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</link>
-      <description>Cut cold-start by 49% and frame time by 32% with these fixes — mobile performance, real device profiling, and the mistakes that hide 200 ms stalls.</description>
-      <pubDate>Thu, 30 Apr 2026 07:22:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</guid>
     </item>
   </channel>
 </rss>
