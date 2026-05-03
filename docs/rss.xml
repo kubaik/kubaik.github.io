@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 17:30:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 18:43:40 +0000</lastBuildDate>
+    <item>
+      <title>Apache Airflow vs Prefect: Building Resilient Data Pipelines</title>
+      <link>https://kubaik.github.io/apache-airflow-vs-prefect-building-resilient-data-/</link>
+      <description>Cut task latency by 90% with Prefect or scale to 200+ steps with Apache Airflow. Build reliable pipelines for mobile-first, intermittent connections.</description>
+      <pubDate>Sun, 03 May 2026 18:43:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/apache-airflow-vs-prefect-building-resilient-data-/</guid>
+    </item>
     <item>
       <title>Why BI Tools Fail Engineers (and How to Fix It)</title>
       <link>https://kubaik.github.io/why-bi-tools-fail-engineers-and-how-to-fix-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview failure rates by 62% with modern hygiene vs 2018-style code. Learn the exact red flags that cost candidates jobs and the green flags that get offers — with benchmarks, cost data, and actionable fixes.</description>
       <pubDate>Thu, 30 Apr 2026 19:06:45 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</guid>
-    </item>
-    <item>
-      <title>Why your team ignores your docs (and how to make them read it)</title>
-      <link>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</link>
-      <description>Cut repeated onboarding questions by 73% with ritual-focused docs, environment contracts, and lightweight telemetry. Includes Makefile snippets, regional caveats table, and a ‘docs health score’ dashboard you can copy today.</description>
-      <pubDate>Thu, 30 Apr 2026 16:28:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</guid>
     </item>
   </channel>
 </rss>
