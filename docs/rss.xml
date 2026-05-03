@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 07:14:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 08:48:05 +0000</lastBuildDate>
+    <item>
+      <title>These 5 Skills Will Make You Obsolete by 2030</title>
+      <link>https://kubaik.github.io/these-5-skills-will-make-you-obsolete-by-2030/</link>
+      <description>Avoid learning skills that will be worthless in 5 years — pick industry-specific problems instead. Learn how to future-proof your career with domain expertise, not framework deep dives.</description>
+      <pubDate>Sun, 03 May 2026 08:48:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/these-5-skills-will-make-you-obsolete-by-2030/</guid>
+    </item>
     <item>
       <title>Your database is too big — split it now or regret it later</title>
       <link>https://kubaik.github.io/your-database-is-too-big-split-it-now-or-regret-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut cold-start by 49% and frame time by 32% with these fixes — mobile performance, real device profiling, and the mistakes that hide 200 ms stalls.</description>
       <pubDate>Thu, 30 Apr 2026 07:22:44 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</guid>
-    </item>
-    <item>
-      <title>Slow SQL Queries Explained: Identifying and Fixing 80% of Performance Issues</title>
-      <link>https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/</link>
-      <description>SQL Optimization: but shows 95% memory free. You’ve hit the c. Practical guide with real examples.</description>
-      <pubDate>Wed, 29 Apr 2026 19:09:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/slow-sql-queries-explained-identifying-and-fixing-/</guid>
     </item>
   </channel>
 </rss>
