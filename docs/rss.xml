@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 10:00:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 13:16:34 +0000</lastBuildDate>
+    <item>
+      <title>Evidently vs Arize: AI drift detection in production</title>
+      <link>https://kubaik.github.io/evidently-vs-arize-ai-drift-detection-in-productio/</link>
+      <description>Evidently flags drift in 180ms vs Arize’s 420ms and costs $936/year vs $30k for Arize — choose Evidently for CI/CD integration and cost control, Arize for managed SLAs and low false positives.</description>
+      <pubDate>Sun, 03 May 2026 13:16:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/evidently-vs-arize-ai-drift-detection-in-productio/</guid>
+    </item>
     <item>
       <title>How we replaced $8k/month in SaaS with free AI tools — and saved 300 hours</title>
       <link>https://kubaik.github.io/how-we-replaced-8kmonth-in-saas-with-free-ai-tools/</link>
@@ -138,13 +145,6 @@
       <description>Cut Real-Time Data Processing at Scale failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by-st…</description>
       <pubDate>Thu, 30 Apr 2026 10:48:28 +0000</pubDate>
       <guid>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</guid>
-    </item>
-    <item>
-      <title>Redis at scale: How we cut cache misses by 63% and latency by 71%</title>
-      <link>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</link>
-      <description>Cut Redis cache misses by 63% and P99 latency by 71% — LFU eviction, write-through, client tracking, and chaos testing for production clusters</description>
-      <pubDate>Thu, 30 Apr 2026 09:13:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</guid>
     </item>
   </channel>
 </rss>
