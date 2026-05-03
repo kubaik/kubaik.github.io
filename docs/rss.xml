@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 13:16:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 15:57:24 +0000</lastBuildDate>
+    <item>
+      <title>Memory leaks finally explained — and how to spot them in minutes</title>
+      <link>https://kubaik.github.io/memory-leaks-finally-explained-and-how-to-spot-the/</link>
+      <description>Cut app crashes and slowdowns by measuring memory leaks in minutes with RSS, heap snapshots, and gc stats — real examples from Node, Python, Java, and Go with code and cost savings.</description>
+      <pubDate>Sun, 03 May 2026 15:57:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/memory-leaks-finally-explained-and-how-to-spot-the/</guid>
+    </item>
     <item>
       <title>Evidently vs Arize: AI drift detection in production</title>
       <link>https://kubaik.github.io/evidently-vs-arize-ai-drift-detection-in-productio/</link>
@@ -138,13 +145,6 @@
       <description>Developer productivity metrics lie 72% of the time — here’s the proof and how to measure what actually matters with concrete numbers and case studies from distributed teams.</description>
       <pubDate>Thu, 30 Apr 2026 14:02:10 +0000</pubDate>
       <guid>https://kubaik.github.io/developer-productivity-what-research-actually-show/</guid>
-    </item>
-    <item>
-      <title>Real-Time Data Processing at Scale: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</link>
-      <description>Cut Real-Time Data Processing at Scale failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a step-by-st…</description>
-      <pubDate>Thu, 30 Apr 2026 10:48:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-data-processing-at-scale-a-practical-tec/</guid>
     </item>
   </channel>
 </rss>
