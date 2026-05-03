@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 15:57:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 17:30:31 +0000</lastBuildDate>
+    <item>
+      <title>Why BI Tools Fail Engineers (and How to Fix It)</title>
+      <link>https://kubaik.github.io/why-bi-tools-fail-engineers-and-how-to-fix-it/</link>
+      <description>Boost engineering efficiency by 5x with BI tools. Learn how to optimize queries, prevent failures, and pick the right tool for clean, actionable insights.</description>
+      <pubDate>Sun, 03 May 2026 17:30:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-bi-tools-fail-engineers-and-how-to-fix-it/</guid>
+    </item>
     <item>
       <title>Memory leaks finally explained — and how to spot them in minutes</title>
       <link>https://kubaik.github.io/memory-leaks-finally-explained-and-how-to-spot-the/</link>
@@ -138,13 +145,6 @@
       <description>Cut repeated onboarding questions by 73% with ritual-focused docs, environment contracts, and lightweight telemetry. Includes Makefile snippets, regional caveats table, and a ‘docs health score’ dashboard you can copy today.</description>
       <pubDate>Thu, 30 Apr 2026 16:28:07 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</guid>
-    </item>
-    <item>
-      <title>Developer Productivity: What Research Actually Shows (and Why Your Metrics Lie)</title>
-      <link>https://kubaik.github.io/developer-productivity-what-research-actually-show/</link>
-      <description>Developer productivity metrics lie 72% of the time — here’s the proof and how to measure what actually matters with concrete numbers and case studies from distributed teams.</description>
-      <pubDate>Thu, 30 Apr 2026 14:02:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/developer-productivity-what-research-actually-show/</guid>
     </item>
   </channel>
 </rss>
