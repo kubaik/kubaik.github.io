@@ -32,6 +32,7 @@ _STOP_WORDS = {
 
 DUPLICATE_TITLE_THRESHOLD = 0.35
 MIN_WORD_COUNT = 2000
+MIN_WORD_PURGE = 1500
 
 
 def _tokenise(text: str) -> set:
@@ -231,7 +232,7 @@ def audit_posts(docs_dir: Path) -> Dict:
             )
             if is_fallback:
                 results["fallback"].append(post_dir.name)
-            elif wc < MIN_WORD_COUNT:
+            elif wc < MIN_WORD_PURGE:
                 results["short"].append((post_dir.name, wc))
             else:
                 results["ok"].append(post_dir.name)
