@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 18:43:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 06:44:18 +0000</lastBuildDate>
+    <item>
+      <title>Mobile app security flaws finally explained</title>
+      <link>https://kubaik.github.io/mobile-app-security-flaws-finally-explained/</link>
+      <description>Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.</description>
+      <pubDate>Mon, 04 May 2026 06:44:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-app-security-flaws-finally-explained/</guid>
+    </item>
     <item>
       <title>Apache Airflow vs Prefect: Building Resilient Data Pipelines</title>
       <link>https://kubaik.github.io/apache-airflow-vs-prefect-building-resilient-data-/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud bills 18% and plan time 74% with 12 Terraform modules tested on 3G in Nigeria, Ghana, and Kenya — CIDR math, IPv6 egress savings, and the modules that survive intermittent VPNs.</description>
       <pubDate>Fri, 01 May 2026 07:22:51 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Red Flags vs Green Flags That Matter</title>
-      <link>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</link>
-      <description>Cut interview failure rates by 62% with modern hygiene vs 2018-style code. Learn the exact red flags that cost candidates jobs and the green flags that get offers — with benchmarks, cost data, and actionable fixes.</description>
-      <pubDate>Thu, 30 Apr 2026 19:06:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</guid>
     </item>
   </channel>
 </rss>
