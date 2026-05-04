@@ -90,15 +90,14 @@
 }
 
 /* ── Post meta row ── */
-.post-header .post-meta-row {
-    display: flex;
+.post-header .post-meta-row span {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    margin-top: 1.5rem;
-    color: rgba(255, 255, 255, 0.95);
-    font-size: 0.82rem;
-    font-weight: 500;
-    animation: fadeIn 0.8s ease-out 0.2s both;
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .post-header .post-meta-row span::before {

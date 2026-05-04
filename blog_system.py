@@ -2275,15 +2275,32 @@ if __name__ == "__main__":
                     # ONE create_tweet() call only — no fallback.
                     # A failed tweet is logged and skipped; it does NOT
                     # trigger a second billable API call.
+                    SEP = "─" * 68
                     if result["success"]:
-                        print(f"✅ Tweet posted: {result['url']}")
+                        print(SEP)
+                        print("✅  X / TWITTER — POST COMPLETE")
+                        print(SEP)
+                        print(f"  URL           : {result['url']}")
+                        print(f"  Tweet ID      : {result['tweet_id']}")
                         print(
-                            f"   {result['char_count']} chars | "
-                            f"{result['tweet_text'][:80]}…"
-                        )
+                            f"  Char count    : {result['char_count']} / 280")
+                        print(f"  Post title    : {blog_post.title}")
+                        print(f"  Slug          : {blog_post.slug}")
+                        print(SEP)
+                        print("  Full tweet text posted:")
+                        print(SEP)
+                        for line in result["tweet_text"].splitlines():
+                            print(f"  │ {line}")
+                        print(SEP + "\n")
                     else:
-                        print(
-                            f"❌ Tweet failed: {result.get('error')} — skipping (no retry).")
+                        print(SEP)
+                        print("❌  X / TWITTER — POST FAILED (no retry)")
+                        print(SEP)
+                        print(f"  Error         : {result.get('error')}")
+                        print(f"  Tweet text    :")
+                        for line in result.get("tweet_text", "").splitlines():
+                            print(f"  │ {line}")
+                        print(SEP + "\n")
 
             except Exception as e:
                 print(f"Error: {e}")
