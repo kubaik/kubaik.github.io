@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 07:43:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 09:21:33 +0000</lastBuildDate>
+    <item>
+      <title>AI’s blind spots finally explained</title>
+      <link>https://kubaik.github.io/ais-blind-spots-finally-explained/</link>
+      <description>Cut AI error rates by 63% with per-output instrumentation and human review — Jakarta e-commerce measured 12% factual errors, Dublin SaaS saw 8% support answer contradictions — measure before you fix</description>
+      <pubDate>Mon, 04 May 2026 09:21:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ais-blind-spots-finally-explained/</guid>
+    </item>
     <item>
       <title>Burnout isn’t about hours — it’s about irreversible design decisions</title>
       <link>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</link>
@@ -138,13 +145,6 @@
       <description>Cut repeated onboarding questions by 73% with ritual-focused docs, environment contracts, and lightweight telemetry. Includes Makefile snippets, regional caveats table, and a ‘docs health score’ dashboard you can copy today.</description>
       <pubDate>Thu, 30 Apr 2026 16:28:07 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</guid>
-    </item>
-    <item>
-      <title>Developer Productivity: What Research Actually Shows (and Why Your Metrics Lie)</title>
-      <link>https://kubaik.github.io/developer-productivity-what-research-actually-show/</link>
-      <description>Developer productivity metrics lie 72% of the time — here’s the proof and how to measure what actually matters with concrete numbers and case studies from distributed teams.</description>
-      <pubDate>Thu, 30 Apr 2026 14:02:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/developer-productivity-what-research-actually-show/</guid>
     </item>
   </channel>
 </rss>
