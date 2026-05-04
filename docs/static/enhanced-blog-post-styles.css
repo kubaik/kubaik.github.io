@@ -89,6 +89,28 @@
     }
 }
 
+/* ── Post meta row ── */
+.post-header .post-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.82rem;
+    font-weight: 500;
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.post-header .post-meta-row span::before {
+    content: "·";
+    margin-right: 0.75rem;
+}
+
+.post-header .post-meta-row span:first-child::before {
+    content: "";
+    margin-right: 0;
+}
+
 /* Tags */
 .post-header .tags {
     display: flex;
@@ -193,27 +215,7 @@
     line-height: 1.5;
 }
 
-/* ── Post meta row ── */
-.post-header .post-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    color: #fff;
-    font-size: 0.82rem;
-    margin-bottom: 0.5rem;
-    justify-content: center;
-    align-items: center;
-}
 
-.post-header .post-meta-row span::before {
-    content: "·";
-    margin-right: 0.75rem;
-}
-
-.post-header .post-meta-row span:first-child::before {
-    content: "";
-    margin-right: 0;
-}
 
 /* ── Related posts ── */
 .related-posts {
