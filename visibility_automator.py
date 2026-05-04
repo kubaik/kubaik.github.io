@@ -727,10 +727,28 @@ class VisibilityAutomator:
         else:
             tweet_text = _build_single_tweet(post, base_url, hook_style)
 
+        # ── Full pre-flight log (visible in GitHub Actions run log) ──────────
+        SEP = "─" * 68
+        print(f"\n{SEP}")
+        print("📣  TWITTER POST — PRE-FLIGHT")
+        print(SEP)
+        print(f"  Post title    : {getattr(post, 'title', '(unknown)')}")
+        print(f"  Slug          : {getattr(post, 'slug',  '(unknown)')}")
+        print(f"  Post URL      : {base_url}/{getattr(post, 'slug', '')}")
+        print(f"  Hook style    : {hook_style}")
+        print(f"  Link strategy : {link_strategy}")
+        print(f"  Char count    : {len(tweet_text)} / 280")
+        print(f"  Hashtags      : {_get_hashtags_for_post(post)}")
         print(
-            f"📝 Tweet preview ({len(tweet_text)} chars):"
-            f"\n{'-'*60}\n{tweet_text}\n{'-'*60}"
-        )
+            f"  Meta desc     : {getattr(post, 'meta_description', '')[:120]}")
+        print(SEP)
+        print("📝  TWEET TEXT (full):")
+        print(SEP)
+        # Print every line of the tweet with a leading pipe so it is
+        # visually distinct and never confused with surrounding log lines.
+        for line in tweet_text.splitlines():
+            print(f"  │ {line}")
+        print(SEP)
 
         try:
             response = self.twitter_client.create_tweet(text=tweet_text)
@@ -739,6 +757,7 @@ class VisibilityAutomator:
             url = f"https://twitter.com/{username}/status/{tweet_id}"
 
             # If hook_only strategy, post the link as first reply
+            reply_url = None
             if link_strategy == "hook_only":
                 post_url = f"{base_url}/{post.slug}"
                 reply_text = (
@@ -746,15 +765,29 @@ class VisibilityAutomator:
                     f"(Read time: ~{getattr(post, 'reading_time_minutes', 8)} min)"
                 )
                 try:
-                    self.twitter_client.create_tweet(
+                    reply_resp = self.twitter_client.create_tweet(
                         text=reply_text,
                         in_reply_to_tweet_id=tweet_id,
                     )
-                    print(f"📎 Link posted as reply to {tweet_id}")
+                    reply_url = (
+                        f"https://twitter.com/{username}/status/"
+                        f"{reply_resp.data['id']}"
+                    )
+                    print(f"  📎  Link reply posted : {reply_url}")
                 except Exception as re_err:
-                    print(f"⚠️  Could not post link reply: {re_err}")
+                    print(f"  ⚠️  Link reply failed : {re_err}")
 
-            print(f"✅ Tweet posted: {url}")
+            # ── Full success log ──────────────────────────────────────────
+            print(SEP)
+            print("✅  TWITTER POST — SUCCESS")
+            print(SEP)
+            print(f"  Tweet ID      : {tweet_id}")
+            print(f"  Tweet URL     : {url}")
+            print(f"  Char count    : {len(tweet_text)} / 280")
+            if reply_url:
+                print(f"  Link reply    : {reply_url}")
+            print(SEP + "\n")
+
             return {
                 "success":    True,
                 "tweet_id":   tweet_id,
@@ -762,8 +795,17 @@ class VisibilityAutomator:
                 "tweet_text": tweet_text,
                 "char_count": len(tweet_text),
             }
+
         except Exception as e:
-            print(f"❌ Tweet failed: {e}")
+            # ── Full failure log ──────────────────────────────────────────
+            print(SEP)
+            print("❌  TWITTER POST — FAILED")
+            print(SEP)
+            print(f"  Error         : {e}")
+            print(f"  Tweet text    :")
+            for line in tweet_text.splitlines():
+                print(f"  │ {line}")
+            print(SEP + "\n")
             return {
                 "success":    False,
                 "error":      str(e),
