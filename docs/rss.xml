@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 09:21:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 10:58:21 +0000</lastBuildDate>
+    <item>
+      <title>5G vs LTE: What these numbers mean for your app in 2025</title>
+      <link>https://kubaik.github.io/5g-vs-lte-what-these-numbers-mean-for-your-app-in-/</link>
+      <description>Cut app response time by 79% with 5G mid-band—test data, cost breakdown, and when to ignore the hype. Compare LTE vs 5G for real-time apps, cloud gaming, and IoT in 2025.</description>
+      <pubDate>Mon, 04 May 2026 10:58:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-vs-lte-what-these-numbers-mean-for-your-app-in-/</guid>
+    </item>
     <item>
       <title>AI’s blind spots finally explained</title>
       <link>https://kubaik.github.io/ais-blind-spots-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview failure rates by 62% with modern hygiene vs 2018-style code. Learn the exact red flags that cost candidates jobs and the green flags that get offers — with benchmarks, cost data, and actionable fixes.</description>
       <pubDate>Thu, 30 Apr 2026 19:06:45 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-red-flags-vs-green-flags-that-matte/</guid>
-    </item>
-    <item>
-      <title>Why your team ignores your docs (and how to make them read it)</title>
-      <link>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</link>
-      <description>Cut repeated onboarding questions by 73% with ritual-focused docs, environment contracts, and lightweight telemetry. Includes Makefile snippets, regional caveats table, and a ‘docs health score’ dashboard you can copy today.</description>
-      <pubDate>Thu, 30 Apr 2026 16:28:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-team-ignores-your-docs-and-how-to-make-th/</guid>
     </item>
   </channel>
 </rss>
