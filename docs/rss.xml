@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 16:20:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 13:23:39 +0000</lastBuildDate>
+    <item>
+      <title>We Reduced App Logic by 30% Using Only SQL — Here’s How</title>
+      <link>https://kubaik.github.io/we-reduced-app-logic-by-30-using-only-sql-heres-ho/</link>
+      <description>Cut dashboard response time by 99% using only SQL — no ORM, no external SaaS. Sub-40ms p99 latency on 1.2M-row datasets with full GDPR compliance and audit trails.</description>
+      <pubDate>Mon, 04 May 2026 13:23:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/we-reduced-app-logic-by-30-using-only-sql-heres-ho/</guid>
+    </item>
     <item>
       <title>AI budgeting cut our monthly overspend by 62% in 90 days</title>
       <link>https://kubaik.github.io/ai-budgeting-cut-our-monthly-overspend-by-62-in-90/</link>
@@ -138,13 +145,6 @@
       <description>Discover why 7 AI ethics failures happen in production, not the lab — with real examples, code, and trade-offs. Learn what Big Tech won’t tell you about bias, power, and the systems that amplify harm.</description>
       <pubDate>Fri, 01 May 2026 09:02:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ethics-is-a-pr-tour-the-7-uncomfortable-truths/</guid>
-    </item>
-    <item>
-      <title>Terraform in 2024: 12 battle-tested setups ranked</title>
-      <link>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</link>
-      <description>Cut cloud bills 18% and plan time 74% with 12 Terraform modules tested on 3G in Nigeria, Ghana, and Kenya — CIDR math, IPv6 egress savings, and the modules that survive intermittent VPNs.</description>
-      <pubDate>Fri, 01 May 2026 07:22:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/</guid>
     </item>
   </channel>
 </rss>
