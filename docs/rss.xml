@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 10:35:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 07:38:22 +0000</lastBuildDate>
+    <item>
+      <title>Tech promotions finally explained — what actually moves the needle</title>
+      <link>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</link>
+      <description>Ship 3 high-impact projects that measurably improve team KPIs and get promoted in 12 months — impact summaries, leverage scores, and the metrics that actually move the needle</description>
+      <pubDate>Mon, 04 May 2026 07:38:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</guid>
+    </item>
     <item>
       <title>Mobile app security flaws finally explained</title>
       <link>https://kubaik.github.io/mobile-app-security-flaws-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>Cut Redis cache misses by 63% and P99 latency by 71% — LFU eviction, write-through, client tracking, and chaos testing for production clusters</description>
       <pubDate>Thu, 30 Apr 2026 09:13:09 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</guid>
-    </item>
-    <item>
-      <title>Why your mobile app feels slow even when it shouldn&apos;t</title>
-      <link>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</link>
-      <description>Cut cold-start by 49% and frame time by 32% with these fixes — mobile performance, real device profiling, and the mistakes that hide 200 ms stalls.</description>
-      <pubDate>Thu, 30 Apr 2026 07:22:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-mobile-app-feels-slow-even-when-it-should/</guid>
     </item>
   </channel>
 </rss>
