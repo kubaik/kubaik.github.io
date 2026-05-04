@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 16:56:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 19:14:32 +0000</lastBuildDate>
+    <item>
+      <title>11 Real-World Auth Patterns Tested in 2024</title>
+      <link>https://kubaik.github.io/11-real-world-auth-patterns-tested-in-2024/</link>
+      <description>Cut authentication latency to 112 ms p95 and keep costs under $50/month with these 11 real-world auth patterns tested on a $40 Vultr VPS in Frankfurt.</description>
+      <pubDate>Mon, 04 May 2026 19:14:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/11-real-world-auth-patterns-tested-in-2024/</guid>
+    </item>
     <item>
       <title>The 10 pivotal moments that made Stripe the internet’s payment layer</title>
       <link>https://kubaik.github.io/the-10-pivotal-moments-that-made-stripe-the-intern/</link>
@@ -138,13 +145,6 @@
       <description>Cut page load time by 58% under 3G with route-level lazy loading and code splitting — real numbers, real devices, and the mistakes that broke first loads.</description>
       <pubDate>Sat, 02 May 2026 06:55:12 +0000</pubDate>
       <guid>https://kubaik.github.io/how-lazy-loading-cut-our-page-load-time-by-58-unde/</guid>
-    </item>
-    <item>
-      <title>Build a Content Algorithm Simulator in 60 Minutes</title>
-      <link>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</link>
-      <description>Simulate a social media algorithm in 60 minutes and increase reach by 70% — content algorithm simulator, platform weights, reach delta, 0.8s replay time for 10k posts</description>
-      <pubDate>Fri, 01 May 2026 18:57:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</guid>
     </item>
   </channel>
 </rss>
