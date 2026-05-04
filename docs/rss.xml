@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 13:34:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 14:07:22 +0000</lastBuildDate>
+    <item>
+      <title>Build a real-time chat app with WebSockets and Flask in 30 minutes</title>
+      <link>https://kubaik.github.io/build-a-real-time-chat-app-with-websockets-and-fla/</link>
+      <description>Build a real-time chat app with WebSockets and Flask in 30 minutes — 68 ms median latency, $0.05/user/month, no AWS bill required</description>
+      <pubDate>Mon, 04 May 2026 14:07:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-real-time-chat-app-with-websockets-and-fla/</guid>
+    </item>
     <item>
       <title>How 4-Day Weeks Cut Outage Time by 37% Without Losing Velocity</title>
       <link>https://kubaik.github.io/how-4-day-weeks-cut-outage-time-by-37-without-losi/</link>
@@ -138,13 +145,6 @@
       <description>Cut debug session time by 58% with this VS Code setup — real numbers from Lagos and Berlin, extension list, and the SSH tunnel trick that saved 2+ minutes per session.</description>
       <pubDate>Fri, 01 May 2026 16:04:34 +0000</pubDate>
       <guid>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</guid>
-    </item>
-    <item>
-      <title>Choose a Message Queue in 30 Minutes: Kafka vs RabbitMQ vs SQS</title>
-      <link>https://kubaik.github.io/choose-a-message-queue-in-30-minutes-kafka-vs-rabb/</link>
-      <description>Cut message queue setup time by 80% with this step-by-step comparison of Kafka vs RabbitMQ vs SQS — real latency, RAM, and cost numbers from a 2024 MacBook Pro test run.</description>
-      <pubDate>Fri, 01 May 2026 10:18:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-a-message-queue-in-30-minutes-kafka-vs-rabb/</guid>
     </item>
   </channel>
 </rss>
