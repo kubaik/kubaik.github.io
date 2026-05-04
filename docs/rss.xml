@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 14:07:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 16:56:40 +0000</lastBuildDate>
+    <item>
+      <title>The 10 pivotal moments that made Stripe the internet’s payment layer</title>
+      <link>https://kubaik.github.io/the-10-pivotal-moments-that-made-stripe-the-intern/</link>
+      <description>Ship payments in an hour with Stripe’s 2.9% fee and 120 ms latency — idempotency keys, Connect marketplaces, and webhooks that don’t disappear</description>
+      <pubDate>Mon, 04 May 2026 16:56:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-10-pivotal-moments-that-made-stripe-the-intern/</guid>
+    </item>
     <item>
       <title>Build a real-time chat app with WebSockets and Flask in 30 minutes</title>
       <link>https://kubaik.github.io/build-a-real-time-chat-app-with-websockets-and-fla/</link>
@@ -138,13 +145,6 @@
       <description>Simulate a social media algorithm in 60 minutes and increase reach by 70% — content algorithm simulator, platform weights, reach delta, 0.8s replay time for 10k posts</description>
       <pubDate>Fri, 01 May 2026 18:57:12 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-content-algorithm-simulator-in-60-minutes/</guid>
-    </item>
-    <item>
-      <title>VS Code Setup That Cuts Debug Sessions in Half</title>
-      <link>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</link>
-      <description>Cut debug session time by 58% with this VS Code setup — real numbers from Lagos and Berlin, extension list, and the SSH tunnel trick that saved 2+ minutes per session.</description>
-      <pubDate>Fri, 01 May 2026 16:04:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/</guid>
     </item>
   </channel>
 </rss>
