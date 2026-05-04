@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2026 07:38:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 07:43:12 +0000</lastBuildDate>
+    <item>
+      <title>Burnout isn’t about hours — it’s about irreversible design decisions</title>
+      <link>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</link>
+      <description>Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.</description>
+      <pubDate>Mon, 04 May 2026 07:43:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</guid>
+    </item>
     <item>
       <title>Tech promotions finally explained — what actually moves the needle</title>
       <link>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</link>
@@ -138,13 +145,6 @@
       <description>Developer productivity metrics lie 72% of the time — here’s the proof and how to measure what actually matters with concrete numbers and case studies from distributed teams.</description>
       <pubDate>Thu, 30 Apr 2026 14:02:10 +0000</pubDate>
       <guid>https://kubaik.github.io/developer-productivity-what-research-actually-show/</guid>
-    </item>
-    <item>
-      <title>Redis at scale: How we cut cache misses by 63% and latency by 71%</title>
-      <link>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</link>
-      <description>Cut Redis cache misses by 63% and P99 latency by 71% — LFU eviction, write-through, client tracking, and chaos testing for production clusters</description>
-      <pubDate>Thu, 30 Apr 2026 09:13:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-at-scale-how-we-cut-cache-misses-by-63-and-l/</guid>
     </item>
   </channel>
 </rss>
