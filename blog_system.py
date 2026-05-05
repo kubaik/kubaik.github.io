@@ -2265,42 +2265,51 @@ if __name__ == "__main__":
                 if not _twitter_posting_enabled():
                     print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
                 else:
-                    # Initialise only when actually posting — avoids a
-                    # get_me() API call on every non-posting run.
+                    # ── Always compose and log the tweet ──────────────────────────
                     visibility = VisibilityAutomator(config)
 
-                    print("\nPosting single tweet...")
-                    result = visibility.post_single_tweet(blog_post)
+                    print("\nComposing tweet preview...")
+                    result = visibility.compose_tweet_preview(blog_post)
 
-                    # ONE create_tweet() call only — no fallback.
-                    # A failed tweet is logged and skipped; it does NOT
-                    # trigger a second billable API call.
                     SEP = "─" * 68
-                    if result["success"]:
-                        print(SEP)
-                        print("✅  X / TWITTER — POST COMPLETE")
-                        print(SEP)
-                        print(f"  URL           : {result['url']}")
-                        print(f"  Tweet ID      : {result['tweet_id']}")
+                    print(SEP)
+                    print("📝  TWEET PREVIEW (composed regardless of posting flag)")
+                    print(SEP)
+                    print(f"  Post title    : {blog_post.title}")
+                    print(f"  Slug          : {blog_post.slug}")
+                    print(f"  Char count    : {result['char_count']} / 280")
+                    print(SEP)
+                    print("  Full tweet text:")
+                    print(SEP)
+                    for line in result["tweet_text"].splitlines():
+                        print(f"  │ {line}")
+                    print(SEP)
+
+                    if not _twitter_posting_enabled():
                         print(
-                            f"  Char count    : {result['char_count']} / 280")
-                        print(f"  Post title    : {blog_post.title}")
-                        print(f"  Slug          : {blog_post.slug}")
-                        print(SEP)
-                        print("  Full tweet text posted:")
-                        print(SEP)
-                        for line in result["tweet_text"].splitlines():
-                            print(f"  │ {line}")
-                        print(SEP + "\n")
+                            "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
+                        print("  ↑ Tweet above is what would have been posted.\n")
                     else:
-                        print(SEP)
-                        print("❌  X / TWITTER — POST FAILED (no retry)")
-                        print(SEP)
-                        print(f"  Error         : {result.get('error')}")
-                        print(f"  Tweet text    :")
-                        for line in result.get("tweet_text", "").splitlines():
-                            print(f"  │ {line}")
-                        print(SEP + "\n")
+                        print("\nPosting tweet...")
+                        post_result = visibility.post_single_tweet(blog_post)
+
+                        if post_result["success"]:
+                            print(SEP)
+                            print("✅  X / TWITTER — POST COMPLETE")
+                            print(SEP)
+                            print(f"  URL           : {post_result['url']}")
+                            print(
+                                f"  Tweet ID      : {post_result['tweet_id']}")
+                            print(
+                                f"  Char count    : {post_result['char_count']} / 280")
+                            print(SEP + "\n")
+                        else:
+                            print(SEP)
+                            print("❌  X / TWITTER — POST FAILED (no retry)")
+                            print(SEP)
+                            print(
+                                f"  Error         : {post_result.get('error')}")
+                            print(SEP + "\n")
 
             except Exception as e:
                 print(f"Error: {e}")
