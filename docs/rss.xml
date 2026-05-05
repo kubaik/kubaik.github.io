@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 14:24:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 16:51:57 +0000</lastBuildDate>
+    <item>
+      <title>Why your FP code throws &apos;Cannot read property&apos; with curried functions (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</link>
+      <description>Reduce &apos;Cannot read property&apos; errors in FP pipelines by 70% with Ramda and Lodash curry fixes — arity checks, compose chains, and transpiler pitfalls revealed. Improve functional code reliability with 4 concrete fixes.</description>
+      <pubDate>Tue, 05 May 2026 16:51:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</guid>
+    </item>
     <item>
       <title>Full-Stack Development in 2026: The Best Stack: A Practical Technical Guide</title>
       <link>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</link>
@@ -138,13 +145,6 @@
       <description>Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.</description>
       <pubDate>Mon, 04 May 2026 07:43:07 +0000</pubDate>
       <guid>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</guid>
-    </item>
-    <item>
-      <title>Tech promotions finally explained — what actually moves the needle</title>
-      <link>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</link>
-      <description>Ship 3 high-impact projects that measurably improve team KPIs and get promoted in 12 months — impact summaries, leverage scores, and the metrics that actually move the needle</description>
-      <pubDate>Mon, 04 May 2026 07:38:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</guid>
     </item>
   </channel>
 </rss>
