@@ -695,6 +695,37 @@ class VisibilityAutomator:
     def _get_trending_tag(self) -> Optional[str]:
         return self._trending_tag
 
+    def compose_tweet_preview(self, post) -> Dict:
+        """
+        Compose the tweet that *would* be posted, without calling the API.
+        Used for dry-run logging when ENABLE_TWITTER_POSTING is false.
+        Always safe to call — no credentials required.
+
+        Returns:
+            {
+                'tweet_text': str,
+                'char_count': int,
+                'hook_style': str,
+                'link_strategy': str,
+            }
+        """
+        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        hook_style = self.config.get("hook_style", "auto")
+        link_strategy = self.config.get(
+            "twitter_link_strategy", "link_in_tweet")
+
+        if link_strategy == "hook_only":
+            tweet_text = _build_linkless_hook(post, hook_style)
+        else:
+            tweet_text = _build_single_tweet(post, base_url, hook_style)
+
+        return {
+            "tweet_text":    tweet_text,
+            "char_count":    len(tweet_text),
+            "hook_style":    hook_style,
+            "link_strategy": link_strategy,
+        }
+
     # ── Single-tweet posting (primary method) ─────────────────────
 
     def post_single_tweet(self, post) -> Dict:
