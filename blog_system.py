@@ -2262,54 +2262,51 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
+                # ── ALWAYS compose and log the tweet (regardless of posting flag) ──
+                visibility = VisibilityAutomator(config)
+
+                preview = visibility.compose_tweet_preview(blog_post)
+
+                SEP = "─" * 68
+                print(SEP)
+                print("📝  TWEET PREVIEW (always logged)")
+                print(SEP)
+                print(f"  Post title    : {blog_post.title}")
+                print(f"  Slug          : {blog_post.slug}")
+                print(f"  Hook style    : {preview['hook_style']}")
+                print(f"  Link strategy : {preview['link_strategy']}")
+                print(f"  Char count    : {preview['char_count']} / 280")
+                print(SEP)
+                print("  Full tweet text:")
+                print(SEP)
+                for line in preview["tweet_text"].splitlines():
+                    print(f"  │ {line}")
+                print(SEP + "\n")
+
+                # ── Only actually post if the flag is enabled ──────────────────
                 if not _twitter_posting_enabled():
-                    print("Skipping Twitter post (ENABLE_TWITTER_POSTING != true).")
+                    print(
+                        "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
+                    print("  ↑ Tweet above is what would have been posted.\n")
                 else:
-                    # ── Always compose and log the tweet ──────────────────────────
-                    visibility = VisibilityAutomator(config)
+                    print("Posting tweet...")
+                    post_result = visibility.post_single_tweet(blog_post)
 
-                    print("\nComposing tweet preview...")
-                    result = visibility.compose_tweet_preview(blog_post)
-
-                    SEP = "─" * 68
-                    print(SEP)
-                    print("📝  TWEET PREVIEW (composed regardless of posting flag)")
-                    print(SEP)
-                    print(f"  Post title    : {blog_post.title}")
-                    print(f"  Slug          : {blog_post.slug}")
-                    print(f"  Char count    : {result['char_count']} / 280")
-                    print(SEP)
-                    print("  Full tweet text:")
-                    print(SEP)
-                    for line in result["tweet_text"].splitlines():
-                        print(f"  │ {line}")
-                    print(SEP)
-
-                    if not _twitter_posting_enabled():
+                    if post_result["success"]:
+                        print(SEP)
+                        print("✅  X / TWITTER — POST COMPLETE")
+                        print(SEP)
+                        print(f"  URL           : {post_result['url']}")
+                        print(f"  Tweet ID      : {post_result['tweet_id']}")
                         print(
-                            "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
-                        print("  ↑ Tweet above is what would have been posted.\n")
+                            f"  Char count    : {post_result['char_count']} / 280")
+                        print(SEP + "\n")
                     else:
-                        print("\nPosting tweet...")
-                        post_result = visibility.post_single_tweet(blog_post)
-
-                        if post_result["success"]:
-                            print(SEP)
-                            print("✅  X / TWITTER — POST COMPLETE")
-                            print(SEP)
-                            print(f"  URL           : {post_result['url']}")
-                            print(
-                                f"  Tweet ID      : {post_result['tweet_id']}")
-                            print(
-                                f"  Char count    : {post_result['char_count']} / 280")
-                            print(SEP + "\n")
-                        else:
-                            print(SEP)
-                            print("❌  X / TWITTER — POST FAILED (no retry)")
-                            print(SEP)
-                            print(
-                                f"  Error         : {post_result.get('error')}")
-                            print(SEP + "\n")
+                        print(SEP)
+                        print("❌  X / TWITTER — POST FAILED (no retry)")
+                        print(SEP)
+                        print(f"  Error         : {post_result.get('error')}")
+                        print(SEP + "\n")
 
             except Exception as e:
                 print(f"Error: {e}")
