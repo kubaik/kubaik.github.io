@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 10:29:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 10:56:46 +0000</lastBuildDate>
+    <item>
+      <title>No-code vs code finally explained</title>
+      <link>https://kubaik.github.io/no-code-vs-code-finally-explained/</link>
+      <description>Validate SaaS ideas in 8 hours with no-code, then migrate to code once you hit 50 paying users to cut page load from 2.4 s to 380 ms and monthly bills from $190 to $12.</description>
+      <pubDate>Tue, 05 May 2026 10:56:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-code-vs-code-finally-explained/</guid>
+    </item>
     <item>
       <title>Pick the Right AI Coding Assistant in 5 Minutes</title>
       <link>https://kubaik.github.io/pick-the-right-ai-coding-assistant-in-5-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Cut 120 ms p99 latency to 25 ms and scale to 4,200 QPS by splitting PostgreSQL into 8 shards — shard key pitfalls, Vitess resharding times, and the one CLI tool that saved 6 hours of downtime.</description>
       <pubDate>Sun, 03 May 2026 07:14:13 +0000</pubDate>
       <guid>https://kubaik.github.io/your-database-is-too-big-split-it-now-or-regret-it/</guid>
-    </item>
-    <item>
-      <title>Why &apos;command not found&apos; still appears after installing a CLI tool (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-command-not-found-still-appears-after-installi/</link>
-      <description>Cut debugging time by 70% with these command-line tool fixes — command not found, shell hash cache, and PATH issues demystified with exact commands and benchmarks.</description>
-      <pubDate>Sat, 02 May 2026 18:43:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-command-not-found-still-appears-after-installi/</guid>
     </item>
   </channel>
 </rss>
