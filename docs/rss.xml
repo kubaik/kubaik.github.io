@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 14:01:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 14:24:22 +0000</lastBuildDate>
+    <item>
+      <title>Full-Stack Development in 2026: The Best Stack: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</link>
+      <description>Cut Full-Stack Development in 2026: The Best Stack failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and …</description>
+      <pubDate>Tue, 05 May 2026 14:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</guid>
+    </item>
     <item>
       <title>DDoS Mitigation is Broken — Here’s What Actually Works</title>
       <link>https://kubaik.github.io/ddos-mitigation-is-broken-heres-what-actually-work/</link>
@@ -138,13 +145,6 @@
       <description>Ship 3 high-impact projects that measurably improve team KPIs and get promoted in 12 months — impact summaries, leverage scores, and the metrics that actually move the needle</description>
       <pubDate>Mon, 04 May 2026 07:38:18 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-promotions-finally-explained-what-actually-mo/</guid>
-    </item>
-    <item>
-      <title>Mobile app security flaws finally explained</title>
-      <link>https://kubaik.github.io/mobile-app-security-flaws-finally-explained/</link>
-      <description>Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.</description>
-      <pubDate>Mon, 04 May 2026 06:44:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-app-security-flaws-finally-explained/</guid>
     </item>
   </channel>
 </rss>
