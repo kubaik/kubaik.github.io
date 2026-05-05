@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 19:05:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 19:54:33 +0000</lastBuildDate>
+    <item>
+      <title>10 AI Tools That Replace Expensive Software: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</link>
+      <description>Cut 10 AI Tools That Replace Expensive Software failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a s…</description>
+      <pubDate>Tue, 05 May 2026 19:54:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</guid>
+    </item>
     <item>
       <title>Why real-world object detection models fail on shelf images (and how to fix it)</title>
       <link>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</link>
@@ -138,13 +145,6 @@
       <description>Cut app response time by 79% with 5G mid-band—test data, cost breakdown, and when to ignore the hype. Compare LTE vs 5G for real-time apps, cloud gaming, and IoT in 2025.</description>
       <pubDate>Mon, 04 May 2026 10:58:16 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-vs-lte-what-these-numbers-mean-for-your-app-in-/</guid>
-    </item>
-    <item>
-      <title>AI’s blind spots finally explained</title>
-      <link>https://kubaik.github.io/ais-blind-spots-finally-explained/</link>
-      <description>Cut AI error rates by 63% with per-output instrumentation and human review — Jakarta e-commerce measured 12% factual errors, Dublin SaaS saw 8% support answer contradictions — measure before you fix</description>
-      <pubDate>Mon, 04 May 2026 09:21:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ais-blind-spots-finally-explained/</guid>
     </item>
   </channel>
 </rss>
