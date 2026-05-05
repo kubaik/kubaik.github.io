@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 08:54:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 09:09:18 +0000</lastBuildDate>
+    <item>
+      <title>Secrets in 2025: Why Vault, SOPS, and 1Password Work in Production</title>
+      <link>https://kubaik.github.io/secrets-in-2025-why-vault-sops-and-1password-work-/</link>
+      <description>Cut secret fetch latency to 12ms in production — secrets management with Vault, SOPS, and 1Password for compliance, audit trails, and high availability. Secrets management for teams who can’t afford breaches or downtime.</description>
+      <pubDate>Tue, 05 May 2026 09:09:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-in-2025-why-vault-sops-and-1password-work-/</guid>
+    </item>
     <item>
       <title>Build a CLI calculator in Rust under 2 hours</title>
       <link>https://kubaik.github.io/build-a-cli-calculator-in-rust-under-2-hours/</link>
@@ -138,13 +145,6 @@
       <description>Cut manual indexing time by 15 hours a month with a local AI workflow that watches folders, OCRs files, and searches in under 10 seconds — no cloud bill, no LLM hallucinations, just a 2020 MacBook Pro.</description>
       <pubDate>Sat, 02 May 2026 15:56:57 +0000</pubDate>
       <guid>https://kubaik.github.io/the-10-hour-ai-workflow-that-actually-works/</guid>
-    </item>
-    <item>
-      <title>How we survived a ransomware attack and lost only 3 hours</title>
-      <link>https://kubaik.github.io/how-we-survived-a-ransomware-attack-and-lost-only-/</link>
-      <description>Survived a ransomware attack with only 52 minutes of downtime and zero data loss — here’s the exact backup strategy, restore process, and tools that saved us $280,000 and 3000 customer invoices</description>
-      <pubDate>Sat, 02 May 2026 13:18:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-we-survived-a-ransomware-attack-and-lost-only-/</guid>
     </item>
   </channel>
 </rss>
