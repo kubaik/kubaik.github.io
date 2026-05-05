@@ -3,15 +3,12 @@ name: Watchdog - Blog Automation Monitor
 on:
   schedule:
     # Run 10 minutes after each blog cron slot to verify it fired
-    # Blog slots: 05, 07, 09, 12, 15, 18 UTC
     - cron: "10 5  * * *"
     - cron: "10 7  * * *"
     - cron: "10 9  * * *"
     - cron: "10 12 * * *"
     - cron: "10 15 * * *"
     - cron: "10 18 * * *"
-    # Catch-all hourly sweep to recover any missed slots
-    - cron: "30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -31,12 +28,9 @@ jobs:
           CURRENT_MINUTE=$(date -u +%-M)
           CURRENT_DATE=$(date -u +%Y-%m-%d)
 
-          # All 6 scheduled blog cron hours (UTC)
           ALL_SLOTS=(5 7 9 12 15 18)
-
           PASSED_SLOTS=()
           for SLOT in "${ALL_SLOTS[@]}"; do
-            # A slot is "due" if its hour has fully passed, or if we're ≥5 min into it
             if [ "$CURRENT_HOUR" -gt "$SLOT" ] || \
                ([ "$CURRENT_HOUR" -eq "$SLOT" ] && [ "$CURRENT_MINUTE" -ge 5 ]); then
               PASSED_SLOTS+=("$SLOT")
@@ -45,36 +39,46 @@ jobs:
 
           echo "Current UTC time  : $(date -u '+%H:%M')"
           echo "Passed slots today: ${PASSED_SLOTS[*]}"
-
-          # Serialise as space-separated string for next step
           echo "passed_slots=${PASSED_SLOTS[*]}" >> $GITHUB_OUTPUT
           echo "current_date=$CURRENT_DATE"       >> $GITHUB_OUTPUT
 
-      - name: Fetch today's completed scheduled runs
+      - name: Fetch today's blog automation runs (all events)
         id: fetch_runs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TODAY="${{ steps.slots.outputs.current_date }}"
 
-          # Fetch last 50 scheduled runs (enough to cover a full day + buffer)
-          RUN_JSON=$(gh run list \
+          # ── KEY FIX: fetch BOTH schedule AND workflow_dispatch runs ──
+          # Watchdog-triggered runs are workflow_dispatch, not schedule.
+          # Fetching only --event schedule made those runs invisible,
+          # causing the watchdog to re-trigger every cycle.
+          SCHEDULE_JSON=$(gh run list \
             --repo ${{ github.repository }} \
             --workflow=blog-automation.yml \
             --event schedule \
-            --limit 50 \
-            --json databaseId,status,conclusion,createdAt)
+            --limit 30 \
+            --json databaseId,status,conclusion,createdAt,event)
 
-          echo "Raw run data:"
-          echo "$RUN_JSON" | python3 -c "
+          DISPATCH_JSON=$(gh run list \
+            --repo ${{ github.repository }} \
+            --workflow=blog-automation.yml \
+            --event workflow_dispatch \
+            --limit 30 \
+            --json databaseId,status,conclusion,createdAt,event)
+
+          # Merge both lists
+          ALL_RUNS=$(python3 -c "
           import json, sys
-          runs = json.load(sys.stdin)
-          for r in runs[:10]:
-              print(f\"  [{r['createdAt']}] {r['status']}/{r['conclusion']} id={r['databaseId']}\")
-          "
+          s = json.loads('''$SCHEDULE_JSON''')
+          d = json.loads('''$DISPATCH_JSON''')
+          merged = s + d
+          print(json.dumps(merged))
+          ")
 
-          # Extract the hours (UTC) of runs that started today and didn't fail badly
-          COVERED_HOURS=$(echo "$RUN_JSON" | python3 -c "
+          echo "Combined run count: $(echo "$ALL_RUNS" | python3 -c "import json,sys; print(len(json.load(sys.stdin)))")"
+
+          COVERED_HOURS=$(echo "$ALL_RUNS" | python3 -c "
           import json, sys
           from datetime import datetime, timezone
 
@@ -83,21 +87,25 @@ jobs:
           hours = set()
 
           for r in runs:
-              created = r['createdAt']                          # e.g. '2025-05-05T07:02:41Z'
+              created = r['createdAt']
               dt = datetime.fromisoformat(created.replace('Z', '+00:00'))
               if dt.strftime('%Y-%m-%d') != today:
                   continue
-              # Ignore runs that were cancelled before doing any real work
-              if r['conclusion'] in ('cancelled',):
+              # Ignore runs cancelled before doing real work
+              if r.get('conclusion') in ('cancelled',):
                   continue
-              hours.add(str(dt.hour))
+              # Only count completed or in-progress runs (not queued)
+              if r.get('status') in ('completed', 'in_progress'):
+                  hours.add(str(dt.hour))
 
           print(' '.join(sorted(hours, key=int)))
           ")
 
-          echo "Hours with runs today: $COVERED_HOURS"
+          echo "Hours with runs today (all events): $COVERED_HOURS"
           echo "covered_hours=$COVERED_HOURS" >> $GITHUB_OUTPUT
-          echo "run_json_b64=$(echo "$RUN_JSON" | base64 -w 0)" >> $GITHUB_OUTPUT
+
+          # Store merged JSON (base64) for hung-run detection below
+          echo "all_runs_b64=$(echo "$ALL_RUNS" | base64 -w 0)" >> $GITHUB_OUTPUT
 
       - name: Detect missing slots and cancel any hung run
         id: missing
@@ -129,13 +137,13 @@ jobs:
             echo "has_missing=false" >> $GITHUB_OUTPUT
           else
             echo "Missing slots: ${MISSING_SLOTS[*]}"
-            echo "has_missing=true"                    >> $GITHUB_OUTPUT
-            echo "missing_list=${MISSING_SLOTS[*]}"    >> $GITHUB_OUTPUT
+            echo "has_missing=true"                 >> $GITHUB_OUTPUT
+            echo "missing_list=${MISSING_SLOTS[*]}" >> $GITHUB_OUTPUT
           fi
 
-          # Cancel any currently hung in-progress run (>25 min old)
-          RUN_JSON=$(echo "${{ steps.fetch_runs.outputs.run_json_b64 }}" | base64 -d)
-          HUNG_ID=$(echo "$RUN_JSON" | python3 -c "
+          # Cancel any hung in-progress run (>25 min old)
+          ALL_RUNS=$(echo "${{ steps.fetch_runs.outputs.all_runs_b64 }}" | base64 -d)
+          HUNG_ID=$(echo "$ALL_RUNS" | python3 -c "
           import json, sys
           from datetime import datetime, timezone
 
@@ -143,7 +151,7 @@ jobs:
           now = datetime.now(timezone.utc)
 
           for r in runs:
-              if r['status'] != 'in_progress':
+              if r.get('status') != 'in_progress':
                   continue
               dt = datetime.fromisoformat(r['createdAt'].replace('Z', '+00:00'))
               age = (now - dt).total_seconds() / 60
@@ -158,7 +166,7 @@ jobs:
             sleep 10
           fi
 
-      - name: Trigger blog automation for each missing slot
+      - name: Trigger blog automation for missing slots
         if: steps.missing.outputs.has_missing == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -172,11 +180,8 @@ jobs:
               --repo ${{ github.repository }} \
               --ref main
             COUNT=$((COUNT + 1))
-
-            # Brief pause between triggers to avoid race conditions
-            if [ -n "$(echo $MISSING | grep -o ' ')" ]; then
-              sleep 15
-            fi
+            # Pause between triggers to avoid concurrency race
+            [ $COUNT -lt $(echo $MISSING | wc -w) ] && sleep 15
           done
 
           echo "Triggered $COUNT run(s) for missed slots: $MISSING"
@@ -189,14 +194,14 @@ jobs:
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
-            echo "| Passed slots today | ${{ steps.slots.outputs.passed_slots }} |"
-            echo "| Covered hours | ${{ steps.fetch_runs.outputs.covered_hours }} |"
-            echo "| Missing slots | ${{ steps.missing.outputs.missing_list || 'none' }} |"
-            echo "| Action taken | ${{ steps.missing.outputs.has_missing == 'true' && 'Re-triggered missing slots' || 'None — all slots covered' }} |"
+            echo "| Passed slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
+            echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
+            echo "| Missing slots | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
+            echo "| Action | ${{ steps.missing.outputs.has_missing == 'true' && 'Re-triggered missing slots ⚠️' || 'No action needed ✅' }} |"
             echo ""
             if [ "${{ steps.missing.outputs.has_missing }}" = "true" ]; then
-              echo "**Missing slots detected and re-triggered:** ${{ steps.missing.outputs.missing_list }}"
+              echo "⚠️ **Triggered for missed slots:** \`${{ steps.missing.outputs.missing_list }}\`"
             else
-              echo "**All cron slots are running on schedule.**"
+              echo "✅ **All cron slots running on schedule.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
