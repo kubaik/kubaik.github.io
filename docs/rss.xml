@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 16:51:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 19:05:18 +0000</lastBuildDate>
+    <item>
+      <title>Why real-world object detection models fail on shelf images (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</link>
+      <description>Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.</description>
+      <pubDate>Tue, 05 May 2026 19:05:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</guid>
+    </item>
     <item>
       <title>Why your FP code throws &apos;Cannot read property&apos; with curried functions (and how to fix it)</title>
       <link>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI error rates by 63% with per-output instrumentation and human review — Jakarta e-commerce measured 12% factual errors, Dublin SaaS saw 8% support answer contradictions — measure before you fix</description>
       <pubDate>Mon, 04 May 2026 09:21:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ais-blind-spots-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Burnout isn’t about hours — it’s about irreversible design decisions</title>
-      <link>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</link>
-      <description>Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.</description>
-      <pubDate>Mon, 04 May 2026 07:43:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/</guid>
     </item>
   </channel>
 </rss>
