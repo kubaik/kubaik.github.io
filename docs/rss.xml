@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2026 11:01:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2026 11:57:59 +0000</lastBuildDate>
+    <item>
+      <title>Why my no-code AI analysis tool returned garbage (and how to fix it)</title>
+      <link>https://kubaik.github.io/why-my-no-code-ai-analysis-tool-returned-garbage-a/</link>
+      <description>Cut analysis time from hours to minutes with no-code AI — but only if you avoid these 3 silent killers: non-determinism, data leakage, and row limits. Benchmarks, Python audits, and budget tiers for $20 droplets vs Series B startups.</description>
+      <pubDate>Tue, 05 May 2026 11:57:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-my-no-code-ai-analysis-tool-returned-garbage-a/</guid>
+    </item>
     <item>
       <title>CI/CD pipelines that actually catch bugs — the ones teams copy</title>
       <link>https://kubaik.github.io/cicd-pipelines-that-actually-catch-bugs-the-ones-t/</link>
@@ -138,13 +145,6 @@
       <description>Cut monthly SaaS spend from $8,240 to $197 using free AI tools — and saved 300 engineering hours. See the exact prompts, budgets, and latency drops that made it work.</description>
       <pubDate>Sun, 03 May 2026 10:00:41 +0000</pubDate>
       <guid>https://kubaik.github.io/how-we-replaced-8kmonth-in-saas-with-free-ai-tools/</guid>
-    </item>
-    <item>
-      <title>These 5 Skills Will Make You Obsolete by 2030</title>
-      <link>https://kubaik.github.io/these-5-skills-will-make-you-obsolete-by-2030/</link>
-      <description>Avoid learning skills that will be worthless in 5 years — pick industry-specific problems instead. Learn how to future-proof your career with domain expertise, not framework deep dives.</description>
-      <pubDate>Sun, 03 May 2026 08:48:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/these-5-skills-will-make-you-obsolete-by-2030/</guid>
     </item>
   </channel>
 </rss>
