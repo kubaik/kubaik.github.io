@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2026 11:21:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2026 14:20:01 +0000</lastBuildDate>
+    <item>
+      <title>Database Sharding: What the Docs Don’t Tell You</title>
+      <link>https://kubaik.github.io/database-sharding-what-the-docs-dont-tell-you/</link>
+      <description>Scale your database to 10x traffic with sharding—cut latency for single-shard queries by 80%, avoid hot shards, and simplify rebalancing with Citus or Vitess.</description>
+      <pubDate>Wed, 06 May 2026 14:19:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/database-sharding-what-the-docs-dont-tell-you/</guid>
+    </item>
     <item>
       <title>21 Time Management Tactics That Fixed My Burnout in 6 Months</title>
       <link>https://kubaik.github.io/21-time-management-tactics-that-fixed-my-burnout-i/</link>
@@ -138,13 +145,6 @@
       <description>Build CLI calculator Rust: that’s a 30% improvement over the default. Practical guide with real examples.</description>
       <pubDate>Tue, 05 May 2026 08:54:48 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-cli-calculator-in-rust-under-2-hours/</guid>
-    </item>
-    <item>
-      <title>Generative AI and Large Language Models Explained: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/generative-ai-and-large-language-models-explained-/</link>
-      <description>Cut Generative AI and Large Language Models Explained failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, a…</description>
-      <pubDate>Tue, 05 May 2026 07:10:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/generative-ai-and-large-language-models-explained-/</guid>
     </item>
   </channel>
 </rss>
