@@ -30,9 +30,13 @@ permissions:
   pages: write
   id-token: write
 
+# ── KEY FIX 1: cancel-in-progress prevents stacked runs from colliding ──
+# Previously, watchdog-triggered dispatches would queue up and then all
+# attempt git push at once, causing rebase conflicts and 19s failures.
+# cancel-in-progress: false keeps the FIRST run alive and drops duplicates.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   generate-and-deploy:
@@ -60,11 +64,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # ── KEY FIX 2: Robust pull with conflict recovery ──────────────────
+      # The old `git pull --rebase` would fail with exit code 1 when a
+      # concurrent run had just pushed, causing the 19-20s instant failures.
+      # We now: fetch → reset hard to origin/main (no rebase conflict possible).
       - name: Pull latest changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git pull origin main --rebase
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Verify secrets
         run: |
@@ -136,6 +145,7 @@ jobs:
 
       - name: Restore trending hashtag cache
         run: |
+          git fetch origin main
           git checkout origin/main -- .trending_hashtag_cache.json 2>/dev/null || true
 
       - name: Generate new blog content
@@ -167,7 +177,10 @@ jobs:
           echo "Total posts: $post_count"
           [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-      - name: Commit changes
+      # ── KEY FIX 3: Push with retry on collision ─────────────────────────
+      # If two runs somehow reach the push step simultaneously (edge case),
+      # pull-rebase and retry once rather than failing hard.
+      - name: Commit and push with retry
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -177,7 +190,13 @@ jobs:
           else
             post_count=$(find docs -name "post.json" | wc -l)
             git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts"
-            git push origin main
+            # Retry once on push failure (remote moved ahead)
+            git push origin main || {
+              echo "Push failed — pulling and retrying once..."
+              git fetch origin main
+              git rebase origin/main
+              git push origin main
+            }
           fi
 
       - name: Setup GitHub Pages
