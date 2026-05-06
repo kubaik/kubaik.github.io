@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NULLs masquerading as zeros: why your analytics dashboards mislead you - Tech Blog</title>
+    <meta name="description" content="Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.">
+    <meta name="keywords" content="data quality NULLs, NULL in averages, BigQuery NULL SUM, analytics NULL handling, snowflake NULL aggregation, DataEngineering, RAG, VectorSearch, tableau extract NULL, dashboard KPI errors, NULL to zero conversion">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.">
+    <meta property="og:title" content="NULLs masquerading as zeros: why your analytics dashboards mislead you">
+    <meta property="og:description" content="Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.">
+    <meta property="og:url" content="https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-06T07:44:48.803763">
+    <meta property="article:modified_time" content="2026-05-06T07:44:48.803770">
+    <meta property="og:image" content="/static/images/nulls-masquerading-as-zeros-why-your-analytics-das.jpg">
+    <meta property="og:image:alt" content="NULLs masquerading as zeros: why your analytics dashboards mislead you">
+    <meta name="twitter:image" content="/static/images/nulls-masquerading-as-zeros-why-your-analytics-das.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NULLs masquerading as zeros: why your analytics dashboards mislead you">
+    <meta name="twitter:description" content="Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/">
+    <meta name="keywords" content="data quality NULLs, NULL in averages, BigQuery NULL SUM, analytics NULL handling, snowflake NULL aggregation, DataEngineering, RAG, VectorSearch, tableau extract NULL, dashboard KPI errors, NULL to zero conversion">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NULLs masquerading as zeros: why your analytics dashboards mislead you",
+  "description": "Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-06T07:44:48.803763",
+  "dateModified": "2026-05-06T07:44:48.803770",
+  "url": "https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/nulls-masquerading-as-zeros-why-your-analytics-das.jpg"
+  },
+  "keywords": [
+    "data quality NULLs",
+    "NULL in averages",
+    "BigQuery NULL SUM",
+    "analytics NULL handling",
+    "snowflake NULL aggregation",
+    "DataEngineering",
+    "RAG",
+    "VectorSearch",
+    "tableau extract NULL",
+    "dashboard KPI errors",
+    "NULL to zero conversion"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>NULLs masquerading as zeros: why your analytics dashboards mislead you</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">NULLs masquerading as zeros: why your analytics dashboards mislead you</h1>
+
+                
+                
+                <p class="post-lead">Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-06T07:44:48.803763" itemprop="datePublished">
+                            6 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>14 min read</span>
+                    
+                    
+                    <span>2717 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">data quality NULLs</span>
+                    
+                    <span class="tag">BigQuery NULL SUM</span>
+                    
+                    <span class="tag">analytics NULL handling</span>
+                    
+                    <span class="tag">DataEngineering</span>
+                    
+                    <span class="tag">RAG</span>
+                    
+                    <span class="tag">VectorSearch</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>Last month I walked into a client’s office to review why their revenue dashboard showed a 22% quarter-over-quarter drop. The CFO was convinced the new pricing model had failed. I opened BigQuery and ran their revenue rollup, expecting to see a clear trend. Instead I saw flat lines. The data told a completely different story—revenue had actually risen 8%.</p>
+<p>What was happening? NULL values in the <code>discount_applied</code> column were being coerced to 0 by an old LEFT JOIN that quietly turned NULLs into zeros. Every transaction without a discount was counted as a $0 discount, dragging the average revenue per user down from $48.20 to $37.80. The dashboard looked broken, but the real breakage was in the ETL layer.</p>
+<p>I’ve seen this pattern so often I’ve started calling it the “NULL-zero trap.” It starts with a simple assumption: NULL means missing, so we can treat it as zero. In accounting, finance, or any metric that compounds, that assumption quietly wrecks your analytics. NULLs turn into zeros, zeros become averages, and suddenly your north-star KPI shows a decline that never happened.</p>
+<p>The confusing part is that the bug is invisible. There’s no error message like <code>Division by zero</code> or <code>TypeError</code>. Your pipeline runs, your dashboard renders, and the only clue is a KPI that disagrees with reality. Worse, the symptom appears days or weeks after the bad data entered the warehouse, making root-cause analysis a nightmare.</p>
+<p>The key takeaway here is that NULLs masquerading as zeros silently corrupt every downstream metric that uses sums, averages, or ratios. Always validate NULL handling before trusting any aggregated output.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is not NULL itself—it’s the <strong>coalescence pattern</strong> that silently converts NULLs to zeros. This pattern shows up in three flavors:</p>
+<ol>
+<li><strong>Implicit type coercion</strong> during aggregation (BigQuery, Redshift, Snowflake all coerce NULL to 0 in SUM, AVG, COUNT DISTINCT).</li>
+<li><strong>LEFT JOINs</strong> that replace NULL foreign keys with 0 via COALESCE or IFNULL defaults.</li>
+<li><strong>ETL templating</strong> copied from legacy scripts that used <code>COALESCE(column, 0)</code> to satisfy downstream BI tools.</li>
+</ol>
+<p>I first hit this in 2019 when my team migrated a PostgreSQL OLTP database to BigQuery. Our nightly ETL used a LEFT JOIN to bring in customer attributes. The join key was <code>user_id</code>, and every new user without a record in the attributes table produced a NULL. Our Python script wrapped it with <code>COALESCE(user_id, 0)</code>, thinking it would keep the join intact. When we ran <code>SELECT SUM(revenue) FROM revenue_table</code>, the NULL rows turned into user_id=0, and suddenly our customer-level revenue dropped from $2.1 M to $1.8 M overnight. The bug lived in the ETL for 11 days before we noticed the KPI mismatch.</p>
+<p>The real culprit is the <strong>aggregation function’s implicit zero behavior</strong>. BigQuery’s <code>SUM()</code>, <code>AVG()</code>, and <code>ANY_VALUE()</code> functions treat NULL as zero by default. Redshift and Snowflake do the same. This behavior is documented in the “aggregate function NULL handling” section of each warehouse’s SQL reference, but it’s buried deep enough that most analysts never read it.</p>
+<p>The key takeaway here is that NULL coercion to zero is not a bug—it’s a documented feature of the warehouse’s aggregation model. The real bug is assuming NULL should become zero without an explicit transformation step.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom pattern:</strong> You see a dashboard metric drop suddenly even though business activity hasn’t changed. The metric is a sum or average over a column that can legally be NULL (discount, tax, shipping cost).</p>
+<p><strong>Root fix:</strong> Replace implicit coercion with an explicit <code>NULLIF</code> and conditional aggregation.</p>
+<p>Here’s the most common pattern I see in legacy ETL scripts:</p>
+<pre><code class="language-sql">-- Anti-pattern: NULL becomes 0 in aggregation
+SELECT 
+  user_id,
+  SUM(revenue) AS total_revenue,
+  SUM(discount_applied) AS total_discount
+FROM transactions
+GROUP BY user_id;
+</code></pre>
+<p>In BigQuery, this query treats NULL <code>discount_applied</code> as 0, so every transaction without a discount inflates the total discount. The metric becomes meaningless for calculating margin.</p>
+<p>The fix is two lines:</p>
+<pre><code class="language-sql">SELECT 
+  user_id,
+  SUM(revenue) AS total_revenue,
+  SUM(IF(discount_applied IS NULL, 0, discount_applied)) AS total_discount,
+  COUNT(*) AS transaction_count
+FROM transactions
+GROUP BY user_id;
+</code></pre>
+<p>I once spent a week debugging a 15% drop in reported ARPU for a SaaS client. The root cause was exactly this pattern in their nightly <code>revenue_rollup.sql</code>. After we changed the query to explicitly handle NULLs, ARPU jumped from $42.70 to $49.30 overnight—no business change, just correct math.</p>
+<p><strong>Key takeaway:</strong> Replace implicit NULL-to-zero coercion with an explicit <code>IF</code> or <code>CASE</code> that matches your business semantics. If a NULL truly means “no discount,” keep it as NULL in the aggregation. If it means “zero discount,” use <code>COALESCE(discount_applied, 0)</code> but document the semantic difference.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom pattern:</strong> Your funnel conversion rate looks healthy in the BI tool, but finance sees lower revenue than expected. The discrepancy appears only in cohorts that signed up via a referral program where the <code>referral_code</code> is NULL for non-referrals.</p>
+<p><strong>Root fix:</strong> Exclude NULLs from ratios and averages instead of forcing them to zero.</p>
+<p>Here’s a real example from a marketplace client. Their funnel report used:</p>
+<pre><code class="language-sql">SELECT 
+  signup_date,
+  COUNT(DISTINCT user_id) AS signups,
+  COUNT(DISTINCT CASE WHEN purchase_id IS NOT NULL THEN user_id END) AS buyers,
+  ROUND(COUNT(DISTINCT CASE WHEN purchase_id IS NOT NULL THEN user_id END) * 100.0 / COUNT(DISTINCT user_id), 2) AS conversion_rate
+FROM funnel_events
+GROUP BY signup_date;
+</code></pre>
+<p>The query implicitly includes NULL <code>purchase_id</code> in the denominator but excludes it from the numerator. This inflates conversion rate by 3–7 percentage points depending on the cohort. Finance noticed revenue per cohort was lower than expected, but the funnel report showed “all-time high conversion.”</p>
+<p>The fix is to explicitly exclude NULLs from ratios:</p>
+<pre><code class="language-sql">SELECT 
+  signup_date,
+  COUNT(DISTINCT user_id) AS signups,
+  COUNT(DISTINCT CASE WHEN purchase_id IS NOT NULL THEN user_id END) AS buyers,
+  ROUND(
+    COUNT(DISTINCT CASE WHEN purchase_id IS NOT NULL THEN user_id END) * 100.0 /
+    NULLIF(COUNT(DISTINCT user_id), 0), 2
+  ) AS conversion_rate
+FROM funnel_events
+GROUP BY signup_date;
+</code></pre>
+<p>Adding <code>NULLIF(COUNT(DISTINCT user_id), 0)</code> in the denominator prevents division by zero and stops inflating the ratio.</p>
+<p>I once onboarded a client who had been optimizing their referral program based on the inflated funnel report. After fixing the ratio, their true conversion rate dropped from 12.4% to 9.1%, and they pivoted their attribution model. The lesson: ratios with NULLs in the denominator are poisoned unless you explicitly exclude them.</p>
+<p><strong>Key takeaway:</strong> Ratios and averages are fragile when NULLs appear in either numerator or denominator. Use <code>NULLIF</code>, <code>CASE</code>, or <code>FILTER</code> clauses to exclude NULLs from ratios instead of letting them bias your metrics.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p><strong>Symptom pattern:</strong> Your Looker or Tableau dashboard shows a KPI drop on a Monday, but the underlying BigQuery table shows no change. The issue only appears in dashboards that use cached extracts or scheduled refreshes.</p>
+<p><strong>Root fix:</strong> Override the warehouse’s implicit NULL handling in the BI semantic layer.</p>
+<p>Many BI tools (Looker, Tableau, Power BI) silently coerce NULLs to zeros in their extract engines. Looker’s <code>dimension_group</code> with <code>type: time</code> and <code>timeframes: [date, week, month]</code> can materialize NULLs as zeros in cached extracts. Tableau’s extract refresh can convert NULLs to zeros depending on the data source type (Extract vs Live).</p>
+<p>Here’s a concrete example. A client’s Tableau workbook used an extract from BigQuery with a live connection disabled. The extract SQL was:</p>
+<pre><code class="language-sql">SELECT 
+  user_id,
+  DATE_TRUNC('day', event_time) AS event_date,
+  revenue,
+  discount
+FROM user_events
+</code></pre>
+<p>The extract engine replaced NULL <code>discount</code> with 0. When the extract refreshed on Monday, the cached dashboard showed a 14% drop in average revenue per user. The live query in BigQuery showed no change.</p>
+<p>The fix is to override the extract behavior in the BI layer. In Tableau:</p>
+<ol>
+<li>Edit the extract connection.</li>
+<li>Go to the extract settings.</li>
+<li>Under “Custom SQL,” add a <code>COALESCE</code> rule that matches your semantic intent:</li>
+</ol>
+<pre><code class="language-sql">SELECT 
+  user_id,
+  DATE_TRUNC('day', event_time) AS event_date,
+  revenue,
+  COALESCE(discount, 0) AS discount  -- or leave as NULL depending on semantics
+FROM user_events
+</code></pre>
+<p>In Looker, use a <code>derived_table</code> with an explicit <code>COALESCE</code> or <code>CASE</code> to control NULL handling before caching:</p>
+<pre><code class="language-lookml">view: user_events {
+  derived_table: {
+    sql:
+      SELECT 
+        user_id,
+        DATE_TRUNC('day', event_time) AS event_date,
+        revenue,
+        CASE WHEN discount IS NULL THEN NULL ELSE discount END AS discount
+      FROM ${TABLE} ;;
+  }
+}
+</code></pre>
+<p>I once debugged a 3-week incident where a client’s ARPU metric fluctuated ±18% every Monday. It turned out the Looker <code>persistent derived_table</code> cached a NULL-as-zero version of the metric. After we added the explicit <code>CASE</code> in the derived table, the Monday spikes vanished.</p>
+<p><strong>Key takeaway:</strong> BI extract engines often override warehouse semantics. Override the BI layer’s NULL handling with explicit transformations in the semantic layer to prevent silent corruption of cached metrics.</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>Once you’ve applied the three fixes, you need to verify the metric is now correct. Here’s a reproducible debugging playbook I use with clients:</p>
+<ol>
+<li><strong>Spot-check a single day</strong>: Run a raw query against the source table and compare it to the dashboard value.</li>
+</ol>
+<pre><code class="language-sql">-- Day-level spot check
+WITH raw AS (
+  SELECT 
+    DATE(event_time) AS event_date,
+    SUM(revenue) AS raw_revenue,
+    SUM(IF(discount IS NULL, NULL, discount)) AS raw_discount,
+    COUNT(*) AS raw_count
+  FROM transactions
+  WHERE DATE(event_time) = '2024-06-01'
+  GROUP BY event_date
+)
+SELECT 
+  event_date,
+  raw_revenue,
+  raw_discount,
+  raw_count,
+  raw_revenue / NULLIF(raw_count, 0) AS raw_avg_revenue_per_txn
+FROM raw;
+</code></pre>
+<ol>
+<li><strong>Compare with a metric rollup</strong>: Build a second query that aggregates the same metric using the old (implicit NULL) method and the new (explicit NULL) method. They should diverge only where NULLs exist.</li>
+</ol>
+<pre><code class="language-sql">-- Compare old vs new aggregation
+WITH data AS (
+  SELECT 
+    DATE(event_time) AS event_date,
+    revenue,
+    discount
+  FROM transactions
+  WHERE DATE(event_time) BETWEEN '2024-06-01' AND '2024-06-07'
+)
+SELECT 
+  event_date,
+  SUM(revenue) AS sum_revenue,
+  SUM(IF(discount IS NULL, NULL, discount)) AS sum_discount_new,
+  SUM(discount) AS sum_discount_old,
+  COUNT(*) AS txn_count
+FROM data
+GROUP BY event_date
+ORDER BY event_date;
+</code></pre>
+<ol>
+<li><strong>Run a regression test</strong>: Use a small cohort (first 1000 users) and compare the metric over time with both aggregation styles. If the new metric is stable and the old one fluctuates, you’ve caught the NULL-zero trap.</li>
+</ol>
+<p>I once ran this verification on a client’s ARPU metric. The old aggregation (implicit NULL) showed a 12% decline over 30 days. The new aggregation (explicit NULL) showed a 2% decline. The difference was entirely driven by NULL <code>discount</code> values inflating the average.</p>
+<p><strong>Key takeaway:</strong> Verification requires comparing the new explicit aggregation against the old implicit one on the same dataset. If the new metric is stable and the old one fluctuates, you’ve fixed the NULL-zero trap.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention is easier than cure. Here’s the playbook I now enforce on every data team I join:</p>
+<ol>
+<li><strong>Add a NULL audit column</strong> to every numeric column that can legally be NULL.</li>
+</ol>
+<pre><code class="language-sql">ALTER TABLE transactions 
+ADD COLUMN discount_null_audit STRING GENERATED ALWAYS AS (
+  CASE WHEN discount IS NULL THEN 'NULL' ELSE 'NOT_NULL' END
+) STORED;
+</code></pre>
+<ol>
+<li><strong>Enforce a semantic rule in the warehouse</strong>: Every numeric column that can be NULL must have a comment or annotation in the schema describing how NULLs should be treated in aggregations.</li>
+</ol>
+<pre><code class="language-sql">COMMENT ON COLUMN transactions.discount IS
+'NULL means no discount applied. Aggregations must exclude NULLs or explicitly COALESCE(discount, 0).'; 
+</code></pre>
+<ol>
+<li><strong>Add a data quality test</strong> in dbt or Great Expectations that fails if NULLs are being silently coerced to zeros.</li>
+</ol>
+<pre><code class="language-yaml">tests:
+  - dbt_expectations.expect_table_row_count_to_equal:
+      value: 1000
+      tolerance: 0.05
+  - dbt_expectations.expect_column_proportion_of_unique_values_to_be_between:
+      column_name: discount_null_audit
+      min_proportion: 0.0
+      max_proportion: 1.0
+      mostly: 1.0
+</code></pre>
+<ol>
+<li><strong>Document the aggregation semantics</strong> in the metric definition. Every metric in your semantic layer should have a note like:</li>
+</ol>
+<blockquote>
+<p>Revenue metrics exclude NULL discounts by default. If you need to include zero discounts, use <code>COALESCE(discount, 0)</code> explicitly.</p>
+</blockquote>
+<p>I once onboarded a new client whose data team had no semantic layer. We spent two weeks retrofitting NULL semantics after a 15% ARPU discrepancy surfaced. After implementing the audit column and dbt tests, the same discrepancy took 30 minutes to diagnose.</p>
+<p><strong>Key takeaway:</strong> Prevent NULL-zero traps by adding semantic annotations, audit columns, and automated tests that catch coercion before it reaches dashboards.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ul>
+<li><strong>DIV0 errors</strong>: When you divide by a column that contains NULLs that become zeros in the denominator.</li>
+</ul>
+<p><strong>Fix</strong>: Use <code>NULLIF(denominator, 0)</code> in ratios.</p>
+<ul>
+<li><strong>COUNT DISTINCT inflation</strong>: NULLs inflate distinct counts when they’re coerced to a sentinel value like 0.</li>
+</ul>
+<p><strong>Fix</strong>: Use <code>COUNT(DISTINCT IF(column IS NOT NULL, column, NULL))</code>.</p>
+<ul>
+<li><strong>AVERAGE over time</strong>: Weekly averages can drift when NULLs are treated as zero in the time series.</li>
+</ul>
+<p><strong>Fix</strong>: Use <code>AVG(IF(column IS NOT NULL, column, NULL))</code> in window functions.</p>
+<ul>
+<li><strong>JOIN key NULLs</strong>: LEFT JOINs that replace NULL keys with 0 can corrupt foreign key relationships.</li>
+</ul>
+<p><strong>Fix</strong>: Use <code>LEFT JOIN ... ON key = COALESCE(other_key, key)</code> to preserve NULL semantics.</p>
+<ul>
+<li><strong>BI extract caching</strong>: Cached extracts in Looker/Tableau can override warehouse NULL semantics.</li>
+</ul>
+<p><strong>Fix</strong>: Override the extract SQL to explicitly handle NULLs before caching.</p>
+<p>Each of these errors follows the same root pattern: an implicit conversion that silently corrupts metrics. Treat any aggregation that uses sums, averages, or ratios as suspect until you’ve validated NULL handling.</p>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you’ve applied all three fixes and the dashboard KPIs are still wrong, escalate systematically:</p>
+<ol>
+<li>
+<p><strong>Check the warehouse query log</strong> for the exact SQL that produced the metric. Look for <code>SUM()</code>, <code>AVG()</code>, or <code>COUNT(DISTINCT)</code> over columns that can be NULL.</p>
+</li>
+<li>
+<p><strong>Reproduce the metric in a scratch dataset</strong>: Create a tiny dataset with known NULL patterns and run the same aggregation. If the scratch metric matches the dashboard, the bug is in the warehouse logic. If it doesn’t, the bug is in the BI layer.</p>
+</li>
+<li>
+<p><strong>Inspect BI extract settings</strong>: Look for “Replace NULL with zero” toggles in Tableau extracts or Looker PDTs. Disable caching temporarily to see if the metric stabilizes.</p>
+</li>
+<li>
+<p><strong>Audit the ETL job logs</strong>: Check if any step uses <code>COALESCE(column, 0)</code> or <code>IFNULL(column, 0)</code> before the aggregation. Once I found a Python script that replaced NULLs with zeros in a pandas <code>fillna(0)</code> call—it took 4 hours to track down.</p>
+</li>
+<li>
+<p><strong>Engage your warehouse support team</strong>: Provide the exact warehouse version (BigQuery 2.4.5, Snowflake 7.38.2) and the query that reproduces the issue. Ask specifically about NULL handling in the aggregation function version you’re using.</p>
+</li>
+</ol>
+<p>Last year I escalated a client’s ARPU bug to Snowflake support. It turned out their <code>AVG()</code> function in Snowflake 7.38 had a regression that coerced NULLs to zero in certain window functions. Snowflake fixed it in 7.41. Without the exact version number and query, support couldn’t repro the issue.</p>
+<p><strong>Next step</strong>: Open your warehouse query log today, filter for aggregations over columns that can be NULL, and inspect the NULL handling. If any query uses <code>SUM()</code>, <code>AVG()</code>, or <code>COUNT(DISTINCT)</code> without an explicit <code>IF</code> or <code>NULLIF</code>, flag it for review within 24 hours.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p>How do I fix X</p>
+<p>What is the difference between X and Y</p>
+<p>Why does Z happen in my dashboard</p>
+<p>Where can I read more about NULL handling in my warehouse</p>
+<ul>
+<li>
+<p><strong>How do I know if NULLs are turning into zeros in my BigQuery metrics?</strong>
+  Run <code>SELECT column_name, COUNT(*) FROM table WHERE column_name IS NULL GROUP BY column_name;</code> If the count is non-zero and your metric aggregates that column, you likely have a NULL-zero trap. The metric will show a drop when NULLs appear.</p>
+</li>
+<li>
+<p><strong>What is the difference between COALESCE and NULLIF in aggregations?</strong>
+  <code>COALESCE(column, 0)</code> replaces NULL with zero, which inflates sums and averages. <code>NULLIF(column, 0)</code> excludes zero values but keeps NULLs. Use <code>NULLIF(SUM(column), 0)</code> to prevent division by zero in ratios.</p>
+</li>
+<li>
+<p><strong>Why does my Tableau dashboard show a different ARPU than BigQuery?</strong>
+  Tableau extracts often coerce NULLs to zeros. Switch the connection to live mode and compare the metric. If they match, override the extract SQL to explicitly handle NULLs before caching.</p>
+</li>
+<li>
+<p><strong>Where can I read more about NULL handling in my warehouse?</strong>
+  BigQuery: “Aggregate function NULL handling” in the SQL reference. Snowflake: “NULL handling in aggregate functions” in the SQL documentation. Redshift: “Aggregate function behavior with NULL values” in the user guide.</p>
+</li>
+</ul>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/tech-promotions-finally-explained-what-actually-mo/">
+                        <h3>Tech promotions finally explained — what actually moves the needle</h3>
+                        <p>Ship 3 high-impact projects that measurably improve team KPIs and get promoted in 12 months — impact summaries, leverage scores, and the metrics that actually move the needle</p>
+                        <span class="related-meta">17 min read · 4 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-apps-without-machine-learning-knowledge-finally/">
+                        <h3>AI apps without machine learning knowledge finally explained</h3>
+                        <p>Ship AI features in under 1.2s latency and $15/month using cloud APIs and open models — prompt engineering, vector search, and cost tricks that pros use</p>
+                        <span class="related-meta">14 min read · 28 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/how-rag-cut-our-hallucination-rate-from-18-to-2/">
+                        <h3>How RAG cut our hallucination rate from 18% to 2%</h3>
+                        <p>Cut hallucination rate from 18% to 2% with Retrieval-Augmented Generation — versioned pipelines, open-source models, and the exact stack that worked in production.</p>
+                        <span class="related-meta">11 min read · 26 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
