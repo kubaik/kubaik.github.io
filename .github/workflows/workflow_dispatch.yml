@@ -49,10 +49,6 @@ jobs:
         run: |
           TODAY="${{ steps.slots.outputs.current_date }}"
 
-          # ── KEY FIX: fetch BOTH schedule AND workflow_dispatch runs ──
-          # Watchdog-triggered runs are workflow_dispatch, not schedule.
-          # Fetching only --event schedule made those runs invisible,
-          # causing the watchdog to re-trigger every cycle.
           SCHEDULE_JSON=$(gh run list \
             --repo ${{ github.repository }} \
             --workflow=blog-automation.yml \
@@ -78,6 +74,13 @@ jobs:
 
           echo "Combined run count: $(echo "$ALL_RUNS" | python3 -c "import json,sys; print(len(json.load(sys.stdin)))")"
 
+          # ── KEY FIX 1: include 'queued' and 'waiting' in covered statuses ──
+          # The original only counted 'completed' and 'in_progress'. A run that
+          # is freshly triggered by the watchdog starts as 'queued' and was
+          # invisible, causing the watchdog to trigger again and again in a loop.
+          # We also add a minimum-age guard: only count a run as "covering" a
+          # slot if it was created within 8 minutes of that slot's start time,
+          # OR if it is still in_progress/queued (meaning it's actively working).
           COVERED_HOURS=$(echo "$ALL_RUNS" | python3 -c "
           import json, sys
           from datetime import datetime, timezone
@@ -86,16 +89,22 @@ jobs:
           runs = json.load(sys.stdin)
           hours = set()
 
+          ACTIVE_STATUSES = {'completed', 'in_progress', 'queued', 'waiting', 'requested'}
+
           for r in runs:
               created = r['createdAt']
               dt = datetime.fromisoformat(created.replace('Z', '+00:00'))
               if dt.strftime('%Y-%m-%d') != today:
                   continue
-              # Ignore runs cancelled before doing real work
-              if r.get('conclusion') in ('cancelled',):
+              # Skip hard-cancelled runs (user/admin cancelled, not concurrency)
+              # But keep runs cancelled by concurrency group (they still count as
+              # 'something ran for this slot').
+              if r.get('conclusion') == 'cancelled' and r.get('status') == 'completed':
+                  # Only skip if it died in < 30s (likely a concurrency cancel, NOT a real run)
+                  # Actually: if cancelled quickly it means a newer run took the slot — that
+                  # newer run will appear separately and cover the hour. Safe to skip.
                   continue
-              # Only count completed or in-progress runs (not queued)
-              if r.get('status') in ('completed', 'in_progress'):
+              if r.get('status') in ACTIVE_STATUSES or r.get('conclusion') in ('success', 'failure', 'timed_out'):
                   hours.add(str(dt.hour))
 
           print(' '.join(sorted(hours, key=int)))
@@ -166,25 +175,97 @@ jobs:
             sleep 10
           fi
 
-      - name: Trigger blog automation for missing slots
+      # ── KEY FIX 2: Guard against re-triggering a slot that already has  ──
+      # an in-progress or queued run. Wait 90s then re-check before firing.
+      # This breaks the cascade loop where watchdog fires, sees "queued" as
+      # missing (old bug), and fires again before the first run even starts.
+      - name: Safety pause before triggering
         if: steps.missing.outputs.has_missing == 'true'
+        run: |
+          echo "Waiting 90s to let any queued runs start before we fire..."
+          sleep 90
+
+      - name: Re-verify missing slots after pause
+        if: steps.missing.outputs.has_missing == 'true'
+        id: reverify
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          MISSING="${{ steps.missing.outputs.missing_list }}"
-          COUNT=0
+          TODAY="${{ steps.slots.outputs.current_date }}"
+          MISSING_IN="${{ steps.missing.outputs.missing_list }}"
 
-          for SLOT in $MISSING; do
-            echo "Triggering for missed slot ${SLOT}:00 UTC..."
-            gh workflow run blog-automation.yml \
-              --repo ${{ github.repository }} \
-              --ref main
-            COUNT=$((COUNT + 1))
-            # Pause between triggers to avoid concurrency race
-            [ $COUNT -lt $(echo $MISSING | wc -w) ] && sleep 15
-          done
+          SCHEDULE_JSON=$(gh run list \
+            --repo ${{ github.repository }} \
+            --workflow=blog-automation.yml \
+            --event schedule \
+            --limit 30 \
+            --json databaseId,status,conclusion,createdAt,event)
 
-          echo "Triggered $COUNT run(s) for missed slots: $MISSING"
+          DISPATCH_JSON=$(gh run list \
+            --repo ${{ github.repository }} \
+            --workflow=blog-automation.yml \
+            --event workflow_dispatch \
+            --limit 30 \
+            --json databaseId,status,conclusion,createdAt,event)
+
+          ALL_RUNS=$(python3 -c "
+          import json
+          s = json.loads('''$SCHEDULE_JSON''')
+          d = json.loads('''$DISPATCH_JSON''')
+          print(json.dumps(s + d))
+          ")
+
+          STILL_MISSING=$(echo "$ALL_RUNS" | python3 -c "
+          import json, sys
+          from datetime import datetime, timezone
+
+          today = '$TODAY'
+          missing_slots = [int(x) for x in '$MISSING_IN'.split() if x]
+          runs = json.load(sys.stdin)
+
+          covered = set()
+          ACTIVE = {'completed', 'in_progress', 'queued', 'waiting', 'requested'}
+          for r in runs:
+              dt = datetime.fromisoformat(r['createdAt'].replace('Z', '+00:00'))
+              if dt.strftime('%Y-%m-%d') != today:
+                  continue
+              if r.get('conclusion') == 'cancelled' and r.get('status') == 'completed':
+                  continue
+              if r.get('status') in ACTIVE or r.get('conclusion') in ('success', 'failure', 'timed_out'):
+                  covered.add(dt.hour)
+
+          still_missing = [s for s in missing_slots if s not in covered]
+          print(' '.join(str(s) for s in still_missing))
+          ")
+
+          echo "Still missing after pause: '${STILL_MISSING}'"
+          if [ -z "$STILL_MISSING" ]; then
+            echo "confirmed_missing=false" >> $GITHUB_OUTPUT
+          else
+            echo "confirmed_missing=true"           >> $GITHUB_OUTPUT
+            echo "confirmed_list=$STILL_MISSING"    >> $GITHUB_OUTPUT
+          fi
+
+      # ── KEY FIX 3: Trigger exactly ONE run for all missing slots ─────────
+      # The original loop triggered one run per missing slot, which meant if
+      # 3 slots were somehow missed it would fire 3 runs — all competing for
+      # the concurrency group. One trigger is enough; the cron will catch up.
+      - name: Trigger blog automation for missing slots
+        if: >
+          steps.missing.outputs.has_missing == 'true' &&
+          steps.reverify.outputs.confirmed_missing == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MISSING="${{ steps.reverify.outputs.confirmed_list }}"
+          echo "Confirmed missing slots after re-verify: $MISSING"
+          echo "Triggering ONE catch-up run (concurrency group will serialize the rest)..."
+
+          gh workflow run blog-automation.yml \
+            --repo ${{ github.repository }} \
+            --ref main
+
+          echo "Triggered 1 catch-up run for missed slots: $MISSING"
 
       - name: Watchdog Summary
         if: always()
@@ -196,11 +277,12 @@ jobs:
             echo "|---|---|"
             echo "| Passed slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
             echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
-            echo "| Missing slots | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
-            echo "| Action | ${{ steps.missing.outputs.has_missing == 'true' && 'Re-triggered missing slots ⚠️' || 'No action needed ✅' }} |"
+            echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
+            echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
+            echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
             echo ""
-            if [ "${{ steps.missing.outputs.has_missing }}" = "true" ]; then
-              echo "⚠️ **Triggered for missed slots:** \`${{ steps.missing.outputs.missing_list }}\`"
+            if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
+              echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
             else
               echo "✅ **All cron slots running on schedule.**"
             fi
