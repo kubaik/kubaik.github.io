@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2026 11:16:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2026 11:21:39 +0000</lastBuildDate>
+    <item>
+      <title>21 Time Management Tactics That Fixed My Burnout in 6 Months</title>
+      <link>https://kubaik.github.io/21-time-management-tactics-that-fixed-my-burnout-i/</link>
+      <description>Recover 4.5 hours of focus time daily with calendar blocking and the &quot;One Thing&quot; rule — proven tactics that cut context-switching by 55% and increased pull-request throughput by 28%.</description>
+      <pubDate>Wed, 06 May 2026 11:21:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/21-time-management-tactics-that-fixed-my-burnout-i/</guid>
+    </item>
     <item>
       <title>The 3-word comment that reduced our bugs by 42%</title>
       <link>https://kubaik.github.io/the-3-word-comment-that-reduced-our-bugs-by-42/</link>
@@ -138,13 +145,6 @@
       <description>Cut Generative AI and Large Language Models Explained failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, a…</description>
       <pubDate>Tue, 05 May 2026 07:10:31 +0000</pubDate>
       <guid>https://kubaik.github.io/generative-ai-and-large-language-models-explained-/</guid>
-    </item>
-    <item>
-      <title>11 Real-World Auth Patterns Tested in 2024</title>
-      <link>https://kubaik.github.io/11-real-world-auth-patterns-tested-in-2024/</link>
-      <description>Cut authentication latency to 112 ms p95 and keep costs under $50/month with these 11 real-world auth patterns tested on a $40 Vultr VPS in Frankfurt.</description>
-      <pubDate>Mon, 04 May 2026 19:14:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/11-real-world-auth-patterns-tested-in-2024/</guid>
     </item>
   </channel>
 </rss>
