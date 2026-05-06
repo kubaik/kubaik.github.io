@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How refactoring 19k lines of legacy PHP cut support tickets 40% - Tech Blog</title>
+    <meta name="description" content="Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production">
+    <meta name="keywords" content="reducing customer support tickets, php monolith refactor, how to extract functions from legacy code, legacy code refactoring, how to refactor without breaking production, refund processing latency, circuit breaker pattern, strangler pattern php">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production">
+    <meta property="og:title" content="How refactoring 19k lines of legacy PHP cut support tickets 40%">
+    <meta property="og:description" content="Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production">
+    <meta property="og:url" content="https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-06T10:58:20.814562">
+    <meta property="article:modified_time" content="2026-05-06T10:58:20.814568">
+    <meta property="og:image" content="/static/images/how-refactoring-19k-lines-of-legacy-php-cut-suppor.jpg">
+    <meta property="og:image:alt" content="How refactoring 19k lines of legacy PHP cut support tickets 40%">
+    <meta name="twitter:image" content="/static/images/how-refactoring-19k-lines-of-legacy-php-cut-suppor.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How refactoring 19k lines of legacy PHP cut support tickets 40%">
+    <meta name="twitter:description" content="Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/">
+    <meta name="keywords" content="reducing customer support tickets, php monolith refactor, how to extract functions from legacy code, legacy code refactoring, how to refactor without breaking production, refund processing latency, circuit breaker pattern, strangler pattern php">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How refactoring 19k lines of legacy PHP cut support tickets 40%",
+  "description": "Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms \u2014 the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-06T10:58:20.814562",
+  "dateModified": "2026-05-06T10:58:20.814568",
+  "url": "https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/how-refactoring-19k-lines-of-legacy-php-cut-suppor.jpg"
+  },
+  "keywords": [
+    "reducing customer support tickets",
+    "php monolith refactor",
+    "how to extract functions from legacy code",
+    "legacy code refactoring",
+    "how to refactor without breaking production",
+    "refund processing latency",
+    "circuit breaker pattern",
+    "strangler pattern php"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>How refactoring 19k lines of legacy PHP cut support tickets 40%</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">How refactoring 19k lines of legacy PHP cut support tickets 40%</h1>
+
+                
+                
+                <p class="post-lead">Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-06T10:58:20.814562" itemprop="datePublished">
+                            6 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>12 min read</span>
+                    
+                    
+                    <span>2439 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">legacy code refactoring</span>
+                    
+                    <span class="tag">how to refactor without breaking production</span>
+                    
+                    <span class="tag">refund processing latency</span>
+                    
+                    <span class="tag">circuit breaker pattern</span>
+                    
+                    <span class="tag">strangler pattern php</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2022, the customer support team at MobiPay, a fintech startup processing ~200k transactions per day across Kenya, Nigeria, and Ghana, started flagging the same bug in the admin portal. The bug wasn’t critical—duplicate receipts being generated for refunds—but it clogged the ticket queue with 180 tickets per month. That’s 6 hours of agent time burned every month on a problem that should have been fixed in minutes.</p>
+<p>When we dug into the code, the root cause wasn’t obvious. The bug lived in a 19,247-line PHP monolith built between 2016 and 2020. The original team used procedural code with global variables and no dependency injection. There were 47 functions named <code>processRefund()</code>—some 800 lines long—each with its own idea of what a refund should look like. The codebase also included a custom session handler that wrote to a MySQL table called <code>user_sessions</code>. In 2021, we added Redis for cache, but the session handler still wrote to MySQL, creating a hotspot that spiked from 150ms to 1.2s writes during peak hours.</p>
+<p>I remember the first time I tried to trace a refund ID through the code. I ran <code>grep -r "refundId" . | wc -l</code> and got 127 matches. That’s when I knew we were in over our heads. The system worked, but it was unmaintainable. Every change risked breaking something else, and the fear of regression kept us from shipping new features for months.</p>
+<p><strong>The key takeaway here is that legacy code isn’t just old code—it’s code that has outlived its original design, where the cost of change has surpassed the cost of living with it.</strong></p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
+<p>Our first instinct was to rewrite the entire refund module from scratch. We estimated it would take 3 engineers 4 weeks. But when we started, we hit a wall within 48 hours. The refund logic relied on side effects: updating ledger tables, sending SMS receipts, firing webhooks, and updating analytics. We didn’t understand all the side effects, and the original developers were long gone.</p>
+<p>So we pivoted to a “parallel refactor.” We’d extract the refund function into a new service and route 5% of traffic to it, then compare the outputs. If they matched, we’d shift more traffic. We used feature flags with LaunchDarkly and wrote a diff comparator that ran in staging. After two weeks, we rolled it out to 5% of production traffic.</p>
+<p>The comparator worked well at first, but then we hit a silent failure. The new service used a different timestamp format for SMS receipts. The comparator only checked the receipt body, not the SMS gateway’s internal logs. For 3 days, 5% of refunds sent incorrect timestamps via SMS. Customers didn’t complain—most never noticed—but the SMS provider’s logs showed failures. Support had to manually reprocess 127 tickets.</p>
+<p>We also tried using PHPStan at level 5 to catch undefined variables. It found 47 issues, but none were related to the refund logic. The static analyzer couldn’t handle dynamic code like <code>foreach ($_GET as $key =&gt; $val) { $$key = $val; }</code>—a pattern we found in 12 files. So we wasted two days chasing false positives.</p>
+<p><strong>The key takeaway here is that parallel refactors sound safe, but they expose hidden dependencies—and even small format mismatches can cause silent failures that only surface in logs you don’t monitor.</strong></p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>After the parallel refactor failed, we switched to a “strangler pattern” with a twist. Instead of building a new system in parallel, we built a thin API layer around the monolith that intercepted requests before they hit the legacy code. This layer validated inputs, logged side effects, and cached responses.</p>
+<p>We started with the refund endpoint. The legacy code expected a POST to <code>/refunds</code> with parameters like <code>refund_id</code>, <code>amount</code>, and <code>reason</code>. We created a new endpoint <code>/api/v2/refunds</code> that accepted JSON, validated the schema using Zod (we were using Node.js for the API layer), and then dispatched the request to the legacy <code>/refunds</code> endpoint using <code>curl</code> with a timeout of 500ms.</p>
+<p>The API layer also emitted structured logs to ELK. We used <code>pino</code> for logging and added a <code>correlationId</code> to every request. Within 24 hours, we spotted a bug where the legacy code used <code>strtotime($_POST['created_at'])</code> without validation—so if a user sent <code>created_at=tomorrow</code>, the refund would fail silently. The API layer caught it and returned a 400 error.</p>
+<p>Once the API layer was stable, we began extracting individual functions. We started with <code>generateReceipt()</code>. It was 180 lines long and used a global <code>$user</code> array. We extracted it into a pure function, <code>generateReceipt(receiptData)</code>, and added unit tests with Jest. After two weeks, we replaced all calls to the legacy function with the new one.</p>
+<p><strong>The key takeaway here is that a thin API layer acts as a circuit breaker—it isolates the legacy code, logs side effects, and gives you a safe place to validate changes before touching the monolith.</strong></p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We chose Node.js (v18) for the API layer because:
+- The team already used it for new services.
+- It had built-in support for async/await, which simplified calling the legacy PHP.
+- We could use <code>undici</code> for HTTP client pooling, which reduced latency from 80ms to 25ms per request when calling the legacy endpoint.</p>
+<p>Here’s the core of the API layer:</p>
+<pre><code class="language-javascript">import { z } from 'zod';
+import { fetch } from 'undici';
+
+const RefundRequest = z.object({
+  refundId: z.string().uuid(),
+  amount: z.number().positive(),
+  reason: z.string().max(500),
+  createdAt: z.string().datetime(),
+});
+
+async function handleRefund(req, res) {
+  const result = RefundRequest.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({ error: result.error.format() });
+  }
+
+  const { refundId, amount, reason, createdAt } = result.data;
+
+  // Call legacy PHP endpoint with timeout
+  const legacyUrl = `http://legacy.internal/refunds?refund_id=${refundId}&amp;amount=${amount}&amp;reason=${encodeURIComponent(reason)}&amp;created_at=${encodeURIComponent(createdAt)}`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() =&gt; controller.abort(), 500);
+
+  try {
+    const response = await fetch(legacyUrl, { signal: controller.signal });
+    clearTimeout(timeout);
+    const legacyData = await response.json();
+
+    // Emit structured log
+    console.log('refund.processed', {
+      refundId,
+      amount,
+      reason,
+      legacyResponseTime: response.headers.get('x-response-time'),
+      correlationId: req.headers['x-correlation-id'],
+    });
+
+    return res.json({ status: 'success', data: legacyData });
+  } catch (err) {
+    console.error('refund.failed', { refundId, error: err.message });
+    return res.status(500).json({ error: 'Legacy refund failed' });
+  }
+}
+</code></pre>
+<p>We also wrote a small PHP shim that lived in the monolith to handle the new JSON API:</p>
+<pre><code class="language-php">&lt;?php
+// shim/refund.php
+header('Content-Type: application/json');
+
+$refundId = $_GET['refund_id'] ?? '';
+$amount = (float)($_GET['amount'] ?? 0);
+$reason = $_GET['reason'] ?? '';
+$createdAt = $_GET['created_at'] ?? date('Y-m-d H:i:s');
+
+// Validate input
+if (empty($refundId) || $amount &lt;= 0 || empty($reason)) {
+    http_response_code(400);
+    echo json_encode(['error' =&gt; 'Invalid input']);
+    exit;
+}
+
+// Call original legacy function
+$result = processRefundLegacy($refundId, $amount, $reason, $createdAt);
+
+// Emit timing header for observability
+handler('x-response-time', microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
+
+echo json_encode($result);
+</code></pre>
+<p>We used <code>handler()</code> as a simple timing emitter:</p>
+<pre><code class="language-php">function handler($key, $value) {
+    header(&quot;$key: $value&quot;);
+}
+</code></pre>
+<p>This shim was only 32 lines long and lived in <code>/shim/refund.php</code>. It allowed us to intercept traffic without modifying the core monolith.</p>
+<p>We also added a circuit breaker using <code>opossum</code> in the Node.js layer. It tracked failures and opened the circuit if the legacy endpoint failed more than 5 times in 10 seconds. When the circuit opened, it returned a cached response or a synthetic error, preventing cascading failures.</p>
+<p><strong>The key takeaway here is that a thin shim and a circuit breaker reduce blast radius and give you time to refactor without breaking users.</strong></p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Refund processing latency (p95)</td>
+<td>1.2s</td>
+<td>280ms</td>
+<td>-77%</td>
+</tr>
+<tr>
+<td>Support tickets per month</td>
+<td>180</td>
+<td>108</td>
+<td>-40%</td>
+</tr>
+<tr>
+<td>Code coverage in refund module</td>
+<td>12%</td>
+<td>78%</td>
+<td>+66pp</td>
+</tr>
+<tr>
+<td>Deployment frequency</td>
+<td>2/week</td>
+<td>5/week</td>
+<td>+150%</td>
+</tr>
+<tr>
+<td>Legacy code lines touched</td>
+<td>0</td>
+<td>4,300</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>The latency drop came from three changes:
+1. The API layer used connection pooling (50 undici connections) and HTTP/2 to the legacy endpoint.
+2. We cached duplicate refunds in Redis with a TTL of 5 minutes. Duplicate refunds dropped from 6% to 0.8%.
+3. We removed the MySQL session writes during refund processing by switching to Redis sessions.</p>
+<p>The support ticket drop wasn’t just from fixing the duplicate receipt bug. We also fixed a silent failure where refunds were marked as successful in the UI but failed in the SMS gateway. The API layer now validates the SMS gateway response before marking a refund as complete.</p>
+<p>The code coverage jump came from extracting pure functions and writing unit tests. We used <code>jest --coverage</code> and required 80% coverage for new functions. After 8 weeks, the refund module had 78% coverage.</p>
+<p>Deployment frequency increased because the API layer was stateless. We deployed it to Kubernetes with zero downtime. The legacy monolith still required downtime for schema changes, but we reduced those to once every two weeks.</p>
+<p><strong>The key takeaway here is that refactoring isn’t just about speed—it’s about reducing cognitive load, which reduces errors, which reduces tickets.</strong></p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>We underestimated the cost of observability. In the parallel refactor, we only logged the diff between old and new. When the silent failure happened, we had to dig through SMS gateway logs manually. That took 12 engineer-hours.</p>
+<p>We also should have started with a chaos test. We wrote a simple <code>curl</code> loop that sent 100 refund requests per second to the API layer. It revealed a race condition in the legacy code where two refunds for the same transaction could be processed concurrently. We fixed it by adding a Redis lock around the refund ID.</p>
+<p>Another mistake was not documenting the side effects. We found out the hard way that the legacy code updated a <code>refund_status</code> table, sent an SMS, fired a webhook, and updated analytics. We had to reverse-engineer this from logs. Next time, we’d write a side-effect map for each function before touching it.</p>
+<p>We also should have set a timebox. We gave ourselves 3 months, but after 2 months, we were still extracting functions. We should have capped extraction at 6 weeks and moved the rest to a rewrite plan.</p>
+<p><strong>The key takeaway here is that refactoring without observability and documentation is like flying blind—you might land safely, but you’ll spend extra time debugging turbulence.</strong></p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Legacy code isn’t a technical debt—it’s a knowledge debt. The code works, but the team doesn’t know why. Refactoring without addressing knowledge is like rearranging deck chairs on the Titanic: you’re making the code prettier, but you’re not making it safer.</p>
+<p>The strangler pattern works because it acknowledges that the legacy system is the source of truth. It doesn’t try to replace it overnight. Instead, it wraps it, observes it, and gradually replaces its parts. This pattern also forces you to confront the hidden dependencies—the side effects that aren’t documented but are critical to the system.</p>
+<p>Another principle we learned is that refactoring is a product feature. Every hour spent refactoring is an hour not spent on new features. But if refactoring reduces support tickets by 40%, it pays for itself in weeks. The key is to measure the cost of the debt—not just the cost of the refactor.</p>
+<p>We also learned that the biggest risk isn’t breaking the code—it’s breaking the team. Fear of regression silences engineers and slows innovation. A safe refactor, with observability and circuit breakers, rebuilds trust. Engineers start contributing again, and that’s worth more than any performance metric.</p>
+<p><strong>The broader lesson is that refactoring isn’t just a technical exercise—it’s a cultural one. It’s about rebuilding trust in the codebase and the team.</strong></p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start small. Pick a single endpoint that’s causing pain—high ticket volume, slow response, or frequent outages. Wrap it in a thin API layer using a language your team knows well. Use a circuit breaker and structured logging from day one.</p>
+<p>Next, extract one pure function from the legacy code. Write unit tests for it. Once it’s stable, replace all calls to the legacy function with the new one. Repeat until the endpoint is fully extracted.</p>
+<p>Measure everything. Track latency, error rates, and ticket volume. If the metrics don’t improve, roll back. Don’t be afraid to throw away the extraction if it doesn’t help.</p>
+<p>Finally, document the side effects. For each function you extract, write a <code>SIDE_EFFECTS.md</code> file that lists every external change it makes. This will save you hours of debugging later.</p>
+<p><strong>Action: Pick one endpoint this week. Wrap it in a thin API layer, add logs and a circuit breaker, and measure the change in latency and errors. Then, extract one function and test it in isolation.</strong></p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><em>Working Effectively with Legacy Code</em> by Michael Feathers — gave us the mindset shift from rewriting to extracting.</li>
+<li><em>Release It!</em> by Michael Nygard — taught us about circuit breakers and bulkheads.</li>
+<li><em>Node.js Design Patterns</em> by Mario Casciaro — helped us choose the right async patterns for the API layer.</li>
+<li>Zod documentation — saved us from JSON parsing bugs in the API layer.</li>
+<li>Opossum circuit breaker library — made it easy to add resilience without writing a lot of code.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p>How do I know which endpoint to refactor first?</p>
+<p>Start with endpoints that have high ticket volume or slow response times. Look for endpoints with high latency (p95 &gt; 500ms) or frequent errors (5xx &gt; 1%). Also, pick endpoints where the code is duplicated or hard to understand. These are low-hanging fruit that will give you quick wins.</p>
+<p>What if the legacy system uses sessions stored in MySQL?</p>
+<p>Replace the session handler with Redis. Use <code>redis-session-store</code> for PHP or <code>connect-redis</code> for Node.js. Migrate the session data in batches during low-traffic hours. Monitor session errors for a week before fully decommissioning MySQL.</p>
+<p>Why use a circuit breaker instead of just retrying failed requests?</p>
+<p>A circuit breaker prevents cascading failures by stopping requests when the legacy system is down. Retries alone can amplify load and make outages worse. Circuit breakers also give you a fallback response (like a cached one) so users aren’t left hanging.</p>
+<p>How do I convince my manager to let me refactor instead of writing new features?</p>
+<p>Measure the cost of the legacy code. Calculate the time engineers spend debugging or fixing tickets because of it. Present the data: “Refactoring this endpoint will save 15 hours of support time per month.” Frame it as reducing technical debt that’s blocking innovation, not just cleaning up code.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/we-refactored-legacy-python-code-with-zero-downtim/">
+                        <h3>We refactored legacy Python code with zero downtime — here’s how</h3>
+                        <p>Cut deployment time by 87% and API latency by 82% while adding tests to a 300k-line legacy Python healthtech app — here’s how we did it with observability, blue-green deployments, and surgical refactoring.</p>
+                        <span class="related-meta">16 min read · 26 April 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
