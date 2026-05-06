@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2026 16:51:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2026 16:54:40 +0000</lastBuildDate>
+    <item>
+      <title>AI model drift: Evidently vs Arize in production</title>
+      <link>https://kubaik.github.io/ai-model-drift-evidently-vs-arize-in-production/</link>
+      <description>Evidently flagged AI drift in 2.4 minutes on $0.04 per 10k events while Arize needed 3.2 minutes at $5.60 — use Evidently for batch Python pipelines, Arize for streaming embeddings — decision framework included.</description>
+      <pubDate>Wed, 06 May 2026 16:54:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-model-drift-evidently-vs-arize-in-production/</guid>
+    </item>
     <item>
       <title>Why Your 2024 Skills Won’t Matter in 2029</title>
       <link>https://kubaik.github.io/why-your-2024-skills-wont-matter-in-2029/</link>
@@ -138,13 +145,6 @@
       <description>Validate SaaS ideas in 8 hours with no-code, then migrate to code once you hit 50 paying users to cut page load from 2.4 s to 380 ms and monthly bills from $190 to $12.</description>
       <pubDate>Tue, 05 May 2026 10:56:41 +0000</pubDate>
       <guid>https://kubaik.github.io/no-code-vs-code-finally-explained/</guid>
-    </item>
-    <item>
-      <title>Pick the Right AI Coding Assistant in 5 Minutes</title>
-      <link>https://kubaik.github.io/pick-the-right-ai-coding-assistant-in-5-minutes/</link>
-      <description>Compare Cursor vs Copilot vs Codeium vs Continue in 5 minutes: first snippet latency, prompt drift, and memory leaks measured on real code. Pick the assistant that actually ships faster.</description>
-      <pubDate>Tue, 05 May 2026 10:29:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-ai-coding-assistant-in-5-minutes/</guid>
     </item>
   </channel>
 </rss>
