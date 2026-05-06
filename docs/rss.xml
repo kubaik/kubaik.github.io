@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2026 07:44:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2026 09:24:10 +0000</lastBuildDate>
+    <item>
+      <title>Algorithm Optimization: Practical Big O Analysis: A Practical Technical Guide</title>
+      <link>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</link>
+      <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
+      <pubDate>Wed, 06 May 2026 09:24:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
+    </item>
     <item>
       <title>NULLs masquerading as zeros: why your analytics dashboards mislead you</title>
       <link>https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/</link>
@@ -138,13 +145,6 @@
       <description>Cut mean time to recovery by 37% with a 4-day work week — incident metrics from a live Go microservice show MTTR dropped from 2h to 1h 12m without sacrificing velocity or SLOs.</description>
       <pubDate>Mon, 04 May 2026 13:34:01 +0000</pubDate>
       <guid>https://kubaik.github.io/how-4-day-weeks-cut-outage-time-by-37-without-losi/</guid>
-    </item>
-    <item>
-      <title>We Reduced App Logic by 30% Using Only SQL — Here’s How</title>
-      <link>https://kubaik.github.io/we-reduced-app-logic-by-30-using-only-sql-heres-ho/</link>
-      <description>Cut dashboard response time by 99% using only SQL — no ORM, no external SaaS. Sub-40ms p99 latency on 1.2M-row datasets with full GDPR compliance and audit trails.</description>
-      <pubDate>Mon, 04 May 2026 13:23:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/we-reduced-app-logic-by-30-using-only-sql-heres-ho/</guid>
     </item>
   </channel>
 </rss>
