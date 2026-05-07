@@ -1404,41 +1404,110 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = f"{self.config.get('base_url', 'https://kubaik.github.io')}/{post.slug}"
-                # Twitter shortens ALL URLs to 23 chars via t.co — budget on that,
-                # not the real URL length, so we don't truncate unnecessarily.
-                TCO_LEN = 23
-                url_overhead = TCO_LEN + 2  # +2 for the \n\n before the URL
 
-                hashtag_str = post.twitter_hashtags
-                hashtag_overhead = len(hashtag_str) + \
-                    2 if hashtag_str else 0  # +2 for \n\n
+                # ── Budget constants ──────────────────────────────────────────
+                # Twitter wraps ALL URLs to exactly 23 chars via t.co.
+                # We reserve fixed slots so every element is guaranteed to appear.
+                TCO_LEN = 23   # t.co URL cost
+                URL_SEP = 2    # \n\n before URL
+                TAG_SEP = 2    # \n\n before hashtags
+                BAIT_SEP = 2    # \n\n before reply-bait
+                MAX_BODY = 180  # hard cap on LLM tweet body — leaves room for everything else
+                MAX_TAGS_CHARS = 60  # max hashtag string length we'll include
+                MAX_BAIT_CHARS = 60  # max reply-bait length we'll include
 
-                # How many chars the body can use
-                max_body = 280 - url_overhead - hashtag_overhead
+                hashtag_str = post.twitter_hashtags or ""
+                # Trim hashtag string if it's very long
+                if len(hashtag_str) > MAX_TAGS_CHARS:
+                    tags = hashtag_str.split()
+                    hashtag_str = ""
+                    for tag in tags:
+                        if len(hashtag_str) + len(tag) + 1 <= MAX_TAGS_CHARS:
+                            hashtag_str = (hashtag_str + " " + tag).strip()
+                        else:
+                            break
 
-                if len(bundle_tweet) <= max_body:
-                    # Body fits cleanly — include URL and hashtags
+                # Pick a reply-bait question (same rotation as visibility_automator)
+                _BAIT_POOL = [
+                    "What broke first when you tried this?",
+                    "Done this differently? Tell me what worked.",
+                    "Which part took you the longest to get right?",
+                    "Where do you think most teams still get this wrong?",
+                    "What would you add to this?",
+                    "Hot take: most people skip the measurement step. Agree?",
+                    "What's the tool you wish you'd found earlier?",
+                    "Anyone hit a different failure mode? Reply below.",
+                ]
+                bait_idx = int(hashlib.md5(post.slug.encode()
+                                           ).hexdigest(), 16) % len(_BAIT_POOL)
+                reply_bait = _BAIT_POOL[bait_idx]
+
+                # ── Trim body to MAX_BODY at a sentence or word boundary ──────
+                if len(bundle_tweet) > MAX_BODY:
+                    # Try to cut at a sentence boundary first
+                    trimmed = bundle_tweet[:MAX_BODY]
+                    sentence_end = max(
+                        trimmed.rfind(". "),
+                        trimmed.rfind(".\n"),
+                        trimmed.rfind("! "),
+                        trimmed.rfind("? "),
+                    )
+                    if sentence_end > MAX_BODY // 2:
+                        # Clean sentence cut — include the punctuation
+                        bundle_tweet = bundle_tweet[:sentence_end + 1].rstrip()
+                    else:
+                        # Fall back to word boundary
+                        bundle_tweet = trimmed.rsplit(
+                            " ", 1)[0].rstrip(".,;:") + "…"
+                    print(
+                        f"Note: LLM tweet body trimmed to {len(bundle_tweet)} chars (was over {MAX_BODY}).")
+
+                # ── Assemble tweet with all elements ─────────────────────────
+                # Total effective cost: body + \n\n + TCO_LEN + \n\n + tags + \n\n + bait
+                effective_len = (
+                    len(bundle_tweet)
+                    + URL_SEP + TCO_LEN
+                    + (TAG_SEP + len(hashtag_str) if hashtag_str else 0)
+                    + (BAIT_SEP + len(reply_bait) if reply_bait else 0)
+                )
+
+                if effective_len <= 280:
+                    # Ideal: everything fits
+                    parts = [bundle_tweet, post_url]
+                    if hashtag_str:
+                        parts.append(hashtag_str)
+                    if reply_bait:
+                        parts.append(reply_bait)
+                    post.prewritten_tweet = "\n\n".join(parts)
+                elif effective_len - (BAIT_SEP + len(reply_bait)) <= 280:
+                    # Drop reply-bait to fit
                     parts = [bundle_tweet, post_url]
                     if hashtag_str:
                         parts.append(hashtag_str)
                     post.prewritten_tweet = "\n\n".join(parts)
+                    print("Note: reply-bait dropped from tweet to fit within 280.")
+                elif effective_len - (BAIT_SEP + len(reply_bait)) - (TAG_SEP + len(hashtag_str)) <= 280:
+                    # Drop hashtags and reply-bait
+                    post.prewritten_tweet = f"{bundle_tweet}\n\n{post_url}"
+                    print(
+                        "Note: hashtags and reply-bait dropped — body + URL fills budget.")
                 else:
-                    # Body too long — try dropping hashtags first to recover space
-                    max_body_no_tags = 280 - url_overhead
-                    if len(bundle_tweet) <= max_body_no_tags:
-                        post.prewritten_tweet = f"{bundle_tweet}\n\n{post_url}"
-                        print(
-                            "Note: hashtags dropped from tweet — body + URL fills budget.")
-                    else:
-                        # Still too long — truncate body at a word boundary
-                        truncated = bundle_tweet[:max_body_no_tags -
-                                                 3].rsplit(" ", 1)[0] + "..."
-                        post.prewritten_tweet = f"{truncated}\n\n{post_url}"
-                        print(
-                            f"Note: tweet body truncated to fit URL ({len(truncated)} chars used).")
+                    # Body still too long even after trimming — shouldn't happen
+                    # given MAX_BODY=180, but belt-and-suspenders
+                    max_body_final = 280 - URL_SEP - TCO_LEN - 3
+                    trimmed = bundle_tweet[:max_body_final].rsplit(" ", 1)[
+                        0] + "…"
+                    post.prewritten_tweet = f"{trimmed}\n\n{post_url}"
+                    print(
+                        f"Note: tweet body hard-trimmed to {len(trimmed)} chars.")
 
-                print(f"Bundle tweet attached ({len(post.prewritten_tweet)} chars, "
-                      f"effective ~{len(post.prewritten_tweet) - len(post_url) + TCO_LEN} after t.co)")
+                print(
+                    f"Bundle tweet assembled: {len(post.prewritten_tweet)} raw chars "
+                    f"(effective ~{len(post.prewritten_tweet) - len(post_url) + TCO_LEN} after t.co)\n"
+                    f"  Body    : {len(bundle_tweet)} chars\n"
+                    f"  Hashtags: {hashtag_str or '(none)'}\n"
+                    f"  Bait    : {reply_bait if reply_bait in post.prewritten_tweet else '(dropped)'}"
+                )
             else:
                 post.prewritten_tweet = ""
                 print("Note: no tweet_text in bundle — template fallback will be used.")
@@ -1520,16 +1589,16 @@ Respond with ONLY a JSON object in this exact shape:
 Bad example: 'A guide to Redis caching.' \
 Good example: 'Cut API response time by 60% with Redis caching — connection pooling, eviction policies, and the mistakes that cause cache stampedes.' \
 Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'.>",
-  "tweet_text": "<a single X/Twitter post, max 240 chars (hashtags will be appended separately). \
+  "tweet_text": "<a single X/Twitter hook body — STRICT MAX 180 chars total. \
+This will have the post URL, hashtags, and a reply question appended automatically — do NOT include them here. \
 Rules: \
-(1) Open with tension, a specific number, or an honest admission — never the topic name alone or 'Just published'. \
-(2) Hook line under 10 words. \
-(3) 2-3 lines of complete, natural prose — no truncated sentences, no trailing ellipsis mid-thought. \
-(4) End with a short action cue on its own line e.g. 'Full breakdown 👇' or 'Here is why 👇'. \
-(5) Write like a developer talking at a meetup, not a content scheduler. \
-(6) Close with a reply-inviting question on a new line e.g. 'What broke first when you tried this?'. \
-BAD: 'Everyone says Event-Driven Architecture Scale is hard. The actual hard part is something else. Stop event-driven… 👇' \
-GOOD: 'Everyone says scaling event-driven systems is hard. It is — but not for the reason you think. The real bottleneck shows up somewhere nobody looks. Stop optimising the wrong layer 👇\n\nWhere did your event-driven setup break first?'>",
+(1) First line: under 10 words — tension, a number, or an honest admission. Never the topic name alone. \
+(2) 1-2 SHORT follow-up lines of complete prose. No trailing ellipsis. No truncated thoughts. \
+(3) Last line: a short action cue e.g. 'Full breakdown 👇' or 'Here is why 👇'. \
+(4) Developer voice — meetup conversation, not content scheduler. \
+(5) MUST be complete and self-contained within 180 chars. Count carefully. \
+BAD (too long, truncated): 'I burned $8k on AI coding tools last year. Only when I measured latency and rework did I realize I was paying for autocomplete. $100/month is worth it only when...' \
+GOOD (complete, punchy): 'I burned $8k on AI tools last year.\n\nMost of it was autocomplete I never needed.\n\nHere is what actually paid off 👇'>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
