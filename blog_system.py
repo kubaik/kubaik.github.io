@@ -1403,9 +1403,21 @@ class BlogSystem:
 
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
-                candidate = f"{bundle_tweet}\n\n{post.twitter_hashtags}"
-                post.prewritten_tweet = candidate if len(
-                    candidate) <= 280 else bundle_tweet[:277] + "..."
+                post_url = f"{self.config.get('base_url', 'https://kubaik.github.io')}/{post.slug}"
+                candidate = f"{bundle_tweet}\n\n{post_url}\n\n{post.twitter_hashtags}"
+                if len(candidate) <= 280:
+                    post.prewritten_tweet = candidate
+                else:
+                    # Try without hashtags to preserve the URL
+                    candidate_no_tags = f"{bundle_tweet}\n\n{post_url}"
+                    if len(candidate_no_tags) <= 280:
+                        post.prewritten_tweet = candidate_no_tags
+                    else:
+                        # Truncate body to fit URL — URL is non-negotiable
+                        url_suffix = f"\n\n{post_url}"
+                        max_body = 277 - len(url_suffix)
+                        post.prewritten_tweet = bundle_tweet[:max_body].rstrip(
+                        ) + "..." + url_suffix
                 print(
                     f"Bundle tweet attached ({len(post.prewritten_tweet)} chars)")
             else:
