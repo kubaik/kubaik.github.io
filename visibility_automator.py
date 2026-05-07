@@ -397,14 +397,18 @@ def _get_hashtags_for_post(post) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 _REPLY_BAIT_ENDINGS = [
-    "\n\nWhat's the biggest mistake you made here?",
+    "\n\nWhat broke first when you tried this?",
     "\n\nDone this differently? Tell me what worked.",
-    "\n\nWhich part took you the longest to get right?",
+    "\n\nWhich part took you the longest to figure out?",
     "\n\nAnyone hit a different failure mode? Reply below.",
-    "\n\nWhat would you add to this?",
-    "\n\nWhere do you think most teams still get this wrong?",
-    "\n\nHot take: most people skip step 3. Agree?",
-    "\n\nWhat's the tool you wish you'd found earlier?",
+    "\n\nWhat would you add — or cut — from this list?",
+    "\n\nWhere do most teams still get this wrong?",
+    "\n\nHot take: the measurement step gets skipped every time. Agree?",
+    "\n\nWhat's the tool you wish you'd found six months earlier?",
+    "\n\nWhat's your biggest lesson from getting this wrong?",
+    "\n\nIf you've shipped this in prod — what surprised you most?",
+    "\n\nWhat's the one thing you'd tell your past self before starting this?",
+    "\n\nWhere did the docs lead you astray on this one?",
 ]
 
 
@@ -493,20 +497,24 @@ def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
         teaser = teaser.rsplit(" ", 1)[0] + "…"
 
     post_url = f"{base_url}/{post.slug}"
+    reading_time = getattr(post, 'reading_time_minutes', None)
+    url_line = f"{post_url}  ({reading_time} min read)" if reading_time else post_url
+
     hashtags = _get_hashtags_for_post(post)
     bait = _pick_reply_bait(post.slug)
 
     tweet = template.format(
-        topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=bait
+        topic=topic, teaser=teaser, url=url_line, tags=hashtags, bait=bait
     )
 
     if len(tweet) > 280:
         budget = 280 - len(tweet) + len(teaser)
         teaser = teaser[:max(budget - 3, 20)].rsplit(" ", 1)[0] + "…"
         tweet = template.format(
-            topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=bait
+            topic=topic, teaser=teaser, url=url_line, tags=hashtags, bait=bait
         )
     if len(tweet) > 280:
+        # Drop read-time annotation from URL to recover space
         tweet = template.format(
             topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=""
         )
