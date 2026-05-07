@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 07:54:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 08:07:35 +0000</lastBuildDate>
+    <item>
+      <title>13 AI code security risks teams miss right now</title>
+      <link>https://kubaik.github.io/13-ai-code-security-risks-teams-miss-right-now/</link>
+      <description>Fix 13 AI code security risks before they hit production — 400ms latency spikes, 12% token failures, and 2,000 PII leaks uncovered in real multi-region stacks. Audit AI-generated code for timezone-naive datetime, integer overflow, SQL injection via ORM, Redis cache stampedes, and more.</description>
+      <pubDate>Thu, 07 May 2026 08:07:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-ai-code-security-risks-teams-miss-right-now/</guid>
+    </item>
     <item>
       <title>Why my AWS bill dropped 40% overnight (and how you can too)</title>
       <link>https://kubaik.github.io/why-my-aws-bill-dropped-40-overnight-and-how-you-c/</link>
@@ -138,13 +145,6 @@
       <description>Reduce &apos;Cannot read property&apos; errors in FP pipelines by 70% with Ramda and Lodash curry fixes — arity checks, compose chains, and transpiler pitfalls revealed. Improve functional code reliability with 4 concrete fixes.</description>
       <pubDate>Tue, 05 May 2026 16:51:52 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</guid>
-    </item>
-    <item>
-      <title>Full-Stack Development in 2026: The Best Stack: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</link>
-      <description>Cut Full-Stack Development in 2026: The Best Stack failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and …</description>
-      <pubDate>Tue, 05 May 2026 14:24:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</guid>
     </item>
   </channel>
 </rss>
