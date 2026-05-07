@@ -423,7 +423,7 @@ def _pick_reply_bait(slug: str) -> str:
 
 _TWEET_TEMPLATES = [
     # 0 — HONEST ADMISSION
-    "I got {topic} wrong for months.\n\n{teaser}\n\nFull breakdown 👇\n{url}\n\n{tags}{bait}",
+    "Many developers get {topic} wrong for months.\n\n{teaser}\n\nFull breakdown 👇\n{url}\n\n{tags}{bait}",
     # 1 — SPECIFIC NUMBER / RESULT LEAD
     "{teaser}\n\nHow this works in practice — with real numbers 👇\n{url}\n\n{tags}{bait}",
     # 2 — PARADOX
@@ -433,17 +433,17 @@ _TWEET_TEMPLATES = [
     # 4 — BEFORE / AFTER
     "Before: days debugging {topic}.\nAfter: a 5-step checklist that catches 90% of issues.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
     # 5 — OBSERVATION
-    "The teams who nail {topic} all do one thing differently.\n\n{teaser}\n\nI finally noticed what it is 👇\n{url}\n\n{tags}{bait}",
+    "Teams that nail {topic} all do one thing differently.\n\n{teaser}\n\nHere's what sets them apart 👇\n{url}\n\n{tags}{bait}",
     # 6 — ANALYZED
-    "Looked at dozens of {topic} implementations in production.\n\nSame 3 mistakes in almost all of them.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
+    "Dozens of {topic} implementations reviewed.\n\nSame 3 mistakes in almost all of them.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
     # 7 — DEV/PROD GAP
     "{topic} works perfectly in dev.\nProduction is a different story.\n\n{teaser}\n\nWhy this happens — and the fix 👇\n{url}\n\n{tags}{bait}",
     # 8 — CONFESSION
-    "I shipped broken {topic} code to production twice before I understood why.\n\n{teaser}\n\nThe lesson that finally stuck 👇\n{url}\n\n{tags}{bait}",
+    "Most teams ship broken {topic} code to production before they understand why.\n\n{teaser}\n\nThe lesson that finally sticks 👇\n{url}\n\n{tags}{bait}",
     # 9 — UNPOPULAR OPINION
     "Unpopular take: most {topic} guides teach the wrong mental model first.\n\n{teaser}\n\nThe model that actually helps 👇\n{url}\n\n{tags}{bait}",
     # 10 — TOOL DISCOVERY
-    "Found a {topic} pattern that replaced 200 lines of code with 20.\n\n{teaser}\n\nSetup + full walkthrough 👇\n{url}\n\n{tags}{bait}",
+    "A {topic} pattern that replaces 200 lines of code with 20.\n\n{teaser}\n\nSetup + full walkthrough 👇\n{url}\n\n{tags}{bait}",
     # 11 — SENIOR VS JUNIOR
     "Senior devs approach {topic} completely differently.\n\n{teaser}\n\nThe mental shift that changes how you see it 👇\n{url}\n\n{tags}{bait}",
     # 12 — COST / SCALE
@@ -451,9 +451,9 @@ _TWEET_TEMPLATES = [
     # 13 — DOCS GAP
     "The {topic} docs are good.\nWhat they don't cover is the part that bites you in prod.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
     # 14 — RESULT + TIMELINE
-    "Fixed a {topic} issue that had been slowing our API by 40%.\nRoot cause was in a single config line.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
+    "A {topic} issue was slowing API responses by 40%.\nRoot cause was in a single config line.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
     # 15 — OPEN QUESTION
-    "How long did {topic} take you to actually understand?\n\nFor me: embarrassingly long.\n\n{teaser}\n\nHere's what finally made it click 👇\n{url}\n\n{tags}{bait}",
+    "How long did {topic} take your team to actually get right?\n\n{teaser}\n\nWhat finally made it click 👇\n{url}\n\n{tags}{bait}",
 ]
 
 _STYLE_MAP = {

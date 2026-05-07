@@ -1604,10 +1604,11 @@ Rules: \
 (1) First line: under 10 words — tension, a number, or an honest admission. Never the topic name alone. \
 (2) 1-2 SHORT follow-up lines of complete prose. No trailing ellipsis. No truncated thoughts. \
 (3) Last line: a short action cue e.g. 'Full breakdown 👇' or 'Here is why 👇'. \
-(4) Developer voice — meetup conversation, not content scheduler. \
+(4) Developer voice — meetup conversation, not content scheduler. Write in third-person or collective perspective (they/teams/most developers) — never 'I burned', 'I spent', 'I learned'. Use 'Most teams', 'Many developers', 'Teams that ship this', 'A common mistake is'. \
 (5) MUST be complete and self-contained within 180 chars. Count carefully. \
-BAD (too long, truncated): 'I burned $8k on AI coding tools last year. Only when I measured latency and rework did I realize I was paying for autocomplete. $100/month is worth it only when...' \
-GOOD (complete, punchy): 'I burned $8k on AI tools last year.\n\nMost of it was autocomplete I never needed.\n\nHere is what actually paid off 👇'>",
+BAD (first-person): 'I burned $8k on AI coding tools last year. Most of it was autocomplete I never needed.' \
+BAD (truncated): 'Most teams overspend on AI coding tools. Only when they measured latency and rework did they realize...' \
+GOOD (complete, third-person): 'Most teams burn $8k+ on AI tools before measuring ROI.\n\nMost of it goes to autocomplete nobody audits.\n\nHere is what actually paid off 👇'>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
