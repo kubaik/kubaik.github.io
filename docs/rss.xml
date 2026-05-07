@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2026 20:04:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 07:37:34 +0000</lastBuildDate>
+    <item>
+      <title>Your AI code tool writes bad tests (and how to fix it)</title>
+      <link>https://kubaik.github.io/your-ai-code-tool-writes-bad-tests-and-how-to-fix-/</link>
+      <description>Catch 67% more bugs by replacing AI-generated weak tests with strong behavioral ones — real metrics from 12 services, mutation scores, and CI pipeline fixes.</description>
+      <pubDate>Thu, 07 May 2026 07:37:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-ai-code-tool-writes-bad-tests-and-how-to-fix-/</guid>
+    </item>
     <item>
       <title>Documentation That Developers Actually Read (and Why Yours Dies Unread)</title>
       <link>https://kubaik.github.io/documentation-that-developers-actually-read-and-wh/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud quantum runtime by 85% and shrink mobile APK bloat to 5 MB with PennyLane 0.36 — the full ranked list of 11 quantum SDKs tested on AWS Braket, IBM Quantum, and 4G mobile connections for software engineers who need reliability over fibre.</description>
       <pubDate>Tue, 05 May 2026 12:29:25 +0000</pubDate>
       <guid>https://kubaik.github.io/the-11-quantum-sdks-and-tools-every-software-engin/</guid>
-    </item>
-    <item>
-      <title>Why my no-code AI analysis tool returned garbage (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-my-no-code-ai-analysis-tool-returned-garbage-a/</link>
-      <description>Cut analysis time from hours to minutes with no-code AI — but only if you avoid these 3 silent killers: non-determinism, data leakage, and row limits. Benchmarks, Python audits, and budget tiers for $20 droplets vs Series B startups.</description>
-      <pubDate>Tue, 05 May 2026 11:57:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-my-no-code-ai-analysis-tool-returned-garbage-a/</guid>
     </item>
   </channel>
 </rss>
