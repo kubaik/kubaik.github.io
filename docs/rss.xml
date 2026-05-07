@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 14:15:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 14:50:11 +0000</lastBuildDate>
+    <item>
+      <title>AI reads your repo: what it sees, what it misses</title>
+      <link>https://kubaik.github.io/ai-reads-your-repo-what-it-sees-what-it-misses/</link>
+      <description>Cut AI-assisted code review time by 60% with repository intelligence — 200 ms queries, 92% first-try fix rate, and the open-source stack that makes it real.</description>
+      <pubDate>Thu, 07 May 2026 14:50:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-reads-your-repo-what-it-sees-what-it-misses/</guid>
+    </item>
     <item>
       <title>Junior devs after GitHub Copilot</title>
       <link>https://kubaik.github.io/junior-devs-after-github-copilot/</link>
@@ -138,13 +145,6 @@
       <description>In 2024, learn GraphQL or Kubernetes and your skills may be obsolete by 2029 — costing you time and money. See the exact tools that won’t age well and what to learn instead.</description>
       <pubDate>Wed, 06 May 2026 16:51:06 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-2024-skills-wont-matter-in-2029/</guid>
-    </item>
-    <item>
-      <title>11 SRE principles that actually cut downtime in production</title>
-      <link>https://kubaik.github.io/11-sre-principles-that-actually-cut-downtime-in-pr/</link>
-      <description>Cut mean time to recovery by 58% with these 11 SRE principles — real benchmarks, code examples, and the ones I dropped after outages. Learn which principles work in production today.</description>
-      <pubDate>Wed, 06 May 2026 14:46:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/11-sre-principles-that-actually-cut-downtime-in-pr/</guid>
     </item>
   </channel>
 </rss>
