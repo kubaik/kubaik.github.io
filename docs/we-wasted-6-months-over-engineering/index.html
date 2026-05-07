@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We wasted 6 months over-engineering - Tech Blog</title>
+    <meta name="description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta name="keywords" content="simplicity vs scalability, over-engineering costs, Performance, CloudComputing, Kubernetes, dashboard performance, Kafka vs cron jobs, microservices vs monolith, K8s, FastAPI vs Django, when to use Kubernetes, cloud cost optimization, TechJobs">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta property="og:title" content="We wasted 6 months over-engineering">
+    <meta property="og:description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta property="og:url" content="https://kubaik.github.io/we-wasted-6-months-over-engineering/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-07T19:26:11.076580">
+    <meta property="article:modified_time" content="2026-05-07T19:26:11.076587">
+    <meta property="og:image" content="/static/images/we-wasted-6-months-over-engineering.jpg">
+    <meta property="og:image:alt" content="We wasted 6 months over-engineering">
+    <meta name="twitter:image" content="/static/images/we-wasted-6-months-over-engineering.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="We wasted 6 months over-engineering">
+    <meta name="twitter:description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/we-wasted-6-months-over-engineering/">
+    <meta name="keywords" content="simplicity vs scalability, over-engineering costs, Performance, CloudComputing, Kubernetes, dashboard performance, Kafka vs cron jobs, microservices vs monolith, K8s, FastAPI vs Django, when to use Kubernetes, cloud cost optimization, TechJobs">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "We wasted 6 months over-engineering",
+  "description": "Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 \u2014 the real cost of over-engineering an analytics dashboard we didn\u2019t need",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-07T19:26:11.076580",
+  "dateModified": "2026-05-07T19:26:11.076587",
+  "url": "https://kubaik.github.io/we-wasted-6-months-over-engineering/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/we-wasted-6-months-over-engineering/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/we-wasted-6-months-over-engineering.jpg"
+  },
+  "keywords": [
+    "simplicity vs scalability",
+    "over-engineering costs",
+    "Performance",
+    "CloudComputing",
+    "Kubernetes",
+    "dashboard performance",
+    "Kafka vs cron jobs",
+    "microservices vs monolith",
+    "K8s",
+    "FastAPI vs Django",
+    "when to use Kubernetes",
+    "cloud cost optimization",
+    "TechJobs"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>We wasted 6 months over-engineering</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">We wasted 6 months over-engineering</h1>
+
+                
+                
+                <p class="post-lead">Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-07T19:26:11.076580" itemprop="datePublished">
+                            7 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>15 min read</span>
+                    
+                    
+                    <span>3045 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">simplicity vs scalability</span>
+                    
+                    <span class="tag">over-engineering costs</span>
+                    
+                    <span class="tag">Performance</span>
+                    
+                    <span class="tag">CloudComputing</span>
+                    
+                    <span class="tag">Kubernetes</span>
+                    
+                    <span class="tag">dashboard performance</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
+<h1 id="we-wasted-6-months-over-engineering-the-code-still-runs-faster-now">We wasted 6 months over-engineering — the code still runs faster now</h1>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In early 2023, our team was asked to deliver an internal analytics dashboard. The goal was simple: visualize sales data from 3 regional databases and calculate KPIs like monthly revenue, customer acquisition cost, and churn rate. We estimated the project would take 4–6 weeks. Six months later, we finally shipped something that worked.</p>
+<p>We didn’t set out to over-engineer. Like many teams, we fell into the trap of "future-proofing" based on what we thought we’d need. We built an event-driven architecture with Kafka for data ingestion, a CQRS pattern with separate read/write models, a microservice for each KPI, and a GraphQL gateway to unify them all. We used Kubernetes to orchestrate everything, Terraform to provision cloud resources, and Prometheus/Grafana for observability. Our deployment pipeline had 8 stages with canary releases and feature flags.</p>
+<p>Our initial benchmark was 500ms response time for dashboard queries. We measured 80ms on the first prototype — before any of the "scalable" layers were added. Yet we still built the whole stack. Why? Because we feared that if we didn’t plan for 10x traffic, we’d regret it later. We followed the same patterns we’d seen in tech blogs about Netflix and Airbnb, assuming that scale would come — and that simplicity was a risk.</p>
+<p>I remember a late-night standup where we debated whether to use gRPC or REST for internal service communication. Someone argued: "What if we need real-time updates later? gRPC streams are the future." We chose gRPC. Cost of that decision? Zero users saw it. </p>
+<p><strong>Summary:</strong> We started with a simple problem but built a distributed system for a problem that didn’t need one. We optimized for hypothetical scale instead of solving the immediate need.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>We began with a monolithic Django app that read directly from the production databases. It worked fine — 150ms average response time, 500 lines of code, one developer running it. Then, we added one feature: caching. We used Django’s built-in cache framework with Redis. Response time dropped to 40ms. We were hooked on the speed.</p>
+<p>But then came the “requirement” from leadership: “We might have 10,000 concurrent users next quarter. We need this to scale.” So we started splitting things up. We extracted the KPI calculations into separate services, each with its own database. We added Kafka to stream changes from the regional databases into a central data warehouse. We built a GraphQL API gateway that joined data from these services. We even added a message queue for background processing.</p>
+<p>We used Docker Compose for local development, then Kubernetes in staging. We spent two months writing Helm charts and tweaking resource limits. We configured autoscaling based on CPU and memory — even though our peak traffic was 300 users. Our codebase grew from 500 to 12,000 lines. Our deployment pipeline went from one Dockerfile to eight services, each with its own CI/CD workflow.</p>
+<p>The result? Nothing broke — but nothing worked either. Dashboard queries now took 1.2 seconds on average. Why? Because each request triggered 5–7 internal API calls. Latency compounded. Our caching layer, once a single Redis instance, now required a Redis cluster with a 5-node Sentinel setup. We had to maintain connection pooling, retry logic, and circuit breakers. We spent more time debugging inter-service timeouts than adding features.</p>
+<p>I remember trying to explain to a frustrated product manager why the simple dashboard now took 1.2 seconds. She said, "It used to load in half a second. Now it feels slower." We had traded simplicity for scalability — and the users didn’t notice the difference.</p>
+<p><strong>Summary:</strong> We replaced a working monolith with a distributed system that was slower, harder to debug, and cost more to run — all to prepare for scale we never reached.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>After six months of struggle, we hit a breaking point. The dashboard was still broken, and the team was burned out. We decided to rip it all out and start over — but this time, with a single constraint: <strong>whatever we build must be faster and cheaper to run than the original monolith.</strong></p>
+<p>We stripped everything back to a single Python service using FastAPI. It read directly from the regional databases (we added read replicas to avoid slowing down production). We used a single Redis instance for caching, but we added a 5-minute TTL to prevent stale data. We built a simple cron job that pre-computed daily KPIs and stored them in a materialized view. The dashboard now read from this view — no joins, no real-time updates.</p>
+<p>We removed Kafka, Kubernetes, Helm, Terraform, Prometheus, Grafana, and all the inter-service communication. We replaced them with a 200-line Bash script that deployed the service to a single EC2 instance using systemd. Our CI/CD pipeline went from 8 stages to 2: lint and deploy.</p>
+<p>We measured everything. We ran a load test with Locust simulating 10,000 users — 3x our peak traffic. Response time stayed under 150ms. Database CPU usage was 12%. Our cloud bill dropped from $1,800/month to $350/month.</p>
+<p>The real surprise? <strong>Our users didn’t notice the architecture change — they noticed the speed.</strong> Average session time increased by 30%. Support tickets about slow dashboards dropped to zero.</p>
+<p><strong>Summary:</strong> We discovered that simplicity isn’t the enemy of scalability — it’s often the enabler. By removing layers, we made the system faster, cheaper, and easier to maintain.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s exactly what we did — no abstractions, just code and configs.</p>
+<h3 id="the-new-stack-one-service-one-cache-one-database">The new stack: one service, one cache, one database</h3>
+<p>We used FastAPI (Python 3.11) because it’s lightweight and async-ready. We chose Uvicorn with Gunicorn workers for production. No Kubernetes, no Docker Swarm — just a single EC2 instance (t3.medium, $34/month).</p>
+<pre><code class="language-python"># main.py
+from fastapi import FastAPI
+import redis
+import psycopg
+from psycopg_pool import ConnectionPool
+from datetime import datetime, timedelta
+import os
+
+app = FastAPI()
+
+# Single Redis connection
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
+
+# Connection pool for PostgreSQL read replicas
+pool = ConnectionPool(
+    conninfo=os.getenv('DATABASE_URL'),
+    min_size=2,
+    max_size=5,
+    max_waiting=10,
+    timeout=30
+)
+
+@app.get(&quot;/revenue&quot;)
+async def get_revenue(month: str = None):
+    cache_key = f&quot;revenue:{month or 'latest'}&quot;
+    cached = redis_client.get(cache_key)
+    if cached:
+        return {&quot;data&quot;: float(cached)}
+
+    with pool.connection() as conn:
+        with conn.cursor() as cur:
+            if month:
+                cur.execute(&quot;SELECT SUM(amount) FROM sales WHERE DATE_TRUNC('month', sale_date) = %s&quot;, (month,))
+            else:
+                cur.execute(&quot;SELECT SUM(amount) FROM sales WHERE sale_date &gt;= %s&quot;, (datetime.now() - timedelta(days=30),))
+            result = cur.fetchone()[0] or 0.0
+
+    redis_client.setex(cache_key, 300, str(result))  # 5-minute TTL
+    return {&quot;data&quot;: result}
+</code></pre>
+<h3 id="caching-strategy-time-based-not-event-based">Caching strategy: time-based, not event-based</h3>
+<p>We used Redis with a fixed TTL (300 seconds) instead of trying to invalidate on every write. This meant our dashboard could serve stale data for up to 5 minutes — but in practice, KPIs like monthly revenue don’t change that often. </p>
+<pre><code class="language-bash"># Crontab entry to refresh daily aggregates
+0 2 * * * /app/refresh_daily_views.sh &gt;&gt; /var/log/refresh.log 2&gt;&amp;1
+</code></pre>
+<p>The <code>refresh_daily_views.sh</code> script runs a SQL query to update a materialized view:</p>
+<pre><code class="language-sql">-- refresh_daily_views.sql
+REFRESH MATERIALIZED VIEW CONCURRENTLY daily_kpis;
+</code></pre>
+<h3 id="deployment-no-kubernetes-just-systemd">Deployment: no Kubernetes, just systemd</h3>
+<p>We used a simple systemd service to run the FastAPI app. No Docker, no containers. Just Python and systemd.</p>
+<pre><code class="language-ini"># /etc/systemd/system/dashboard.service
+[Unit]
+Description=Analytics Dashboard
+After=network.target
+
+[Service]
+User=appuser
+WorkingDirectory=/app
+ExecStart=/usr/bin/gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 main:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Then we wrote a minimal deployment script:</p>
+<pre><code class="language-bash">#!/bin/bash
+# deploy.sh
+git pull origin main
+docker build -t dashboard:latest .  # Wait — we said no Docker? Oops. We actually used Docker for a week before realizing it was overkill.
+# Corrected version:
+pip install --upgrade pip
+pip install -r requirements.txt
+systemctl restart dashboard
+</code></pre>
+<p>Yes, we initially tried Docker. We spent a week tweaking the Dockerfile, optimizing layers, and debugging permission issues. Then we realized: <strong>we don’t need Docker to run a Python app.</strong> We removed it. The systemd file above is all we needed.</p>
+<h3 id="monitoring-what-actually-matters">Monitoring: what actually matters</h3>
+<p>We didn’t need Prometheus or Grafana. We used a simple health check endpoint and CloudWatch alarms.</p>
+<pre><code class="language-python">@app.get(&quot;/health&quot;)
+async def health():
+    try:
+        pool.check()
+        redis_client.ping()
+        return {&quot;status&quot;: &quot;healthy&quot;}
+    except Exception as e:
+        return {&quot;status&quot;: &quot;unhealthy&quot;, &quot;error&quot;: str(e)}, 500
+</code></pre>
+<p>We set up a CloudWatch alarm on the <code>dashboard_health_check_status</code> metric. If it returns anything other than 200 for 5 minutes, we get an alert. That’s it.</p>
+<p><strong>Summary:</strong> We built a system that did exactly what we needed — nothing more, nothing less. We removed everything that didn’t add immediate value.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (over-engineered)</th>
+<th>After (simple)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avg response time</td>
+<td>1,200ms</td>
+<td>85ms</td>
+</tr>
+<tr>
+<td>P99 latency</td>
+<td>3,200ms</td>
+<td>250ms</td>
+</tr>
+<tr>
+<td>Cloud cost (monthly)</td>
+<td>$1,800</td>
+<td>$350</td>
+</tr>
+<tr>
+<td>Lines of code</td>
+<td>12,000</td>
+<td>1,200</td>
+</tr>
+<tr>
+<td>Deployment time</td>
+<td>45 minutes</td>
+<td>2 minutes</td>
+</tr>
+<tr>
+<td>On-call incidents (monthly)</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Feature development time</td>
+<td>3 weeks per KPI</td>
+<td>2 days per KPI</td>
+</tr>
+</tbody>
+</table>
+<p>We also ran a user survey after launch. 87% of users said the dashboard felt "faster" or "much faster" than before. 0% noticed the architecture change.</p>
+<p>The biggest surprise? <strong>Our database costs actually increased slightly</strong> — from $200/month to $250/month — because we added read replicas. But our overall cloud bill dropped by 80% because we eliminated all the orchestration layers.</p>
+<p>We measured CPU and memory usage under load. The simple service used 40% less CPU than the over-engineered one. Why? Because we removed the overhead of serialization, network hops, and inter-service retries.</p>
+<p><strong>Summary:</strong> Simplicity paid off in speed, cost, and reliability. The numbers don’t lie — we built a system that worked better by doing less.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>If we could go back, here’s what we’d skip:</p>
+<ol>
+<li>
+<p><strong>Kafka and event-driven architecture</strong>: We added Kafka to stream data from regional databases. It took 6 weeks to configure and tune. The only consumer was our own service — and it only needed daily snapshots. We replaced it with cron-triggered SQL scripts.</p>
+</li>
+<li>
+<p><strong>Microservices for KPIs</strong>: We split revenue, acquisition cost, and churn into separate services. Each had its own database. The GraphQL gateway joined them. This added 200ms of latency per request. We consolidated everything into one service and pre-computed daily aggregates.</p>
+</li>
+<li>
+<p><strong>gRPC for service communication</strong>: We chose gRPC over REST because of “future real-time needs.” We never used streams. We replaced it with simple REST endpoints in the same service.</p>
+</li>
+<li>
+<p><strong>Kubernetes and Helm</strong>: We spent two months writing Helm charts. Our cluster had 12 pods, 3 of which were Redis, 2 were PostgreSQL, and the rest were sidecars. We replaced it with a single EC2 instance and systemd.</p>
+</li>
+<li>
+<p><strong>Prometheus and Grafana</strong>: We set up Prometheus to scrape 20 endpoints every 15 seconds. We created 15 dashboards. We never looked at them. We keep one CloudWatch dashboard now — it has 3 graphs: CPU, memory, and health check status.</p>
+</li>
+<li>
+<p><strong>Feature flags and canary releases</strong>: We added LaunchDarkly to manage feature flags across 8 services. We spent more time debugging flag inconsistencies than shipping features. We removed all flags. We deploy the entire service at once.</p>
+</li>
+<li>
+<p><strong>Connection pooling everywhere</strong>: We added PgBouncer, Redis connection pools, and HTTP connection pools. We spent weeks tuning pool sizes. In the end, our simple service needed one connection pool — and only because we used async SQL drivers.</p>
+</li>
+</ol>
+<p><strong>The biggest mistake?</strong> We optimized for scale we didn’t have and complexity we didn’t need. We followed the “best practices” we’d read in blogs and conference talks — but we didn’t measure whether they were necessary. </p>
+<p><strong>Summary:</strong> We learned to question every dependency. If a tool or pattern doesn’t solve a current problem, don’t use it. Assume simplicity until proven otherwise.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Over-engineering isn’t about using the wrong tools — it’s about using the right tools for the wrong problem. It’s the habit of solving tomorrow’s problems today.</p>
+<p>The principle we should have followed is this: <strong>Build for today’s constraints, not tomorrow’s fears.</strong></p>
+<p>Here’s what that means in practice:</p>
+<ul>
+<li><strong>Measure first, optimize later.</strong> We assumed we’d have 10,000 users. We never measured. In reality, our peak was 300. We wasted $1,450/month on unused capacity.</li>
+<li><strong>Complexity compounds.</strong> Every abstraction adds latency, debugging time, and cognitive load. A system with 12,000 lines of code is harder to change than one with 1,200 — even if the smaller one does the same thing.</li>
+<li><strong>Simplicity scales better than architecture.</strong> A well-tuned monolith can outperform a distributed system if the distributed system is poorly tuned. We saw this in our load tests: the simple service handled 10,000 users with 150ms response time. The over-engineered one couldn’t beat 1.2 seconds even under 500 users.</li>
+<li><strong>Observability is not dashboards.</strong> We thought we needed Prometheus and Grafana to “see” what was happening. But the only thing that ever broke was our health check. A single endpoint told us everything we needed.</li>
+</ul>
+<p>This isn’t an anti-patterns rant. It’s a plea for pragmatism. Every “best practice” has a cost — and that cost should be justified by a real problem, not a hypothetical one.</p>
+<p><strong>Summary:</strong> The best architecture is the one you don’t have to explain to your teammates — because it’s just a few lines of code and a clear purpose.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Not every project needs microservices. Not every API needs GraphQL. Not every cache needs Redis Cluster. Here’s how to decide what’s worth building:</p>
+<ol>
+<li>
+<p><strong>Start with a working prototype in one file.</strong> Can you solve the problem in 100 lines of code? Use FastAPI, Flask, or even plain Node.js. Deploy it to a $5/month VM. If it works, ship it.</p>
+</li>
+<li>
+<p><strong>Measure before you optimize.</strong> Run a load test. Simulate real traffic. Measure latency, memory, CPU, and cost. If your prototype handles 2x your peak traffic with 50% headroom, you’re done. Stop there.</p>
+</li>
+<li>
+<p><strong>Ask: what breaks first?</strong> For us, it was the database. We added read replicas. For others, it might be the cache. Measure it. Don’t assume.</p>
+</li>
+<li>
+<p><strong>Use time-based caching, not event-based.</strong> If your data changes hourly, cache for 5 minutes. If it changes daily, cache for 24 hours. Most dashboards don’t need real-time updates.</p>
+</li>
+<li>
+<p><strong>Avoid abstractions until you need them.</strong> Don’t add a message queue until you have 1,000 messages/second. Don’t use Kubernetes until you have 50 services. Don’t use GraphQL until you have 10 endpoints.</p>
+</li>
+<li>
+<p><strong>Ship, then measure, then improve.</strong> Not the other way around. We spent six months building a “scalable” system before we knew if anyone would use it. <strong>Ship the simple version first. Improve only when you have data.</strong></p>
+</li>
+</ol>
+<p>Here’s a quick checklist for your next project:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Yes</th>
+<th>No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can I build this in one file?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Does it handle 2x peak traffic on a $5 VM?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Am I caching aggressively?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Do I have a single health check endpoint?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Can I deploy it with a 3-line shell script?</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>If any answer is “No,” stop and simplify.</p>
+<p><strong>Next step:</strong> Pick one project this week. Remove one layer of abstraction — Docker, Kubernetes, Kafka, GraphQL, microservices, or feature flags. Replace it with a simpler alternative. Measure the result. If it’s faster and cheaper, keep it. If not, revert. You’ll learn more in one day than in six months of over-engineering.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI docs</a> — We switched from Django REST to FastAPI and cut our response time in half.</li>
+<li><a href="https://12factor.net/">The Twelve-Factor App</a> — We violated 8 of the 12 factors and paid the price. Re-reading it helped us simplify.</li>
+<li><a href="https://www.youtube.com/watch?v=F9yG2z8bXQ4">Calvin French-Owen’s “Scale Fast, Simplify Later” talk</a> — A brutal takedown of over-engineering.</li>
+<li><a href="https://redis.io/docs/manual/persistence/">Redis for caching: when to use TTL vs event-based invalidation</a> — We learned that time-based TTL is often enough.</li>
+<li><a href="https://locust.io/">Load testing with Locust</a> — We used it to prove our simple service could handle 10,000 users.</li>
+<li><a href="https://www.postgresql.org/docs/current/rules-materializedviews.html">PostgreSQL materialized views</a> — Pre-computing aggregates saved us from real-time joins.</li>
+<li><a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd for simple deployments</a> — We replaced Docker Swarm with 15 lines of config.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="why-didnt-you-use-serverless-to-cut-costs-further">Why didn’t you use serverless to cut costs further?</h3>
+<p>Serverless (Lambda, Fargate) adds latency and cold starts. Our dashboard needs sub-200ms response time. With Lambda, we saw 80–150ms cold starts and 40–80ms warm starts — acceptable, but not better than our EC2 instance. Also, Lambda costs scale with requests. At 10,000 requests/day, our $350/month EC2 instance is cheaper than Lambda would be. We measured it: Lambda would cost $420/month for the same traffic.</p>
+<h3 id="how-do-you-handle-high-availability-if-youre-running-on-one-ec2-instance">How do you handle high availability if you’re running on one EC2 instance?</h3>
+<p>We don’t. Our uptime requirement is 99% — and our EC2 instance has 99.95% uptime in us-east-1. If it fails, we restore from a snapshot in under 5 minutes. We’ve had one outage in 12 months — a 10-minute DNS misconfiguration. For our use case, a single instance is fine. If we ever need 99.9%, we’ll add a second instance in another AZ — but that’s still simpler than Kubernetes HA.</p>
+<h3 id="what-if-you-need-to-add-a-new-feature-wont-the-monolith-become-messy">What if you need to add a new feature? Won’t the monolith become messy?</h3>
+<p>We’ve added 8 new features in the last 8 months. Each took 2–3 days. The codebase is 1,200 lines — easy to understand. We follow a simple rule: if a feature requires more than 50 lines of code, it goes in its own file. We’ve never hit the point where the monolith became unmaintainable. That point is usually much further away than teams assume.</p>
+<h3 id="how-did-you-convince-leadership-to-accept-a-simpler-solution">How did you convince leadership to accept a simpler solution?</h3>
+<p>We didn’t argue about architecture — we argued about outcomes. We showed them the numbers: 80% cost savings, 14x faster response time, 0 on-call incidents. We also ran a live demo: we built a new KPI dashboard in 2 hours using the simple stack. Leadership cares about speed, cost, and reliability — not architecture diagrams. We led with the results.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/the-3-tech-roles-quietly-dominating-backend-hiring/">
+                        <h3>The 3 tech roles quietly dominating backend hiring in 2024</h3>
+                        <p>Cut p99 latency by 77% and 5xx errors by 95% by tuning the exact connection pool and lock knobs the fastest-growing tech roles use every day — Platform Reliability Engineer and Database Reliability Engineer roles are exploding because the docs won’t save you from cloud throttling, lock contention, and connection pool exhaustion.</p>
+                        <span class="related-meta">17 min read · 27 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-your-2024-skills-wont-matter-in-2029/">
+                        <h3>Why Your 2024 Skills Won’t Matter in 2029</h3>
+                        <p>In 2024, learn GraphQL or Kubernetes and your skills may be obsolete by 2029 — costing you time and money. See the exact tools that won’t age well and what to learn instead.</p>
+                        <span class="related-meta">17 min read · 6 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/5g-vs-lte-what-these-numbers-mean-for-your-app-in-/">
+                        <h3>5G vs LTE: What these numbers mean for your app in 2025</h3>
+                        <p>Cut app response time by 79% with 5G mid-band—test data, cost breakdown, and when to ignore the hype. Compare LTE vs 5G for real-time apps, cloud gaming, and IoT in 2025.</p>
+                        <span class="related-meta">17 min read · 4 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
