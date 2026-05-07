@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 08:07:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 08:21:09 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers exposed: the invisible layer 99% of devs miss</title>
+      <link>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</link>
+      <description>MCP servers exposed invisible: e result? 100% of subsequent calls failed wi. Practical guide with real examples.</description>
+      <pubDate>Thu, 07 May 2026 08:21:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</guid>
+    </item>
     <item>
       <title>13 AI code security risks teams miss right now</title>
       <link>https://kubaik.github.io/13-ai-code-security-risks-teams-miss-right-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.</description>
       <pubDate>Tue, 05 May 2026 19:05:13 +0000</pubDate>
       <guid>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</guid>
-    </item>
-    <item>
-      <title>Why your FP code throws &apos;Cannot read property&apos; with curried functions (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</link>
-      <description>Reduce &apos;Cannot read property&apos; errors in FP pipelines by 70% with Ramda and Lodash curry fixes — arity checks, compose chains, and transpiler pitfalls revealed. Improve functional code reliability with 4 concrete fixes.</description>
-      <pubDate>Tue, 05 May 2026 16:51:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-fp-code-throws-cannot-read-property-with-/</guid>
     </item>
   </channel>
 </rss>
