@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 13:01:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 14:15:48 +0000</lastBuildDate>
+    <item>
+      <title>Junior devs after GitHub Copilot</title>
+      <link>https://kubaik.github.io/junior-devs-after-github-copilot/</link>
+      <description>Ship 2.3x faster with GitHub Copilot without cargo-culting — latency drops from 240ms to 18ms, cache hit ratio jumps from 42% to 78%, and incidents fall 67% with this repeatable junior onboarding stack.</description>
+      <pubDate>Thu, 07 May 2026 14:15:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/junior-devs-after-github-copilot/</guid>
+    </item>
     <item>
       <title>5 ways to add real-time without WebSockets</title>
       <link>https://kubaik.github.io/5-ways-to-add-real-time-without-websockets/</link>
@@ -138,13 +145,6 @@
       <description>Cut mean time to recovery by 58% with these 11 SRE principles — real benchmarks, code examples, and the ones I dropped after outages. Learn which principles work in production today.</description>
       <pubDate>Wed, 06 May 2026 14:46:32 +0000</pubDate>
       <guid>https://kubaik.github.io/11-sre-principles-that-actually-cut-downtime-in-pr/</guid>
-    </item>
-    <item>
-      <title>Database Sharding: What the Docs Don’t Tell You</title>
-      <link>https://kubaik.github.io/database-sharding-what-the-docs-dont-tell-you/</link>
-      <description>Scale your database to 10x traffic with sharding—cut latency for single-shard queries by 80%, avoid hot shards, and simplify rebalancing with Citus or Vitess.</description>
-      <pubDate>Wed, 06 May 2026 14:19:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-sharding-what-the-docs-dont-tell-you/</guid>
     </item>
   </channel>
 </rss>
