@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 09:47:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 11:02:57 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions in 2026 are cheaper than a coffee but only useful in 3 cases</title>
+      <link>https://kubaik.github.io/edge-functions-in-2026-are-cheaper-than-a-coffee-b/</link>
+      <description>Cut API response time by 43% for SE Asia users with Cloudflare Workers, but added 34ms in the US — real latency, cost, and failure data from a live global API in 2026. edge functions when Cloudflare Workers and Vercel Edge actually make sense</description>
+      <pubDate>Thu, 07 May 2026 11:02:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-in-2026-are-cheaper-than-a-coffee-b/</guid>
+    </item>
     <item>
       <title>13 AI Coding Tools Ranked by Real Trust (Not Just Downloads)</title>
       <link>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</link>
@@ -138,13 +145,6 @@
       <description>Stop event-driven pipelines from hanging silently — detect deadlocks at 10,000 events/second and reduce memory growth by 90% with backpressure, timeouts, and DNS caching under real load.</description>
       <pubDate>Wed, 06 May 2026 09:37:23 +0000</pubDate>
       <guid>https://kubaik.github.io/event-driven-architecture-fails-at-scale-detecting/</guid>
-    </item>
-    <item>
-      <title>Algorithm Optimization: Practical Big O Analysis: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</link>
-      <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
-      <pubDate>Wed, 06 May 2026 09:24:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
     </item>
   </channel>
 </rss>
