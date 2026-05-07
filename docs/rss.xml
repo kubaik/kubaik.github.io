@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 09:17:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 09:34:17 +0000</lastBuildDate>
+    <item>
+      <title>Why my 3am AI prototypes died at 9am in production</title>
+      <link>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</link>
+      <description>Cut production latency by 78% and connection leaks to zero after replacing vibe-coded endpoints with hand-crafted asyncpg pools — here’s the exact migration cost and tooling that worked</description>
+      <pubDate>Thu, 07 May 2026 09:34:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</guid>
+    </item>
     <item>
       <title>Feeling empty at 2pm every day? The burnout loop freelancers miss</title>
       <link>https://kubaik.github.io/feeling-empty-at-2pm-every-day-the-burnout-loop-fr/</link>
@@ -138,13 +145,6 @@
       <description>Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.</description>
       <pubDate>Wed, 06 May 2026 07:44:48 +0000</pubDate>
       <guid>https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/</guid>
-    </item>
-    <item>
-      <title>13 ways to lock down your personal data from corporations in 2024</title>
-      <link>https://kubaik.github.io/13-ways-to-lock-down-your-personal-data-from-corpo/</link>
-      <description>more than 5% of tests was rejected. 2. Per with lock down personal data — solve) I got an email in January 2024 that looked l.</description>
-      <pubDate>Wed, 06 May 2026 07:31:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/13-ways-to-lock-down-your-personal-data-from-corpo/</guid>
     </item>
   </channel>
 </rss>
