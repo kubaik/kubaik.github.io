@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 09:34:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 09:47:41 +0000</lastBuildDate>
+    <item>
+      <title>13 AI Coding Tools Ranked by Real Trust (Not Just Downloads)</title>
+      <link>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</link>
+      <description>Cut rework time by 62% with the right AI coding tool — ranked list from 29% trustworthy tools, benchmarks, and the $87 mistake that changed my mind</description>
+      <pubDate>Thu, 07 May 2026 09:47:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</guid>
+    </item>
     <item>
       <title>Why my 3am AI prototypes died at 9am in production</title>
       <link>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut Algorithm Optimization: Practical Big O Analysis failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, an…</description>
       <pubDate>Wed, 06 May 2026 09:24:05 +0000</pubDate>
       <guid>https://kubaik.github.io/algorithm-optimization-practical-big-o-analysis-a-/</guid>
-    </item>
-    <item>
-      <title>NULLs masquerading as zeros: why your analytics dashboards mislead you</title>
-      <link>https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/</link>
-      <description>Cut revenue KPI error by 15% by fixing NULLs masquerading as zeros in BigQuery and Looker. Learn the exact SQL pattern that silently corrupts analytics and the 3-step fix to stop misleading dashboards.</description>
-      <pubDate>Wed, 06 May 2026 07:44:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/nulls-masquerading-as-zeros-why-your-analytics-das/</guid>
     </item>
   </channel>
 </rss>
