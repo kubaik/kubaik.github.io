@@ -1404,22 +1404,41 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = f"{self.config.get('base_url', 'https://kubaik.github.io')}/{post.slug}"
-                candidate = f"{bundle_tweet}\n\n{post_url}\n\n{post.twitter_hashtags}"
-                if len(candidate) <= 280:
-                    post.prewritten_tweet = candidate
+                # Twitter shortens ALL URLs to 23 chars via t.co — budget on that,
+                # not the real URL length, so we don't truncate unnecessarily.
+                TCO_LEN = 23
+                url_overhead = TCO_LEN + 2  # +2 for the \n\n before the URL
+
+                hashtag_str = post.twitter_hashtags
+                hashtag_overhead = len(hashtag_str) + \
+                    2 if hashtag_str else 0  # +2 for \n\n
+
+                # How many chars the body can use
+                max_body = 280 - url_overhead - hashtag_overhead
+
+                if len(bundle_tweet) <= max_body:
+                    # Body fits cleanly — include URL and hashtags
+                    parts = [bundle_tweet, post_url]
+                    if hashtag_str:
+                        parts.append(hashtag_str)
+                    post.prewritten_tweet = "\n\n".join(parts)
                 else:
-                    # Try without hashtags to preserve the URL
-                    candidate_no_tags = f"{bundle_tweet}\n\n{post_url}"
-                    if len(candidate_no_tags) <= 280:
-                        post.prewritten_tweet = candidate_no_tags
+                    # Body too long — try dropping hashtags first to recover space
+                    max_body_no_tags = 280 - url_overhead
+                    if len(bundle_tweet) <= max_body_no_tags:
+                        post.prewritten_tweet = f"{bundle_tweet}\n\n{post_url}"
+                        print(
+                            "Note: hashtags dropped from tweet — body + URL fills budget.")
                     else:
-                        # Truncate body to fit URL — URL is non-negotiable
-                        url_suffix = f"\n\n{post_url}"
-                        max_body = 277 - len(url_suffix)
-                        post.prewritten_tweet = bundle_tweet[:max_body].rstrip(
-                        ) + "..." + url_suffix
-                print(
-                    f"Bundle tweet attached ({len(post.prewritten_tweet)} chars)")
+                        # Still too long — truncate body at a word boundary
+                        truncated = bundle_tweet[:max_body_no_tags -
+                                                 3].rsplit(" ", 1)[0] + "..."
+                        post.prewritten_tweet = f"{truncated}\n\n{post_url}"
+                        print(
+                            f"Note: tweet body truncated to fit URL ({len(truncated)} chars used).")
+
+                print(f"Bundle tweet attached ({len(post.prewritten_tweet)} chars, "
+                      f"effective ~{len(post.prewritten_tweet) - len(post_url) + TCO_LEN} after t.co)")
             else:
                 post.prewritten_tweet = ""
                 print("Note: no tweet_text in bundle — template fallback will be used.")
