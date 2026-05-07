@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 15:15:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 12:26:59 +0000</lastBuildDate>
+    <item>
+      <title>Agentic AI steals your hours</title>
+      <link>https://kubaik.github.io/agentic-ai-steals-your-hours/</link>
+      <description>Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.</description>
+      <pubDate>Thu, 07 May 2026 12:26:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-ai-steals-your-hours/</guid>
+    </item>
     <item>
       <title>Get paid $120k for remote work from a $2k/mo country</title>
       <link>https://kubaik.github.io/get-paid-120k-for-remote-work-from-a-2kmo-country/</link>
@@ -138,13 +145,6 @@
       <description>Reduce bugs by 42% with 3-word code review comments — real latency drops from 210ms to 45ms and cloud bills by $8k/month with checklists, Semgrep, and Redis rate limiters.</description>
       <pubDate>Wed, 06 May 2026 11:15:59 +0000</pubDate>
       <guid>https://kubaik.github.io/the-3-word-comment-that-reduced-our-bugs-by-42/</guid>
-    </item>
-    <item>
-      <title>How refactoring 19k lines of legacy PHP cut support tickets 40%</title>
-      <link>https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/</link>
-      <description>Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production</description>
-      <pubDate>Wed, 06 May 2026 10:58:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/</guid>
     </item>
   </channel>
 </rss>
