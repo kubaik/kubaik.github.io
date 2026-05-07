@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 17:03:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 19:26:16 +0000</lastBuildDate>
+    <item>
+      <title>We wasted 6 months over-engineering</title>
+      <link>https://kubaik.github.io/we-wasted-6-months-over-engineering/</link>
+      <description>Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need</description>
+      <pubDate>Thu, 07 May 2026 19:26:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/we-wasted-6-months-over-engineering/</guid>
+    </item>
     <item>
       <title>9 AI tools that cost more work than they save</title>
       <link>https://kubaik.github.io/9-ai-tools-that-cost-more-work-than-they-save/</link>
@@ -138,13 +145,6 @@
       <description>Cut debugging time by 70% with documentation that developers actually read — error contracts, behavioral specs, and environment matrices with concrete examples and benchmarks.</description>
       <pubDate>Wed, 06 May 2026 20:04:40 +0000</pubDate>
       <guid>https://kubaik.github.io/documentation-that-developers-actually-read-and-wh/</guid>
-    </item>
-    <item>
-      <title>Retrieval-Augmented Generation (RAG) Explained Simply: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/retrieval-augmented-generation-rag-explained-simpl/</link>
-      <description>Cut Retrieval-Augmented Generation (RAG) Explained Simply failures by understanding connection pooling and retry logic — real benchmarks, common mistake…</description>
-      <pubDate>Wed, 06 May 2026 19:21:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/retrieval-augmented-generation-rag-explained-simpl/</guid>
     </item>
   </channel>
 </rss>
