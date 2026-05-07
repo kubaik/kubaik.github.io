@@ -753,13 +753,8 @@ class VisibilityAutomator:
             }
 
         except Exception as e:
-            print(SEP)
             print("❌  TWITTER POST — FAILED")
-            print(SEP)
             print(f"  Error         : {e}")
-            for line in tweet_text.splitlines():
-                print(f"  │ {line}")
-            print(SEP + "\n")
             return {"success": False, "error": str(e), "tweet_text": tweet_text}
 
     # ── Single-tweet posting (template path) ──────────────────────

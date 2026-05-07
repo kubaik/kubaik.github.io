@@ -2240,7 +2240,7 @@ if __name__ == "__main__":
                 print("  Full tweet text:")
                 print(SEP)
                 for line in final_tweet_text.splitlines():
-                    print(f"  │ {line}")
+                    print(f" {line}")
                 print(SEP + "\n")
 
                 if not _twitter_posting_enabled():
@@ -2262,11 +2262,8 @@ if __name__ == "__main__":
                             f"  Char count    : {post_result['char_count']} / 280")
                         print(SEP + "\n")
                     else:
-                        print(SEP)
                         print("❌  X / TWITTER — POST FAILED (no retry)")
-                        print(SEP)
                         print(f"  Error         : {post_result.get('error')}")
-                        print(SEP + "\n")
 
             except Exception as e:
                 print(f"Error: {e}")
