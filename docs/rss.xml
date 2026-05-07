@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 19:26:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 19:57:14 +0000</lastBuildDate>
+    <item>
+      <title>Node.js memory leak: how to find it in 10 min</title>
+      <link>https://kubaik.github.io/nodejs-memory-leak-how-to-find-it-in-10-min/</link>
+      <description>Cut Node.js memory usage 70% by fixing the 3 real leaks: closures, unclosed streams, and CPU throttling. Use process.memoryUsage().external, heap diffs, and clinic.js to find it in minutes.</description>
+      <pubDate>Thu, 07 May 2026 19:57:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/nodejs-memory-leak-how-to-find-it-in-10-min/</guid>
+    </item>
     <item>
       <title>We wasted 6 months over-engineering</title>
       <link>https://kubaik.github.io/we-wasted-6-months-over-engineering/</link>
@@ -138,13 +145,6 @@
       <description>Catch 67% more bugs by replacing AI-generated weak tests with strong behavioral ones — real metrics from 12 services, mutation scores, and CI pipeline fixes.</description>
       <pubDate>Thu, 07 May 2026 07:37:29 +0000</pubDate>
       <guid>https://kubaik.github.io/your-ai-code-tool-writes-bad-tests-and-how-to-fix-/</guid>
-    </item>
-    <item>
-      <title>Documentation That Developers Actually Read (and Why Yours Dies Unread)</title>
-      <link>https://kubaik.github.io/documentation-that-developers-actually-read-and-wh/</link>
-      <description>Cut debugging time by 70% with documentation that developers actually read — error contracts, behavioral specs, and environment matrices with concrete examples and benchmarks.</description>
-      <pubDate>Wed, 06 May 2026 20:04:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/documentation-that-developers-actually-read-and-wh/</guid>
     </item>
   </channel>
 </rss>
