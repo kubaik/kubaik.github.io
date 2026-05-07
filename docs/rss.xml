@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 15:45:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 12:48:10 +0000</lastBuildDate>
+    <item>
+      <title>2026 tech salaries will crash — here’s the math</title>
+      <link>https://kubaik.github.io/2026-tech-salaries-will-crash-heres-the-math/</link>
+      <description>Cut real tech salaries by 18% in 2026: how legacy systems and AI tools erode compensation — leverage, ownership, and the data from 47 companies</description>
+      <pubDate>Thu, 07 May 2026 12:48:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-tech-salaries-will-crash-heres-the-math/</guid>
+    </item>
     <item>
       <title>Agentic AI steals your hours</title>
       <link>https://kubaik.github.io/agentic-ai-steals-your-hours/</link>
@@ -138,13 +145,6 @@
       <description>Recover 4.5 hours of focus time daily with calendar blocking and the &quot;One Thing&quot; rule — proven tactics that cut context-switching by 55% and increased pull-request throughput by 28%.</description>
       <pubDate>Wed, 06 May 2026 11:21:34 +0000</pubDate>
       <guid>https://kubaik.github.io/21-time-management-tactics-that-fixed-my-burnout-i/</guid>
-    </item>
-    <item>
-      <title>The 3-word comment that reduced our bugs by 42%</title>
-      <link>https://kubaik.github.io/the-3-word-comment-that-reduced-our-bugs-by-42/</link>
-      <description>Reduce bugs by 42% with 3-word code review comments — real latency drops from 210ms to 45ms and cloud bills by $8k/month with checklists, Semgrep, and Redis rate limiters.</description>
-      <pubDate>Wed, 06 May 2026 11:15:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/the-3-word-comment-that-reduced-our-bugs-by-42/</guid>
     </item>
   </channel>
 </rss>
