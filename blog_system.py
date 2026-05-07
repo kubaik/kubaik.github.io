@@ -88,11 +88,6 @@ def _count_words(text: str) -> int:
 # ─────────────────────────────────────────────────────────────────
 
 def _twitter_posting_enabled() -> bool:
-    """
-    Reads the ENABLE_TWITTER_POSTING GitHub secret (exposed as an env var).
-    Returns True only when the value is explicitly 'true' (case-insensitive).
-    Defaults to False so a missing or empty secret is always safe.
-    """
     raw = os.getenv("ENABLE_TWITTER_POSTING", "false").strip().lower()
     enabled = raw == "true"
     if not enabled:
@@ -104,24 +99,17 @@ def _twitter_posting_enabled() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX: derive a description from content when meta_description is empty
-# ✅ CHANGE: Full replacement — now uses 4-strategy AdSense CTR formula
-#   (outcome + keyword + benefit) instead of naive first-sentence extraction
+# Meta description derivation
 # ─────────────────────────────────────────────────────────────────
 
 def _extract_numbers(text: str) -> str:
-    """
-    Pull the first percentage, time saving, multiplier, or latency figure
-    from content and return a short phrase around it.
-    Used as the 'outcome' component of the meta_description formula.
-    """
     patterns = [
-        r'\d+\s*%',                                      # 40%
-        r'\d+x\s+(?:faster|cheaper|more|improvement)',   # 3x faster
-        r'(?:cut|reduce|save|improve)\w*\s+(?:by\s+)?\d+',  # cut by 60
-        r'\d+\s*ms',                                     # 120ms
-        r'\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)',   # 2 seconds faster
-        r'under\s+\d+\s*ms',                             # under 10ms
+        r'\d+\s*%',
+        r'\d+x\s+(?:faster|cheaper|more|improvement)',
+        r'(?:cut|reduce|save|improve)\w*\s+(?:by\s+)?\d+',
+        r'\d+\s*ms',
+        r'\d+\s*(?:seconds?|minutes?)\s+(?:faster|saved)',
+        r'under\s+\d+\s*ms',
         r'\d+\s*(?:req|requests?)(?:/|\s+per\s+)(?:s|sec|second|min|minute)',
     ]
     for pattern in patterns:
@@ -137,15 +125,6 @@ def _extract_numbers(text: str) -> str:
 
 
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
-    """
-    Build a meta_description that follows the AdSense CTR formula:
-      (1) a specific number or outcome  — extracted from content
-      (2) the primary keyword           — extracted from title
-      (3) an implied benefit            — extracted from early content
-
-    Falls back through four strategies, then to first-sentence extraction
-    only as a last resort. Result is always ≤ max_len characters.
-    """
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`",        " ", text)
     text = re.sub(r"#{1,6}\s+",      " ", text)
@@ -206,11 +185,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
 
 
 def audit_posts(docs_dir: Path) -> Dict:
-    """
-    Scan all saved posts and return counts + slugs of:
-      - fallback posts  (contain the telltale 'used_fallback' flag)
-      - short posts     (below MIN_WORD_COUNT)
-    """
     results = {"fallback": [], "short": [], "ok": []}
     if not docs_dir.exists():
         return results
@@ -447,6 +421,13 @@ _HASHTAG_TIERS = {
         "websocket":       ["WebSockets", "RealTime"],
         "webassembly":     ["WebAssembly", "WASM"],
         "wasm":            ["WebAssembly"],
+        "platform eng":    ["PlatformEngineering"],
+        "devsecops":       ["DevSecOps"],
+        "agentic":         ["AgenticAI"],
+        "multi-agent":     ["MultiAgent"],
+        "vibe cod":        ["VibeCoding"],
+        "claude code":     ["ClaudeCode"],
+        "cursor":          ["CursorAI"],
     },
     "monetization": {
         "passive income":    ["PassiveIncome"],
@@ -476,6 +457,9 @@ _HASHTAG_TIERS = {
         "promoted":          ["CareerAdvice", "TechCareer"],
         "burnout":           ["DevWellbeing"],
         "burn out":          ["DevWellbeing"],
+        "andela":            ["TechCareer", "AfricaTech"],
+        "africa tech":       ["AfricaTech"],
+        "nairobi":           ["AfricaTech", "NairobiTech"],
     },
 }
 
@@ -535,13 +519,9 @@ _MISTRAL_FREE_TIER_DELAY = 1.2
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
-# GitHub Models — endpoint changed Oct 2025 (old Azure URL is dead)
-# Model names use PascalCase: "Llama-4-Scout-17B-16E-Instruct", "gpt-4o", etc.
 _GITHUB_MODELS_URL = "https://models.github.ai/inference/chat/completions"
 _GITHUB_MODEL = "Llama-4-Scout-17B-16E-Instruct"
 
-# Cloudflare Workers AI — needs account ID in the URL path
-# Model names use @cf/ namespace: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
 
@@ -550,7 +530,6 @@ _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 # ─────────────────────────────────────────────────────────────────
 
 _STRUCTURE_SETS = [
-    # 0 — deep-dive / how-it-works
     (
         "deep_dive",
         [
@@ -569,7 +548,6 @@ _STRUCTURE_SETS = [
             "Include at least one moment where you say what surprised you or contradicted your expectations."
         ),
     ),
-    # 1 — tutorial / step-by-step
     (
         "tutorial",
         [
@@ -589,7 +567,6 @@ _STRUCTURE_SETS = [
             "Include at least one 'gotcha' you discovered while writing or testing this."
         ),
     ),
-    # 2 — opinion / contrarian take
     (
         "opinion",
         [
@@ -610,7 +587,6 @@ _STRUCTURE_SETS = [
             "Avoid hedging — readers come to opinion pieces for conviction."
         ),
     ),
-    # 3 — comparison / versus
     (
         "comparison",
         [
@@ -631,7 +607,6 @@ _STRUCTURE_SETS = [
             "Acknowledge weaknesses in your preferred option."
         ),
     ),
-    # 4 — case study / story-driven
     (
         "case_study",
         [
@@ -652,7 +627,6 @@ _STRUCTURE_SETS = [
             "The 'broader lesson' section is where you zoom out — make it a principle, not just a summary."
         ),
     ),
-    # 5 — explainer / concept clarity
     (
         "explainer",
         [
@@ -672,7 +646,6 @@ _STRUCTURE_SETS = [
             "The 'quick reference' section should be a scannable table or bullet list a reader can bookmark."
         ),
     ),
-    # 6 — listicle / tools roundup (highest CTR for display ads)
     (
         "listicle",
         [
@@ -695,7 +668,6 @@ _STRUCTURE_SETS = [
             "This format performs well for search — optimise the headings for question-based queries."
         ),
     ),
-    # 7 — troubleshooting / error guide (captures high-intent search traffic)
     (
         "troubleshooting",
         [
@@ -727,7 +699,7 @@ def _pick_structure(topic: str) -> tuple:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Author persona contexts for humanization
+# Author persona contexts
 # ─────────────────────────────────────────────────────────────────
 
 _AUTHOR_CONTEXTS = [
@@ -906,10 +878,6 @@ _PERSONAL_INTROS = [
 
 
 def inject_personal_intro(post, topic: str) -> None:
-    """
-    Prepend a short personal intro paragraph to post.content.
-    Call this after generate_blog_post() and before save_post().
-    """
     idx = int(hashlib.md5(topic.encode()).hexdigest(),
               16) % len(_PERSONAL_INTROS)
     intro = _PERSONAL_INTROS[idx]
@@ -927,26 +895,13 @@ class BlogSystem:
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
 
-        # ── Original six provider keys ─────────────────────────────
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.mistral_key = os.getenv("MISTRAL_API_KEY")
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
-
-        # ── New provider keys ──────────────────────────────────────
-        # GitHub Models: any GitHub personal access token works.
-        # Create one at https://github.com/settings/tokens
-        # (classic token, no special scope needed for public models)
         self.github_token = os.getenv("BLOGGITHUB_TOKEN")
-
-        # Cloudflare Workers AI: needs both a token AND the account ID.
-        # Token:      dash.cloudflare.com/profile/api-tokens
-        #             → Create Token → Workers AI (Read) template
-        # Account ID: visible in the URL when you log into the dashboard:
-        #             dash.cloudflare.com/<ACCOUNT_ID>/...
-        # Free plan:  10,000 neurons/day, no credit card required.
         self.cloudflare_token = os.getenv("CLOUDFLARE_API_TOKEN")
         self.cloudflare_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
 
@@ -975,7 +930,6 @@ class BlogSystem:
             f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}")
         print(
             f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
-        # ── New providers ──────────────────────────────────────────
         print(
             f"  GitHub Models:  {'configured' if self.github_token         else 'NOT SET'}")
         cf_status = (
@@ -1057,7 +1011,6 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
-
         providers = []
 
         if self.mistral_key:
@@ -1101,7 +1054,7 @@ class BlogSystem:
             f"All configured API providers failed. Last error: {last_error}")
 
     # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Groq
+    # PROVIDERS
     # ─────────────────────────────────────────────────────────────
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
@@ -1114,11 +1067,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        "https://api.groq.com/openai/v1/chat/completions",
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=90),
-                    ) as r:
+                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1133,10 +1082,6 @@ class BlogSystem:
             except asyncio.TimeoutError:
                 raise Exception("Groq timed out.")
         raise Exception("Groq unavailable.")
-
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: OpenRouter
-    # ─────────────────────────────────────────────────────────────
 
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
@@ -1157,11 +1102,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        "https://openrouter.ai/api/v1/chat/completions",
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=90),
-                    ) as r:
+                    async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
@@ -1181,25 +1122,17 @@ class BlogSystem:
                 raise Exception("OpenRouter timed out.")
         raise Exception("OpenRouter unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Cerebras
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.cerebras_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "qwen-3-235b-a22b-instruct-2507", "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7}
+        data = {"model": "qwen-3-235b-a22b-instruct-2507",
+                "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        "https://api.cerebras.ai/v1/chat/completions",
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=90),
-                    ) as r:
+                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1215,10 +1148,6 @@ class BlogSystem:
                 raise Exception("Cerebras timed out.")
         raise Exception("Cerebras unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Mistral
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.mistral_key}",
@@ -1229,11 +1158,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        "https://api.mistral.ai/v1/chat/completions",
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=90),
-                    ) as r:
+                    async with s.post("https://api.mistral.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1249,10 +1174,6 @@ class BlogSystem:
                 raise Exception("Mistral timed out.")
         raise Exception("Mistral unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: NVIDIA NIM
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.nvidia_key}",
@@ -1263,11 +1184,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        "https://integrate.api.nvidia.com/v1/chat/completions",
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=120),
-                    ) as r:
+                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1283,14 +1200,9 @@ class BlogSystem:
                 raise Exception("NVIDIA NIM timed out.")
         raise Exception("NVIDIA NIM unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Gemini
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
         GEMINI_MODEL = "gemini-2.5-flash"
         RETRYABLE = {503, 429, 500, 502, 504}
-
         try:
             import google.generativeai as genai
 
@@ -1302,14 +1214,11 @@ class BlogSystem:
                         max_output_tokens=max_tokens, temperature=0.7),
                 )
                 parts = [
-                    ("SYSTEM: " if m.get("role") == "system" else "USER: ")
-                    + m.get("content", "")
+                    ("SYSTEM: " if m.get("role") ==
+                     "system" else "USER: ") + m.get("content", "")
                     for m in messages
                 ]
-                return model.generate_content(
-                    "\n\n".join(parts) + "\n\nASSISTANT:"
-                ).text
-
+                return model.generate_content("\n\n".join(parts) + "\n\nASSISTANT:").text
             return await asyncio.get_event_loop().run_in_executor(None, _sdk_call)
         except ImportError:
             pass
@@ -1329,18 +1238,13 @@ class BlogSystem:
         contents = [{"role": "user", "parts": [{"text": first_user}]}]
         for extra in user_parts[1:]:
             contents.append({"role": "user", "parts": [{"text": extra}]})
-        payload = {
-            "contents": contents,
-            "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.7},
-        }
+        payload = {"contents": contents, "generationConfig": {
+            "maxOutputTokens": max_tokens, "temperature": 0.7}}
         waits = [2, 5, 10, 20]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        api_url, json=payload,
-                        timeout=aiohttp.ClientTimeout(total=120),
-                    ) as r:
+                    async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             result = await r.json()
                             try:
@@ -1360,52 +1264,17 @@ class BlogSystem:
                 raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: GitHub Models                                   NEW
-    #
-    # Free with any GitHub personal access token — no credit card,
-    # no expiry, no monthly cap.  Uses Azure AI inference under the
-    # hood but routed through GitHub's endpoint.
-    #
-    # ⚠️  The old Azure endpoint (models.inference.ai.azure.com) was
-    #     deprecated July 2025 and shut down October 17, 2025.
-    #     Always use: https://models.github.ai/inference
-    #
-    # Model names are PascalCase — NOT HuggingFace slugs:
-    #   "Llama-4-Scout-17B-16E-Instruct"         ✓
-    #   "gpt-4o"                                 ✓
-    #   "Mistral-Large-2411"                     ✓
-    #   "DeepSeek-R1"                            ✓
-    #   "meta-llama-3.3-70b-instruct"            ✗ (returns HTTP 400)
-    #
-    # Rate limits: ~10 RPM / 150 req/day on large models (free account).
-    #              Higher with GitHub Pro/Team.
-    #
-    # Setup: https://github.com/settings/tokens → generate any
-    #        personal access token (classic, no special scope needed).
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_github(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {
-            "Authorization": f"Bearer {self.github_token}",
-            "Content-Type":  "application/json",
-        }
-        data = {
-            "model":       "gpt-4o",   # "Llama-4-Scout-17B-16E-Instruct"
-            "messages":    messages,
-            "max_tokens":  max_tokens,
-            "temperature": 0.7,
-        }
+        headers = {"Authorization": f"Bearer {self.github_token}",
+                   "Content-Type": "application/json"}
+        data = {"model": "gpt-4o", "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        _GITHUB_MODELS_URL,
-                        headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=120),
-                    ) as r:
+                    async with s.post(_GITHUB_MODELS_URL, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1423,58 +1292,18 @@ class BlogSystem:
                 raise Exception("GitHub Models timed out.")
         raise Exception("GitHub Models unavailable.")
 
-    # ─────────────────────────────────────────────────────────────
-    # PROVIDER: Cloudflare Workers AI                           NEW
-    #
-    # Free plan: 10,000 neurons/day — no credit card required.
-    # Neurons ≈ output tokens (1:1 for text models roughly).
-    # 10k neurons covers ~5-8 blog content calls per day.
-    #
-    # Best positioned as a last-resort fallback because:
-    #   - Tightest daily quota of all providers
-    #   - But runs on Cloudflare's global edge network —
-    #     completely different infrastructure from every other
-    #     provider in this chain, so it fails independently.
-    #
-    # Setup:
-    #   1. Sign up free: https://dash.cloudflare.com/sign-up
-    #   2. Token: dash.cloudflare.com/profile/api-tokens
-    #             → Create Token → Workers AI (Read) template
-    #   3. Account ID: visible in dashboard URL after login:
-    #             dash.cloudflare.com/<ACCOUNT_ID>/...
-    #
-    # Model names use @cf/ namespace:
-    #   "@cf/meta/llama-3.3-70b-instruct-fp8-fast"   — fast, good quality
-    #   "@cf/deepseek-ai/deepseek-r1-distill-llama-70b" — reasoning quality
-    #   "@cf/qwen/qwen2.5-72b-instruct"               — strong structured JSON
-    # ─────────────────────────────────────────────────────────────
-
     async def _call_cloudflare(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {
-            "Authorization": f"Bearer {self.cloudflare_token}",
-            "Content-Type":  "application/json",
-        }
-        data = {
-            "model":       _CF_MODEL,   # "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-            "messages":    messages,
-            "max_tokens":  max_tokens,
-            "temperature": 0.7,
-            "stream":      False,
-        }
-        # Endpoint embeds the account ID in the path
-        url = (
-            f"https://api.cloudflare.com/client/v4/accounts/"
-            f"{self.cloudflare_account_id}/ai/v1/chat/completions"
-        )
+        headers = {"Authorization": f"Bearer {self.cloudflare_token}",
+                   "Content-Type": "application/json"}
+        data = {"model": _CF_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        url = f"https://api.cloudflare.com/client/v4/accounts/{self.cloudflare_account_id}/ai/v1/chat/completions"
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(
-                        url, headers=headers, json=data,
-                        timeout=aiohttp.ClientTimeout(total=120),
-                    ) as r:
+                    async with s.post(url, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1572,6 +1401,17 @@ class BlogSystem:
             post.twitter_hashtags = " ".join(
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags)
 
+            bundle_tweet = bundle.get("tweet_text", "").strip()
+            if bundle_tweet:
+                candidate = f"{bundle_tweet}\n\n{post.twitter_hashtags}"
+                post.prewritten_tweet = candidate if len(
+                    candidate) <= 280 else bundle_tweet[:277] + "..."
+                print(
+                    f"Bundle tweet attached ({len(post.prewritten_tweet)} chars)")
+            else:
+                post.prewritten_tweet = ""
+                print("Note: no tweet_text in bundle — template fallback will be used.")
+
             return post
 
         except Exception as e:
@@ -1580,7 +1420,7 @@ class BlogSystem:
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
-    # SINGLE BUNDLE CALL — with rotating structures + author voice
+    # SINGLE BUNDLE CALL
     # ─────────────────────────────────────────────────────────────
 
     async def _generate_full_bundle(
@@ -1612,8 +1452,8 @@ class BlogSystem:
             "comparison":      "Title should name both options being compared.",
             "case_study":      "Title should hint at the result, e.g. 'How we cut X by 40%'.",
             "explainer":       "Title should address the confusion, e.g. 'X finally explained'.",
-            "listicle":        "Title should name the number of items and promise a ranked or curated list, e.g. 'The 7 best X tools in 2026'.",
-            "troubleshooting": "Title should name the specific error or symptom, e.g. 'Why X fails with Y (and how to fix it)'.",
+            "listicle":        "Title should name the number of items and promise a ranked or curated list.",
+            "troubleshooting": "Title should name the specific error or symptom.",
         }.get(format_name, "Write a specific, benefit-driven title.")
 
         messages = [
@@ -1649,6 +1489,16 @@ Respond with ONLY a JSON object in this exact shape:
 Bad example: 'A guide to Redis caching.' \
 Good example: 'Cut API response time by 60% with Redis caching — connection pooling, eviction policies, and the mistakes that cause cache stampedes.' \
 Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'.>",
+  "tweet_text": "<a single X/Twitter post, max 240 chars (hashtags will be appended separately). \
+Rules: \
+(1) Open with tension, a specific number, or an honest admission — never the topic name alone or 'Just published'. \
+(2) Hook line under 10 words. \
+(3) 2-3 lines of complete, natural prose — no truncated sentences, no trailing ellipsis mid-thought. \
+(4) End with a short action cue on its own line e.g. 'Full breakdown 👇' or 'Here is why 👇'. \
+(5) Write like a developer talking at a meetup, not a content scheduler. \
+(6) Close with a reply-inviting question on a new line e.g. 'What broke first when you tried this?'. \
+BAD: 'Everyone says Event-Driven Architecture Scale is hard. The actual hard part is something else. Stop event-driven… 👇' \
+GOOD: 'Everyone says scaling event-driven systems is hard. It is — but not for the reason you think. The real bottleneck shows up somewhere nobody looks. Stop optimising the wrong layer 👇\n\nWhere did your event-driven setup break first?'>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}
 
@@ -1664,16 +1514,11 @@ Hard requirements for "content":
 - Do NOT include the title as a # heading at the top
 - The final section must end with a specific, actionable next step — not a generic "start today"
 - Include a "## Frequently Asked Questions" section near the end with 3–4 questions
-  written as real search queries (e.g. "How do I fix X", "What is the difference between X and Y").
-  Answer each in 3–5 sentences. This improves featured snippet eligibility.
-- At least one comparison table using markdown table syntax (| col | col |) —
-  structured content increases dwell time and ad viewability.
+  written as real search queries. Answer each in 3–5 sentences.
+- At least one comparison table using markdown table syntax (| col | col |)
 - Each major section should have a 1–2 sentence summary at the end
-  ("The key takeaway here is...") — this improves content scannability and reduces bounce rate.
-- Vary sentence length deliberately: mix short punchy sentences with longer technical ones.
-  Walls of uniform-length sentences increase bounce rate.
 
-Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based ("how to...", "why does...").
+Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based.
 
 Return ONLY the JSON object.""",
             },
@@ -1687,13 +1532,11 @@ Return ONLY the JSON object.""",
 
         data = self._parse_bundle_json(raw)
 
-        # AFTER — only title + content are truly required; derive the rest
         for key in ("title", "content"):
             if key not in data:
                 raise ValueError(
                     f"Bundle response missing required key: '{key}'")
 
-        # Gracefully fill optional keys that models sometimes omit
         if not data.get("meta_description", "").strip():
             print(
                 "Note: meta_description missing from API response — deriving from content.")
@@ -1713,6 +1556,10 @@ Return ONLY the JSON object.""",
                 f"what is {topic.lower()}",
                 f"{topic.lower()} vs alternatives",
             ]
+
+        if not data.get("tweet_text", "").strip():
+            print(
+                "Note: tweet_text missing from bundle — template fallback will be used.")
 
         data["_format"] = format_name
         return data
@@ -1791,7 +1638,7 @@ Return ONLY the JSON object.""",
             if m:
                 data['title'] = m.group(1).replace('\\"', '"').strip()
             m = re.search(
-                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords)|"\s*\})',
+                r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords|tweet_text)|"\s*\})',
                 text, re.DOTALL,
             )
             if not m:
@@ -1808,6 +1655,15 @@ Return ONLY the JSON object.""",
             if m:
                 data['meta_description'] = m.group(
                     1).replace('\\n', ' ').strip()
+            m = re.search(
+                r'"tweet_text"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
+            if m:
+                data['tweet_text'] = (
+                    m.group(1)
+                    .replace('\\n', '\n')
+                    .replace('\\"', '"')
+                    .strip()
+                )
             m = re.search(r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
             if m:
                 data['seo_keywords'] = [
@@ -1835,6 +1691,7 @@ Return ONLY the JSON object.""",
         if 'content' in data:
             data.setdefault('title', '')
             data.setdefault('meta_description', '')
+            data.setdefault('tweet_text', '')
             data.setdefault('seo_keywords', [])
             return data
         raise ValueError(
@@ -1935,12 +1792,6 @@ class {topic_slug}Client:
             return False
 ```
 
-Step 1: Set environment variables — never hardcode credentials.
-Step 2: Start with conservative timeouts (5s) and tune from p99 measurements.
-Step 3: Add circuit breaker — stop after 5 failures, wait 30 seconds.
-Step 4: Instrument connection count, success rate, p50/p95/p99 latency, error types.
-Step 5: Load test with realistic traffic before going live.
-
 ## Real-World Performance Numbers
 
 | Traffic Level | Without Tuning | With Tuning | Key Difference |
@@ -1951,45 +1802,25 @@ Step 5: Load test with realistic traffic before going live.
 
 ## Common Mistakes and How to Avoid Them
 
-**No timeout:** Set connection timeout (2–5s) and per-operation timeout (1–5s) explicitly.
-**Binary error handling:** Connection refused ≠ timeout ≠ auth error. Handle each separately.
-**No pool monitoring:** Alert when wait time exceeds 500ms.
-**Happy-path-only testing:** Use fault injection in staging.
-**DNS caching in containers:** Set TTL to 30–60 seconds.
-
-## Tools and Libraries Worth Using
-
-- **Prometheus + Grafana** for metrics (use histograms, not averages)
-- **OpenTelemetry** for distributed tracing (~1–2% overhead)
-- **Testcontainers** for real infrastructure in tests
-- **k6 or Locust** for load testing
-- **tenacity / resilience4j / polly** for circuit breaker and retry
-
-## When Not to Use This Approach
-
-Skip it for low, predictable traffic (under 100 req/min). Skip it without observability — you can't debug what you can't see. Skip it if your team doesn't understand the failure modes; a simpler system they know beats a sophisticated one they don't.
-
-## My Take: What Nobody Else Is Saying
-
-Most guides tell you to add {topic} and call it done. In practice, the hardest part is not the setup — it's the operational burden. Every abstraction you add is a thing your team needs to understand at 2am when it breaks. Start simpler than you think you need to, instrument everything from day one, and only add complexity when metrics prove you need it.
+No timeout, binary error handling, no pool monitoring, happy-path-only testing, and DNS caching in containers are the five mistakes I see most often. Each is fixable in under an hour once you know to look for it.
 
 ## Frequently Asked Questions
 
 **What is {topic} and why does it matter?**
-{topic} is a core concept in modern software development that directly affects reliability, performance, and maintainability. Understanding it properly prevents the most common class of production incidents in this area. Most developers encounter it indirectly — through a slow query, a timeout, or a cascade failure — before they understand the root cause.
+{topic} is a core concept in modern software development that directly affects reliability, performance, and maintainability. Most developers encounter it indirectly — through a slow query, a timeout, or a cascade failure — before they understand the root cause.
 
 **How long does it take to implement {topic} correctly?**
-A basic implementation takes a few hours. A production-ready one — with monitoring, error handling, and load testing — typically takes 1–2 days. The difference matters: most outages happen in the gap between those two. Treat the first implementation as a draft, not a final version.
+A basic implementation takes a few hours. A production-ready one — with monitoring, error handling, and load testing — typically takes 1–2 days.
 
 **What are the most common mistakes when using {topic}?**
-The three most common mistakes are: skipping timeout configuration, treating all errors the same way, and not instrumenting the integration before going live. Each is covered in detail above. The good news is that all three are detectable before you ship if you load test against a staging environment.
+The three most common mistakes are: skipping timeout configuration, treating all errors the same way, and not instrumenting the integration before going live.
 
 **When should I NOT use {topic}?**
-If your traffic is low and predictable (under a few hundred requests per minute), the operational overhead may not be worth it. Start simpler, measure, and add complexity only when your metrics demand it. The best architecture is the simplest one that meets your actual requirements — not your imagined future scale.
+If your traffic is low and predictable (under a few hundred requests per minute), the operational overhead may not be worth it. Start simpler, measure, and add complexity only when your metrics demand it.
 
-## Conclusion and Next Steps
+## What to Do Next
 
-Production-ready {topic} comes down to systematic failure handling. Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
+Add explicit timeouts today. Set up latency histograms this week. Run a chaos test against staging this month."""
 
         meta_description = (
             f"Cut {topic} failures by understanding connection pooling and retry logic — "
@@ -2006,8 +1837,8 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
         post = BlogPost(
             title=title, content=content, slug=slug,
-            tags=[topic_lower.replace(' ', '-'), 'development',
-                  'technical-guide', 'best-practices'] + fallback_hashtags,
+            tags=[topic_lower.replace(
+                ' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
             meta_description=meta_description,
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(),
@@ -2023,6 +1854,7 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
         post.monetization_data["used_fallback"] = True
         post.twitter_hashtags = " ".join(f"#{h}" for h in fallback_hashtags)
+        post.prewritten_tweet = ""
 
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
             post.content, topic)
@@ -2049,9 +1881,7 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
 
         if word_count < MIN_WORD_COUNT:
             print(
-                f"Warning: saving post with only {word_count} words "
-                f"(min recommended: {MIN_WORD_COUNT})"
-            )
+                f"Warning: saving post with only {word_count} words (min recommended: {MIN_WORD_COUNT})")
 
         if not getattr(post, 'meta_description', '').strip():
             post.meta_description = _derive_description(
@@ -2070,6 +1900,9 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             post_data['twitter_hashtags'] = post.twitter_hashtags
 
+        if hasattr(post, 'prewritten_tweet') and post.prewritten_tweet:
+            post_data['prewritten_tweet'] = post.prewritten_tweet
+
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
             json.dump(post_data, f, indent=2, ensure_ascii=False)
 
@@ -2084,6 +1917,8 @@ Production-ready {topic} comes down to systematic failure handling. Add explicit
             f"  - {post.monetization_data.get('ad_slots', 0)} ad slots configured")
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             print(f"  - Twitter hashtags: {post.twitter_hashtags}")
+        if hasattr(post, 'prewritten_tweet') and post.prewritten_tweet:
+            print(f"  - Prewritten tweet: {len(post.prewritten_tweet)} chars")
         print(
             f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
 
@@ -2176,6 +2011,8 @@ def create_sample_config():
             "facebook": "your-facebook-page",
         },
         "content_topics": [
+            # ── ORIGINAL TOPICS (keep all — 15% unused remain valid) ──────────
+
             "Copilot vs Cursor: which actually speeds up Python backend work",
             "How I use Claude to review my own code (and where it fails)",
             "RAG pipelines in production: what the tutorials skip",
@@ -2205,6 +2042,92 @@ def create_sample_config():
             "Burnout as a freelance developer: what helped me recover",
             "How I manage client work and side projects without losing weekends",
             "The tools that save me the most time as a solo developer",
+
+            # ── NEW: AGENTIC AI & CODING AGENTS ──────────────────────────────
+            # Sourced from: Anthropic 2026 Agentic Coding Report, DEV.to Feb 2026,
+            # EveryDev.ai Mar 2026 — highest reader interest category right now.
+
+            "Claude Code vs Cursor: a real cost breakdown after 3 months",
+            "How I delegate tasks to AI agents without losing control of my codebase",
+            "Multi-agent systems in production: what nobody tells you upfront",
+            "Agentic AI for solo developers: where it saves hours and where it wastes them",
+            "Why 84% of developers use AI coding tools but only 29% trust the output",
+            "Repository intelligence: how AI is learning your entire codebase context",
+            "The $100/month AI coding budget question: is it worth it for indie developers",
+            "How to review AI-generated code without spending more time than writing it yourself",
+            "Vibe coding is fun for prototypes — here's why I stopped using it in production",
+            "Building your first agentic workflow with Claude Code: a practical walkthrough",
+
+            # ── NEW: PLATFORM ENGINEERING & DEVSECOPS ────────────────────────
+            # Sourced from: intelegain.com Mar 2026, checkmarx.com Mar 2026,
+            # SaM Solutions Feb 2026 — fast-growing hiring category.
+
+            "Platform engineering explained: why your team needs a paved road",
+            "DevSecOps in practice: shifting security left without slowing down deploys",
+            "How to build an internal developer platform on a startup budget",
+            "AI-generated code and security: the new vulnerabilities teams are missing",
+            "Supply chain attacks in 2026: how to protect your Python and npm dependencies",
+            "Zero-trust architecture for small teams: what actually makes sense to implement",
+
+            # ── NEW: AI TRUST, PRODUCTIVITY & CAREER IMPACT ──────────────────
+            # Sourced from: Pragmatic Engineer May 2026, OfferZen 2026 salary report,
+            # EveryDev.ai Mar 2026 — high engagement / debate topics.
+
+            "AI is a force multiplier: why it makes senior devs more powerful and juniors more exposed",
+            "How AI tools are changing what 'senior developer' actually means in 2026",
+            "The AI productivity tax: when your tools create more work than they save",
+            "Measuring the real impact of AI on your team's velocity (not just vibes)",
+            "AI skills that actually affect your salary in 2026: a data-backed breakdown",
+            "What happens to junior developers in a world of AI-assisted code generation",
+
+            # ── NEW: AFRICA & GLOBAL SOUTH TECH CAREERS ──────────────────────
+            # Sourced from: OnlineJobsKenya Feb 2026, Skillworks.ng Feb 2026,
+            # Remote4Africa Nov 2025, Hirezar May 2026 — core audience context.
+
+            "How developers in Nairobi and Lagos are landing $4k/month remote roles",
+            "Andela, Toptal, and Arc: which platform actually works for African developers in 2026",
+            "Building a portfolio that gets you hired remotely from Africa",
+            "M-Pesa, Flutterwave, Paystack: integrating African payment APIs without the headaches",
+            "The timezone advantage: why European startups are hiring East African engineers",
+            "From local salary to global rate: the career moves that made the difference for me",
+            "How to pass technical interviews for remote roles when you're self-taught",
+            "Infrastructure constraints in Africa that changed how I write backend code",
+
+            # ── NEW: SUSTAINABLE & COST-AWARE ENGINEERING ────────────────────
+            # Sourced from: intelegain.com Mar 2026 (Green Software Foundation data),
+            # EveryDev.ai Mar 2026 — growing reader interest as cloud bills rise.
+
+            "Sustainable software engineering: cutting cloud carbon without cutting performance",
+            "Carbon-aware deployment: scheduling workloads when the grid is cleanest",
+            "How to cut your AWS bill by 40% using Graviton and spot instances",
+            "The real cost of over-engineering: when simplicity beats the fancy architecture",
+
+            # ── NEW: REAL-TIME & EDGE COMPUTING ──────────────────────────────
+            # Sourced from: SaM Solutions Feb 2026, Microsoft Jan 2026 — strong
+            # search volume for real-time systems content.
+
+            "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
+            "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
+            "Building real-time features without a WebSocket server: practical alternatives",
+            "5G and mobile-first backends: what changes when your users are always on cellular",
+
+            # ── NEW: LOW-CODE, NO-CODE & AI-NATIVE APPS ──────────────────────
+            # Sourced from: SaM Solutions Feb 2026 ($45B market at 28% CAGR),
+            # DEV.to Feb 2026 — non-traditional developer wave.
+
+            "When to build with no-code vs write the code yourself: a decision framework",
+            "Non-traditional developers shipping real products: what the AI coding wave made possible",
+            "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
+            "MCP servers explained: what they are and why every developer should understand them",
+
+            # ── NEW: SYSTEM DESIGN & ARCHITECTURE FOR 2026 ───────────────────
+            # Evergreen high-traffic category refreshed with 2026 angles.
+
+            "Designing systems for AI-first applications: the patterns that actually hold up",
+            "Event sourcing in 2026: when it's worth the complexity and when it isn't",
+            "How to design a multi-tenant SaaS database without painting yourself into a corner",
+            "Monolith vs microservices in 2026: the pendulum is swinging back and here's why",
+            "Observability for AI pipelines: what to instrument when your system includes an LLM",
         ],
     }
 
@@ -2235,8 +2158,8 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print(
-                "Done! API chain: Mistral → OpenRouter → Groq → Cerebras → "
-                "Gemini → NVIDIA NIM → GitHub Models → Cloudflare AI → local template"
+                "Done! API chain: Mistral → GitHub Models → OpenRouter → Groq → "
+                "Cloudflare AI → Cerebras → Gemini → NVIDIA NIM → local template"
             )
 
         elif mode == "auto":
@@ -2262,10 +2185,17 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
-                # ── ALWAYS compose and log the tweet (regardless of posting flag) ──
+                # ── Resolve final tweet text ───────────────────────────────────
                 visibility = VisibilityAutomator(config)
+                prewritten = getattr(blog_post, "prewritten_tweet", "").strip()
 
-                preview = visibility.compose_tweet_preview(blog_post)
+                if prewritten:
+                    final_tweet_text = prewritten
+                    tweet_source = "bundle (LLM-generated during content creation)"
+                else:
+                    preview = visibility.compose_tweet_preview(blog_post)
+                    final_tweet_text = preview["tweet_text"]
+                    tweet_source = f"template fallback (hook_style={preview['hook_style']})"
 
                 SEP = "─" * 68
                 print(SEP)
@@ -2273,24 +2203,23 @@ if __name__ == "__main__":
                 print(SEP)
                 print(f"  Post title    : {blog_post.title}")
                 print(f"  Slug          : {blog_post.slug}")
-                print(f"  Hook style    : {preview['hook_style']}")
-                print(f"  Link strategy : {preview['link_strategy']}")
-                print(f"  Char count    : {preview['char_count']} / 280")
+                print(f"  Source        : {tweet_source}")
+                print(f"  Char count    : {len(final_tweet_text)} / 280")
                 print(SEP)
                 print("  Full tweet text:")
                 print(SEP)
-                for line in preview["tweet_text"].splitlines():
+                for line in final_tweet_text.splitlines():
                     print(f"  │ {line}")
                 print(SEP + "\n")
 
-                # ── Only actually post if the flag is enabled ──────────────────
                 if not _twitter_posting_enabled():
                     print(
                         "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
                     print("  ↑ Tweet above is what would have been posted.\n")
                 else:
                     print("Posting tweet...")
-                    post_result = visibility.post_single_tweet(blog_post)
+                    post_result = visibility.post_prewritten_tweet(
+                        blog_post, final_tweet_text)
 
                     if post_result["success"]:
                         print(SEP)
@@ -2363,9 +2292,7 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
             blog_system = BlogSystem(config)
             print(
-                f"Output directory: {blog_system.output_dir} "
-                f"(exists: {blog_system.output_dir.exists()})"
-            )
+                f"Output directory: {blog_system.output_dir} (exists: {blog_system.output_dir.exists()})")
             if blog_system.output_dir.exists():
                 for item in blog_system.output_dir.iterdir():
                     print(
@@ -2381,11 +2308,13 @@ if __name__ == "__main__":
                                 wc = _count_words(data.get('content', ''))
                                 is_fb = data.get('monetization_data', {}).get(
                                     'used_fallback', False)
+                                has_tweet = bool(
+                                    data.get('prewritten_tweet', ''))
                                 print(
                                     f"    Title: {data.get('title', 'Unknown')} | "
-                                    f"Words: {wc} "
-                                    f"{'✓' if wc >= MIN_WORD_COUNT else '⚠'} "
-                                    f"{'[FALLBACK]' if is_fb else ''}"
+                                    f"Words: {wc} {'✓' if wc >= MIN_WORD_COUNT else '⚠'} "
+                                    f"{'[FALLBACK]' if is_fb else ''} "
+                                    f"{'[HAS TWEET]' if has_tweet else '[NO TWEET]'}"
                                 )
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
@@ -2464,20 +2393,12 @@ if __name__ == "__main__":
                 except Exception as e:
                     print(f"Error fixing {post_dir.name}: {e}")
             print(
-                f"\nFixed {fixed} posts. "
-                "Run 'python blog_system.py build' to regenerate HTML."
-            )
+                f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
 
         else:
             print(
-                "Usage: python blog_system.py "
-                "[init|auto|build|cleanup|audit|purge|debug|social|"
-                "test-twitter|dedup|fix-descriptions]"
-            )
+                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup|fix-descriptions]")
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print(
-            "Commands: init | auto | build | cleanup | audit | purge | debug | "
-            "social | test-twitter | dedup | fix-descriptions"
-        )
+        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions")
