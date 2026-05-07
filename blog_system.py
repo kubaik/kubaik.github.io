@@ -1396,12 +1396,9 @@ class BlogSystem:
                 monetization_data={},
             )
 
-            enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
-                post.content, topic)
-            post.content = enhanced_content
-            post.affiliate_links = affiliate_links
+            post.affiliate_links = []
             post.monetization_data = self.monetization.generate_ad_slots(
-                enhanced_content)
+                post.content)
 
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
@@ -1969,12 +1966,10 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
         post.twitter_hashtags = " ".join(f"#{h}" for h in fallback_hashtags)
         post.prewritten_tweet = ""
 
-        enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
-            post.content, topic)
-        post.content = enhanced_content
-        post.affiliate_links = affiliate_links
+        post.affiliate_links = []
         post.monetization_data.update(
-            self.monetization.generate_ad_slots(enhanced_content))
+            self.monetization.generate_ad_slots(post.content))
+
         post.monetization_data["used_fallback"] = True
         return post
 
