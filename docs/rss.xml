@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 08:37:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 09:17:43 +0000</lastBuildDate>
+    <item>
+      <title>Feeling empty at 2pm every day? The burnout loop freelancers miss</title>
+      <link>https://kubaik.github.io/feeling-empty-at-2pm-every-day-the-burnout-loop-fr/</link>
+      <description>Freelance developers cut daily focus time from 1h42m to 4h45m by capping active projects at 3, logging emotional debt, and auditing their environment. Verified with RescueTime, Oura Ring, and Linear API data.</description>
+      <pubDate>Thu, 07 May 2026 09:17:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/feeling-empty-at-2pm-every-day-the-burnout-loop-fr/</guid>
+    </item>
     <item>
       <title>The $100/month AI coding budget finally explained</title>
       <link>https://kubaik.github.io/the-100month-ai-coding-budget-finally-explained/</link>
@@ -138,13 +145,6 @@
       <description>more than 5% of tests was rejected. 2. Per with lock down personal data — solve) I got an email in January 2024 that looked l.</description>
       <pubDate>Wed, 06 May 2026 07:31:17 +0000</pubDate>
       <guid>https://kubaik.github.io/13-ways-to-lock-down-your-personal-data-from-corpo/</guid>
-    </item>
-    <item>
-      <title>10 AI Tools That Replace Expensive Software: A Practical Technical Guide</title>
-      <link>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</link>
-      <description>Cut 10 AI Tools That Replace Expensive Software failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a s…</description>
-      <pubDate>Tue, 05 May 2026 19:54:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</guid>
     </item>
   </channel>
 </rss>
