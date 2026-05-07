@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 07:43:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 07:54:56 +0000</lastBuildDate>
+    <item>
+      <title>Why my AWS bill dropped 40% overnight (and how you can too)</title>
+      <link>https://kubaik.github.io/why-my-aws-bill-dropped-40-overnight-and-how-you-c/</link>
+      <description>Cut AWS compute costs by 40% with Graviton ARM instances and Spot Instances — real benchmarks, Terraform code, and the interruptions I didn’t see coming.</description>
+      <pubDate>Thu, 07 May 2026 07:54:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-my-aws-bill-dropped-40-overnight-and-how-you-c/</guid>
+    </item>
     <item>
       <title>AI-first systems fail without this backend pattern</title>
       <link>https://kubaik.github.io/ai-first-systems-fail-without-this-backend-pattern/</link>
@@ -138,13 +145,6 @@
       <description>Cut Full-Stack Development in 2026: The Best Stack failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and …</description>
       <pubDate>Tue, 05 May 2026 14:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/full-stack-development-in-2026-the-best-stack-a-pr/</guid>
-    </item>
-    <item>
-      <title>DDoS Mitigation is Broken — Here’s What Actually Works</title>
-      <link>https://kubaik.github.io/ddos-mitigation-is-broken-heres-what-actually-work/</link>
-      <description>Cut DDoS response time by 70% and save $12k/month with edge state reduction — why scrubbing alone fails on WebSockets, gRPC, and databases, plus real attack case studies and code examples.</description>
-      <pubDate>Tue, 05 May 2026 14:01:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-mitigation-is-broken-heres-what-actually-work/</guid>
     </item>
   </channel>
 </rss>
