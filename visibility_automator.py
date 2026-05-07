@@ -46,6 +46,12 @@ CHANGES (2026-04-29):
   - Trending hashtag is NOT fetched from the Twitter API.
   - Cache file supports an array of hashtags under "hashtags" key.
   - Only ONE tweet is posted per run: post_single_tweet().
+
+CHANGES (2026-05-07):
+  - Added post_prewritten_tweet(): posts an already-composed tweet verbatim,
+    bypassing all internal template composition. Called by blog_system.py auto
+    mode when a bundle tweet was written by the LLM during content generation.
+    Supports hook_only link strategy identically to post_single_tweet().
 """
 
 import datetime
@@ -387,9 +393,7 @@ def _get_hashtags_for_post(post) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Reply-bait endings — appended to drive the reply signal
-# (replies weighted 27x a like in 2026 X algorithm)
-# Each is a genuine question that invites a developer to share experience.
+# Reply-bait endings
 # ─────────────────────────────────────────────────────────────────
 
 _REPLY_BAIT_ENDINGS = [
@@ -410,90 +414,43 @@ def _pick_reply_bait(slug: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Tweet hook templates — 16 patterns, research-backed for 2026
-#
-# Design rules applied here:
-#  1. Hook line ≤ 10 words. Creates instant scroll-stop.
-#  2. Specific number or concrete detail in the first 7 words when possible.
-#  3. Link goes at the END — not in line 1 or 2.
-#  4. No "Just published", "New post", or topic-name-as-opener.
-#  5. Positive/constructive framing (Grok penalises combative tone).
-#  6. Each template closes with _REPLY_BAIT_ENDINGS to drive replies.
-#
-# Placeholders:
-#   {topic}  — extracted topic phrase, e.g. "Redis", "System Design"
-#   {teaser} — first 60 chars of meta_description
-#   {url}    — full post URL
-#   {tags}   — hashtag string
-#   {bait}   — reply-inviting question
+# Tweet hook templates — 16 patterns
 # ─────────────────────────────────────────────────────────────────
 
 _TWEET_TEMPLATES = [
-    # 0 — HONEST ADMISSION (high parasocial connection + reply signal)
-    # Pattern: "I got [topic] wrong for [time]. Here's what actually works:"
+    # 0 — HONEST ADMISSION
     "I got {topic} wrong for months.\n\n{teaser}\n\nFull breakdown 👇\n{url}\n\n{tags}{bait}",
-
     # 1 — SPECIFIC NUMBER / RESULT LEAD
-    # Pattern: Lead with a concrete outcome, then explain how.
     "{teaser}\n\nHow this works in practice — with real numbers 👇\n{url}\n\n{tags}{bait}",
-
-    # 2 — PARADOX / COUNTER-INTUITIVE OBSERVATION
-    # Pattern: Logical tension the reader needs to resolve.
+    # 2 — PARADOX
     "Less {topic} code = more reliability.\n\n{teaser}\n\nHere's why 👇\n{url}\n\n{tags}{bait}",
-
-    # 3 — "EVERYONE SAYS X, BUT ACTUALLY Y" (contrarian + data)
-    # Pattern proven to get 2M+ impressions in research.
+    # 3 — CONTRARIAN
     "Everyone says {topic} is hard.\n\nThe actual hard part is something else.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
-
-    # 4 — BEFORE / AFTER WITH NUMBERS
-    # Pattern: Time-to-fix or cost reduction framing.
+    # 4 — BEFORE / AFTER
     "Before: days debugging {topic}.\nAfter: a 5-step checklist that catches 90% of issues.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
-
-    # 5 — SHORT PUNCHY OBSERVATION (single idea, reply magnet)
-    # Pattern: One sharp insight that stands alone.
+    # 5 — OBSERVATION
     "The teams who nail {topic} all do one thing differently.\n\n{teaser}\n\nI finally noticed what it is 👇\n{url}\n\n{tags}{bait}",
-
-    # 6 — "I ANALYZED [BIG NUMBER]" (authority + curiosity)
-    # Research shows this format gets very high save rates.
+    # 6 — ANALYZED
     "Looked at dozens of {topic} implementations in production.\n\nSame 3 mistakes in almost all of them.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
-
-    # 7 — CURIOSITY GAP (dev/prod tension)
-    # Pattern: Works fine in dev. Fails silently in prod. Why?
+    # 7 — DEV/PROD GAP
     "{topic} works perfectly in dev.\nProduction is a different story.\n\n{teaser}\n\nWhy this happens — and the fix 👇\n{url}\n\n{tags}{bait}",
-
-    # 8 — CONFESSION + LESSON
-    # Pattern: Vulnerability + reversal drives emotional engagement.
+    # 8 — CONFESSION
     "I shipped broken {topic} code to production twice before I understood why.\n\n{teaser}\n\nThe lesson that finally stuck 👇\n{url}\n\n{tags}{bait}",
-
-    # 9 — UNPOPULAR OPINION (highest reply-to-impression ratio)
-    # Pattern: Defensible take backed by experience.
+    # 9 — UNPOPULAR OPINION
     "Unpopular take: most {topic} guides teach the wrong mental model first.\n\n{teaser}\n\nThe model that actually helps 👇\n{url}\n\n{tags}{bait}",
-
-    # 10 — TOOL DISCOVERY (developers hunt for tools that save time)
-    # Pattern: "Found X, it replaces Y entirely."
+    # 10 — TOOL DISCOVERY
     "Found a {topic} pattern that replaced 200 lines of code with 20.\n\n{teaser}\n\nSetup + full walkthrough 👇\n{url}\n\n{tags}{bait}",
-
-    # 11 — SENIOR VS JUNIOR FRAMING (aspirational, high share rate)
+    # 11 — SENIOR VS JUNIOR
     "Senior devs approach {topic} completely differently.\n\n{teaser}\n\nThe mental shift that changes how you see it 👇\n{url}\n\n{tags}{bait}",
-
-    # 12 — COST / SCALE FRAMING (high relevance to indie hackers + startups)
+    # 12 — COST / SCALE
     "Cut {topic} overhead by doing less of it.\n\n{teaser}\n\nCounter-intuitive breakdown 👇\n{url}\n\n{tags}{bait}",
-
-    # 13 — "THE THING NOBODY MENTIONS" (curiosity + authority)
+    # 13 — DOCS GAP
     "The {topic} docs are good.\nWhat they don't cover is the part that bites you in prod.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
-
-    # 14 — RESULT + TIMELINE (specific + credible)
+    # 14 — RESULT + TIMELINE
     "Fixed a {topic} issue that had been slowing our API by 40%.\nRoot cause was in a single config line.\n\n{teaser}\n\n👇\n{url}\n\n{tags}{bait}",
-
-    # 15 — OPEN QUESTION HOOK (highest reply conversion)
-    # Pattern: Start with a question the reader can answer from experience.
+    # 15 — OPEN QUESTION
     "How long did {topic} take you to actually understand?\n\nFor me: embarrassingly long.\n\n{teaser}\n\nHere's what finally made it click 👇\n{url}\n\n{tags}{bait}",
 ]
-
-
-# ─────────────────────────────────────────────────────────────────
-# Hook style → template index map
-# ─────────────────────────────────────────────────────────────────
 
 _STYLE_MAP = {
     "honest_admission":  0,
@@ -512,7 +469,7 @@ _STYLE_MAP = {
     "docs_gap":          13,
     "result_timeline":   14,
     "open_question":     15,
-    # Legacy aliases (backward-compat)
+    # Legacy aliases
     "knowledge_gap":     7,
     "curiosity":         7,
     "pattern_interrupt": 9,
@@ -521,23 +478,7 @@ _STYLE_MAP = {
 }
 
 
-def _build_single_tweet(
-    post,
-    base_url: str,
-    hook_style: str = "auto",
-) -> str:
-    """
-    Compose one high-engagement tweet for *post*.
-
-    Hashtags come entirely from the post's own metadata.
-    The trending cache tag is NOT used here.
-
-    Link suppression note (2026):
-      External links are suppressed by X's algorithm for non-Premium accounts.
-      The link is still included — Premium accounts need it for click-through —
-      but the hook is designed to earn replies BEFORE the link is noticed,
-      so the algorithm surfaces the tweet to a wider audience first.
-    """
+def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
     if hook_style == "auto" or hook_style not in _STYLE_MAP:
         idx = int(hash(post.slug)) % len(_TWEET_TEMPLATES)
     else:
@@ -559,7 +500,6 @@ def _build_single_tweet(
         topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=bait
     )
 
-    # Trim to 280 chars — reduce teaser first, then strip bait if needed
     if len(tweet) > 280:
         budget = 280 - len(tweet) + len(teaser)
         teaser = teaser[:max(budget - 3, 20)].rsplit(" ", 1)[0] + "…"
@@ -567,7 +507,6 @@ def _build_single_tweet(
             topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=bait
         )
     if len(tweet) > 280:
-        # Last resort: drop the reply-bait ending
         tweet = template.format(
             topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=""
         )
@@ -582,18 +521,6 @@ def _build_single_tweet(
 # ─────────────────────────────────────────────────────────────────
 
 def _build_linkless_hook(post, hook_style: str = "auto") -> str:
-    """
-    Build a text-only hook with NO external link.
-
-    Use this for non-Premium accounts where the X algorithm suppresses
-    link-containing tweets to near-zero median reach (confirmed March 2026).
-
-    Strategy: post the hook without a link to let the algorithm distribute
-    it based on reply/engagement signals. Then drop the URL in the first
-    reply to the original tweet.
-
-    Enabled via config key: "twitter_link_strategy": "hook_only"
-    """
     if hook_style == "auto" or hook_style not in _STYLE_MAP:
         idx = int(hash(post.slug + "nk")) % len(_TWEET_TEMPLATES)
     else:
@@ -610,7 +537,6 @@ def _build_linkless_hook(post, hook_style: str = "auto") -> str:
     hashtags = _get_hashtags_for_post(post)
     bait = _pick_reply_bait(post.slug)
 
-    # Substitute a thread indicator instead of a URL
     tweet = template.format(
         topic=topic, teaser=teaser,
         url="(full guide in the thread below ↓)",
@@ -695,10 +621,12 @@ class VisibilityAutomator:
     def _get_trending_tag(self) -> Optional[str]:
         return self._trending_tag
 
+    # ── Compose preview (dry-run, no API call) ────────────────────
+
     def compose_tweet_preview(self, post) -> Dict:
         """
         Compose the tweet that *would* be posted, without calling the API.
-        Used for dry-run logging when ENABLE_TWITTER_POSTING is false.
+        Used as the template fallback when post.prewritten_tweet is empty.
         Always safe to call — no credentials required.
 
         Returns:
@@ -726,57 +654,54 @@ class VisibilityAutomator:
             "link_strategy": link_strategy,
         }
 
-    # ── Single-tweet posting (primary method) ─────────────────────
+    # ── NEW: Post a prewritten tweet verbatim ─────────────────────
 
-    def post_single_tweet(self, post) -> Dict:
+    def post_prewritten_tweet(self, post, tweet_text: str) -> Dict:
         """
-        Compose and post ONE tweet for *post*.
+        Post *tweet_text* verbatim — no internal template composition.
 
-        Respects "twitter_link_strategy" config key:
-          "link_in_tweet" (default): include link in tweet body
-          "hook_only": post text-only hook; URL goes in first reply
+        Called by blog_system.py auto mode when the LLM wrote the tweet
+        during content generation (stored as post.prewritten_tweet).
+        This bypasses post_single_tweet()'s internal _build_single_tweet()
+        call so the polished, context-aware text is used exactly as written.
 
-        Returns:
-            {
-                'success': bool,
-                'tweet_id': str,
-                'url': str,
-                'tweet_text': str,
-                'char_count': int,
-            }
+        Supports the same hook_only link strategy as post_single_tweet():
+        if "twitter_link_strategy" is "hook_only", the URL is posted as a
+        first reply after the main tweet so the algorithm distributes the
+        link-free hook to a wider audience first.
+
+        Parameters
+        ----------
+        post : BlogPost
+            Used for logging and the hook_only URL reply construction.
+        tweet_text : str
+            The final tweet text to post — must be ≤ 280 characters.
+
+        Returns
+        -------
+        dict
+            {"success": True,  "tweet_id": str, "url": str, "char_count": int}
+            {"success": False, "error": str}
         """
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
 
         base_url = self.config.get("base_url", "https://kubaik.github.io")
-        hook_style = self.config.get("hook_style", "auto")
         link_strategy = self.config.get(
             "twitter_link_strategy", "link_in_tweet")
 
-        if link_strategy == "hook_only":
-            tweet_text = _build_linkless_hook(post, hook_style)
-        else:
-            tweet_text = _build_single_tweet(post, base_url, hook_style)
-
-        # ── Full pre-flight log (visible in GitHub Actions run log) ──────────
         SEP = "─" * 68
         print(f"\n{SEP}")
-        print("📣  TWITTER POST — PRE-FLIGHT")
+        print("📣  TWITTER POST — PRE-FLIGHT (bundle tweet)")
         print(SEP)
         print(f"  Post title    : {getattr(post, 'title', '(unknown)')}")
         print(f"  Slug          : {getattr(post, 'slug',  '(unknown)')}")
-        print(f"  Post URL      : {base_url}/{getattr(post, 'slug', '')}")
-        print(f"  Hook style    : {hook_style}")
+        print(f"  Source        : LLM-generated during content creation")
         print(f"  Link strategy : {link_strategy}")
         print(f"  Char count    : {len(tweet_text)} / 280")
-        print(f"  Hashtags      : {_get_hashtags_for_post(post)}")
-        print(
-            f"  Meta desc     : {getattr(post, 'meta_description', '')[:120]}")
         print(SEP)
-        print("📝  TWEET TEXT (full):")
+        print("📝  TWEET TEXT:")
         print(SEP)
-        # Print every line of the tweet with a leading pipe so it is
-        # visually distinct and never confused with surrounding log lines.
         for line in tweet_text.splitlines():
             print(f"  │ {line}")
         print(SEP)
@@ -785,9 +710,10 @@ class VisibilityAutomator:
             response = self.twitter_client.create_tweet(text=tweet_text)
             tweet_id = response.data["id"]
             username = self._username or "i"
-            url = f"https://twitter.com/{username}/status/{tweet_id}"
+            tweet_url = f"https://twitter.com/{username}/status/{tweet_id}"
 
-            # If hook_only strategy, post the link as first reply
+            # hook_only: post URL as first reply so the algorithm distributes
+            # the link-free hook first, then surfaces the link to a wider audience.
             reply_url = None
             if link_strategy == "hook_only":
                 post_url = f"{base_url}/{post.slug}"
@@ -808,7 +734,107 @@ class VisibilityAutomator:
                 except Exception as re_err:
                     print(f"  ⚠️  Link reply failed : {re_err}")
 
-            # ── Full success log ──────────────────────────────────────────
+            print(SEP)
+            print("✅  TWITTER POST — SUCCESS")
+            print(SEP)
+            print(f"  Tweet ID      : {tweet_id}")
+            print(f"  Tweet URL     : {tweet_url}")
+            print(f"  Char count    : {len(tweet_text)} / 280")
+            if reply_url:
+                print(f"  Link reply    : {reply_url}")
+            print(SEP + "\n")
+
+            return {
+                "success":    True,
+                "tweet_id":   tweet_id,
+                "url":        tweet_url,
+                "tweet_text": tweet_text,
+                "char_count": len(tweet_text),
+            }
+
+        except Exception as e:
+            print(SEP)
+            print("❌  TWITTER POST — FAILED")
+            print(SEP)
+            print(f"  Error         : {e}")
+            for line in tweet_text.splitlines():
+                print(f"  │ {line}")
+            print(SEP + "\n")
+            return {"success": False, "error": str(e), "tweet_text": tweet_text}
+
+    # ── Single-tweet posting (template path) ──────────────────────
+
+    def post_single_tweet(self, post) -> Dict:
+        """
+        Compose and post ONE tweet using the internal template engine.
+
+        This is the original template-based path. It is still used when
+        post.prewritten_tweet is empty (e.g. fallback posts, social mode).
+        For normal auto-mode runs, post_prewritten_tweet() is called instead.
+
+        Respects "twitter_link_strategy" config key:
+          "link_in_tweet" (default): include link in tweet body
+          "hook_only": post text-only hook; URL goes in first reply
+        """
+        if not self.twitter_client:
+            return {"success": False, "error": "Twitter client not initialized."}
+
+        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        hook_style = self.config.get("hook_style", "auto")
+        link_strategy = self.config.get(
+            "twitter_link_strategy", "link_in_tweet")
+
+        if link_strategy == "hook_only":
+            tweet_text = _build_linkless_hook(post, hook_style)
+        else:
+            tweet_text = _build_single_tweet(post, base_url, hook_style)
+
+        SEP = "─" * 68
+        print(f"\n{SEP}")
+        print("📣  TWITTER POST — PRE-FLIGHT (template)")
+        print(SEP)
+        print(f"  Post title    : {getattr(post, 'title', '(unknown)')}")
+        print(f"  Slug          : {getattr(post, 'slug',  '(unknown)')}")
+        print(f"  Post URL      : {base_url}/{getattr(post, 'slug', '')}")
+        print(f"  Hook style    : {hook_style}")
+        print(f"  Link strategy : {link_strategy}")
+        print(f"  Char count    : {len(tweet_text)} / 280")
+        print(f"  Hashtags      : {_get_hashtags_for_post(post)}")
+        print(
+            f"  Meta desc     : {getattr(post, 'meta_description', '')[:120]}")
+        print(SEP)
+        print("📝  TWEET TEXT (full):")
+        print(SEP)
+        for line in tweet_text.splitlines():
+            print(f"  │ {line}")
+        print(SEP)
+
+        try:
+            response = self.twitter_client.create_tweet(text=tweet_text)
+            tweet_id = response.data["id"]
+            username = self._username or "i"
+            url = f"https://twitter.com/{username}/status/{tweet_id}"
+
+            reply_url = None
+            if link_strategy == "hook_only":
+                post_url = f"{base_url}/{post.slug}"
+                reply_text = (
+                    f"Full guide here 👇\n{post_url}\n\n"
+                    f"(Read time: ~{getattr(post, 'reading_time_minutes', 8)} min)"
+                )
+                try:
+                    reply_resp = self.twitter_client.create_tweet(
+                        text=reply_text,
+                        in_reply_to_tweet_id=tweet_id,
+                    )
+                    reply_url = (
+                        f"https://twitter.com/{username}/status/"
+                        f"{reply_resp.data['id']}"
+                    )
+                    print(f"  📎  Link reply posted : {reply_url}")
+                except Exception as re_err:
+                    print(f"  ⚠️  Link reply failed : {re_err}")
+
             print(SEP)
             print("✅  TWITTER POST — SUCCESS")
             print(SEP)
@@ -828,20 +854,14 @@ class VisibilityAutomator:
             }
 
         except Exception as e:
-            # ── Full failure log ──────────────────────────────────────────
             print(SEP)
             print("❌  TWITTER POST — FAILED")
             print(SEP)
             print(f"  Error         : {e}")
-            print(f"  Tweet text    :")
             for line in tweet_text.splitlines():
                 print(f"  │ {line}")
             print(SEP + "\n")
-            return {
-                "success":    False,
-                "error":      str(e),
-                "tweet_text": tweet_text,
-            }
+            return {"success": False, "error": str(e), "tweet_text": tweet_text}
 
     # ── Helpers: peak-time awareness ──────────────────────────────
 
@@ -974,11 +994,9 @@ class VisibilityAutomator:
                 self._my_id = None
         return self._my_id
 
-    # ── Existing helpers ──────────────────────────────────────────
+    # ── Legacy helpers (kept for backward compatibility) ──────────
 
-    def post_to_twitter(
-        self, tweet_text: str = None, post=None, strategy: str = "auto"
-    ) -> Dict:
+    def post_to_twitter(self, tweet_text: str = None, post=None, strategy: str = "auto") -> Dict:
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
         try:
@@ -1119,6 +1137,7 @@ if __name__ == "__main__":
         seo_keywords = ["ai ethics", "big tech problems",
                         "responsible ai", "ai bias"]
         twitter_hashtags = "#AI #AIEthics #MachineLearning #Tech #GenerativeAI"
+        prewritten_tweet = ""  # empty → template path used in preview
 
     post = MockPost()
 
@@ -1148,8 +1167,7 @@ if __name__ == "__main__":
         rendered = _TWEET_TEMPLATES[i].format(
             topic=topic, teaser=teaser, url=url, tags=tags, bait=bait
         )
-        print(
-            f"\n--- Template {i}: {list(_STYLE_MAP.keys())[i] if i < len(_STYLE_MAP) else 'extra'} ({len(rendered)} chars) ---\n{rendered}")
+        print(f"\n--- Template {i}: ({len(rendered)} chars) ---\n{rendered}")
 
     print("\n\n🎯 SELECTED TWEET (auto-rotation by slug hash)")
     print("=" * 70)
