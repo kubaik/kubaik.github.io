@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 17:00:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 17:03:49 +0000</lastBuildDate>
+    <item>
+      <title>9 AI tools that cost more work than they save</title>
+      <link>https://kubaik.github.io/9-ai-tools-that-cost-more-work-than-they-save/</link>
+      <description>Cut rework time 30% with these 9 AI tools — real benchmarks, rework rates, and the $12k mistake we made measuring the wrong thing</description>
+      <pubDate>Thu, 07 May 2026 17:03:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/9-ai-tools-that-cost-more-work-than-they-save/</guid>
+    </item>
     <item>
       <title>TypeScript strict mode traps you still hit</title>
       <link>https://kubaik.github.io/typescript-strict-mode-traps-you-still-hit/</link>
@@ -138,13 +145,6 @@
       <description>Cut Retrieval-Augmented Generation (RAG) Explained Simply failures by understanding connection pooling and retry logic — real benchmarks, common mistake…</description>
       <pubDate>Wed, 06 May 2026 19:21:36 +0000</pubDate>
       <guid>https://kubaik.github.io/retrieval-augmented-generation-rag-explained-simpl/</guid>
-    </item>
-    <item>
-      <title>AI model drift: Evidently vs Arize in production</title>
-      <link>https://kubaik.github.io/ai-model-drift-evidently-vs-arize-in-production/</link>
-      <description>Evidently flagged AI drift in 2.4 minutes on $0.04 per 10k events while Arize needed 3.2 minutes at $5.60 — use Evidently for batch Python pipelines, Arize for streaming embeddings — decision framework included.</description>
-      <pubDate>Wed, 06 May 2026 16:54:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-drift-evidently-vs-arize-in-production/</guid>
     </item>
   </channel>
 </rss>
