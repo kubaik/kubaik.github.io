@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 08:21:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 08:37:03 +0000</lastBuildDate>
+    <item>
+      <title>The $100/month AI coding budget finally explained</title>
+      <link>https://kubaik.github.io/the-100month-ai-coding-budget-finally-explained/</link>
+      <description>Cut debugging time by 30% with a $100/month AI coding budget — real latency figures, rework costs, and the tools that actually worked in Nigeria and Ghana. AI coding budget explained for indie devs.</description>
+      <pubDate>Thu, 07 May 2026 08:36:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/the-100month-ai-coding-budget-finally-explained/</guid>
+    </item>
     <item>
       <title>MCP servers exposed: the invisible layer 99% of devs miss</title>
       <link>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</link>
@@ -138,13 +145,6 @@
       <description>Cut 10 AI Tools That Replace Expensive Software failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a s…</description>
       <pubDate>Tue, 05 May 2026 19:54:29 +0000</pubDate>
       <guid>https://kubaik.github.io/10-ai-tools-that-replace-expensive-software-a-prac/</guid>
-    </item>
-    <item>
-      <title>Why real-world object detection models fail on shelf images (and how to fix it)</title>
-      <link>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</link>
-      <description>Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.</description>
-      <pubDate>Tue, 05 May 2026 19:05:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/</guid>
     </item>
   </channel>
 </rss>
