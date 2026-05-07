@@ -1337,6 +1337,18 @@ class BlogSystem:
             bundle = await self._generate_full_bundle(topic, keywords, existing_titles)
 
             title = bundle["title"].strip().strip('"')
+            # Strip common filler prefixes that LLMs insert despite instructions
+            _TITLE_FILLER = re.compile(
+                r'^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|'
+                r'introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|'
+                r'everything\s+you\s+need\s+to\s+know\s+about\s+)',
+                re.IGNORECASE,
+            )
+            title = _TITLE_FILLER.sub('', title).strip()
+
+            # Hard cap at 55 chars — cut at last word boundary, no ellipsis
+            if len(title) > 55:
+                title = title[:55].rsplit(' ', 1)[0].rstrip(',:;-')
             content = bundle["content"].strip()
             meta_description = bundle["meta_description"].strip()
             seo_keywords = [k.strip()
@@ -1546,15 +1558,15 @@ class BlogSystem:
         )
 
         title_guidance = {
-            "deep_dive":       "Title should promise a real technical revelation, not just a topic name.",
-            "tutorial":        "Title should describe the outcome, e.g. 'Build X with Y in Z minutes'.",
-            "opinion":         "Title should take a stance — controversial is fine if honest.",
-            "comparison":      "Title should name both options being compared.",
-            "case_study":      "Title should hint at the result, e.g. 'How we cut X by 40%'.",
-            "explainer":       "Title should address the confusion, e.g. 'X finally explained'.",
-            "listicle":        "Title should name the number of items and promise a ranked or curated list.",
-            "troubleshooting": "Title should name the specific error or symptom.",
-        }.get(format_name, "Write a specific, benefit-driven title.")
+            "deep_dive":       "Title: MAX 50 chars. Lead with the insight, not the topic. E.g. 'Postgres indexes: the setting nobody checks'.",
+            "tutorial":        "Title: MAX 50 chars. Name the outcome + tool only. E.g. 'FastAPI rate limiting in 20 lines'.",
+            "opinion":         "Title: MAX 50 chars. State the contrarian take directly. E.g. 'Microservices slowed us down'.",
+            "comparison":      "Title: MAX 50 chars. Name both options + the verdict angle. E.g. 'Redis vs Memcached: the benchmark that matters'.",
+            "case_study":      "Title: MAX 50 chars. Lead with the result. E.g. 'How we cut latency 60% with one index'.",
+            "explainer":       "Title: MAX 50 chars. Name the confusion being resolved. E.g. 'Async Python: when it helps, when it hurts'.",
+            "listicle":        "Title: MAX 50 chars. Number + specific promise. E.g. '7 TypeScript traps I keep seeing in code reviews'.",
+            "troubleshooting": "Title: MAX 50 chars. Use the exact error symptom. E.g. 'Node.js memory leak: how to find it in 10 min'.",
+        }.get(format_name, "Title: MAX 50 chars. Specific, benefit-driven, no filler.")
 
         messages = [
             {
@@ -1580,7 +1592,7 @@ class BlogSystem:
 
 Respond with ONLY a JSON object in this exact shape:
 {{
-  "title": "<specific title under 60 chars>",
+  "title": "<punchy title: MAX 50 chars, no filler words like 'Complete', 'Ultimate', 'Guide to', 'Introduction to'. Start with a verb, number, or sharp noun. Examples: 'Redis caching: what breaks first', 'Cut AWS costs 40%: the real levers', 'TypeScript strict mode traps'>",
   "content": "<full markdown article — no title heading at top>",
   "meta_description": "<under 155 chars — must include all three: \
 (1) a specific number or outcome e.g. 'Cut latency by 40%' or 'under 10ms response time', \
@@ -1833,7 +1845,8 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _generate_fallback_post(self, topic: str) -> BlogPost:
-        title = f"{topic}: A Practical Technical Guide"
+        _topic_words = topic.split()
+        title = topic if len(topic) <= 50 else ' '.join(_topic_words[:6])
         slug = self._create_slug(title)
         topic_lower = topic.lower()
         topic_slug = topic.replace(' ', '').replace('-', '')[:20]
@@ -1973,7 +1986,7 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
         slug = title.lower()
         slug = re.sub(r'[^\w\s-]', '', slug)
         slug = re.sub(r'[\s_-]+', '-', slug)
-        return slug.strip('-')[:50]
+        return slug.strip('-')[:60]
 
     def save_post(self, post):
         word_count = len(post.content.split())
