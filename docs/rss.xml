@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 11:02:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 11:21:23 +0000</lastBuildDate>
+    <item>
+      <title>Get paid $120k for remote work from a $2k/mo country</title>
+      <link>https://kubaik.github.io/get-paid-120k-for-remote-work-from-a-2kmo-country/</link>
+      <description>Get paid $120k remotely from a $2k country — the exact scripts, spreadsheets, and contracts that worked in Kenya, Colombia, and Mexico. Includes real contracts, currency hacks, and a 3-email cold pitch that gets replies.</description>
+      <pubDate>Thu, 07 May 2026 11:21:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/get-paid-120k-for-remote-work-from-a-2kmo-country/</guid>
+    </item>
     <item>
       <title>Edge functions in 2026 are cheaper than a coffee but only useful in 3 cases</title>
       <link>https://kubaik.github.io/edge-functions-in-2026-are-cheaper-than-a-coffee-b/</link>
@@ -138,13 +145,6 @@
       <description>Cut customer support tickets for legacy PHP code by 40% while reducing refund latency from 1.2s to 280ms — the strangler pattern, circuit breakers, and the 4,300 lines we refactored without breaking production</description>
       <pubDate>Wed, 06 May 2026 10:58:20 +0000</pubDate>
       <guid>https://kubaik.github.io/how-refactoring-19k-lines-of-legacy-php-cut-suppor/</guid>
-    </item>
-    <item>
-      <title>Event-Driven Architecture Fails at Scale — Detecting Silent Deadlocks (and Fixing Them)</title>
-      <link>https://kubaik.github.io/event-driven-architecture-fails-at-scale-detecting/</link>
-      <description>Stop event-driven pipelines from hanging silently — detect deadlocks at 10,000 events/second and reduce memory growth by 90% with backpressure, timeouts, and DNS caching under real load.</description>
-      <pubDate>Wed, 06 May 2026 09:37:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-driven-architecture-fails-at-scale-detecting/</guid>
     </item>
   </channel>
 </rss>
