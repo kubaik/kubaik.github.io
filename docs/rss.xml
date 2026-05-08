@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 10:50:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 13:55:40 +0000</lastBuildDate>
+    <item>
+      <title>6 free AI tools that replaced $2k of my paid stack</title>
+      <link>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</link>
+      <description>Cut monthly tool costs by $819 using 6 free AI replacements — measured latency, quality deltas, and edge cases that actually matter to teams shipping in constrained environments.</description>
+      <pubDate>Fri, 08 May 2026 13:55:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</guid>
+    </item>
     <item>
       <title>Shift security left 3x faster without slowing deploys</title>
       <link>https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/</link>
@@ -138,13 +145,6 @@
       <description>Cut production latency by 78% and connection leaks to zero after replacing vibe-coded endpoints with hand-crafted asyncpg pools — here’s the exact migration cost and tooling that worked</description>
       <pubDate>Thu, 07 May 2026 09:34:11 +0000</pubDate>
       <guid>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</guid>
-    </item>
-    <item>
-      <title>Feeling empty at 2pm every day? The burnout loop freelancers miss</title>
-      <link>https://kubaik.github.io/feeling-empty-at-2pm-every-day-the-burnout-loop-fr/</link>
-      <description>Freelance developers cut daily focus time from 1h42m to 4h45m by capping active projects at 3, logging emotional debt, and auditing their environment. Verified with RescueTime, Oura Ring, and Linear API data.</description>
-      <pubDate>Thu, 07 May 2026 09:17:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/feeling-empty-at-2pm-every-day-the-burnout-loop-fr/</guid>
     </item>
   </channel>
 </rss>
