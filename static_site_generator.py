@@ -66,7 +66,7 @@ class StaticSiteGenerator:
             print("No posts found. Creating placeholder homepage...")
         self._generate_homepage(posts)
         self._generate_post_pages(posts)
-        self._generate_static_pages()
+        self._generate_static_pages(posts)
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
@@ -238,10 +238,13 @@ Sitemap: {base_url}/rss.xml
             })
         return result
 
-    def _generate_static_pages(self):
+    def _generate_static_pages(self, posts: List[BlogPost] = None):
         config = self.blog_system.config
         pages = {
-            'about': ('about', {'topics': config.get('content_topics', [])[:]}),
+            'about': ('about', {
+                'topics': config.get('content_topics', [][:]),
+                'posts': posts or [],
+            }),
             'contact': ('contact', {}),
             'privacy-policy': ('privacy_policy', {'current_date': datetime.now().strftime('%B %d, %Y')}),
             'terms-of-service': ('terms_of_service', {'current_date': datetime.now().strftime('%B %d, %Y')})
