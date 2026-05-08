@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 14:16:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 16:23:13 +0000</lastBuildDate>
+    <item>
+      <title>Big tech exits: what engineers actually quit for</title>
+      <link>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</link>
+      <description>Cut ‘ghost contributor’ rate by 75% with a 30-line service — impact tracking, observability, and the hidden dependencies that drain ownership in big tech teams.</description>
+      <pubDate>Fri, 08 May 2026 16:23:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</guid>
+    </item>
     <item>
       <title>Agents in production: 5 things docs skip</title>
       <link>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 43% for SE Asia users with Cloudflare Workers, but added 34ms in the US — real latency, cost, and failure data from a live global API in 2026. edge functions when Cloudflare Workers and Vercel Edge actually make sense</description>
       <pubDate>Thu, 07 May 2026 11:02:51 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-in-2026-are-cheaper-than-a-coffee-b/</guid>
-    </item>
-    <item>
-      <title>13 AI Coding Tools Ranked by Real Trust (Not Just Downloads)</title>
-      <link>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</link>
-      <description>Cut rework time by 62% with the right AI coding tool — ranked list from 29% trustworthy tools, benchmarks, and the $87 mistake that changed my mind</description>
-      <pubDate>Thu, 07 May 2026 09:47:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</guid>
     </item>
   </channel>
 </rss>
