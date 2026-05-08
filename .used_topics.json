@@ -50,5 +50,6 @@
   "The timezone advantage: why European startups are hiring East African engineers",
   "Andela, Toptal, and Arc: which platform actually works for African developers in 2026",
   "Claude Code vs Cursor: a real cost breakdown after 3 months",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month"
 ]
