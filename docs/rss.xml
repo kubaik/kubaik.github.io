@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 19:32:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 19:48:03 +0000</lastBuildDate>
+    <item>
+      <title>Which AI IDE cuts your bill: Claude Code or Cursor</title>
+      <link>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</link>
+      <description>Cursor burned $86/month per developer on idle AWS while Claude Code stayed at $12 — here’s the exact experiment, benchmarks, and cost breakdown</description>
+      <pubDate>Fri, 08 May 2026 19:47:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</guid>
+    </item>
     <item>
       <title>Choose Arc over Toptal for African devs in 2026</title>
       <link>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut infra cost 75% and latency 60% by replacing WebSockets with Redis Streams polling — concrete benchmarks and code for 5 real-time alternatives</description>
       <pubDate>Thu, 07 May 2026 13:01:49 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ways-to-add-real-time-without-websockets/</guid>
-    </item>
-    <item>
-      <title>2026 tech salaries will crash — here’s the math</title>
-      <link>https://kubaik.github.io/2026-tech-salaries-will-crash-heres-the-math/</link>
-      <description>Cut real tech salaries by 18% in 2026: how legacy systems and AI tools erode compensation — leverage, ownership, and the data from 47 companies</description>
-      <pubDate>Thu, 07 May 2026 12:48:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-tech-salaries-will-crash-heres-the-math/</guid>
     </item>
   </channel>
 </rss>
