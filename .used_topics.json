@@ -42,5 +42,6 @@
   "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
   "FastAPI vs Django REST: after building both in production",
   "DevSecOps in practice: shifting security left without slowing down deploys",
-  "AI tools that replaced paid software in my workflow"
+  "AI tools that replaced paid software in my workflow",
+  "Multi-agent systems in production: what nobody tells you upfront"
 ]
