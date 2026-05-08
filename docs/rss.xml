@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 08:49:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 10:19:02 +0000</lastBuildDate>
+    <item>
+      <title>Choose wrong: FastAPI vs Django REST in prod</title>
+      <link>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</link>
+      <description>Cut API latency 4x and AWS costs 43% by choosing the right Python backend — FastAPI vs Django REST pros, cons, and real production numbers.</description>
+      <pubDate>Fri, 08 May 2026 10:18:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</guid>
+    </item>
     <item>
       <title>Doctors, lawyers, scientists: how they ship production</title>
       <link>https://kubaik.github.io/doctors-lawyers-scientists-how-they-ship-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut debugging time by 30% with a $100/month AI coding budget — real latency figures, rework costs, and the tools that actually worked in Nigeria and Ghana. AI coding budget explained for indie devs.</description>
       <pubDate>Thu, 07 May 2026 08:36:57 +0000</pubDate>
       <guid>https://kubaik.github.io/the-100month-ai-coding-budget-finally-explained/</guid>
-    </item>
-    <item>
-      <title>MCP servers exposed: the invisible layer 99% of devs miss</title>
-      <link>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</link>
-      <description>MCP servers exposed invisible: e result? 100% of subsequent calls failed wi. Practical guide with real examples.</description>
-      <pubDate>Thu, 07 May 2026 08:21:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</guid>
     </item>
   </channel>
 </rss>
