@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 22:28:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 19:32:40 +0000</lastBuildDate>
+    <item>
+      <title>Choose Arc over Toptal for African devs in 2026</title>
+      <link>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</link>
+      <description>Cut hiring time by 75% and save $4,000/month for African tech teams: Arc delivered candidates in 12 days vs 45 days on Andela and 28 days on Toptal in 2026.</description>
+      <pubDate>Fri, 08 May 2026 19:32:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</guid>
+    </item>
     <item>
       <title>Why European startups hire East African engineers</title>
       <link>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</link>
@@ -138,13 +145,6 @@
       <description>Cut real tech salaries by 18% in 2026: how legacy systems and AI tools erode compensation — leverage, ownership, and the data from 47 companies</description>
       <pubDate>Thu, 07 May 2026 12:48:04 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-tech-salaries-will-crash-heres-the-math/</guid>
-    </item>
-    <item>
-      <title>Agentic AI steals your hours</title>
-      <link>https://kubaik.github.io/agentic-ai-steals-your-hours/</link>
-      <description>Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.</description>
-      <pubDate>Thu, 07 May 2026 12:26:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/agentic-ai-steals-your-hours/</guid>
     </item>
   </channel>
 </rss>
