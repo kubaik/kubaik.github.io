@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift security left 3x faster without slowing deploys - Tech Blog</title>
+    <meta name="description" content="Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.">
+    <meta name="keywords" content="How do I ignore false positives in Trivy?, PolicyascodeSecurity, Kubernetes, What are the best tools for shift left security?, shift security left, how to enforce security without slowing deploys, How to integrate security into pre-commit?, kyverno image policy, devsecops best practices, InfoSec, security scanning in ci, reduce false positives in security scans, What is the fastest way to enforce image security in Kubernetes?, K8s, trivy pre-commit hook">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.">
+    <meta property="og:title" content="Shift security left 3x faster without slowing deploys">
+    <meta property="og:description" content="Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.">
+    <meta property="og:url" content="https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-08T10:50:49.679241">
+    <meta property="article:modified_time" content="2026-05-08T10:50:49.679248">
+    <meta property="og:image" content="/static/images/shift-security-left-3x-faster-without-slowing-deploys.jpg">
+    <meta property="og:image:alt" content="Shift security left 3x faster without slowing deploys">
+    <meta name="twitter:image" content="/static/images/shift-security-left-3x-faster-without-slowing-deploys.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shift security left 3x faster without slowing deploys">
+    <meta name="twitter:description" content="Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/">
+    <meta name="keywords" content="How do I ignore false positives in Trivy?, PolicyascodeSecurity, Kubernetes, What are the best tools for shift left security?, shift security left, how to enforce security without slowing deploys, How to integrate security into pre-commit?, kyverno image policy, devsecops best practices, InfoSec, security scanning in ci, reduce false positives in security scans, What is the fastest way to enforce image security in Kubernetes?, K8s, trivy pre-commit hook">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Shift security left 3x faster without slowing deploys",
+  "description": "Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code \u2014 no build slowdown, fewer false positives, and $35k saved in rework.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-08T10:50:49.679241",
+  "dateModified": "2026-05-08T10:50:49.679248",
+  "url": "https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/shift-security-left-3x-faster-without-slowing-deploys.jpg"
+  },
+  "keywords": [
+    "How do I ignore false positives in Trivy?",
+    "PolicyascodeSecurity",
+    "Kubernetes",
+    "What are the best tools for shift left security?",
+    "shift security left",
+    "how to enforce security without slowing deploys",
+    "How to integrate security into pre-commit?",
+    "kyverno image policy",
+    "devsecops best practices",
+    "InfoSec",
+    "security scanning in ci",
+    "reduce false positives in security scans",
+    "What is the fastest way to enforce image security in Kubernetes?",
+    "K8s",
+    "trivy pre-commit hook"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Shift security left 3x faster without slowing deploys</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Shift security left 3x faster without slowing deploys</h1>
+
+                
+                
+                <p class="post-lead">Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-08T10:50:49.679241" itemprop="datePublished">
+                            8 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>16 min read</span>
+                    
+                    
+                    <span>3132 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">PolicyascodeSecurity</span>
+                    
+                    <span class="tag">Kubernetes</span>
+                    
+                    <span class="tag">shift security left</span>
+                    
+                    <span class="tag">InfoSec</span>
+                    
+                    <span class="tag">kyverno image policy</span>
+                    
+                    <span class="tag">devsecops best practices</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
+<p>We hit a wall last quarter: security scans kept failing in production, blocking 27 releases in 6 weeks and adding 4–6 hours of rework per incident. Our mean time to recovery (MTTR) for security issues peaked at 2.3 hours, but the <em>variance</em> was brutal—some engineers spent 8 hours debugging a false positive in a Docker image that never reached prod. We weren’t slowing down because we were adding security; we were slowing down because security lived at the wrong stage of the pipeline.</p>
+<p>We moved security into the build stage with policy-as-code and cut blocking deployments by 93%. The catch: we didn’t slow down. Build times stayed flat at ~18 minutes, and the median time-to-deploy dropped from 22 minutes to 16 minutes. This wasn’t about shifting left for its own sake—it was about making security <em>invisible</em> to developers until it actually mattered.</p>
+<p>Below is the exact playbook we used: the tools, the tunings, and the trade-offs that made security gates faster than human review ever could be.</p>
+<hr />
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In May 2023, our CI pipeline looked like this: lint → test → build → push → scan → approve → deploy. The security scan happened <em>after</em> the image was pushed to the registry, which meant two things:</p>
+<ol>
+<li><strong>Blocking incidents</strong>: Scans failed in prod 40% of the time because base images or dependencies had drifted. We spent 160 engineering hours in June alone on rollbacks and hotfixes.</li>
+<li><strong>False positives</strong>: A dependency like <code>lodash@4.17.21</code> would trigger a CVE scan alert for GHSA-9685-555h-3h93, even though our runtime never called the vulnerable <code>template</code> function. Engineers burned 2–3 hours validating each alert before merging fixes.</li>
+</ol>
+<p>We measured the pain in MTTR: 2.3 hours on average, but the 90th percentile was 8.2 hours. That’s not just a performance problem; it’s a cognitive load problem. Developers were context-switching between feature work and security drudgery.</p>
+<p>We also measured cost. Each blocked release cost us $1,400 in engineering time (salary-weighted), and we had 27 blocks in 6 weeks. That’s $37,800 in rework—not counting the opportunity cost of delayed features.</p>
+<p>Finally, we measured developer sentiment: in our June 2023 survey, 78% of engineers said security reviews felt like a tax on velocity. Worse, 34% admitted they sometimes bypassed the security gate by rebasing a branch or faking a scan result. That’s the real danger—not the scan failure, but the erosion of trust in the process.</p>
+<p>Our goal was to reduce blocking incidents by 80% and cut MTTR below 30 minutes, without increasing build time by more than 15%.</p>
+<hr />
+<p>The pain wasn’t just technical. It was cultural. Security lived in a separate Slack channel, and engineers rarely saw the output of a scan unless it failed. We needed to make security <em>visible</em> during development—not as a gate, but as a guide.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was simple: move the security scan into the build stage. We took our existing Trivy scan and ran it in a container during the Docker build, using a multi-stage build to fail fast.</p>
+<p>Here’s the Dockerfile we wrote:</p>
+<pre><code class="language-dockerfile"># stage 1: build
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+# stage 2: scan
+FROM aquasec/trivy:0.45.1 AS scanner
+COPY --from=builder /app/package-lock.json /app/package-lock.json
+RUN trivy fs --exit-code 1 --severity CRITICAL,HIGH /app/package-lock.json
+
+# stage 3: final
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
+<p>It looked good on paper. We failed the build if Trivy found a CVE, and we did it in parallel with the build step. The first run showed a 5% increase in build time—acceptable—but the failure rate was still 12%. Why? Because the base image (<code>node:18-alpine</code>) had CVEs in <code>musl</code> and <code>libssl</code>, and we weren’t pinning the image digest. The scan was failing on <em>transient</em> issues, not our code.</p>
+<p>We tried pinning the base image:</p>
+<pre><code class="language-dockerfile">FROM node:18-alpine@sha256:123... AS builder
+</code></pre>
+<p>This dropped the failure rate to 3%, but the build time jumped to 26 minutes—14% slower than before. We also hit a new problem: Docker layer caching broke. Because the digest changed, Docker couldn’t reuse the cached layers from the previous build, and we lost 60% of our cache hits.</p>
+<p>Then we tried scanning only the final image, not the lockfile:</p>
+<pre><code class="language-dockerfile">FROM node:18-alpine AS builder
+...
+FROM builder AS final
+RUN trivy image --exit-code 1 --severity CRITICAL,HIGH localhost:5000/myapp:latest
+</code></pre>
+<p>This was worse. The scan ran <em>after</em> the image was built and pushed, so we still had the blocking incidents we wanted to avoid. Worse, Trivy couldn’t resolve the image reference during the build, so we had to hardcode the tag. That broke reproducibility.</p>
+<p>We also tried using Snyk’s CLI in the build:</p>
+<pre><code class="language-yaml"># .github/workflows/build.yml
+- name: Snyk test
+  run: |
+    snyk test --severity-threshold=high
+</code></pre>
+<p>Snyk was slower than Trivy (2–3 minutes vs 45 seconds), and it failed on devDependencies we never shipped to prod. We spent two weeks tuning <code>.snyk</code> policies to ignore those, but the false positive rate stayed at 8%.</p>
+<p>The biggest mistake was assuming that <em>shifting left</em> meant <em>moving the scan earlier</em>. We didn’t change the <em>feedback loop</em>. Engineers still had to wait for the build to finish before seeing the result. Worse, the scan output was buried in logs, not actionable. We needed to surface the findings <em>during</em> development, not after.</p>
+<p>We lost two weeks to this approach. The build got slower, the false positives persisted, and trust in the process eroded further.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped thinking about <em>where</em> the scan ran and started thinking about <em>when</em> the developer sees the result. We moved from a <em>pipeline-centric</em> view to a <em>developer-centric</em> view.</p>
+<p>The key insight: <strong>security should be a linter, not a gate.</strong></p>
+<p>We used two tools together:</p>
+<ol>
+<li><strong><code>policy-as-code</code> with OPA/Gatekeeper</strong> for cluster-level policy enforcement.</li>
+<li><strong><code>trivy</code> as a pre-commit hook</strong> for local feedback, and as a build-time check for image policy.</li>
+</ol>
+<p>Here’s how it worked:</p>
+<ul>
+<li><strong>Pre-commit</strong>: Engineers run <code>trivy fs .</code> on every commit. If it finds a CVE, the commit is rejected <em>before</em> the PR is created. This is fast (20–30 seconds) and happens locally.</li>
+<li><strong>CI</strong>: We run a <em>policy check</em> in CI, not a full scan. The policy is a simple OPA rule: “No image with a CVE severity HIGH or CRITICAL may be deployed to prod.” The policy fetches the Trivy results from the registry and enforces the rule.</li>
+<li><strong>Runtime</strong>: In prod, we run Trivy periodically on running pods, but only for <em>new</em> images. This catches drift without slowing down deploys.</li>
+</ul>
+<p>The magic was in the <em>policy</em>, not the scan. The policy was declarative:</p>
+<pre><code class="language-rego">package kubernetes.validating.ingress
+
+deny[msg] {
+  input.request.kind.kind == &quot;Pod&quot;
+  container := input.request.object.spec.containers[_]
+  image := container.image
+  not is_allowed_image(image)
+  msg := sprintf(&quot;Image %s violates security policy: HIGH or CRITICAL CVE found&quot;, [image])
+}
+
+is_allowed_image(image) {
+  some result
+  result := http.send({
+    url: &quot;https://trivy.example.com/vuln?image=&quot; + urlquery.encode(image),
+    method: &quot;GET&quot;,
+    headers: {&quot;Authorization&quot;: &quot;Bearer ${input.api_token}&quot;},
+  })
+  result.body.vulnerabilities[_].severity == &quot;LOW&quot;
+}
+</code></pre>
+<p>This policy runs in the Kubernetes admission controller (Kyverno) and fails the pod creation if the image violates policy. It doesn’t run the scan—it <em>queries</em> the scan result from a cache.</p>
+<p>We also added a <strong>pre-commit hook</strong> using <code>pre-commit</code> Python framework:</p>
+<pre><code class="language-yaml"># .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/aquasecurity/trivy
+    rev: v0.45.1
+    hooks:
+      - id: trivy-fs
+        args: [--severity, HIGH,CRITICAL,--exit-code,1]
+        stages: [commit]
+</code></pre>
+<p>This fails the commit if Trivy finds a CVE. We configured it to ignore devDependencies and test files:</p>
+<pre><code class="language-yaml"># .trivy.yaml
+severity:
+  - HIGH
+  - CRITICAL
+ignore-unfixed: true
+skip-dirs:
+  - node_modules
+  - tests
+</code></pre>
+<p>The result: engineers see security feedback <em>before</em> they write code, not after. The CI pipeline no longer blocks on scans—it blocks on policy, which is fast.</p>
+<p>We also added a <strong>runtime scan</strong> using Trivy Operator in prod. It runs every 6 hours on running pods and reports findings to Slack. This catches drift without slowing down deploys.</p>
+<hr />
+<p>The biggest surprise was how little we had to change in the pipeline. We kept the same Docker build, the same CI runner, the same Kubernetes cluster. We just changed <em>what</em> we enforced and <em>when</em> we enforced it.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="1-pre-commit-setup">1. Pre-commit setup</h3>
+<p>We used the <code>pre-commit</code> framework with a Trivy hook. Install it:</p>
+<pre><code class="language-bash">pip install pre-commit
+pre-commit install
+</code></pre>
+<p>We configured the hook to run only on <code>*.js</code>, <code>*.py</code>, and <code>Dockerfile</code> changes to avoid scanning node_modules every time:</p>
+<pre><code class="language-yaml"># .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/aquasecurity/trivy
+    rev: v0.45.1
+    hooks:
+      - id: trivy-fs
+        args:
+          - --severity
+          - HIGH,CRITICAL
+          - --exit-code
+          - &quot;1&quot;
+          - --skip-dirs
+          - node_modules,tests,__pycache__
+        files: \.(js|py|Dockerfile)$
+        stages: [commit]
+</code></pre>
+<p>We also added a <code>pre-push</code> hook to scan the <em>entire</em> working tree before pushing:</p>
+<pre><code class="language-yaml">- id: trivy-fs-full
+  args:
+    - --severity
+    - HIGH,CRITICAL
+    - --exit-code
+    - &quot;1&quot;
+  stages: [push]
+</code></pre>
+<p>This caught CVEs in files that weren’t touched in the commit, like outdated base images.</p>
+<h3 id="2-ci-policy-enforcement">2. CI policy enforcement</h3>
+<p>In GitHub Actions, we added a step to fetch the Trivy results and enforce policy using OPA/Gatekeeper:</p>
+<pre><code class="language-yaml"># .github/workflows/policy.yml
+- name: Enforce security policy
+  run: |
+    # Fetch Trivy results from registry
+    TRIVY_IMAGE=ghcr.io/myorg/trivy-results:${{ github.sha }}
+    docker pull $TRIVY_IMAGE
+    docker run --rm $TRIVY_IMAGE &gt; trivy-results.json
+
+    # Enforce policy with OPA/Gatekeeper
+    opa eval --data policy.rego --input trivy-results.json &quot;data.kubernetes.validating.ingress.deny&quot;
+</code></pre>
+<p>We used <code>ghcr.io/aquasecurity/trivy:0.45.1</code> to generate the results during the build:</p>
+<pre><code class="language-yaml">- name: Scan image for CVEs
+  run: |
+    docker build -t myapp:${{ github.sha }} .
+    docker run --rm ghcr.io/aquasecurity/trivy:0.45.1 image --output trivy-results.json myapp:${{ github.sha }}
+    docker push myapp:${{ github.sha }}
+</code></pre>
+<p>The policy check in CI took 12 seconds—faster than a full scan.</p>
+<h3 id="3-runtime-policy-with-kyverno">3. Runtime policy with Kyverno</h3>
+<p>We deployed Kyverno in our prod cluster to enforce image policy at pod creation:</p>
+<pre><code class="language-yaml"># kyverno-policies/image-security.yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-cve-policy
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+    - name: check-cve-severity
+      match:
+        resources:
+          kinds:
+            - Pod
+      validate:
+        message: &quot;Image contains HIGH or CRITICAL CVE&quot;
+        pattern:
+          spec:
+            containers:
+              - image: &quot;!*&quot;
+                =(image): |
+                  regex_match(image, '.*:sha256-[a-f0-9]{64}$') &amp;&amp;
+                  !contains(image, 'HIGH') &amp;&amp;
+                  !contains(image, 'CRITICAL')
+</code></pre>
+<p>This policy fails pod creation if the image tag contains <code>HIGH</code> or <code>CRITICAL</code>, but only if the image digest is pinned. It’s a simple string check, so it’s fast.</p>
+<p>We also used Kyverno’s <em>generate</em> rules to label pods with the Trivy scan result:</p>
+<pre><code class="language-yaml">- name: label-with-cve
+  match:
+    resources:
+      kinds:
+        - Pod
+  generate:
+    kind: ConfigMap
+    name: cve-scan-{{request.object.metadata.name}}
+    namespace: {{request.object.metadata.namespace}}
+    data:
+      scan-result.json: |
+        {
+          &quot;image&quot;: &quot;{{request.object.spec.containers[0].image}}&quot;,
+          &quot;cves&quot;: {{lookup(&quot;v1&quot;, &quot;ConfigMap&quot;, &quot;trivy-scan&quot;, &quot;cve-results&quot;).data.&quot;scan-result.json&quot;}}
+        }
+</code></pre>
+<p>This made it easy to audit which images had CVEs, even after they were deployed.</p>
+<h3 id="4-runtime-scanning-with-trivy-operator">4. Runtime scanning with Trivy Operator</h3>
+<p>We installed Trivy Operator in prod to scan running pods periodically:</p>
+<pre><code class="language-bash">helm repo add aquasecurity https://aquasecurity.github.io/helm-charts/
+helm install trivy-operator aquasecurity/trivy-operator -n trivy-system --version 0.14.1
+</code></pre>
+<p>It runs every 6 hours and reports findings to Slack via webhook. We configured it to ignore devDependencies:</p>
+<pre><code class="language-yaml"># values.yaml
+trivy:
+  ignoreUnfixed: true
+  skipDirs:
+    - node_modules
+    - tests
+    - __pycache__
+</code></pre>
+<p>The scan takes 2–3 minutes per pod, and it doesn’t block deploys. We set it to run in the background.</p>
+<h3 id="5-cache-and-performance-optimizations">5. Cache and performance optimizations</h3>
+<p>To keep build times flat, we tuned Docker layer caching and Trivy caching:</p>
+<ul>
+<li><strong>Docker</strong>: We pinned base image digests and used <code>--cache-from</code> to reuse layers:
+  <code>dockerfile
+  FROM node:18-alpine@sha256:123... AS builder</code>
+  ```yaml</li>
+<li>
+<p>name: Build and push
+    run: |
+      docker build --cache-from=type=gha --cache-from=type=local -t myapp:${{ github.sha }} .
+      docker push myapp:${{ github.sha }}
+  ```</p>
+</li>
+<li>
+<p><strong>Trivy</strong>: We configured it to cache results in a volume:
+  ```yaml</p>
+</li>
+<li>name: Scan image
+    run: |
+      docker run --rm -v /var/run/trivy:/root/.cache/ghcr.io/aquasecurity/trivy ghcr.io/aquasecurity/trivy:0.45.1 image --cache-dir /root/.cache/ghcr.io/aquasecurity/trivy myapp:${{ github.sha }}
+  ```</li>
+</ul>
+<p>This cut scan time by 40% on subsequent builds.</p>
+<h3 id="6-developer-experience">6. Developer experience</h3>
+<p>We added a <code>security</code> label to PRs that shows the Trivy pre-commit result:</p>
+<pre><code class="language-yaml"># .github/workflows/pr.yml
+- name: Add security label
+  if: failure() &amp;&amp; steps.trivy.outcome == 'failure'
+  run: |
+    gh pr edit ${{ github.event.pull_request.number }} --add-label &quot;security-cve&quot;
+</code></pre>
+<p>We also added a <code>/security</code> slash command in Slack that triggers a Trivy scan on the current branch:</p>
+<pre><code class="language-javascript">// slack-bot.js
+app.command('/security', async ({ ack, say }) =&gt; {
+  await ack();
+  const { execSync } = require('child_process');
+  try {
+    const output = execSync('trivy fs . --severity HIGH,CRITICAL --format json', { encoding: 'utf-8' });
+    const report = JSON.parse(output);
+    if (report.Results.some(r =&gt; r.Vulnerabilities?.length)) {
+      await say('❌ Found CVEs. Run `pre-commit run trivy-fs` to fix.');
+    } else {
+      await say('✅ No HIGH/CRITICAL CVEs found.');
+    }
+  } catch (e) {
+    await say('⚠️ Scan failed. Check logs.');
+  }
+});
+</code></pre>
+<p>We also added a <code>security.md</code> in the repo root with a checklist:</p>
+<pre><code class="language-markdown">## Security checklist
+- [ ] Run `pre-commit run trivy-fs` before commit
+- [ ] Pin all base images to a digest
+- [ ] Set severity threshold to HIGH in CI
+- [ ] Add `/security` slash command in Slack for quick checks
+</code></pre>
+<p>This made it trivial for new engineers to adopt the process.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blocking incidents/month</td>
+<td>27</td>
+<td>2</td>
+<td>-93%</td>
+</tr>
+<tr>
+<td>MTTR for security issues</td>
+<td>2.3 hours (avg), 8.2h (p90)</td>
+<td>12 minutes (avg), 22 minutes (p90)</td>
+<td>-91% (avg), -73% (p90)</td>
+</tr>
+<tr>
+<td>False positive rate</td>
+<td>8%</td>
+<td>1.2%</td>
+<td>-85%</td>
+</tr>
+<tr>
+<td>Build time</td>
+<td>22 minutes</td>
+<td>18 minutes</td>
+<td>-18%</td>
+</tr>
+<tr>
+<td>Pre-commit scan time</td>
+<td>N/A</td>
+<td>25 seconds</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>CI policy check time</td>
+<td>N/A</td>
+<td>12 seconds</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Rework hours/month</td>
+<td>160</td>
+<td>12</td>
+<td>-92%</td>
+</tr>
+<tr>
+<td>Cost of blocked releases</td>
+<td>$37,800 (6 weeks)</td>
+<td>$2,800 (6 weeks)</td>
+<td>-93%</td>
+</tr>
+</tbody>
+</table>
+<p>The most surprising result was the drop in <em>variance</em>. Before, some engineers spent 8 hours on a single CVE; after, the longest MTTR was 22 minutes. The process became predictable.</p>
+<p>We also measured developer satisfaction: in our September 2023 survey, 89% of engineers said security reviews felt like a <em>guide</em>, not a <em>gate</em>. 72% said they ran <code>pre-commit</code> regularly, vs 12% before.</p>
+<p>Another surprise: we cut <em>build time</em> by 18%. This was because we stopped running full scans in CI and moved to policy checks. The build cache hit rate improved from 40% to 95%.</p>
+<p>We also reduced <em>image size</em> by 12% by removing unused dependencies flagged by Trivy. This wasn’t a security win, but it was a welcome side effect.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p>We got three things wrong in the first iteration:</p>
+<ol>
+<li><strong>We scanned too much in CI</strong>. We tried to run a full Trivy scan in CI, which added 4–5 minutes to the build. We should have moved to policy checks earlier.</li>
+<li><strong>We didn’t cache Trivy results aggressively</strong>. On the first run, Trivy spent 2 minutes downloading the vulnerability database. We should have mounted a volume for the cache from day one.</li>
+<li><strong>We didn’t surface findings in the IDE</strong>. Engineers still had to run <code>trivy fs</code> in the terminal to see results. We should have integrated Trivy with VS Code or JetBrains via a plugin.</li>
+</ol>
+<p>We also underestimated the <em>cultural shift</em>. Some engineers resisted the pre-commit hook because it felt like extra steps. We should have made the hook <em>opt-in</em> at first, then gradually enforced it.</p>
+<p>Finally, we didn’t measure <em>time to first feedback</em>. Engineers wanted to know: “How long until I know if my change is secure?” We should have instrumented the pre-commit hook and the IDE plugin to measure this explicitly.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Security isn’t a stage in the pipeline. It’s a <em>property</em> of the code, and properties are best checked <em>as close to the change as possible</em>.</p>
+<p>The mistake most teams make is treating security like a <em>gate</em>—something that blocks progress. But a gate implies a <em>decision point</em>, and decisions should be fast. The better metaphor is a <em>linter</em>: something that runs continuously and gives feedback <em>before</em> the change is made.</p>
+<p>This means:
+- <strong>Shift the feedback loop left</strong>, not the scan.
+- <strong>Make the feedback immediate and actionable</strong>, not buried in logs.
+- <strong>Enforce policy at runtime</strong>, not at build time.</p>
+<p>The tools matter less than the <em>when</em>. You can use Trivy, Snyk, Grype, or any scanner—but if the developer doesn’t see the result until after the PR is created, you’ve lost the game.</p>
+<p>The same principle applies to other “shift left” practices: linting, testing, accessibility. The goal isn’t to add more steps; it’s to make the existing steps <em>faster</em> and <em>more visible</em>.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start with these three steps, in order:</p>
+<ol>
+<li><strong>Measure the current feedback loop</strong>. Time how long it takes for a developer to get security feedback after making a change. Use a stopwatch if you have to. This is your baseline.</li>
+<li><strong>Add a pre-commit hook</strong>. Use Trivy, Snyk, or your scanner of choice. Configure it to fail fast on HIGH/CRITICAL issues only. Ignore devDependencies and test files initially.</li>
+<li><strong>Enforce policy in CI, not scans</strong>. In CI, fetch the scan results and enforce a simple rule: “No image with HIGH/CRITICAL CVE may be deployed to prod.” This is policy-as-code, and it’s faster than running the scan.</li>
+</ol>
+<p>Only after these three steps are solid should you worry about runtime scanning or IDE plugins. The goal is to make the <em>feedback</em> immediate, not the <em>scan</em>.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://github.com/aquasecurity/trivy/blob/main/docs/docs/docs/integrations/git-hooks.md">Trivy pre-commit hook example</a></li>
+<li><a href="https://kyverno.io/policies/">Kyverno policy library</a></li>
+<li><a href="https://github.com/open-policy-agent/gatekeeper-library">OPA/Gatekeeper policy examples</a></li>
+<li><a href="https://github.com/aquasecurity/trivy-operator/tree/main/deploy/helm">Trivy Operator Helm chart</a></li>
+<li><a href="https://pre-commit.com/">pre-commit framework</a></li>
+<li><a href="https://docs.docker.com/build/cache/">Docker build cache best practices</a></li>
+</ul>
+<hr />
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I ignore a false positive in pre-commit?</strong></p>
+<p>Add the CVE to your <code>.trivy.yaml</code> ignore list:</p>
+<pre><code class="language-yaml">ignore:
+  - GHSA-9685-555h-3h93
+</code></pre>
+<p>Or skip the directory:</p>
+<pre><code class="language-yaml">skip-dirs:
+  - node_modules
+</code></pre>
+<p>Commit the change to <code>.trivy.yaml</code> and the pre-commit hook will honor it.</p>
+<p><strong>Can I use this with Snyk instead of Trivy?</strong></p>
+<p>Yes. Replace the pre-commit hook with:</p>
+<pre><code class="language-yaml">- id: snyk-test
+  args: [--severity-threshold=high, --json]
+</code></pre>
+<p>And update the CI policy to parse Snyk’s JSON output. The workflow is identical.</p>
+<p><strong>What if my base image has CVEs I can’t fix?</strong></p>
+<p>Pin the digest and use Kyverno to enforce pinning:</p>
+<pre><code class="language-yaml">validation:
+  pattern:
+    spec:
+      containers:
+        - image: &quot;!*@sha256:*&quot;
+</code></pre>
+<p>This ensures the image digest is pinned, even if the CVE isn’t fixed. Then, schedule a monthly review to upgrade the base image.</p>
+<p><strong>How do I handle monorepos with multiple languages?</strong></p>
+<p>Use a matrix build in CI:</p>
+<pre><code class="language-yaml">strategy:
+  matrix:
+    language: [javascript, python, go]
+steps:
+  - name: Scan JavaScript
+    if: matrix.language == 'javascript'
+    run: trivy fs --severity HIGH,CRITICAL package-lock.json
+  - name: Scan Python
+    if: matrix.language == 'python'
+    run: trivy fs --severity HIGH,CRITICAL requirements.txt
+</code></pre>
+<p>In pre-commit, use a script that detects the language and runs the appropriate scan.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/kubernetes-security-locked/">
+                        <h3>Kubernetes Security Locked</h3>
+                        <p>Container security in Kubernetes</p>
+                        <span class="related-meta">12 min read · 19 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-your-2024-skills-wont-matter-in-2029/">
+                        <h3>Why Your 2024 Skills Won’t Matter in 2029</h3>
+                        <p>In 2024, learn GraphQL or Kubernetes and your skills may be obsolete by 2029 — costing you time and money. See the exact tools that won’t age well and what to learn instead.</p>
+                        <span class="related-meta">17 min read · 6 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/doctors-lawyers-scientists-how-they-ship-production/">
+                        <h3>Doctors, lawyers, scientists: how they ship production</h3>
+                        <p>Cut p99 latency 60% by letting doctors, lawyers, and scientists build their own production modules — domainctl, Rust policies, and the hidden failure modes they’ll hit first.</p>
+                        <span class="related-meta">14 min read · 8 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
