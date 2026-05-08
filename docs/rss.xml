@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 06:26:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 07:02:24 +0000</lastBuildDate>
+    <item>
+      <title>Win $4k remote jobs: Next.js + Supabase stack</title>
+      <link>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</link>
+      <description>Land $4k/month remote jobs using Next.js + Supabase: latency under 50ms, $4.56/month hosting, and the exact stack teams in Nairobi and Lagos use to sign contracts.</description>
+      <pubDate>Fri, 08 May 2026 07:02:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</guid>
+    </item>
     <item>
       <title>Async Python: when it helps, when it hurts</title>
       <link>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS compute costs by 40% with Graviton ARM instances and Spot Instances — real benchmarks, Terraform code, and the interruptions I didn’t see coming.</description>
       <pubDate>Thu, 07 May 2026 07:54:51 +0000</pubDate>
       <guid>https://kubaik.github.io/why-my-aws-bill-dropped-40-overnight-and-how-you-c/</guid>
-    </item>
-    <item>
-      <title>AI-first systems fail without this backend pattern</title>
-      <link>https://kubaik.github.io/ai-first-systems-fail-without-this-backend-pattern/</link>
-      <description>Cut API latency to 180ms and LLM costs by 62% with this backend pattern — FastAPI, Redis, RQ, and vector cache. Real code, benchmarks, and failure modes you won’t find in docs.</description>
-      <pubDate>Thu, 07 May 2026 07:43:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-first-systems-fail-without-this-backend-pattern/</guid>
     </item>
   </channel>
 </rss>
