@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 23:03:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 20:05:53 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: what production breaks first</title>
+      <link>https://kubaik.github.io/rag-pipelines-what-production-breaks-first/</link>
+      <description>Cut RAG pipeline cost 9x and hit 12k QPS with 138ms P99 latency on 8 vCPUs — connection pooling, cache tiers, and Qdrant bloom filters made the difference. Learn what tutorials skip about production RAG.</description>
+      <pubDate>Fri, 08 May 2026 20:05:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-what-production-breaks-first/</guid>
+    </item>
     <item>
       <title>Which AI IDE cuts your bill: Claude Code or Cursor</title>
       <link>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</link>
@@ -138,13 +145,6 @@
       <description>Ship 2.3x faster with GitHub Copilot without cargo-culting — latency drops from 240ms to 18ms, cache hit ratio jumps from 42% to 78%, and incidents fall 67% with this repeatable junior onboarding stack.</description>
       <pubDate>Thu, 07 May 2026 14:15:43 +0000</pubDate>
       <guid>https://kubaik.github.io/junior-devs-after-github-copilot/</guid>
-    </item>
-    <item>
-      <title>5 ways to add real-time without WebSockets</title>
-      <link>https://kubaik.github.io/5-ways-to-add-real-time-without-websockets/</link>
-      <description>Cut infra cost 75% and latency 60% by replacing WebSockets with Redis Streams polling — concrete benchmarks and code for 5 real-time alternatives</description>
-      <pubDate>Thu, 07 May 2026 13:01:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-ways-to-add-real-time-without-websockets/</guid>
     </item>
   </channel>
 </rss>
