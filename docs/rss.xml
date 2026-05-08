@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 19:57:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 06:26:53 +0000</lastBuildDate>
+    <item>
+      <title>Async Python: when it helps, when it hurts</title>
+      <link>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</link>
+      <description>Cut API response time 64% with async Python — when async helps, when it freezes your event loop, real benchmarks and fixes</description>
+      <pubDate>Fri, 08 May 2026 06:26:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</guid>
+    </item>
     <item>
       <title>Node.js memory leak: how to find it in 10 min</title>
       <link>https://kubaik.github.io/nodejs-memory-leak-how-to-find-it-in-10-min/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency to 180ms and LLM costs by 62% with this backend pattern — FastAPI, Redis, RQ, and vector cache. Real code, benchmarks, and failure modes you won’t find in docs.</description>
       <pubDate>Thu, 07 May 2026 07:43:49 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-first-systems-fail-without-this-backend-pattern/</guid>
-    </item>
-    <item>
-      <title>Your AI code tool writes bad tests (and how to fix it)</title>
-      <link>https://kubaik.github.io/your-ai-code-tool-writes-bad-tests-and-how-to-fix-/</link>
-      <description>Catch 67% more bugs by replacing AI-generated weak tests with strong behavioral ones — real metrics from 12 services, mutation scores, and CI pipeline fixes.</description>
-      <pubDate>Thu, 07 May 2026 07:37:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-ai-code-tool-writes-bad-tests-and-how-to-fix-/</guid>
     </item>
   </channel>
 </rss>
