@@ -35,5 +35,6 @@
   "TypeScript mistakes that slip through even with strict mode",
   "The AI productivity tax: when your tools create more work than they save",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "Node.js memory leaks: how to find and fix them"
+  "Node.js memory leaks: how to find and fix them",
+  "Python async: where it helps and where it makes things worse"
 ]
