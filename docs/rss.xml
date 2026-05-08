@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 21:03:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 18:06:02 +0000</lastBuildDate>
+    <item>
+      <title>Got a remote tech job: what actually worked</title>
+      <link>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</link>
+      <description>Build one project that survives 100 users and 256 MB memory: the real signals that got me a remote job after 6 rejections</description>
+      <pubDate>Fri, 08 May 2026 18:05:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</guid>
+    </item>
     <item>
       <title>Cut cloud carbon 35% without losing speed</title>
       <link>https://kubaik.github.io/cut-cloud-carbon-35-without-losing-speed/</link>
@@ -138,13 +145,6 @@
       <description>Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.</description>
       <pubDate>Thu, 07 May 2026 12:26:54 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-ai-steals-your-hours/</guid>
-    </item>
-    <item>
-      <title>Get paid $120k for remote work from a $2k/mo country</title>
-      <link>https://kubaik.github.io/get-paid-120k-for-remote-work-from-a-2kmo-country/</link>
-      <description>Get paid $120k remotely from a $2k country — the exact scripts, spreadsheets, and contracts that worked in Kenya, Colombia, and Mexico. Includes real contracts, currency hacks, and a 3-email cold pitch that gets replies.</description>
-      <pubDate>Thu, 07 May 2026 11:21:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/get-paid-120k-for-remote-work-from-a-2kmo-country/</guid>
     </item>
   </channel>
 </rss>
