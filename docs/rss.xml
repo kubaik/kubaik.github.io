@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 13:55:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 14:16:21 +0000</lastBuildDate>
+    <item>
+      <title>Agents in production: 5 things docs skip</title>
+      <link>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</link>
+      <description>Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</description>
+      <pubDate>Fri, 08 May 2026 14:16:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</guid>
+    </item>
     <item>
       <title>6 free AI tools that replaced $2k of my paid stack</title>
       <link>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut rework time by 62% with the right AI coding tool — ranked list from 29% trustworthy tools, benchmarks, and the $87 mistake that changed my mind</description>
       <pubDate>Thu, 07 May 2026 09:47:36 +0000</pubDate>
       <guid>https://kubaik.github.io/13-ai-coding-tools-ranked-by-real-trust-not-just-d/</guid>
-    </item>
-    <item>
-      <title>Why my 3am AI prototypes died at 9am in production</title>
-      <link>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</link>
-      <description>Cut production latency by 78% and connection leaks to zero after replacing vibe-coded endpoints with hand-crafted asyncpg pools — here’s the exact migration cost and tooling that worked</description>
-      <pubDate>Thu, 07 May 2026 09:34:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-my-3am-ai-prototypes-died-at-9am-in-production/</guid>
     </item>
   </channel>
 </rss>
