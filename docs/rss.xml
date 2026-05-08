@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 08:22:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 08:49:52 +0000</lastBuildDate>
+    <item>
+      <title>Doctors, lawyers, scientists: how they ship production</title>
+      <link>https://kubaik.github.io/doctors-lawyers-scientists-how-they-ship-production/</link>
+      <description>Cut p99 latency 60% by letting doctors, lawyers, and scientists build their own production modules — domainctl, Rust policies, and the hidden failure modes they’ll hit first.</description>
+      <pubDate>Fri, 08 May 2026 08:49:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/doctors-lawyers-scientists-how-they-ship-production/</guid>
+    </item>
     <item>
       <title>AI changed senior devs: 9 tools reshaping 2026</title>
       <link>https://kubaik.github.io/ai-changed-senior-devs-9-tools-reshaping-2026/</link>
@@ -138,13 +145,6 @@
       <description>MCP servers exposed invisible: e result? 100% of subsequent calls failed wi. Practical guide with real examples.</description>
       <pubDate>Thu, 07 May 2026 08:21:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/</guid>
-    </item>
-    <item>
-      <title>13 AI code security risks teams miss right now</title>
-      <link>https://kubaik.github.io/13-ai-code-security-risks-teams-miss-right-now/</link>
-      <description>Fix 13 AI code security risks before they hit production — 400ms latency spikes, 12% token failures, and 2,000 PII leaks uncovered in real multi-region stacks. Audit AI-generated code for timezone-naive datetime, integer overflow, SQL injection via ORM, Redis cache stampedes, and more.</description>
-      <pubDate>Thu, 07 May 2026 08:07:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/13-ai-code-security-risks-teams-miss-right-now/</guid>
     </item>
   </channel>
 </rss>
