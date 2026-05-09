@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 08:28:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 08:52:38 +0000</lastBuildDate>
+    <item>
+      <title>Run local LLMs on a laptop today</title>
+      <link>https://kubaik.github.io/run-local-llms-on-a-laptop-today/</link>
+      <description>Run a 7B LLM locally on a laptop in under 3 seconds per response — VRAM limits, Q4_K_M quantization, and the flags that actually work. Benchmarks on M2 Air, RTX 3060, and RTX 3080 included.</description>
+      <pubDate>Sat, 09 May 2026 08:52:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/run-local-llms-on-a-laptop-today/</guid>
+    </item>
     <item>
       <title>Rewrite your backend for 5G users or lose half your</title>
       <link>https://kubaik.github.io/rewrite-your-backend-for-5g-users-or-lose-half-your/</link>
@@ -138,13 +145,6 @@
       <description>Cut Node.js memory usage 70% by fixing the 3 real leaks: closures, unclosed streams, and CPU throttling. Use process.memoryUsage().external, heap diffs, and clinic.js to find it in minutes.</description>
       <pubDate>Thu, 07 May 2026 19:57:09 +0000</pubDate>
       <guid>https://kubaik.github.io/nodejs-memory-leak-how-to-find-it-in-10-min/</guid>
-    </item>
-    <item>
-      <title>We wasted 6 months over-engineering</title>
-      <link>https://kubaik.github.io/we-wasted-6-months-over-engineering/</link>
-      <description>Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need</description>
-      <pubDate>Thu, 07 May 2026 19:26:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/we-wasted-6-months-over-engineering/</guid>
     </item>
   </channel>
 </rss>
