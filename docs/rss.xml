@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 10:19:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 13:23:33 +0000</lastBuildDate>
+    <item>
+      <title>Rate your freelance dev work in 2025</title>
+      <link>https://kubaik.github.io/rate-your-freelance-dev-work-in-2025/</link>
+      <description>Learn the real numbers behind freelance developer rates — actual formulas, taxes, fees, and benchmarks that turn guesswork into profit. Includes a working Python calculator and 4 real client outcomes.</description>
+      <pubDate>Sat, 09 May 2026 13:23:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-your-freelance-dev-work-in-2025/</guid>
+    </item>
     <item>
       <title>Cut AWS costs 40% without touching the code</title>
       <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut story-point estimation by 42% and incident MTTR by 65% with these 9 AI tools — real benchmarks, costs, and the mistakes that break them. The new senior skill in 2026 isn’t writing for-loops; it’s auditing AI outputs.</description>
       <pubDate>Fri, 08 May 2026 08:22:52 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-changed-senior-devs-9-tools-reshaping-2026/</guid>
-    </item>
-    <item>
-      <title>Win $4k remote jobs: Next.js + Supabase stack</title>
-      <link>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</link>
-      <description>Land $4k/month remote jobs using Next.js + Supabase: latency under 50ms, $4.56/month hosting, and the exact stack teams in Nairobi and Lagos use to sign contracts.</description>
-      <pubDate>Fri, 08 May 2026 07:02:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</guid>
     </item>
   </channel>
 </rss>
