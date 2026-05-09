@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 10:02:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 10:19:25 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS costs 40% without touching the code</title>
+      <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</link>
+      <description>bill grew 12% quarter-over-quarter. I spent with Cut AWS costs touching — knowing why.</description>
+      <pubDate>Sat, 09 May 2026 10:19:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</guid>
+    </item>
     <item>
       <title>Raised salary 3x in two years</title>
       <link>https://kubaik.github.io/raised-salary-3x-in-two-years/</link>
@@ -138,13 +145,6 @@
       <description>Land $4k/month remote jobs using Next.js + Supabase: latency under 50ms, $4.56/month hosting, and the exact stack teams in Nairobi and Lagos use to sign contracts.</description>
       <pubDate>Fri, 08 May 2026 07:02:19 +0000</pubDate>
       <guid>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</guid>
-    </item>
-    <item>
-      <title>Async Python: when it helps, when it hurts</title>
-      <link>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</link>
-      <description>Cut API response time 64% with async Python — when async helps, when it freezes your event loop, real benchmarks and fixes</description>
-      <pubDate>Fri, 08 May 2026 06:26:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</guid>
     </item>
   </channel>
 </rss>
