@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 16:01:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 16:04:49 +0000</lastBuildDate>
+    <item>
+      <title>Stop guessing max pool size: do this instead</title>
+      <link>https://kubaik.github.io/stop-guessing-max-pool-size-do-this-instead/</link>
+      <description>Optimize database response times under 300ms by mastering connection pooling. Avoid common mistakes with max pool size settings and protect your database.</description>
+      <pubDate>Sat, 09 May 2026 16:04:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-guessing-max-pool-size-do-this-instead/</guid>
+    </item>
     <item>
       <title>Stop overusing fine-tuning: prompts often win</title>
       <link>https://kubaik.github.io/stop-overusing-fine-tuning-prompts-often-win/</link>
@@ -138,13 +145,6 @@
       <description>Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.</description>
       <pubDate>Fri, 08 May 2026 10:50:49 +0000</pubDate>
       <guid>https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/</guid>
-    </item>
-    <item>
-      <title>Choose wrong: FastAPI vs Django REST in prod</title>
-      <link>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</link>
-      <description>Cut API latency 4x and AWS costs 43% by choosing the right Python backend — FastAPI vs Django REST pros, cons, and real production numbers.</description>
-      <pubDate>Fri, 08 May 2026 10:18:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</guid>
     </item>
   </channel>
 </rss>
