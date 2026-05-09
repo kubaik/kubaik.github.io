@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 18:44:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 19:25:30 +0000</lastBuildDate>
+    <item>
+      <title>Save $12k/year: Build a dev platform cheaply</title>
+      <link>https://kubaik.github.io/save-12kyear-build-a-dev-platform-cheaply/</link>
+      <description>Build an internal dev platform under $500/year. Learn how we cut onboarding from 12 days to 3 and saved $12k/year in cloud costs. Practical tools included.</description>
+      <pubDate>Sat, 09 May 2026 19:25:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/save-12kyear-build-a-dev-platform-cheaply/</guid>
+    </item>
     <item>
       <title>How to design a multi-tenant SaaS</title>
       <link>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</description>
       <pubDate>Fri, 08 May 2026 14:16:16 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</guid>
-    </item>
-    <item>
-      <title>6 free AI tools that replaced $2k of my paid stack</title>
-      <link>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</link>
-      <description>Cut monthly tool costs by $819 using 6 free AI replacements — measured latency, quality deltas, and edge cases that actually matter to teams shipping in constrained environments.</description>
-      <pubDate>Fri, 08 May 2026 13:55:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</guid>
     </item>
   </channel>
 </rss>
