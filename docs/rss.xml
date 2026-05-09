@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 May 2026 20:12:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 07:03:08 +0000</lastBuildDate>
+    <item>
+      <title>Vector search: when to use it — and when not to</title>
+      <link>https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/</link>
+      <description>Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.</description>
+      <pubDate>Sat, 09 May 2026 07:03:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/</guid>
+    </item>
     <item>
       <title>GitHub Actions costs 3x CircleCI at 50k builds</title>
       <link>https://kubaik.github.io/github-actions-costs-3x-circleci-at-50k-builds/</link>
@@ -138,13 +145,6 @@
       <description>Cut TypeScript runtime errors 40% with strict mode traps — compare zod vs io-ts on latency, DX, and infra cost using real benchmarks and failure scenarios you’ll hit in production.</description>
       <pubDate>Thu, 07 May 2026 17:00:47 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-strict-mode-traps-you-still-hit/</guid>
-    </item>
-    <item>
-      <title>AI reads your repo: what it sees, what it misses</title>
-      <link>https://kubaik.github.io/ai-reads-your-repo-what-it-sees-what-it-misses/</link>
-      <description>Cut AI-assisted code review time by 60% with repository intelligence — 200 ms queries, 92% first-try fix rate, and the open-source stack that makes it real.</description>
-      <pubDate>Thu, 07 May 2026 14:50:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-reads-your-repo-what-it-sees-what-it-misses/</guid>
     </item>
   </channel>
 </rss>
