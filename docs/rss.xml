@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 07:22:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 08:28:31 +0000</lastBuildDate>
+    <item>
+      <title>Rewrite your backend for 5G users or lose half your</title>
+      <link>https://kubaik.github.io/rewrite-your-backend-for-5g-users-or-lose-half-your/</link>
+      <description>Reduce 5G backend failures by 68% with a 120-line shim, latency budgets, and jittered retries. Learn what to measure first and which dials actually move the needle.</description>
+      <pubDate>Sat, 09 May 2026 08:28:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/rewrite-your-backend-for-5g-users-or-lose-half-your/</guid>
+    </item>
     <item>
       <title>Ace remote interviews without a CS degree</title>
       <link>https://kubaik.github.io/ace-remote-interviews-without-a-cs-degree/</link>
@@ -138,13 +145,6 @@
       <description>Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need</description>
       <pubDate>Thu, 07 May 2026 19:26:11 +0000</pubDate>
       <guid>https://kubaik.github.io/we-wasted-6-months-over-engineering/</guid>
-    </item>
-    <item>
-      <title>9 AI tools that cost more work than they save</title>
-      <link>https://kubaik.github.io/9-ai-tools-that-cost-more-work-than-they-save/</link>
-      <description>Cut rework time 30% with these 9 AI tools — real benchmarks, rework rates, and the $12k mistake we made measuring the wrong thing</description>
-      <pubDate>Thu, 07 May 2026 17:03:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/9-ai-tools-that-cost-more-work-than-they-save/</guid>
     </item>
   </channel>
 </rss>
