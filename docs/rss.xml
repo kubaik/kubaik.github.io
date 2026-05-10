@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 15:11:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 16:02:10 +0000</lastBuildDate>
+    <item>
+      <title>Python 3.13 packaging: the only setup that worked</title>
+      <link>https://kubaik.github.io/python-313-packaging-the-only-setup-that-worked/</link>
+      <description>Cut Python packaging time by 73% and reduce Docker images by 28% with pyproject.toml, uv, and cibuildwheel — the stack teams use in 2026.</description>
+      <pubDate>Sun, 10 May 2026 16:02:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-313-packaging-the-only-setup-that-worked/</guid>
+    </item>
     <item>
       <title>Stop polishing your GitHub profile</title>
       <link>https://kubaik.github.io/stop-polishing-your-github-profile/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline cost 9x and hit 12k QPS with 138ms P99 latency on 8 vCPUs — connection pooling, cache tiers, and Qdrant bloom filters made the difference. Learn what tutorials skip about production RAG.</description>
       <pubDate>Fri, 08 May 2026 20:05:47 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-what-production-breaks-first/</guid>
-    </item>
-    <item>
-      <title>Which AI IDE cuts your bill: Claude Code or Cursor</title>
-      <link>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</link>
-      <description>Cursor burned $86/month per developer on idle AWS while Claude Code stayed at $12 — here’s the exact experiment, benchmarks, and cost breakdown</description>
-      <pubDate>Fri, 08 May 2026 19:47:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</guid>
     </item>
   </channel>
 </rss>
