@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 20:23:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 17:26:49 +0000</lastBuildDate>
+    <item>
+      <title>AI turns juniors into seniors overnight</title>
+      <link>https://kubaik.github.io/ai-turns-juniors-into-seniors-overnight/</link>
+      <description>Cut schema generation time by 82% with GitHub Copilot and a validation harness — bug rate drops from 3.2% to 1.0% while juniors learn faster and seniors ship more</description>
+      <pubDate>Sun, 10 May 2026 17:26:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-turns-juniors-into-seniors-overnight/</guid>
+    </item>
     <item>
       <title>Stop losing clients to rate limits</title>
       <link>https://kubaik.github.io/stop-losing-clients-to-rate-limits/</link>
@@ -138,13 +145,6 @@
       <description>Reduce 5G backend failures by 68% with a 120-line shim, latency budgets, and jittered retries. Learn what to measure first and which dials actually move the needle.</description>
       <pubDate>Sat, 09 May 2026 08:28:25 +0000</pubDate>
       <guid>https://kubaik.github.io/rewrite-your-backend-for-5g-users-or-lose-half-your/</guid>
-    </item>
-    <item>
-      <title>Ace remote interviews without a CS degree</title>
-      <link>https://kubaik.github.io/ace-remote-interviews-without-a-cs-degree/</link>
-      <description>Pass remote interviews without a CS degree — real system failures, trade-offs, and the $200/month tools that actually work</description>
-      <pubDate>Sat, 09 May 2026 07:22:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-remote-interviews-without-a-cs-degree/</guid>
     </item>
   </channel>
 </rss>
