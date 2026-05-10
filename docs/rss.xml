@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 19:55:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 16:58:24 +0000</lastBuildDate>
+    <item>
+      <title>Stop losing clients to rate limits</title>
+      <link>https://kubaik.github.io/stop-losing-clients-to-rate-limits/</link>
+      <description>Cut API 429 errors from 23% to 2.1% with a leaky bucket and global counter — client retries dropped 87%, latency fell from 210ms to 85ms, and we saved $100/month on Redis costs.</description>
+      <pubDate>Sun, 10 May 2026 16:58:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-losing-clients-to-rate-limits/</guid>
+    </item>
     <item>
       <title>Claude Code agents: we built one in 125 lines</title>
       <link>https://kubaik.github.io/claude-code-agents-we-built-one-in-125-lines/</link>
@@ -138,13 +145,6 @@
       <description>Pass remote interviews without a CS degree — real system failures, trade-offs, and the $200/month tools that actually work</description>
       <pubDate>Sat, 09 May 2026 07:22:50 +0000</pubDate>
       <guid>https://kubaik.github.io/ace-remote-interviews-without-a-cs-degree/</guid>
-    </item>
-    <item>
-      <title>Vector search: when to use it — and when not to</title>
-      <link>https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/</link>
-      <description>Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.</description>
-      <pubDate>Sat, 09 May 2026 07:03:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/</guid>
     </item>
   </channel>
 </rss>
