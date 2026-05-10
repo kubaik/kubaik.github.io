@@ -71,6 +71,7 @@ class StaticSiteGenerator:
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
         self._generate_robots_txt()
+        self._generate_404_page()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
@@ -168,6 +169,19 @@ Sitemap: {base_url}/rss.xml
                 return dt.strftime('%d %B %Y').lstrip('0')
             except:
                 return iso_date.split('T')[0]
+
+    def _generate_404_page(self):
+        config = self.blog_system.config
+        context = {
+            'site_name': config.get('site_name', 'Tech Blog'),
+            'base_path': config.get('base_path', ''),
+            'current_year': datetime.now().year,
+            'global_meta_tags': self.seo.generate_global_meta_tags(),
+        }
+        html = self.templates['not_found'].render(**context)
+        with open("./docs/404.html", 'w', encoding='utf-8') as f:
+            f.write(html)
+        print("Generated 404.html")
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -1202,6 +1216,99 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    NOT_FOUND_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - {{ site_name }}</title>
+    <meta name="robots" content="noindex, nofollow">
+    {{ global_meta_tags | safe }}
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    <script>
+        setTimeout(function () {
+            window.location.replace('{{ base_path }}/');
+        }, 3000);
+    </script>
+    <style>
+        .error-container {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 60vh;
+            text-align: center; padding: 2rem;
+        }
+        .error-code { font-size: 6rem; font-weight: 700; color: #6366f1; line-height: 1; margin-bottom: 1rem; }
+        .error-title { font-size: 1.5rem; color: #333; margin-bottom: 0.75rem; }
+        .error-message { color: #666; margin-bottom: 2rem; max-width: 420px; line-height: 1.6; }
+        .redirect-notice { font-size: 0.9rem; color: #888; margin-bottom: 1.5rem; }
+        .countdown { font-weight: 700; color: #6366f1; }
+        .home-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; padding: 0.75rem 2rem; border-radius: 50px;
+            text-decoration: none; font-weight: 600; font-size: 1rem;
+        }
+        .home-button:hover { opacity: 0.9; }
+        .progress-bar-wrap {
+            width: 280px; height: 4px; background: #e0e0e0;
+            border-radius: 2px; margin: 1.5rem auto 0; overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px; animation: drain 3s linear forwards; transform-origin: left;
+        }
+        @keyframes drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">
+                This page may have been moved or deleted.
+                You'll be taken to the homepage automatically.
+            </p>
+            <p class="redirect-notice">
+                Redirecting in <span class="countdown" id="countdown">3</span> seconds&hellip;
+            </p>
+            <a href="{{ base_path }}/" class="home-button">Go to Homepage Now</a>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }}</p>
+        </div>
+    </footer>
+    <script src="{{ base_path }}/static/navigation.js"></script>
+    <script>
+        var seconds = 3;
+        var el = document.getElementById('countdown');
+        var interval = setInterval(function () {
+            seconds -= 1;
+            if (el) el.textContent = seconds;
+            if (seconds <= 0) clearInterval(interval);
+        }, 1000);
+    </script>
+</body>
+</html>"""
+
     env = Environment(loader=BaseLoader())
     return {
         'post':             env.from_string(POST_TMPL),
@@ -1210,4 +1317,5 @@ def _build_templates() -> dict:
         'privacy_policy':   env.from_string(PRIVACY_TMPL),
         'terms_of_service': env.from_string(TERMS_TMPL),
         'contact':          env.from_string(CONTACT_TMPL),
+        'not_found':        env.from_string(NOT_FOUND_TMPL),  # ← add this line
     }
