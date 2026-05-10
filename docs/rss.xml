@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 19:25:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 07:21:13 +0000</lastBuildDate>
+    <item>
+      <title>Zero trust for tiny teams: skip the enterprise bloat</title>
+      <link>https://kubaik.github.io/zero-trust-for-tiny-teams-skip-the-enterprise-bloat/</link>
+      <description>Cut blast radius by 80% with zero-trust for small teams — IAM scoping, MFA, short-lived tokens, and network isolation that actually work without enterprise bloat</description>
+      <pubDate>Sun, 10 May 2026 07:21:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-tiny-teams-skip-the-enterprise-bloat/</guid>
+    </item>
     <item>
       <title>Save $12k/year: Build a dev platform cheaply</title>
       <link>https://kubaik.github.io/save-12kyear-build-a-dev-platform-cheaply/</link>
@@ -138,13 +145,6 @@
       <description>Cut ‘ghost contributor’ rate by 75% with a 30-line service — impact tracking, observability, and the hidden dependencies that drain ownership in big tech teams.</description>
       <pubDate>Fri, 08 May 2026 16:23:07 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</guid>
-    </item>
-    <item>
-      <title>Agents in production: 5 things docs skip</title>
-      <link>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</link>
-      <description>Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</description>
-      <pubDate>Fri, 08 May 2026 14:16:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</guid>
     </item>
   </channel>
 </rss>
