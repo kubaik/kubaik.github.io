@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 09:04:09 +0000</lastBuildDate>
-    <item>
-      <title>Copilot vs Cursor: which actually speeds</title>
-      <link>https://kubaik.github.io/copilot-vs-cursor-which-actually-speeds/</link>
-      <description>Cut Copilot vs Cursor: which actually speeds up Python backend work failures by understanding connection pooling and retry logic — real benchmarks, comm…</description>
-      <pubDate>Sun, 10 May 2026 09:04:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/copilot-vs-cursor-which-actually-speeds/</guid>
-    </item>
+    <lastBuildDate>Sun, 10 May 2026 12:48:42 +0000</lastBuildDate>
     <item>
       <title>AI code breaks here: Copilot vs Cursor in edge cases</title>
       <link>https://kubaik.github.io/ai-code-breaks-here-copilot-vs-cursor-in-edge-cases/</link>
@@ -28,53 +21,11 @@
       <guid>https://kubaik.github.io/these-7-tools-cut-my-solo-dev-time-in-half/</guid>
     </item>
     <item>
-      <title>Zero trust for tiny teams: skip the enterprise bloat</title>
-      <link>https://kubaik.github.io/zero-trust-for-tiny-teams-skip-the-enterprise-bloat/</link>
-      <description>Cut blast radius by 80% with zero-trust for small teams — IAM scoping, MFA, short-lived tokens, and network isolation that actually work without enterprise bloat</description>
-      <pubDate>Sun, 10 May 2026 07:21:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-tiny-teams-skip-the-enterprise-bloat/</guid>
-    </item>
-    <item>
-      <title>Save $12k/year: Build a dev platform cheaply</title>
-      <link>https://kubaik.github.io/save-12kyear-build-a-dev-platform-cheaply/</link>
-      <description>Build an internal dev platform under $500/year. Learn how we cut onboarding from 12 days to 3 and saved $12k/year in cloud costs. Practical tools included.</description>
-      <pubDate>Sat, 09 May 2026 19:25:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/save-12kyear-build-a-dev-platform-cheaply/</guid>
-    </item>
-    <item>
-      <title>How to design a multi-tenant SaaS</title>
-      <link>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</link>
-      <description>Cut How to design a multi-tenant SaaS database without painting yourself into a corner failures by understanding connection pooling and retry logic — re…</description>
-      <pubDate>Sat, 09 May 2026 18:44:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</guid>
-    </item>
-    <item>
-      <title>Stop guessing max pool size: do this instead</title>
-      <link>https://kubaik.github.io/stop-guessing-max-pool-size-do-this-instead/</link>
-      <description>Optimize database response times under 300ms by mastering connection pooling. Avoid common mistakes with max pool size settings and protect your database.</description>
-      <pubDate>Sat, 09 May 2026 16:04:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-guessing-max-pool-size-do-this-instead/</guid>
-    </item>
-    <item>
-      <title>Stop overusing fine-tuning: prompts often win</title>
-      <link>https://kubaik.github.io/stop-overusing-fine-tuning-prompts-often-win/</link>
-      <description>Save time and cost: prompts vs fine-tuning LLMs. Learn when to stop over-engineering and which method delivers 90% accuracy for less. Boost results today.</description>
-      <pubDate>Sat, 09 May 2026 16:01:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-overusing-fine-tuning-prompts-often-win/</guid>
-    </item>
-    <item>
       <title>3 AI stacks that turned side projects into shipped</title>
       <link>https://kubaik.github.io/3-ai-stacks-that-turned-side-projects-into-shipped/</link>
       <description>Ship a real product in 90 minutes with Vercel + V0 + Turso — under $0.02/day and 380ms latency under 1,000 requests — the AI stacks that turned side projects into production products</description>
       <pubDate>Sat, 09 May 2026 13:51:47 +0000</pubDate>
       <guid>https://kubaik.github.io/3-ai-stacks-that-turned-side-projects-into-shipped/</guid>
-    </item>
-    <item>
-      <title>Rate your freelance dev work in 2025</title>
-      <link>https://kubaik.github.io/rate-your-freelance-dev-work-in-2025/</link>
-      <description>Learn the real numbers behind freelance developer rates — actual formulas, taxes, fees, and benchmarks that turn guesswork into profit. Includes a working Python calculator and 4 real client outcomes.</description>
-      <pubDate>Sat, 09 May 2026 13:23:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/rate-your-freelance-dev-work-in-2025/</guid>
     </item>
     <item>
       <title>Cut AWS costs 40% without touching the code</title>
@@ -145,6 +96,55 @@
       <description>Cut hiring time by 75% and save $4,000/month for African tech teams: Arc delivered candidates in 12 days vs 45 days on Andela and 28 days on Toptal in 2026.</description>
       <pubDate>Fri, 08 May 2026 19:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</guid>
+    </item>
+    <item>
+      <title>Why European startups hire East African engineers</title>
+      <link>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</link>
+      <description>Cut support response time from 12h to 2.5h by fixing timezone overlap with East African engineers — overlap windows, UTC storage, and DST-proof scheduling with exact timings.</description>
+      <pubDate>Fri, 08 May 2026 19:04:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</guid>
+    </item>
+    <item>
+      <title>Got a remote tech job: what actually worked</title>
+      <link>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</link>
+      <description>Build one project that survives 100 users and 256 MB memory: the real signals that got me a remote job after 6 rejections</description>
+      <pubDate>Fri, 08 May 2026 18:05:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</guid>
+    </item>
+    <item>
+      <title>Big tech exits: what engineers actually quit for</title>
+      <link>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</link>
+      <description>Cut ‘ghost contributor’ rate by 75% with a 30-line service — impact tracking, observability, and the hidden dependencies that drain ownership in big tech teams.</description>
+      <pubDate>Fri, 08 May 2026 16:23:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</guid>
+    </item>
+    <item>
+      <title>Agents in production: 5 things docs skip</title>
+      <link>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</link>
+      <description>Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</description>
+      <pubDate>Fri, 08 May 2026 14:16:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</guid>
+    </item>
+    <item>
+      <title>6 free AI tools that replaced $2k of my paid stack</title>
+      <link>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</link>
+      <description>Cut monthly tool costs by $819 using 6 free AI replacements — measured latency, quality deltas, and edge cases that actually matter to teams shipping in constrained environments.</description>
+      <pubDate>Fri, 08 May 2026 13:55:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</guid>
+    </item>
+    <item>
+      <title>Shift security left 3x faster without slowing deploys</title>
+      <link>https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/</link>
+      <description>Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.</description>
+      <pubDate>Fri, 08 May 2026 10:50:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/</guid>
+    </item>
+    <item>
+      <title>Choose wrong: FastAPI vs Django REST in prod</title>
+      <link>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</link>
+      <description>Cut API latency 4x and AWS costs 43% by choosing the right Python backend — FastAPI vs Django REST pros, cons, and real production numbers.</description>
+      <pubDate>Fri, 08 May 2026 10:18:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</guid>
     </item>
   </channel>
 </rss>
