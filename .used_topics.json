@@ -71,5 +71,6 @@
   "Supply chain attacks in 2026: how to protect your Python and npm dependencies",
   "PostgreSQL vs MySQL in 2026: the decision I keep making",
   "How to review AI-generated code without spending more time than writing it yourself",
-  "Measuring the real impact of AI on your team's velocity (not just vibes)"
+  "Measuring the real impact of AI on your team's velocity (not just vibes)",
+  "Observability for AI pipelines: what to instrument when your system includes an LLM"
 ]
