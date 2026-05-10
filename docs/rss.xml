@@ -5,20 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 10:43:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 13:56:35 +0000</lastBuildDate>
     <item>
       <title>AI didn’t move the needle? Measure this first</title>
       <link>https://kubaik.github.io/ai-didnt-move-the-needle-measure-this-first/</link>
       <description>Cut AI tool waste: measure real velocity impact in 4 weeks with PR reopen rates, semantic validation, and cognitive load metrics — proven with concrete numbers and budgets for all tiers.</description>
       <pubDate>Sun, 10 May 2026 10:43:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-didnt-move-the-needle-measure-this-first/</guid>
-    </item>
-    <item>
-      <title>Audit AI code in 2 minutes</title>
-      <link>https://kubaik.github.io/audit-ai-code-in-2-minutes/</link>
-      <description>Cut AI review time to under 2 minutes per file while catching 90% of real issues — linters, tests, and grep as your only tools</description>
-      <pubDate>Sun, 10 May 2026 10:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/audit-ai-code-in-2-minutes/</guid>
     </item>
     <item>
       <title>Pick PostgreSQL in 2026, here’s how to decide</title>
@@ -145,6 +138,13 @@
       <description>Cut ‘ghost contributor’ rate by 75% with a 30-line service — impact tracking, observability, and the hidden dependencies that drain ownership in big tech teams.</description>
       <pubDate>Fri, 08 May 2026 16:23:07 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</guid>
+    </item>
+    <item>
+      <title>Agents in production: 5 things docs skip</title>
+      <link>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</link>
+      <description>Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</description>
+      <pubDate>Fri, 08 May 2026 14:16:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</guid>
     </item>
   </channel>
 </rss>
