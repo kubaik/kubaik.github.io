@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 13:24:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 13:55:02 +0000</lastBuildDate>
+    <item>
+      <title>Event sourcing: when complexity pays off</title>
+      <link>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</link>
+      <description>Cut debugging time 70% with event sourcing — benchmarks, latency figures, and the storage and write-speed trade-offs teams miss. event sourcing when it helps and when it doesn’t</description>
+      <pubDate>Sun, 10 May 2026 13:54:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</guid>
+    </item>
     <item>
       <title>Burn weekends? Stop this client work trap</title>
       <link>https://kubaik.github.io/burn-weekends-stop-this-client-work-trap/</link>
@@ -138,13 +145,6 @@
       <description>Cut support response time from 12h to 2.5h by fixing timezone overlap with East African engineers — overlap windows, UTC storage, and DST-proof scheduling with exact timings.</description>
       <pubDate>Fri, 08 May 2026 19:04:58 +0000</pubDate>
       <guid>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</guid>
-    </item>
-    <item>
-      <title>Got a remote tech job: what actually worked</title>
-      <link>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</link>
-      <description>Build one project that survives 100 users and 256 MB memory: the real signals that got me a remote job after 6 rejections</description>
-      <pubDate>Fri, 08 May 2026 18:05:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</guid>
     </item>
   </channel>
 </rss>
