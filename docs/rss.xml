@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 07:21:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 07:36:14 +0000</lastBuildDate>
+    <item>
+      <title>These 7 tools cut my solo dev time in half</title>
+      <link>https://kubaik.github.io/these-7-tools-cut-my-solo-dev-time-in-half/</link>
+      <description>spike to 95% while the app returned 502s u with These tools cut solo — spin up a Next.</description>
+      <pubDate>Sun, 10 May 2026 07:36:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/these-7-tools-cut-my-solo-dev-time-in-half/</guid>
+    </item>
     <item>
       <title>Zero trust for tiny teams: skip the enterprise bloat</title>
       <link>https://kubaik.github.io/zero-trust-for-tiny-teams-skip-the-enterprise-bloat/</link>
@@ -138,13 +145,6 @@
       <description>Build one project that survives 100 users and 256 MB memory: the real signals that got me a remote job after 6 rejections</description>
       <pubDate>Fri, 08 May 2026 18:05:56 +0000</pubDate>
       <guid>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</guid>
-    </item>
-    <item>
-      <title>Big tech exits: what engineers actually quit for</title>
-      <link>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</link>
-      <description>Cut ‘ghost contributor’ rate by 75% with a 30-line service — impact tracking, observability, and the hidden dependencies that drain ownership in big tech teams.</description>
-      <pubDate>Fri, 08 May 2026 16:23:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exits-what-engineers-actually-quit-for/</guid>
     </item>
   </channel>
 </rss>
