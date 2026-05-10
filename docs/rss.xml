@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 08:55:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 09:04:09 +0000</lastBuildDate>
+    <item>
+      <title>Copilot vs Cursor: which actually speeds</title>
+      <link>https://kubaik.github.io/copilot-vs-cursor-which-actually-speeds/</link>
+      <description>Cut Copilot vs Cursor: which actually speeds up Python backend work failures by understanding connection pooling and retry logic — real benchmarks, comm…</description>
+      <pubDate>Sun, 10 May 2026 09:04:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/copilot-vs-cursor-which-actually-speeds/</guid>
+    </item>
     <item>
       <title>AI code breaks here: Copilot vs Cursor in edge cases</title>
       <link>https://kubaik.github.io/ai-code-breaks-here-copilot-vs-cursor-in-edge-cases/</link>
@@ -138,13 +145,6 @@
       <description>Cut hiring time by 75% and save $4,000/month for African tech teams: Arc delivered candidates in 12 days vs 45 days on Andela and 28 days on Toptal in 2026.</description>
       <pubDate>Fri, 08 May 2026 19:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</guid>
-    </item>
-    <item>
-      <title>Why European startups hire East African engineers</title>
-      <link>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</link>
-      <description>Cut support response time from 12h to 2.5h by fixing timezone overlap with East African engineers — overlap windows, UTC storage, and DST-proof scheduling with exact timings.</description>
-      <pubDate>Fri, 08 May 2026 19:04:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</guid>
     </item>
   </channel>
 </rss>
