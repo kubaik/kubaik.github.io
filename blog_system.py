@@ -1374,11 +1374,48 @@ class BlogSystem:
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
+            MIN_ACCEPTABLE = 1500  # below this, retry with a new topic
+
             if word_count < MIN_WORD_COUNT:
                 print(f"Content short ({word_count} words). Expanding once...")
-                content = await self._expand_content(content, title, topic)
-                word_count = _count_words(content)
-                print(f"After expansion: {word_count} words")
+                expanded = await self._expand_content(content, title, topic)
+                expanded_count = _count_words(expanded)
+                print(f"After expansion: {expanded_count} words")
+
+                # Only use expansion if it actually made things longer
+                if expanded_count > word_count:
+                    content = expanded
+                    word_count = expanded_count
+                else:
+                    print(
+                        f"Warning: expansion reduced word count ({word_count} → {expanded_count}). Keeping original.")
+
+                # If still under the acceptable minimum, retry with a fresh topic
+                if word_count < MIN_ACCEPTABLE:
+                    print(
+                        f"Post still too short ({word_count} words, min {MIN_ACCEPTABLE}). Retrying with a new topic...")
+                    existing_titles = _load_existing_titles(self.output_dir)
+                    retry_topic = self._pick_retry_topic(
+                        topic, existing_titles)
+                    print(f"Retry topic: {retry_topic}")
+                    bundle = await self._generate_full_bundle(retry_topic, keywords, existing_titles)
+                    title = bundle["title"].strip().strip('"')
+                    content = bundle["content"].strip()
+                    meta_description = bundle.get(
+                        "meta_description", "").strip()
+                    seo_keywords = [k.strip() for k in bundle.get(
+                        "seo_keywords", []) if k.strip()]
+                    word_count = _count_words(content)
+                    print(f"Retry generated: {word_count} words")
+
+                    if word_count < MIN_ACCEPTABLE:
+                        print(
+                            f"Retry also short ({word_count} words). Proceeding anyway.")
+
+                    # Update topic reference for slug/hashtag derivation below
+                    topic = retry_topic
+                    if not keywords:
+                        keywords = seo_keywords
 
             slug = self._create_slug(title)
 
@@ -1831,8 +1868,11 @@ Return ONLY the JSON object.""",
                     "2. Integration with 2–3 real tools (name versions), with a working code snippet\n"
                     "3. A before/after comparison with actual numbers (latency, cost, lines of code, etc.)\n\n"
                     f"Existing content:\n{existing_content}\n\n"
-                    "Return the complete article (original + new sections). "
-                    "Do not repeat the title. Keep the same author voice throughout."
+                    "Return the COMPLETE article — every word of the original content first, "
+                    "then the 3 new sections appended at the end. "
+                    "Do not summarise, truncate, or paraphrase the original. "
+                    "Do not repeat the title. Keep the same author voice throughout. "
+                    "The response must be longer than the input."
                 ),
             },
         ]
@@ -1983,6 +2023,55 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
         slug = re.sub(r'[^\w\s-]', '', slug)
         slug = re.sub(r'[\s_-]+', '-', slug)
         return slug.strip('-')[:60]
+
+    def _pick_retry_topic(self, failed_topic: str, existing_titles: List[str]) -> str:
+        """Pick a different topic for retry, avoiding the failed one and already-published titles."""
+        import random as _random
+
+        history_file = ".used_topics.json"
+        used = []
+        if os.path.exists(history_file):
+            try:
+                with open(history_file, "r") as f:
+                    used = json.load(f)
+            except (json.JSONDecodeError, FileNotFoundError):
+                used = []
+
+        all_topics = self.config.get("content_topics", [])
+        # Exclude the failed topic and already-used topics
+        candidates = [
+            t for t in all_topics
+            if t != failed_topic and t not in used
+        ]
+
+        if not candidates:
+            # All topics used — fall back to any topic that isn't the failed one
+            candidates = [t for t in all_topics if t != failed_topic]
+
+        if not candidates:
+            return failed_topic  # nothing else available
+
+        # Filter out near-duplicates of existing published posts
+        if existing_titles:
+            safe = []
+            for candidate in candidates:
+                is_dup, _, _ = _is_duplicate_title(
+                    candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD
+                )
+                if not is_dup:
+                    safe.append(candidate)
+            if safe:
+                candidates = safe
+
+        chosen = _random.choice(candidates)
+
+        # Mark it as used so the scheduler doesn't pick it again
+        used.append(chosen)
+        with open(history_file, "w") as f:
+            json.dump(used, f, indent=2)
+
+        print(f"Retry topic selected and marked used: {chosen}")
+        return chosen
 
     def save_post(self, post):
         word_count = len(post.content.split())
