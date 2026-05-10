@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 18:09:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 15:11:53 +0000</lastBuildDate>
+    <item>
+      <title>Stop polishing your GitHub profile</title>
+      <link>https://kubaik.github.io/stop-polishing-your-github-profile/</link>
+      <description>Reduce portfolio noise by 80% with one rule: publish latency graphs, cost data, and incident logs—examples from real AWS and DigitalOcean systems that landed $95k–$135k remote offers.</description>
+      <pubDate>Sun, 10 May 2026 15:11:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-polishing-your-github-profile/</guid>
+    </item>
     <item>
       <title>Claude reviews my code — here’s what works</title>
       <link>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</link>
@@ -138,13 +145,6 @@
       <description>Cursor burned $86/month per developer on idle AWS while Claude Code stayed at $12 — here’s the exact experiment, benchmarks, and cost breakdown</description>
       <pubDate>Fri, 08 May 2026 19:47:58 +0000</pubDate>
       <guid>https://kubaik.github.io/which-ai-ide-cuts-your-bill-claude-code-or-cursor/</guid>
-    </item>
-    <item>
-      <title>Choose Arc over Toptal for African devs in 2026</title>
-      <link>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</link>
-      <description>Cut hiring time by 75% and save $4,000/month for African tech teams: Arc delivered candidates in 12 days vs 45 days on Andela and 28 days on Toptal in 2026.</description>
-      <pubDate>Fri, 08 May 2026 19:32:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</guid>
     </item>
   </channel>
 </rss>
