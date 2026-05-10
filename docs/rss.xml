@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 12:48:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 09:51:24 +0000</lastBuildDate>
+    <item>
+      <title>Python/npm supply chain attacks: 2026 attack patterns</title>
+      <link>https://kubaik.github.io/pythonnpm-supply-chain-attacks-2026-attack-patterns/</link>
+      <description>Stop 2026 supply chain attacks: cut dependency resolution time by 70% with exact pinning, mirror hardening, and CI cache busting. Learn the real causes behind slow downloads and malicious tarballs in Python and npm.</description>
+      <pubDate>Sun, 10 May 2026 09:51:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/pythonnpm-supply-chain-attacks-2026-attack-patterns/</guid>
+    </item>
     <item>
       <title>AI code breaks here: Copilot vs Cursor in edge cases</title>
       <link>https://kubaik.github.io/ai-code-breaks-here-copilot-vs-cursor-in-edge-cases/</link>
@@ -138,13 +145,6 @@
       <description>Cut security block time 93% by moving scans to pre-commit and enforcing policy-as-code — no build slowdown, fewer false positives, and $35k saved in rework.</description>
       <pubDate>Fri, 08 May 2026 10:50:49 +0000</pubDate>
       <guid>https://kubaik.github.io/shift-security-left-3x-faster-without-slowing-deploys/</guid>
-    </item>
-    <item>
-      <title>Choose wrong: FastAPI vs Django REST in prod</title>
-      <link>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</link>
-      <description>Cut API latency 4x and AWS costs 43% by choosing the right Python backend — FastAPI vs Django REST pros, cons, and real production numbers.</description>
-      <pubDate>Fri, 08 May 2026 10:18:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</guid>
     </item>
   </channel>
 </rss>
