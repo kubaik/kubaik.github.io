@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 19:26:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 16:29:16 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code agents: we built one in 125 lines</title>
+      <link>https://kubaik.github.io/claude-code-agents-we-built-one-in-125-lines/</link>
+      <description>Cut daily automation time from 30 minutes to 3 minutes with a 125-line Claude Code agent — no Docker, no Lambda, no yak shaving. Practical walkthrough with code, benchmarks, and lessons learned.</description>
+      <pubDate>Sun, 10 May 2026 16:29:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-code-agents-we-built-one-in-125-lines/</guid>
+    </item>
     <item>
       <title>No CS degree? Build senior skills anyway</title>
       <link>https://kubaik.github.io/no-cs-degree-build-senior-skills-anyway/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.</description>
       <pubDate>Sat, 09 May 2026 07:03:03 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/</guid>
-    </item>
-    <item>
-      <title>GitHub Actions costs 3x CircleCI at 50k builds</title>
-      <link>https://kubaik.github.io/github-actions-costs-3x-circleci-at-50k-builds/</link>
-      <description>At 50k builds/month GitHub Actions costs $5k–$7k while CircleCI costs $1.8k–$2.2k — concrete egress, concurrency, and secrets numbers from three Nairobi fintech systems</description>
-      <pubDate>Fri, 08 May 2026 20:12:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/github-actions-costs-3x-circleci-at-50k-builds/</guid>
     </item>
   </channel>
 </rss>
