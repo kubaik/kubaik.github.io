@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2026 13:55:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2026 14:21:11 +0000</lastBuildDate>
+    <item>
+      <title>Claude reviews my code — here’s what works</title>
+      <link>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</link>
+      <description>Cut review time 70% with Claude code reviews — prompt templates, cost benchmarks, and the 3 scenarios where it still fails. Read this before you replace your human reviewers.</description>
+      <pubDate>Sun, 10 May 2026 14:21:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</guid>
+    </item>
     <item>
       <title>Event sourcing: when complexity pays off</title>
       <link>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</link>
@@ -138,13 +145,6 @@
       <description>Cut hiring time by 75% and save $4,000/month for African tech teams: Arc delivered candidates in 12 days vs 45 days on Andela and 28 days on Toptal in 2026.</description>
       <pubDate>Fri, 08 May 2026 19:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-arc-over-toptal-for-african-devs-in-2026/</guid>
-    </item>
-    <item>
-      <title>Why European startups hire East African engineers</title>
-      <link>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</link>
-      <description>Cut support response time from 12h to 2.5h by fixing timezone overlap with East African engineers — overlap windows, UTC storage, and DST-proof scheduling with exact timings.</description>
-      <pubDate>Fri, 08 May 2026 19:04:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-european-startups-hire-east-african-engineers/</guid>
     </item>
   </channel>
 </rss>
