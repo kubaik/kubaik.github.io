@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 17:33:08 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 18:13:16 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript strict mode traps: 5 silent footguns</title>
+      <link>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</link>
+      <description>Cut 3 a.m. incidents by 60%: TypeScript strict mode traps exposed with real benchmarks and fixes for solo founders. Learn the 5 silent footguns that survive tsc --noEmit and the exact commands to audit your codebase today.</description>
+      <pubDate>Mon, 11 May 2026 18:13:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</guid>
+    </item>
     <item>
       <title>Pick WebSocket vs SSE vs polling in 60 seconds</title>
       <link>https://kubaik.github.io/pick-websocket-vs-sse-vs-polling-in-60-seconds/</link>
@@ -138,13 +145,6 @@
       <description>Cut engineer time on undifferentiated work by 67% with a paved road platform — Nix, Tilt, OPA, and guardrails reduced setup time 91% and staging breaks 73%</description>
       <pubDate>Mon, 11 May 2026 08:36:36 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-losing-devs-to-undifferentiated-work/</guid>
-    </item>
-    <item>
-      <title>7 reasons monoliths beat microservices in 2026</title>
-      <link>https://kubaik.github.io/7-reasons-monoliths-beat-microservices-in-2026/</link>
-      <description>Cut API response time by 50% and cloud costs 80% with Go monoliths — the real 2026 benchmarks, mistakes, and when to split — for teams from $200 DigitalOcean to Series B</description>
-      <pubDate>Mon, 11 May 2026 08:20:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-reasons-monoliths-beat-microservices-in-2026/</guid>
     </item>
   </channel>
 </rss>
