@@ -94,6 +94,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -131,7 +138,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">Agents in production: 5 things docs skip</h1>
 
-                
                 
                 <p class="post-lead">Cut multi-agent system latency from 8.4s to 1.2s in production — state, rate limits, and tool timeouts teams miss in the docs</p>
                 
@@ -640,5 +646,6 @@ Only if you add idempotency keys, compensating transactions, and deterministic a
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

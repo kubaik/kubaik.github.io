@@ -96,6 +96,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -133,7 +140,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI-first systems fail without this backend pattern</h1>
 
-                
                 
                 <p class="post-lead">Cut API latency to 180ms and LLM costs by 62% with this backend pattern — FastAPI, Redis, RQ, and vector cache. Real code, benchmarks, and failure modes you won’t find in docs.</p>
                 
@@ -568,5 +574,6 @@ Start with 0.85 cosine similarity. If your cache hit rate is too low, lower to 0
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

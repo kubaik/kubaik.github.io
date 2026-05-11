@@ -78,6 +78,13 @@
 </script>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="alternate" type="application/rss+xml" title="Tech Blog" href="/rss.xml">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     <style>
         .search-container { margin: 0 0 1.5rem; max-width: 420px; }
         .search-wrapper {
@@ -161,7 +168,6 @@
                    data-description="Cut deployment time 73% and on-call incidents 67% with a paved road — the concrete steps, tools, and tradeoffs most guides miss. Includes GitHub Actions workflow, Helm chart, and Backstage setup."
                    data-tags="paved road,DevOps,golden path,platform engineering,K8s,platform engineering guide,Kubernetes,devops paved road,SoftwareEngineering,PlatformEngineering">
                     <h3>Your team needs a paved road before snow hits</h3>
-                    
                     <p class="post-excerpt">Cut deployment time 73% and on-call incidents 67% with a paved road — the concrete steps, tools, and tradeoffs most guides miss. Includes GitHub Actions workflow, Helm chart, and Backstage setup.</p>
                     
                     <p class="post-reading-time">18 min read</p>
@@ -184,7 +190,6 @@
                    data-description="Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks"
                    data-tags="GitHub AI agent permissions,AI agents in code review,GitHub,ArtificialIntelligence,AI,AST diff tools for AI agents,how to safely use AI for code changes,AI code refactor risks">
                     <h3>AI agents overwrote my repo: how to stop them</h3>
-                    
                     <p class="post-excerpt">Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks</p>
                     
                     <p class="post-reading-time">16 min read</p>
@@ -207,7 +212,6 @@
                    data-description="Cut rework from 11 days to 2 by choosing the right AI coding tool and enforcing a prompt template and review gate. Measure first-pass merge rate and edge-case coverage in two weeks, not months."
                    data-tags="AI coding tools 2024,Git,trust AI-generated code,AI,best AI coding assistant,ArtificialIntelligence">
                     <h3>Why 84% use AI coding tools but only 29% trust them</h3>
-                    
                     <p class="post-excerpt">Cut rework from 11 days to 2 by choosing the right AI coding tool and enforcing a prompt template and review gate. Measure first-pass merge rate and edge-case coverage in two weeks, not months.</p>
                     
                     <p class="post-reading-time">19 min read</p>
@@ -230,7 +234,6 @@
                    data-description="Cut realtime tool choice mistakes to zero with measured WebSockets vs SSE vs long polling latency, CPU, and battery data on a 2020 M1 MacBook Pro using vegeta 12.8, FastAPI 0.111, Flask 3.0, and iPhone 13 battery logging."
                    data-tags="RealTime,realtime web protocols comparison,WebDev,WebSockets vs SSE vs long polling latency,WebSockets,FastAPI SSE example,CloudComputing,WebSocket performance benchmarks 2024,which realtime technology to choose">
                     <h3>Pick the right realtime tool for your app</h3>
-                    
                     <p class="post-excerpt">Cut realtime tool choice mistakes to zero with measured WebSockets vs SSE vs long polling latency, CPU, and battery data on a 2020 M1 MacBook Pro using vegeta 12.8, FastAPI 0.111, Flask 3.0, and iPhone 13 battery logging.</p>
                     
                     <p class="post-reading-time">11 min read</p>
@@ -253,7 +256,6 @@
                    data-description="Cut p99 API latency from 850ms to 12ms in Africa by writing"
                    data-tags="infrastructure constraints in africa that changed how i write backend code tutorial,infrastructure constraints in africa that changed how i write backend code best practices,Backend,infrastructure constraints in africa that changed how i write backend code,how to use infrastructure constraints in africa that changed how i write backend code,infrastructure constraints in africa that changed how i write backend code guide,SoftwareEngineering">
                     <h3>Africa’s latency taught me to write backend for 10ms</h3>
-                    
                     <p class="post-excerpt">Cut p99 API latency from 850ms to 12ms in Africa by writing</p>
                     
                     <p class="post-reading-time">19 min read</p>
@@ -276,7 +278,6 @@
                    data-description="Cut 60% of API latency by replacing message queues with REST calls — when queues help and when they waste money, with real benchmarks and failure modes."
                    data-tags="ApacheKafka,message queue cost,kafka rabbitmq vs rest,when to use message queue,message queue vs rest,Performance,message queue failure modes">
                     <h3>Message queues: when to pay the price</h3>
-                    
                     <p class="post-excerpt">Cut 60% of API latency by replacing message queues with REST calls — when queues help and when they waste money, with real benchmarks and failure modes.</p>
                     
                     <p class="post-reading-time">14 min read</p>
@@ -299,7 +300,6 @@
                    data-description="Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included."
                    data-tags="CodebaseGuardrails,AI agent sandbox,AI,ArtificialIntelligence,AI agent code changes,agent pr review,AI agent review,codebase guardrails">
                     <h3>AI agents steal your code: how to watch them</h3>
-                    
                     <p class="post-excerpt">Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included.</p>
                     
                     <p class="post-reading-time">12 min read</p>
@@ -322,7 +322,6 @@
                    data-description="Cut API response time by 60% with Redis or Memcached — p99 latency at 15k ops/sec, eviction rates, cold-start times, and the mistakes that cause cache stampedes."
                    data-tags="Redis,cache stampede redis,redis aof vs rdb latency,Performance,redis vs memcached performance,redis vs memcached benchmark,memcached eviction rate">
                     <h3>Redis vs Memcached: what fails first?</h3>
-                    
                     <p class="post-excerpt">Cut API response time by 60% with Redis or Memcached — p99 latency at 15k ops/sec, eviction rates, cold-start times, and the mistakes that cause cache stampedes.</p>
                     
                     <p class="post-reading-time">14 min read</p>
@@ -345,7 +344,6 @@
                    data-description="Cut engineer time on undifferentiated work by 67% with a paved road platform — Nix, Tilt, OPA, and guardrails reduced setup time 91% and staging breaks 73%"
                    data-tags="internal developer platform,K8s,paved road platform engineering,Kubernetes,SoftwareEngineering,Nix flakes for development environments,Coding,OPA policies CI guardrails,Tilt local development Kubernetes">
                     <h3>Stop losing devs to undifferentiated work</h3>
-                    
                     <p class="post-excerpt">Cut engineer time on undifferentiated work by 67% with a paved road platform — Nix, Tilt, OPA, and guardrails reduced setup time 91% and staging breaks 73%</p>
                     
                     <p class="post-reading-time">19 min read</p>
@@ -368,7 +366,6 @@
                    data-description="Cut API response time by 50% and cloud costs 80% with Go monoliths — the real 2026 benchmarks, mistakes, and when to split — for teams from $200 DigitalOcean to Series B"
                    data-tags="serverless vs monolith 2026,Go monolith performance,MicroservicesCost,microservices cost,monolith architecture 2026,monolith vs microservices,Golang,Performance,Serverless">
                     <h3>7 reasons monoliths beat microservices in 2026</h3>
-                    
                     <p class="post-excerpt">Cut API response time by 50% and cloud costs 80% with Go monoliths — the real 2026 benchmarks, mistakes, and when to split — for teams from $200 DigitalOcean to Series B</p>
                     
                     <p class="post-reading-time">13 min read</p>
@@ -468,10 +465,8 @@
             h3.textContent = post.title;
             a.appendChild(h3);
 
-            // ── FIX: use meta_description from posts.json (already safe-excerpted) ──
             var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
-                // client-side last resort: first 155 chars of content
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
                 if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
             }
@@ -702,5 +697,6 @@
 
     }());
     </script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>
