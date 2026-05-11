@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 20:07:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 17:09:50 +0000</lastBuildDate>
+    <item>
+      <title>AI junior devs hit 8x bugs faster</title>
+      <link>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</link>
+      <description>Cut junior-dev incidents 80% with guardrails — 22 bugs caught vs 8 slips through when AI-only. Includes FastAPI, Prometheus, pre-commit hooks, and 5-week benchmark.</description>
+      <pubDate>Mon, 11 May 2026 17:09:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</guid>
+    </item>
     <item>
       <title>Vibe coding fails in prod</title>
       <link>https://kubaik.github.io/vibe-coding-fails-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary gaps with real data: SQL over vector embeddings delivers 12% higher pay than LLM fine-tuning — plus 60% lower query costs and 40% faster response times in 2026 benchmarks.</description>
       <pubDate>Mon, 11 May 2026 06:46:43 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salaries-ai-skills-that-pay-vs-ones-that-dont/</guid>
-    </item>
-    <item>
-      <title>Integrate African payments: M-Pesa vs Flutterwave vs</title>
-      <link>https://kubaik.github.io/integrate-african-payments-m-pesa-vs-flutterwave-vs/</link>
-      <description>Cut African payment integration time by 40%: M-Pesa 1.01% fee vs Flutterwave 3.8% vs Paystack 1.5% with real latency benchmarks and compliance costs for Kenya, Nigeria, Ghana.</description>
-      <pubDate>Sun, 10 May 2026 19:35:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/integrate-african-payments-m-pesa-vs-flutterwave-vs/</guid>
     </item>
   </channel>
 </rss>
