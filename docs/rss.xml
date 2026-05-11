@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 17:52:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 14:55:29 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: when brute-force beats similarity search</title>
+      <link>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</link>
+      <description>Cut API response time by 60% with vector search — pgvector vs Milvus benchmarks, p99 latency, and the exact dataset size when brute-force beats specialized stores.</description>
+      <pubDate>Mon, 11 May 2026 14:55:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</guid>
+    </item>
     <item>
       <title>Your team needs a paved road before snow hits</title>
       <link>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</link>
@@ -138,13 +145,6 @@
       <description>Cut Python packaging time by 73% and reduce Docker images by 28% with pyproject.toml, uv, and cibuildwheel — the stack teams use in 2026.</description>
       <pubDate>Sun, 10 May 2026 16:02:06 +0000</pubDate>
       <guid>https://kubaik.github.io/python-313-packaging-the-only-setup-that-worked/</guid>
-    </item>
-    <item>
-      <title>Stop polishing your GitHub profile</title>
-      <link>https://kubaik.github.io/stop-polishing-your-github-profile/</link>
-      <description>Reduce portfolio noise by 80% with one rule: publish latency graphs, cost data, and incident logs—examples from real AWS and DigitalOcean systems that landed $95k–$135k remote offers.</description>
-      <pubDate>Sun, 10 May 2026 15:11:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-polishing-your-github-profile/</guid>
     </item>
   </channel>
 </rss>
