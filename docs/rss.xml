@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 16:38:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 16:50:47 +0000</lastBuildDate>
+    <item>
+      <title>Vibe coding fails in prod</title>
+      <link>https://kubaik.github.io/vibe-coding-fails-in-prod/</link>
+      <description>Cut API response time by 95% after vibe coding failures — connection pools, query plans, and the staging gap that burned teams. Learn what to instrument first.</description>
+      <pubDate>Mon, 11 May 2026 16:50:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/vibe-coding-fails-in-prod/</guid>
+    </item>
     <item>
       <title>7 AI pitfalls leaving security gaps in production</title>
       <link>https://kubaik.github.io/7-ai-pitfalls-leaving-security-gaps-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut African payment integration time by 40%: M-Pesa 1.01% fee vs Flutterwave 3.8% vs Paystack 1.5% with real latency benchmarks and compliance costs for Kenya, Nigeria, Ghana.</description>
       <pubDate>Sun, 10 May 2026 19:35:24 +0000</pubDate>
       <guid>https://kubaik.github.io/integrate-african-payments-m-pesa-vs-flutterwave-vs/</guid>
-    </item>
-    <item>
-      <title>No-code vs code: pick the right path first</title>
-      <link>https://kubaik.github.io/no-code-vs-code-pick-the-right-path-first/</link>
-      <description>Cut build time by 70% with the no-code vs code decision framework — measure latency, cost, and lock-in before you commit. Examples from Retool, Bubble, Next.js.</description>
-      <pubDate>Sun, 10 May 2026 18:45:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-vs-code-pick-the-right-path-first/</guid>
     </item>
   </channel>
 </rss>
