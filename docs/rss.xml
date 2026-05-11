@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 21:19:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 18:21:46 +0000</lastBuildDate>
+    <item>
+      <title>Land $120k remote when you&apos;re in a $30k city</title>
+      <link>https://kubaik.github.io/land-120k-remote-when-youre-in-a-30k-city/</link>
+      <description>y rate by 40% within 90 days because I trea with Land 120k remote you — burning bridges with clients or HR.</description>
+      <pubDate>Mon, 11 May 2026 18:21:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-120k-remote-when-youre-in-a-30k-city/</guid>
+    </item>
     <item>
       <title>TypeScript strict mode traps: 5 silent footguns</title>
       <link>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 60% with Redis or Memcached — p99 latency at 15k ops/sec, eviction rates, cold-start times, and the mistakes that cause cache stampedes.</description>
       <pubDate>Mon, 11 May 2026 08:39:02 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-vs-memcached-what-fails-first/</guid>
-    </item>
-    <item>
-      <title>Stop losing devs to undifferentiated work</title>
-      <link>https://kubaik.github.io/stop-losing-devs-to-undifferentiated-work/</link>
-      <description>Cut engineer time on undifferentiated work by 67% with a paved road platform — Nix, Tilt, OPA, and guardrails reduced setup time 91% and staging breaks 73%</description>
-      <pubDate>Mon, 11 May 2026 08:36:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-losing-devs-to-undifferentiated-work/</guid>
     </item>
   </channel>
 </rss>
