@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 14:55:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 14:59:56 +0000</lastBuildDate>
+    <item>
+      <title>Instrument 5G latency: the first 3 metrics to watch</title>
+      <link>https://kubaik.github.io/instrument-5g-latency-the-first-3-metrics-to-watch/</link>
+      <description>Cut p99 API latency by 75% by measuring 3 cellular metrics first — TCP connect, TLS handshake, and handover spikes — using eBPF, OpenTelemetry and Prometheus on real 5G devices.</description>
+      <pubDate>Mon, 11 May 2026 14:59:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-5g-latency-the-first-3-metrics-to-watch/</guid>
+    </item>
     <item>
       <title>Vector DBs: when brute-force beats similarity search</title>
       <link>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</link>
@@ -138,13 +145,6 @@
       <description>Go from junior to senior in 3-5 years without a CS degree — learn systems, not syllabi. Real examples from payments, caching, and Kubernetes under load.</description>
       <pubDate>Sun, 10 May 2026 16:06:09 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-build-senior-skills-anyway/</guid>
-    </item>
-    <item>
-      <title>Python 3.13 packaging: the only setup that worked</title>
-      <link>https://kubaik.github.io/python-313-packaging-the-only-setup-that-worked/</link>
-      <description>Cut Python packaging time by 73% and reduce Docker images by 28% with pyproject.toml, uv, and cibuildwheel — the stack teams use in 2026.</description>
-      <pubDate>Sun, 10 May 2026 16:02:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-313-packaging-the-only-setup-that-worked/</guid>
     </item>
   </channel>
 </rss>
