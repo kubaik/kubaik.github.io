@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 19:28:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 20:06:34 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech exits: the hidden reasons</title>
+      <link>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</link>
+      <description>,798 | 97.6% resolution rate | | Mean time with Tech exits reasons — startups or hedge funds for 200k+ TC.</description>
+      <pubDate>Mon, 11 May 2026 20:06:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</guid>
+    </item>
     <item>
       <title>CS degree won’t save your career</title>
       <link>https://kubaik.github.io/cs-degree-wont-save-your-career/</link>
@@ -138,13 +145,6 @@
       <description>Cut 60% of API latency by replacing message queues with REST calls — when queues help and when they waste money, with real benchmarks and failure modes.</description>
       <pubDate>Mon, 11 May 2026 09:34:38 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-when-to-pay-the-price/</guid>
-    </item>
-    <item>
-      <title>AI agents steal your code: how to watch them</title>
-      <link>https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/</link>
-      <description>Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included.</description>
-      <pubDate>Mon, 11 May 2026 09:26:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/</guid>
     </item>
   </channel>
 </rss>
