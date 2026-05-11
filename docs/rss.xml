@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 08:36:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 08:39:08 +0000</lastBuildDate>
+    <item>
+      <title>Redis vs Memcached: what fails first?</title>
+      <link>https://kubaik.github.io/redis-vs-memcached-what-fails-first/</link>
+      <description>Cut API response time by 60% with Redis or Memcached — p99 latency at 15k ops/sec, eviction rates, cold-start times, and the mistakes that cause cache stampedes.</description>
+      <pubDate>Mon, 11 May 2026 08:39:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-vs-memcached-what-fails-first/</guid>
+    </item>
     <item>
       <title>Stop losing devs to undifferentiated work</title>
       <link>https://kubaik.github.io/stop-losing-devs-to-undifferentiated-work/</link>
@@ -138,13 +145,6 @@
       <description>Stop 2026 supply chain attacks: cut dependency resolution time by 70% with exact pinning, mirror hardening, and CI cache busting. Learn the real causes behind slow downloads and malicious tarballs in Python and npm.</description>
       <pubDate>Sun, 10 May 2026 09:51:19 +0000</pubDate>
       <guid>https://kubaik.github.io/pythonnpm-supply-chain-attacks-2026-attack-patterns/</guid>
-    </item>
-    <item>
-      <title>AI code breaks here: Copilot vs Cursor in edge cases</title>
-      <link>https://kubaik.github.io/ai-code-breaks-here-copilot-vs-cursor-in-edge-cases/</link>
-      <description>Cut AI-generated code failures by 60% with targeted fuzzing — Copilot vs Cursor in edge cases, real benchmarks, and the tools that survive the gauntlet. Learn which AI assistant handles real-world data under load.</description>
-      <pubDate>Sun, 10 May 2026 08:55:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-breaks-here-copilot-vs-cursor-in-edge-cases/</guid>
     </item>
   </channel>
 </rss>
