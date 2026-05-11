@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 09:42:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 06:46:49 +0000</lastBuildDate>
+    <item>
+      <title>2026 salaries: AI skills that pay vs ones that don’t</title>
+      <link>https://kubaik.github.io/2026-salaries-ai-skills-that-pay-vs-ones-that-dont/</link>
+      <description>Cut AI salary gaps with real data: SQL over vector embeddings delivers 12% higher pay than LLM fine-tuning — plus 60% lower query costs and 40% faster response times in 2026 benchmarks.</description>
+      <pubDate>Mon, 11 May 2026 06:46:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salaries-ai-skills-that-pay-vs-ones-that-dont/</guid>
+    </item>
     <item>
       <title>Integrate African payments: M-Pesa vs Flutterwave vs</title>
       <link>https://kubaik.github.io/integrate-african-payments-m-pesa-vs-flutterwave-vs/</link>
@@ -138,13 +145,6 @@
       <description>bill grew 12% quarter-over-quarter. I spent with Cut AWS costs touching — knowing why.</description>
       <pubDate>Sat, 09 May 2026 10:19:19 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</guid>
-    </item>
-    <item>
-      <title>Raised salary 3x in two years</title>
-      <link>https://kubaik.github.io/raised-salary-3x-in-two-years/</link>
-      <description>Raised salary from $2,800 to $8,400 in two years by shifting from hourly coding to fixed-scope fractional CTO contracts, cutting latency from 210 ms to 48 ms, and using Neon Postgres and Fly.io to cut AWS costs 78 %. For engineers who want to price like a team, not an individual.</description>
-      <pubDate>Sat, 09 May 2026 10:02:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/raised-salary-3x-in-two-years/</guid>
     </item>
   </channel>
 </rss>
