@@ -707,12 +707,6 @@ class VisibilityAutomator:
         print(f"  Source        : LLM-generated during content creation")
         print(f"  Link strategy : {link_strategy}")
         print(f"  Char count    : {len(tweet_text)} / 280")
-        print(SEP)
-        print("📝  TWEET TEXT:")
-        print(SEP)
-        for line in tweet_text.splitlines():
-            print(f"  │ {line}")
-        print(SEP)
 
         try:
             response = self.twitter_client.create_tweet(text=tweet_text)
