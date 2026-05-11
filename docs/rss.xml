@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 10:40:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 10:46:27 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right realtime tool for your app</title>
+      <link>https://kubaik.github.io/pick-the-right-realtime-tool-for-your-app/</link>
+      <description>Cut realtime tool choice mistakes to zero with measured WebSockets vs SSE vs long polling latency, CPU, and battery data on a 2020 M1 MacBook Pro using vegeta 12.8, FastAPI 0.111, Flask 3.0, and iPhone 13 battery logging.</description>
+      <pubDate>Mon, 11 May 2026 10:46:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-realtime-tool-for-your-app/</guid>
+    </item>
     <item>
       <title>Africa’s latency taught me to write backend for 10ms</title>
       <link>https://kubaik.github.io/africas-latency-taught-me-to-write-backend-for-10ms/</link>
@@ -138,13 +145,6 @@
       <description>Cut weekend burnout 70% with this client work vs side projects split — monorepo vs micro-repo benchmarks, CI costs, and the exact decision framework to choose. Avoid the trap I fell into.</description>
       <pubDate>Sun, 10 May 2026 13:24:07 +0000</pubDate>
       <guid>https://kubaik.github.io/burn-weekends-stop-this-client-work-trap/</guid>
-    </item>
-    <item>
-      <title>Instrument LLM pipelines like a pro</title>
-      <link>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</link>
-      <description>Reduce LLM pipeline latency from 1.2 s to 320 ms with 4 instrumented layers — code, prompts, vectors, downstream — and concrete Prometheus metrics you can copy today</description>
-      <pubDate>Sun, 10 May 2026 10:59:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
