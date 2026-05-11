@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 14:59:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 15:37:38 +0000</lastBuildDate>
+    <item>
+      <title>Python packaging in 2026: what actually works</title>
+      <link>https://kubaik.github.io/python-packaging-in-2026-what-actually-works/</link>
+      <description>Cut Docker image build time 65% and install latency 83% with Python packaging in 2026 — use PDM 2.15.4, hatchling 1.25.0, and uv 0.3.0 for reproducible wheels and multi-platform deployments that actually work in production.</description>
+      <pubDate>Mon, 11 May 2026 15:37:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-packaging-in-2026-what-actually-works/</guid>
+    </item>
     <item>
       <title>Instrument 5G latency: the first 3 metrics to watch</title>
       <link>https://kubaik.github.io/instrument-5g-latency-the-first-3-metrics-to-watch/</link>
@@ -138,13 +145,6 @@
       <description>Cut daily automation time from 30 minutes to 3 minutes with a 125-line Claude Code agent — no Docker, no Lambda, no yak shaving. Practical walkthrough with code, benchmarks, and lessons learned.</description>
       <pubDate>Sun, 10 May 2026 16:29:10 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-agents-we-built-one-in-125-lines/</guid>
-    </item>
-    <item>
-      <title>No CS degree? Build senior skills anyway</title>
-      <link>https://kubaik.github.io/no-cs-degree-build-senior-skills-anyway/</link>
-      <description>Go from junior to senior in 3-5 years without a CS degree — learn systems, not syllabi. Real examples from payments, caching, and Kubernetes under load.</description>
-      <pubDate>Sun, 10 May 2026 16:06:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-cs-degree-build-senior-skills-anyway/</guid>
     </item>
   </channel>
 </rss>
