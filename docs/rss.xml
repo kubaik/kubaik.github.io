@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 12:00:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 12:03:34 +0000</lastBuildDate>
+    <item>
+      <title>AI agents overwrote my repo: how to stop them</title>
+      <link>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</link>
+      <description>Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks</description>
+      <pubDate>Mon, 11 May 2026 12:03:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</guid>
+    </item>
     <item>
       <title>Why 84% use AI coding tools but only 29% trust them</title>
       <link>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut review time 70% with Claude code reviews — prompt templates, cost benchmarks, and the 3 scenarios where it still fails. Read this before you replace your human reviewers.</description>
       <pubDate>Sun, 10 May 2026 14:21:05 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</guid>
-    </item>
-    <item>
-      <title>Event sourcing: when complexity pays off</title>
-      <link>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</link>
-      <description>Cut debugging time 70% with event sourcing — benchmarks, latency figures, and the storage and write-speed trade-offs teams miss. event sourcing when it helps and when it doesn’t</description>
-      <pubDate>Sun, 10 May 2026 13:54:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</guid>
     </item>
   </channel>
 </rss>
