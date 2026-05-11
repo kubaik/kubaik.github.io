@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 11:04:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 08:07:17 +0000</lastBuildDate>
+    <item>
+      <title>Schedule vs cron: when the grid cleans up</title>
+      <link>https://kubaik.github.io/schedule-vs-cron-when-the-grid-cleans-up/</link>
+      <description>Cut cloud carbon 37% by scheduling batch jobs when Kenya’s grid is cleanest — real AWS Lambda vs Granulate GCAS benchmarks, costs, and the next step to verify savings in your cluster.</description>
+      <pubDate>Mon, 11 May 2026 08:07:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/schedule-vs-cron-when-the-grid-cleans-up/</guid>
+    </item>
     <item>
       <title>2026 salaries: AI skills that pay vs ones that don’t</title>
       <link>https://kubaik.github.io/2026-salaries-ai-skills-that-pay-vs-ones-that-dont/</link>
@@ -138,13 +145,6 @@
       <description>Ship a real product in 90 minutes with Vercel + V0 + Turso — under $0.02/day and 380ms latency under 1,000 requests — the AI stacks that turned side projects into production products</description>
       <pubDate>Sat, 09 May 2026 13:51:47 +0000</pubDate>
       <guid>https://kubaik.github.io/3-ai-stacks-that-turned-side-projects-into-shipped/</guid>
-    </item>
-    <item>
-      <title>Cut AWS costs 40% without touching the code</title>
-      <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</link>
-      <description>bill grew 12% quarter-over-quarter. I spent with Cut AWS costs touching — knowing why.</description>
-      <pubDate>Sat, 09 May 2026 10:19:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-code/</guid>
     </item>
   </channel>
 </rss>
