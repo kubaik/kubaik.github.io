@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 08:07:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 08:20:57 +0000</lastBuildDate>
+    <item>
+      <title>7 reasons monoliths beat microservices in 2026</title>
+      <link>https://kubaik.github.io/7-reasons-monoliths-beat-microservices-in-2026/</link>
+      <description>Cut API response time by 50% and cloud costs 80% with Go monoliths — the real 2026 benchmarks, mistakes, and when to split — for teams from $200 DigitalOcean to Series B</description>
+      <pubDate>Mon, 11 May 2026 08:20:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-reasons-monoliths-beat-microservices-in-2026/</guid>
+    </item>
     <item>
       <title>Schedule vs cron: when the grid cleans up</title>
       <link>https://kubaik.github.io/schedule-vs-cron-when-the-grid-cleans-up/</link>
@@ -138,13 +145,6 @@
       <description>spike to 95% while the app returned 502s u with These tools cut solo — spin up a Next.</description>
       <pubDate>Sun, 10 May 2026 07:36:08 +0000</pubDate>
       <guid>https://kubaik.github.io/these-7-tools-cut-my-solo-dev-time-in-half/</guid>
-    </item>
-    <item>
-      <title>3 AI stacks that turned side projects into shipped</title>
-      <link>https://kubaik.github.io/3-ai-stacks-that-turned-side-projects-into-shipped/</link>
-      <description>Ship a real product in 90 minutes with Vercel + V0 + Turso — under $0.02/day and 380ms latency under 1,000 requests — the AI stacks that turned side projects into production products</description>
-      <pubDate>Sat, 09 May 2026 13:51:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-ai-stacks-that-turned-side-projects-into-shipped/</guid>
     </item>
   </channel>
 </rss>
