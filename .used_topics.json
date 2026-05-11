@@ -89,5 +89,6 @@
   "Monolith vs microservices in 2026: the pendulum is swinging back and here's why",
   "Platform engineering explained: why your team needs a paved road",
   "Redis vs Memcached: a benchmark that actually matters",
-  "How I delegate tasks to AI agents without losing control of my codebase"
+  "How I delegate tasks to AI agents without losing control of my codebase",
+  "When to use a message queue (and when it's overkill)"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 09:26:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 09:34:44 +0000</lastBuildDate>
+    <item>
+      <title>Message queues: when to pay the price</title>
+      <link>https://kubaik.github.io/message-queues-when-to-pay-the-price/</link>
+      <description>Cut 60% of API latency by replacing message queues with REST calls — when queues help and when they waste money, with real benchmarks and failure modes.</description>
+      <pubDate>Mon, 11 May 2026 09:34:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/message-queues-when-to-pay-the-price/</guid>
+    </item>
     <item>
       <title>AI agents steal your code: how to watch them</title>
       <link>https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI tool waste: measure real velocity impact in 4 weeks with PR reopen rates, semantic validation, and cognitive load metrics — proven with concrete numbers and budgets for all tiers.</description>
       <pubDate>Sun, 10 May 2026 10:43:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-didnt-move-the-needle-measure-this-first/</guid>
-    </item>
-    <item>
-      <title>Pick PostgreSQL in 2026, here’s how to decide</title>
-      <link>https://kubaik.github.io/pick-postgresql-in-2026-heres-how-to-decide/</link>
-      <description>Cut production decision time by 60% with a 15-minute PostgreSQL vs MySQL harness that measures ingestion latency, partial JSON indexing, replica lag, and PITR times — tested on real hardware with 1 M rows.</description>
-      <pubDate>Sun, 10 May 2026 10:07:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-postgresql-in-2026-heres-how-to-decide/</guid>
     </item>
   </channel>
 </rss>
