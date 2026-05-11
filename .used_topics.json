@@ -90,5 +90,6 @@
   "Platform engineering explained: why your team needs a paved road",
   "Redis vs Memcached: a benchmark that actually matters",
   "How I delegate tasks to AI agents without losing control of my codebase",
-  "When to use a message queue (and when it's overkill)"
+  "When to use a message queue (and when it's overkill)",
+  "Infrastructure constraints in Africa that changed how I write backend code"
 ]
