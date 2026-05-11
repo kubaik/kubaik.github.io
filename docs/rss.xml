@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 10:46:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 12:00:03 +0000</lastBuildDate>
+    <item>
+      <title>Why 84% use AI coding tools but only 29% trust them</title>
+      <link>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</link>
+      <description>Cut rework from 11 days to 2 by choosing the right AI coding tool and enforcing a prompt template and review gate. Measure first-pass merge rate and edge-case coverage in two weeks, not months.</description>
+      <pubDate>Mon, 11 May 2026 11:59:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</guid>
+    </item>
     <item>
       <title>Pick the right realtime tool for your app</title>
       <link>https://kubaik.github.io/pick-the-right-realtime-tool-for-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Cut debugging time 70% with event sourcing — benchmarks, latency figures, and the storage and write-speed trade-offs teams miss. event sourcing when it helps and when it doesn’t</description>
       <pubDate>Sun, 10 May 2026 13:54:56 +0000</pubDate>
       <guid>https://kubaik.github.io/event-sourcing-when-complexity-pays-off/</guid>
-    </item>
-    <item>
-      <title>Burn weekends? Stop this client work trap</title>
-      <link>https://kubaik.github.io/burn-weekends-stop-this-client-work-trap/</link>
-      <description>Cut weekend burnout 70% with this client work vs side projects split — monorepo vs micro-repo benchmarks, CI costs, and the exact decision framework to choose. Avoid the trap I fell into.</description>
-      <pubDate>Sun, 10 May 2026 13:24:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/burn-weekends-stop-this-client-work-trap/</guid>
     </item>
   </channel>
 </rss>
