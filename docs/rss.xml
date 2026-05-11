@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 12:03:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 12:24:41 +0000</lastBuildDate>
+    <item>
+      <title>Your team needs a paved road before snow hits</title>
+      <link>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</link>
+      <description>Cut deployment time 73% and on-call incidents 67% with a paved road — the concrete steps, tools, and tradeoffs most guides miss. Includes GitHub Actions workflow, Helm chart, and Backstage setup.</description>
+      <pubDate>Mon, 11 May 2026 12:24:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</guid>
+    </item>
     <item>
       <title>AI agents overwrote my repo: how to stop them</title>
       <link>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</link>
@@ -138,13 +145,6 @@
       <description>Reduce portfolio noise by 80% with one rule: publish latency graphs, cost data, and incident logs—examples from real AWS and DigitalOcean systems that landed $95k–$135k remote offers.</description>
       <pubDate>Sun, 10 May 2026 15:11:46 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-polishing-your-github-profile/</guid>
-    </item>
-    <item>
-      <title>Claude reviews my code — here’s what works</title>
-      <link>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</link>
-      <description>Cut review time 70% with Claude code reviews — prompt templates, cost benchmarks, and the 3 scenarios where it still fails. Read this before you replace your human reviewers.</description>
-      <pubDate>Sun, 10 May 2026 14:21:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-reviews-my-code-heres-what-works/</guid>
     </item>
   </channel>
 </rss>
