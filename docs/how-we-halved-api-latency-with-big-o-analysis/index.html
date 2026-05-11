@@ -96,6 +96,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -133,7 +140,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">How we halved API latency with Big O analysis</h1>
 
-                
                 
                 <p class="post-lead">Cut API latency by 55x using Big O analysis — reduced median response time from 2.1s to 38ms, saved $60/month, and fixed Black Friday traffic spikes with RedisSearch and NumPy vectorization.</p>
                 
@@ -381,5 +387,6 @@ scores = product_matrix @ preferences  # O(n*m) in theory, fast in practice
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

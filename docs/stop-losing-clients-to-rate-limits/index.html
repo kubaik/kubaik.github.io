@@ -93,6 +93,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -130,7 +137,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">Stop losing clients to rate limits</h1>
 
-                
                 
                 <p class="post-lead">Cut API 429 errors from 23% to 2.1% with a leaky bucket and global counter — client retries dropped 87%, latency fell from 210ms to 85ms, and we saved $100/month on Redis costs.</p>
                 
@@ -480,5 +486,6 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

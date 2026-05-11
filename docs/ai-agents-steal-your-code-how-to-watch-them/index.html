@@ -94,6 +94,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -131,7 +138,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI agents steal your code: how to watch them</h1>
 
-                
                 
                 <p class="post-lead">Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included.</p>
                 
@@ -417,5 +423,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

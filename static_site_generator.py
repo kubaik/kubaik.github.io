@@ -72,6 +72,7 @@ class StaticSiteGenerator:
         self._generate_posts_json(posts)
         self._generate_robots_txt()
         self._generate_404_page()
+        self._generate_pwa_files()
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
@@ -182,6 +183,30 @@ Sitemap: {base_url}/rss.xml
         with open("./docs/404.html", 'w', encoding='utf-8') as f:
             f.write(html)
         print("Generated 404.html")
+
+    def _generate_pwa_files(self):
+        """Copy sw.js, offline.html, and manifest.json into /docs/."""
+        import shutil
+        pwa_sources = [
+            ("sw.js",       "./docs/sw.js"),
+            ("offline.html", "./docs/offline.html"),
+            ("manifest.json", "./docs/manifest.json"),
+        ]
+        for src, dst in pwa_sources:
+            src_path = Path(src)
+            if src_path.exists():
+                shutil.copy2(src_path, dst)
+                print(f"Copied {src} → {dst}")
+            else:
+                print(f"Warning: {src} not found — skipping")
+
+        # Copy pwa.js into static/
+        pwa_js_src = Path("static/pwa.js")
+        if pwa_js_src.exists():
+            shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
+            print("Copied static/pwa.js → docs/static/pwa.js")
+        else:
+            print("Warning: static/pwa.js not found — skipping")
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -371,6 +396,23 @@ Sitemap: {base_url}/rss.xml
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
+    # ─────────────────────────────────────────────────────────────
+    # Shared PWA head tags — inserted into every template <head>
+    # ─────────────────────────────────────────────────────────────
+    PWA_HEAD = """\
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">"""
+
+    # Shared PWA script tag — inserted before </body> in every template
+    PWA_SCRIPT = """\
+    <script defer src="{{ base_path }}/static/pwa.js"></script>"""
+
+    # ─────────────────────────────────────────────────────────────
     POST_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -386,6 +428,13 @@ def _build_templates() -> dict:
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
     <script defer src="{{ base_path }}/static/code_runner.js"></script>
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
 </head>
 <body>
     {{ header_ad | safe }}
@@ -413,7 +462,6 @@ def _build_templates() -> dict:
             <header class="post-header">
                 <h1 itemprop="headline">{{ post.title }}</h1>
 
-                {# ── FIX: show meta_description as a lead paragraph on the post page ── #}
                 {% if post.meta_description %}
                 <p class="post-lead">{{ post.meta_description }}</p>
                 {% endif %}
@@ -500,9 +548,11 @@ def _build_templates() -> dict:
         </div>
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -517,6 +567,13 @@ def _build_templates() -> dict:
     {{ website_schema | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .search-container { margin: 0 0 1.5rem; max-width: 420px; }
         .search-wrapper {
@@ -600,7 +657,6 @@ def _build_templates() -> dict:
                    data-description="{{ post.meta_description | e }}"
                    data-tags="{{ post.tags | join(',') | e }}">
                     <h3>{{ post.title }}</h3>
-                    {# ── FIX: meta_description is guaranteed non-empty by _generate_homepage ── #}
                     <p class="post-excerpt">{{ post.meta_description }}</p>
                     {% if post.reading_time %}
                     <p class="post-reading-time">{{ post.reading_time }} min read</p>
@@ -694,12 +750,10 @@ def _build_templates() -> dict:
             h3.textContent = post.title;
             a.appendChild(h3);
 
-            // ── FIX: use meta_description from posts.json (already safe-excerpted) ──
             var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
-                // client-side last resort: first 155 chars of content
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -928,9 +982,11 @@ def _build_templates() -> dict:
 
     }());
     </script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -941,6 +997,13 @@ def _build_templates() -> dict:
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/about/">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .about-section{background:#f8f9fa;padding:1.5rem 2rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .about-section h2{color:#333;margin-top:0;margin-bottom:1rem}
@@ -978,33 +1041,24 @@ def _build_templates() -> dict:
             <div class="about-section">
                 <h2>The Author</h2>
                 <div class="author-card">
-                    <!-- Profile Image -->
                     <div class="author-avatar-lg">
-                        <img src="../static/photo.jpg" 
-                            alt="Kubai Kevin" 
-                            class="author-photo">
+                        <img src="../static/photo.jpg" alt="Kubai Kevin" class="author-photo">
                     </div>
-
                     <div>
                         <h3 itemprop="name">Kubai Kevin</h3>
-                        <p class="credentials" itemprop="jobTitle">
-                            Software Developer · Nairobi, Kenya
+                        <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
+                        <p itemprop="description" class="paragraph-spacing">
+                            Software Engineer building production systems since 2014, with experience in the financial services industry.
+                            I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
                         </p>
-
-                        <p itemprop="description" class="paragraph-spacing" >
-                                Software Engineer building production systems since 2014, with experience in the financial services industry. 
-                                I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
-                            </p>
-
-                            <p class="paragraph-spacing >
-                                My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
-                                with an emphasis on performance, cost, and scalability.
-                            </p>
-
-                            <p class="paragraph-spacing >
-                                I write about real-world engineering tradeoffs and what actually works in production.
-                            </p>
-                            <p>
+                        <p class="paragraph-spacing">
+                            My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows,
+                            with an emphasis on performance, cost, and scalability.
+                        </p>
+                        <p class="paragraph-spacing">
+                            I write about real-world engineering tradeoffs and what actually works in production.
+                        </p>
+                        <p>
                             <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
                                 View full experience on LinkedIn →
                             </a>
@@ -1049,9 +1103,11 @@ def _build_templates() -> dict:
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     PRIVACY_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1062,6 +1118,13 @@ def _build_templates() -> dict:
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .privacy-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .privacy-section h3{color:#333;margin-top:0}
@@ -1114,9 +1177,11 @@ def _build_templates() -> dict:
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
     <script src="../static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     TERMS_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1127,6 +1192,13 @@ def _build_templates() -> dict:
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .terms-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .terms-section h3{color:#333;margin-top:0}
@@ -1161,9 +1233,11 @@ def _build_templates() -> dict:
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
     <script src="../static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     CONTACT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1174,6 +1248,13 @@ def _build_templates() -> dict:
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="{{ base_url }}/contact/">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .contact-method{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .contact-method h3{color:#333;margin-top:0}
@@ -1213,9 +1294,11 @@ def _build_templates() -> dict:
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
+    # ─────────────────────────────────────────────────────────────
     NOT_FOUND_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1226,6 +1309,13 @@ def _build_templates() -> dict:
     <meta name="robots" content="noindex, nofollow">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <script>
         setTimeout(function () {
             window.location.replace('{{ base_path }}/');
@@ -1306,6 +1396,7 @@ def _build_templates() -> dict:
             if (seconds <= 0) clearInterval(interval);
         }, 1000);
     </script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
 </body>
 </html>"""
 
@@ -1317,5 +1408,5 @@ def _build_templates() -> dict:
         'privacy_policy':   env.from_string(PRIVACY_TMPL),
         'terms_of_service': env.from_string(TERMS_TMPL),
         'contact':          env.from_string(CONTACT_TMPL),
-        'not_found':        env.from_string(NOT_FOUND_TMPL),  # ← add this line
+        'not_found':        env.from_string(NOT_FOUND_TMPL),
     }

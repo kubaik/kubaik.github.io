@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Offline – Tech Blog</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        header a {
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: #1a1a2e;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffc107;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin: 0.4rem;
+        }
+
+        .btn:hover { opacity: 0.88; }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .cached-pages {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .cached-pages h2 {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        #cached-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #cached-list li a {
+            display: block;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #6366f1;
+            font-size: 0.9rem;
+            transition: background 0.15s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #cached-list li a:hover { background: #f0f4ff; }
+
+        #cached-list li + li { border-top: 1px solid #f0f0f0; }
+
+        .empty-cache {
+            color: #aaa;
+            font-size: 0.875rem;
+            font-style: italic;
+            padding: 0.5rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #999;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/">Tech Blog</a>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="icon">
+                <!-- Wifi-off icon -->
+                <svg viewBox="0 0 24 24">
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
+                    <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
+                    <path d="M10.71 5.05A16 16 0 0 1 22.56 9"/>
+                    <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                    <line x1="12" y1="20" x2="12.01" y2="20"/>
+                </svg>
+            </div>
+
+            <h1>You're offline</h1>
+
+            <div class="status">
+                <span class="dot"></span>
+                No internet connection
+            </div>
+
+            <p>
+                Don't worry — any posts you've already read are available below.
+                We'll reload automatically once you're back online.
+            </p>
+
+            <button class="btn" onclick="tryReload()">Try again</button>
+            <a href="/" class="btn btn-outline">Go to homepage</a>
+
+            <div class="cached-pages">
+                <h2>Available offline</h2>
+                <ul id="cached-list">
+                    <li><span class="empty-cache">Loading cached pages…</span></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>Tech Blog · You'll be back online soon</footer>
+
+    <script>
+        // List cached pages for the user
+        (async function () {
+            const list = document.getElementById('cached-list');
+            try {
+                const cacheNames = await caches.keys();
+                const pagesCacheName = cacheNames.find(n => n.startsWith('pages-'));
+                if (!pagesCacheName) {
+                    list.innerHTML = '<li><span class="empty-cache">No pages cached yet — visit some posts first.</span></li>';
+                    return;
+                }
+                const cache = await caches.open(pagesCacheName);
+                const keys  = await cache.keys();
+                const pages = keys
+                    .map(r => new URL(r.url))
+                    .filter(u => u.pathname !== '/offline.html')
+                    .slice(0, 12);
+
+                if (pages.length === 0) {
+                    list.innerHTML = '<li><span class="empty-cache">No pages cached yet — visit some posts first.</span></li>';
+                    return;
+                }
+
+                list.innerHTML = pages.map(u => {
+                    const label = u.pathname === '/'
+                        ? 'Homepage'
+                        : decodeURIComponent(u.pathname.replace(/\//g, ' ').trim());
+                    return `<li><a href="${u.pathname}">${label}</a></li>`;
+                }).join('');
+            } catch (e) {
+                list.innerHTML = '<li><span class="empty-cache">Could not load cached pages.</span></li>';
+            }
+        })();
+
+        // Auto-reload when connection returns
+        window.addEventListener('online', () => window.location.reload());
+
+        function tryReload() {
+            if (navigator.onLine) {
+                window.location.reload();
+            } else {
+                const btn = document.querySelector('.btn');
+                btn.textContent = 'Still offline…';
+                setTimeout(() => btn.textContent = 'Try again', 2000);
+            }
+        }
+    </script>
+</body>
+</html>

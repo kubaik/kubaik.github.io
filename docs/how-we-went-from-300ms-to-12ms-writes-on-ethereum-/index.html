@@ -92,6 +92,13 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
     <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
@@ -129,7 +136,6 @@
             <header class="post-header">
                 <h1 itemprop="headline">How we went from 300ms to 12ms writes on Ethereum with calldata compression</h1>
 
-                
                 
                 <p class="post-lead">Cut Ethereum calldata writes from 3,100 bytes to 1,860 bytes with zlib compression, reducing confirmation time from 18 seconds to 1.2 seconds and halving gas costs — plus the on-chain zlib address and fallback code you need.</p>
                 
@@ -472,5 +478,6 @@ contract DataMarket {
         </div>
     </footer>
     <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

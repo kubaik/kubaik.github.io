@@ -9,3 +9,5 @@ tweepy
 numpy
 scikit-learn
 huggingface_hub
+cairosvg
+Pillow

@@ -20,6 +20,13 @@
 
     <link rel="stylesheet" href="../static/style.css">
     <link rel="canonical" href="https://kubaik.github.io/about/">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     <style>
         .about-section{background:#f8f9fa;padding:1.5rem 2rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .about-section h2{color:#333;margin-top:0;margin-bottom:1rem}
@@ -57,33 +64,24 @@
             <div class="about-section">
                 <h2>The Author</h2>
                 <div class="author-card">
-                    <!-- Profile Image -->
                     <div class="author-avatar-lg">
-                        <img src="../static/photo.jpg" 
-                            alt="Kubai Kevin" 
-                            class="author-photo">
+                        <img src="../static/photo.jpg" alt="Kubai Kevin" class="author-photo">
                     </div>
-
                     <div>
                         <h3 itemprop="name">Kubai Kevin</h3>
-                        <p class="credentials" itemprop="jobTitle">
-                            Software Developer · Nairobi, Kenya
+                        <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
+                        <p itemprop="description" class="paragraph-spacing">
+                            Software Engineer building production systems since 2014, with experience in the financial services industry.
+                            I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
                         </p>
-
-                        <p itemprop="description" class="paragraph-spacing" >
-                                Software Engineer building production systems since 2014, with experience in the financial services industry. 
-                                I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
-                            </p>
-
-                            <p class="paragraph-spacing >
-                                My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows, 
-                                with an emphasis on performance, cost, and scalability.
-                            </p>
-
-                            <p class="paragraph-spacing >
-                                I write about real-world engineering tradeoffs and what actually works in production.
-                            </p>
-                            <p>
+                        <p class="paragraph-spacing">
+                            My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows,
+                            with an emphasis on performance, cost, and scalability.
+                        </p>
+                        <p class="paragraph-spacing">
+                            I write about real-world engineering tradeoffs and what actually works in production.
+                        </p>
+                        <p>
                             <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
                                 View full experience on LinkedIn →
                             </a>
@@ -128,5 +126,6 @@
     </main>
     <footer><div class="container"><p>&copy; 2026 Tech Blog · Written by Kubai Kevin</p></div></footer>
     <script src="../static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>
