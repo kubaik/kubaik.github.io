@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 12:23:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 09:26:11 +0000</lastBuildDate>
+    <item>
+      <title>AI agents steal your code: how to watch them</title>
+      <link>https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/</link>
+      <description>Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included.</description>
+      <pubDate>Mon, 11 May 2026 09:26:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/</guid>
+    </item>
     <item>
       <title>Redis vs Memcached: what fails first?</title>
       <link>https://kubaik.github.io/redis-vs-memcached-what-fails-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut production decision time by 60% with a 15-minute PostgreSQL vs MySQL harness that measures ingestion latency, partial JSON indexing, replica lag, and PITR times — tested on real hardware with 1 M rows.</description>
       <pubDate>Sun, 10 May 2026 10:07:39 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-postgresql-in-2026-heres-how-to-decide/</guid>
-    </item>
-    <item>
-      <title>Python/npm supply chain attacks: 2026 attack patterns</title>
-      <link>https://kubaik.github.io/pythonnpm-supply-chain-attacks-2026-attack-patterns/</link>
-      <description>Stop 2026 supply chain attacks: cut dependency resolution time by 70% with exact pinning, mirror hardening, and CI cache busting. Learn the real causes behind slow downloads and malicious tarballs in Python and npm.</description>
-      <pubDate>Sun, 10 May 2026 09:51:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/pythonnpm-supply-chain-attacks-2026-attack-patterns/</guid>
     </item>
   </channel>
 </rss>
