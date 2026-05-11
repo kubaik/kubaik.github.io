@@ -1,13 +1,16 @@
-/**
- * pwa.js — registers the service worker and handles the install prompt.
- * Drop this file in /static/ and add a <script defer src="/static/pwa.js"></script>
- * to every page template (just before </body>).
- */
+// pwa.js — service worker registration + install prompt + GA4 analytics
 
 (function () {
     'use strict';
 
-    // ── 1. Register service worker ─────────────────────────────────
+    // ── 0. GA4 helper ──────────────────────────────────────────────────
+    function trackEvent(name, params) {
+        if (typeof gtag === 'function') {
+            gtag('event', name, params || {});
+        }
+    }
+
+    // ── 1. Register service worker ─────────────────────────────────────
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
             navigator.serviceWorker
@@ -15,7 +18,6 @@
                 .then(function (reg) {
                     console.log('[PWA] Service worker registered, scope:', reg.scope);
 
-                    // Notify user when a new version is waiting
                     reg.addEventListener('updatefound', function () {
                         var newWorker = reg.installing;
                         if (!newWorker) return;
@@ -30,7 +32,6 @@
                     console.warn('[PWA] Service worker registration failed:', err);
                 });
 
-            // If the controller changes (new SW activated), reload to get fresh page
             navigator.serviceWorker.addEventListener('controllerchange', function () {
                 if (window.__pwaReloading) return;
                 window.__pwaReloading = true;
@@ -39,7 +40,7 @@
         });
     }
 
-    // ── 2. Install prompt (Add to Home Screen) ─────────────────────
+    // ── 2. Install prompt ──────────────────────────────────────────────
     var deferredPrompt = null;
     var installBtn = null;
 
@@ -47,16 +48,20 @@
         e.preventDefault();
         deferredPrompt = e;
         showInstallButton();
+        // How many people saw the install button?
+        trackEvent('pwa_prompt_shown');
     });
 
     window.addEventListener('appinstalled', function () {
         deferredPrompt = null;
         hideInstallButton();
         console.log('[PWA] App installed');
+        // Confirmed install (Android / desktop Chrome / Edge only — iOS never fires this)
+        trackEvent('pwa_installed');
     });
 
     function showInstallButton() {
-        if (installBtn) return;   // already shown
+        if (installBtn) return;
 
         installBtn = document.createElement('button');
         installBtn.id = 'pwa-install-btn';
@@ -88,7 +93,6 @@
 
         document.body.appendChild(installBtn);
 
-        // Animate in
         requestAnimationFrame(function () {
             requestAnimationFrame(function () {
                 installBtn.style.opacity = '1';
@@ -98,8 +102,14 @@
 
         installBtn.addEventListener('click', function () {
             if (!deferredPrompt) return;
+
+            // User tapped your button — about to see the OS dialog
+            trackEvent('pwa_install_clicked');
+
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then(function (result) {
+                // result.outcome is 'accepted' or 'dismissed'
+                trackEvent('pwa_install_' + result.outcome);   // pwa_install_accepted / pwa_install_dismissed
                 console.log('[PWA] Install choice:', result.outcome);
                 deferredPrompt = null;
                 hideInstallButton();
@@ -119,7 +129,7 @@
         }, 300);
     }
 
-    // ── 3. Update banner ───────────────────────────────────────────
+    // ── 3. Update banner ───────────────────────────────────────────────
     function showUpdateBanner() {
         if (document.getElementById('pwa-update-banner')) return;
 
@@ -190,7 +200,7 @@
         document.body.appendChild(banner);
     }
 
-    // ── 4. Online / Offline indicator ─────────────────────────────
+    // ── 4. Online / Offline indicator ──────────────────────────────────
     var offlineToast = null;
 
     function showOfflineToast() {
@@ -223,10 +233,6 @@
 
     if (!navigator.onLine) showOfflineToast();
     window.addEventListener('offline', showOfflineToast);
-    window.addEventListener('online', function () {
-        hideOfflineToast();
-        // Optionally reload to get fresh content
-        // window.location.reload();
-    });
+    window.addEventListener('online', hideOfflineToast);
 
 })();
