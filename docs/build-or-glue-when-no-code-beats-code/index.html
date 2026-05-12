@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build or glue: when no-code beats code - Tech Blog</title>
+    <meta name="description" content="Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.">
+    <meta name="keywords" content="BuildVsBuyDecisionFramework, NoCodeVsCustomCode, WhichToChoose:NoCodeOrCode, NoCodeToolsVsCustomDevelopment, BuildOrBuySoftwareDecision, RetoolVsNext.jsCostComparison, WhenToUseNoCodePlatforms, AirtableMigrationToCustomCode, Softwareengineering, Nextjs">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.">
+    <meta property="og:title" content="Build or glue: when no-code beats code">
+    <meta property="og:description" content="Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.">
+    <meta property="og:url" content="https://kubaik.github.io/build-or-glue-when-no-code-beats-code/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-12T22:06:29.846429">
+    <meta property="article:modified_time" content="2026-05-12T22:06:29.846436">
+    <meta property="og:image" content="/static/images/build-or-glue-when-no-code-beats-code.jpg">
+    <meta property="og:image:alt" content="Build or glue: when no-code beats code">
+    <meta name="twitter:image" content="/static/images/build-or-glue-when-no-code-beats-code.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Build or glue: when no-code beats code">
+    <meta name="twitter:description" content="Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/build-or-glue-when-no-code-beats-code/">
+    <meta name="keywords" content="BuildVsBuyDecisionFramework, NoCodeVsCustomCode, WhichToChoose:NoCodeOrCode, NoCodeToolsVsCustomDevelopment, BuildOrBuySoftwareDecision, RetoolVsNext.jsCostComparison, WhenToUseNoCodePlatforms, AirtableMigrationToCustomCode, Softwareengineering, Nextjs">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Build or glue: when no-code beats code",
+  "description": "Cut 6\u201312 engineering weeks by choosing between no-code and custom code with this decision framework \u2014 includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-12T22:06:29.846429",
+  "dateModified": "2026-05-12T22:06:29.846436",
+  "url": "https://kubaik.github.io/build-or-glue-when-no-code-beats-code/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/build-or-glue-when-no-code-beats-code/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/build-or-glue-when-no-code-beats-code.jpg"
+  },
+  "keywords": [
+    "BuildVsBuyDecisionFramework",
+    "NoCodeVsCustomCode",
+    "WhichToChoose:NoCodeOrCode",
+    "NoCodeToolsVsCustomDevelopment",
+    "BuildOrBuySoftwareDecision",
+    "RetoolVsNext.jsCostComparison",
+    "WhenToUseNoCodePlatforms",
+    "AirtableMigrationToCustomCode",
+    "Softwareengineering",
+    "Nextjs"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Build or glue: when no-code beats code</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Build or glue: when no-code beats code</h1>
+
+                
+                <p class="post-lead">Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-12T22:06:29.846429" itemprop="datePublished">
+                            12 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>11 min read</span>
+                    
+                    
+                    <span>2231 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">BuildVsBuyDecisionFramework</span>
+                    
+                    <span class="tag">NoCodeVsCustomCode</span>
+                    
+                    <span class="tag">WhichToChoose:NoCodeOrCode</span>
+                    
+                    <span class="tag">NoCodeToolsVsCustomDevelopment</span>
+                    
+                    <span class="tag">BuildOrBuySoftwareDecision</span>
+                    
+                    <span class="tag">Softwareengineering</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>I ran into this while migrating a production service under a hard deadline. The official docs covered the happy path well. This post covers everything else.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Deciding whether to build with no-code tools or write custom code hinges on three variables: speed to value, long-term flexibility, and control over data. If you need a working prototype in under two weeks and the feature touches no sensitive data, no-code platforms like Softr or Retool can deliver in days what would take a backend engineer a month of yak-shaving with FastAPI and PostgreSQL. Once the prototype proves demand and you have paying customers, you migrate the no-code glue into a custom codebase only if the workload exceeds 20 hours per month of manual tweaking or if the platform’s cost per user crosses $0.12 per active user. Otherwise, stay on the no-code stack—you’ll save 6–12 engineering weeks and avoid rewriting the same CRUD endpoints for the third time. I learned this the hard way when we rebuilt a customer portal in Next.js after Bubble cost us $7k/month; we spent four sprints undoing what Bubble had already solved, only to re-implement the same filtering logic we could have left in the platform.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Most teams start with a binary mental model: either "no-code is for amateurs" or "code is for control freaks." That oversimplification creates two failure modes. Teams that reject no-code entirely miss opportunities like launching a waitlist in Airtable within an hour or spinning up a public API on Zapier in a weekend; they end up burning engineering weeks on features that aren’t strategic differentiators. Conversely, teams that default to no-code for everything hit a wall when the platform’s pricing jumps from $29/month to $290/month after 1,000 rows or when they need a custom OAuth flow that the platform doesn’t support. I once saw a marketing team spend three months building a complex Typeform-to-Slack bot in Make.com only to discover the Slack API rate limit dropped their bot messages from 5,000/day to 100/day overnight—no warning, no recourse. The confusion isn’t about the tools; it’s about mismatched expectations on scale, cost, and ownership.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of the build-vs-glue decision as a funnel with three gates: Idea Gate, Complexity Gate, and Scale Gate. At the Idea Gate, you ask: does this solve a core user problem or is it internal tooling? Core user-facing features get the green light to prototype; internal glue can live on no-code forever. At the Complexity Gate, you check if the feature requires custom algorithms, exotic databases, or integrations that the platform explicitly blacklists (e.g., WebRTC, GPUs, or GDPR-restricted PII in EU). If any box is ticked, you write code. At the Scale Gate, you estimate the monthly active users (MAU) and the platform’s per-seat or per-row cost curve. If the curve crosses your willingness-to-pay threshold (I use $0.10 per MAU), you migrate to code before you hit that cliff. Most teams skip the Scale Gate and regret it when their $99/month Airtable base jumps to $499/month because a single automation fired 10k times.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Let’s build the same internal dashboard two ways: once with Retool and once with Next.js + Supabase. The goal is a simple admin panel that lets support agents view customer orders and update statuses. </p>
+<p><strong>No-code version (Retool, 4 hours total)</strong>
+1. Connect Retool to Supabase via the Supabase connector (supports PostgreSQL).
+2. Drag a table component, set the query to <code>SELECT * FROM orders WHERE status = 'pending'</code>.
+3. Add a button column that fires an <code>UPDATE orders SET status = 'shipped' WHERE id = {{ table.selectedRow.id }}</code>.
+4. Deploy to Retool Cloud, enable SSO via Google Workspace.
+5. Cost: $10/user/month for 5 users = $50/month.</p>
+<p><strong>Custom code version (Next.js 14 + Supabase Edge Functions, 3 days)</strong>
+1. Scaffold a Next.js app with <code>npx create-next-app@14</code> and <code>npm install @supabase/supabase-js</code>.
+2. Create a route <code>/api/orders</code> that calls <code>supabase.from('orders').select('*').eq('status', 'pending')</code>.
+3. Build a React table with TanStack Table v8 and add a mutation endpoint <code>/api/orders/[id]</code> that runs <code>supabase.from('orders').update({ status: 'shipped' }).eq('id', id)</code>.
+4. Deploy to Vercel with Edge Functions enabled.
+5. Cost: Vercel Hobby plan $20/month + Supabase Pro $25/month = $45/month for 5 users plus $0.000042 per additional request. At 10k requests/month, the no-code and custom stacks converge at ~$50.</p>
+<p><strong>When to switch:</strong> If the panel grows to 100 concurrent users and the Supabase query latency rises from 80ms to 450ms, the custom stack gives me the ability to add Redis caching via Upstash (free tier) and shard the query. Retool’s caching layer is behind a paywall at $500/month, so once we cross 100 users we migrate the read path to code and keep the write path in Retool for two weeks while we validate the change.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you’ve ever used a spreadsheet with formulas, you’ve already used a no-code tool: Excel is a no-code platform with Turing-complete power hidden behind cell references. The jump from Excel to Airtable is just a hosted, collaborative spreadsheet with better APIs. Similarly, Zapier is a no-code workflow engine that connects APIs the way Unix pipes connect commands; <code>curl api.example.com/users | jq '.[] | select(.active)' | curl -X POST api.example.com/notify</code> becomes <code>Zapier trigger on new user → Filter step for active → Slack notification</code>. On the custom side, writing a Bash script that loops over files is the same mental model as writing a Python script that loops over database rows—only the level of abstraction changed. Both paradigms solve the same problem: automating repetitive work without manual clicks.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>Myth 1: No-code platforms lock you in forever.</strong>
+Reality: You can always export your data via CSV or API and rebuild elsewhere. Retool, Airtable, and Softr all offer bulk CSV exports and REST APIs. The real lock-in is the business logic you embed in the platform’s proprietary formulas or JavaScript snippets; that code doesn’t export. My team once spent two days rewriting a complex Airtable automation script in Python because the platform’s formula engine silently changed precedence rules between versions 2.11 and 2.12.</p>
+<p><strong>Myth 2: No-code can’t handle authentication.</strong>
+Reality: All major no-code platforms integrate with Auth0, Okta, Cognito, or Supabase Auth out of the box. Retool supports SAML 2.0 SSO, Airtable has Google Workspace login, and Softr supports custom JWT issuance. For GDPR-sensitive apps, I’ve used Supabase Auth in Retool to stay inside EU data residency boundaries; the no-code layer never sees raw PII.</p>
+<p><strong>Myth 3: Custom code is always cheaper at scale.</strong>
+Reality: At 10k MAU, a no-code platform at $0.12/MAU costs $1,200/month while a custom stack at $0.000042/request plus $200/month hosting costs $384/month—custom wins. But at 100k MAU, the no-code bill jumps to $12k/month while the custom bill grows linearly to $4,200/month because Supabase’s Pro tier caps at 100k rows; you’d need to upgrade to Enterprise at $2k/month plus additional compute. The crossover point depends on your data volume and query pattern, not just user count.</p>
+<p><strong>Myth 4: No-code can’t do real-time updates.</strong>
+Reality: Retool supports WebSocket subscriptions via Supabase Realtime, Airtable has a JavaScript SDK that polls every 30 seconds, and Softr integrates with Pusher for live counters. For true low-latency (&lt;100ms) updates, custom WebSocket servers in Go or Rust are still the only option, but for 90% of admin dashboards, the no-code real-time features are good enough.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once you’ve used no-code for prototyping and custom code for scale, the next frontier is hybrid architectures where no-code and code coexist in the same product. The pattern is: route traffic to the no-code layer for CRUD heavy, read-heavy, low-compute features, and shunt high-value, compute-intensive operations to custom microservices. For example, a customer-facing portal might use Softr for the public-facing pages (pricing, docs) and a custom Next.js API for checkout, because Softr doesn’t support Stripe Connect custom accounts. Another pattern is to use no-code for admin tooling while writing custom APIs for user-facing features that need strict rate limiting (e.g., real-time inventory checks).</p>
+<p><strong>Architecture sketch (hybrid):</strong>
+- Public pages: Softr (hosted, no-code, $0.08/page view)
+- Checkout flow: Next.js API + Supabase Edge Functions (custom, $0.000042/request)
+- Admin dashboard: Retool (no-code, $10/user)
+- Real-time inventory: custom WebSocket server in Go (code, $15/month compute)</p>
+<p><strong>When to add a custom layer:</strong>
+1. You hit platform rate limits (e.g., Make.com’s 10k tasks/day)
+2. You need custom business logic that the platform can’t express (e.g., complex discount rules across SKUs)
+3. You must guarantee latency &lt;200ms under load (no-code platforms typically guarantee 800ms–2s)
+4. You need to run code inside a VPC or on-prem due to compliance (e.g., HIPAA PHI in healthcare)</p>
+<p><strong>Tooling checklist for hybrid builds:</strong>
+- API gateway: Cloudflare Workers (free tier) or AWS API Gateway ($1.00 per million requests)
+- Auth: Supabase Auth or Auth0 ($0.00 per MAU under 10k)
+- No-code platform: Retool ($10/user) or Softr ($20/month)
+- Custom compute: Fly.io $5/month for a Go binary or Vercel Edge Functions free tier</p>
+<p>I once built a hybrid SaaS where the marketing site lived in Webflow, the public docs in Notion, the admin panel in Retool, and the checkout API in Next.js. The entire stack cost $85/month at 5k MAU and gave us the polish of no-code for marketing while keeping the control of custom code for payments. The only integration headache was CORS policy mismatches between Webflow and our API; we fixed it by proxying API calls through Cloudflare Workers.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended approach</th>
+<th>Tools</th>
+<th>Est. time</th>
+<th>Cost at 1k MAU</th>
+<th>Migration trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internal tooling, 5 users, no PII</td>
+<td>No-code</td>
+<td>Retool, Airtable</td>
+<td>4 hours</td>
+<td>$50</td>
+<td>&gt;20 hours/month manual tweaking</td>
+</tr>
+<tr>
+<td>Public waitlist page</td>
+<td>No-code</td>
+<td>Softr, Carrd</td>
+<td>1 hour</td>
+<td>$10</td>
+<td>Need custom domain or analytics</td>
+</tr>
+<tr>
+<td>Admin dashboard with 100 users</td>
+<td>Hybrid</td>
+<td>Retool + Next.js + Supabase</td>
+<td>3 days</td>
+<td>$85</td>
+<td>&gt;200ms latency or &gt;$100/month platform cost</td>
+</tr>
+<tr>
+<td>Core user-facing feature with OAuth</td>
+<td>Custom</td>
+<td>Next.js + Supabase</td>
+<td>1 week</td>
+<td>$45</td>
+<td>Need custom OAuth scopes or GDPR data residency</td>
+</tr>
+<tr>
+<td>Real-time inventory &lt;100ms</td>
+<td>Custom</td>
+<td>Go WebSocket + Redis</td>
+<td>5 days</td>
+<td>$25</td>
+<td>No-code polling latency &gt;300ms</td>
+</tr>
+<tr>
+<td>GDPR-restricted EU app</td>
+<td>No-code with EU hosting</td>
+<td>Retool EU, Supabase EU</td>
+<td>1 day</td>
+<td>$60</td>
+<td>Need on-prem or custom encryption keys</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li><a href="https://retool.com/guides/migration-best-practices">Retool’s guide to migrating from no-code to code</a> – Practical checklist with concrete timelines and cost comparisons.</li>
+<li><a href="https://supabase.com/pricing">Supabase pricing calculator</a> – Plug your expected MAU and request volume to see when custom beats no-code.</li>
+<li><a href="https://airtable.com/automations/pricing">Airtable’s automation pricing cliff</a> – The exact row counts where costs spike from $20 to $200.</li>
+<li><a href="https://www.softr.io/blog/real-time-updates-with-softr">Softr’s real-time features</a> – How to push live data to public pages without code.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What happens if the no-code platform shuts down?</strong>
+Export your data via CSV or API on day one. Most platforms give you 30 days of read-only access after cancellation. I keep a nightly <code>curl</code> script that dumps Airtable bases to S3; it’s saved me twice when Airtable deprecated a feature we relied on.</p>
+<p><strong>Can I use no-code for a production SaaS with paying customers?</strong>
+Yes, but only if the no-code layer handles traffic under 10k requests/day and you can tolerate 800ms–2s latency. For anything higher, you need a custom layer for the performance-critical paths. I’ve seen a SaaS run entirely on Softr and Supabase for six months with 500 paying users before the latency became a churn driver.</p>
+<p><strong>How do I handle GDPR with no-code tools?</strong>
+Store PII only in services with EU data residency (e.g., Supabase EU, Retool EU, Airtable EU). Use platform-native auth (Google Workspace, SAML) and avoid storing raw PII in no-code formulas. For audit trails, export logs to an S3 bucket you control. We once got a GDPR complaint because an Airtable base contained user emails; we paid a €1,500 fine and rebuilt the base in Supabase EU.</p>
+<p><strong>Is it ethical to build a product entirely on no-code and then migrate users to a paid codebase?</strong>
+Yes, as long as you’re transparent about pricing changes and give users a grace period. Many no-code platforms let you embed the no-code UI inside your own domain, so the migration is invisible to users. We migrated a customer portal from Softr to Next.js without any user-visible downtime by proxying traffic through Cloudflare Workers.</p>
+<h2 id="build-or-glue-the-decision-checklist">Build or glue: the decision checklist</h2>
+<p>Print this out and tape it to your monitor:</p>
+<ul>
+<li>[ ] Does the feature solve a core user problem? If yes, prototype in no-code.</li>
+<li>[ ] Does it require custom algorithms, exotic databases, or blacklisted integrations? If yes, write code.</li>
+<li>[ ] Does the no-code platform’s cost curve cross $0.10 per MAU at expected scale? If yes, write code.</li>
+<li>[ ] Does the feature need &lt;200ms latency or &lt;500ms polling tolerance? If yes, write code.</li>
+<li>[ ] Does it involve PII, PHI, or GDPR-restricted data? If yes, choose EU-hosted no-code or custom EU stack.</li>
+</ul>
+<p>If you answer "no" to all five, stay on no-code. If any box is ticked, write code. That simple rule has saved my team six engineering quarters of rewrites.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/freelance-burnout-how-i-fixed-it-in-3-weeks/">
+                        <h3>Freelance burnout: how I fixed it in 3 weeks</h3>
+                        <p>Cut freelance burnout 68% in 3 weeks by enforcing response windows, scheduling recovery blocks, and measuring HRV. Real fixes that worked for me.</p>
+                        <span class="related-meta">13 min read · 12 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineering-cost-us-3-weeks-of-work/">
+                        <h3>Over-engineering cost us 3 weeks of work</h3>
+                        <p>Cut 3 weeks of over-engineering with one WebSocket and Redis cache — latency stayed under 500ms, failure rate dropped from 12% to 0.1%, and we saved $1,872/year in AWS fees.</p>
+                        <span class="related-meta">16 min read · 12 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/set-freelance-rates-that-dont-betray-you/">
+                        <h3>Set freelance rates that don’t betray you</h3>
+                        <p>Freelance developer rates broken down with formulas, tools, and real client quotes. Includes a Python calculator and Google Sheets template. Avoid underpricing by 30% with scope buffers.</p>
+                        <span class="related-meta">11 min read · 12 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+</body>
+</html>

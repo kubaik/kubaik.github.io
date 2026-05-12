@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 21:10:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 22:06:36 +0000</lastBuildDate>
+    <item>
+      <title>Build or glue: when no-code beats code</title>
+      <link>https://kubaik.github.io/build-or-glue-when-no-code-beats-code/</link>
+      <description>Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.</description>
+      <pubDate>Tue, 12 May 2026 22:06:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-or-glue-when-no-code-beats-code/</guid>
+    </item>
     <item>
       <title>Freelance burnout: how I fixed it in 3 weeks</title>
       <link>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.</description>
       <pubDate>Tue, 12 May 2026 10:08:30 +0000</pubDate>
       <guid>https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/</guid>
-    </item>
-    <item>
-      <title>Monoliths won in 2026 — here’s the data</title>
-      <link>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</link>
-      <description>Cut cloud costs by 37% and deployments by 80% with modular monoliths — the real-world data on why monoliths won in 2026 for most teams.</description>
-      <pubDate>Tue, 12 May 2026 08:48:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</guid>
     </item>
   </channel>
 </rss>
