@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 15:35:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 16:19:08 +0000</lastBuildDate>
+    <item>
+      <title>Pools of death: the connection setting you copy-pasted</title>
+      <link>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</link>
+      <description>Pools death connection setting: spiked to 95%, P99 latency jumped from 45 m. Practical guide with real examples.</description>
+      <pubDate>Tue, 12 May 2026 16:19:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</guid>
+    </item>
     <item>
       <title>How to build an internal developer</title>
       <link>https://kubaik.github.io/how-to-build-an-internal-developer/</link>
@@ -138,13 +145,6 @@
       <description>,798 | 97.6% resolution rate | | Mean time with Tech exits reasons — startups or hedge funds for 200k+ TC.</description>
       <pubDate>Mon, 11 May 2026 20:06:27 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</guid>
-    </item>
-    <item>
-      <title>CS degree won’t save your career</title>
-      <link>https://kubaik.github.io/cs-degree-wont-save-your-career/</link>
-      <description>Senior developers ship under constraints not degrees—real latency, budget, and uptime figures from real systems including a Go API handling 12k req/s under $1.2k/month and a Python pipeline processing 50GB daily with Airflow and dbt.</description>
-      <pubDate>Mon, 11 May 2026 19:28:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/cs-degree-wont-save-your-career/</guid>
     </item>
   </channel>
 </rss>

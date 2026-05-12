@@ -33,5 +33,6 @@
   "Copilot vs Cursor: which actually speeds up Python backend work",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
   "Claude Code vs Cursor: a real cost breakdown after 3 months",
-  "How to build an internal developer platform on a startup budget"
+  "How to build an internal developer platform on a startup budget",
+  "Database connection pooling: the setting everyone gets wrong"
 ]
