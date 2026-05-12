@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 07:24:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 07:44:18 +0000</lastBuildDate>
+    <item>
+      <title>Claude reviews my code: blind spots found</title>
+      <link>https://kubaik.github.io/claude-reviews-my-code-blind-spots-found/</link>
+      <description>Cut review time in half with 62 real bugs caught using Claude 3.7 Sonnet for code review — actual prompts, benchmarks, and the failure modes most teams miss before production fires.</description>
+      <pubDate>Tue, 12 May 2026 07:44:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-reviews-my-code-blind-spots-found/</guid>
+    </item>
     <item>
       <title>AI skills that pay 2026: LLM fine-tuning vs prompt</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-2026-llm-fine-tuning-vs-prompt/</link>
@@ -138,13 +145,6 @@
       <description>Cut rework from 11 days to 2 by choosing the right AI coding tool and enforcing a prompt template and review gate. Measure first-pass merge rate and edge-case coverage in two weeks, not months.</description>
       <pubDate>Mon, 11 May 2026 11:59:57 +0000</pubDate>
       <guid>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</guid>
-    </item>
-    <item>
-      <title>Pick the right realtime tool for your app</title>
-      <link>https://kubaik.github.io/pick-the-right-realtime-tool-for-your-app/</link>
-      <description>Cut realtime tool choice mistakes to zero with measured WebSockets vs SSE vs long polling latency, CPU, and battery data on a 2020 M1 MacBook Pro using vegeta 12.8, FastAPI 0.111, Flask 3.0, and iPhone 13 battery logging.</description>
-      <pubDate>Mon, 11 May 2026 10:46:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-realtime-tool-for-your-app/</guid>
     </item>
   </channel>
 </rss>
