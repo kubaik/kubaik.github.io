@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 11:15:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 11:24:18 +0000</lastBuildDate>
+    <item>
+      <title>Remote jobs: build one project, not ten portfolios</title>
+      <link>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</link>
+      <description>Build one anchor project that runs in production to land remote jobs from Africa — 3 real examples, AWS/Render costs, FastAPI 0.68.0 mistake, and uptime figures</description>
+      <pubDate>Tue, 12 May 2026 11:24:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</guid>
+    </item>
     <item>
       <title>Pick the wrong Python API stack, regret later</title>
       <link>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</link>
@@ -138,13 +145,6 @@
       <description>Catch 7 AI-generated code vulnerabilities missed by scanners — hardcoded secrets, SQL injection, memory leaks and more. Reduce production failures by 60% with pre-commit hooks and semgrep.</description>
       <pubDate>Mon, 11 May 2026 16:38:46 +0000</pubDate>
       <guid>https://kubaik.github.io/7-ai-pitfalls-leaving-security-gaps-in-production/</guid>
-    </item>
-    <item>
-      <title>AI isn&apos;t boosting velocity: measure it or quit</title>
-      <link>https://kubaik.github.io/ai-isnt-boosting-velocity-measure-it-or-quit/</link>
-      <description>Cut feature cycle time measurement errors by 60% with AI velocity audits. Measure AI impact on velocity with Linear, GitHub, and Sentry metrics. Stop guessing if AI is helping or hurting.</description>
-      <pubDate>Mon, 11 May 2026 16:27:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-isnt-boosting-velocity-measure-it-or-quit/</guid>
     </item>
   </channel>
 </rss>
