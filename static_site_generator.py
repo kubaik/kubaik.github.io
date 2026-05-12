@@ -185,14 +185,40 @@ Sitemap: {base_url}/rss.xml
         print("Generated 404.html")
 
     def _generate_pwa_files(self):
-        """Copy sw.js, offline.html, and manifest.json into /docs/."""
+        """Copy sw.js (with cache-busted version), offline.html, and manifest.json into /docs/."""
         import shutil
-        pwa_sources = [
-            ("sw.js",       "./docs/sw.js"),
-            ("offline.html", "./docs/offline.html"),
-            ("manifest.json", "./docs/manifest.json"),
-        ]
-        for src, dst in pwa_sources:
+        import re
+        import time
+
+        # ── sw.js: inject a fresh cache version so the SW picks up new posts ──
+        sw_src = Path("sw.js")
+        if sw_src.exists():
+            sw_text = sw_src.read_text(encoding="utf-8")
+            new_version = f"v{int(time.time())}"
+
+            patched, n = re.subn(
+                r"(const\s+CACHE_VERSION\s*=\s*')[^']*(')",
+                lambda m: m.group(1) + new_version + m.group(2),
+                sw_text,
+            )
+            if n == 0:
+                patched, n = re.subn(
+                    r"((?:cache|CACHE)[_-])(v\d+)",
+                    lambda m: m.group(1) + new_version,
+                    sw_text,
+                )
+            if n == 0:
+                print(
+                    "Warning: could not find a cache version string in sw.js — SW cache may be stale")
+                patched = sw_text
+
+            Path("./docs/sw.js").write_text(patched, encoding="utf-8")
+            print(f"Generated docs/sw.js with cache version {new_version}")
+        else:
+            print("Warning: sw.js not found — skipping")
+
+        for src, dst in [("offline.html", "./docs/offline.html"),
+                         ("manifest.json", "./docs/manifest.json")]:
             src_path = Path(src)
             if src_path.exists():
                 shutil.copy2(src_path, dst)
@@ -200,7 +226,6 @@ Sitemap: {base_url}/rss.xml
             else:
                 print(f"Warning: {src} not found — skipping")
 
-        # Copy pwa.js into static/
         pwa_js_src = Path("static/pwa.js")
         if pwa_js_src.exists():
             shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
