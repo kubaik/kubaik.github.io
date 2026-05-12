@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 22:47:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 23:44:53 +0000</lastBuildDate>
+    <item>
+      <title>Pick PostgreSQL 2026: the 3 benchmarks that decide</title>
+      <link>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</link>
+      <description>PostgreSQL beats MySQL by 60% latency and 3x recovery speed — benchmarks from 2026 workloads on identical hardware. See the exact PostgreSQL 16 and MySQL 8.3 numbers and the one-line code swap that proves it.</description>
+      <pubDate>Tue, 12 May 2026 23:44:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</guid>
+    </item>
     <item>
       <title>Edge functions: 80ms p99 at $0.02 per million</title>
       <link>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 30% after choosing the right Python stack — FastAPI vs Django REST trade-offs, real benchmarks, and the mistakes that cost teams weeks</description>
       <pubDate>Tue, 12 May 2026 11:15:42 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</guid>
-    </item>
-    <item>
-      <title>Fine-tuning beats prompt engineering 60% of the time</title>
-      <link>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</link>
-      <description>Cut hallucinations by 60% with fine-tuning — the real difference between prompt engineering and fine-tuning when shipping AI systems to production under load</description>
-      <pubDate>Tue, 12 May 2026 10:45:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</guid>
     </item>
   </channel>
 </rss>
