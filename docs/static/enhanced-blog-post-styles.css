@@ -784,3 +784,45 @@
         border-color: #4a5568;
     }
 }
+
+/* ============================================
+   ABOUT PAGE — MOBILE AUTHOR CARD
+   ============================================ */
+
+@media (max-width: 600px) {
+
+    /* Stack photo above text instead of side-by-side */
+    .author-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    .author-avatar-lg {
+        width: 90px;
+        height: 90px;
+        flex-shrink: 0;
+    }
+
+    .author-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .author-card .credentials {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .author-card p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .linkedin-link {
+        font-size: 0.95rem;
+    }
+}
