@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 13:20:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 13:59:10 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code vs Cursor: 3-month cost breakdown</title>
+      <link>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</link>
+      <description>Cut AI coding tool costs by $71 per developer in 3 months — real token counts, latency, and rework data from Cursor vs Claude Code benchmarks. Compare tools without the marketing fluff.</description>
+      <pubDate>Tue, 12 May 2026 13:59:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</guid>
+    </item>
     <item>
       <title>Instrument LLM pipelines: Prometheus + OpenTelemetry</title>
       <link>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</link>
@@ -138,13 +145,6 @@
       <description>y rate by 40% within 90 days because I trea with Land 120k remote you — burning bridges with clients or HR.</description>
       <pubDate>Mon, 11 May 2026 18:21:40 +0000</pubDate>
       <guid>https://kubaik.github.io/land-120k-remote-when-youre-in-a-30k-city/</guid>
-    </item>
-    <item>
-      <title>TypeScript strict mode traps: 5 silent footguns</title>
-      <link>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</link>
-      <description>Cut 3 a.m. incidents by 60%: TypeScript strict mode traps exposed with real benchmarks and fixes for solo founders. Learn the 5 silent footguns that survive tsc --noEmit and the exact commands to audit your codebase today.</description>
-      <pubDate>Mon, 11 May 2026 18:13:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</guid>
     </item>
   </channel>
 </rss>
