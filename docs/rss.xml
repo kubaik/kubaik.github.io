@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 23:44:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 23:54:04 +0000</lastBuildDate>
+    <item>
+      <title>5 real-time tricks without WebSockets</title>
+      <link>https://kubaik.github.io/5-real-time-tricks-without-websockets/</link>
+      <description>Cut real-time latency by 60% under 6 k updates/sec without WebSockets — SSE, HTTP/2 Push, WebTransport benchmarks, $3.20 per million updates, Safari 60s timeout fix included.</description>
+      <pubDate>Tue, 12 May 2026 23:53:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-real-time-tricks-without-websockets/</guid>
+    </item>
     <item>
       <title>Pick PostgreSQL 2026: the 3 benchmarks that decide</title>
       <link>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</link>
@@ -138,13 +145,6 @@
       <description>Build one anchor project that runs in production to land remote jobs from Africa — 3 real examples, AWS/Render costs, FastAPI 0.68.0 mistake, and uptime figures</description>
       <pubDate>Tue, 12 May 2026 11:24:11 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</guid>
-    </item>
-    <item>
-      <title>Pick the wrong Python API stack, regret later</title>
-      <link>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</link>
-      <description>Cut API response time by 30% after choosing the right Python stack — FastAPI vs Django REST trade-offs, real benchmarks, and the mistakes that cost teams weeks</description>
-      <pubDate>Tue, 12 May 2026 11:15:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</guid>
     </item>
   </channel>
 </rss>
