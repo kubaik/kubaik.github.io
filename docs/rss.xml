@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 11:09:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 08:12:15 +0000</lastBuildDate>
+    <item>
+      <title>Async Python: when it helps, when it hurts</title>
+      <link>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</link>
+      <description>Cut API response time 9.4x with async Python — real benchmarks, httpx vs requests, and the traps that cost 2 weeks of debugging in a fintech microservice.</description>
+      <pubDate>Tue, 12 May 2026 08:12:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</guid>
+    </item>
     <item>
       <title>Claude reviews my code: blind spots found</title>
       <link>https://kubaik.github.io/claude-reviews-my-code-blind-spots-found/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks</description>
       <pubDate>Mon, 11 May 2026 12:03:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</guid>
-    </item>
-    <item>
-      <title>Why 84% use AI coding tools but only 29% trust them</title>
-      <link>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</link>
-      <description>Cut rework from 11 days to 2 by choosing the right AI coding tool and enforcing a prompt template and review gate. Measure first-pass merge rate and edge-case coverage in two weeks, not months.</description>
-      <pubDate>Mon, 11 May 2026 11:59:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-84-use-ai-coding-tools-but-only-29-trust-them/</guid>
     </item>
   </channel>
 </rss>
