@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 19:24:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 20:28:31 +0000</lastBuildDate>
+    <item>
+      <title>Agents fail in prod: the real catch</title>
+      <link>https://kubaik.github.io/agents-fail-in-prod-the-real-catch/</link>
+      <description>Cut p99 latency to 320ms with a multi-agent ticket triage system — LangGraph, NATS, Redis, and the mistakes that caused cache stampedes and state drift</description>
+      <pubDate>Tue, 12 May 2026 20:28:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-fail-in-prod-the-real-catch/</guid>
+    </item>
     <item>
       <title>Set freelance rates that don’t betray you</title>
       <link>https://kubaik.github.io/set-freelance-rates-that-dont-betray-you/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 9.4x with async Python — real benchmarks, httpx vs requests, and the traps that cost 2 weeks of debugging in a fintech microservice.</description>
       <pubDate>Tue, 12 May 2026 08:12:08 +0000</pubDate>
       <guid>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</guid>
-    </item>
-    <item>
-      <title>Claude reviews my code: blind spots found</title>
-      <link>https://kubaik.github.io/claude-reviews-my-code-blind-spots-found/</link>
-      <description>Cut review time in half with 62 real bugs caught using Claude 3.7 Sonnet for code review — actual prompts, benchmarks, and the failure modes most teams miss before production fires.</description>
-      <pubDate>Tue, 12 May 2026 07:44:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-reviews-my-code-blind-spots-found/</guid>
     </item>
   </channel>
 </rss>
