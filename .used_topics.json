@@ -32,5 +32,6 @@
   "How to design a multi-tenant SaaS database without painting yourself into a corner",
   "Copilot vs Cursor: which actually speeds up Python backend work",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
-  "Claude Code vs Cursor: a real cost breakdown after 3 months"
+  "Claude Code vs Cursor: a real cost breakdown after 3 months",
+  "How to build an internal developer platform on a startup budget"
 ]

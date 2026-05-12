@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 13:59:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 15:35:38 +0000</lastBuildDate>
+    <item>
+      <title>How to build an internal developer</title>
+      <link>https://kubaik.github.io/how-to-build-an-internal-developer/</link>
+      <description>Cut How to build an internal developer platform on a startup budget failures by understanding connection pooling and retry logic — real benchmarks, comm…</description>
+      <pubDate>Tue, 12 May 2026 15:35:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-to-build-an-internal-developer/</guid>
+    </item>
     <item>
       <title>Claude Code vs Cursor: 3-month cost breakdown</title>
       <link>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</link>
@@ -138,13 +145,6 @@
       <description>Senior developers ship under constraints not degrees—real latency, budget, and uptime figures from real systems including a Go API handling 12k req/s under $1.2k/month and a Python pipeline processing 50GB daily with Airflow and dbt.</description>
       <pubDate>Mon, 11 May 2026 19:28:12 +0000</pubDate>
       <guid>https://kubaik.github.io/cs-degree-wont-save-your-career/</guid>
-    </item>
-    <item>
-      <title>Land $120k remote when you&apos;re in a $30k city</title>
-      <link>https://kubaik.github.io/land-120k-remote-when-youre-in-a-30k-city/</link>
-      <description>y rate by 40% within 90 days because I trea with Land 120k remote you — burning bridges with clients or HR.</description>
-      <pubDate>Mon, 11 May 2026 18:21:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/land-120k-remote-when-youre-in-a-30k-city/</guid>
     </item>
   </channel>
 </rss>
