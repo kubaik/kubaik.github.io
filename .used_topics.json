@@ -34,5 +34,6 @@
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
   "Claude Code vs Cursor: a real cost breakdown after 3 months",
   "How to build an internal developer platform on a startup budget",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "Zero-trust architecture for small teams: what actually makes sense to implement"
 ]
