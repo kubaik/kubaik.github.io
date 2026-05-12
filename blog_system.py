@@ -35,6 +35,21 @@ MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1500
 
 
+def _to_single_word_tags(tags: List[str]) -> List[str]:
+    """Convert multi-word tags to CamelCase single-word tags."""
+    result = []
+    seen = set()
+    for tag in tags:
+        # Strip # prefix if present
+        tag = tag.lstrip('#').strip()
+        # CamelCase each word and join
+        word = ''.join(w.capitalize() for w in re.split(r'[\s\-_]+', tag) if w)
+        if word and word.lower() not in seen:
+            seen.add(word.lower())
+            result.append(word)
+    return result
+
+
 def _tokenise(text: str) -> set:
     words = re.sub(r"[^\w\s]", "", text.lower()).split()
     return {w for w in words if w not in _STOP_WORDS and len(w) > 2}
@@ -1442,8 +1457,11 @@ class BlogSystem:
                 seo_keywords, topic=topic, title=title, max_hashtags=5)
             print(f"Hashtags selected: {', '.join(hashtags)}")
 
-            post.tags = list(set(post.tags + hashtags))[:15]
-            post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
+            all_tags = _to_single_word_tags(seo_keywords[:5] + hashtags)
+            post.tags = all_tags[:15]
+            post.seo_keywords = _to_single_word_tags(
+                seo_keywords + hashtags)[:15]
+
             post.twitter_hashtags = " ".join(
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags)
 
@@ -1988,8 +2006,11 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
 
         post = BlogPost(
             title=title, content=content, slug=slug,
-            tags=[topic_lower.replace(
-                ' ', '-'), 'development', 'technical-guide', 'best-practices'] + fallback_hashtags,
+            tags=_to_single_word_tags(
+                [topic_lower.replace(' ', '-'), 'development',
+                 'technical-guide', 'best-practices']
+                + fallback_hashtags
+            ),
             meta_description=meta_description,
             featured_image=f"/static/images/{slug}.jpg",
             created_at=datetime.now().isoformat(),
