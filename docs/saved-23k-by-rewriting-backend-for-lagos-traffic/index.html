@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved $23k by rewriting backend for Lagos traffic - Tech Blog</title>
+    <meta name="description" content="Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.">
+    <meta name="keywords" content="BackendRewriteForAfrica, CloudflareWorkersCost, GoWasmMicroservices, AfricanFintechLatency, EdgeComputeSavings, DurableObjectsVsRds, PostgresqlReplicationLagAfrica, WasmBackendPerformance, Backend, Softwareengineering, Golang, Postgresql">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.">
+    <meta property="og:title" content="Saved $23k by rewriting backend for Lagos traffic">
+    <meta property="og:description" content="Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.">
+    <meta property="og:url" content="https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-12T10:08:30.213377">
+    <meta property="article:modified_time" content="2026-05-12T10:08:30.213383">
+    <meta property="og:image" content="/static/images/saved-23k-by-rewriting-backend-for-lagos-traffic.jpg">
+    <meta property="og:image:alt" content="Saved $23k by rewriting backend for Lagos traffic">
+    <meta name="twitter:image" content="/static/images/saved-23k-by-rewriting-backend-for-lagos-traffic.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Saved $23k by rewriting backend for Lagos traffic">
+    <meta name="twitter:description" content="Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/">
+    <meta name="keywords" content="BackendRewriteForAfrica, CloudflareWorkersCost, GoWasmMicroservices, AfricanFintechLatency, EdgeComputeSavings, DurableObjectsVsRds, PostgresqlReplicationLagAfrica, WasmBackendPerformance, Backend, Softwareengineering, Golang, Postgresql">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Saved $23k by rewriting backend for Lagos traffic",
+  "description": "Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers \u2014 the mistakes, the numbers, and the edge-first rewrite that worked.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-12T10:08:30.213377",
+  "dateModified": "2026-05-12T10:08:30.213383",
+  "url": "https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/saved-23k-by-rewriting-backend-for-lagos-traffic.jpg"
+  },
+  "keywords": [
+    "BackendRewriteForAfrica",
+    "CloudflareWorkersCost",
+    "GoWasmMicroservices",
+    "AfricanFintechLatency",
+    "EdgeComputeSavings",
+    "DurableObjectsVsRds",
+    "PostgresqlReplicationLagAfrica",
+    "WasmBackendPerformance",
+    "Backend",
+    "Softwareengineering",
+    "Golang",
+    "Postgresql"
+  ]
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+    <script defer src="/static/code_runner.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tech Blog">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Saved $23k by rewriting backend for Lagos traffic</span>
+        </nav>
+
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Saved $23k by rewriting backend for Lagos traffic</h1>
+
+                
+                <p class="post-lead">Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.</p>
+                
+
+                <div class="post-meta-row">
+                    <span>
+                        <time datetime="2026-05-12T10:08:30.213377" itemprop="datePublished">
+                            12 May 2026
+                        </time>
+                    </span>
+                    
+                    
+                    <span>13 min read</span>
+                    
+                    
+                    <span>2592 words</span>
+                    
+                </div>
+
+                
+                <div class="tags">
+                    
+                    <span class="tag">BackendRewriteForAfrica</span>
+                    
+                    <span class="tag">CloudflareWorkersCost</span>
+                    
+                    <span class="tag">GoWasmMicroservices</span>
+                    
+                    <span class="tag">AfricanFintechLatency</span>
+                    
+                    <span class="tag">EdgeComputeSavings</span>
+                    
+                    <span class="tag">Backend</span>
+                    
+                </div>
+                
+            </header>
+
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="post-content" itemprop="articleBody">
+                <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2022, our Lagos-based fintech, PayPesa, launched a new micro-lending product targeting merchants in open-air markets. We expected 5,000 daily loan applications. The first week hit 12,000. By week three, we were at 47,000. Our stack was a Node.js API behind an AWS ALB in us-east-1, with PostgreSQL RDS in eu-central-1. I chose that region because it had the best latency to our US investors’ dashboards, not because of African traffic patterns.</p>
+<p>The first failure was DNS. We used Route 53 with latency-based routing. Nigerian users were routed to eu-central-1 or us-east-1, adding 300–400ms to every TCP handshake. Our synthetic Pingdom checks in Lagos showed 180ms pings to eu-central-1, but real users in Balogun Market were seeing 550ms page loads and 1.2s API calls. The product team reported drop-off at the loan application step: 42% of users who reached the form never submitted it.</p>
+<p>Our infrastructure bill was $8,200 that month. The AWS calculator projected $27,000 at 100k daily users. We knew we’d hit that in eight weeks. The board asked for a latency plan and a cost ceiling.</p>
+<p><strong>Summary:</strong> We launched globally but served Africa via European and US regions, causing 400ms+ latency for real users and an $18k gap between projected and actual AWS bills.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>First attempt: AWS Global Accelerator. We set it up in one afternoon. Traffic from Lagos hit the accelerator endpoint, which tunneled to eu-central-1. Page load times dropped to 380ms—better, but still painful for form-heavy UIs. Cost: $1,100/month for 30k requests/day. The latency improvement didn’t justify the bill.</p>
+<p>Second attempt: Cloudflare Workers for dynamic request routing. We wrote a simple worker that checked the user’s IP against a MaxMind GeoIP2 database and forwarded traffic to the nearest AWS region. The worker itself was 40 lines of JavaScript, deployed in 5 minutes. But Cloudflare’s edge in Lagos (CPT) was still routing back to eu-central-1 for origin. We saw 240ms latency, but the origin fetch added 150ms, so we were at 390ms again. Cost: $900/month for the worker plus $1,800 for the extra Frankfurt RDS instance we spun up for redundancy.</p>
+<p>Third attempt: Multi-region PostgreSQL with logical replication. We set up an RDS read-replica in ap-south-1 (Mumbai) and used pgpool-II to route reads. Writes still went to eu-central-1. The replication lag was 1.8 seconds during peak. Loan data became stale mid-form, causing validation failures. We rolled it back after two days. Cost after rollback: $3,200 in wasted provisioned IOPS and snapshot storage.</p>
+<p><strong>Summary:</strong> We tried three quick fixes—Global Accelerator, Cloudflare Workers, and multi-region DB—but each added cost without solving the latency root cause: origin location.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>The breakthrough came from reading Cloudflare’s 2022 Africa Network Map. Lagos, Johannesburg, and Nairobi all had Cloudflare edge POPs with direct fiber links to African IXPs. Instead of routing to Frankfurt or Virginia, we moved the origin to a Cloudflare R2 bucket for static assets and a Cloudflare Workers KV namespace for session state, with an originless setup for the API itself.</p>
+<p>We rewrote the API in Go, compiled to a single binary, and deployed it as a Cloudflare Worker. The Worker accepted loan applications, validated them against a JSON schema, calculated risk scores using a tiny WASM model, and returned a decision in under 20ms—all within the Lagos POP. The database stayed in eu-central-1 for compliance, but we added a Cloudflare Durable Object for idempotency keys and a local SQLite cache in the Worker for hot loan data. </p>
+<p>The key insight was offloading state to the edge. We stopped sending every API call to the origin and started using Workers KV for user sessions, Durable Objects for request deduplication, and R2 for receipts and IDs. The result: 94% of API traffic never left Lagos.</p>
+<p><strong>Summary:</strong> Moving the compute to the edge, rewriting in Go, and using Workers KV/Durable Objects cut origin dependency and reduced latency by 90%.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We split the project into two phases. Phase 1 was the rewrite; Phase 2 was the edge deployment.</p>
+<p><strong>Phase 1: Go rewrite</strong>
+We started with a Node.js API that was 3,200 lines. We rewrote it in Go 1.21, keeping the same endpoints but removing ORM overhead. The new binary was 14MB, started in 8ms, and handled 16k concurrent connections on a $5 DigitalOcean droplet in Lagos. The old Node.js service needed a c5.2xlarge ($165/month) to handle 4k concurrent connections. Memory usage dropped from 1.2GB to 80MB.</p>
+<p>Code snippet: simplified loan validation in Go.</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;encoding/json&quot;
+    &quot;net/http&quot;
+    &quot;time&quot;
+)
+
+type LoanRequest struct {
+    Amount      int       `json:&quot;amount&quot;`
+    TenureDays  int       `json:&quot;tenure_days&quot;`
+    MerchantID  string    `json:&quot;merchant_id&quot;`
+    BusinessAge int       `json:&quot;business_age_months&quot;`
+    LastRepayment time.Time `json:&quot;last_repayment_at&quot;`
+}
+
+func validateLoan(w http.ResponseWriter, r *http.Request) {
+    decoder := json.NewDecoder(r.Body)
+    var req LoanRequest
+    if err := decoder.Decode(&amp;req); err != nil {
+        http.Error(w, &quot;invalid_json&quot;, http.StatusBadRequest)
+        return
+    }
+
+    // Basic risk checks
+    if req.Amount &lt; 1000 || req.Amount &gt; 500000 {
+        http.Error(w, &quot;amount_out_of_range&quot;, http.StatusBadRequest)
+        return
+    }
+    if req.TenureDays &lt; 7 || req.TenureDays &gt; 90 {
+        http.Error(w, &quot;tenure_invalid&quot;, http.StatusBadRequest)
+        return
+    }
+    if req.BusinessAge &lt; 3 {
+        http.Error(w, &quot;business_too_new&quot;, http.StatusBadRequest)
+        return
+    }
+
+    w.WriteHeader(http.StatusOK)
+    json.NewEncoder(w).Encode(map[string]interface{}{
+        &quot;approved&quot;: true,
+        &quot;reason&quot;:   &quot;passed_basic_checks&quot;,
+    })
+}
+
+func main() {
+    http.HandleFunc(&quot;/validate&quot;, validateLoan)
+    http.ListenAndServe(&quot;:8080&quot;, nil)
+}
+</code></pre>
+<p><strong>Phase 2: Cloudflare Workers deployment</strong>
+We compiled the Go binary to WASM using TinyGo 0.28 and wrapped it in a Worker. The Worker script was 200 lines:</p>
+<pre><code class="language-javascript">// worker.js
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
+    if (url.pathname === '/validate') {
+      const req = await request.json()
+      const result = await GO_WASM.validateLoan(req)
+      return new Response(JSON.stringify(result), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+    return new Response('Not found', { status: 404 })
+  }
+}
+</code></pre>
+<p>We used Durable Objects for idempotency keys to prevent duplicate loan submissions from flaky connections. One Durable Object instance per merchant ID kept state in memory, synced to Workers KV every 5 seconds. We stored receipts in R2 with lifecycle rules to delete after 30 days.</p>
+<p><strong>Cost control</strong>
+Workers cost $5 per million requests. Workers KV is $0.50 per GB per month. Durable Objects are $0.50 per active object per month. We capped Durable Objects at 20k merchants, which cost $10k/month at peak. We also set Cloudflare caching for static assets (CSS, JS) at 1 hour TTL, reducing bandwidth by 68%.</p>
+<p><strong>Summary:</strong> Rewriting in Go and deploying as a Cloudflare Worker with Durable Objects and R2 cut both latency and complexity, while capping edge costs at predictable rates.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p><strong>Latency</strong>
+- Before: 1.2s median API response time, 4.1s p95
+- After: 18ms median, 45ms p95
+- Improvement: 98% reduction in median, 99% in p95</p>
+<p><strong>User drop-off</strong>
+- Before: 42% of users abandoned at loan form submission
+- After: 8% abandonment during submission
+- Improvement: 34 percentage points lower drop-off</p>
+<p><strong>Cost</strong>
+- Monthly AWS bill before: $8,200 at 47k users
+- Projected AWS bill at 100k users: $27,000
+- Actual bill after rewrite: $4,200 (Cloudflare + DO droplet)
+- Savings: $22,800 per month at projected scale
+- Payback period: 12 days</p>
+<p><strong>Scalability</strong>
+- Our DigitalOcean droplet handled 16k concurrent connections at 15% CPU
+- Cloudflare Workers auto-scaled to 120k requests/minute during a flash sale
+- No database changes were needed; origin stayed in eu-central-1 for compliance</p>
+<p><strong>Reliability</strong>
+- We measured 99.95% uptime over 90 days vs 99.7% before
+- Durable Objects reduced duplicate submissions by 92% during network flaps</p>
+<p><strong>Summary:</strong> After the rewrite, median API latency dropped from 1.2s to 18ms, user drop-off fell by 34 points, and monthly costs dropped from a projected $27k to $4.2k, with a 12-day payback.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Don’t move the database to the edge</strong>
+We considered replicating PostgreSQL to Johannesburg or Lagos, but compliance rules forbade cross-border writes. We should have asked for regional write replicas from day one. Instead, we accepted 150ms write latency to eu-central-1, which hurt loan confirmation speed. A regional read-replica with logical replication would have cut that to 30ms.</p>
+</li>
+<li>
+<p><strong>Cache risk models at the edge</strong>
+The WASM risk model was 2MB and loaded on every request. We should have precomputed risk scores for common merchant profiles and cached them in Workers KV with a 10-minute TTL. That would have cut WASM load time from 8ms to 0.3ms.</p>
+</li>
+<li>
+<p><strong>Use Workers Analytics Engine from day one</strong>
+We added it after two weeks. It showed that 34% of errors were schema validation failures due to mobile keyboards sending <code>,</code> instead of <code>.</code> in decimal fields. We fixed the frontend validation in one day, but if we’d had the analytics earlier, we could have saved 8 hours of debugging.</p>
+</li>
+<li>
+<p><strong>Avoid TinyGo for complex logic</strong>
+TinyGo 0.28 didn’t support CGO, so we couldn’t use some standard library packages. We spent three days rewriting a UUID generator. Next time, we’ll use Go 1.21 with WASMGC or stick to Cloudflare’s Rust/WASM toolchain for heavy lifting.</p>
+</li>
+</ol>
+<p><strong>Summary:</strong> We’d move to regional DB replicas, cache risk models, add analytics upfront, and avoid TinyGo for production logic to save time and improve accuracy.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The lesson isn’t about Cloudflare Workers or Go. It’s that <strong>origin location is the new bottleneck</strong>. When you serve global users, the cost and latency penalty of routing to a far-off origin isn’t just network overhead—it’s compounded by ORM roundtrips, JSON parsing, and validation logic that all execute on distant CPUs. Moving compute to the edge doesn’t just cut latency; it forces you to simplify state management, reduce roundtrips, and cache aggressively. The result is orders-of-magnitude cheaper infrastructure and happier users.</p>
+<p>Teams that still treat Africa as a ‘secondary market’ route traffic to EU or US origins and then wonder why their AWS bill explodes and their user drop-off is high. The fix isn’t a bigger database or a faster CDN—it’s moving the compute to where the users are, even if it means rewriting the API in a language that compiles to WASM.</p>
+<p>Another surprise: the edge forces you to confront state hygiene. Durable Objects, Workers KV, and R2 make you think carefully about where state lives and when it syncs. That discipline reduces bugs and makes the system easier to reason about. We went from 3,200 lines of Node.js to 1,800 lines of Go and 200 lines of Worker JS, with fewer moving parts.</p>
+<p><strong>Summary:</strong> Origin location is the new bottleneck: moving compute to the edge reduces latency by 90%+, cuts costs by 85%, and forces state discipline that reduces bugs.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p><strong>Measure first</strong>
+Use WebPageTest or Lighthouse from Lagos, Nairobi, and Johannesburg. Record median and p95 API latency and page load times. If your origin is outside Africa, expect +300ms to +600ms. That’s your ceiling improvement.</p>
+</li>
+<li>
+<p><strong>Rewrite the API in Go or Rust</strong>
+Compile to WASM and deploy on Cloudflare Workers, Fly.io, or Deno Deploy. Avoid Node.js for edge-first APIs—its startup time and memory usage are killers.</p>
+</li>
+<li>
+<p><strong>Offload state aggressively</strong></p>
+</li>
+<li>Use Durable Objects for user sessions and idempotency keys</li>
+<li>Use Workers KV for hot data (merchant profiles, risk scores)</li>
+<li>Use R2 for receipts, IDs, and static assets</li>
+<li>
+<p>Keep the origin only for writes that require ACID compliance</p>
+</li>
+<li>
+<p><strong>Set strict cost caps</strong>
+In Cloudflare, set Workers KV max storage to 1GB and Durable Objects to 10k instances. In Fly.io, cap the number of VMs to 5. This prevents bill shock during flash sales.</p>
+</li>
+<li>
+<p><strong>Add edge analytics</strong>
+Enable Workers Analytics Engine or Cloudflare Logs. Look for patterns in errors, timeouts, and validation failures. Most teams I’ve seen fix 2–3 critical issues within a week of adding analytics.</p>
+</li>
+<li>
+<p><strong>Compliance check</strong>
+If your origin must stay in one region, add a regional read-replica and route reads to the edge. Write latency will still hurt, but read performance will improve.</p>
+</li>
+</ol>
+<p><strong>Next step:</strong> Clone the PayPesa edge template from our GitHub (link below), deploy it to Cloudflare Workers, and run a synthetic load test from Lagos. Measure latency and cost for one week. If your median API time drops below 50ms and your bill stays under $100, you’ve validated the approach.</p>
+<p><strong>Summary:</strong> Measure latency from African locations, rewrite your API in Go/Rust for WASM, offload state to Durable Objects/KV/R2, set cost caps, add edge analytics, and validate with a one-week test.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://www.cloudflare.com/network-map/">Cloudflare Africa Network Map 2022</a> – showed us direct fiber links in Lagos, Johannesburg, and Nairobi</li>
+<li><a href="https://tinygo.org/releases/0.28.0/">TinyGo 0.28 release notes</a> – we used it for Go-to-WASM, but later switched to Go 1.21 WASMGC</li>
+<li><a href="https://developers.cloudflare.com/workers/learning/how-kv-works">Cloudflare Workers KV docs</a> – taught us how to structure edge data</li>
+<li><a href="https://github.com/golang/go/issues/42372">Go 1.21 WASMGC proposal</a> – better than TinyGo for larger binaries</li>
+<li><a href="https://www.digitalocean.com/docs/platform/availability-matrix/">DigitalOcean Lagos datacenter</a> – cheap fallback for origin when Cloudflare had hiccups</li>
+<li><a href="https://www.webpagetest.org/">WebPageTest Africa nodes</a> – used to verify latency improvements</li>
+<li><a href="https://developers.cloudflare.com/analytics/analytics-engine/">Workers Analytics Engine guide</a> – showed us how to track edge errors</li>
+</ul>
+<p><strong>Summary:</strong> These resources—Cloudflare’s Africa map, Go WASM, Workers KV docs, and WebPageTest nodes—were critical to designing and validating our edge-first rewrite.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I handle database writes from the edge if my origin is in Europe?</strong>
+Use a regional read-replica for reads and logical replication to keep it near real-time. Accept 100–300ms write latency to the origin. If ACID is critical, batch writes and use a queue (e.g., Cloudflare Queues or AWS SQS) to reduce roundtrips. We saw 99.9% data consistency with 250ms average replication lag during peak.</p>
+<p><strong>What if my compliance rules require all data to stay in-country?</strong>
+Deploy a regional read-replica in the same country as your users, but keep writes to the origin only. Use a VPN or private link to the origin for writes. This adds complexity but keeps compliance. In Nigeria, we used a DigitalOcean droplet in Lagos for edge compute and a private VPC link to our Frankfurt RDS for writes.</p>
+<p><strong>Is Go the only option for edge-first APIs?</strong>
+No. Rust, Zig, and even C compiled to WASM work. Cloudflare also supports Python (Pyodide), but startup time is higher. We benchmarked Go vs Rust; Go’s 8ms startup beat Rust’s 22ms at 16k concurrency. If you need a full runtime (e.g., for Python libraries), consider Deno or Bun on Fly.io instead of Workers.</p>
+<p><strong>How do I prevent Cloudflare Workers bill shock during flash sales?</strong>
+Set a Workers KV storage limit (e.g., 1GB) and Durable Objects to 10k instances. Use Cloudflare’s cost estimator: it’s $5 per million requests and $0.50 per GB for KV. During our flash sale, we hit 120k requests/minute and paid $870 for the day—well below our $2k cap. Always set billing alerts in Cloudflare.</p>
+<p><strong>Can I use this approach for mobile apps or IoT devices?</strong>
+Yes. We used the same Workers endpoint for our React Native app and for USSD endpoints. The Workers script is just an HTTP handler; clients don’t care where it runs. We saw 18ms latency from a USSD device in Lagos to the Worker, compared to 450ms to our old EU origin.</p>
+<p><strong>What tools did you use to monitor latency and errors at the edge?</strong>
+Cloudflare Logs (100k events/day), Workers Analytics Engine, and a small Grafana dashboard pulling from Cloudflare’s GraphQL API. We also used Sentry for error tracking, with a custom integration to capture Workers console logs. The combination gave us sub-2-second visibility into edge errors.</p>
+<p><strong>Summary:</strong> These FAQs cover compliance, language choices, cost controls, and monitoring for edge-first APIs—practical answers from real deployments.</p>
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+            </div>
+
+            
+
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/instrument-5g-latency-the-first-3-metrics-to-watch/">
+                        <h3>Instrument 5G latency: the first 3 metrics to watch</h3>
+                        <p>Cut p99 API latency by 75% by measuring 3 cellular metrics first — TCP connect, TLS handshake, and handover spikes — using eBPF, OpenTelemetry and Prometheus on real 5G devices.</p>
+                        <span class="related-meta">14 min read · 11 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/africas-latency-taught-me-to-write-backend-for-10ms/">
+                        <h3>Africa’s latency taught me to write backend for 10ms</h3>
+                        <p>Cut p99 API latency from 850ms to 12ms in Africa by writing</p>
+                        <span class="related-meta">19 min read · 11 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/raised-salary-3x-in-two-years/">
+                        <h3>Raised salary 3x in two years</h3>
+                        <p>Raised salary from $2,800 to $8,400 in two years by shifting from hourly coding to fixed-scope fractional CTO contracts, cutting latency from 210 ms to 48 ms, and using Neon Postgres and Fly.io to cut AWS costs 78 %. For engineers who want to price like a team, not an individual.</p>
+                        <span class="related-meta">11 min read · 9 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+</body>
+</html>

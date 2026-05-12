@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 08:48:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 10:08:37 +0000</lastBuildDate>
+    <item>
+      <title>Saved $23k by rewriting backend for Lagos traffic</title>
+      <link>https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/</link>
+      <description>Cut API response time from 1.2s to 18ms and saved $23k/month by rewriting a Lagos fintech backend in Go and deploying it on Cloudflare Workers — the mistakes, the numbers, and the edge-first rewrite that worked.</description>
+      <pubDate>Tue, 12 May 2026 10:08:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/saved-23k-by-rewriting-backend-for-lagos-traffic/</guid>
+    </item>
     <item>
       <title>Monoliths won in 2026 — here’s the data</title>
       <link>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 API latency by 75% by measuring 3 cellular metrics first — TCP connect, TLS handshake, and handover spikes — using eBPF, OpenTelemetry and Prometheus on real 5G devices.</description>
       <pubDate>Mon, 11 May 2026 14:59:49 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-5g-latency-the-first-3-metrics-to-watch/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: when brute-force beats similarity search</title>
-      <link>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</link>
-      <description>Cut API response time by 60% with vector search — pgvector vs Milvus benchmarks, p99 latency, and the exact dataset size when brute-force beats specialized stores.</description>
-      <pubDate>Mon, 11 May 2026 14:55:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</guid>
     </item>
   </channel>
 </rss>
