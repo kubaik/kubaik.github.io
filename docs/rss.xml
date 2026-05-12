@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 12:15:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 12:31:37 +0000</lastBuildDate>
+    <item>
+      <title>How to design a multi-tenant SaaS</title>
+      <link>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</link>
+      <description>Cut How to design a multi-tenant SaaS database without painting yourself into a corner failures by understanding connection pooling and retry logic — re…</description>
+      <pubDate>Tue, 12 May 2026 12:31:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</guid>
+    </item>
     <item>
       <title>Land $4k remote roles with this test setup</title>
       <link>https://kubaik.github.io/land-4k-remote-roles-with-this-test-setup/</link>
@@ -138,13 +145,6 @@
       <description>Agentic AI wastes solo developers 30 hours before saving time. See the hard numbers, examples, and guardrails that actually work. Real-world benchmarks, Python code, and a decision checklist.</description>
       <pubDate>Mon, 11 May 2026 17:30:35 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-ai-wastes-your-time-first/</guid>
-    </item>
-    <item>
-      <title>AI junior devs hit 8x bugs faster</title>
-      <link>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</link>
-      <description>Cut junior-dev incidents 80% with guardrails — 22 bugs caught vs 8 slips through when AI-only. Includes FastAPI, Prometheus, pre-commit hooks, and 5-week benchmark.</description>
-      <pubDate>Mon, 11 May 2026 17:09:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</guid>
     </item>
   </channel>
 </rss>
