@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 11:33:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 08:37:26 +0000</lastBuildDate>
+    <item>
+      <title>AI senior devs hit 3x fewer bugs in 2026</title>
+      <link>https://kubaik.github.io/ai-senior-devs-hit-3x-fewer-bugs-in-2026/</link>
+      <description>That’s a 152% increase in post-deployment i with AI senior devs hit — solve) In 2024, I noticed something unsettling: tea.</description>
+      <pubDate>Tue, 12 May 2026 08:37:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-senior-devs-hit-3x-fewer-bugs-in-2026/</guid>
+    </item>
     <item>
       <title>Async Python: when it helps, when it hurts</title>
       <link>https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment time 73% and on-call incidents 67% with a paved road — the concrete steps, tools, and tradeoffs most guides miss. Includes GitHub Actions workflow, Helm chart, and Backstage setup.</description>
       <pubDate>Mon, 11 May 2026 12:24:34 +0000</pubDate>
       <guid>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</guid>
-    </item>
-    <item>
-      <title>AI agents overwrote my repo: how to stop them</title>
-      <link>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</link>
-      <description>Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks</description>
-      <pubDate>Mon, 11 May 2026 12:03:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/</guid>
     </item>
   </channel>
 </rss>
