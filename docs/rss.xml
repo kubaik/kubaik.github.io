@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 10:16:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 10:45:39 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tuning beats prompt engineering 60% of the time</title>
+      <link>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</link>
+      <description>Cut hallucinations by 60% with fine-tuning — the real difference between prompt engineering and fine-tuning when shipping AI systems to production under load</description>
+      <pubDate>Tue, 12 May 2026 10:45:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</guid>
+    </item>
     <item>
       <title>Pass interviews without a CS degree</title>
       <link>https://kubaik.github.io/pass-interviews-without-a-cs-degree/</link>
@@ -138,13 +145,6 @@
       <description>minutes | 96% reduction | | Documentation a with Claude Code agents saved — solve) Our team spent 20 hours a week on repetitive.</description>
       <pubDate>Mon, 11 May 2026 16:22:31 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-agents-saved-us-14-hours-weekly/</guid>
-    </item>
-    <item>
-      <title>Python packaging in 2026: what actually works</title>
-      <link>https://kubaik.github.io/python-packaging-in-2026-what-actually-works/</link>
-      <description>Cut Docker image build time 65% and install latency 83% with Python packaging in 2026 — use PDM 2.15.4, hatchling 1.25.0, and uv 0.3.0 for reproducible wheels and multi-platform deployments that actually work in production.</description>
-      <pubDate>Mon, 11 May 2026 15:37:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-packaging-in-2026-what-actually-works/</guid>
     </item>
   </channel>
 </rss>
