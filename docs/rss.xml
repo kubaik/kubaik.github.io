@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 20:54:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 21:10:10 +0000</lastBuildDate>
+    <item>
+      <title>Freelance burnout: how I fixed it in 3 weeks</title>
+      <link>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</link>
+      <description>Cut freelance burnout 68% in 3 weeks by enforcing response windows, scheduling recovery blocks, and measuring HRV. Real fixes that worked for me.</description>
+      <pubDate>Tue, 12 May 2026 21:10:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</guid>
+    </item>
     <item>
       <title>Over-engineering cost us 3 weeks of work</title>
       <link>https://kubaik.github.io/over-engineering-cost-us-3-weeks-of-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs by 37% and deployments by 80% with modular monoliths — the real-world data on why monoliths won in 2026 for most teams.</description>
       <pubDate>Tue, 12 May 2026 08:48:32 +0000</pubDate>
       <guid>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</guid>
-    </item>
-    <item>
-      <title>AI senior devs hit 3x fewer bugs in 2026</title>
-      <link>https://kubaik.github.io/ai-senior-devs-hit-3x-fewer-bugs-in-2026/</link>
-      <description>That’s a 152% increase in post-deployment i with AI senior devs hit — solve) In 2024, I noticed something unsettling: tea.</description>
-      <pubDate>Tue, 12 May 2026 08:37:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-senior-devs-hit-3x-fewer-bugs-in-2026/</guid>
     </item>
   </channel>
 </rss>
