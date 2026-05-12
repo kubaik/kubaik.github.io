@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 12:33:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 13:20:21 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLM pipelines: Prometheus + OpenTelemetry</title>
+      <link>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</link>
+      <description>Cut LLM pipeline errors by 75% with Prometheus and OpenTelemetry — measure latency, hallucinations, cache misses, and cost in production using real metrics and traces</description>
+      <pubDate>Tue, 12 May 2026 13:20:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</guid>
+    </item>
     <item>
       <title>Python backend: Copilot vs Cursor speed test</title>
       <link>https://kubaik.github.io/python-backend-copilot-vs-cursor-speed-test/</link>
@@ -138,13 +145,6 @@
       <description>Cut 3 a.m. incidents by 60%: TypeScript strict mode traps exposed with real benchmarks and fixes for solo founders. Learn the 5 silent footguns that survive tsc --noEmit and the exact commands to audit your codebase today.</description>
       <pubDate>Mon, 11 May 2026 18:13:11 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-footguns/</guid>
-    </item>
-    <item>
-      <title>Pick WebSocket vs SSE vs polling in 60 seconds</title>
-      <link>https://kubaik.github.io/pick-websocket-vs-sse-vs-polling-in-60-seconds/</link>
-      <description>Cut real-time infra costs 62% by choosing SSE over WebSockets — latency, CPU, and AWS bill breakdown with 3 concrete protocols compared</description>
-      <pubDate>Mon, 11 May 2026 17:33:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-websocket-vs-sse-vs-polling-in-60-seconds/</guid>
     </item>
   </channel>
 </rss>
