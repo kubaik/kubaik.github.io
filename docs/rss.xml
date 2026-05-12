@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 11:24:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 12:13:05 +0000</lastBuildDate>
+    <item>
+      <title>AI coding tools 10x your first product</title>
+      <link>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</link>
+      <description>Cut your first product time to 12 minutes with AI tools that actually work in production — test templates, version locking, and the real benchmarks from solo devs shipping $8k MRR.</description>
+      <pubDate>Tue, 12 May 2026 12:12:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</guid>
+    </item>
     <item>
       <title>Remote jobs: build one project, not ten portfolios</title>
       <link>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 95% after vibe coding failures — connection pools, query plans, and the staging gap that burned teams. Learn what to instrument first.</description>
       <pubDate>Mon, 11 May 2026 16:50:41 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-fails-in-prod/</guid>
-    </item>
-    <item>
-      <title>7 AI pitfalls leaving security gaps in production</title>
-      <link>https://kubaik.github.io/7-ai-pitfalls-leaving-security-gaps-in-production/</link>
-      <description>Catch 7 AI-generated code vulnerabilities missed by scanners — hardcoded secrets, SQL injection, memory leaks and more. Reduce production failures by 60% with pre-commit hooks and semgrep.</description>
-      <pubDate>Mon, 11 May 2026 16:38:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ai-pitfalls-leaving-security-gaps-in-production/</guid>
     </item>
   </channel>
 </rss>
