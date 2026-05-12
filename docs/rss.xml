@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 12:13:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 12:15:59 +0000</lastBuildDate>
+    <item>
+      <title>Land $4k remote roles with this test setup</title>
+      <link>https://kubaik.github.io/land-4k-remote-roles-with-this-test-setup/</link>
+      <description>veraged 2.12ms with 47k requests/second. Rev with Land remote roles test — me: “We keep getting ghosted after the first interv.</description>
+      <pubDate>Tue, 12 May 2026 12:15:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-4k-remote-roles-with-this-test-setup/</guid>
+    </item>
     <item>
       <title>AI coding tools 10x your first product</title>
       <link>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</link>
@@ -138,13 +145,6 @@
       <description>Cut junior-dev incidents 80% with guardrails — 22 bugs caught vs 8 slips through when AI-only. Includes FastAPI, Prometheus, pre-commit hooks, and 5-week benchmark.</description>
       <pubDate>Mon, 11 May 2026 17:09:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</guid>
-    </item>
-    <item>
-      <title>Vibe coding fails in prod</title>
-      <link>https://kubaik.github.io/vibe-coding-fails-in-prod/</link>
-      <description>Cut API response time by 95% after vibe coding failures — connection pools, query plans, and the staging gap that burned teams. Learn what to instrument first.</description>
-      <pubDate>Mon, 11 May 2026 16:50:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-fails-in-prod/</guid>
     </item>
   </channel>
 </rss>
