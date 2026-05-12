@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 22:39:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 22:47:24 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: 80ms p99 at $0.02 per million</title>
+      <link>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</link>
+      <description>Cut API response time to 80ms p99 and costs to $0.02 per million with Workers or Edge — benchmarks, code, and failure modes from a 50M request/month system.</description>
+      <pubDate>Tue, 12 May 2026 22:47:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</guid>
+    </item>
     <item>
       <title>Is $100/month AI coding worth it?</title>
       <link>https://kubaik.github.io/is-100month-ai-coding-worth-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut hallucinations by 60% with fine-tuning — the real difference between prompt engineering and fine-tuning when shipping AI systems to production under load</description>
       <pubDate>Tue, 12 May 2026 10:45:32 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</guid>
-    </item>
-    <item>
-      <title>Pass interviews without a CS degree</title>
-      <link>https://kubaik.github.io/pass-interviews-without-a-cs-degree/</link>
-      <description>S with 99.99% uptime SLA, or on a Kubernete with Pass interviews CS degree — passing remote technical interviews is straightforw.</description>
-      <pubDate>Tue, 12 May 2026 10:16:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/pass-interviews-without-a-cs-degree/</guid>
     </item>
   </channel>
 </rss>
