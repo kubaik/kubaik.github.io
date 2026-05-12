@@ -24,5 +24,6 @@
   "Monolith vs microservices in 2026: the pendulum is swinging back and here's why",
   "Infrastructure constraints in Africa that changed how I write backend code",
   "How to pass technical interviews for remote roles when you're self-taught",
-  "Fine-tuning vs prompt engineering: when each one wins"
+  "Fine-tuning vs prompt engineering: when each one wins",
+  "FastAPI vs Django REST: after building both in production"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 10:45:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 11:15:48 +0000</lastBuildDate>
+    <item>
+      <title>Pick the wrong Python API stack, regret later</title>
+      <link>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</link>
+      <description>Cut API response time by 30% after choosing the right Python stack — FastAPI vs Django REST trade-offs, real benchmarks, and the mistakes that cost teams weeks</description>
+      <pubDate>Tue, 12 May 2026 11:15:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-wrong-python-api-stack-regret-later/</guid>
+    </item>
     <item>
       <title>Fine-tuning beats prompt engineering 60% of the time</title>
       <link>https://kubaik.github.io/fine-tuning-beats-prompt-engineering-60-of-the-time/</link>
@@ -138,13 +145,6 @@
       <description>Cut feature cycle time measurement errors by 60% with AI velocity audits. Measure AI impact on velocity with Linear, GitHub, and Sentry metrics. Stop guessing if AI is helping or hurting.</description>
       <pubDate>Mon, 11 May 2026 16:27:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-isnt-boosting-velocity-measure-it-or-quit/</guid>
-    </item>
-    <item>
-      <title>Claude Code agents saved us 14 hours weekly</title>
-      <link>https://kubaik.github.io/claude-code-agents-saved-us-14-hours-weekly/</link>
-      <description>minutes | 96% reduction | | Documentation a with Claude Code agents saved — solve) Our team spent 20 hours a week on repetitive.</description>
-      <pubDate>Mon, 11 May 2026 16:22:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-code-agents-saved-us-14-hours-weekly/</guid>
     </item>
   </channel>
 </rss>
