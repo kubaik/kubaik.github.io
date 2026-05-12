@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 18:45:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 18:53:05 +0000</lastBuildDate>
+    <item>
+      <title>Cut cloud carbon 34% without losing speed</title>
+      <link>https://kubaik.github.io/cut-cloud-carbon-34-without-losing-speed/</link>
+      <description>Cut compute carbon 34% on AWS while keeping 95th-percentile latency under 210ms — Rust + Polars on Graviton3, batching, and right-sizing. Tools, mistakes, and numbers.</description>
+      <pubDate>Tue, 12 May 2026 18:52:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-carbon-34-without-losing-speed/</guid>
+    </item>
     <item>
       <title>Pick the right dev platform in 2026</title>
       <link>https://kubaik.github.io/pick-the-right-dev-platform-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Pick African payment API: ter 100ms 12% of the time during peak hours. Practical guide with real examples.</description>
       <pubDate>Tue, 12 May 2026 07:07:51 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-african-payment-api-in-30-minutes/</guid>
-    </item>
-    <item>
-      <title>Big Tech exits: the hidden reasons</title>
-      <link>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</link>
-      <description>,798 | 97.6% resolution rate | | Mean time with Tech exits reasons — startups or hedge funds for 200k+ TC.</description>
-      <pubDate>Mon, 11 May 2026 20:06:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</guid>
     </item>
   </channel>
 </rss>
