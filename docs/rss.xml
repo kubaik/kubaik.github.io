@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 17:40:40 +0000</lastBuildDate>
-    <item>
-      <title>Tech salaries in 2026: what the data shows</title>
-      <link>https://kubaik.github.io/tech-salaries-in-2026-what-the-data-shows/</link>
-      <description>Cut Tech salaries in 2026: what the data shows failures by understanding connection pooling and retry logic — real benchmarks, common mistakes, and a st…</description>
-      <pubDate>Tue, 12 May 2026 17:40:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-salaries-in-2026-what-the-data-shows/</guid>
-    </item>
+    <lastBuildDate>Tue, 12 May 2026 21:41:57 +0000</lastBuildDate>
     <item>
       <title>Small teams need 3 zero-trust rules</title>
       <link>https://kubaik.github.io/small-teams-need-3-zero-trust-rules/</link>
@@ -26,13 +19,6 @@
       <description>Pools death connection setting: spiked to 95%, P99 latency jumped from 45 m. Practical guide with real examples.</description>
       <pubDate>Tue, 12 May 2026 16:19:01 +0000</pubDate>
       <guid>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</guid>
-    </item>
-    <item>
-      <title>How to build an internal developer</title>
-      <link>https://kubaik.github.io/how-to-build-an-internal-developer/</link>
-      <description>Cut How to build an internal developer platform on a startup budget failures by understanding connection pooling and retry logic — real benchmarks, comm…</description>
-      <pubDate>Tue, 12 May 2026 15:35:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-to-build-an-internal-developer/</guid>
     </item>
     <item>
       <title>Claude Code vs Cursor: 3-month cost breakdown</title>
@@ -54,13 +40,6 @@
       <description>Cut Python backend time-to-prototype 78% with Copilot and Cursor — measured bug density, rework hours, and latency before and after. See the split approach that worked and the gotchas that cost us 12 hours.</description>
       <pubDate>Tue, 12 May 2026 12:33:49 +0000</pubDate>
       <guid>https://kubaik.github.io/python-backend-copilot-vs-cursor-speed-test/</guid>
-    </item>
-    <item>
-      <title>How to design a multi-tenant SaaS</title>
-      <link>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</link>
-      <description>Cut How to design a multi-tenant SaaS database without painting yourself into a corner failures by understanding connection pooling and retry logic — re…</description>
-      <pubDate>Tue, 12 May 2026 12:31:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/how-to-design-a-multi-tenant-saas/</guid>
     </item>
     <item>
       <title>Land $4k remote roles with this test setup</title>
@@ -145,6 +124,27 @@
       <description>See $220k vs $180k salaries in 2026: fine-tuning vs prompt engineering—latency, hallucinations, and the exact data you need to choose. Real benchmarks and cost breakdowns.</description>
       <pubDate>Tue, 12 May 2026 07:23:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-pay-2026-llm-fine-tuning-vs-prompt/</guid>
+    </item>
+    <item>
+      <title>Pick the right African payment API in 30 minutes</title>
+      <link>https://kubaik.github.io/pick-the-right-african-payment-api-in-30-minutes/</link>
+      <description>Pick African payment API: ter 100ms 12% of the time during peak hours. Practical guide with real examples.</description>
+      <pubDate>Tue, 12 May 2026 07:07:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-african-payment-api-in-30-minutes/</guid>
+    </item>
+    <item>
+      <title>Big Tech exits: the hidden reasons</title>
+      <link>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</link>
+      <description>,798 | 97.6% resolution rate | | Mean time with Tech exits reasons — startups or hedge funds for 200k+ TC.</description>
+      <pubDate>Mon, 11 May 2026 20:06:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exits-the-hidden-reasons/</guid>
+    </item>
+    <item>
+      <title>CS degree won’t save your career</title>
+      <link>https://kubaik.github.io/cs-degree-wont-save-your-career/</link>
+      <description>Senior developers ship under constraints not degrees—real latency, budget, and uptime figures from real systems including a Go API handling 12k req/s under $1.2k/month and a Python pipeline processing 50GB daily with Airflow and dbt.</description>
+      <pubDate>Mon, 11 May 2026 19:28:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/cs-degree-wont-save-your-career/</guid>
     </item>
   </channel>
 </rss>
