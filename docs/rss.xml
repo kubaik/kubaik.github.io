@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 11:43:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2026 08:48:39 +0000</lastBuildDate>
+    <item>
+      <title>Monoliths won in 2026 — here’s the data</title>
+      <link>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</link>
+      <description>Cut cloud costs by 37% and deployments by 80% with modular monoliths — the real-world data on why monoliths won in 2026 for most teams.</description>
+      <pubDate>Tue, 12 May 2026 08:48:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/monoliths-won-in-2026-heres-the-data/</guid>
+    </item>
     <item>
       <title>AI senior devs hit 3x fewer bugs in 2026</title>
       <link>https://kubaik.github.io/ai-senior-devs-hit-3x-fewer-bugs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 60% with vector search — pgvector vs Milvus benchmarks, p99 latency, and the exact dataset size when brute-force beats specialized stores.</description>
       <pubDate>Mon, 11 May 2026 14:55:23 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-when-brute-force-beats-similarity-search/</guid>
-    </item>
-    <item>
-      <title>Your team needs a paved road before snow hits</title>
-      <link>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</link>
-      <description>Cut deployment time 73% and on-call incidents 67% with a paved road — the concrete steps, tools, and tradeoffs most guides miss. Includes GitHub Actions workflow, Helm chart, and Backstage setup.</description>
-      <pubDate>Mon, 11 May 2026 12:24:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-team-needs-a-paved-road-before-snow-hits/</guid>
     </item>
   </channel>
 </rss>
