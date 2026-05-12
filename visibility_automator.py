@@ -52,6 +52,14 @@ CHANGES (2026-05-07):
     bypassing all internal template composition. Called by blog_system.py auto
     mode when a bundle tweet was written by the LLM during content generation.
     Supports hook_only link strategy identically to post_single_tweet().
+
+CHANGES (2026-05-12):
+  - FIX: _get_hashtags_for_post() now guarantees every hashtag is a single
+    word (no spaces). Tags derived from multi-word SEO keywords are
+    CamelCase-joined and stripped of all non-word characters before use.
+  - FIX: One tag from .trending_hashtag_cache.json is now randomly selected
+    and injected into the tweet hashtag string (replacing the last slot),
+    so the trending pool is actually used in posts rather than just logged.
 """
 
 import datetime
@@ -232,10 +240,14 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Trending hashtag — cache read only, for logging/reference only
+# Trending hashtag — cache read only (used in tweets as a tag slot)
 # ─────────────────────────────────────────────────────────────────
 
 def _load_trending_cache() -> Optional[str]:
+    """
+    Load the trending hashtag cache and return ONE randomly chosen tag.
+    Returns a string like '#MachineLearning', or None if cache is absent/empty.
+    """
     if not _TRENDING_CACHE_FILE.exists():
         print(f"ℹ️  No trending cache file found at {_TRENDING_CACHE_FILE}.")
         return None
@@ -248,20 +260,22 @@ def _load_trending_cache() -> Optional[str]:
                      for h in hashtags if isinstance(h, str) and h.strip()]
             if valid:
                 chosen = random.choice(valid)
-                if not chosen.startswith("#"):
-                    chosen = f"#{chosen}"
+                # Ensure it's a single word (no spaces) with # prefix
+                chosen = re.sub(r"[^\w]", "", chosen.lstrip("#"))
+                chosen = f"#{chosen}"
                 print(
                     f"📦 Trending cache pool ({len(valid)} tags) — "
-                    f"randomly selected: {chosen} [reference only, not in tweet]"
+                    f"randomly selected: {chosen}"
                 )
                 return chosen
             print("ℹ️  'hashtags' array in cache is empty.")
             return None
+        # Legacy single-tag format
         tag = data.get("hashtag", "").strip()
         if tag:
-            if not tag.startswith("#"):
-                tag = f"#{tag}"
-            print(f"📦 Trending tag from cache (legacy, reference only): {tag}")
+            tag = re.sub(r"[^\w]", "", tag.lstrip("#"))
+            tag = f"#{tag}"
+            print(f"📦 Trending tag from cache (legacy): {tag}")
             return tag
         print("ℹ️  Trending cache file contains no usable tags.")
         return None
@@ -334,62 +348,116 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Hashtag resolver
+# Hashtag helpers
 # ─────────────────────────────────────────────────────────────────
 
-def _get_hashtags_for_post(post) -> str:
+def _make_single_word_tag(raw: str) -> str:
+    """
+    Convert any string into a valid single-word hashtag (no spaces).
+
+    Rules:
+      - Strip leading '#'
+      - CamelCase each word part so meaning is preserved
+      - Remove all non-word characters (punctuation, apostrophes, etc.)
+      - Ensure the result is non-empty
+
+    Examples:
+      "How to pass technical interviews" → "HowToPassTechnicalInterviews"  (too long but valid)
+      "MachineLearning"                  → "MachineLearning"               (unchanged)
+      "cloud-native"                     → "CloudNative"
+      "#DevOps"                          → "DevOps"
+    """
+    raw = raw.lstrip("#").strip()
+    # Split on spaces, hyphens, underscores
+    parts = re.split(r"[\s\-_]+", raw)
+    tag = "".join(p.capitalize() if p.islower() else p for p in parts if p)
+    # Strip any remaining non-word characters
+    tag = re.sub(r"[^\w]", "", tag)
+    return tag
+
+
+def _get_hashtags_for_post(post, max_tags: int = 4) -> str:
+    """
+    Return a space-separated string of up to max_tags single-word hashtags
+    for the post, with ONE slot reserved for a randomly picked trending tag
+    from the cache file (if available).
+
+    The trending tag replaces the last slot so it always appears when the
+    cache has data, without exceeding the max_tags budget.
+    """
+    seen: set = set()
+    clean: List[str] = []
+
+    # ── 1. Prefer post.twitter_hashtags (already curated by blog_system) ──
     if (
         hasattr(post, "twitter_hashtags")
         and post.twitter_hashtags
         and post.twitter_hashtags.strip()
     ):
-        parts = post.twitter_hashtags.strip().split()
-        return " ".join(parts[:5])
+        for part in post.twitter_hashtags.strip().split():
+            word = _make_single_word_tag(part)
+            if word and word.lower() not in seen:
+                seen.add(word.lower())
+                clean.append(f"#{word}")
+            if len(clean) >= max_tags:
+                break
 
-    if hasattr(post, "tags") and post.tags:
-        seen: set = set()
-        clean: List[str] = []
+    # ── 2. Fall back to post.tags ──────────────────────────────────────────
+    if not clean and hasattr(post, "tags") and post.tags:
         for t in post.tags:
             if not t:
                 continue
-            raw = t.lstrip("#").replace(" ", "").replace("-", "")
-            if len(raw) < 2:
+            word = _make_single_word_tag(t)
+            if len(word) < 2:
                 continue
-            key = raw.lower()
-            if key in seen:
+            if word.lower() in seen:
                 continue
-            seen.add(key)
-            clean.append(f"#{raw}")
-            if len(clean) == 5:
+            seen.add(word.lower())
+            clean.append(f"#{word}")
+            if len(clean) >= max_tags:
                 break
-        if clean:
-            return " ".join(clean)
 
-    if hasattr(post, "seo_keywords") and post.seo_keywords:
-        seen = set()
-        tags: List[str] = []
-        for kw in post.seo_keywords[:8]:
+    # ── 3. Fall back to SEO keywords ──────────────────────────────────────
+    if not clean and hasattr(post, "seo_keywords") and post.seo_keywords:
+        for kw in post.seo_keywords[:10]:
             kw = kw.strip()
             if not kw:
                 continue
-            parts = kw.split()
-            if len(parts) <= 3:
-                tag = "".join(w.capitalize() for w in parts)
-                tag = re.sub(r"[^\w]", "", tag)
-                if tag and tag.lower() not in seen:
-                    seen.add(tag.lower())
-                    tags.append(f"#{tag}")
-            if len(tags) == 5:
+            word = _make_single_word_tag(kw)
+            if not word or word.lower() in seen:
+                continue
+            seen.add(word.lower())
+            clean.append(f"#{word}")
+            if len(clean) >= max_tags:
                 break
-        if tags:
-            return " ".join(tags)
 
-    if hasattr(post, "title") and post.title:
-        phrase = _extract_topic_phrase(post.title, max_words=2)
-        tag = phrase.replace(" ", "")
-        return f"#{tag} #Programming #SoftwareEngineering"
+    # ── 4. Last-resort generic tags ───────────────────────────────────────
+    if not clean:
+        if hasattr(post, "title") and post.title:
+            phrase = _extract_topic_phrase(post.title, max_words=2)
+            word = _make_single_word_tag(phrase)
+            clean = [f"#{word}", "#Programming", "#SoftwareEngineering"]
+        else:
+            clean = ["#Programming", "#SoftwareEngineering", "#TechBlog"]
 
-    return "#Programming #SoftwareEngineering #TechBlog"
+    # ── 5. Inject one random trending tag (replaces last slot) ────────────
+    trending_tag = _load_trending_cache()
+    if trending_tag:
+        trending_word = _make_single_word_tag(trending_tag)
+        trending_formatted = f"#{trending_word}"
+        if trending_word.lower() not in seen:
+            if len(clean) >= max_tags:
+                # Replace the last tag to stay within budget
+                clean[-1] = trending_formatted
+            else:
+                clean.append(trending_formatted)
+            print(
+                f"  🔥 Trending tag injected into tweet: {trending_formatted}")
+        else:
+            print(
+                f"  ℹ️  Trending tag {trending_formatted} already present — skipped.")
+
+    return " ".join(clean[:max_tags])
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -578,10 +646,12 @@ class VisibilityAutomator:
 
         self._init_twitter()
 
+        # Cache is now consumed by _get_hashtags_for_post() per tweet.
+        # We load it once here only for the reference log line.
         self._trending_tag: Optional[str] = _load_trending_cache()
         if self._trending_tag:
             print(
-                f"ℹ️  Cache tag noted (reference only, not used in tweets): "
+                f"ℹ️  Trending tag available — will be injected into tweet hashtag slot: "
                 f"{self._trending_tag}"
             )
 
@@ -1151,7 +1221,7 @@ if __name__ == "__main__":
     print(f"🏷️  Hashtags       : '{_get_hashtags_for_post(post)}'")
     print(f"💬 Reply bait     : '{_pick_reply_bait(post.slug).strip()}'")
     print(
-        f"ℹ️  Cache tag      : '{visibility._get_trending_tag()}' (reference only)")
+        f"ℹ️  Cache tag      : '{visibility._get_trending_tag()}' (will be injected into last hashtag slot)")
 
     print("\n📱 ALL 16 HOOK TEMPLATES")
     print("=" * 70)
