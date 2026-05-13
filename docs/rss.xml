@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 23:00:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 23:59:39 +0000</lastBuildDate>
+    <item>
+      <title>Ship code, not profiles: how Africans land remote jobs</title>
+      <link>https://kubaik.github.io/ship-code-not-profiles-how-africans-land-remote-jobs/</link>
+      <description>Land remote jobs from Africa by shipping real systems, not polished profiles. Cut job hunt time from 72 days to 12 with proof-first portfolios — benchmarks, Terraform modules, and incident logs that teams actually read.</description>
+      <pubDate>Wed, 13 May 2026 23:59:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-code-not-profiles-how-africans-land-remote-jobs/</guid>
+    </item>
     <item>
       <title>Rate limit 500 req/s without pissing off clients</title>
       <link>https://kubaik.github.io/rate-limit-500-reqs-without-pissing-off-clients/</link>
@@ -138,13 +145,6 @@
       <description>We cut PR merge time 31% and critical vulnerabilities 87% by turning security into a measurable signal instead of a gate. Here’s how we instrumented GitHub Actions, Kubernetes, and Prometheus to shift security left without slowing deploys.</description>
       <pubDate>Wed, 13 May 2026 07:52:50 +0000</pubDate>
       <guid>https://kubaik.github.io/we-moved-security-left-without-slowing-deploys/</guid>
-    </item>
-    <item>
-      <title>AI reads your codebase: the context gap you missed</title>
-      <link>https://kubaik.github.io/ai-reads-your-codebase-the-context-gap-you-missed/</link>
-      <description>Cut onboarding time by 38% with repository intelligence — measure grep loops and onboarding hours before you index your 50k-file monorepo</description>
-      <pubDate>Wed, 13 May 2026 07:39:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-reads-your-codebase-the-context-gap-you-missed/</guid>
     </item>
   </channel>
 </rss>
