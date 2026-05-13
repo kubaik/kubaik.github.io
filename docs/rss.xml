@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 19:10:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 19:26:51 +0000</lastBuildDate>
+    <item>
+      <title>Switched salary to $95/hr in 18 months</title>
+      <link>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</link>
+      <description>Earned $18/hr locally and reached $95/hr in 18 months by open-sourcing Django tools. Includes concrete numbers, GitHub examples, and a repeatable playbook for developers in Accra, London, and Bangalore.</description>
+      <pubDate>Wed, 13 May 2026 19:26:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</guid>
+    </item>
     <item>
       <title>Cut AWS costs 40% without touching the architecture</title>
       <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 450 ms to 80 ms on a $12/month budget with four tools nobody talks about — PM2, Playwright, pino, and Caddy.</description>
       <pubDate>Wed, 13 May 2026 02:15:57 +0000</pubDate>
       <guid>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</guid>
-    </item>
-    <item>
-      <title>5 real-time tricks without WebSockets</title>
-      <link>https://kubaik.github.io/5-real-time-tricks-without-websockets/</link>
-      <description>Cut real-time latency by 60% under 6 k updates/sec without WebSockets — SSE, HTTP/2 Push, WebTransport benchmarks, $3.20 per million updates, Safari 60s timeout fix included.</description>
-      <pubDate>Tue, 12 May 2026 23:53:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-real-time-tricks-without-websockets/</guid>
     </item>
   </channel>
 </rss>
