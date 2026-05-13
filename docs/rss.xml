@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 11:58:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 13:33:02 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines fail at 10k RPM</title>
+      <link>https://kubaik.github.io/rag-pipelines-fail-at-10k-rpm/</link>
+      <description>Cut RAG cost 67% and errors 92% at 10k RPM with Milvus+ClickHouse — the real stack that handles catalog churn and concurrency most tutorials ignore.</description>
+      <pubDate>Wed, 13 May 2026 13:32:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-fail-at-10k-rpm/</guid>
+    </item>
     <item>
       <title>Node.js memory leak: detect it in 7 minutes flat</title>
       <link>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</link>
@@ -138,13 +145,6 @@
       <description>Cut 3 weeks of over-engineering with one WebSocket and Redis cache — latency stayed under 500ms, failure rate dropped from 12% to 0.1%, and we saved $1,872/year in AWS fees.</description>
       <pubDate>Tue, 12 May 2026 20:54:27 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-cost-us-3-weeks-of-work/</guid>
-    </item>
-    <item>
-      <title>Agents fail in prod: the real catch</title>
-      <link>https://kubaik.github.io/agents-fail-in-prod-the-real-catch/</link>
-      <description>Cut p99 latency to 320ms with a multi-agent ticket triage system — LangGraph, NATS, Redis, and the mistakes that caused cache stampedes and state drift</description>
-      <pubDate>Tue, 12 May 2026 20:28:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-fail-in-prod-the-real-catch/</guid>
     </item>
   </channel>
 </rss>
