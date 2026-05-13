@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 07:34:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 07:39:15 +0000</lastBuildDate>
+    <item>
+      <title>AI reads your codebase: the context gap you missed</title>
+      <link>https://kubaik.github.io/ai-reads-your-codebase-the-context-gap-you-missed/</link>
+      <description>Cut onboarding time by 38% with repository intelligence — measure grep loops and onboarding hours before you index your 50k-file monorepo</description>
+      <pubDate>Wed, 13 May 2026 07:39:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-reads-your-codebase-the-context-gap-you-missed/</guid>
+    </item>
     <item>
       <title>MCP servers cut 80% boilerplate. Here’s why.</title>
       <link>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Cut hiring time by 80% with Arc’s Africa-only tier — real data from Django and Go spikes, latency benchmarks, and cost per PR. Choose the right platform for African developers in 2026.</description>
       <pubDate>Tue, 12 May 2026 18:44:53 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-dev-platform-in-2026/</guid>
-    </item>
-    <item>
-      <title>Small teams need 3 zero-trust rules</title>
-      <link>https://kubaik.github.io/small-teams-need-3-zero-trust-rules/</link>
-      <description>Cut incident response time by 60% with zero-trust in 3 rings — perimeter, access, runtime — using Cloudflare Tunnel, JWT, and read-only containers under $20/month</description>
-      <pubDate>Tue, 12 May 2026 16:35:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/small-teams-need-3-zero-trust-rules/</guid>
     </item>
   </channel>
 </rss>
