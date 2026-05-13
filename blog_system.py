@@ -1490,27 +1490,33 @@ class BlogSystem:
 
                 # ── Budget constants ──────────────────────────────────────────
                 # Twitter wraps ALL URLs to exactly 23 chars via t.co.
-                # We reserve fixed slots so every element is guaranteed to appear.
-                TCO_LEN = 23   # t.co URL cost
+                # t.co URL cost (fixed regardless of real URL length)
+                TCO_LEN = 23
                 URL_SEP = 2    # \n\n before URL
                 TAG_SEP = 2    # \n\n before hashtags
                 BAIT_SEP = 2    # \n\n before reply-bait
-                MAX_BODY = 180  # hard cap on LLM tweet body — leaves room for everything else
-                MAX_TAGS_CHARS = 60  # max hashtag string length we'll include
-                MAX_BAIT_CHARS = 60  # max reply-bait length we'll include
+                MAX_BODY = 160  # conservative cap — leaves room for all other elements
+                MAX_TAGS_CHARS = 60
+                TWITTER_LIMIT = 280
 
-                hashtag_str = post.twitter_hashtags or ""
-                # Trim hashtag string if it's very long
+                # ── Build hashtag string via _get_hashtags_for_post ───────────
+                # This is the ONLY place hashtag_str is built for prewritten tweets.
+                # It runs through the full tiered system AND injects the trending
+                # tag as the first slot — same as the template path.
+                from visibility_automator import _get_hashtags_for_post
+                hashtag_str = _get_hashtags_for_post(post, max_tags=4)
+
+                # Trim if somehow still too long
                 if len(hashtag_str) > MAX_TAGS_CHARS:
-                    tags = hashtag_str.split()
+                    parts = hashtag_str.split()
                     hashtag_str = ""
-                    for tag in tags:
+                    for tag in parts:
                         if len(hashtag_str) + len(tag) + 1 <= MAX_TAGS_CHARS:
                             hashtag_str = (hashtag_str + " " + tag).strip()
                         else:
                             break
 
-                # Pick a reply-bait question (same rotation as visibility_automator)
+                # ── Pick reply-bait ───────────────────────────────────────────
                 _BAIT_POOL = [
                     "What broke first when you tried this?",
                     "Done this differently? Tell me what worked.",
@@ -1525,71 +1531,61 @@ class BlogSystem:
                                            ).hexdigest(), 16) % len(_BAIT_POOL)
                 reply_bait = _BAIT_POOL[bait_idx]
 
-                # ── Trim body to MAX_BODY at a sentence or word boundary ──────
-                if len(bundle_tweet) > MAX_BODY:
-                    # Try to cut at a sentence boundary first
-                    trimmed = bundle_tweet[:MAX_BODY]
+                # ── Compute effective budget used by fixed elements ───────────
+                # URL always costs TCO_LEN. Hashtags and bait are optional.
+                fixed_cost = URL_SEP + TCO_LEN
+                tags_cost = (TAG_SEP + len(hashtag_str)) if hashtag_str else 0
+                bait_cost = (BAIT_SEP + len(reply_bait)) if reply_bait else 0
+                body_budget = TWITTER_LIMIT - fixed_cost - tags_cost - bait_cost
+
+                # ── Trim body to budget at a sentence or word boundary ────────
+                if len(bundle_tweet) > body_budget:
+                    trimmed = bundle_tweet[:body_budget]
                     sentence_end = max(
                         trimmed.rfind(". "),
                         trimmed.rfind(".\n"),
                         trimmed.rfind("! "),
                         trimmed.rfind("? "),
                     )
-                    if sentence_end > MAX_BODY // 2:
-                        # Clean sentence cut — include the punctuation
+                    if sentence_end > body_budget // 2:
                         bundle_tweet = bundle_tweet[:sentence_end + 1].rstrip()
                     else:
-                        # Fall back to word boundary
                         bundle_tweet = trimmed.rsplit(
                             " ", 1)[0].rstrip(".,;:") + "…"
-                    print(
-                        f"Note: LLM tweet body trimmed to {len(bundle_tweet)} chars (was over {MAX_BODY}).")
+                    print(f"Note: tweet body trimmed to {len(bundle_tweet)} chars "
+                          f"(budget was {body_budget}).")
 
-                # ── Assemble tweet with all elements ─────────────────────────
-                # Total effective cost: body + \n\n + TCO_LEN + \n\n + tags + \n\n + bait
-                effective_len = (
-                    len(bundle_tweet)
-                    + URL_SEP + TCO_LEN
-                    + (TAG_SEP + len(hashtag_str) if hashtag_str else 0)
-                    + (BAIT_SEP + len(reply_bait) if reply_bait else 0)
-                )
+                # ── Verify total fits — drop bait then tags if needed ─────────
+                effective = len(bundle_tweet) + fixed_cost + \
+                    tags_cost + bait_cost
+                if effective > TWITTER_LIMIT:
+                    # Drop reply-bait
+                    bait_cost = 0
+                    reply_bait = ""
+                    effective = len(bundle_tweet) + fixed_cost + tags_cost
+                    print("Note: reply-bait dropped to fit within 280.")
 
-                if effective_len <= 280:
-                    # Ideal: everything fits
-                    parts = [bundle_tweet, post_url]
-                    if hashtag_str:
-                        parts.append(hashtag_str)
-                    if reply_bait:
-                        parts.append(reply_bait)
-                    post.prewritten_tweet = "\n\n".join(parts)
-                elif effective_len - (BAIT_SEP + len(reply_bait)) <= 280:
-                    # Drop reply-bait to fit
-                    parts = [bundle_tweet, post_url]
-                    if hashtag_str:
-                        parts.append(hashtag_str)
-                    post.prewritten_tweet = "\n\n".join(parts)
-                    print("Note: reply-bait dropped from tweet to fit within 280.")
-                elif effective_len - (BAIT_SEP + len(reply_bait)) - (TAG_SEP + len(hashtag_str)) <= 280:
-                    # Drop hashtags and reply-bait
-                    post.prewritten_tweet = f"{bundle_tweet}\n\n{post_url}"
-                    print(
-                        "Note: hashtags and reply-bait dropped — body + URL fills budget.")
-                else:
-                    # Body still too long even after trimming — shouldn't happen
-                    # given MAX_BODY=180, but belt-and-suspenders
-                    max_body_final = 280 - URL_SEP - TCO_LEN - 3
-                    trimmed = bundle_tweet[:max_body_final].rsplit(" ", 1)[
-                        0] + "…"
-                    post.prewritten_tweet = f"{trimmed}\n\n{post_url}"
-                    print(
-                        f"Note: tweet body hard-trimmed to {len(trimmed)} chars.")
+                if effective > TWITTER_LIMIT:
+                    # Drop hashtags too
+                    tags_cost = 0
+                    hashtag_str = ""
+                    effective = len(bundle_tweet) + fixed_cost
+                    print("Note: hashtags dropped — body + URL fills budget.")
+
+                # ── Assemble final tweet ──────────────────────────────────────
+                parts = [bundle_tweet, post_url]
+                if hashtag_str:
+                    parts.append(hashtag_str)
+                if reply_bait:
+                    parts.append(reply_bait)
+                post.prewritten_tweet = "\n\n".join(parts)
 
                 print(
                     f"Bundle tweet assembled: {len(post.prewritten_tweet)} raw chars "
-                    f"(effective ~{len(post.prewritten_tweet) - len(post_url) + TCO_LEN} after t.co)\n"
-                    f"  Body    : {len(bundle_tweet)} chars\n"
+                    f"(effective ~{len(bundle_tweet) + fixed_cost + tags_cost + bait_cost} after t.co)\n"
+                    f"  Body    : {len(bundle_tweet)} chars (budget {body_budget})\n"
                     f"  Hashtags: {hashtag_str or '(none)'}\n"
-                    f"  Bait    : {reply_bait if reply_bait in post.prewritten_tweet else '(dropped)'}"
+                    f"  Bait    : {reply_bait if reply_bait else '(dropped)'}"
                 )
             else:
                 post.prewritten_tweet = ""
