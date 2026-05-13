@@ -175,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //    Progress bar is injected on post pages only.
     // ============================================
 
-    // --- Reading progress bar (post pages only) ---
     const isPostPage = Boolean(
         document.querySelector('.post-content') ||
         document.querySelector('article.blog-post')
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return bar;
     })();
 
-    // --- Back-to-top button (injected once, works on every page) ---
+    // Inject back-to-top button if not already in DOM
     let backToTopBtn = document.getElementById('back-to-top');
     if (!backToTopBtn) {
         backToTopBtn = document.createElement('button');
@@ -203,6 +202,10 @@ document.addEventListener('DOMContentLoaded', function () {
         backToTopBtn.innerHTML = '<span aria-hidden="true">&#8593;</span>';
         document.body.appendChild(backToTopBtn);
     }
+    // Guarantee it starts hidden but not display:none
+    backToTopBtn.style.display = '';
+
+    const SCROLL_THRESHOLD = 200; // lower than before — catches shorter post pages
 
     function getScrollPercent() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -213,16 +216,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function onScrollExtras() {
-        const scrollY = window.pageYOffset;
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Show / hide back-to-top button
-        if (scrollY > 300) {
+        if (scrollY > SCROLL_THRESHOLD) {
             backToTopBtn.classList.add('visible');
         } else {
             backToTopBtn.classList.remove('visible');
         }
 
-        // Update reading progress bar (post pages only)
         if (progressBar) {
             const pct = getScrollPercent();
             progressBar.style.width = pct + '%';
@@ -231,12 +232,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.addEventListener('scroll', onScrollExtras, { passive: true });
+    // Run once on load so button shows if page is already scrolled (e.g. anchor link)
+    onScrollExtras();
 
     backToTopBtn.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Keyboard shortcut: press T (outside inputs) to scroll to top
     document.addEventListener('keydown', function (e) {
         if (e.key !== 't' && e.key !== 'T') return;
         const tag = document.activeElement && document.activeElement.tagName;
