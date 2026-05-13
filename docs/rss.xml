@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 17:05:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 17:11:53 +0000</lastBuildDate>
+    <item>
+      <title>CircleCI costs 3× GitHub Actions at 50k builds</title>
+      <link>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</link>
+      <description>CircleCI costs 3× GitHub Actions at 50k builds/month for Nairobi teams — real cost breakdown with $1200 savings, queue time costs, and artifact storage traps you’re ignoring.</description>
+      <pubDate>Wed, 13 May 2026 17:11:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</guid>
+    </item>
     <item>
       <title>Use event sourcing when your undo button matters</title>
       <link>https://kubaik.github.io/use-event-sourcing-when-your-undo-button-matters/</link>
@@ -138,13 +145,6 @@
       <description>PostgreSQL beats MySQL by 60% latency and 3x recovery speed — benchmarks from 2026 workloads on identical hardware. See the exact PostgreSQL 16 and MySQL 8.3 numbers and the one-line code swap that proves it.</description>
       <pubDate>Tue, 12 May 2026 23:44:46 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</guid>
-    </item>
-    <item>
-      <title>Edge functions: 80ms p99 at $0.02 per million</title>
-      <link>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</link>
-      <description>Cut API response time to 80ms p99 and costs to $0.02 per million with Workers or Edge — benchmarks, code, and failure modes from a 50M request/month system.</description>
-      <pubDate>Tue, 12 May 2026 22:47:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</guid>
     </item>
   </channel>
 </rss>

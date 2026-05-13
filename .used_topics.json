@@ -65,5 +65,6 @@
   "How I manage client work and side projects without losing weekends",
   "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
   "Carbon-aware deployment: scheduling workloads when the grid is cleanest",
-  "Event sourcing in 2026: when it's worth the complexity and when it isn't"
+  "Event sourcing in 2026: when it's worth the complexity and when it isn't",
+  "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month"
 ]
