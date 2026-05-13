@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 06:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 07:10:51 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS bill 40%: Graviton + spot now</title>
+      <link>https://kubaik.github.io/cut-aws-bill-40-graviton-spot-now/</link>
+      <description>Cut your AWS bill 40% by combining Graviton processors and Spot Instances — real benchmarks, concrete steps, and the mistakes that cost teams before they succeeded. Validate binary compatibility, pick the right instance families, and measure performance-per-dollar.</description>
+      <pubDate>Wed, 13 May 2026 07:10:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-bill-40-graviton-spot-now/</guid>
+    </item>
     <item>
       <title>Redis vs Memcached: which cache breaks first?</title>
       <link>https://kubaik.github.io/redis-vs-memcached-which-cache-breaks-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI coding tool costs by $71 per developer in 3 months — real token counts, latency, and rework data from Cursor vs Claude Code benchmarks. Compare tools without the marketing fluff.</description>
       <pubDate>Tue, 12 May 2026 13:59:04 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</guid>
-    </item>
-    <item>
-      <title>Instrument LLM pipelines: Prometheus + OpenTelemetry</title>
-      <link>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</link>
-      <description>Cut LLM pipeline errors by 75% with Prometheus and OpenTelemetry — measure latency, hallucinations, cache misses, and cost in production using real metrics and traces</description>
-      <pubDate>Tue, 12 May 2026 13:20:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</guid>
     </item>
   </channel>
 </rss>

@@ -52,5 +52,6 @@
   "The tools that save me the most time as a solo developer",
   "API rate limiting patterns that don't break your clients",
   "From local salary to global rate: the career moves that made the difference for me",
-  "Redis vs Memcached: a benchmark that actually matters"
+  "Redis vs Memcached: a benchmark that actually matters",
+  "How to cut your AWS bill by 40% using Graviton and spot instances"
 ]
