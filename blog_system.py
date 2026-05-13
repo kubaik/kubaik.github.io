@@ -1053,20 +1053,39 @@ class BlogSystem:
                 "or CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID."
             )
 
+        _RETRY_DELAYS = [5, 15, 30]   # seconds to wait before each retry pass
+        _MAX_CHAIN_RETRIES = 3
+
         last_error = None
-        for name, caller in providers:
-            try:
-                result = await caller(messages, max_tokens)
-                print(f"API: {name} responded successfully.")
-                return result
-            except Exception as e:
-                last_error = e
-                print(f"{name} error: {e}")
-                if name != providers[-1][0]:
-                    print("Falling back to next provider...")
+        for chain_attempt in range(1, _MAX_CHAIN_RETRIES + 1):
+            if chain_attempt > 1:
+                delay = _RETRY_DELAYS[chain_attempt - 2]
+                print(
+                    f"All providers failed on attempt {chain_attempt - 1}. "
+                    f"Retrying full chain in {delay}s "
+                    f"(attempt {chain_attempt}/{_MAX_CHAIN_RETRIES})..."
+                )
+                await asyncio.sleep(delay)
+
+            for name, caller in providers:
+                try:
+                    result = await caller(messages, max_tokens)
+                    print(f"API: {name} responded successfully "
+                          f"(chain attempt {chain_attempt}).")
+                    return result
+                except Exception as e:
+                    last_error = e
+                    print(f"{name} error: {e}")
+                    if name != providers[-1][0]:
+                        print("Falling back to next provider...")
+
+            print(f"Full provider chain exhausted on attempt "
+                  f"{chain_attempt}/{_MAX_CHAIN_RETRIES}.")
 
         raise Exception(
-            f"All configured API providers failed. Last error: {last_error}")
+            f"All configured API providers failed after {_MAX_CHAIN_RETRIES} attempts. "
+            f"Last error: {last_error}"
+        )
 
     # ─────────────────────────────────────────────────────────────
     # PROVIDERS
@@ -1580,7 +1599,8 @@ class BlogSystem:
 
         except Exception as e:
             print(
-                f"All API providers exhausted ({e}). Using local template content.")
+                f"All API providers exhausted after retries ({e}). "
+                f"Using local template content as last resort.")
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
