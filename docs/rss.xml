@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 06:21:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 06:54:06 +0000</lastBuildDate>
+    <item>
+      <title>Redis vs Memcached: which cache breaks first?</title>
+      <link>https://kubaik.github.io/redis-vs-memcached-which-cache-breaks-first/</link>
+      <description>Cut API response time by 40% with Redis or Memcached — 278k ops/sec under TLS, eviction storms, and the $286/month cost gap uncovered in 30-day AWS tests.</description>
+      <pubDate>Wed, 13 May 2026 06:53:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-vs-memcached-which-cache-breaks-first/</guid>
+    </item>
     <item>
       <title>Made $32k to $190k in 3 years: the moves that stuck</title>
       <link>https://kubaik.github.io/made-32k-to-190k-in-3-years-the-moves-that-stuck/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM pipeline errors by 75% with Prometheus and OpenTelemetry — measure latency, hallucinations, cache misses, and cost in production using real metrics and traces</description>
       <pubDate>Tue, 12 May 2026 13:20:14 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llm-pipelines-prometheus-opentelemetry/</guid>
-    </item>
-    <item>
-      <title>Python backend: Copilot vs Cursor speed test</title>
-      <link>https://kubaik.github.io/python-backend-copilot-vs-cursor-speed-test/</link>
-      <description>Cut Python backend time-to-prototype 78% with Copilot and Cursor — measured bug density, rework hours, and latency before and after. See the split approach that worked and the gotchas that cost us 12 hours.</description>
-      <pubDate>Tue, 12 May 2026 12:33:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-backend-copilot-vs-cursor-speed-test/</guid>
     </item>
   </channel>
 </rss>
