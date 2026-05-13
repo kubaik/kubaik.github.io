@@ -28,9 +28,18 @@ _STOP_WORDS = {
     "are", "with", "how", "your", "my", "our", "its", "on", "at",
     "by", "from", "this", "that", "best", "using", "guide", "complete",
     "introduction", "overview", "tutorial", "tips", "top", "ways",
+    # Paraphrase-swap words — these swap freely between duplicate titles
+    # ("5 ways to" vs "5 tricks for", "ace" vs "pass" vs "nail")
+    "ways", "tricks", "steps", "things", "methods", "approach",
+    "ace", "pass", "nail", "master", "learn", "know",
+    "add", "build", "get", "make", "use", "do",
+    "without", "beyond", "instead", "heres", "here",
+    "real", "actually", "truly", "really",
+    "quick", "fast", "simple", "easy", "practical",
+    "vs", "versus",
 }
 
-DUPLICATE_TITLE_THRESHOLD = 0.35
+DUPLICATE_TITLE_THRESHOLD = 0.40
 MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1500
 
@@ -50,15 +59,64 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
     return result
 
 
+def _normalise_title(text: str) -> str:
+    """
+    Collapse common surface-form variants so the tokenizer sees
+    equivalent tokens regardless of phrasing.
+
+    Examples:
+      "PostgreSQL" → "postgres"
+      "real-time"  → "realtime"
+      "5 ways to"  → "5"           (stopwords strip the rest)
+      "2026"       → "2026"        (kept — year is meaningful signal)
+    """
+    text = text.lower()
+    # Collapse technology name variants
+    _VARIANTS = [
+        (r'\bpostgresql\b', 'postgres'),
+        (r'\bpostgres\b',   'postgres'),
+        (r'\bmysql\b',      'sql'),
+        (r'\bwebsockets?\b', 'websocket'),
+        (r'\breal[\-\s]time\b', 'realtime'),
+        (r'\bcs\s*degree\b', 'csdegree'),
+        (r'\bno[\-\s]code\b', 'nocode'),
+        (r'\bai[\-\s]generated\b', 'aigenerated'),
+        (r'\bfull[\-\s]stack\b', 'fullstack'),
+        (r'\bback[\-\s]end\b', 'backend'),
+        (r'\bfront[\-\s]end\b', 'frontend'),
+        (r'\bopen[\-\s]source\b', 'opensource'),
+    ]
+    for pattern, replacement in _VARIANTS:
+        text = re.sub(pattern, replacement, text)
+    return text
+
+
 def _tokenise(text: str) -> set:
+    text = _normalise_title(text)
     words = re.sub(r"[^\w\s]", "", text.lower()).split()
-    return {w for w in words if w not in _STOP_WORDS and len(w) > 2}
+    tokens = {w for w in words if w not in _STOP_WORDS and len(w) > 2}
+
+    # Bigrams catch adjacent-concept pairs even when word order shifts
+    word_list = [w for w in words if w not in _STOP_WORDS and len(w) > 2]
+    for i in range(len(word_list) - 1):
+        tokens.add(f"{word_list[i]}_{word_list[i+1]}")
+
+    return tokens
 
 
 def _jaccard(a: set, b: set) -> float:
     if not a or not b:
         return 0.0
-    return len(a & b) / len(a | b)
+    intersection = len(a & b)
+    union = len(a | b)
+    base_score = intersection / union
+
+    # Boost score when one title is a near-subset of the other.
+    # This catches cases like "Ace remote interviews" vs
+    # "Pass interviews without a CS degree" where shared content
+    # is high relative to the shorter title.
+    overlap_vs_shorter = intersection / min(len(a), len(b))
+    return max(base_score, overlap_vs_shorter * 0.7)
 
 
 def _is_duplicate_title(new_title: str, existing_titles: List[str],
