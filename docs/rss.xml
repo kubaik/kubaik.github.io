@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 May 2026 23:54:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 02:16:05 +0000</lastBuildDate>
+    <item>
+      <title>4 tools the pros keep quiet about</title>
+      <link>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</link>
+      <description>Cut API latency from 450 ms to 80 ms on a $12/month budget with four tools nobody talks about — PM2, Playwright, pino, and Caddy.</description>
+      <pubDate>Wed, 13 May 2026 02:15:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</guid>
+    </item>
     <item>
       <title>5 real-time tricks without WebSockets</title>
       <link>https://kubaik.github.io/5-real-time-tricks-without-websockets/</link>
@@ -138,13 +145,6 @@
       <description>Cut your first product time to 12 minutes with AI tools that actually work in production — test templates, version locking, and the real benchmarks from solo devs shipping $8k MRR.</description>
       <pubDate>Tue, 12 May 2026 12:12:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</guid>
-    </item>
-    <item>
-      <title>Remote jobs: build one project, not ten portfolios</title>
-      <link>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</link>
-      <description>Build one anchor project that runs in production to land remote jobs from Africa — 3 real examples, AWS/Render costs, FastAPI 0.68.0 mistake, and uptime figures</description>
-      <pubDate>Tue, 12 May 2026 11:24:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-jobs-build-one-project-not-ten-portfolios/</guid>
     </item>
   </channel>
 </rss>
