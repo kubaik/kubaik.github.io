@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 09:39:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 11:58:28 +0000</lastBuildDate>
+    <item>
+      <title>Node.js memory leak: detect it in 7 minutes flat</title>
+      <link>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</link>
+      <description>Cut Node.js memory leaks by 100% in production — detect leaks in 7 minutes, fix unbounded caches, closures, and Kubernetes misconfigs, with exact error messages and tools.</description>
+      <pubDate>Wed, 13 May 2026 11:58:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</guid>
+    </item>
     <item>
       <title>Queue when to queue: save yourself 3am fires</title>
       <link>https://kubaik.github.io/queue-when-to-queue-save-yourself-3am-fires/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency to 320ms with a multi-agent ticket triage system — LangGraph, NATS, Redis, and the mistakes that caused cache stampedes and state drift</description>
       <pubDate>Tue, 12 May 2026 20:28:23 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-fail-in-prod-the-real-catch/</guid>
-    </item>
-    <item>
-      <title>Set freelance rates that don’t betray you</title>
-      <link>https://kubaik.github.io/set-freelance-rates-that-dont-betray-you/</link>
-      <description>Freelance developer rates broken down with formulas, tools, and real client quotes. Includes a Python calculator and Google Sheets template. Avoid underpricing by 30% with scope buffers.</description>
-      <pubDate>Tue, 12 May 2026 19:24:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/set-freelance-rates-that-dont-betray-you/</guid>
     </item>
   </channel>
 </rss>
