@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 14:20:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 16:36:59 +0000</lastBuildDate>
+    <item>
+      <title>Schedule jobs when the grid is cleanest</title>
+      <link>https://kubaik.github.io/schedule-jobs-when-the-grid-is-cleanest/</link>
+      <description>Cut fintech batch costs 40% and Scope-2 emissions 35% when scheduling workloads with real-time carbon data versus fixed windows — latency numbers, API traps, and the exact Helm charts to ship.</description>
+      <pubDate>Wed, 13 May 2026 16:36:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/schedule-jobs-when-the-grid-is-cleanest/</guid>
+    </item>
     <item>
       <title>Doctors, lawyers, scientists: who’s debugging your</title>
       <link>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI coding costs by 60% with gated pipelines and sparse context — measured with GPT-4o, Stripe, and Vercel previews under $0.05 per diff</description>
       <pubDate>Tue, 12 May 2026 22:39:24 +0000</pubDate>
       <guid>https://kubaik.github.io/is-100month-ai-coding-worth-it/</guid>
-    </item>
-    <item>
-      <title>Build or glue: when no-code beats code</title>
-      <link>https://kubaik.github.io/build-or-glue-when-no-code-beats-code/</link>
-      <description>Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.</description>
-      <pubDate>Tue, 12 May 2026 22:06:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-or-glue-when-no-code-beats-code/</guid>
     </item>
   </channel>
 </rss>

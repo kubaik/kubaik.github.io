@@ -63,5 +63,6 @@
   "Node.js memory leaks: how to find and fix them",
   "RAG pipelines in production: what the tutorials skip",
   "How I manage client work and side projects without losing weekends",
-  "How domain experts (doctors, lawyers, scientists) are building production software in 2026"
+  "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
+  "Carbon-aware deployment: scheduling workloads when the grid is cleanest"
 ]
