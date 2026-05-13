@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 22:42:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 22:52:16 +0000</lastBuildDate>
+    <item>
+      <title>Schedule at 3am or 3pm? Carbon-aware deployments under</title>
+      <link>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</link>
+      <description>ons by 40-50% without touching code. I firs with Schedule 3am 3pm Carbon-aware — touching code.</description>
+      <pubDate>Wed, 13 May 2026 22:52:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</guid>
+    </item>
     <item>
       <title>Edge functions pay off only at 50k req/day</title>
       <link>https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server latency by 80% with this guide—schema validation, rate limiting, and the mistakes that break production systems. Learn when to use MCP, when to avoid it, and how to debug it in real code.</description>
       <pubDate>Wed, 13 May 2026 07:34:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</guid>
-    </item>
-    <item>
-      <title>AI systems: the hard parts no tutorial covers</title>
-      <link>https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/</link>
-      <description>Cut API response time by 60% and cloud costs by 70% with a FastAPI + vLLM + pgvector stack. Real benchmarks, code, and the failure modes most tutorials skip.</description>
-      <pubDate>Wed, 13 May 2026 07:30:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/</guid>
     </item>
   </channel>
 </rss>
