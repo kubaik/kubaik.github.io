@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 22:52:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 23:00:06 +0000</lastBuildDate>
+    <item>
+      <title>Rate limit 500 req/s without pissing off clients</title>
+      <link>https://kubaik.github.io/rate-limit-500-reqs-without-pissing-off-clients/</link>
+      <description>Cut API P99 latency from 2300 ms to 145 ms without SaaS bloat — fixed-window Redis counters with retry-aware acceptance reduced retry storms 42% to 3% and saved $168/month on cloud costs.</description>
+      <pubDate>Wed, 13 May 2026 22:59:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-limit-500-reqs-without-pissing-off-clients/</guid>
+    </item>
     <item>
       <title>Schedule at 3am or 3pm? Carbon-aware deployments under</title>
       <link>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</link>
@@ -138,13 +145,6 @@
       <description>Cut onboarding time by 38% with repository intelligence — measure grep loops and onboarding hours before you index your 50k-file monorepo</description>
       <pubDate>Wed, 13 May 2026 07:39:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-reads-your-codebase-the-context-gap-you-missed/</guid>
-    </item>
-    <item>
-      <title>MCP servers cut 80% boilerplate. Here’s why.</title>
-      <link>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</link>
-      <description>Cut MCP server latency by 80% with this guide—schema validation, rate limiting, and the mistakes that break production systems. Learn when to use MCP, when to avoid it, and how to debug it in real code.</description>
-      <pubDate>Wed, 13 May 2026 07:34:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</guid>
     </item>
   </channel>
 </rss>
