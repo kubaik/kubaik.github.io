@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 13:33:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 13:56:54 +0000</lastBuildDate>
+    <item>
+      <title>Side projects vs client work: the 40-hour balance</title>
+      <link>https://kubaik.github.io/side-projects-vs-client-work-the-40-hour-balance/</link>
+      <description>Cut weekend sacrifice by 51% with the time blocking pattern — measure your unpaid hours, client quality scores, and side project completion rates over 8 weeks.</description>
+      <pubDate>Wed, 13 May 2026 13:56:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/side-projects-vs-client-work-the-40-hour-balance/</guid>
+    </item>
     <item>
       <title>RAG pipelines fail at 10k RPM</title>
       <link>https://kubaik.github.io/rag-pipelines-fail-at-10k-rpm/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout 68% in 3 weeks by enforcing response windows, scheduling recovery blocks, and measuring HRV. Real fixes that worked for me.</description>
       <pubDate>Tue, 12 May 2026 21:10:03 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</guid>
-    </item>
-    <item>
-      <title>Over-engineering cost us 3 weeks of work</title>
-      <link>https://kubaik.github.io/over-engineering-cost-us-3-weeks-of-work/</link>
-      <description>Cut 3 weeks of over-engineering with one WebSocket and Redis cache — latency stayed under 500ms, failure rate dropped from 12% to 0.1%, and we saved $1,872/year in AWS fees.</description>
-      <pubDate>Tue, 12 May 2026 20:54:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-cost-us-3-weeks-of-work/</guid>
     </item>
   </channel>
 </rss>
