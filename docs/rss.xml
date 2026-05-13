@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 08:32:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 09:39:12 +0000</lastBuildDate>
+    <item>
+      <title>Queue when to queue: save yourself 3am fires</title>
+      <link>https://kubaik.github.io/queue-when-to-queue-save-yourself-3am-fires/</link>
+      <description>Cut 6ms latency and 80% on-call pages by swapping thread pools for RabbitMQ queues — payload tuning, prefetch traps, and the disk I/O surprise when durability matters</description>
+      <pubDate>Wed, 13 May 2026 09:39:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/queue-when-to-queue-save-yourself-3am-fires/</guid>
+    </item>
     <item>
       <title>Run a local LLM on a laptop — here’s the catch</title>
       <link>https://kubaik.github.io/run-a-local-llm-on-a-laptop-heres-the-catch/</link>
@@ -138,13 +145,6 @@
       <description>Freelance developer rates broken down with formulas, tools, and real client quotes. Includes a Python calculator and Google Sheets template. Avoid underpricing by 30% with scope buffers.</description>
       <pubDate>Tue, 12 May 2026 19:24:50 +0000</pubDate>
       <guid>https://kubaik.github.io/set-freelance-rates-that-dont-betray-you/</guid>
-    </item>
-    <item>
-      <title>AI junior devs hit 8x bugs faster</title>
-      <link>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</link>
-      <description>Cut review time 75% with AI junior devs using this guardrail stack — FastAPI, Copilot, pytest, Prometheus, Locust load test at 500 RPM</description>
-      <pubDate>Tue, 12 May 2026 19:15:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-junior-devs-hit-8x-bugs-faster/</guid>
     </item>
   </channel>
 </rss>
