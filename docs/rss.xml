@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 10:27:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 07:30:24 +0000</lastBuildDate>
+    <item>
+      <title>AI systems: the hard parts no tutorial covers</title>
+      <link>https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/</link>
+      <description>Cut API response time by 60% and cloud costs by 70% with a FastAPI + vLLM + pgvector stack. Real benchmarks, code, and the failure modes most tutorials skip.</description>
+      <pubDate>Wed, 13 May 2026 07:30:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/</guid>
+    </item>
     <item>
       <title>Cut AWS bill 40%: Graviton + spot now</title>
       <link>https://kubaik.github.io/cut-aws-bill-40-graviton-spot-now/</link>
@@ -138,13 +145,6 @@
       <description>Pools death connection setting: spiked to 95%, P99 latency jumped from 45 m. Practical guide with real examples.</description>
       <pubDate>Tue, 12 May 2026 16:19:01 +0000</pubDate>
       <guid>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</guid>
-    </item>
-    <item>
-      <title>Claude Code vs Cursor: 3-month cost breakdown</title>
-      <link>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</link>
-      <description>Cut AI coding tool costs by $71 per developer in 3 months — real token counts, latency, and rework data from Cursor vs Claude Code benchmarks. Compare tools without the marketing fluff.</description>
-      <pubDate>Tue, 12 May 2026 13:59:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-code-vs-cursor-3-month-cost-breakdown/</guid>
     </item>
   </channel>
 </rss>

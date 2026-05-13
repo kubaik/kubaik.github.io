@@ -53,5 +53,6 @@
   "API rate limiting patterns that don't break your clients",
   "From local salary to global rate: the career moves that made the difference for me",
   "Redis vs Memcached: a benchmark that actually matters",
-  "How to cut your AWS bill by 40% using Graviton and spot instances"
+  "How to cut your AWS bill by 40% using Graviton and spot instances",
+  "Designing systems for AI-first applications: the patterns that actually hold up"
 ]
