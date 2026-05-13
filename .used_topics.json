@@ -49,5 +49,6 @@
   "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
   "PostgreSQL vs MySQL in 2026: the decision I keep making",
   "Building real-time features without a WebSocket server: practical alternatives",
-  "The tools that save me the most time as a solo developer"
+  "The tools that save me the most time as a solo developer",
+  "API rate limiting patterns that don't break your clients"
 ]

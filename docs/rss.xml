@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 02:16:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 05:36:45 +0000</lastBuildDate>
+    <item>
+      <title>Rate limit at the edge, not in the core</title>
+      <link>https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/</link>
+      <description>Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.</description>
+      <pubDate>Wed, 13 May 2026 05:36:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/</guid>
+    </item>
     <item>
       <title>4 tools the pros keep quiet about</title>
       <link>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</link>
@@ -138,13 +145,6 @@
       <description>veraged 2.12ms with 47k requests/second. Rev with Land remote roles test — me: “We keep getting ghosted after the first interv.</description>
       <pubDate>Tue, 12 May 2026 12:15:52 +0000</pubDate>
       <guid>https://kubaik.github.io/land-4k-remote-roles-with-this-test-setup/</guid>
-    </item>
-    <item>
-      <title>AI coding tools 10x your first product</title>
-      <link>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</link>
-      <description>Cut your first product time to 12 minutes with AI tools that actually work in production — test templates, version locking, and the real benchmarks from solo devs shipping $8k MRR.</description>
-      <pubDate>Tue, 12 May 2026 12:12:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-tools-10x-your-first-product/</guid>
     </item>
   </channel>
 </rss>
