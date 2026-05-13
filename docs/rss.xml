@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 07:30:24 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 07:34:10 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers cut 80% boilerplate. Here’s why.</title>
+      <link>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</link>
+      <description>Cut MCP server latency by 80% with this guide—schema validation, rate limiting, and the mistakes that break production systems. Learn when to use MCP, when to avoid it, and how to debug it in real code.</description>
+      <pubDate>Wed, 13 May 2026 07:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/</guid>
+    </item>
     <item>
       <title>AI systems: the hard parts no tutorial covers</title>
       <link>https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident response time by 60% with zero-trust in 3 rings — perimeter, access, runtime — using Cloudflare Tunnel, JWT, and read-only containers under $20/month</description>
       <pubDate>Tue, 12 May 2026 16:35:52 +0000</pubDate>
       <guid>https://kubaik.github.io/small-teams-need-3-zero-trust-rules/</guid>
-    </item>
-    <item>
-      <title>Pools of death: the connection setting you copy-pasted</title>
-      <link>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</link>
-      <description>Pools death connection setting: spiked to 95%, P99 latency jumped from 45 m. Practical guide with real examples.</description>
-      <pubDate>Tue, 12 May 2026 16:19:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/pools-of-death-the-connection-setting-you-copy-pasted/</guid>
     </item>
   </channel>
 </rss>
