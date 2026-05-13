@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 16:36:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 17:05:30 +0000</lastBuildDate>
+    <item>
+      <title>Use event sourcing when your undo button matters</title>
+      <link>https://kubaik.github.io/use-event-sourcing-when-your-undo-button-matters/</link>
+      <description>Cut audit time by 80% with event sourcing — when it helps, when it hurts, and the real latency numbers from EventStoreDB 26.0 and PostgreSQL</description>
+      <pubDate>Wed, 13 May 2026 17:05:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/use-event-sourcing-when-your-undo-button-matters/</guid>
+    </item>
     <item>
       <title>Schedule jobs when the grid is cleanest</title>
       <link>https://kubaik.github.io/schedule-jobs-when-the-grid-is-cleanest/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time to 80ms p99 and costs to $0.02 per million with Workers or Edge — benchmarks, code, and failure modes from a 50M request/month system.</description>
       <pubDate>Tue, 12 May 2026 22:47:16 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-80ms-p99-at-002-per-million/</guid>
-    </item>
-    <item>
-      <title>Is $100/month AI coding worth it?</title>
-      <link>https://kubaik.github.io/is-100month-ai-coding-worth-it/</link>
-      <description>Cut AI coding costs by 60% with gated pipelines and sparse context — measured with GPT-4o, Stripe, and Vercel previews under $0.05 per diff</description>
-      <pubDate>Tue, 12 May 2026 22:39:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/is-100month-ai-coding-worth-it/</guid>
     </item>
   </channel>
 </rss>
