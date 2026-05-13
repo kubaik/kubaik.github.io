@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 19:26:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 19:43:50 +0000</lastBuildDate>
+    <item>
+      <title>Vector databases: when they help (and when they waste</title>
+      <link>https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/</link>
+      <description>Cut vector search costs 60% with pgvector in PostgreSQL — RAM sizing, HNSW tuning, and the mistakes that spike latency to 400 ms</description>
+      <pubDate>Wed, 13 May 2026 19:43:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/</guid>
+    </item>
     <item>
       <title>Switched salary to $95/hr in 18 months</title>
       <link>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.</description>
       <pubDate>Wed, 13 May 2026 05:36:39 +0000</pubDate>
       <guid>https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/</guid>
-    </item>
-    <item>
-      <title>4 tools the pros keep quiet about</title>
-      <link>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</link>
-      <description>Cut API latency from 450 ms to 80 ms on a $12/month budget with four tools nobody talks about — PM2, Playwright, pino, and Caddy.</description>
-      <pubDate>Wed, 13 May 2026 02:15:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/4-tools-the-pros-keep-quiet-about/</guid>
     </item>
   </channel>
 </rss>
