@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 17:11:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 19:10:17 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS costs 40% without touching the architecture</title>
+      <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</link>
+      <description>Cut AWS bill by 40% without redesigning the stack — $540 saved on NAT Gateway alone, plus 9 other zero-code tweaks with real latency and cost data</description>
+      <pubDate>Wed, 13 May 2026 19:10:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</guid>
+    </item>
     <item>
       <title>CircleCI costs 3× GitHub Actions at 50k builds</title>
       <link>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time latency by 60% under 6 k updates/sec without WebSockets — SSE, HTTP/2 Push, WebTransport benchmarks, $3.20 per million updates, Safari 60s timeout fix included.</description>
       <pubDate>Tue, 12 May 2026 23:53:56 +0000</pubDate>
       <guid>https://kubaik.github.io/5-real-time-tricks-without-websockets/</guid>
-    </item>
-    <item>
-      <title>Pick PostgreSQL 2026: the 3 benchmarks that decide</title>
-      <link>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</link>
-      <description>PostgreSQL beats MySQL by 60% latency and 3x recovery speed — benchmarks from 2026 workloads on identical hardware. See the exact PostgreSQL 16 and MySQL 8.3 numbers and the one-line code swap that proves it.</description>
-      <pubDate>Tue, 12 May 2026 23:44:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-postgresql-2026-the-3-benchmarks-that-decide/</guid>
     </item>
   </channel>
 </rss>
