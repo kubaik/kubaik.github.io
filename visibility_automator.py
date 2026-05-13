@@ -202,7 +202,7 @@ def _load_trending_cache() -> Optional[str]:
                 chosen = f"#{chosen}"
                 print(
                     f"📦 Trending cache pool ({len(valid)} tags) — "
-                    f"randomly selected: {chosen}"
+                    f"randomly selected for first slot: {chosen}"
                 )
                 return chosen
             print("ℹ️  'hashtags' array in cache is empty.")
@@ -212,7 +212,7 @@ def _load_trending_cache() -> Optional[str]:
         if tag:
             tag = re.sub(r"[^\w]", "", tag.lstrip("#"))
             tag = f"#{tag}"
-            print(f"📦 Trending tag from cache (legacy): {tag}")
+            print(f"📦 Trending tag from cache (legacy) — will go first: {tag}")
             return tag
         print("ℹ️  Trending cache file contains no usable tags.")
         return None
@@ -314,14 +314,6 @@ def _make_single_word_tag(raw: str) -> str:
 
 
 def _get_hashtags_for_post(post, max_tags: int = 4) -> str:
-    """
-    Return a space-separated string of up to max_tags single-word hashtags
-    for the post, with ONE slot reserved for a randomly picked trending tag
-    from the cache file (if available).
-
-    The trending tag replaces the last slot so it always appears when the
-    cache has data, without exceeding the max_tags budget.
-    """
     seen: set = set()
     clean: List[str] = []
 
@@ -377,19 +369,20 @@ def _get_hashtags_for_post(post, max_tags: int = 4) -> str:
         else:
             clean = ["#Programming", "#SoftwareEngineering", "#TechBlog"]
 
-    # ── 5. Inject one random trending tag (replaces last slot) ────────────
+    # ── 5. Inject one random trending tag (always first slot) ─────────────
     trending_tag = _load_trending_cache()
     if trending_tag:
         trending_word = _make_single_word_tag(trending_tag)
         trending_formatted = f"#{trending_word}"
         if trending_word.lower() not in seen:
             if len(clean) >= max_tags:
-                # Replace the last tag to stay within budget
-                clean[-1] = trending_formatted
+                # Insert at front, drop last tag to stay within budget
+                clean = [trending_formatted] + clean[: max_tags - 1]
             else:
-                clean.append(trending_formatted)
+                clean = [trending_formatted] + clean
+            seen.add(trending_word.lower())
             print(
-                f"  🔥 Trending tag injected into tweet: {trending_formatted}")
+                f"  🔥 Trending tag injected as first hashtag: {trending_formatted}")
         else:
             print(
                 f"  ℹ️  Trending tag {trending_formatted} already present — skipped.")
