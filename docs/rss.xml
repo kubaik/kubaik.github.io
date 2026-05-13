@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 20:59:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 21:14:44 +0000</lastBuildDate>
+    <item>
+      <title>Why RAG pipelines fail in production</title>
+      <link>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</link>
+      <description>oduction, 42% of user queries returned no a with RAG — user intent; reality disagreed.</description>
+      <pubDate>Wed, 13 May 2026 21:14:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</guid>
+    </item>
     <item>
       <title>Freelancer burnout: how I fixed it in 8 weeks</title>
       <link>https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 40% with Redis or Memcached — 278k ops/sec under TLS, eviction storms, and the $286/month cost gap uncovered in 30-day AWS tests.</description>
       <pubDate>Wed, 13 May 2026 06:53:59 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-vs-memcached-which-cache-breaks-first/</guid>
-    </item>
-    <item>
-      <title>Made $32k to $190k in 3 years: the moves that stuck</title>
-      <link>https://kubaik.github.io/made-32k-to-190k-in-3-years-the-moves-that-stuck/</link>
-      <description>Made $32k to $190k in 3 years: the moves that stuck — cut AWS costs 33%, raised hourly rate 6x, and built a global freelance business from Accra. Learn the exact steps, tools, and contracts that turned local salary into global income.</description>
-      <pubDate>Wed, 13 May 2026 06:21:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/made-32k-to-190k-in-3-years-the-moves-that-stuck/</guid>
     </item>
   </channel>
 </rss>
