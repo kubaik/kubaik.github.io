@@ -56,5 +56,6 @@
   "How to cut your AWS bill by 40% using Graviton and spot instances",
   "Designing systems for AI-first applications: the patterns that actually hold up",
   "MCP servers explained: what they are and why every developer should understand them",
-  "Repository intelligence: how AI is learning your entire codebase context"
+  "Repository intelligence: how AI is learning your entire codebase context",
+  "DevSecOps in practice: shifting security left without slowing down deploys"
 ]
