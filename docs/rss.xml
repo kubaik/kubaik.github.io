@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 13:56:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 14:20:19 +0000</lastBuildDate>
+    <item>
+      <title>Doctors, lawyers, scientists: who’s debugging your</title>
+      <link>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</link>
+      <description>h with 99.9% uptime and a 95th-percentile with Doctors lawyers scientists debugging — the flame graphs, the top three stack frames were a.</description>
+      <pubDate>Wed, 13 May 2026 14:20:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</guid>
+    </item>
     <item>
       <title>Side projects vs client work: the 40-hour balance</title>
       <link>https://kubaik.github.io/side-projects-vs-client-work-the-40-hour-balance/</link>
@@ -138,13 +145,6 @@
       <description>Cut 6–12 engineering weeks by choosing between no-code and custom code with this decision framework — includes concrete benchmarks, cost curves, and a worked Retool vs Next.js example.</description>
       <pubDate>Tue, 12 May 2026 22:06:29 +0000</pubDate>
       <guid>https://kubaik.github.io/build-or-glue-when-no-code-beats-code/</guid>
-    </item>
-    <item>
-      <title>Freelance burnout: how I fixed it in 3 weeks</title>
-      <link>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</link>
-      <description>Cut freelance burnout 68% in 3 weeks by enforcing response windows, scheduling recovery blocks, and measuring HRV. Real fixes that worked for me.</description>
-      <pubDate>Tue, 12 May 2026 21:10:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-burnout-how-i-fixed-it-in-3-weeks/</guid>
     </item>
   </channel>
 </rss>

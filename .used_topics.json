@@ -62,5 +62,6 @@
   "When to use a message queue (and when it's overkill)",
   "Node.js memory leaks: how to find and fix them",
   "RAG pipelines in production: what the tutorials skip",
-  "How I manage client work and side projects without losing weekends"
+  "How I manage client work and side projects without losing weekends",
+  "How domain experts (doctors, lawyers, scientists) are building production software in 2026"
 ]
