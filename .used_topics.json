@@ -57,5 +57,6 @@
   "Designing systems for AI-first applications: the patterns that actually hold up",
   "MCP servers explained: what they are and why every developer should understand them",
   "Repository intelligence: how AI is learning your entire codebase context",
-  "DevSecOps in practice: shifting security left without slowing down deploys"
+  "DevSecOps in practice: shifting security left without slowing down deploys",
+  "Building a local LLM setup that actually runs on a laptop"
 ]
