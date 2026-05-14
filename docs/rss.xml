@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 16:21:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 18:11:08 +0000</lastBuildDate>
+    <item>
+      <title>Avoid this AI stack mistake before it’s too late</title>
+      <link>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</link>
+      <description>Cut API latency from 2.1s to 180ms with a boring stack: Postgres + pgvector, Redis, BullMQ, and FastAPI. Real numbers, real code, and the mistakes that break AI-first apps.</description>
+      <pubDate>Thu, 14 May 2026 18:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</guid>
+    </item>
     <item>
       <title>Your AI tools don&apos;t improve velocity — here&apos;s the proof</title>
       <link>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</link>
@@ -138,13 +145,6 @@
       <description>Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.</description>
       <pubDate>Wed, 13 May 2026 22:42:14 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/</guid>
-    </item>
-    <item>
-      <title>AI junior devs hit 9x bugs faster</title>
-      <link>https://kubaik.github.io/ai-junior-devs-hit-9x-bugs-faster/</link>
-      <description>Ship 50% fewer bugs with AI coding tools — benchmarks, guardrails, and the exact tools that turned AI junior devs into production-ready engineers in 12 weeks</description>
-      <pubDate>Wed, 13 May 2026 21:20:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-junior-devs-hit-9x-bugs-faster/</guid>
     </item>
   </channel>
 </rss>
