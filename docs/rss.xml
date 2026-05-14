@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 08:18:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 09:30:08 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right realtime API: WebSockets vs SSE vs long</title>
+      <link>https://kubaik.github.io/pick-the-right-realtime-api-websockets-vs-sse-vs-long/</link>
+      <description>Compare WebSocket, SSE and long polling with real numbers on memory, latency and cost — pick the right realtime transport for your product before you ship. Benchmarks from localhost and $5 DigitalOcean droplet included.</description>
+      <pubDate>Thu, 14 May 2026 09:30:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-realtime-api-websockets-vs-sse-vs-long/</guid>
+    </item>
     <item>
       <title>Doctors, lawyers, scientists: who’s running prod in</title>
       <link>https://kubaik.github.io/doctors-lawyers-scientists-whos-running-prod-in/</link>
@@ -138,13 +145,6 @@
       <description>h with 99.9% uptime and a 95th-percentile with Doctors lawyers scientists debugging — the flame graphs, the top three stack frames were a.</description>
       <pubDate>Wed, 13 May 2026 14:20:12 +0000</pubDate>
       <guid>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</guid>
-    </item>
-    <item>
-      <title>Side projects vs client work: the 40-hour balance</title>
-      <link>https://kubaik.github.io/side-projects-vs-client-work-the-40-hour-balance/</link>
-      <description>Cut weekend sacrifice by 51% with the time blocking pattern — measure your unpaid hours, client quality scores, and side project completion rates over 8 weeks.</description>
-      <pubDate>Wed, 13 May 2026 13:56:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/side-projects-vs-client-work-the-40-hour-balance/</guid>
     </item>
   </channel>
 </rss>
