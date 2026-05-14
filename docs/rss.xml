@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 11:47:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 13:08:33 +0000</lastBuildDate>
+    <item>
+      <title>Agentic AI for solo devs: where it saves hours</title>
+      <link>https://kubaik.github.io/agentic-ai-for-solo-devs-where-it-saves-hours/</link>
+      <description>Cut build time by 60% with agentic AI — when it works for solo devs and when it backfires with concrete case studies and benchmarks from real freelance projects</description>
+      <pubDate>Thu, 14 May 2026 13:08:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-ai-for-solo-devs-where-it-saves-hours/</guid>
+    </item>
     <item>
       <title>Zero-trust for 5 people? Skip the hype</title>
       <link>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS bill by 40% without redesigning the stack — $540 saved on NAT Gateway alone, plus 9 other zero-code tweaks with real latency and cost data</description>
       <pubDate>Wed, 13 May 2026 19:10:10 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</guid>
-    </item>
-    <item>
-      <title>CircleCI costs 3× GitHub Actions at 50k builds</title>
-      <link>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</link>
-      <description>CircleCI costs 3× GitHub Actions at 50k builds/month for Nairobi teams — real cost breakdown with $1200 savings, queue time costs, and artifact storage traps you’re ignoring.</description>
-      <pubDate>Wed, 13 May 2026 17:11:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</guid>
     </item>
   </channel>
 </rss>
