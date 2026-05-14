@@ -1808,6 +1808,7 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _parse_bundle_json(self, raw: str) -> dict:
+
         def _sanitize(s):
             result, in_str, esc = [], False, False
             for ch in s:
@@ -1870,12 +1871,46 @@ Return ONLY the JSON object.""",
                 rep += '}'
             return rep
 
+        def _fix_unquoted_content(text: str) -> str:
+            """
+            Handle the Mistral pattern:
+                "content": ## Heading\n\nBody text...,\n  "meta_description": ...
+
+            Strategy:
+            1. Find `"content":` followed by optional whitespace then a non-quote char.
+            2. Grab everything up to the next JSON key at the same nesting level
+                (`"meta_description"`, `"tweet_text"`, `"seo_keywords"`, or `}`).
+            3. JSON-encode that blob and splice it back in.
+            """
+            # Pattern: "content": <non-string value>
+            # The next sibling key or closing brace marks the end.
+            unquoted_pattern = re.compile(
+                r'("content"\s*:\s*)([^"\s\{][^}]*?)(\s*,\s*"(?:meta_description|tweet_text|seo_keywords)"|\s*\})',
+                re.DOTALL,
+            )
+            m = unquoted_pattern.search(text)
+            if not m:
+                return text
+
+            prefix = m.group(1)      # `"content": `
+            content = m.group(2)      # the raw markdown blob
+            suffix = m.group(3)      # `, "meta_description":` or `}`
+
+            # Clean up escaped newlines that might already be half-escaped
+            content = content.replace('\\n', '\n')
+
+            # produces a properly escaped JSON string
+            encoded = json.dumps(content)
+            return text[:m.start()] + prefix + encoded + suffix + text[m.end():]
+
         def _partial(text):
             data = {}
             m = re.search(
                 r'"title"\s*:\s*"(.*?)(?:"\s*,|\"\s*\})', text, re.DOTALL)
             if m:
                 data['title'] = m.group(1).replace('\\"', '"').strip()
+
+            # Try quoted content first, then fall back to unquoted grab
             m = re.search(
                 r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords|tweet_text)|"\s*\})',
                 text, re.DOTALL,
@@ -1889,11 +1924,22 @@ Return ONLY the JSON object.""",
                     .replace('\\"', '"')
                     .replace('\\t', '\t')
                 )
+            else:
+                # Unquoted content fallback — grab everything after "content":
+                # up to the next known sibling key
+                m2 = re.search(
+                    r'"content"\s*:\s*([^"\{][^}]*?)(?=,\s*"(?:meta_description|tweet_text|seo_keywords)"|\s*\})',
+                    text, re.DOTALL,
+                )
+                if m2:
+                    data['content'] = m2.group(1).strip().rstrip(',').strip()
+
             m = re.search(
                 r'"meta_description"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
             if m:
                 data['meta_description'] = m.group(
                     1).replace('\\n', ' ').strip()
+
             m = re.search(
                 r'"tweet_text"\s*:\s*"(.*?)(?:"\s*,\s*"|\"\s*\})', text, re.DOTALL)
             if m:
@@ -1903,6 +1949,7 @@ Return ONLY the JSON object.""",
                     .replace('\\"', '"')
                     .strip()
                 )
+
             m = re.search(r'"seo_keywords"\s*:\s*\[(.*?)\]', text, re.DOTALL)
             if m:
                 data['seo_keywords'] = [
@@ -1912,13 +1959,18 @@ Return ONLY the JSON object.""",
                 ]
             return data
 
+        # ── Attempt chain (new step 3 = fix_unquoted_content) ────────────────────
         for attempt in [
             lambda t: json.loads(t),
             lambda t: json.loads(_sanitize(t)),
+            # NEW: fix unquoted content value, then sanitize + parse
+            lambda t: json.loads(_sanitize(_fix_unquoted_content(t))),
             lambda t: json.loads(_sanitize(
                 re.search(r'\{.*\}', t, re.DOTALL).group()
             )) if re.search(r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
             lambda t: json.loads(_sanitize(_repair(t))),
+            # NEW: fix unquoted content, then repair, then sanitize
+            lambda t: json.loads(_sanitize(_repair(_fix_unquoted_content(t)))),
         ]:
             try:
                 return attempt(raw)
@@ -1933,8 +1985,11 @@ Return ONLY the JSON object.""",
             data.setdefault('tweet_text', '')
             data.setdefault('seo_keywords', [])
             return data
+
+        # If we reach here, nothing worked — raise so the caller can try next provider
         raise ValueError(
-            f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}")
+            f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}"
+        )
 
     # ─────────────────────────────────────────────────────────────
     # EXPANSION
