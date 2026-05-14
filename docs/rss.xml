@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 18:11:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 18:25:12 +0000</lastBuildDate>
+    <item>
+      <title>Pendulum swings back: monolith wins in 2026</title>
+      <link>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</link>
+      <description>Cut AWS costs 40% and MTTR from 45 to 2 minutes with monoliths in 2026 — build times, real stacks, and the exact tipping point to choose between monolith and microservices.</description>
+      <pubDate>Thu, 14 May 2026 18:25:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</guid>
+    </item>
     <item>
       <title>Avoid this AI stack mistake before it’s too late</title>
       <link>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</link>
@@ -138,13 +145,6 @@
       <description>ons by 40-50% without touching code. I firs with Schedule 3am 3pm Carbon-aware — touching code.</description>
       <pubDate>Wed, 13 May 2026 22:52:08 +0000</pubDate>
       <guid>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</guid>
-    </item>
-    <item>
-      <title>Edge functions pay off only at 50k req/day</title>
-      <link>https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/</link>
-      <description>Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.</description>
-      <pubDate>Wed, 13 May 2026 22:42:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/</guid>
     </item>
   </channel>
 </rss>
