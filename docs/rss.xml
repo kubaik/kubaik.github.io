@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 13:08:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 13:22:34 +0000</lastBuildDate>
+    <item>
+      <title>Platform engineering explained: why your team</title>
+      <link>https://kubaik.github.io/platform-engineering-explained-why-your-team/</link>
+      <description>Cut Platform engineering explained: why your team needs a paved road failures by understanding connection pooling and retry logic — real benchmarks, com…</description>
+      <pubDate>Thu, 14 May 2026 13:22:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-engineering-explained-why-your-team/</guid>
+    </item>
     <item>
       <title>Agentic AI for solo devs: where it saves hours</title>
       <link>https://kubaik.github.io/agentic-ai-for-solo-devs-where-it-saves-hours/</link>
@@ -138,13 +145,6 @@
       <description>Earned $18/hr locally and reached $95/hr in 18 months by open-sourcing Django tools. Includes concrete numbers, GitHub examples, and a repeatable playbook for developers in Accra, London, and Bangalore.</description>
       <pubDate>Wed, 13 May 2026 19:26:44 +0000</pubDate>
       <guid>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</guid>
-    </item>
-    <item>
-      <title>Cut AWS costs 40% without touching the architecture</title>
-      <link>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</link>
-      <description>Cut AWS bill by 40% without redesigning the stack — $540 saved on NAT Gateway alone, plus 9 other zero-code tweaks with real latency and cost data</description>
-      <pubDate>Wed, 13 May 2026 19:10:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-costs-40-without-touching-the-architecture/</guid>
     </item>
   </channel>
 </rss>
