@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 11:05:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 11:47:10 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for 5 people? Skip the hype</title>
+      <link>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</link>
+      <description>Cut cloud security overhead 60% with zero-trust that actually fits five-person teams — identity hygiene, least privilege IAM, and automated rotation with real latency and cost numbers</description>
+      <pubDate>Thu, 14 May 2026 11:47:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</guid>
+    </item>
     <item>
       <title>AI skills paying 40% more by 2026: data vs prompt</title>
       <link>https://kubaik.github.io/ai-skills-paying-40-more-by-2026-data-vs-prompt/</link>
@@ -138,13 +145,6 @@
       <description>CircleCI costs 3× GitHub Actions at 50k builds/month for Nairobi teams — real cost breakdown with $1200 savings, queue time costs, and artifact storage traps you’re ignoring.</description>
       <pubDate>Wed, 13 May 2026 17:11:46 +0000</pubDate>
       <guid>https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/</guid>
-    </item>
-    <item>
-      <title>Use event sourcing when your undo button matters</title>
-      <link>https://kubaik.github.io/use-event-sourcing-when-your-undo-button-matters/</link>
-      <description>Cut audit time by 80% with event sourcing — when it helps, when it hurts, and the real latency numbers from EventStoreDB 26.0 and PostgreSQL</description>
-      <pubDate>Wed, 13 May 2026 17:05:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/use-event-sourcing-when-your-undo-button-matters/</guid>
     </item>
   </channel>
 </rss>
