@@ -30,5 +30,6 @@
   "TypeScript mistakes that slip through even with strict mode",
   "Negotiating a remote salary when you're in a lower-cost country",
   "Freelance developer rates: a realistic breakdown",
-  "Why senior developers leave big tech (it's not always the money)"
+  "Why senior developers leave big tech (it's not always the money)",
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]

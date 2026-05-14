@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 20:26:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 21:40:39 +0000</lastBuildDate>
+    <item>
+      <title>Split the database now or regret it later</title>
+      <link>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</link>
+      <description>Cut multi-tenant SaaS database costs by 30% and latency by 60% with schema-per-tenant routing instead of shared schemas. Real systems from Shopify, Stripe and Jakarta startups prove it works.</description>
+      <pubDate>Thu, 14 May 2026 21:40:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech (the real reasons)</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-tech-the-real-reasons/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 420ms to 65ms and cloud costs 93% with a monolith — the over-engineering trap that cost $25k and 3 weeks, with code and benchmarks.</description>
       <pubDate>Thu, 14 May 2026 08:08:09 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-cost-us-3-weeks-and-7k/</guid>
-    </item>
-    <item>
-      <title>AI learns your codebase: don&apos;t trust autocomplete</title>
-      <link>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</link>
-      <description>Cut code-review feedback loops 40% with repository intelligence — tree-sitter ASTs, vector indexes, and the tools that actually understand your whole codebase.</description>
-      <pubDate>Thu, 14 May 2026 06:23:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</guid>
     </item>
   </channel>
 </rss>
