@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 09:30:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 10:38:18 +0000</lastBuildDate>
+    <item>
+      <title>Choose PostgreSQL in 2026: 5 benchmarks</title>
+      <link>https://kubaik.github.io/choose-postgresql-in-2026-5-benchmarks/</link>
+      <description>Run analytics workloads 4.4x faster with PostgreSQL 16.1 vs MySQL 8.0.36 — connection pooling, BRIN indexes, and the exact Docker stack used in 8 production migrations</description>
+      <pubDate>Thu, 14 May 2026 10:38:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-postgresql-in-2026-5-benchmarks/</guid>
+    </item>
     <item>
       <title>Pick the right realtime API: WebSockets vs SSE vs long</title>
       <link>https://kubaik.github.io/pick-the-right-realtime-api-websockets-vs-sse-vs-long/</link>
@@ -138,13 +145,6 @@
       <description>Cut fintech batch costs 40% and Scope-2 emissions 35% when scheduling workloads with real-time carbon data versus fixed windows — latency numbers, API traps, and the exact Helm charts to ship.</description>
       <pubDate>Wed, 13 May 2026 16:36:53 +0000</pubDate>
       <guid>https://kubaik.github.io/schedule-jobs-when-the-grid-is-cleanest/</guid>
-    </item>
-    <item>
-      <title>Doctors, lawyers, scientists: who’s debugging your</title>
-      <link>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</link>
-      <description>h with 99.9% uptime and a 95th-percentile with Doctors lawyers scientists debugging — the flame graphs, the top three stack frames were a.</description>
-      <pubDate>Wed, 13 May 2026 14:20:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/doctors-lawyers-scientists-whos-debugging-your/</guid>
     </item>
   </channel>
 </rss>
