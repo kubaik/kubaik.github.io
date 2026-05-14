@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 20:06:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 20:21:51 +0000</lastBuildDate>
+    <item>
+      <title>Charge what you&apos;re worth: freelance rates</title>
+      <link>https://kubaik.github.io/charge-what-youre-worth-freelance-rates/</link>
+      <description>Learn the real freelance developer rates that paid off in 2024 — actual numbers, spreadsheets, and negotiation scripts that turned proposals into profit for 22 projects totaling $182k revenue</description>
+      <pubDate>Thu, 14 May 2026 20:21:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/charge-what-youre-worth-freelance-rates/</guid>
+    </item>
     <item>
       <title>Land $120k remote: data-driven offers</title>
       <link>https://kubaik.github.io/land-120k-remote-data-driven-offers/</link>
@@ -138,13 +145,6 @@
       <description>Ship 3 projects, get hired: how self-taught devs ace remote interviews without Leetcode burnout — evidence from Lisbon, Dubai, and Nairobi deployments</description>
       <pubDate>Thu, 14 May 2026 05:34:55 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-skip-the-cs-whiteboard-trap/</guid>
-    </item>
-    <item>
-      <title>Stop writing glue code: MCP servers do it for you</title>
-      <link>https://kubaik.github.io/stop-writing-glue-code-mcp-servers-do-it-for-you/</link>
-      <description>Cut internal tooling maintenance by 80% with MCP servers — real benchmarks, failure modes, and a step-by-step implementation guide for production systems</description>
-      <pubDate>Thu, 14 May 2026 02:58:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-writing-glue-code-mcp-servers-do-it-for-you/</guid>
     </item>
   </channel>
 </rss>
