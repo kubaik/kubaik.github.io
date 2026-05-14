@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 05:35:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 06:23:42 +0000</lastBuildDate>
+    <item>
+      <title>AI learns your codebase: don&apos;t trust autocomplete</title>
+      <link>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</link>
+      <description>Cut code-review feedback loops 40% with repository intelligence — tree-sitter ASTs, vector indexes, and the tools that actually understand your whole codebase.</description>
+      <pubDate>Thu, 14 May 2026 06:23:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</guid>
+    </item>
     <item>
       <title>Self-taught? Skip the CS whiteboard trap</title>
       <link>https://kubaik.github.io/self-taught-skip-the-cs-whiteboard-trap/</link>
@@ -138,13 +145,6 @@
       <description>Cut Node.js memory leaks by 100% in production — detect leaks in 7 minutes, fix unbounded caches, closures, and Kubernetes misconfigs, with exact error messages and tools.</description>
       <pubDate>Wed, 13 May 2026 11:58:21 +0000</pubDate>
       <guid>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</guid>
-    </item>
-    <item>
-      <title>Queue when to queue: save yourself 3am fires</title>
-      <link>https://kubaik.github.io/queue-when-to-queue-save-yourself-3am-fires/</link>
-      <description>Cut 6ms latency and 80% on-call pages by swapping thread pools for RabbitMQ queues — payload tuning, prefetch traps, and the disk I/O surprise when durability matters</description>
-      <pubDate>Wed, 13 May 2026 09:39:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/queue-when-to-queue-save-yourself-3am-fires/</guid>
     </item>
   </channel>
 </rss>
