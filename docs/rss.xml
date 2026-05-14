@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 23:38:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 23:48:29 +0000</lastBuildDate>
+    <item>
+      <title>Find Node.js memory leaks in 10 min</title>
+      <link>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</link>
+      <description>Cut Node.js memory leaks in half in 24 hours with heap snapshots and event listener audits — real causes, fixes, and the tooling most teams miss.</description>
+      <pubDate>Thu, 14 May 2026 23:48:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</guid>
+    </item>
     <item>
       <title>Run LLMs locally today</title>
       <link>https://kubaik.github.io/run-llms-locally-today/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud security overhead 60% with zero-trust that actually fits five-person teams — identity hygiene, least privilege IAM, and automated rotation with real latency and cost numbers</description>
       <pubDate>Thu, 14 May 2026 11:47:02 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</guid>
-    </item>
-    <item>
-      <title>AI skills paying 40% more by 2026: data vs prompt</title>
-      <link>https://kubaik.github.io/ai-skills-paying-40-more-by-2026-data-vs-prompt/</link>
-      <description>and got a 40% raise when hired full-time. T with AI Skills — build a transaction categorization model.</description>
-      <pubDate>Thu, 14 May 2026 11:05:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-paying-40-more-by-2026-data-vs-prompt/</guid>
     </item>
   </channel>
 </rss>
