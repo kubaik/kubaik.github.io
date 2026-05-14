@@ -33,5 +33,6 @@
   "Why senior developers leave big tech (it's not always the money)",
   "How to design a multi-tenant SaaS database without painting yourself into a corner",
   "Event sourcing in 2026: when it's worth the complexity and when it isn't",
-  "Redis vs Memcached: a benchmark that actually matters"
+  "Redis vs Memcached: a benchmark that actually matters",
+  "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month"
 ]
