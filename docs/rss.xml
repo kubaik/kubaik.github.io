@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 16:08:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 19:18:53 +0000</lastBuildDate>
     <item>
       <title>Skip RabbitMQ when your queue is 10k/sec</title>
       <link>https://kubaik.github.io/skip-rabbitmq-when-your-queue-is-10ksec/</link>
@@ -33,13 +33,6 @@
       <description>Cut agent routing errors by 98% with multi-agent systems — real latency, failure modes, and tool choices from a 1.2M order system. multi-agent systems in production performance numbers tools failure modes</description>
       <pubDate>Thu, 14 May 2026 13:50:01 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-get-stuck-in-production-too/</guid>
-    </item>
-    <item>
-      <title>Platform engineering explained: why your team</title>
-      <link>https://kubaik.github.io/platform-engineering-explained-why-your-team/</link>
-      <description>Cut Platform engineering explained: why your team needs a paved road failures by understanding connection pooling and retry logic — real benchmarks, com…</description>
-      <pubDate>Thu, 14 May 2026 13:22:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-engineering-explained-why-your-team/</guid>
     </item>
     <item>
       <title>Agentic AI for solo devs: where it saves hours</title>
@@ -145,6 +138,13 @@
       <description>Ship 50% fewer bugs with AI coding tools — benchmarks, guardrails, and the exact tools that turned AI junior devs into production-ready engineers in 12 weeks</description>
       <pubDate>Wed, 13 May 2026 21:20:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-junior-devs-hit-9x-bugs-faster/</guid>
+    </item>
+    <item>
+      <title>Why RAG pipelines fail in production</title>
+      <link>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</link>
+      <description>oduction, 42% of user queries returned no a with RAG — user intent; reality disagreed.</description>
+      <pubDate>Wed, 13 May 2026 21:14:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</guid>
     </item>
   </channel>
 </rss>
