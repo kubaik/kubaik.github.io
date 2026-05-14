@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 18:25:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 18:31:57 +0000</lastBuildDate>
+    <item>
+      <title>No CS degree? Ship more code</title>
+      <link>https://kubaik.github.io/no-cs-degree-ship-more-code/</link>
+      <description>Ship more production code without a CS degree — real systems, real costs, and the metrics that matter. From Nairobi to Manila, learn how to debug, monitor, and scale without over-engineering or burning cloud cash.</description>
+      <pubDate>Thu, 14 May 2026 18:31:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-cs-degree-ship-more-code/</guid>
+    </item>
     <item>
       <title>Pendulum swings back: monolith wins in 2026</title>
       <link>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API P99 latency from 2300 ms to 145 ms without SaaS bloat — fixed-window Redis counters with retry-aware acceptance reduced retry storms 42% to 3% and saved $168/month on cloud costs.</description>
       <pubDate>Wed, 13 May 2026 22:59:58 +0000</pubDate>
       <guid>https://kubaik.github.io/rate-limit-500-reqs-without-pissing-off-clients/</guid>
-    </item>
-    <item>
-      <title>Schedule at 3am or 3pm? Carbon-aware deployments under</title>
-      <link>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</link>
-      <description>ons by 40-50% without touching code. I firs with Schedule 3am 3pm Carbon-aware — touching code.</description>
-      <pubDate>Wed, 13 May 2026 22:52:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/schedule-at-3am-or-3pm-carbon-aware-deployments-under/</guid>
     </item>
   </channel>
 </rss>
