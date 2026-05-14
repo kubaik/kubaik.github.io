@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 13:22:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 13:50:09 +0000</lastBuildDate>
+    <item>
+      <title>Agents get stuck in production too</title>
+      <link>https://kubaik.github.io/agents-get-stuck-in-production-too/</link>
+      <description>Cut agent routing errors by 98% with multi-agent systems — real latency, failure modes, and tool choices from a 1.2M order system. multi-agent systems in production performance numbers tools failure modes</description>
+      <pubDate>Thu, 14 May 2026 13:50:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-get-stuck-in-production-too/</guid>
+    </item>
     <item>
       <title>Platform engineering explained: why your team</title>
       <link>https://kubaik.github.io/platform-engineering-explained-why-your-team/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search costs 60% with pgvector in PostgreSQL — RAM sizing, HNSW tuning, and the mistakes that spike latency to 400 ms</description>
       <pubDate>Wed, 13 May 2026 19:43:44 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/</guid>
-    </item>
-    <item>
-      <title>Switched salary to $95/hr in 18 months</title>
-      <link>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</link>
-      <description>Earned $18/hr locally and reached $95/hr in 18 months by open-sourcing Django tools. Includes concrete numbers, GitHub examples, and a repeatable playbook for developers in Accra, London, and Bangalore.</description>
-      <pubDate>Wed, 13 May 2026 19:26:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/switched-salary-to-95hr-in-18-months/</guid>
     </item>
   </channel>
 </rss>
