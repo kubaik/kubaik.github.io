@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 21:52:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 22:04:23 +0000</lastBuildDate>
+    <item>
+      <title>Redis vs Memcached: the cache choice</title>
+      <link>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</link>
+      <description>Cut API latency from 120 ms to 32 ms under 100k QPS by choosing Redis 7.2 over Memcached 1.6.17 — connection pooling, eviction policies, and the production mistakes that break cache.</description>
+      <pubDate>Thu, 14 May 2026 22:04:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</guid>
+    </item>
     <item>
       <title>Event sourcing: when it’s worth the pain</title>
       <link>https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSocket, SSE and long polling with real numbers on memory, latency and cost — pick the right realtime transport for your product before you ship. Benchmarks from localhost and $5 DigitalOcean droplet included.</description>
       <pubDate>Thu, 14 May 2026 09:30:00 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-realtime-api-websockets-vs-sse-vs-long/</guid>
-    </item>
-    <item>
-      <title>Doctors, lawyers, scientists: who’s running prod in</title>
-      <link>https://kubaik.github.io/doctors-lawyers-scientists-whos-running-prod-in/</link>
-      <description>Cut deployment latency from 4 days to 5 minutes with domain-specific builders that emit compliant, production-ready code — p99 latency 8 ms, SOC2 artifacts auto-generated, no terminal required</description>
-      <pubDate>Thu, 14 May 2026 08:18:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/doctors-lawyers-scientists-whos-running-prod-in/</guid>
     </item>
   </channel>
 </rss>
