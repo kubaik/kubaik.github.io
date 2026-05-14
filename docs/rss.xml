@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 20:21:51 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 20:26:49 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit big tech (the real reasons)</title>
+      <link>https://kubaik.github.io/senior-devs-quit-big-tech-the-real-reasons/</link>
+      <description>akable: - 100% cited unclear promotion paths with Senior devs quit tech — spot the warning signs early, and what you can do a.</description>
+      <pubDate>Thu, 14 May 2026 20:26:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-the-real-reasons/</guid>
+    </item>
     <item>
       <title>Charge what you&apos;re worth: freelance rates</title>
       <link>https://kubaik.github.io/charge-what-youre-worth-freelance-rates/</link>
@@ -138,13 +145,6 @@
       <description>Cut code-review feedback loops 40% with repository intelligence — tree-sitter ASTs, vector indexes, and the tools that actually understand your whole codebase.</description>
       <pubDate>Thu, 14 May 2026 06:23:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</guid>
-    </item>
-    <item>
-      <title>Self-taught? Skip the CS whiteboard trap</title>
-      <link>https://kubaik.github.io/self-taught-skip-the-cs-whiteboard-trap/</link>
-      <description>Ship 3 projects, get hired: how self-taught devs ace remote interviews without Leetcode burnout — evidence from Lisbon, Dubai, and Nairobi deployments</description>
-      <pubDate>Thu, 14 May 2026 05:34:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-taught-skip-the-cs-whiteboard-trap/</guid>
     </item>
   </channel>
 </rss>
