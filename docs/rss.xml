@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2026 23:59:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 02:58:57 +0000</lastBuildDate>
+    <item>
+      <title>Stop writing glue code: MCP servers do it for you</title>
+      <link>https://kubaik.github.io/stop-writing-glue-code-mcp-servers-do-it-for-you/</link>
+      <description>Cut internal tooling maintenance by 80% with MCP servers — real benchmarks, failure modes, and a step-by-step implementation guide for production systems</description>
+      <pubDate>Thu, 14 May 2026 02:58:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-writing-glue-code-mcp-servers-do-it-for-you/</guid>
+    </item>
     <item>
       <title>Ship code, not profiles: how Africans land remote jobs</title>
       <link>https://kubaik.github.io/ship-code-not-profiles-how-africans-land-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM latency to under 100ms on a laptop with 16GB RAM — the real constraints, model sizes that work, and the mistakes that break the setup. local LLM setup guide with benchmarks and thermal limits.</description>
       <pubDate>Wed, 13 May 2026 08:32:49 +0000</pubDate>
       <guid>https://kubaik.github.io/run-a-local-llm-on-a-laptop-heres-the-catch/</guid>
-    </item>
-    <item>
-      <title>We moved security left without slowing deploys</title>
-      <link>https://kubaik.github.io/we-moved-security-left-without-slowing-deploys/</link>
-      <description>We cut PR merge time 31% and critical vulnerabilities 87% by turning security into a measurable signal instead of a gate. Here’s how we instrumented GitHub Actions, Kubernetes, and Prometheus to shift security left without slowing deploys.</description>
-      <pubDate>Wed, 13 May 2026 07:52:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/we-moved-security-left-without-slowing-deploys/</guid>
     </item>
   </channel>
 </rss>
