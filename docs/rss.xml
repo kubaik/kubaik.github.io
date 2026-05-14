@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 19:18:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 16:21:31 +0000</lastBuildDate>
+    <item>
+      <title>Your AI tools don&apos;t improve velocity — here&apos;s the proof</title>
+      <link>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</link>
+      <description>Cut sprint waste by 30% with real AI velocity metrics — cycle time, escaped defects, and CI tests that catch regressions — not PR counts. Learn why story points lie and how to measure impact at any budget tier.</description>
+      <pubDate>Thu, 14 May 2026 16:21:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</guid>
+    </item>
     <item>
       <title>Skip RabbitMQ when your queue is 10k/sec</title>
       <link>https://kubaik.github.io/skip-rabbitmq-when-your-queue-is-10ksec/</link>
@@ -138,13 +145,6 @@
       <description>Ship 50% fewer bugs with AI coding tools — benchmarks, guardrails, and the exact tools that turned AI junior devs into production-ready engineers in 12 weeks</description>
       <pubDate>Wed, 13 May 2026 21:20:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-junior-devs-hit-9x-bugs-faster/</guid>
-    </item>
-    <item>
-      <title>Why RAG pipelines fail in production</title>
-      <link>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</link>
-      <description>oduction, 42% of user queries returned no a with RAG — user intent; reality disagreed.</description>
-      <pubDate>Wed, 13 May 2026 21:14:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</guid>
     </item>
   </channel>
 </rss>
