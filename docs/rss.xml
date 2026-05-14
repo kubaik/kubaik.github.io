@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 15:36:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 16:02:07 +0000</lastBuildDate>
+    <item>
+      <title>Balance client work vs side projects: tools that help</title>
+      <link>https://kubaik.github.io/balance-client-work-vs-side-projects-tools-that-help/</link>
+      <description>Balance client work and side projects with ClickUp or Google Calendar. Reduce weekend stress, align deadlines, and improve focus. See which fits your workflow.</description>
+      <pubDate>Thu, 14 May 2026 16:01:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-client-work-vs-side-projects-tools-that-help/</guid>
+    </item>
     <item>
       <title>Pool size: most set it wrong</title>
       <link>https://kubaik.github.io/pool-size-most-set-it-wrong/</link>
@@ -138,13 +145,6 @@
       <description>oduction, 42% of user queries returned no a with RAG — user intent; reality disagreed.</description>
       <pubDate>Wed, 13 May 2026 21:14:36 +0000</pubDate>
       <guid>https://kubaik.github.io/why-rag-pipelines-fail-in-production/</guid>
-    </item>
-    <item>
-      <title>Freelancer burnout: how I fixed it in 8 weeks</title>
-      <link>https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/</link>
-      <description>Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.</description>
-      <pubDate>Wed, 13 May 2026 20:58:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/</guid>
     </item>
   </channel>
 </rss>
