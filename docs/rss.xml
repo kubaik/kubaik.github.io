@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 06:23:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 08:08:17 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering cost us 3 weeks and $7k</title>
+      <link>https://kubaik.github.io/over-engineering-cost-us-3-weeks-and-7k/</link>
+      <description>Cut API latency from 420ms to 65ms and cloud costs 93% with a monolith — the over-engineering trap that cost $25k and 3 weeks, with code and benchmarks.</description>
+      <pubDate>Thu, 14 May 2026 08:08:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-cost-us-3-weeks-and-7k/</guid>
+    </item>
     <item>
       <title>AI learns your codebase: don&apos;t trust autocomplete</title>
       <link>https://kubaik.github.io/ai-learns-your-codebase-dont-trust-autocomplete/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG cost 67% and errors 92% at 10k RPM with Milvus+ClickHouse — the real stack that handles catalog churn and concurrency most tutorials ignore.</description>
       <pubDate>Wed, 13 May 2026 13:32:55 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-fail-at-10k-rpm/</guid>
-    </item>
-    <item>
-      <title>Node.js memory leak: detect it in 7 minutes flat</title>
-      <link>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</link>
-      <description>Cut Node.js memory leaks by 100% in production — detect leaks in 7 minutes, fix unbounded caches, closures, and Kubernetes misconfigs, with exact error messages and tools.</description>
-      <pubDate>Wed, 13 May 2026 11:58:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/nodejs-memory-leak-detect-it-in-7-minutes-flat/</guid>
     </item>
   </channel>
 </rss>
