@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 13:50:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2026 15:36:58 +0000</lastBuildDate>
+    <item>
+      <title>Pool size: most set it wrong</title>
+      <link>https://kubaik.github.io/pool-size-most-set-it-wrong/</link>
+      <description>Cut database p99 latency by 70% by sizing connection pools the wrong way — concurrency limits, churn rates, and idle budgets you’re ignoring. Benchmarks, formulas, and mistakes from real systems.</description>
+      <pubDate>Thu, 14 May 2026 15:36:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-most-set-it-wrong/</guid>
+    </item>
     <item>
       <title>Agents get stuck in production too</title>
       <link>https://kubaik.github.io/agents-get-stuck-in-production-too/</link>
@@ -138,13 +145,6 @@
       <description>Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.</description>
       <pubDate>Wed, 13 May 2026 20:58:55 +0000</pubDate>
       <guid>https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/</guid>
-    </item>
-    <item>
-      <title>Vector databases: when they help (and when they waste</title>
-      <link>https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/</link>
-      <description>Cut vector search costs 60% with pgvector in PostgreSQL — RAM sizing, HNSW tuning, and the mistakes that spike latency to 400 ms</description>
-      <pubDate>Wed, 13 May 2026 19:43:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/</guid>
     </item>
   </channel>
 </rss>
