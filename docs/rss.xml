@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 10:20:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 07:23:16 +0000</lastBuildDate>
+    <item>
+      <title>Cut cloud carbon 38% without slowing down</title>
+      <link>https://kubaik.github.io/cut-cloud-carbon-38-without-slowing-down/</link>
+      <description>eak, with 95% p99 latency under 80 ms. We u with Cut cloud carbon slowing — solve) In late 2023, we were running a real-time ge.</description>
+      <pubDate>Fri, 15 May 2026 07:23:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-carbon-38-without-slowing-down/</guid>
+    </item>
     <item>
       <title>Land $4k remote roles: GitHub README portfolio</title>
       <link>https://kubaik.github.io/land-4k-remote-roles-github-readme-portfolio/</link>
@@ -138,13 +145,6 @@
       <description>Balance client work and side projects with ClickUp or Google Calendar. Reduce weekend stress, align deadlines, and improve focus. See which fits your workflow.</description>
       <pubDate>Thu, 14 May 2026 16:01:59 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-client-work-vs-side-projects-tools-that-help/</guid>
-    </item>
-    <item>
-      <title>Pool size: most set it wrong</title>
-      <link>https://kubaik.github.io/pool-size-most-set-it-wrong/</link>
-      <description>Cut database p99 latency by 70% by sizing connection pools the wrong way — concurrency limits, churn rates, and idle budgets you’re ignoring. Benchmarks, formulas, and mistakes from real systems.</description>
-      <pubDate>Thu, 14 May 2026 15:36:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-most-set-it-wrong/</guid>
     </item>
   </channel>
 </rss>
