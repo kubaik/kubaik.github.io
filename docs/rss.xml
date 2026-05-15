@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 23:16:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 23:37:44 +0000</lastBuildDate>
+    <item>
+      <title>Lessons from 9 months of unnecessary code</title>
+      <link>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</link>
+      <description>Cut cloud costs 21× and latency 35× by replacing Kubernetes and Kafka with a single FastAPI service — the real cost of over-engineering in 2026</description>
+      <pubDate>Fri, 15 May 2026 23:37:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</guid>
+    </item>
     <item>
       <title>Stop guessing pool sizes: the real way to tune DB pools</title>
       <link>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</link>
@@ -138,13 +145,6 @@
       <description>Cut zero-trust setup time from months to days with a JWT gate at the edge — real latency numbers, cost deltas, and the security controls that actually matter for small teams. Zero-trust architecture for small teams: what actually makes sense to implement.</description>
       <pubDate>Fri, 15 May 2026 13:46:57 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-zero-trusts-checkboxes-small-teams-need-this/</guid>
-    </item>
-    <item>
-      <title>Pick the right dev platform in 5 minutes</title>
-      <link>https://kubaik.github.io/pick-the-right-dev-platform-in-5-minutes/</link>
-      <description>Cut sandbox latency by 60% when choosing a dev platform in Africa — Andela vs Toptal vs Arc with real latency data, cost per hour, and hire-to-prod timelines for Lagos fintechs in 2026.</description>
-      <pubDate>Fri, 15 May 2026 13:19:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-dev-platform-in-5-minutes/</guid>
     </item>
   </channel>
 </rss>
