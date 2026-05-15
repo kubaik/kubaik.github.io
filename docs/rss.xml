@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 07:23:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 08:22:05 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right dev platform in 5 mins</title>
+      <link>https://kubaik.github.io/pick-the-right-dev-platform-in-5-mins/</link>
+      <description>ium is 25–30% above market. Toptal’s contra with Pick dev platform mins — cancel the contract.</description>
+      <pubDate>Fri, 15 May 2026 08:21:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-dev-platform-in-5-mins/</guid>
+    </item>
     <item>
       <title>Cut cloud carbon 38% without slowing down</title>
       <link>https://kubaik.github.io/cut-cloud-carbon-38-without-slowing-down/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time by 60% with Redis Streams — when queues are overkill, what’s the real cost, and which tools to use instead</description>
       <pubDate>Thu, 14 May 2026 16:07:57 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-rabbitmq-when-your-queue-is-10ksec/</guid>
-    </item>
-    <item>
-      <title>Balance client work vs side projects: tools that help</title>
-      <link>https://kubaik.github.io/balance-client-work-vs-side-projects-tools-that-help/</link>
-      <description>Balance client work and side projects with ClickUp or Google Calendar. Reduce weekend stress, align deadlines, and improve focus. See which fits your workflow.</description>
-      <pubDate>Thu, 14 May 2026 16:01:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-client-work-vs-side-projects-tools-that-help/</guid>
     </item>
   </channel>
 </rss>
