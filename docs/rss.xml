@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 20:40:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 17:43:58 +0000</lastBuildDate>
+    <item>
+      <title>Why 2026 killed vibe coding in production</title>
+      <link>https://kubaik.github.io/why-2026-killed-vibe-coding-in-production/</link>
+      <description>romise 30–50% time savings on boilerplate with AI coding tools cost — faster production releases.</description>
+      <pubDate>Fri, 15 May 2026 17:43:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-2026-killed-vibe-coding-in-production/</guid>
+    </item>
     <item>
       <title>Rewrite your backend for 5G users before they do</title>
       <link>https://kubaik.github.io/rewrite-your-backend-for-5g-users-before-they-do/</link>
@@ -138,13 +145,6 @@
       <description>Cut Node.js memory leaks in half in 24 hours with heap snapshots and event listener audits — real causes, fixes, and the tooling most teams miss.</description>
       <pubDate>Thu, 14 May 2026 23:48:21 +0000</pubDate>
       <guid>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</guid>
-    </item>
-    <item>
-      <title>Run LLMs locally today</title>
-      <link>https://kubaik.github.io/run-llms-locally-today/</link>
-      <description>s already 80% full when they try to install with LLMs — load, then get a CUDA out-of-memory error when they.</description>
-      <pubDate>Thu, 14 May 2026 23:38:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/run-llms-locally-today/</guid>
     </item>
   </channel>
 </rss>
