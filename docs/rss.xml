@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 13:47:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 14:39:49 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLM pipelines like a pro</title>
+      <link>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</link>
+      <description>Cut AI pipeline debugging time by 70% with structured observability. Learn exactly what to log, trace, and alert on when your system includes an LLM — with Prometheus, OpenTelemetry, and Grafana.</description>
+      <pubDate>Fri, 15 May 2026 14:39:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</guid>
+    </item>
     <item>
       <title>Skip zero-trust’s checkboxes: small teams need this</title>
       <link>https://kubaik.github.io/skip-zero-trusts-checkboxes-small-teams-need-this/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-tenant SaaS database costs by 30% and latency by 60% with schema-per-tenant routing instead of shared schemas. Real systems from Shopify, Stripe and Jakarta startups prove it works.</description>
       <pubDate>Thu, 14 May 2026 21:40:31 +0000</pubDate>
       <guid>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit big tech (the real reasons)</title>
-      <link>https://kubaik.github.io/senior-devs-quit-big-tech-the-real-reasons/</link>
-      <description>akable: - 100% cited unclear promotion paths with Senior devs quit tech — spot the warning signs early, and what you can do a.</description>
-      <pubDate>Thu, 14 May 2026 20:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-the-real-reasons/</guid>
     </item>
   </channel>
 </rss>
