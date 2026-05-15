@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 08:22:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 08:31:08 +0000</lastBuildDate>
+    <item>
+      <title>Vibe coding burns prod: hard numbers</title>
+      <link>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</link>
+      <description>Cut p99 latency 96% and AWS costs 82% after vibe coding melted prod — here’s what to instrument first in FastAPI, Python 3.11, and the hidden AST/GC costs nobody mentions.</description>
+      <pubDate>Fri, 15 May 2026 08:31:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</guid>
+    </item>
     <item>
       <title>Pick the right dev platform in 5 mins</title>
       <link>https://kubaik.github.io/pick-the-right-dev-platform-in-5-mins/</link>
@@ -138,13 +145,6 @@
       <description>Cut sprint waste by 30% with real AI velocity metrics — cycle time, escaped defects, and CI tests that catch regressions — not PR counts. Learn why story points lie and how to measure impact at any budget tier.</description>
       <pubDate>Thu, 14 May 2026 16:21:23 +0000</pubDate>
       <guid>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</guid>
-    </item>
-    <item>
-      <title>Skip RabbitMQ when your queue is 10k/sec</title>
-      <link>https://kubaik.github.io/skip-rabbitmq-when-your-queue-is-10ksec/</link>
-      <description>Cut API response time by 60% with Redis Streams — when queues are overkill, what’s the real cost, and which tools to use instead</description>
-      <pubDate>Thu, 14 May 2026 16:07:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-rabbitmq-when-your-queue-is-10ksec/</guid>
     </item>
   </channel>
 </rss>
