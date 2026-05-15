@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2026 23:48:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 02:16:29 +0000</lastBuildDate>
+    <item>
+      <title>Pick FastAPI or Django REST: the real trade-offs</title>
+      <link>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</link>
+      <description>FastAPI beats Django REST in latency by 60% at 25k rpm but costs $8/month less on AWS — real AWS bills, connection leaks, and the unexpected coupling that surprised teams in Nairobi fintech stacks</description>
+      <pubDate>Fri, 15 May 2026 02:16:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</guid>
+    </item>
     <item>
       <title>Find Node.js memory leaks in 10 min</title>
       <link>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</link>
@@ -138,13 +145,6 @@
       <description>Cut build time by 60% with agentic AI — when it works for solo devs and when it backfires with concrete case studies and benchmarks from real freelance projects</description>
       <pubDate>Thu, 14 May 2026 13:08:25 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-ai-for-solo-devs-where-it-saves-hours/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for 5 people? Skip the hype</title>
-      <link>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</link>
-      <description>Cut cloud security overhead 60% with zero-trust that actually fits five-person teams — identity hygiene, least privilege IAM, and automated rotation with real latency and cost numbers</description>
-      <pubDate>Thu, 14 May 2026 11:47:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-5-people-skip-the-hype/</guid>
     </item>
   </channel>
 </rss>
