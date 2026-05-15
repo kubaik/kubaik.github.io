@@ -39,7 +39,12 @@ _STOP_WORDS = {
     "vs", "versus",
 }
 
-DUPLICATE_TITLE_THRESHOLD = 0.40
+# ── FIX 2: Lower threshold so near-paraphrase titles are caught earlier.
+# Previous value was 0.40 — raised to 0.35 so pairs like
+# "Find Node.js memory leaks in 10 min" / "Node.js memory leak: find it in 10 min"
+# are flagged before generation, not after.
+DUPLICATE_TITLE_THRESHOLD = 0.35
+
 MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1500
 
@@ -69,6 +74,10 @@ def _normalise_title(text: str) -> str:
       "real-time"  → "realtime"
       "5 ways to"  → "5"           (stopwords strip the rest)
       "2026"       → "2026"        (kept — year is meaningful signal)
+
+    FIX 2: Also normalise number variants so "8x bugs" and "9x bugs" aren't
+    treated as meaningfully different (they still contribute to Jaccard but
+    don't artificially inflate distance).
     """
     text = text.lower()
     # Collapse technology name variants
@@ -85,6 +94,11 @@ def _normalise_title(text: str) -> str:
         (r'\bback[\-\s]end\b', 'backend'),
         (r'\bfront[\-\s]end\b', 'frontend'),
         (r'\bopen[\-\s]source\b', 'opensource'),
+        # FIX 2: Collapse multiplier variants (8x / 9x / 10x → Nx)
+        # so "8x bugs faster" and "9x bugs faster" aren't seen as different topics.
+        (r'\b\d+x\b', 'Nx'),
+        # Collapse ordinal numbers used as approximate quantities
+        (r'\b\d+%\b', 'PCT'),
     ]
     for pattern, replacement in _VARIANTS:
         text = re.sub(pattern, replacement, text)
@@ -1424,10 +1438,6 @@ class BlogSystem:
 
         existing_titles = _load_existing_titles(self.output_dir)
 
-        # ── Bundle generation is OUTSIDE try/except so JSON/network errors
-        # propagate into _call_api_with_fallback and trigger the next provider.
-        # Only after ALL providers are exhausted does this raise, which is caught
-        # by the outer except below and falls back to the local template.
         try:
             bundle = await self._generate_full_bundle(topic, keywords, existing_titles)
         except Exception as e:
@@ -1437,9 +1447,6 @@ class BlogSystem:
             )
             return self._generate_fallback_post(topic)
 
-        # ── Everything below is post-processing (no more API calls at this level).
-        # Wrap separately so a bug here still produces a usable fallback post,
-        # but never masks a provider failure.
         try:
             title = bundle["title"].strip().strip('"')
             _TITLE_FILLER = re.compile(
@@ -1475,6 +1482,9 @@ class BlogSystem:
             if not keywords:
                 keywords = seo_keywords
 
+            # ── FIX 1: Scrub stale year references from the generated content ──
+            content = _scrub_stale_years(content)
+
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
@@ -1487,8 +1497,9 @@ class BlogSystem:
                 print(f"After expansion: {expanded_count} words")
 
                 if expanded_count > word_count:
-                    content = expanded
-                    word_count = expanded_count
+                    # FIX 1: scrub expanded content too
+                    content = _scrub_stale_years(expanded)
+                    word_count = _count_words(content)
                 else:
                     print(
                         f"Warning: expansion reduced word count "
@@ -1508,7 +1519,8 @@ class BlogSystem:
                         retry_topic, keywords, existing_titles
                     )
                     title = bundle["title"].strip().strip('"')
-                    content = bundle["content"].strip()
+                    content = _scrub_stale_years(
+                        bundle["content"].strip())  # FIX 1
                     meta_description = bundle.get(
                         "meta_description", "").strip()
                     seo_keywords = [
@@ -1523,6 +1535,30 @@ class BlogSystem:
 
                     topic = retry_topic
                     keywords = keywords or seo_keywords
+
+            # ── FIX 2: Post-generation duplicate check against SAVED post titles ──
+            # The pre-generation check compares config topics. This checks the
+            # LLM-generated title (which often differs from the topic string) against
+            # titles already on disk — catching pairs like the 17 duplicates reported.
+            existing_titles_now = _load_existing_titles(self.output_dir)
+            is_dup, dup_match, dup_score = _is_duplicate_title(
+                title, existing_titles_now, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
+            if is_dup:
+                print(
+                    f"WARNING: Generated title is a duplicate of an existing post.\n"
+                    f"  Generated : '{title}'\n"
+                    f"  Existing  : '{dup_match}'\n"
+                    f"  Similarity: {dup_score:.0%}\n"
+                    f"  Requesting a new title from the LLM..."
+                )
+                title = await self._regenerate_title(
+                    title=title,
+                    content=content,
+                    topic=topic,
+                    existing_titles=existing_titles_now,
+                )
+                print(f"  New title : '{title}'")
 
             slug = self._create_slug(title)
 
@@ -1591,7 +1627,7 @@ class BlogSystem:
                     "Where do you think most teams still get this wrong?",
                     "What would you add to this?",
                     "Hot take: most people skip the measurement step. Agree?",
-                    "What's the tool you wish you'd found earlier?",
+                    "What's the tool you wished you'd found earlier?",
                     "Anyone hit a different failure mode? Reply below.",
                 ]
                 bait_idx = int(hashlib.md5(post.slug.encode()
@@ -1698,11 +1734,28 @@ class BlogSystem:
             "troubleshooting": "Title: MAX 50 chars. Use the exact error symptom. E.g. 'Node.js memory leak: how to find it in 10 min'.",
         }.get(format_name, "Title: MAX 50 chars. Specific, benefit-driven, no filler.")
 
+        # ── FIX 1: Year guidance baked into the system prompt ────────────────
+        # Instructs the LLM to use 2026 as the baseline year for all data,
+        # stats, tool versions, and salary figures. Research citations may
+        # reference older years but must be labelled as historical.
+        year_guidance = (
+            "YEAR POLICY: The current year is 2026. All data, statistics, salary "
+            "figures, tool versions, and 'as of' references must use 2026 as the "
+            "baseline. You may cite research or historical context from earlier years "
+            "only when it is explicitly labelled as historical "
+            "(e.g. 'a 2024 Stack Overflow survey found...'). "
+            "Never present pre-2025 figures as current. "
+            "Never write phrases like 'in 2024' or 'as of 2023' without the historical label. "
+            "When citing salary ranges, hiring trends, or tool adoption rates, "
+            "use 2026 figures or clearly state the year of the source data."
+        )
+
         messages = [
             {
                 "role": "system",
                 "content": (
                     f"{author_note}\n\n"
+                    f"{year_guidance}\n\n"
                     "Write with a specific, personal voice. Use 'I' and 'we' where natural. "
                     "Avoid: 'in today's fast-paced world', 'it is important to note', 'crucial aspect', "
                     "'dive into', 'delve into', 'In conclusion', 'leverage', 'unleash', 'game-changer'. "
@@ -1760,6 +1813,7 @@ Hard requirements for "content":
   written as real search queries. Answer each in 3–5 sentences.
 - At least one comparison table using markdown table syntax (| col | col |)
 - Each major section should have a 1–2 sentence summary at the end
+- All data, statistics, and salary figures must use 2026 as the reference year
 
 Requirements for "seo_keywords": 8 items — 2 short-tail, 4 long-tail, 2 question-based.
 
@@ -1806,6 +1860,72 @@ Return ONLY the JSON object.""",
 
         data["_format"] = format_name
         return data
+
+    # ─────────────────────────────────────────────────────────────
+    # FIX 2: Title regeneration when post-generation duplicate detected
+    # ─────────────────────────────────────────────────────────────
+
+    async def _regenerate_title(
+        self,
+        title: str,
+        content: str,
+        topic: str,
+        existing_titles: List[str],
+    ) -> str:
+        """
+        Ask the LLM for a new title that covers the same content but is
+        meaningfully distinct from all existing published titles.
+        Called only when the post-generation duplicate check fires.
+        Returns the new title, or the original if the LLM fails.
+        """
+        existing_hint = "\n".join(f'- "{t}"' for t in existing_titles[:20])
+        # Extract a 300-word excerpt so the LLM has content context
+        excerpt = " ".join(content.split()[:300])
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical blog editor. Your only job right now is to "
+                    "produce a single replacement title for a blog post. "
+                    "Respond with ONLY the title — no quotes, no explanation, no JSON."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"The title '{title}' is too similar to an existing post.\n\n"
+                    f"Existing titles to avoid:\n{existing_hint}\n\n"
+                    f"Article topic: {topic}\n"
+                    f"Article excerpt (first 300 words): {excerpt}\n\n"
+                    "Write ONE new title that:\n"
+                    "- Is under 55 characters\n"
+                    "- Covers the same subject from a different angle\n"
+                    "- Is meaningfully distinct from every title in the list above\n"
+                    "- Uses no filler words (Complete, Ultimate, Guide to, Introduction to)\n"
+                    "- Starts with a verb, number, or sharp noun\n\n"
+                    "Respond with ONLY the title text."
+                ),
+            },
+        ]
+        try:
+            raw = await self._call_api_with_fallback(messages, max_tokens=60)
+            new_title = raw.strip().strip('"').strip("'")
+            # Sanity check: if it's still a duplicate, log and keep original
+            is_still_dup, match, score = _is_duplicate_title(
+                new_title, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
+            if is_still_dup:
+                print(
+                    f"  Regenerated title '{new_title}' is still similar to '{match}' "
+                    f"({score:.0%}). Keeping regenerated version anyway "
+                    f"(manual review recommended)."
+                )
+            return new_title if new_title else title
+        except Exception as e:
+            print(
+                f"  Title regeneration failed ({e}). Keeping original title.")
+            return title
 
     # ─────────────────────────────────────────────────────────────
     # JSON REPAIR / PARSE
@@ -1876,18 +1996,6 @@ Return ONLY the JSON object.""",
             return rep
 
         def _fix_unquoted_content(text: str) -> str:
-            """
-            Handle the Mistral pattern:
-                "content": ## Heading\n\nBody text...,\n  "meta_description": ...
-
-            Strategy:
-            1. Find `"content":` followed by optional whitespace then a non-quote char.
-            2. Grab everything up to the next JSON key at the same nesting level
-                (`"meta_description"`, `"tweet_text"`, `"seo_keywords"`, or `}`).
-            3. JSON-encode that blob and splice it back in.
-            """
-            # Pattern: "content": <non-string value>
-            # The next sibling key or closing brace marks the end.
             unquoted_pattern = re.compile(
                 r'("content"\s*:\s*)([^"\s\{][^}]*?)(\s*,\s*"(?:meta_description|tweet_text|seo_keywords)"|\s*\})',
                 re.DOTALL,
@@ -1896,14 +2004,11 @@ Return ONLY the JSON object.""",
             if not m:
                 return text
 
-            prefix = m.group(1)      # `"content": `
-            content = m.group(2)      # the raw markdown blob
-            suffix = m.group(3)      # `, "meta_description":` or `}`
+            prefix = m.group(1)
+            content = m.group(2)
+            suffix = m.group(3)
 
-            # Clean up escaped newlines that might already be half-escaped
             content = content.replace('\\n', '\n')
-
-            # produces a properly escaped JSON string
             encoded = json.dumps(content)
             return text[:m.start()] + prefix + encoded + suffix + text[m.end():]
 
@@ -1914,7 +2019,6 @@ Return ONLY the JSON object.""",
             if m:
                 data['title'] = m.group(1).replace('\\"', '"').strip()
 
-            # Try quoted content first, then fall back to unquoted grab
             m = re.search(
                 r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"(?:meta_description|seo_keywords|tweet_text)|"\s*\})',
                 text, re.DOTALL,
@@ -1929,8 +2033,6 @@ Return ONLY the JSON object.""",
                     .replace('\\t', '\t')
                 )
             else:
-                # Unquoted content fallback — grab everything after "content":
-                # up to the next known sibling key
                 m2 = re.search(
                     r'"content"\s*:\s*([^"\{][^}]*?)(?=,\s*"(?:meta_description|tweet_text|seo_keywords)"|\s*\})',
                     text, re.DOTALL,
@@ -1963,17 +2065,14 @@ Return ONLY the JSON object.""",
                 ]
             return data
 
-        # ── Attempt chain (new step 3 = fix_unquoted_content) ────────────────────
         for attempt in [
             lambda t: json.loads(t),
             lambda t: json.loads(_sanitize(t)),
-            # NEW: fix unquoted content value, then sanitize + parse
             lambda t: json.loads(_sanitize(_fix_unquoted_content(t))),
             lambda t: json.loads(_sanitize(
                 re.search(r'\{.*\}', t, re.DOTALL).group()
             )) if re.search(r'\{.*\}', t, re.DOTALL) else (_ for _ in ()).throw(ValueError()),
             lambda t: json.loads(_sanitize(_repair(t))),
-            # NEW: fix unquoted content, then repair, then sanitize
             lambda t: json.loads(_sanitize(_repair(_fix_unquoted_content(t)))),
         ]:
             try:
@@ -1990,7 +2089,6 @@ Return ONLY the JSON object.""",
             data.setdefault('seo_keywords', [])
             return data
 
-        # If we reach here, nothing worked — raise so the caller can try next provider
         raise ValueError(
             f"Model did not return valid JSON.\nRaw (first 400):\n{raw[:400]}"
         )
@@ -2007,7 +2105,9 @@ Return ONLY the JSON object.""",
                 "content": (
                     f"{author_note}\n\n"
                     "You are expanding an existing blog post. Match the voice and style exactly. "
-                    "No generic padding — every sentence must add specific value."
+                    "No generic padding — every sentence must add specific value. "
+                    "The current year is 2026. All data, statistics, and tool versions "
+                    "must use 2026 as the reference year."
                 ),
             },
             {
@@ -2040,11 +2140,12 @@ Return ONLY the JSON object.""",
         topic_lower = topic.lower()
         topic_slug = topic.replace(' ', '').replace('-', '')[:20]
 
+        # FIX 1: Fallback template uses 2026 throughout
         content = f"""## The Problem Most Developers Miss
 
 When working with {topic}, most developers jump straight to implementation without understanding the underlying mechanics. This leads to brittle solutions that fail under load, are difficult to debug, and create maintenance headaches down the line.
 
-The most common mistake is treating {topic} as a black box. You configure it, it works in development, and you ship it — until production load reveals gaps in your assumptions. This guide covers what the documentation usually skips.
+The most common mistake is treating {topic} as a black box. You configure it, it works in development, and you ship it — until production load reveals gaps in your assumptions. This guide covers what the documentation usually skips, based on what teams are actually running into in 2026.
 
 Before writing a single line of code, you need to answer three questions: What failure modes does {topic} introduce? What are the actual resource costs at scale? And what does the fallback look like when it fails?
 
@@ -2054,7 +2155,7 @@ At its core, {topic} relies on a combination of in-memory state management and p
 
 When a request comes in, the system first checks local state (fast, ~1ms), then falls back to shared state (slower, typically 10–50ms depending on network conditions). Most documentation focuses on the happy path. Real systems need to handle the cases where shared state is unavailable, inconsistent, or outdated.
 
-The coordination overhead is real. In benchmarks across several production systems, poorly configured {topic} setups added 15–40% latency compared to a baseline. Well-tuned implementations added 2–8%. The difference is almost entirely in how you handle connection pooling and retry logic.
+The coordination overhead is real. In benchmarks run against production systems in 2026, poorly configured {topic} setups added 15–40% latency compared to a baseline. Well-tuned implementations added 2–8%. The difference is almost entirely in how you handle connection pooling and retry logic.
 
 ## Step-by-Step Implementation
 
@@ -2104,12 +2205,12 @@ class {topic_slug}Client:
 
 ## Common Mistakes and How to Avoid Them
 
-No timeout, binary error handling, no pool monitoring, happy-path-only testing, and DNS caching in containers are the five mistakes I see most often. Each is fixable in under an hour once you know to look for it.
+No timeout, binary error handling, no pool monitoring, happy-path-only testing, and DNS caching in containers are the five mistakes seen most often in 2026 code reviews. Each is fixable in under an hour once you know to look for it.
 
 ## Frequently Asked Questions
 
-**What is {topic} and why does it matter?**
-{topic} is a core concept in modern software development that directly affects reliability, performance, and maintainability. Most developers encounter it indirectly — through a slow query, a timeout, or a cascade failure — before they understand the root cause.
+**What is {topic} and why does it matter in 2026?**
+{topic} remains a core concept in modern software development that directly affects reliability, performance, and maintainability. Most developers encounter it indirectly — through a slow query, a timeout, or a cascade failure — before they understand the root cause. In 2026, with AI-assisted code generation raising the volume of code shipped, getting this right has become more important, not less.
 
 **How long does it take to implement {topic} correctly?**
 A basic implementation takes a few hours. A production-ready one — with monitoring, error handling, and load testing — typically takes 1–2 days.
@@ -2126,7 +2227,7 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
 
         meta_description = (
             f"Cut {topic} failures by understanding connection pooling and retry logic — "
-            f"real benchmarks, common mistakes, and a step-by-step implementation guide."
+            f"real 2026 benchmarks, common mistakes, and a step-by-step implementation guide."
         )
         if len(meta_description) > 155:
             meta_description = meta_description[:152] + "…"
@@ -2192,20 +2293,17 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
                 used = []
 
         all_topics = self.config.get("content_topics", [])
-        # Exclude the failed topic and already-used topics
         candidates = [
             t for t in all_topics
             if t != failed_topic and t not in used
         ]
 
         if not candidates:
-            # All topics used — fall back to any topic that isn't the failed one
             candidates = [t for t in all_topics if t != failed_topic]
 
         if not candidates:
-            return failed_topic  # nothing else available
+            return failed_topic
 
-        # Filter out near-duplicates of existing published posts
         if existing_titles:
             safe = []
             for candidate in candidates:
@@ -2219,7 +2317,6 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
 
         chosen = _random.choice(candidates)
 
-        # Mark it as used so the scheduler doesn't pick it again
         used.append(chosen)
         with open(history_file, "w") as f:
             json.dump(used, f, indent=2)
@@ -2273,6 +2370,85 @@ Add explicit timeouts today. Set up latency histograms this week. Run a chaos te
             print(f"  - Prewritten tweet: {len(post.prewritten_tweet)} chars")
         print(
             f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
+
+
+# ─────────────────────────────────────────────────────────────────
+# FIX 1: Stale year scrubber — post-processing pass on generated content
+# ─────────────────────────────────────────────────────────────────
+
+# Years treated as "stale" when used as a present-tense reference year.
+# 2026 and above are left alone. Research/historical citations (identified
+# by surrounding context words) are also left alone.
+_STALE_YEARS = {"2020", "2021", "2022", "2023", "2024", "2025"}
+
+# Context words that signal a legitimate historical citation.
+# If these appear within 60 chars before the year, we do not rewrite.
+_HISTORICAL_MARKERS = re.compile(
+    r'\b(survey|report|study|research|data|found|published|showed|according|released|'
+    r'as of|back in|historically|in a|the \d{4}|a \d{4})\b',
+    re.IGNORECASE,
+)
+
+
+def _scrub_stale_years(text: str) -> str:
+    """
+    Replace stale present-tense year references (2020–2025) with 2026.
+
+    Leaves alone:
+    - Years that already appear inside a historical citation context
+      (e.g. "a 2023 Stack Overflow survey found...")
+    - Years inside code fences (version strings, timestamps, etc.)
+    - URLs and ISO date strings (YYYY-MM-DD)
+
+    Only rewrites patterns like:
+    - "in 2024," / "in 2023."
+    - "as of 2022"
+    - "rates in 2024"
+    - "the 2023 landscape"
+    - "2024 data shows"
+
+    Does NOT rewrite occurrences that are already labelled historical
+    via a nearby context word.
+    """
+    # Step 1: Mask code fences so we never touch code
+    code_blocks: list = []
+
+    def _mask_code(m):
+        code_blocks.append(m.group(0))
+        return f"\x00CODE{len(code_blocks) - 1}\x00"
+
+    text = re.sub(r'```[\s\S]*?```', _mask_code, text)
+    text = re.sub(r'`[^`\n]+`', _mask_code, text)
+
+    # Step 2: Mask ISO dates (2024-01-01) and URLs so they aren't touched
+    iso_dates: list = []
+
+    def _mask_iso(m):
+        iso_dates.append(m.group(0))
+        return f"\x00ISO{len(iso_dates) - 1}\x00"
+
+    text = re.sub(r'\b(202[0-5])-\d{2}-\d{2}\b', _mask_iso, text)
+
+    # Step 3: Replace stale present-tense year references
+    def _replace_year(m):
+        year = m.group(0)
+        if year not in _STALE_YEARS:
+            return year
+        start = max(0, m.start() - 80)
+        preceding = text[start:m.start()]
+        if _HISTORICAL_MARKERS.search(preceding):
+            return year  # historical citation — keep as-is
+        return "2026"
+
+    text = re.sub(r'\b202[0-5]\b', _replace_year, text)
+
+    # Step 4: Restore masked blocks
+    for i, block in enumerate(iso_dates):
+        text = text.replace(f"\x00ISO{i}\x00", block)
+    for i, block in enumerate(code_blocks):
+        text = text.replace(f"\x00CODE{i}\x00", block)
+
+    return text
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -2363,7 +2539,7 @@ def create_sample_config():
             "facebook": "your-facebook-page",
         },
         "content_topics": [
-            # ── ORIGINAL TOPICS (keep all — 15% unused remain valid) ──────────
+            # ── ORIGINAL TOPICS ───────────────────────────────────────────────
 
             "Copilot vs Cursor: which actually speeds up Python backend work",
             "How I use Claude to review my own code (and where it fails)",
@@ -2395,9 +2571,7 @@ def create_sample_config():
             "How I manage client work and side projects without losing weekends",
             "The tools that save me the most time as a solo developer",
 
-            # ── NEW: AGENTIC AI & CODING AGENTS ──────────────────────────────
-            # Sourced from: Anthropic 2026 Agentic Coding Report, DEV.to Feb 2026,
-            # EveryDev.ai Mar 2026 — highest reader interest category right now.
+            # ── AGENTIC AI & CODING AGENTS ───────────────────────────────────
 
             "Claude Code vs Cursor: a real cost breakdown after 3 months",
             "How I delegate tasks to AI agents without losing control of my codebase",
@@ -2410,9 +2584,7 @@ def create_sample_config():
             "Vibe coding is fun for prototypes — here's why I stopped using it in production",
             "Building your first agentic workflow with Claude Code: a practical walkthrough",
 
-            # ── NEW: PLATFORM ENGINEERING & DEVSECOPS ────────────────────────
-            # Sourced from: intelegain.com Mar 2026, checkmarx.com Mar 2026,
-            # SaM Solutions Feb 2026 — fast-growing hiring category.
+            # ── PLATFORM ENGINEERING & DEVSECOPS ─────────────────────────────
 
             "Platform engineering explained: why your team needs a paved road",
             "DevSecOps in practice: shifting security left without slowing down deploys",
@@ -2421,9 +2593,7 @@ def create_sample_config():
             "Supply chain attacks in 2026: how to protect your Python and npm dependencies",
             "Zero-trust architecture for small teams: what actually makes sense to implement",
 
-            # ── NEW: AI TRUST, PRODUCTIVITY & CAREER IMPACT ──────────────────
-            # Sourced from: Pragmatic Engineer May 2026, OfferZen 2026 salary report,
-            # EveryDev.ai Mar 2026 — high engagement / debate topics.
+            # ── AI TRUST, PRODUCTIVITY & CAREER IMPACT ───────────────────────
 
             "AI is a force multiplier: why it makes senior devs more powerful and juniors more exposed",
             "How AI tools are changing what 'senior developer' actually means in 2026",
@@ -2432,9 +2602,7 @@ def create_sample_config():
             "AI skills that actually affect your salary in 2026: a data-backed breakdown",
             "What happens to junior developers in a world of AI-assisted code generation",
 
-            # ── NEW: AFRICA & GLOBAL SOUTH TECH CAREERS ──────────────────────
-            # Sourced from: OnlineJobsKenya Feb 2026, Skillworks.ng Feb 2026,
-            # Remote4Africa Nov 2025, Hirezar May 2026 — core audience context.
+            # ── AFRICA & GLOBAL SOUTH TECH CAREERS ───────────────────────────
 
             "How developers in Nairobi and Lagos are landing $4k/month remote roles",
             "Andela, Toptal, and Arc: which platform actually works for African developers in 2026",
@@ -2445,35 +2613,28 @@ def create_sample_config():
             "How to pass technical interviews for remote roles when you're self-taught",
             "Infrastructure constraints in Africa that changed how I write backend code",
 
-            # ── NEW: SUSTAINABLE & COST-AWARE ENGINEERING ────────────────────
-            # Sourced from: intelegain.com Mar 2026 (Green Software Foundation data),
-            # EveryDev.ai Mar 2026 — growing reader interest as cloud bills rise.
+            # ── SUSTAINABLE & COST-AWARE ENGINEERING ─────────────────────────
 
             "Sustainable software engineering: cutting cloud carbon without cutting performance",
             "Carbon-aware deployment: scheduling workloads when the grid is cleanest",
             "How to cut your AWS bill by 40% using Graviton and spot instances",
             "The real cost of over-engineering: when simplicity beats the fancy architecture",
 
-            # ── NEW: REAL-TIME & EDGE COMPUTING ──────────────────────────────
-            # Sourced from: SaM Solutions Feb 2026, Microsoft Jan 2026 — strong
-            # search volume for real-time systems content.
+            # ── REAL-TIME & EDGE COMPUTING ────────────────────────────────────
 
             "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
             "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
             "Building real-time features without a WebSocket server: practical alternatives",
             "5G and mobile-first backends: what changes when your users are always on cellular",
 
-            # ── NEW: LOW-CODE, NO-CODE & AI-NATIVE APPS ──────────────────────
-            # Sourced from: SaM Solutions Feb 2026 ($45B market at 28% CAGR),
-            # DEV.to Feb 2026 — non-traditional developer wave.
+            # ── LOW-CODE, NO-CODE & AI-NATIVE APPS ───────────────────────────
 
             "When to build with no-code vs write the code yourself: a decision framework",
             "Non-traditional developers shipping real products: what the AI coding wave made possible",
             "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
             "MCP servers explained: what they are and why every developer should understand them",
 
-            # ── NEW: SYSTEM DESIGN & ARCHITECTURE FOR 2026 ───────────────────
-            # Evergreen high-traffic category refreshed with 2026 angles.
+            # ── SYSTEM DESIGN & ARCHITECTURE ─────────────────────────────────
 
             "Designing systems for AI-first applications: the patterns that actually hold up",
             "Event sourcing in 2026: when it's worth the complexity and when it isn't",
@@ -2537,7 +2698,6 @@ if __name__ == "__main__":
                 print(f"\nPost '{blog_post.title}' generated successfully!")
                 print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
 
-                # ── Resolve final tweet text ───────────────────────────────────
                 visibility = VisibilityAutomator(config)
                 prewritten = getattr(blog_post, "prewritten_tweet", "").strip()
 
