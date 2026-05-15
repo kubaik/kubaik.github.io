@@ -45,5 +45,6 @@
   "Vibe coding is fun for prototypes \u2014 here's why I stopped using it in production",
   "Tech salaries in 2026: what the data shows",
   "AI is a force multiplier: why it makes senior devs more powerful and juniors more exposed",
-  "5G and mobile-first backends: what changes when your users are always on cellular"
+  "5G and mobile-first backends: what changes when your users are always on cellular",
+  "Observability for AI pipelines: what to instrument when your system includes an LLM"
 ]

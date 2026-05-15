@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 11:07:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 11:34:22 +0000</lastBuildDate>
+    <item>
+      <title>Measure LLM pipelines: 4 critical metrics to track</title>
+      <link>https://kubaik.github.io/measure-llm-pipelines-4-critical-metrics-to-track/</link>
+      <description>Cut LLM pipeline costs by 42% and latency by 71% with 4 critical metrics — prompt tags, retriever distance, token counters, and post-process flags. Production-grade tracing, Prometheus dashboards, and replay tests included.</description>
+      <pubDate>Fri, 15 May 2026 11:34:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/measure-llm-pipelines-4-critical-metrics-to-track/</guid>
+    </item>
     <item>
       <title>Fix 5G backend bugs before users do</title>
       <link>https://kubaik.github.io/fix-5g-backend-bugs-before-users-do/</link>
@@ -138,13 +145,6 @@
       <description>Cut production crashes 60% with strict TypeScript — how zod and custom guards compare, benchmarks, and the mistakes that slip through even with strict mode enabled</description>
       <pubDate>Thu, 14 May 2026 18:53:55 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-strict-mode-traps-5-silent-failures/</guid>
-    </item>
-    <item>
-      <title>No CS degree? Ship more code</title>
-      <link>https://kubaik.github.io/no-cs-degree-ship-more-code/</link>
-      <description>Ship more production code without a CS degree — real systems, real costs, and the metrics that matter. From Nairobi to Manila, learn how to debug, monitor, and scale without over-engineering or burning cloud cash.</description>
-      <pubDate>Thu, 14 May 2026 18:31:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-cs-degree-ship-more-code/</guid>
     </item>
   </channel>
 </rss>
