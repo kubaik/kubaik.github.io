@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 08:31:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 09:42:01 +0000</lastBuildDate>
+    <item>
+      <title>Tech salaries 2026: a cold shower</title>
+      <link>https://kubaik.github.io/tech-salaries-2026-a-cold-shower/</link>
+      <description>Tech salaries in 2026 will rise 30–50% for AI core roles but flatline for legacy systems — real numbers from real systems, with comp benchmarks and the mistakes that break the hype</description>
+      <pubDate>Fri, 15 May 2026 09:41:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salaries-2026-a-cold-shower/</guid>
+    </item>
     <item>
       <title>Vibe coding burns prod: hard numbers</title>
       <link>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 2.1s to 180ms with a boring stack: Postgres + pgvector, Redis, BullMQ, and FastAPI. Real numbers, real code, and the mistakes that break AI-first apps.</description>
       <pubDate>Thu, 14 May 2026 18:11:00 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</guid>
-    </item>
-    <item>
-      <title>Your AI tools don&apos;t improve velocity — here&apos;s the proof</title>
-      <link>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</link>
-      <description>Cut sprint waste by 30% with real AI velocity metrics — cycle time, escaped defects, and CI tests that catch regressions — not PR counts. Learn why story points lie and how to measure impact at any budget tier.</description>
-      <pubDate>Thu, 14 May 2026 16:21:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-ai-tools-dont-improve-velocity-heres-the-proof/</guid>
     </item>
   </channel>
 </rss>
