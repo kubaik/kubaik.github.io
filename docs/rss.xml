@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 17:43:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 18:15:00 +0000</lastBuildDate>
+    <item>
+      <title>AI salaries 2026: the 2 skills that moved pay bands</title>
+      <link>https://kubaik.github.io/ai-salaries-2026-the-2-skills-that-moved-pay-bands/</link>
+      <description>Cut AI salary bands 22% with RAG or fine-tuning — concrete latency, cost, and hiring data for 2026. Compare two skills that actually move pay.</description>
+      <pubDate>Fri, 15 May 2026 18:14:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salaries-2026-the-2-skills-that-moved-pay-bands/</guid>
+    </item>
     <item>
       <title>Why 2026 killed vibe coding in production</title>
       <link>https://kubaik.github.io/why-2026-killed-vibe-coding-in-production/</link>
@@ -138,13 +145,6 @@
       <description>FastAPI beats Django REST in latency by 60% at 25k rpm but costs $8/month less on AWS — real AWS bills, connection leaks, and the unexpected coupling that surprised teams in Nairobi fintech stacks</description>
       <pubDate>Fri, 15 May 2026 02:16:20 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</guid>
-    </item>
-    <item>
-      <title>Find Node.js memory leaks in 10 min</title>
-      <link>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</link>
-      <description>Cut Node.js memory leaks in half in 24 hours with heap snapshots and event listener audits — real causes, fixes, and the tooling most teams miss.</description>
-      <pubDate>Thu, 14 May 2026 23:48:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</guid>
     </item>
   </channel>
 </rss>
