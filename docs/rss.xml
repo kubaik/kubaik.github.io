@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 05:42:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 06:27:08 +0000</lastBuildDate>
+    <item>
+      <title>Land $4k remote roles: GitHub README portfolio</title>
+      <link>https://kubaik.github.io/land-4k-remote-roles-github-readme-portfolio/</link>
+      <description>Land $4,000 remote roles by shipping a CLI tool with caching and logging — latency benchmarks, GitHub Actions CI, and README template included for Nairobi and Lagos devs.</description>
+      <pubDate>Fri, 15 May 2026 06:27:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-4k-remote-roles-github-readme-portfolio/</guid>
+    </item>
     <item>
       <title>M-Pesa vs Flutterwave vs Paystack: pick the right</title>
       <link>https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut database p99 latency by 70% by sizing connection pools the wrong way — concurrency limits, churn rates, and idle budgets you’re ignoring. Benchmarks, formulas, and mistakes from real systems.</description>
       <pubDate>Thu, 14 May 2026 15:36:50 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-most-set-it-wrong/</guid>
-    </item>
-    <item>
-      <title>Agents get stuck in production too</title>
-      <link>https://kubaik.github.io/agents-get-stuck-in-production-too/</link>
-      <description>Cut agent routing errors by 98% with multi-agent systems — real latency, failure modes, and tool choices from a 1.2M order system. multi-agent systems in production performance numbers tools failure modes</description>
-      <pubDate>Thu, 14 May 2026 13:50:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-get-stuck-in-production-too/</guid>
     </item>
   </channel>
 </rss>
