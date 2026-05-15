@@ -16,5 +16,6 @@
   "PostgreSQL vs MySQL in 2026: the decision I keep making",
   "TypeScript mistakes that slip through even with strict mode",
   "API rate limiting patterns that don't break your clients",
-  "Redis vs Memcached: a benchmark that actually matters"
+  "Redis vs Memcached: a benchmark that actually matters",
+  "When to use a message queue (and when it's overkill)"
 ]
