@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 17:05:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 17:27:47 +0000</lastBuildDate>
+    <item>
+      <title>Rewrite your backend for 5G users before they do</title>
+      <link>https://kubaik.github.io/rewrite-your-backend-for-5g-users-before-they-do/</link>
+      <description>Cut mobile backend latency 56%: proxy, payload truncation, and the 5G metrics that expose hidden costs</description>
+      <pubDate>Fri, 15 May 2026 17:27:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/rewrite-your-backend-for-5g-users-before-they-do/</guid>
+    </item>
     <item>
       <title>Negotiate remote salaries below $50k in 3 calls</title>
       <link>https://kubaik.github.io/negotiate-remote-salaries-below-50k-in-3-calls/</link>
@@ -138,13 +145,6 @@
       <description>s already 80% full when they try to install with LLMs — load, then get a CUDA out-of-memory error when they.</description>
       <pubDate>Thu, 14 May 2026 23:38:33 +0000</pubDate>
       <guid>https://kubaik.github.io/run-llms-locally-today/</guid>
-    </item>
-    <item>
-      <title>CircleCI cheaper past 50k builds</title>
-      <link>https://kubaik.github.io/circleci-cheaper-past-50k-builds/</link>
-      <description>CircleCI cheaper than GitHub Actions at 50k builds? Evidence from three real systems shows when the switch pays off — cache hits, runner size, and self-hosted Spot nodes that cut bills 3×</description>
-      <pubDate>Thu, 14 May 2026 23:16:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/circleci-cheaper-past-50k-builds/</guid>
     </item>
   </channel>
 </rss>
