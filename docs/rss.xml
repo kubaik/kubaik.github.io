@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 18:15:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 18:58:00 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: the piece your stack is missing</title>
+      <link>https://kubaik.github.io/mcp-servers-the-piece-your-stack-is-missing/</link>
+      <description>Cut MCP transport cost 40% with caching and streaming — validate URIs, enforce timeouts, and pick the right SDK in 2026&apos;s definitive guide.</description>
+      <pubDate>Fri, 15 May 2026 18:57:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-the-piece-your-stack-is-missing/</guid>
+    </item>
     <item>
       <title>AI salaries 2026: the 2 skills that moved pay bands</title>
       <link>https://kubaik.github.io/ai-salaries-2026-the-2-skills-that-moved-pay-bands/</link>
@@ -138,13 +145,6 @@
       <description>Cut webhook latency 60% and save 3 weeks of dev time choosing between M-Pesa, Flutterwave, and Paystack — real benchmarks, real costs, and the integration mistakes most teams make.</description>
       <pubDate>Fri, 15 May 2026 05:42:17 +0000</pubDate>
       <guid>https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/</guid>
-    </item>
-    <item>
-      <title>Pick FastAPI or Django REST: the real trade-offs</title>
-      <link>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</link>
-      <description>FastAPI beats Django REST in latency by 60% at 25k rpm but costs $8/month less on AWS — real AWS bills, connection leaks, and the unexpected coupling that surprised teams in Nairobi fintech stacks</description>
-      <pubDate>Fri, 15 May 2026 02:16:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</guid>
     </item>
   </channel>
 </rss>
