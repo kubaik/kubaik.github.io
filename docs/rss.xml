@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 13:42:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 10:45:47 +0000</lastBuildDate>
+    <item>
+      <title>AI multiplies dev power: the real split between senior</title>
+      <link>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</link>
+      <description>ster with 40% fewer bugs. Juniors delivered with AI multiplies dev power — understanding the codebase just amplified their mi.</description>
+      <pubDate>Fri, 15 May 2026 10:45:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</guid>
+    </item>
     <item>
       <title>Tech salaries 2026: a cold shower</title>
       <link>https://kubaik.github.io/tech-salaries-2026-a-cold-shower/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 40% and MTTR from 45 to 2 minutes with monoliths in 2026 — build times, real stacks, and the exact tipping point to choose between monolith and microservices.</description>
       <pubDate>Thu, 14 May 2026 18:25:04 +0000</pubDate>
       <guid>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</guid>
-    </item>
-    <item>
-      <title>Avoid this AI stack mistake before it’s too late</title>
-      <link>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</link>
-      <description>Cut API latency from 2.1s to 180ms with a boring stack: Postgres + pgvector, Redis, BullMQ, and FastAPI. Real numbers, real code, and the mistakes that break AI-first apps.</description>
-      <pubDate>Thu, 14 May 2026 18:11:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-this-ai-stack-mistake-before-its-too-late/</guid>
     </item>
   </channel>
 </rss>
