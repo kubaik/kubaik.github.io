@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 22:38:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 22:46:54 +0000</lastBuildDate>
+    <item>
+      <title>Decode remote interviews without LeetCode</title>
+      <link>https://kubaik.github.io/decode-remote-interviews-without-leetcode/</link>
+      <description>Cut interview failure rate by 60% with real system prep — LeetCode won’t save you in 2026 remote roles. Learn the stack, measure real metrics, and communicate async like a pro.</description>
+      <pubDate>Fri, 15 May 2026 22:46:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/decode-remote-interviews-without-leetcode/</guid>
+    </item>
     <item>
       <title>Message queues: the load balancer you never asked for</title>
       <link>https://kubaik.github.io/message-queues-the-load-balancer-you-never-asked-for/</link>
@@ -138,13 +145,6 @@
       <description>Cut infra costs 40% and latency from 1.8s to 8ms — monoliths are back in 2026 and this is the exact stack to use for your budget tier</description>
       <pubDate>Fri, 15 May 2026 11:50:04 +0000</pubDate>
       <guid>https://kubaik.github.io/monoliths-are-back-in-2026-and-this-time-theyre/</guid>
-    </item>
-    <item>
-      <title>Measure LLM pipelines: 4 critical metrics to track</title>
-      <link>https://kubaik.github.io/measure-llm-pipelines-4-critical-metrics-to-track/</link>
-      <description>Cut LLM pipeline costs by 42% and latency by 71% with 4 critical metrics — prompt tags, retriever distance, token counters, and post-process flags. Production-grade tracing, Prometheus dashboards, and replay tests included.</description>
-      <pubDate>Fri, 15 May 2026 11:34:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/measure-llm-pipelines-4-critical-metrics-to-track/</guid>
     </item>
   </channel>
 </rss>
