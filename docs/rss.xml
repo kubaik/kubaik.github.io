@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 22:46:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 23:16:24 +0000</lastBuildDate>
+    <item>
+      <title>Stop guessing pool sizes: the real way to tune DB pools</title>
+      <link>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</link>
+      <description>Cut 95th percentile latency in half by stopping pool size guesswork — dynamic sizing cuts compute waste by 18% and prevents Black Friday outages</description>
+      <pubDate>Fri, 15 May 2026 23:16:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</guid>
+    </item>
     <item>
       <title>Decode remote interviews without LeetCode</title>
       <link>https://kubaik.github.io/decode-remote-interviews-without-leetcode/</link>
@@ -138,13 +145,6 @@
       <description>Cut sandbox latency by 60% when choosing a dev platform in Africa — Andela vs Toptal vs Arc with real latency data, cost per hour, and hire-to-prod timelines for Lagos fintechs in 2026.</description>
       <pubDate>Fri, 15 May 2026 13:19:43 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-dev-platform-in-5-minutes/</guid>
-    </item>
-    <item>
-      <title>Monoliths are back in 2026 — and this time they&apos;re</title>
-      <link>https://kubaik.github.io/monoliths-are-back-in-2026-and-this-time-theyre/</link>
-      <description>Cut infra costs 40% and latency from 1.8s to 8ms — monoliths are back in 2026 and this is the exact stack to use for your budget tier</description>
-      <pubDate>Fri, 15 May 2026 11:50:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/monoliths-are-back-in-2026-and-this-time-theyre/</guid>
     </item>
   </channel>
 </rss>

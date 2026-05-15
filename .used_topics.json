@@ -18,5 +18,6 @@
   "API rate limiting patterns that don't break your clients",
   "Redis vs Memcached: a benchmark that actually matters",
   "When to use a message queue (and when it's overkill)",
-  "How to pass technical interviews for remote roles when you're self-taught"
+  "How to pass technical interviews for remote roles when you're self-taught",
+  "Database connection pooling: the setting everyone gets wrong"
 ]
