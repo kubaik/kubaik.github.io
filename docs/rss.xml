@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 14:39:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 15:54:31 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates that pay in 2024</title>
+      <link>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</link>
+      <description>Freelance developers leave $40k on the table yearly with wrong rates. Use the 2024 rate calculator to set floor, target, and premium rates with real metrics—benchmarks, client budgets, and risk adjustments included.</description>
+      <pubDate>Fri, 15 May 2026 15:54:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</guid>
+    </item>
     <item>
       <title>Instrument LLM pipelines like a pro</title>
       <link>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit time from 4 days to 30 minutes with event sourcing — 8ms writes vs 200ms CRUD, but only if you invest in projections and snapshots.</description>
       <pubDate>Thu, 14 May 2026 21:51:56 +0000</pubDate>
       <guid>https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/</guid>
-    </item>
-    <item>
-      <title>Split the database now or regret it later</title>
-      <link>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</link>
-      <description>Cut multi-tenant SaaS database costs by 30% and latency by 60% with schema-per-tenant routing instead of shared schemas. Real systems from Shopify, Stripe and Jakarta startups prove it works.</description>
-      <pubDate>Thu, 14 May 2026 21:40:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</guid>
     </item>
   </channel>
 </rss>
