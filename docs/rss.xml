@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 15:59:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 17:05:03 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote salaries below $50k in 3 calls</title>
+      <link>https://kubaik.github.io/negotiate-remote-salaries-below-50k-in-3-calls/</link>
+      <description>Land $70k remote roles from lower-cost countries: PPP math, anchor scripts, and the exact emails that got me $65k average — client objections, equity tricks, and when to walk away.</description>
+      <pubDate>Fri, 15 May 2026 17:04:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-salaries-below-50k-in-3-calls/</guid>
+    </item>
     <item>
       <title>Vector DBs: when to use them (and when to skip)</title>
       <link>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</link>
@@ -138,13 +145,6 @@
       <description>CircleCI cheaper than GitHub Actions at 50k builds? Evidence from three real systems shows when the switch pays off — cache hits, runner size, and self-hosted Spot nodes that cut bills 3×</description>
       <pubDate>Thu, 14 May 2026 23:16:47 +0000</pubDate>
       <guid>https://kubaik.github.io/circleci-cheaper-past-50k-builds/</guid>
-    </item>
-    <item>
-      <title>Redis vs Memcached: the cache choice</title>
-      <link>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</link>
-      <description>Cut API latency from 120 ms to 32 ms under 100k QPS by choosing Redis 7.2 over Memcached 1.6.17 — connection pooling, eviction policies, and the production mistakes that break cache.</description>
-      <pubDate>Thu, 14 May 2026 22:04:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</guid>
     </item>
   </channel>
 </rss>
