@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 20:55:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 21:43:39 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript strict pitfalls: 5 silent bugs</title>
+      <link>https://kubaik.github.io/typescript-strict-pitfalls-5-silent-bugs/</link>
+      <description>TypeScript: 5.6 added 15% faster builds, but the new JI. Practical guide with real examples.</description>
+      <pubDate>Fri, 15 May 2026 21:43:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-strict-pitfalls-5-silent-bugs/</guid>
+    </item>
     <item>
       <title>Choose PostgreSQL when you need JSON indexes</title>
       <link>https://kubaik.github.io/choose-postgresql-when-you-need-json-indexes/</link>
@@ -138,13 +145,6 @@
       <description>Tech salaries in 2026 will rise 30–50% for AI core roles but flatline for legacy systems — real numbers from real systems, with comp benchmarks and the mistakes that break the hype</description>
       <pubDate>Fri, 15 May 2026 09:41:53 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-salaries-2026-a-cold-shower/</guid>
-    </item>
-    <item>
-      <title>Vibe coding burns prod: hard numbers</title>
-      <link>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</link>
-      <description>Cut p99 latency 96% and AWS costs 82% after vibe coding melted prod — here’s what to instrument first in FastAPI, Python 3.11, and the hidden AST/GC costs nobody mentions.</description>
-      <pubDate>Fri, 15 May 2026 08:31:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</guid>
     </item>
   </channel>
 </rss>
