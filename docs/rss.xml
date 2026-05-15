@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 15:54:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 15:59:44 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: when to use them (and when to skip)</title>
+      <link>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</link>
+      <description>Cut vector search latency from 60 ms to 8 ms and halve ingestion time with a simple schema change. Compare pgvector, Qdrant, and ClickHouse VectorIndex on real workloads and pick the right tool before you migrate.</description>
+      <pubDate>Fri, 15 May 2026 15:59:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</guid>
+    </item>
     <item>
       <title>Freelance rates that pay in 2024</title>
       <link>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 120 ms to 32 ms under 100k QPS by choosing Redis 7.2 over Memcached 1.6.17 — connection pooling, eviction policies, and the production mistakes that break cache.</description>
       <pubDate>Thu, 14 May 2026 22:04:16 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</guid>
-    </item>
-    <item>
-      <title>Event sourcing: when it’s worth the pain</title>
-      <link>https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/</link>
-      <description>Cut audit time from 4 days to 30 minutes with event sourcing — 8ms writes vs 200ms CRUD, but only if you invest in projections and snapshots.</description>
-      <pubDate>Thu, 14 May 2026 21:51:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/</guid>
     </item>
   </channel>
 </rss>
