@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 23:37:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 23:48:31 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines failed 3 times before we fixed this</title>
+      <link>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</link>
+      <description>Cut RAG pipeline costs 37% and hallucinations 65% by indexing documents as trees, not chunks — with real numbers, code, and the mistakes that cost $4,200/month. RAG pipeline production pitfalls 2026, RAG hallucination rate target, transformer reranking cost per query 2026, Neo4j vector search latency 2026, sentence-transformers 2026 cost per embedding</description>
+      <pubDate>Fri, 15 May 2026 23:48:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</guid>
+    </item>
     <item>
       <title>Lessons from 9 months of unnecessary code</title>
       <link>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI pipeline debugging time by 70% with structured observability. Learn exactly what to log, trace, and alert on when your system includes an LLM — with Prometheus, OpenTelemetry, and Grafana.</description>
       <pubDate>Fri, 15 May 2026 14:39:41 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Skip zero-trust’s checkboxes: small teams need this</title>
-      <link>https://kubaik.github.io/skip-zero-trusts-checkboxes-small-teams-need-this/</link>
-      <description>Cut zero-trust setup time from months to days with a JWT gate at the edge — real latency numbers, cost deltas, and the security controls that actually matter for small teams. Zero-trust architecture for small teams: what actually makes sense to implement.</description>
-      <pubDate>Fri, 15 May 2026 13:46:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-zero-trusts-checkboxes-small-teams-need-this/</guid>
     </item>
   </channel>
 </rss>
