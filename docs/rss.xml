@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 20:39:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 20:55:06 +0000</lastBuildDate>
+    <item>
+      <title>Choose PostgreSQL when you need JSON indexes</title>
+      <link>https://kubaik.github.io/choose-postgresql-when-you-need-json-indexes/</link>
+      <description>Cut query latency to 3 ms at 10k RPM with PostgreSQL JSONB GIN indexes — real benchmarks, Docker setup, and the mistakes that cause 400 ms lookups. Ideal for semi-structured product data.</description>
+      <pubDate>Fri, 15 May 2026 20:54:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-postgresql-when-you-need-json-indexes/</guid>
+    </item>
     <item>
       <title>Stop Overloading Portfolios: Focus on Depth</title>
       <link>https://kubaik.github.io/stop-overloading-portfolios-focus-on-depth/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency 96% and AWS costs 82% after vibe coding melted prod — here’s what to instrument first in FastAPI, Python 3.11, and the hidden AST/GC costs nobody mentions.</description>
       <pubDate>Fri, 15 May 2026 08:31:00 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</guid>
-    </item>
-    <item>
-      <title>Pick the right dev platform in 5 mins</title>
-      <link>https://kubaik.github.io/pick-the-right-dev-platform-in-5-mins/</link>
-      <description>ium is 25–30% above market. Toptal’s contra with Pick dev platform mins — cancel the contract.</description>
-      <pubDate>Fri, 15 May 2026 08:21:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-dev-platform-in-5-mins/</guid>
     </item>
   </channel>
 </rss>
