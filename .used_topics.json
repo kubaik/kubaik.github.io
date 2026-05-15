@@ -37,5 +37,6 @@
   "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month",
   "Building a local LLM setup that actually runs on a laptop",
   "Node.js memory leaks: how to find and fix them",
-  "FastAPI vs Django REST: after building both in production"
+  "FastAPI vs Django REST: after building both in production",
+  "M-Pesa, Flutterwave, Paystack: integrating African payment APIs without the headaches"
 ]
