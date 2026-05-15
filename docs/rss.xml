@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 18:58:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 19:20:46 +0000</lastBuildDate>
+    <item>
+      <title>AI devs shipped real products in 2026</title>
+      <link>https://kubaik.github.io/ai-devs-shipped-real-products-in-2026/</link>
+      <description>Ship production-ready products in 2026 with AI coding tools that actually work—ranked by real developers, with cost, speed, and failure scenarios. Cut development time by 60% or more.</description>
+      <pubDate>Fri, 15 May 2026 19:20:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-devs-shipped-real-products-in-2026/</guid>
+    </item>
     <item>
       <title>MCP servers: the piece your stack is missing</title>
       <link>https://kubaik.github.io/mcp-servers-the-piece-your-stack-is-missing/</link>
@@ -138,13 +145,6 @@
       <description>Land $4,000 remote roles by shipping a CLI tool with caching and logging — latency benchmarks, GitHub Actions CI, and README template included for Nairobi and Lagos devs.</description>
       <pubDate>Fri, 15 May 2026 06:27:00 +0000</pubDate>
       <guid>https://kubaik.github.io/land-4k-remote-roles-github-readme-portfolio/</guid>
-    </item>
-    <item>
-      <title>M-Pesa vs Flutterwave vs Paystack: pick the right</title>
-      <link>https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/</link>
-      <description>Cut webhook latency 60% and save 3 weeks of dev time choosing between M-Pesa, Flutterwave, and Paystack — real benchmarks, real costs, and the integration mistakes most teams make.</description>
-      <pubDate>Fri, 15 May 2026 05:42:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/</guid>
     </item>
   </channel>
 </rss>
