@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 10:45:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 11:07:47 +0000</lastBuildDate>
+    <item>
+      <title>Fix 5G backend bugs before users do</title>
+      <link>https://kubaik.github.io/fix-5g-backend-bugs-before-users-do/</link>
+      <description>Cut mobile API timeouts by 83% with 5G-aware streaming, connection pooling, and observability — the exact steps teams used to fix slowness before users complained.</description>
+      <pubDate>Fri, 15 May 2026 11:07:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-5g-backend-bugs-before-users-do/</guid>
+    </item>
     <item>
       <title>AI multiplies dev power: the real split between senior</title>
       <link>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</link>
@@ -138,13 +145,6 @@
       <description>Ship more production code without a CS degree — real systems, real costs, and the metrics that matter. From Nairobi to Manila, learn how to debug, monitor, and scale without over-engineering or burning cloud cash.</description>
       <pubDate>Thu, 14 May 2026 18:31:49 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-ship-more-code/</guid>
-    </item>
-    <item>
-      <title>Pendulum swings back: monolith wins in 2026</title>
-      <link>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</link>
-      <description>Cut AWS costs 40% and MTTR from 45 to 2 minutes with monoliths in 2026 — build times, real stacks, and the exact tipping point to choose between monolith and microservices.</description>
-      <pubDate>Thu, 14 May 2026 18:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/pendulum-swings-back-monolith-wins-in-2026/</guid>
     </item>
   </channel>
 </rss>
