@@ -1422,14 +1422,26 @@ class BlogSystem:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
+        existing_titles = _load_existing_titles(self.output_dir)
+
+        # ── Bundle generation is OUTSIDE try/except so JSON/network errors
+        # propagate into _call_api_with_fallback and trigger the next provider.
+        # Only after ALL providers are exhausted does this raise, which is caught
+        # by the outer except below and falls back to the local template.
         try:
-            print(f"Generating content for: {topic}")
-            existing_titles = _load_existing_titles(self.output_dir)
-
             bundle = await self._generate_full_bundle(topic, keywords, existing_titles)
+        except Exception as e:
+            print(
+                f"All API providers exhausted after retries ({e}). "
+                f"Using local template content as last resort."
+            )
+            return self._generate_fallback_post(topic)
 
+        # ── Everything below is post-processing (no more API calls at this level).
+        # Wrap separately so a bug here still produces a usable fallback post,
+        # but never masks a provider failure.
+        try:
             title = bundle["title"].strip().strip('"')
-            # Strip common filler prefixes that LLMs insert despite instructions
             _TITLE_FILLER = re.compile(
                 r'^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|'
                 r'introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|'
@@ -1438,9 +1450,9 @@ class BlogSystem:
             )
             title = _TITLE_FILLER.sub('', title).strip()
 
-            # Hard cap at 55 chars — cut at last word boundary, no ellipsis
             if len(title) > 55:
                 title = title[:55].rsplit(' ', 1)[0].rstrip(',:;-')
+
             content = bundle["content"].strip()
             meta_description = bundle["meta_description"].strip()
             seo_keywords = [k.strip()
@@ -1466,7 +1478,7 @@ class BlogSystem:
             word_count = _count_words(content)
             print(f"Generated content: {word_count} words")
 
-            MIN_ACCEPTABLE = 1500  # below this, retry with a new topic
+            MIN_ACCEPTABLE = 1500
 
             if word_count < MIN_WORD_COUNT:
                 print(f"Content short ({word_count} words). Expanding once...")
@@ -1474,29 +1486,34 @@ class BlogSystem:
                 expanded_count = _count_words(expanded)
                 print(f"After expansion: {expanded_count} words")
 
-                # Only use expansion if it actually made things longer
                 if expanded_count > word_count:
                     content = expanded
                     word_count = expanded_count
                 else:
                     print(
-                        f"Warning: expansion reduced word count ({word_count} → {expanded_count}). Keeping original.")
+                        f"Warning: expansion reduced word count "
+                        f"({word_count} → {expanded_count}). Keeping original."
+                    )
 
-                # If still under the acceptable minimum, retry with a fresh topic
                 if word_count < MIN_ACCEPTABLE:
                     print(
-                        f"Post still too short ({word_count} words, min {MIN_ACCEPTABLE}). Retrying with a new topic...")
+                        f"Post still too short ({word_count} words, min {MIN_ACCEPTABLE}). "
+                        f"Retrying with a new topic..."
+                    )
                     existing_titles = _load_existing_titles(self.output_dir)
                     retry_topic = self._pick_retry_topic(
                         topic, existing_titles)
                     print(f"Retry topic: {retry_topic}")
-                    bundle = await self._generate_full_bundle(retry_topic, keywords, existing_titles)
+                    bundle = await self._generate_full_bundle(
+                        retry_topic, keywords, existing_titles
+                    )
                     title = bundle["title"].strip().strip('"')
                     content = bundle["content"].strip()
                     meta_description = bundle.get(
                         "meta_description", "").strip()
-                    seo_keywords = [k.strip() for k in bundle.get(
-                        "seo_keywords", []) if k.strip()]
+                    seo_keywords = [
+                        k.strip() for k in bundle.get("seo_keywords", []) if k.strip()
+                    ]
                     word_count = _count_words(content)
                     print(f"Retry generated: {word_count} words")
 
@@ -1504,10 +1521,8 @@ class BlogSystem:
                         print(
                             f"Retry also short ({word_count} words). Proceeding anyway.")
 
-                    # Update topic reference for slug/hashtag derivation below
                     topic = retry_topic
-                    if not keywords:
-                        keywords = seo_keywords
+                    keywords = keywords or seo_keywords
 
             slug = self._create_slug(title)
 
@@ -1531,40 +1546,35 @@ class BlogSystem:
 
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
-                seo_keywords, topic=topic, title=title, max_hashtags=5)
+                seo_keywords, topic=topic, title=title, max_hashtags=5
+            )
             print(f"Hashtags selected: {', '.join(hashtags)}")
 
             all_tags = _to_single_word_tags(seo_keywords[:5] + hashtags)
             post.tags = all_tags[:15]
             post.seo_keywords = _to_single_word_tags(
                 seo_keywords + hashtags)[:15]
-
             post.twitter_hashtags = " ".join(
-                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags)
+                f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
+            )
 
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
-                post_url = f"{self.config.get('base_url', 'https://kubaik.github.io')}/{post.slug}"
+                post_url = (
+                    f"{self.config.get('base_url', 'https://kubaik.github.io')}"
+                    f"/{post.slug}"
+                )
 
-                # ── Budget constants ──────────────────────────────────────────
-                # Twitter wraps ALL URLs to exactly 23 chars via t.co.
-                # t.co URL cost (fixed regardless of real URL length)
                 TCO_LEN = 23
-                URL_SEP = 2    # \n\n before URL
-                TAG_SEP = 2    # \n\n before hashtags
-                BAIT_SEP = 2    # \n\n before reply-bait
-                MAX_BODY = 160  # conservative cap — leaves room for all other elements
+                URL_SEP = 2
+                TAG_SEP = 2
+                BAIT_SEP = 2
                 MAX_TAGS_CHARS = 60
                 TWITTER_LIMIT = 280
 
-                # ── Build hashtag string via _get_hashtags_for_post ───────────
-                # This is the ONLY place hashtag_str is built for prewritten tweets.
-                # It runs through the full tiered system AND injects the trending
-                # tag as the first slot — same as the template path.
                 from visibility_automator import _get_hashtags_for_post
                 hashtag_str = _get_hashtags_for_post(post, max_tags=4)
 
-                # Trim if somehow still too long
                 if len(hashtag_str) > MAX_TAGS_CHARS:
                     parts = hashtag_str.split()
                     hashtag_str = ""
@@ -1574,7 +1584,6 @@ class BlogSystem:
                         else:
                             break
 
-                # ── Pick reply-bait ───────────────────────────────────────────
                 _BAIT_POOL = [
                     "What broke first when you tried this?",
                     "Done this differently? Tell me what worked.",
@@ -1589,14 +1598,11 @@ class BlogSystem:
                                            ).hexdigest(), 16) % len(_BAIT_POOL)
                 reply_bait = _BAIT_POOL[bait_idx]
 
-                # ── Compute effective budget used by fixed elements ───────────
-                # URL always costs TCO_LEN. Hashtags and bait are optional.
                 fixed_cost = URL_SEP + TCO_LEN
                 tags_cost = (TAG_SEP + len(hashtag_str)) if hashtag_str else 0
                 bait_cost = (BAIT_SEP + len(reply_bait)) if reply_bait else 0
                 body_budget = TWITTER_LIMIT - fixed_cost - tags_cost - bait_cost
 
-                # ── Trim body to budget at a sentence or word boundary ────────
                 if len(bundle_tweet) > body_budget:
                     trimmed = bundle_tweet[:body_budget]
                     sentence_end = max(
@@ -1610,27 +1616,25 @@ class BlogSystem:
                     else:
                         bundle_tweet = trimmed.rsplit(
                             " ", 1)[0].rstrip(".,;:") + "…"
-                    print(f"Note: tweet body trimmed to {len(bundle_tweet)} chars "
-                          f"(budget was {body_budget}).")
+                    print(
+                        f"Note: tweet body trimmed to {len(bundle_tweet)} chars "
+                        f"(budget was {body_budget})."
+                    )
 
-                # ── Verify total fits — drop bait then tags if needed ─────────
                 effective = len(bundle_tweet) + fixed_cost + \
                     tags_cost + bait_cost
                 if effective > TWITTER_LIMIT:
-                    # Drop reply-bait
                     bait_cost = 0
                     reply_bait = ""
                     effective = len(bundle_tweet) + fixed_cost + tags_cost
                     print("Note: reply-bait dropped to fit within 280.")
 
                 if effective > TWITTER_LIMIT:
-                    # Drop hashtags too
                     tags_cost = 0
                     hashtag_str = ""
                     effective = len(bundle_tweet) + fixed_cost
                     print("Note: hashtags dropped — body + URL fills budget.")
 
-                # ── Assemble final tweet ──────────────────────────────────────
                 parts = [bundle_tweet, post_url]
                 if hashtag_str:
                     parts.append(hashtag_str)
@@ -1653,8 +1657,8 @@ class BlogSystem:
 
         except Exception as e:
             print(
-                f"All API providers exhausted after retries ({e}). "
-                f"Using local template content as last resort.")
+                f"Post-processing error ({e}). Using local template content as last resort."
+            )
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
