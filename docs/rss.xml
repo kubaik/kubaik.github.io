@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 21:53:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 22:15:30 +0000</lastBuildDate>
+    <item>
+      <title>Redis vs Memcached: 3 million ops/sec test</title>
+      <link>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</link>
+      <description>00ms lose 12% more users than those under 5 with Redis — qualifying what kind of traffic, what language bin.</description>
+      <pubDate>Fri, 15 May 2026 22:15:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</guid>
+    </item>
     <item>
       <title>Rate limit clients without breaking them</title>
       <link>https://kubaik.github.io/rate-limit-clients-without-breaking-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile API timeouts by 83% with 5G-aware streaming, connection pooling, and observability — the exact steps teams used to fix slowness before users complained.</description>
       <pubDate>Fri, 15 May 2026 11:07:40 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-5g-backend-bugs-before-users-do/</guid>
-    </item>
-    <item>
-      <title>AI multiplies dev power: the real split between senior</title>
-      <link>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</link>
-      <description>ster with 40% fewer bugs. Juniors delivered with AI multiplies dev power — understanding the codebase just amplified their mi.</description>
-      <pubDate>Fri, 15 May 2026 10:45:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</guid>
     </item>
   </channel>
 </rss>
