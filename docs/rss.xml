@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 20:55:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 21:42:44 +0000</lastBuildDate>
+    <item>
+      <title>Freelance burnout’s hidden buffer fix</title>
+      <link>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</link>
+      <description>Cut freelance burnout 60% in 90 days — the 3 fixes that worked: red-flag checklists, focus blocks, and solo offices. Avoid the $3,200/year cognitive load tax.</description>
+      <pubDate>Sat, 16 May 2026 21:42:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</guid>
+    </item>
     <item>
       <title>Message queues: the two questions that break everything</title>
       <link>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI system latency to under 1.2s at 8.5k requests/day — the caching, database, and streaming patterns that survive production in 2026</description>
       <pubDate>Sat, 16 May 2026 08:52:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-systems-fail-here-5-patterns-that-survive/</guid>
-    </item>
-    <item>
-      <title>AI coding: senior edge, junior risk</title>
-      <link>https://kubaik.github.io/ai-coding-senior-edge-junior-risk/</link>
-      <description>Cut review false positives 84% with Ollama 0.3.8 and FastAPI — latency risks, memory leaks, and race conditions caught before merge for under $0.005 per review.</description>
-      <pubDate>Sat, 16 May 2026 07:53:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-senior-edge-junior-risk/</guid>
     </item>
   </channel>
 </rss>
