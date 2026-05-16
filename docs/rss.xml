@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 05:48:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 07:36:53 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit big tech (and it’s not pay)</title>
+      <link>https://kubaik.github.io/senior-devs-quit-big-tech-and-its-not-pay/</link>
+      <description>Cut on-call burnout 40% with end-to-end ownership: 11 reasons senior devs quit big tech in 2026, the hidden friction points, and the one-line tests that prevent pager nightmares.</description>
+      <pubDate>Sat, 16 May 2026 07:36:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-and-its-not-pay/</guid>
+    </item>
     <item>
       <title>Cut 14 tons cloud CO2 monthly without latency loss</title>
       <link>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</link>
@@ -138,13 +145,6 @@
       <description>Land $70k remote roles from lower-cost countries: PPP math, anchor scripts, and the exact emails that got me $65k average — client objections, equity tricks, and when to walk away.</description>
       <pubDate>Fri, 15 May 2026 17:04:55 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-salaries-below-50k-in-3-calls/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: when to use them (and when to skip)</title>
-      <link>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</link>
-      <description>Cut vector search latency from 60 ms to 8 ms and halve ingestion time with a simple schema change. Compare pgvector, Qdrant, and ClickHouse VectorIndex on real workloads and pick the right tool before you migrate.</description>
-      <pubDate>Fri, 15 May 2026 15:59:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</guid>
     </item>
   </channel>
 </rss>
