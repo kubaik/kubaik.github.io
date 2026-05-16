@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 20:44:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 20:47:23 +0000</lastBuildDate>
+    <item>
+      <title>Price your freelance work in 2026</title>
+      <link>https://kubaik.github.io/price-your-freelance-work-in-2026/</link>
+      <description>Price freelance work in 2026 with hidden costs included — MVR, target rates, and project quotes that prevent burnout. Includes benchmarks, spreadsheets, and gotchas from real contracts.</description>
+      <pubDate>Sat, 16 May 2026 20:47:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-your-freelance-work-in-2026/</guid>
+    </item>
     <item>
       <title>African devs: Andela vs Arc vs Toptal</title>
       <link>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 35% without 1ms latency loss — fraud API case study with metrics</description>
       <pubDate>Sat, 16 May 2026 05:48:44 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</guid>
-    </item>
-    <item>
-      <title>Edge functions: when they actually save money</title>
-      <link>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</link>
-      <description>Cut API latency to 5 ms globally while trimming cloud bills — real numbers from a 2026 production Next.js app. edge functions Cloudflare Workers Vercel Edge Functions cost and latency benchmarks for solo devs and startups</description>
-      <pubDate>Sat, 16 May 2026 02:07:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</guid>
     </item>
   </channel>
 </rss>
