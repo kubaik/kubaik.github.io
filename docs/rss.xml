@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 09:19:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 09:25:09 +0000</lastBuildDate>
+    <item>
+      <title>AI sprint math: how to measure real velocity gains</title>
+      <link>https://kubaik.github.io/ai-sprint-math-how-to-measure-real-velocity-gains/</link>
+      <description>int) rose 15%. But when we normalized for t with AI sprint math measure — make teams faster.</description>
+      <pubDate>Sat, 16 May 2026 09:25:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-sprint-math-how-to-measure-real-velocity-gains/</guid>
+    </item>
     <item>
       <title>Jumped from $3k to $12k monthly in 18 months</title>
       <link>https://kubaik.github.io/jumped-from-3k-to-12k-monthly-in-18-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP transport cost 40% with caching and streaming — validate URIs, enforce timeouts, and pick the right SDK in 2026&apos;s definitive guide.</description>
       <pubDate>Fri, 15 May 2026 18:57:54 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-the-piece-your-stack-is-missing/</guid>
-    </item>
-    <item>
-      <title>AI salaries 2026: the 2 skills that moved pay bands</title>
-      <link>https://kubaik.github.io/ai-salaries-2026-the-2-skills-that-moved-pay-bands/</link>
-      <description>Cut AI salary bands 22% with RAG or fine-tuning — concrete latency, cost, and hiring data for 2026. Compare two skills that actually move pay.</description>
-      <pubDate>Fri, 15 May 2026 18:14:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salaries-2026-the-2-skills-that-moved-pay-bands/</guid>
     </item>
   </channel>
 </rss>
