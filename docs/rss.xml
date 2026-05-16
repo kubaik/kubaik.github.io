@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 18:36:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 18:54:15 +0000</lastBuildDate>
+    <item>
+      <title>Pay me 70% of US salary? Do this first</title>
+      <link>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</link>
+      <description>Negotiate remote salaries 70% of US rates using PPP and Levels.fyi 2026 — exact formulas, CLI, and benchmarks to close deals faster. No filler.</description>
+      <pubDate>Sat, 16 May 2026 18:54:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</guid>
+    </item>
     <item>
       <title>I raised my rate from $3k to $12k in 18 months</title>
       <link>https://kubaik.github.io/i-raised-my-rate-from-3k-to-12k-in-18-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 21× and latency 35× by replacing Kubernetes and Kafka with a single FastAPI service — the real cost of over-engineering in 2026</description>
       <pubDate>Fri, 15 May 2026 23:37:36 +0000</pubDate>
       <guid>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</guid>
-    </item>
-    <item>
-      <title>Stop guessing pool sizes: the real way to tune DB pools</title>
-      <link>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</link>
-      <description>Cut 95th percentile latency in half by stopping pool size guesswork — dynamic sizing cuts compute waste by 18% and prevents Black Friday outages</description>
-      <pubDate>Fri, 15 May 2026 23:16:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</guid>
     </item>
   </channel>
 </rss>
