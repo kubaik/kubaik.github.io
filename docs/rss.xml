@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 02:08:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 05:48:52 +0000</lastBuildDate>
+    <item>
+      <title>Cut 14 tons cloud CO2 monthly without latency loss</title>
+      <link>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</link>
+      <description>Cut cloud carbon 35% without 1ms latency loss — fraud API case study with metrics</description>
+      <pubDate>Sat, 16 May 2026 05:48:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</guid>
+    </item>
     <item>
       <title>Edge functions: when they actually save money</title>
       <link>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency from 60 ms to 8 ms and halve ingestion time with a simple schema change. Compare pgvector, Qdrant, and ClickHouse VectorIndex on real workloads and pick the right tool before you migrate.</description>
       <pubDate>Fri, 15 May 2026 15:59:37 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/</guid>
-    </item>
-    <item>
-      <title>Freelance rates that pay in 2024</title>
-      <link>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</link>
-      <description>Freelance developers leave $40k on the table yearly with wrong rates. Use the 2024 rate calculator to set floor, target, and premium rates with real metrics—benchmarks, client budgets, and risk adjustments included.</description>
-      <pubDate>Fri, 15 May 2026 15:54:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</guid>
     </item>
   </channel>
 </rss>
