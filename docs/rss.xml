@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 10:57:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 11:46:43 +0000</lastBuildDate>
+    <item>
+      <title>Land $4k roles: READMEs that don’t crash</title>
+      <link>https://kubaik.github.io/land-4k-roles-readmes-that-dont-crash/</link>
+      <description>Land $4k/month remote roles with a GitHub profile that proves resilience: 5k RPM load test, p95 latency &lt; 100ms, and a README recruiters read in 90 seconds.</description>
+      <pubDate>Sat, 16 May 2026 11:46:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-4k-roles-readmes-that-dont-crash/</guid>
+    </item>
     <item>
       <title>50k builds/month: GitHub Actions vs CircleCI cost smackdown</title>
       <link>https://kubaik.github.io/50k-buildsmonth-github-actions-vs-circleci-cost-smackdown/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout 70% with three fixes — batching communication, shutdown rituals, and rate discipline. Measured metrics from 2026 freelance recovery show 40% fewer rollbacks and 60% faster sleep latency.</description>
       <pubDate>Fri, 15 May 2026 20:10:15 +0000</pubDate>
       <guid>https://kubaik.github.io/recovered-from-burnout-what-actually-worked/</guid>
-    </item>
-    <item>
-      <title>AI devs shipped real products in 2026</title>
-      <link>https://kubaik.github.io/ai-devs-shipped-real-products-in-2026/</link>
-      <description>Ship production-ready products in 2026 with AI coding tools that actually work—ranked by real developers, with cost, speed, and failure scenarios. Cut development time by 60% or more.</description>
-      <pubDate>Fri, 15 May 2026 19:20:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-devs-shipped-real-products-in-2026/</guid>
     </item>
   </channel>
 </rss>
