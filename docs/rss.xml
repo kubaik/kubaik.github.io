@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 21:42:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 22:39:27 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee big tech quietly</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</link>
+      <description>y exceeds 500 ms By the end, you’ll have a rep with tech attrition quit — four themes: stagnant impact, opaque promotion syst.</description>
+      <pubDate>Sat, 16 May 2026 22:39:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</guid>
+    </item>
     <item>
       <title>Freelance burnout’s hidden buffer fix</title>
       <link>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</link>
@@ -138,13 +145,6 @@
       <description>Jumped from $3k to $12k monthly in 18 months by shifting from local salary to global retainers. Learn the retainer model, open-source trust-building, and automation that cut 75% of admin time.</description>
       <pubDate>Sat, 16 May 2026 09:19:47 +0000</pubDate>
       <guid>https://kubaik.github.io/jumped-from-3k-to-12k-monthly-in-18-months/</guid>
-    </item>
-    <item>
-      <title>AI systems fail here: 5 patterns that survive</title>
-      <link>https://kubaik.github.io/ai-systems-fail-here-5-patterns-that-survive/</link>
-      <description>Cut AI system latency to under 1.2s at 8.5k requests/day — the caching, database, and streaming patterns that survive production in 2026</description>
-      <pubDate>Sat, 16 May 2026 08:52:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-systems-fail-here-5-patterns-that-survive/</guid>
     </item>
   </channel>
 </rss>
