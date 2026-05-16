@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 22:39:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 23:44:43 +0000</lastBuildDate>
+    <item>
+      <title>Why choose PostgreSQL over MySQL in 2026</title>
+      <link>https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/</link>
+      <description>Cut p99 latency from 124 ms to 8 ms and replication lag from 47 seconds to under 2 seconds by choosing PostgreSQL in 2026 — hands-on benchmarks, Docker setup, and the exact commands that break MySQL at scale.</description>
+      <pubDate>Sat, 16 May 2026 23:44:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/</guid>
+    </item>
     <item>
       <title>Senior devs flee big tech quietly</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</link>
@@ -138,13 +145,6 @@
       <description>int) rose 15%. But when we normalized for t with AI sprint math measure — make teams faster.</description>
       <pubDate>Sat, 16 May 2026 09:25:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-sprint-math-how-to-measure-real-velocity-gains/</guid>
-    </item>
-    <item>
-      <title>Jumped from $3k to $12k monthly in 18 months</title>
-      <link>https://kubaik.github.io/jumped-from-3k-to-12k-monthly-in-18-months/</link>
-      <description>Jumped from $3k to $12k monthly in 18 months by shifting from local salary to global retainers. Learn the retainer model, open-source trust-building, and automation that cut 75% of admin time.</description>
-      <pubDate>Sat, 16 May 2026 09:19:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/jumped-from-3k-to-12k-monthly-in-18-months/</guid>
     </item>
   </channel>
 </rss>
