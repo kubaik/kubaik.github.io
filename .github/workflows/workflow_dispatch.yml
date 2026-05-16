@@ -3,19 +3,38 @@ name: Watchdog - Blog Automation Monitor
 on:
   schedule:
     - cron: "15 * * * *"
+    - cron: "30 * * * *"
     - cron: "45 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # upgraded from 'read' — needed for checkout + git push after dedup
   actions: write
 
 jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10 # bumped from 5 — dedup + site rebuild can take a few minutes
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so git operations work correctly
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          pip install --quiet pyyaml aiohttp requests
+          # Install any other deps your deduplicate_posts.py / blog_system.py need.
+          # Add lines here if requirements.txt exists:
+          # pip install --quiet -r requirements.txt
+
       - name: Determine which cron slots have passed today
         id: slots
         run: |
@@ -69,13 +88,6 @@ jobs:
 
           echo "Combined run count: $(echo "$ALL_RUNS" | python3 -c "import json,sys; print(len(json.load(sys.stdin)))")"
 
-          # ── KEY FIX 1: include 'queued' and 'waiting' in covered statuses ──
-          # The original only counted 'completed' and 'in_progress'. A run that
-          # is freshly triggered by the watchdog starts as 'queued' and was
-          # invisible, causing the watchdog to trigger again and again in a loop.
-          # We also add a minimum-age guard: only count a run as "covering" a
-          # slot if it was created within 8 minutes of that slot's start time,
-          # OR if it is still in_progress/queued (meaning it's actively working).
           COVERED_HOURS=$(echo "$ALL_RUNS" | python3 -c "
           import json, sys
           from datetime import datetime, timezone
@@ -91,13 +103,7 @@ jobs:
               dt = datetime.fromisoformat(created.replace('Z', '+00:00'))
               if dt.strftime('%Y-%m-%d') != today:
                   continue
-              # Skip hard-cancelled runs (user/admin cancelled, not concurrency)
-              # But keep runs cancelled by concurrency group (they still count as
-              # 'something ran for this slot').
               if r.get('conclusion') == 'cancelled' and r.get('status') == 'completed':
-                  # Only skip if it died in < 30s (likely a concurrency cancel, NOT a real run)
-                  # Actually: if cancelled quickly it means a newer run took the slot — that
-                  # newer run will appear separately and cover the hour. Safe to skip.
                   continue
               if r.get('status') in ACTIVE_STATUSES or r.get('conclusion') in ('success', 'failure', 'timed_out'):
                   hours.add(str(dt.hour))
@@ -170,10 +176,69 @@ jobs:
             sleep 10
           fi
 
-      # ── KEY FIX 2: Guard against re-triggering a slot that already has  ──
-      # an in-progress or queued run. Wait 90s then re-check before firing.
-      # This breaks the cascade loop where watchdog fires, sees "queued" as
-      # missing (old bug), and fires again before the first run even starts.
+      # ── DEDUPLICATION ────────────────────────────────────────────────────────
+      # Runs on every watchdog execution (independent of the missing-slot logic).
+      # Step 1: dry-run to detect duplicates and capture the exit signal.
+      # Step 2: delete only when duplicates were actually found.
+      # Step 3: commit + push the cleaned docs/ tree so the deletion persists.
+
+      - name: Deduplication dry-run (detect duplicates)
+        id: dedup_check
+        run: |
+          echo "Running deduplication dry-run..."
+
+          # Capture full output; the script exits 0 whether or not dupes exist.
+          OUTPUT=$(python deduplicate_posts.py 2>&1)
+          echo "$OUTPUT"
+
+          # The script prints "No duplicate posts found." when clean.
+          if echo "$OUTPUT" | grep -q "No duplicate posts found."; then
+            echo "has_duplicates=false" >> $GITHUB_OUTPUT
+            echo "✅ No duplicates detected."
+          else
+            # Verify there really is at least one duplicate pair line before flagging.
+            if echo "$OUTPUT" | grep -q "Similarity"; then
+              echo "has_duplicates=true" >> $GITHUB_OUTPUT
+              echo "⚠️ Duplicates detected — will delete in next step."
+            else
+              # Output was unexpected — treat as clean to avoid accidental mass-deletes.
+              echo "has_duplicates=false" >> $GITHUB_OUTPUT
+              echo "⚠️ Unexpected dedup output — defaulting to no-delete (review logs above)."
+            fi
+          fi
+
+      - name: Deduplication delete (remove duplicate posts)
+        id: dedup_delete
+        if: steps.dedup_check.outputs.has_duplicates == 'true'
+        run: |
+          echo "Duplicates confirmed. Running deletion pass..."
+          # --no-rebuild: we commit the raw docs/ changes; the blog-automation
+          # workflow (or a manual build) will regenerate HTML as normal.
+          # If you want the HTML rebuilt immediately here too, remove --no-rebuild.
+          python deduplicate_posts.py --delete --no-rebuild
+          echo "Deletion complete."
+
+      - name: Commit and push deduplicated posts
+        if: steps.dedup_check.outputs.has_duplicates == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage only the docs/ directory — don't accidentally commit other changes.
+          git add docs/
+
+          # Nothing to commit if the delete step somehow produced no diff.
+          if git diff --cached --quiet; then
+            echo "No changes to commit (docs/ unchanged after dedup)."
+          else
+            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+            git commit -m "chore: remove duplicate blog posts [watchdog ${TIMESTAMP}]"
+            git push
+            echo "Pushed deduplicated docs/ to main."
+          fi
+
+      # ── MISSING-SLOT RECOVERY (unchanged logic) ──────────────────────────────
+
       - name: Safety pause before triggering
         if: steps.missing.outputs.has_missing == 'true'
         run: |
@@ -241,10 +306,6 @@ jobs:
             echo "confirmed_list=$STILL_MISSING"    >> $GITHUB_OUTPUT
           fi
 
-      # ── KEY FIX 3: Trigger exactly ONE run for all missing slots ─────────
-      # The original loop triggered one run per missing slot, which meant if
-      # 3 slots were somehow missed it would fire 3 runs — all competing for
-      # the concurrency group. One trigger is enough; the cron will catch up.
       - name: Trigger blog automation for missing slots
         if: >
           steps.missing.outputs.has_missing == 'true' &&
@@ -275,10 +336,18 @@ jobs:
             echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
             echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
+            echo "| Duplicates found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo ""
             if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
               echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
             else
               echo "✅ **All cron slots running on schedule.**"
+            fi
+            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+              echo ""
+              echo "⚠️ **Duplicate posts were detected and deleted. docs/ has been pushed.**"
+            else
+              echo ""
+              echo "✅ **No duplicate posts found.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
