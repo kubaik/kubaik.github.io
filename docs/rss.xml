@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 15:52:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 16:49:41 +0000</lastBuildDate>
+    <item>
+      <title>Shipped to Senior: No CS, No Problem</title>
+      <link>https://kubaik.github.io/shipped-to-senior-no-cs-no-problem/</link>
+      <description>Cut senior-level latency by 80% without a CS degree — real systems, tradeoffs, and the runbooks that got me there in 2026</description>
+      <pubDate>Sat, 16 May 2026 16:49:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/shipped-to-senior-no-cs-no-problem/</guid>
+    </item>
     <item>
       <title>Local LLM on a laptop: the real stack</title>
       <link>https://kubaik.github.io/local-llm-on-a-laptop-the-real-stack/</link>
@@ -138,13 +145,6 @@
       <description>nt) adds ~30% latency compared to classic q with Load Balancing — decouple services, use a message queue.</description>
       <pubDate>Fri, 15 May 2026 22:38:35 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-the-load-balancer-you-never-asked-for/</guid>
-    </item>
-    <item>
-      <title>Redis vs Memcached: 3 million ops/sec test</title>
-      <link>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</link>
-      <description>00ms lose 12% more users than those under 5 with Redis — qualifying what kind of traffic, what language bin.</description>
-      <pubDate>Fri, 15 May 2026 22:15:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</guid>
     </item>
   </channel>
 </rss>
