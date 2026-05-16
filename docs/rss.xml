@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 20:00:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 20:44:58 +0000</lastBuildDate>
+    <item>
+      <title>African devs: Andela vs Arc vs Toptal</title>
+      <link>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</link>
+      <description>Deploy a Go microservice in 3 days on a $15 VPS in Lagos using Arc — latency, bandwidth, and time-zone constraints tested in 2026. Platform comparison table included.</description>
+      <pubDate>Sat, 16 May 2026 20:44:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</guid>
+    </item>
     <item>
       <title>Slash cloud carbon 30% without killing speed</title>
       <link>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency to 5 ms globally while trimming cloud bills — real numbers from a 2026 production Next.js app. edge functions Cloudflare Workers Vercel Edge Functions cost and latency benchmarks for solo devs and startups</description>
       <pubDate>Sat, 16 May 2026 02:07:54 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines failed 3 times before we fixed this</title>
-      <link>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</link>
-      <description>Cut RAG pipeline costs 37% and hallucinations 65% by indexing documents as trees, not chunks — with real numbers, code, and the mistakes that cost $4,200/month. RAG pipeline production pitfalls 2026, RAG hallucination rate target, transformer reranking cost per query 2026, Neo4j vector search latency 2026, sentence-transformers 2026 cost per embedding</description>
-      <pubDate>Fri, 15 May 2026 23:48:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</guid>
     </item>
   </channel>
 </rss>
