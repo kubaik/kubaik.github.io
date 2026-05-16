@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 12:11:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 13:02:34 +0000</lastBuildDate>
+    <item>
+      <title>Which realtime tech fits your app?</title>
+      <link>https://kubaik.github.io/which-realtime-tech-fits-your-app/</link>
+      <description>Cut 70 % of realtime infra cost by picking the right transport — WebSocket, SSE, or polling benchmarks under 500 ms latency with 2026 pricing and code examples.</description>
+      <pubDate>Sat, 16 May 2026 13:02:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-realtime-tech-fits-your-app/</guid>
+    </item>
     <item>
       <title>AI learns your repo: the context trap you missed</title>
       <link>https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/</link>
@@ -138,13 +145,6 @@
       <description>Cut query latency to 3 ms at 10k RPM with PostgreSQL JSONB GIN indexes — real benchmarks, Docker setup, and the mistakes that cause 400 ms lookups. Ideal for semi-structured product data.</description>
       <pubDate>Fri, 15 May 2026 20:54:59 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-postgresql-when-you-need-json-indexes/</guid>
-    </item>
-    <item>
-      <title>Stop Overloading Portfolios: Focus on Depth</title>
-      <link>https://kubaik.github.io/stop-overloading-portfolios-focus-on-depth/</link>
-      <description>Build a remote-ready portfolio: 2-3 polished projects, deployed on AWS, with clear docs. Skip quantity. This approach works for African developers by 2026.</description>
-      <pubDate>Fri, 15 May 2026 20:39:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-overloading-portfolios-focus-on-depth/</guid>
     </item>
   </channel>
 </rss>
