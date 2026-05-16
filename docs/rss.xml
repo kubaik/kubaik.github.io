@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 20:52:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 20:55:08 +0000</lastBuildDate>
+    <item>
+      <title>Message queues: the two questions that break everything</title>
+      <link>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</link>
+      <description>Cut API latency 60% with Redis Streams 7.2 — poison messages, commit strategies, and the ops overhead nobody budgets for.</description>
+      <pubDate>Sat, 16 May 2026 20:55:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</guid>
+    </item>
     <item>
       <title>AI tools that turn solo devs into founders</title>
       <link>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</link>
@@ -138,13 +145,6 @@
       <description>Cut review false positives 84% with Ollama 0.3.8 and FastAPI — latency risks, memory leaks, and race conditions caught before merge for under $0.005 per review.</description>
       <pubDate>Sat, 16 May 2026 07:53:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-senior-edge-junior-risk/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit big tech (and it’s not pay)</title>
-      <link>https://kubaik.github.io/senior-devs-quit-big-tech-and-its-not-pay/</link>
-      <description>Cut on-call burnout 40% with end-to-end ownership: 11 reasons senior devs quit big tech in 2026, the hidden friction points, and the one-line tests that prevent pager nightmares.</description>
-      <pubDate>Sat, 16 May 2026 07:36:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-and-its-not-pay/</guid>
     </item>
   </channel>
 </rss>
