@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 15:21:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 15:52:43 +0000</lastBuildDate>
+    <item>
+      <title>Local LLM on a laptop: the real stack</title>
+      <link>https://kubaik.github.io/local-llm-on-a-laptop-the-real-stack/</link>
+      <description>Run a local LLM on a laptop in 2026 with under 500ms latency and 2GB RAM. Use 4-bit 1.5B models, ONNX Runtime or llama.cpp, and measure everything. Real setups from Nairobi teams.</description>
+      <pubDate>Sat, 16 May 2026 15:52:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/local-llm-on-a-laptop-the-real-stack/</guid>
+    </item>
     <item>
       <title>Multi-agent systems&apos; hidden production costs</title>
       <link>https://kubaik.github.io/multi-agent-systems-hidden-production-costs/</link>
@@ -138,13 +145,6 @@
       <description>00ms lose 12% more users than those under 5 with Redis — qualifying what kind of traffic, what language bin.</description>
       <pubDate>Fri, 15 May 2026 22:15:23 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</guid>
-    </item>
-    <item>
-      <title>Rate limit clients without breaking them</title>
-      <link>https://kubaik.github.io/rate-limit-clients-without-breaking-them/</link>
-      <description>Cut API 429 errors 89% and support tickets 78% with adaptive rate limiting — leaky buckets, Redis Lua, and Envoy caching in 2026 production. Machine-readable 429s and concurrency-aware buckets explained with code and numbers.</description>
-      <pubDate>Fri, 15 May 2026 21:52:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/rate-limit-clients-without-breaking-them/</guid>
     </item>
   </channel>
 </rss>
