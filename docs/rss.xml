@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 May 2026 23:48:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 02:08:03 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: when they actually save money</title>
+      <link>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</link>
+      <description>Cut API latency to 5 ms globally while trimming cloud bills — real numbers from a 2026 production Next.js app. edge functions Cloudflare Workers Vercel Edge Functions cost and latency benchmarks for solo devs and startups</description>
+      <pubDate>Sat, 16 May 2026 02:07:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-when-they-actually-save-money/</guid>
+    </item>
     <item>
       <title>RAG pipelines failed 3 times before we fixed this</title>
       <link>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</link>
@@ -138,13 +145,6 @@
       <description>Freelance developers leave $40k on the table yearly with wrong rates. Use the 2024 rate calculator to set floor, target, and premium rates with real metrics—benchmarks, client budgets, and risk adjustments included.</description>
       <pubDate>Fri, 15 May 2026 15:54:23 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-that-pay-in-2024/</guid>
-    </item>
-    <item>
-      <title>Instrument LLM pipelines like a pro</title>
-      <link>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</link>
-      <description>Cut AI pipeline debugging time by 70% with structured observability. Learn exactly what to log, trace, and alert on when your system includes an LLM — with Prometheus, OpenTelemetry, and Grafana.</description>
-      <pubDate>Fri, 15 May 2026 14:39:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-llm-pipelines-like-a-pro/</guid>
     </item>
   </channel>
 </rss>

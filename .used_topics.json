@@ -21,5 +21,6 @@
   "How to pass technical interviews for remote roles when you're self-taught",
   "Database connection pooling: the setting everyone gets wrong",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense"
 ]
