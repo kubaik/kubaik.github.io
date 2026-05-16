@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 20:47:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 20:52:41 +0000</lastBuildDate>
+    <item>
+      <title>AI tools that turn solo devs into founders</title>
+      <link>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</link>
+      <description>Cut development time by 50% with AI tools that write, test, and deploy full stacks — real tools, real costs, and the mistakes that break production in 2026.</description>
+      <pubDate>Sat, 16 May 2026 20:52:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</guid>
+    </item>
     <item>
       <title>Price your freelance work in 2026</title>
       <link>https://kubaik.github.io/price-your-freelance-work-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call burnout 40% with end-to-end ownership: 11 reasons senior devs quit big tech in 2026, the hidden friction points, and the one-line tests that prevent pager nightmares.</description>
       <pubDate>Sat, 16 May 2026 07:36:44 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-big-tech-and-its-not-pay/</guid>
-    </item>
-    <item>
-      <title>Cut 14 tons cloud CO2 monthly without latency loss</title>
-      <link>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</link>
-      <description>Cut cloud carbon 35% without 1ms latency loss — fraud API case study with metrics</description>
-      <pubDate>Sat, 16 May 2026 05:48:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-14-tons-cloud-co2-monthly-without-latency-loss/</guid>
     </item>
   </channel>
 </rss>
