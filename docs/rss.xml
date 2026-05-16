@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 11:46:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 12:11:20 +0000</lastBuildDate>
+    <item>
+      <title>AI learns your repo: the context trap you missed</title>
+      <link>https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/</link>
+      <description>Cut AI suggestion errors by 45% with repository intelligence — AST chunking, dependency graphs, and routing that actually understand your whole codebase in 2026</description>
+      <pubDate>Sat, 16 May 2026 12:11:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/</guid>
+    </item>
     <item>
       <title>Land $4k roles: READMEs that don’t crash</title>
       <link>https://kubaik.github.io/land-4k-roles-readmes-that-dont-crash/</link>
@@ -138,13 +145,6 @@
       <description>Build a remote-ready portfolio: 2-3 polished projects, deployed on AWS, with clear docs. Skip quantity. This approach works for African developers by 2026.</description>
       <pubDate>Fri, 15 May 2026 20:39:24 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-overloading-portfolios-focus-on-depth/</guid>
-    </item>
-    <item>
-      <title>Recovered from burnout: what actually worked</title>
-      <link>https://kubaik.github.io/recovered-from-burnout-what-actually-worked/</link>
-      <description>Cut freelance burnout 70% with three fixes — batching communication, shutdown rituals, and rate discipline. Measured metrics from 2026 freelance recovery show 40% fewer rollbacks and 60% faster sleep latency.</description>
-      <pubDate>Fri, 15 May 2026 20:10:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/recovered-from-burnout-what-actually-worked/</guid>
     </item>
   </channel>
 </rss>
