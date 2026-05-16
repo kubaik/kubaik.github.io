@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 16:49:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 17:51:04 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS bill 40%: 11 levers I missed first</title>
+      <link>https://kubaik.github.io/cut-aws-bill-40-11-levers-i-missed-first/</link>
+      <description>Cut AWS bill 40% without re-architecture — the exact 11-step playbook with S3, RDS, Lambda, and CloudFront that saved $720/month in 2026</description>
+      <pubDate>Sat, 16 May 2026 17:50:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-bill-40-11-levers-i-missed-first/</guid>
+    </item>
     <item>
       <title>Shipped to Senior: No CS, No Problem</title>
       <link>https://kubaik.github.io/shipped-to-senior-no-cs-no-problem/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview failure rate by 60% with real system prep — LeetCode won’t save you in 2026 remote roles. Learn the stack, measure real metrics, and communicate async like a pro.</description>
       <pubDate>Fri, 15 May 2026 22:46:46 +0000</pubDate>
       <guid>https://kubaik.github.io/decode-remote-interviews-without-leetcode/</guid>
-    </item>
-    <item>
-      <title>Message queues: the load balancer you never asked for</title>
-      <link>https://kubaik.github.io/message-queues-the-load-balancer-you-never-asked-for/</link>
-      <description>nt) adds ~30% latency compared to classic q with Load Balancing — decouple services, use a message queue.</description>
-      <pubDate>Fri, 15 May 2026 22:38:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-the-load-balancer-you-never-asked-for/</guid>
     </item>
   </channel>
 </rss>
