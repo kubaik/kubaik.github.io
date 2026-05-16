@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 18:54:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 20:00:29 +0000</lastBuildDate>
+    <item>
+      <title>Slash cloud carbon 30% without killing speed</title>
+      <link>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</link>
+      <description>had grown 300% since 2023 after a viral TikT with Slashed cloud carbon slowing — losing the 80 ms p99 latency they’d tuned to perfe.</description>
+      <pubDate>Sat, 16 May 2026 20:00:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</guid>
+    </item>
     <item>
       <title>Pay me 70% of US salary? Do this first</title>
       <link>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline costs 37% and hallucinations 65% by indexing documents as trees, not chunks — with real numbers, code, and the mistakes that cost $4,200/month. RAG pipeline production pitfalls 2026, RAG hallucination rate target, transformer reranking cost per query 2026, Neo4j vector search latency 2026, sentence-transformers 2026 cost per embedding</description>
       <pubDate>Fri, 15 May 2026 23:48:22 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/</guid>
-    </item>
-    <item>
-      <title>Lessons from 9 months of unnecessary code</title>
-      <link>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</link>
-      <description>Cut cloud costs 21× and latency 35× by replacing Kubernetes and Kafka with a single FastAPI service — the real cost of over-engineering in 2026</description>
-      <pubDate>Fri, 15 May 2026 23:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/lessons-from-9-months-of-unnecessary-code/</guid>
     </item>
   </channel>
 </rss>
