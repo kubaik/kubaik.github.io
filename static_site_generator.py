@@ -600,28 +600,6 @@ def _build_templates() -> dict:
                 <p class="post-lead">{{ post.meta_description }}</p>
                 {% endif %}
 
-                <div class="post-meta-row">
-                    <span>
-                        <time datetime="{{ post.created_at }}" itemprop="datePublished">
-                            {{ post.display_date }}
-                        </time>
-                    </span>
-                    {% if post.updated_date and post.updated_date != post.display_date %}
-                    <span>
-                        Updated
-                        <time datetime="{{ post.updated_at }}" itemprop="dateModified">
-                            {{ post.updated_date }}
-                        </time>
-                    </span>
-                    {% endif %}
-                    {% if post.reading_time %}
-                    <span>{{ post.reading_time }} min read</span>
-                    {% endif %}
-                    {% if post.word_count %}
-                    <span>{{ post.word_count | int }} words</span>
-                    {% endif %}
-                </div>
-
                 {% if post.tags %}
                 <div class="tags">
                     {% for tag in post.tags[:6] %}
