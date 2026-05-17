@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 21:13:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 21:17:31 +0000</lastBuildDate>
+    <item>
+      <title>Pick the Right Real-Time Protocol</title>
+      <link>https://kubaik.github.io/pick-the-right-real-time-protocol/</link>
+      <description>Cut API latency 75%: benchmark WebSocket vs SSE vs long polling with exact latency, memory, and cost figures for 2026</description>
+      <pubDate>Sun, 17 May 2026 21:17:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-real-time-protocol/</guid>
+    </item>
     <item>
       <title>Ace remote interviews without a CS degree</title>
       <link>https://kubaik.github.io/ace-remote-interviews-without-a-cs-degree/</link>
@@ -138,13 +145,6 @@
       <description>68% of remote hiring managers reject portfolios without production artefacts. Build a $5 droplet with observability and a postmortem — the artefacts that actually get you hired remotely from Africa.</description>
       <pubDate>Sun, 17 May 2026 14:42:41 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-mistakes-that-cost-african-devs-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>Pass remote tech interviews without LeetCode</title>
-      <link>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</link>
-      <description>Self-taught devs fail remote interviews by over-grinding LeetCode — real debugging and cost-aware design win roles in 2026. Build systems, not clones; measure latency, not just lines of code.</description>
-      <pubDate>Sun, 17 May 2026 14:28:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</guid>
     </item>
   </channel>
 </rss>
