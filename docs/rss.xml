@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 14:42:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 15:22:30 +0000</lastBuildDate>
+    <item>
+      <title>AI multiplies senior devs — juniors get exposed</title>
+      <link>https://kubaik.github.io/ai-multiplies-senior-devs-juniors-get-exposed/</link>
+      <description>it ratio: 87% - External API calls per seco with AI multiplies senior devs — review a junior engineer’s pull request that added.</description>
+      <pubDate>Sun, 17 May 2026 15:22:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-multiplies-senior-devs-juniors-get-exposed/</guid>
+    </item>
     <item>
       <title>Portfolio mistakes that cost African devs remote jobs</title>
       <link>https://kubaik.github.io/portfolio-mistakes-that-cost-african-devs-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent round-trip latency from 140ms to 42ms in production systems — connection pooling, TLS overhead, and the 10ms hop budget nobody mentions</description>
       <pubDate>Sun, 17 May 2026 09:00:39 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-the-production-trap-nobody/</guid>
-    </item>
-    <item>
-      <title>AI sprints: how to measure if it&apos;s helping or hurting</title>
-      <link>https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/</link>
-      <description>y went up 15%. The CEO wanted to double the with AI sprints measure helping — double the budget.</description>
-      <pubDate>Sun, 17 May 2026 07:49:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/</guid>
     </item>
   </channel>
 </rss>
