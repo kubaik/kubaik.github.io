@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 11:41:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 11:47:36 +0000</lastBuildDate>
+    <item>
+      <title>3 AI system patterns that work in 2026</title>
+      <link>https://kubaik.github.io/3-ai-system-patterns-that-work-in-2026/</link>
+      <description>Achieve 84% cost savings and 0.4% error rates in AI-first systems with idempotent actions, write-through cache, and state machines — the boring patterns that survive 2026.</description>
+      <pubDate>Sun, 17 May 2026 11:47:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-ai-system-patterns-that-work-in-2026/</guid>
+    </item>
     <item>
       <title>3 LLM metrics your pipeline ignores</title>
       <link>https://kubaik.github.io/3-llm-metrics-your-pipeline-ignores/</link>
@@ -138,13 +145,6 @@
       <description>Price freelance work in 2026 with hidden costs included — MVR, target rates, and project quotes that prevent burnout. Includes benchmarks, spreadsheets, and gotchas from real contracts.</description>
       <pubDate>Sat, 16 May 2026 20:47:15 +0000</pubDate>
       <guid>https://kubaik.github.io/price-your-freelance-work-in-2026/</guid>
-    </item>
-    <item>
-      <title>African devs: Andela vs Arc vs Toptal</title>
-      <link>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</link>
-      <description>Deploy a Go microservice in 3 days on a $15 VPS in Lagos using Arc — latency, bandwidth, and time-zone constraints tested in 2026. Platform comparison table included.</description>
-      <pubDate>Sat, 16 May 2026 20:44:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</guid>
     </item>
   </channel>
 </rss>

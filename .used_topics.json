@@ -22,5 +22,6 @@
   "RAG pipelines in production: what the tutorials skip",
   "Zero-trust architecture for small teams: what actually makes sense to implement",
   "API rate limiting patterns that don't break your clients",
-  "Observability for AI pipelines: what to instrument when your system includes an LLM"
+  "Observability for AI pipelines: what to instrument when your system includes an LLM",
+  "Designing systems for AI-first applications: the patterns that actually hold up"
 ]
