@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 11:57:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 12:43:45 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers demystified for developers</title>
+      <link>https://kubaik.github.io/mcp-servers-demystified-for-developers/</link>
+      <description>Cut API response time 70% with an MCP server — Python mcp 1.13.0, fastmcp 0.8.0, and the 3 mistakes every team makes first.</description>
+      <pubDate>Sun, 17 May 2026 12:43:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-demystified-for-developers/</guid>
+    </item>
     <item>
       <title>Tune your pool size or waste CPU cycles</title>
       <link>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% with Redis Streams 7.2 — poison messages, commit strategies, and the ops overhead nobody budgets for.</description>
       <pubDate>Sat, 16 May 2026 20:55:00 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</guid>
-    </item>
-    <item>
-      <title>AI tools that turn solo devs into founders</title>
-      <link>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</link>
-      <description>Cut development time by 50% with AI tools that write, test, and deploy full stacks — real tools, real costs, and the mistakes that break production in 2026.</description>
-      <pubDate>Sat, 16 May 2026 20:52:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</guid>
     </item>
   </channel>
 </rss>

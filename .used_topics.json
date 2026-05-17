@@ -24,5 +24,6 @@
   "API rate limiting patterns that don't break your clients",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
   "Designing systems for AI-first applications: the patterns that actually hold up",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "MCP servers explained: what they are and why every developer should understand them"
 ]
