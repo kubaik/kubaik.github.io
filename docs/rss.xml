@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 10:09:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 10:16:57 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: the latency lie we still tell users</title>
+      <link>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</link>
+      <description>Cut API latency by 59ms for APAC users with edge functions — when Cloudflare Workers and Vercel Edge actually make sense, failure modes, and code examples for 2026 budgets.</description>
+      <pubDate>Sun, 17 May 2026 10:16:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</guid>
+    </item>
     <item>
       <title>Senior without CS degree: how I proved the myth wrong</title>
       <link>https://kubaik.github.io/senior-without-cs-degree-how-i-proved-the-myth-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Cut senior-level latency by 80% without a CS degree — real systems, tradeoffs, and the runbooks that got me there in 2026</description>
       <pubDate>Sat, 16 May 2026 16:49:33 +0000</pubDate>
       <guid>https://kubaik.github.io/shipped-to-senior-no-cs-no-problem/</guid>
-    </item>
-    <item>
-      <title>Local LLM on a laptop: the real stack</title>
-      <link>https://kubaik.github.io/local-llm-on-a-laptop-the-real-stack/</link>
-      <description>Run a local LLM on a laptop in 2026 with under 500ms latency and 2GB RAM. Use 4-bit 1.5B models, ONNX Runtime or llama.cpp, and measure everything. Real setups from Nairobi teams.</description>
-      <pubDate>Sat, 16 May 2026 15:52:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/local-llm-on-a-laptop-the-real-stack/</guid>
     </item>
   </channel>
 </rss>
