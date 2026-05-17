@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 10:57:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 11:37:57 +0000</lastBuildDate>
+    <item>
+      <title>Slay API rate limits without 429s</title>
+      <link>https://kubaik.github.io/slay-api-rate-limits-without-429s/</link>
+      <description>Cut API 429 errors 99% with adaptive rate limiting — per-client burst growth, Redis leaky bucket, and Retry-After headers that clients actually follow.</description>
+      <pubDate>Sun, 17 May 2026 11:37:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/slay-api-rate-limits-without-429s/</guid>
+    </item>
     <item>
       <title>Zero-trust for 5-person teams: skip the bloat</title>
       <link>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</link>
@@ -138,13 +145,6 @@
       <description>had grown 300% since 2023 after a viral TikT with Slashed cloud carbon slowing — losing the 80 ms p99 latency they’d tuned to perfe.</description>
       <pubDate>Sat, 16 May 2026 20:00:21 +0000</pubDate>
       <guid>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</guid>
-    </item>
-    <item>
-      <title>Pay me 70% of US salary? Do this first</title>
-      <link>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</link>
-      <description>Negotiate remote salaries 70% of US rates using PPP and Levels.fyi 2026 — exact formulas, CLI, and benchmarks to close deals faster. No filler.</description>
-      <pubDate>Sat, 16 May 2026 18:54:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</guid>
     </item>
   </channel>
 </rss>
