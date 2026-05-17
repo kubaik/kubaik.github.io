@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 13:54:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 10:57:49 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for 5-person teams: skip the bloat</title>
+      <link>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</link>
+      <description>Cut security overhead 70% with minimal zero-trust for 5-person teams — SSH certificates, short-lived tokens, and immutable logs that actually work in production.</description>
+      <pubDate>Sun, 17 May 2026 10:57:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</guid>
+    </item>
     <item>
       <title>RAG pipelines: why speed kills at scale</title>
       <link>https://kubaik.github.io/rag-pipelines-why-speed-kills-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salaries 70% of US rates using PPP and Levels.fyi 2026 — exact formulas, CLI, and benchmarks to close deals faster. No filler.</description>
       <pubDate>Sat, 16 May 2026 18:54:06 +0000</pubDate>
       <guid>https://kubaik.github.io/pay-me-70-of-us-salary-do-this-first/</guid>
-    </item>
-    <item>
-      <title>I raised my rate from $3k to $12k in 18 months</title>
-      <link>https://kubaik.github.io/i-raised-my-rate-from-3k-to-12k-in-18-months/</link>
-      <description>Raised my freelance rate from $3,200 to $12,000 per month in 18 months — the tools, contracts, and metrics that actually moved the needle</description>
-      <pubDate>Sat, 16 May 2026 18:35:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/i-raised-my-rate-from-3k-to-12k-in-18-months/</guid>
     </item>
   </channel>
 </rss>
