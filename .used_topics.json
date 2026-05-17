@@ -28,5 +28,6 @@
   "MCP servers explained: what they are and why every developer should understand them",
   "Redis vs Memcached: a benchmark that actually matters",
   "How vector databases work (and when you don't need one)",
-  "Monolith vs microservices in 2026: the pendulum is swinging back and here's why"
+  "Monolith vs microservices in 2026: the pendulum is swinging back and here's why",
+  "Vibe coding is fun for prototypes \u2014 here's why I stopped using it in production"
 ]
