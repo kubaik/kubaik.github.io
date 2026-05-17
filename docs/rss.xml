@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 06:16:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 07:49:21 +0000</lastBuildDate>
+    <item>
+      <title>AI sprints: how to measure if it&apos;s helping or hurting</title>
+      <link>https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/</link>
+      <description>y went up 15%. The CEO wanted to double the with AI sprints measure helping — double the budget.</description>
+      <pubDate>Sun, 17 May 2026 07:49:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/</guid>
+    </item>
     <item>
       <title>Codebase Graphs: AI Sees What You Miss</title>
       <link>https://kubaik.github.io/codebase-graphs-ai-sees-what-you-miss/</link>
@@ -138,13 +145,6 @@
       <description>Cut 70 % of realtime infra cost by picking the right transport — WebSocket, SSE, or polling benchmarks under 500 ms latency with 2026 pricing and code examples.</description>
       <pubDate>Sat, 16 May 2026 13:02:26 +0000</pubDate>
       <guid>https://kubaik.github.io/which-realtime-tech-fits-your-app/</guid>
-    </item>
-    <item>
-      <title>AI learns your repo: the context trap you missed</title>
-      <link>https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/</link>
-      <description>Cut AI suggestion errors by 45% with repository intelligence — AST chunking, dependency graphs, and routing that actually understand your whole codebase in 2026</description>
-      <pubDate>Sat, 16 May 2026 12:11:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/</guid>
     </item>
   </channel>
 </rss>
