@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 11:37:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 11:41:57 +0000</lastBuildDate>
+    <item>
+      <title>3 LLM metrics your pipeline ignores</title>
+      <link>https://kubaik.github.io/3-llm-metrics-your-pipeline-ignores/</link>
+      <description>at’s only 30% of the picture. The other 70% with LLMs — be a single misconfigured timeout — this post is wh.</description>
+      <pubDate>Sun, 17 May 2026 11:41:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-llm-metrics-your-pipeline-ignores/</guid>
+    </item>
     <item>
       <title>Slay API rate limits without 429s</title>
       <link>https://kubaik.github.io/slay-api-rate-limits-without-429s/</link>
@@ -138,13 +145,6 @@
       <description>Deploy a Go microservice in 3 days on a $15 VPS in Lagos using Arc — latency, bandwidth, and time-zone constraints tested in 2026. Platform comparison table included.</description>
       <pubDate>Sat, 16 May 2026 20:44:49 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-andela-vs-arc-vs-toptal/</guid>
-    </item>
-    <item>
-      <title>Slash cloud carbon 30% without killing speed</title>
-      <link>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</link>
-      <description>had grown 300% since 2023 after a viral TikT with Slashed cloud carbon slowing — losing the 80 ms p99 latency they’d tuned to perfe.</description>
-      <pubDate>Sat, 16 May 2026 20:00:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/slash-cloud-carbon-30-without-killing-speed/</guid>
     </item>
   </channel>
 </rss>
