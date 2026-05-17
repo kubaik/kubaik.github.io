@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 15:39:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 15:48:20 +0000</lastBuildDate>
+    <item>
+      <title>Oops! 5 TypeScript strict failures</title>
+      <link>https://kubaik.github.io/oops-5-typescript-strict-failures/</link>
+      <description>Cut production incidents 40% with TypeScript strict mode and runtime validation — the real trade-offs between Zod schemas and TypeScript-only types in 2026.</description>
+      <pubDate>Sun, 17 May 2026 15:48:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/oops-5-typescript-strict-failures/</guid>
+    </item>
     <item>
       <title>Choose the right realtime protocol</title>
       <link>https://kubaik.github.io/choose-the-right-realtime-protocol/</link>
@@ -138,13 +145,6 @@
       <description>that only 38% of professional developers ho with CS degree Ship senior — a computer science degree.</description>
       <pubDate>Sun, 17 May 2026 10:09:37 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-without-cs-degree-how-i-proved-the-myth-wrong/</guid>
-    </item>
-    <item>
-      <title>Tame cellular timeouts before your P99 burns</title>
-      <link>https://kubaik.github.io/tame-cellular-timeouts-before-your-p99-burns/</link>
-      <description>Cut mobile P99 latency from 8.2 s to 720 ms: TCP_NODELAY, TFO, DoQ, and pool sizing for 5G networks — real Ookla 2026 traces and FastAPI code</description>
-      <pubDate>Sun, 17 May 2026 10:04:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-cellular-timeouts-before-your-p99-burns/</guid>
     </item>
   </channel>
 </rss>

@@ -34,5 +34,6 @@
   "How to pass technical interviews for remote roles when you're self-taught",
   "Building a portfolio that gets you hired remotely from Africa",
   "AI is a force multiplier: why it makes senior devs more powerful and juniors more exposed",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
+  "TypeScript mistakes that slip through even with strict mode"
 ]
