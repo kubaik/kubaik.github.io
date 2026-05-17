@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 19:43:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 19:48:13 +0000</lastBuildDate>
+    <item>
+      <title>Cut cloud emissions 37% without latency hit</title>
+      <link>https://kubaik.github.io/cut-cloud-emissions-37-without-latency-hit/</link>
+      <description>Cut cloud carbon emissions 37% without latency hit — Redis caching, carbon-aware routing, and CPU scaling in a real B2B API. Results from a 2.1M requests/day system.</description>
+      <pubDate>Sun, 17 May 2026 19:48:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-emissions-37-without-latency-hit/</guid>
+    </item>
     <item>
       <title>Instrument AI pipelines: what to watch when logs fail</title>
       <link>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch-when-logs-fail/</link>
@@ -138,13 +145,6 @@
       <description>Python scripts gone 3am: test with 98% coverage, and even added Open. Practical guide with real examples.</description>
       <pubDate>Sun, 17 May 2026 14:14:01 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-vs-production-reality/</guid>
-    </item>
-    <item>
-      <title>Burn $47k on microservices?</title>
-      <link>https://kubaik.github.io/burn-47k-on-microservices/</link>
-      <description>Monoliths beat microservices in 2026: latency, cost, and MTTR benchmarks for startups, solo devs, and bootstrappers — real numbers, real stacks.</description>
-      <pubDate>Sun, 17 May 2026 14:06:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/burn-47k-on-microservices/</guid>
     </item>
   </channel>
 </rss>
