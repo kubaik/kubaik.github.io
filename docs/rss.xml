@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 15:22:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 15:39:52 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right realtime protocol</title>
+      <link>https://kubaik.github.io/choose-the-right-realtime-protocol/</link>
+      <description>Cut realtime API latency and error rates in 2026: compare WebSockets vs SSE vs long polling with concrete numbers and Safari 17 fixes.</description>
+      <pubDate>Sun, 17 May 2026 15:39:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-realtime-protocol/</guid>
+    </item>
     <item>
       <title>AI multiplies senior devs — juniors get exposed</title>
       <link>https://kubaik.github.io/ai-multiplies-senior-devs-juniors-get-exposed/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile P99 latency from 8.2 s to 720 ms: TCP_NODELAY, TFO, DoQ, and pool sizing for 5G networks — real Ookla 2026 traces and FastAPI code</description>
       <pubDate>Sun, 17 May 2026 10:04:24 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-cellular-timeouts-before-your-p99-burns/</guid>
-    </item>
-    <item>
-      <title>Multi-agent systems: the production trap nobody</title>
-      <link>https://kubaik.github.io/multi-agent-systems-the-production-trap-nobody/</link>
-      <description>Cut agent round-trip latency from 140ms to 42ms in production systems — connection pooling, TLS overhead, and the 10ms hop budget nobody mentions</description>
-      <pubDate>Sun, 17 May 2026 09:00:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-the-production-trap-nobody/</guid>
     </item>
   </channel>
 </rss>
