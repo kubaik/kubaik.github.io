@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 22:17:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 22:37:31 +0000</lastBuildDate>
+    <item>
+      <title>70-hour weeks to sustainable freelancing</title>
+      <link>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</link>
+      <description>Cut freelance burnout 70% with sustainable workload, context batching, and platform detox — real tools, real metrics, and the contract clause that actually works.</description>
+      <pubDate>Sun, 17 May 2026 22:37:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</guid>
+    </item>
     <item>
       <title>Trust small teams, not zero-trust</title>
       <link>https://kubaik.github.io/trust-small-teams-not-zero-trust/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 30% with Memcached vs Redis in 2026 — exact latency benchmarks, connection pool failures, and the cache choice most teams get wrong.</description>
       <pubDate>Sun, 17 May 2026 16:42:36 +0000</pubDate>
       <guid>https://kubaik.github.io/benchmark-redis-vs-memcached-under-real-load/</guid>
-    </item>
-    <item>
-      <title>Which dev platform pays African devs fastest in 2026</title>
-      <link>https://kubaik.github.io/which-dev-platform-pays-african-devs-fastest-in-2026/</link>
-      <description>Pick the right remote dev platform in 2026 with real payout latency and take-home pay numbers from Lagos, Nairobi, and Johannesburg — Arc paid 40% faster than Toptal, but Toptal’s top clients paid 70% more per hour.</description>
-      <pubDate>Sun, 17 May 2026 15:53:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-dev-platform-pays-african-devs-fastest-in-2026/</guid>
     </item>
   </channel>
 </rss>
