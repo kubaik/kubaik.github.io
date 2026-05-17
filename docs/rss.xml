@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 19:48:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 19:52:36 +0000</lastBuildDate>
+    <item>
+      <title>How much freelancers charge 2026</title>
+      <link>https://kubaik.github.io/how-much-freelancers-charge-2026/</link>
+      <description>2026 freelance developer rates: exact numbers for $50, $100, and $150/hour — includes hidden costs, tax math, and a Python calculator you can reuse today</description>
+      <pubDate>Sun, 17 May 2026 19:52:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-much-freelancers-charge-2026/</guid>
+    </item>
     <item>
       <title>Cut cloud emissions 37% without latency hit</title>
       <link>https://kubaik.github.io/cut-cloud-emissions-37-without-latency-hit/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 66% and AWS costs 63% by removing Redis, Kafka, and over-engineered patterns — the real cost of premature abstraction and how to avoid it.</description>
       <pubDate>Sun, 17 May 2026 14:18:43 +0000</pubDate>
       <guid>https://kubaik.github.io/14k-mistake-simple-code-beats-fancy-stacks/</guid>
-    </item>
-    <item>
-      <title>Vibe coding vs production reality</title>
-      <link>https://kubaik.github.io/vibe-coding-vs-production-reality/</link>
-      <description>Python scripts gone 3am: test with 98% coverage, and even added Open. Practical guide with real examples.</description>
-      <pubDate>Sun, 17 May 2026 14:14:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-vs-production-reality/</guid>
     </item>
   </channel>
 </rss>
