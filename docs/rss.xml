@@ -5,35 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 10:25:12 +0000</lastBuildDate>
-    <item>
-      <title>Build fast APIs that clear $4k/month remote</title>
-      <link>https://kubaik.github.io/build-fast-apis-that-clear-4kmonth-remote/</link>
-      <description>Ship a $4k/month-ready API in 2026: Redis caching, Sentry error tracking, and load tests that prove stability. The real stack developers in Nairobi and Lagos use to keep remote roles.</description>
-      <pubDate>Sun, 17 May 2026 10:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-fast-apis-that-clear-4kmonth-remote/</guid>
-    </item>
-    <item>
-      <title>Edge functions: the latency lie we still tell users</title>
-      <link>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</link>
-      <description>Cut API latency by 59ms for APAC users with edge functions — when Cloudflare Workers and Vercel Edge actually make sense, failure modes, and code examples for 2026 budgets.</description>
-      <pubDate>Sun, 17 May 2026 10:16:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</guid>
-    </item>
-    <item>
-      <title>Senior without CS degree: how I proved the myth wrong</title>
-      <link>https://kubaik.github.io/senior-without-cs-degree-how-i-proved-the-myth-wrong/</link>
-      <description>that only 38% of professional developers ho with CS degree Ship senior — a computer science degree.</description>
-      <pubDate>Sun, 17 May 2026 10:09:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-without-cs-degree-how-i-proved-the-myth-wrong/</guid>
-    </item>
-    <item>
-      <title>Tame cellular timeouts before your P99 burns</title>
-      <link>https://kubaik.github.io/tame-cellular-timeouts-before-your-p99-burns/</link>
-      <description>Cut mobile P99 latency from 8.2 s to 720 ms: TCP_NODELAY, TFO, DoQ, and pool sizing for 5G networks — real Ookla 2026 traces and FastAPI code</description>
-      <pubDate>Sun, 17 May 2026 10:04:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-cellular-timeouts-before-your-p99-burns/</guid>
-    </item>
+    <lastBuildDate>Sun, 17 May 2026 13:38:44 +0000</lastBuildDate>
     <item>
       <title>Multi-agent systems: the production trap nobody</title>
       <link>https://kubaik.github.io/multi-agent-systems-the-production-trap-nobody/</link>

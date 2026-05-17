@@ -1,9 +1,18 @@
 User-agent: *
 Allow: /
 Disallow: /static/admin/
-Disallow: /*.json$
 
+# Allow Google AdSense crawler explicitly
+User-agent: Mediapartners-Google
+Allow: /
+
+# Allow all Google bots
+User-agent: Googlebot
+Allow: /
 Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /static/
 
 Sitemap: https://kubaik.github.io/sitemap.xml
 Sitemap: https://kubaik.github.io/rss.xml
