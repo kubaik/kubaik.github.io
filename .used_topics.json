@@ -23,5 +23,6 @@
   "Burnout as a freelance developer: what helped me recover",
   "API rate limiting patterns that don't break your clients",
   "RAG pipelines in production: what the tutorials skip",
-  "PostgreSQL vs MySQL in 2026: the decision I keep making"
+  "PostgreSQL vs MySQL in 2026: the decision I keep making",
+  "Database connection pooling: the setting everyone gets wrong"
 ]

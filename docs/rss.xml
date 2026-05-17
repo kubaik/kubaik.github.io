@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 23:31:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 23:43:05 +0000</lastBuildDate>
+    <item>
+      <title>Bust the pool size myth for 2026</title>
+      <link>https://kubaik.github.io/bust-the-pool-size-myth-for-2026/</link>
+      <description>Reduce database p99 latency 60% by fixing connection pool sizing — the outdated CPU-core heuristic costs teams $18k/month in RDS over-provisioning and adds 2x tail latency. Learn the metrics that matter.</description>
+      <pubDate>Sun, 17 May 2026 23:42:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/bust-the-pool-size-myth-for-2026/</guid>
+    </item>
     <item>
       <title>Pick PostgreSQL in 2026, here&apos;s why</title>
       <link>https://kubaik.github.io/pick-postgresql-in-2026-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio projects that land remote jobs in 2026 aren’t polished clones—they’re proof-of-work systems with deployed demos, post-mortems, and domain depth. Build a real constraint, not a tutorial.</description>
       <pubDate>Sun, 17 May 2026 17:43:08 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-beats-pedigree-for-remote-roles/</guid>
-    </item>
-    <item>
-      <title>Don&apos;t shard by tenant early. Do this instead</title>
-      <link>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</link>
-      <description>Cut multi-tenant SaaS costs 40% by avoiding early sharding. See real latency benchmarks, schema migration times, and AWS bills from Jakarta and Philippine startups in 2026.</description>
-      <pubDate>Sun, 17 May 2026 17:35:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</guid>
     </item>
   </channel>
 </rss>
