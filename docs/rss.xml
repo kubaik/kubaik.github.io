@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 May 2026 23:44:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 02:12:19 +0000</lastBuildDate>
+    <item>
+      <title>Data skills that boost AI salaries</title>
+      <link>https://kubaik.github.io/data-skills-that-boost-ai-salaries/</link>
+      <description>Fine-tuning pays 15–25% more than prompt engineering in 2026 fintech/healthtech roles — but only if you own data and ops capacity. See latency, hallucination rates, and cost data that breaks the myth that speed always wins.</description>
+      <pubDate>Sun, 17 May 2026 02:12:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-skills-that-boost-ai-salaries/</guid>
+    </item>
     <item>
       <title>Why choose PostgreSQL over MySQL in 2026</title>
       <link>https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Save $1,400/month at 50k builds: CircleCI beats GitHub Actions on egress-heavy workloads — runner-minute pricing, artifact storage, and the real cost drivers at scale for 2026.</description>
       <pubDate>Sat, 16 May 2026 10:57:50 +0000</pubDate>
       <guid>https://kubaik.github.io/50k-buildsmonth-github-actions-vs-circleci-cost-smackdown/</guid>
-    </item>
-    <item>
-      <title>AI sprint math: how to measure real velocity gains</title>
-      <link>https://kubaik.github.io/ai-sprint-math-how-to-measure-real-velocity-gains/</link>
-      <description>int) rose 15%. But when we normalized for t with AI sprint math measure — make teams faster.</description>
-      <pubDate>Sat, 16 May 2026 09:25:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sprint-math-how-to-measure-real-velocity-gains/</guid>
     </item>
   </channel>
 </rss>
