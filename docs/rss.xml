@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 15:53:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 16:42:43 +0000</lastBuildDate>
+    <item>
+      <title>Benchmark Redis vs Memcached under real load</title>
+      <link>https://kubaik.github.io/benchmark-redis-vs-memcached-under-real-load/</link>
+      <description>Cut cloud costs 30% with Memcached vs Redis in 2026 — exact latency benchmarks, connection pool failures, and the cache choice most teams get wrong.</description>
+      <pubDate>Sun, 17 May 2026 16:42:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/benchmark-redis-vs-memcached-under-real-load/</guid>
+    </item>
     <item>
       <title>Which dev platform pays African devs fastest in 2026</title>
       <link>https://kubaik.github.io/which-dev-platform-pays-african-devs-fastest-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Ship a $4k/month-ready API in 2026: Redis caching, Sentry error tracking, and load tests that prove stability. The real stack developers in Nairobi and Lagos use to keep remote roles.</description>
       <pubDate>Sun, 17 May 2026 10:25:04 +0000</pubDate>
       <guid>https://kubaik.github.io/build-fast-apis-that-clear-4kmonth-remote/</guid>
-    </item>
-    <item>
-      <title>Edge functions: the latency lie we still tell users</title>
-      <link>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</link>
-      <description>Cut API latency by 59ms for APAC users with edge functions — when Cloudflare Workers and Vercel Edge actually make sense, failure modes, and code examples for 2026 budgets.</description>
-      <pubDate>Sun, 17 May 2026 10:16:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-the-latency-lie-we-still-tell-users/</guid>
     </item>
   </channel>
 </rss>
