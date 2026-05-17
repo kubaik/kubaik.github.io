@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 16:42:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 16:49:41 +0000</lastBuildDate>
+    <item>
+      <title>Tune backends for 5G users in 5 steps</title>
+      <link>https://kubaik.github.io/tune-backends-for-5g-users-in-5-steps/</link>
+      <description>Cut mobile API latency 76% by reusing sockets and caching — socket reuse ratios, TLS handshakes, and the 5G carrier IP rotation pattern most teams ignore.</description>
+      <pubDate>Sun, 17 May 2026 16:49:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-backends-for-5g-users-in-5-steps/</guid>
+    </item>
     <item>
       <title>Benchmark Redis vs Memcached under real load</title>
       <link>https://kubaik.github.io/benchmark-redis-vs-memcached-under-real-load/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 82% and infra costs 49% — the real bottlenecks, cache keys, and deduplication layer most tutorials skip. Learn the production metrics that matter in 2026.</description>
       <pubDate>Sun, 17 May 2026 10:43:55 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-why-speed-kills-at-scale/</guid>
-    </item>
-    <item>
-      <title>Build fast APIs that clear $4k/month remote</title>
-      <link>https://kubaik.github.io/build-fast-apis-that-clear-4kmonth-remote/</link>
-      <description>Ship a $4k/month-ready API in 2026: Redis caching, Sentry error tracking, and load tests that prove stability. The real stack developers in Nairobi and Lagos use to keep remote roles.</description>
-      <pubDate>Sun, 17 May 2026 10:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-fast-apis-that-clear-4kmonth-remote/</guid>
     </item>
   </channel>
 </rss>
