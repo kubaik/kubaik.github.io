@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 17:35:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 17:43:17 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio beats pedigree for remote roles</title>
+      <link>https://kubaik.github.io/portfolio-beats-pedigree-for-remote-roles/</link>
+      <description>Portfolio projects that land remote jobs in 2026 aren’t polished clones—they’re proof-of-work systems with deployed demos, post-mortems, and domain depth. Build a real constraint, not a tutorial.</description>
+      <pubDate>Sun, 17 May 2026 17:43:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-beats-pedigree-for-remote-roles/</guid>
+    </item>
     <item>
       <title>Don&apos;t shard by tenant early. Do this instead</title>
       <link>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</link>
@@ -138,13 +145,6 @@
       <description>at’s only 30% of the picture. The other 70% with LLMs — be a single misconfigured timeout — this post is wh.</description>
       <pubDate>Sun, 17 May 2026 11:41:48 +0000</pubDate>
       <guid>https://kubaik.github.io/3-llm-metrics-your-pipeline-ignores/</guid>
-    </item>
-    <item>
-      <title>Slay API rate limits without 429s</title>
-      <link>https://kubaik.github.io/slay-api-rate-limits-without-429s/</link>
-      <description>Cut API 429 errors 99% with adaptive rate limiting — per-client burst growth, Redis leaky bucket, and Retry-After headers that clients actually follow.</description>
-      <pubDate>Sun, 17 May 2026 11:37:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/slay-api-rate-limits-without-429s/</guid>
     </item>
   </channel>
 </rss>
