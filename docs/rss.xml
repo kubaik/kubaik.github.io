@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 17:53:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 18:17:59 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering costs that hit in 2026</title>
+      <link>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</link>
+      <description>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</description>
+      <pubDate>Sun, 17 May 2026 18:17:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</guid>
+    </item>
     <item>
       <title>Why MCP servers break in production</title>
       <link>https://kubaik.github.io/why-mcp-servers-break-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Save 40% CPU by shrinking your pool — PostgreSQL connection sizing myths debunked with 2026 benchmarks and a new formula based on concurrency, not max_connections</description>
       <pubDate>Sun, 17 May 2026 11:56:59 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</guid>
-    </item>
-    <item>
-      <title>3 AI system patterns that work in 2026</title>
-      <link>https://kubaik.github.io/3-ai-system-patterns-that-work-in-2026/</link>
-      <description>Achieve 84% cost savings and 0.4% error rates in AI-first systems with idempotent actions, write-through cache, and state machines — the boring patterns that survive 2026.</description>
-      <pubDate>Sun, 17 May 2026 11:47:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-ai-system-patterns-that-work-in-2026/</guid>
     </item>
   </channel>
 </rss>
