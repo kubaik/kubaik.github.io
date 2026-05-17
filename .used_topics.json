@@ -25,5 +25,6 @@
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
   "Designing systems for AI-first applications: the patterns that actually hold up",
   "Database connection pooling: the setting everyone gets wrong",
-  "MCP servers explained: what they are and why every developer should understand them"
+  "MCP servers explained: what they are and why every developer should understand them",
+  "Redis vs Memcached: a benchmark that actually matters"
 ]

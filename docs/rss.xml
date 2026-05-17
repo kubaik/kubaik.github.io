@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 12:43:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 13:01:25 +0000</lastBuildDate>
+    <item>
+      <title>Cache Showdown: Which One Survives the Spike</title>
+      <link>https://kubaik.github.io/cache-showdown-which-one-survives-the-spike/</link>
+      <description>Cut API latency 60% with Memcached 1.6.22 — benchmark shows p99 under load and the one tuning knob that matters. Compare Redis 7.2’s data structures vs Memcached’s simplicity for production traffic.</description>
+      <pubDate>Sun, 17 May 2026 13:01:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/cache-showdown-which-one-survives-the-spike/</guid>
+    </item>
     <item>
       <title>MCP servers demystified for developers</title>
       <link>https://kubaik.github.io/mcp-servers-demystified-for-developers/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout 60% in 90 days — the 3 fixes that worked: red-flag checklists, focus blocks, and solo offices. Avoid the $3,200/year cognitive load tax.</description>
       <pubDate>Sat, 16 May 2026 21:42:36 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</guid>
-    </item>
-    <item>
-      <title>Message queues: the two questions that break everything</title>
-      <link>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</link>
-      <description>Cut API latency 60% with Redis Streams 7.2 — poison messages, commit strategies, and the ops overhead nobody budgets for.</description>
-      <pubDate>Sat, 16 May 2026 20:55:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</guid>
     </item>
   </channel>
 </rss>
