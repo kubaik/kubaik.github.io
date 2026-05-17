@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 14:03:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 14:06:54 +0000</lastBuildDate>
+    <item>
+      <title>Burn $47k on microservices?</title>
+      <link>https://kubaik.github.io/burn-47k-on-microservices/</link>
+      <description>Monoliths beat microservices in 2026: latency, cost, and MTTR benchmarks for startups, solo devs, and bootstrappers — real numbers, real stacks.</description>
+      <pubDate>Sun, 17 May 2026 14:06:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/burn-47k-on-microservices/</guid>
+    </item>
     <item>
       <title>Vector DB vs Postgres 16: the 300ms cut that matters</title>
       <link>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency from 124 ms to 8 ms and replication lag from 47 seconds to under 2 seconds by choosing PostgreSQL in 2026 — hands-on benchmarks, Docker setup, and the exact commands that break MySQL at scale.</description>
       <pubDate>Sat, 16 May 2026 23:44:35 +0000</pubDate>
       <guid>https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech quietly</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</link>
-      <description>y exceeds 500 ms By the end, you’ll have a rep with tech attrition quit — four themes: stagnant impact, opaque promotion syst.</description>
-      <pubDate>Sat, 16 May 2026 22:39:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</guid>
     </item>
   </channel>
 </rss>

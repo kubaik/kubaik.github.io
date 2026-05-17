@@ -27,5 +27,6 @@
   "Database connection pooling: the setting everyone gets wrong",
   "MCP servers explained: what they are and why every developer should understand them",
   "Redis vs Memcached: a benchmark that actually matters",
-  "How vector databases work (and when you don't need one)"
+  "How vector databases work (and when you don't need one)",
+  "Monolith vs microservices in 2026: the pendulum is swinging back and here's why"
 ]
