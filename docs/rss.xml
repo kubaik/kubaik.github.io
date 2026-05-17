@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 17:19:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 17:35:41 +0000</lastBuildDate>
+    <item>
+      <title>Don&apos;t shard by tenant early. Do this instead</title>
+      <link>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</link>
+      <description>Cut multi-tenant SaaS costs 40% by avoiding early sharding. See real latency benchmarks, schema migration times, and AWS bills from Jakarta and Philippine startups in 2026.</description>
+      <pubDate>Sun, 17 May 2026 17:35:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</guid>
+    </item>
     <item>
       <title>Earned 6× in 18 months: how I priced myself globally</title>
       <link>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</link>
@@ -138,13 +145,6 @@
       <description>Cut API 429 errors 99% with adaptive rate limiting — per-client burst growth, Redis leaky bucket, and Retry-After headers that clients actually follow.</description>
       <pubDate>Sun, 17 May 2026 11:37:48 +0000</pubDate>
       <guid>https://kubaik.github.io/slay-api-rate-limits-without-429s/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for 5-person teams: skip the bloat</title>
-      <link>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</link>
-      <description>Cut security overhead 70% with minimal zero-trust for 5-person teams — SSH certificates, short-lived tokens, and immutable logs that actually work in production.</description>
-      <pubDate>Sun, 17 May 2026 10:57:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</guid>
     </item>
   </channel>
 </rss>
