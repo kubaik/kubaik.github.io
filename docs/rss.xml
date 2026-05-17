@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 23:16:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 23:31:47 +0000</lastBuildDate>
+    <item>
+      <title>Pick PostgreSQL in 2026, here&apos;s why</title>
+      <link>https://kubaik.github.io/pick-postgresql-in-2026-heres-why/</link>
+      <description>Cut p99 latency 63% and deadlocks to zero by choosing PostgreSQL in 2026 — schema, indexes, and connection pooling that actually work under load.</description>
+      <pubDate>Sun, 17 May 2026 23:31:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-postgresql-in-2026-heres-why/</guid>
+    </item>
     <item>
       <title>RAG in prod: hidden failure modes</title>
       <link>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-tenant SaaS costs 40% by avoiding early sharding. See real latency benchmarks, schema migration times, and AWS bills from Jakarta and Philippine startups in 2026.</description>
       <pubDate>Sun, 17 May 2026 17:35:32 +0000</pubDate>
       <guid>https://kubaik.github.io/dont-shard-by-tenant-early-do-this-instead/</guid>
-    </item>
-    <item>
-      <title>Earned 6× in 18 months: how I priced myself globally</title>
-      <link>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</link>
-      <description>Earned $22k/month from $3.2k by selling outcomes not hours. Includes audit scripts, Next.js 14.4 stack, and SLA templates used to triple hourly rate in 18 months.</description>
-      <pubDate>Sun, 17 May 2026 17:18:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</guid>
     </item>
   </channel>
 </rss>
