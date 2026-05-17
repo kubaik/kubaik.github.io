@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 21:17:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 21:38:51 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs vs PostgreSQL 16: the exact cutoff</title>
+      <link>https://kubaik.github.io/vector-dbs-vs-postgresql-16-the-exact-cutoff/</link>
+      <description>Cut vector search latency 60% and monthly cloud costs 86% by switching from Milvus 2.4 to PostgreSQL 16 with pgvector 0.7.0 — benchmark data, index tuning, and the one metric that matters.</description>
+      <pubDate>Sun, 17 May 2026 21:38:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-vs-postgresql-16-the-exact-cutoff/</guid>
+    </item>
     <item>
       <title>Pick the Right Real-Time Protocol</title>
       <link>https://kubaik.github.io/pick-the-right-real-time-protocol/</link>
@@ -124,13 +131,6 @@
       <description>Cut production incidents 40% with TypeScript strict mode and runtime validation — the real trade-offs between Zod schemas and TypeScript-only types in 2026.</description>
       <pubDate>Sun, 17 May 2026 15:48:12 +0000</pubDate>
       <guid>https://kubaik.github.io/oops-5-typescript-strict-failures/</guid>
-    </item>
-    <item>
-      <title>Choose the right realtime protocol</title>
-      <link>https://kubaik.github.io/choose-the-right-realtime-protocol/</link>
-      <description>Cut realtime API latency and error rates in 2026: compare WebSockets vs SSE vs long polling with concrete numbers and Safari 17 fixes.</description>
-      <pubDate>Sun, 17 May 2026 15:39:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-realtime-protocol/</guid>
     </item>
     <item>
       <title>AI multiplies senior devs — juniors get exposed</title>
