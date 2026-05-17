@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 18:46:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 18:57:20 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote salary: 3 data points to win</title>
+      <link>https://kubaik.github.io/negotiate-remote-salary-3-data-points-to-win/</link>
+      <description>Negotiate remote salary in 2026 with 3 data points: local CPI, client benchmark, value multiplier. Increase accepted asks 20–30% using this calculator.</description>
+      <pubDate>Sun, 17 May 2026 18:57:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-salary-3-data-points-to-win/</guid>
+    </item>
     <item>
       <title>CS degree? Skip it: 5 steps to senior</title>
       <link>https://kubaik.github.io/cs-degree-skip-it-5-steps-to-senior/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 40% using Postgres 16 + pgvector 0.7.0 instead of a dedicated DB—benchmark, filters, and the exact commands to measure right now.</description>
       <pubDate>Sun, 17 May 2026 14:03:00 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</guid>
-    </item>
-    <item>
-      <title>Cache Showdown: Which One Survives the Spike</title>
-      <link>https://kubaik.github.io/cache-showdown-which-one-survives-the-spike/</link>
-      <description>Cut API latency 60% with Memcached 1.6.22 — benchmark shows p99 under load and the one tuning knob that matters. Compare Redis 7.2’s data structures vs Memcached’s simplicity for production traffic.</description>
-      <pubDate>Sun, 17 May 2026 13:01:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/cache-showdown-which-one-survives-the-spike/</guid>
     </item>
   </channel>
 </rss>
