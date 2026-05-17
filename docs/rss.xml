@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 21:18:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 18:22:23 +0000</lastBuildDate>
+    <item>
+      <title>When queues help (and when they hurt)</title>
+      <link>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</link>
+      <description>ls from 0.8% to 0.001%. Ordering guarantee with Message queues they drop — taking the other with it.</description>
+      <pubDate>Sun, 17 May 2026 18:22:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</guid>
+    </item>
+    <item>
+      <title>Over-engineering costs that hit in 2026</title>
+      <link>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</link>
+      <description>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</description>
+      <pubDate>Sun, 17 May 2026 18:17:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</guid>
+    </item>
     <item>
       <title>Why MCP servers break in production</title>
       <link>https://kubaik.github.io/why-mcp-servers-break-in-production/</link>
@@ -131,13 +145,6 @@
       <description>Cut API response time 70% with an MCP server — Python mcp 1.13.0, fastmcp 0.8.0, and the 3 mistakes every team makes first.</description>
       <pubDate>Sun, 17 May 2026 12:43:35 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-demystified-for-developers/</guid>
-    </item>
-    <item>
-      <title>Tune your pool size or waste CPU cycles</title>
-      <link>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</link>
-      <description>Save 40% CPU by shrinking your pool — PostgreSQL connection sizing myths debunked with 2026 benchmarks and a new formula based on concurrency, not max_connections</description>
-      <pubDate>Sun, 17 May 2026 11:56:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</guid>
     </item>
   </channel>
 </rss>
