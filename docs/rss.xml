@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 18:57:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 19:43:19 +0000</lastBuildDate>
+    <item>
+      <title>Instrument AI pipelines: what to watch when logs fail</title>
+      <link>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch-when-logs-fail/</link>
+      <description>Cut LLM pipeline failures 75% using OpenTelemetry 1.39 — token metrics, vector drift, and the three spans most teams miss.</description>
+      <pubDate>Sun, 17 May 2026 19:43:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch-when-logs-fail/</guid>
+    </item>
     <item>
       <title>Negotiate remote salary: 3 data points to win</title>
       <link>https://kubaik.github.io/negotiate-remote-salary-3-data-points-to-win/</link>
@@ -138,13 +145,6 @@
       <description>Monoliths beat microservices in 2026: latency, cost, and MTTR benchmarks for startups, solo devs, and bootstrappers — real numbers, real stacks.</description>
       <pubDate>Sun, 17 May 2026 14:06:47 +0000</pubDate>
       <guid>https://kubaik.github.io/burn-47k-on-microservices/</guid>
-    </item>
-    <item>
-      <title>Vector DB vs Postgres 16: the 300ms cut that matters</title>
-      <link>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</link>
-      <description>Cut vector search latency 40% using Postgres 16 + pgvector 0.7.0 instead of a dedicated DB—benchmark, filters, and the exact commands to measure right now.</description>
-      <pubDate>Sun, 17 May 2026 14:03:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</guid>
     </item>
   </channel>
 </rss>
