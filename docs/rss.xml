@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 11:47:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 11:57:08 +0000</lastBuildDate>
+    <item>
+      <title>Tune your pool size or waste CPU cycles</title>
+      <link>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</link>
+      <description>Save 40% CPU by shrinking your pool — PostgreSQL connection sizing myths debunked with 2026 benchmarks and a new formula based on concurrency, not max_connections</description>
+      <pubDate>Sun, 17 May 2026 11:56:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-your-pool-size-or-waste-cpu-cycles/</guid>
+    </item>
     <item>
       <title>3 AI system patterns that work in 2026</title>
       <link>https://kubaik.github.io/3-ai-system-patterns-that-work-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut development time by 50% with AI tools that write, test, and deploy full stacks — real tools, real costs, and the mistakes that break production in 2026.</description>
       <pubDate>Sat, 16 May 2026 20:52:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-that-turn-solo-devs-into-founders/</guid>
-    </item>
-    <item>
-      <title>Price your freelance work in 2026</title>
-      <link>https://kubaik.github.io/price-your-freelance-work-in-2026/</link>
-      <description>Price freelance work in 2026 with hidden costs included — MVR, target rates, and project quotes that prevent burnout. Includes benchmarks, spreadsheets, and gotchas from real contracts.</description>
-      <pubDate>Sat, 16 May 2026 20:47:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-your-freelance-work-in-2026/</guid>
     </item>
   </channel>
 </rss>
