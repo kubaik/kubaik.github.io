@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 16:49:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 17:19:08 +0000</lastBuildDate>
+    <item>
+      <title>Earned 6× in 18 months: how I priced myself globally</title>
+      <link>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</link>
+      <description>Earned $22k/month from $3.2k by selling outcomes not hours. Includes audit scripts, Next.js 14.4 stack, and SLA templates used to triple hourly rate in 18 months.</description>
+      <pubDate>Sun, 17 May 2026 17:18:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</guid>
+    </item>
     <item>
       <title>Tune backends for 5G users in 5 steps</title>
       <link>https://kubaik.github.io/tune-backends-for-5g-users-in-5-steps/</link>
@@ -138,13 +145,6 @@
       <description>Cut security overhead 70% with minimal zero-trust for 5-person teams — SSH certificates, short-lived tokens, and immutable logs that actually work in production.</description>
       <pubDate>Sun, 17 May 2026 10:57:40 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-bloat/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: why speed kills at scale</title>
-      <link>https://kubaik.github.io/rag-pipelines-why-speed-kills-at-scale/</link>
-      <description>Cut RAG pipeline latency 82% and infra costs 49% — the real bottlenecks, cache keys, and deduplication layer most tutorials skip. Learn the production metrics that matter in 2026.</description>
-      <pubDate>Sun, 17 May 2026 10:43:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-why-speed-kills-at-scale/</guid>
     </item>
   </channel>
 </rss>
