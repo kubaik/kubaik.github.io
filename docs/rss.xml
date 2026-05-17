@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 14:18:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 14:28:27 +0000</lastBuildDate>
+    <item>
+      <title>Pass remote tech interviews without LeetCode</title>
+      <link>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</link>
+      <description>Self-taught devs fail remote interviews by over-grinding LeetCode — real debugging and cost-aware design win roles in 2026. Build systems, not clones; measure latency, not just lines of code.</description>
+      <pubDate>Sun, 17 May 2026 14:28:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</guid>
+    </item>
     <item>
       <title>$14k mistake: simple code beats fancy stacks</title>
       <link>https://kubaik.github.io/14k-mistake-simple-code-beats-fancy-stacks/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 42% with repository intelligence — Cody Graph, symbol graphs, and the context tools that actually work in 2026</description>
       <pubDate>Sun, 17 May 2026 06:16:02 +0000</pubDate>
       <guid>https://kubaik.github.io/codebase-graphs-ai-sees-what-you-miss/</guid>
-    </item>
-    <item>
-      <title>Multi-tenant databases: the schema mistake everyone</title>
-      <link>https://kubaik.github.io/multi-tenant-databases-the-schema-mistake-everyone/</link>
-      <description>Cut cross-tenant query latency from 4.2s to 80ms with a single-table design and RLS — schema-per-tenant and separate databases are overkill for most SaaS stacks</description>
-      <pubDate>Sun, 17 May 2026 05:38:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-tenant-databases-the-schema-mistake-everyone/</guid>
     </item>
   </channel>
 </rss>
