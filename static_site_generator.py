@@ -236,13 +236,17 @@ Sitemap: {base_url}/rss.xml
             else:
                 print(f"Warning: {src} not found — skipping")
 
-        pwa_js_src = Path("static/pwa.js")
-        if pwa_js_src.exists():
-            import shutil
-            shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
-            print("Copied static/pwa.js → docs/static/pwa.js")
+        pwa_js_candidates = [Path("static/pwa.js"), Path("docs/static/pwa.js")]
+        pwa_js_src = next((p for p in pwa_js_candidates if p.exists()), None)
+        if pwa_js_src:
+            if str(pwa_js_src) != "docs/static/pwa.js":
+                import shutil
+                shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
+                print(f"Copied {pwa_js_src} → docs/static/pwa.js")
+            else:
+                print("pwa.js already in docs/static/ — no copy needed")
         else:
-            print("Warning: static/pwa.js not found — skipping")
+            print("Warning: pwa.js not found in static/ or docs/static/ — skipping")
 
     def _generate_article_schema(self, post, base_url: str) -> str:
         """
