@@ -26,5 +26,6 @@
   "Designing systems for AI-first applications: the patterns that actually hold up",
   "Database connection pooling: the setting everyone gets wrong",
   "MCP servers explained: what they are and why every developer should understand them",
-  "Redis vs Memcached: a benchmark that actually matters"
+  "Redis vs Memcached: a benchmark that actually matters",
+  "How vector databases work (and when you don't need one)"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 13:01:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 14:03:09 +0000</lastBuildDate>
+    <item>
+      <title>Vector DB vs Postgres 16: the 300ms cut that matters</title>
+      <link>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</link>
+      <description>Cut vector search latency 40% using Postgres 16 + pgvector 0.7.0 instead of a dedicated DB—benchmark, filters, and the exact commands to measure right now.</description>
+      <pubDate>Sun, 17 May 2026 14:03:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-db-vs-postgres-16-the-300ms-cut-that-matters/</guid>
+    </item>
     <item>
       <title>Cache Showdown: Which One Survives the Spike</title>
       <link>https://kubaik.github.io/cache-showdown-which-one-survives-the-spike/</link>
@@ -138,13 +145,6 @@
       <description>y exceeds 500 ms By the end, you’ll have a rep with tech attrition quit — four themes: stagnant impact, opaque promotion syst.</description>
       <pubDate>Sat, 16 May 2026 22:39:20 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-tech-quietly/</guid>
-    </item>
-    <item>
-      <title>Freelance burnout’s hidden buffer fix</title>
-      <link>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</link>
-      <description>Cut freelance burnout 60% in 90 days — the 3 fixes that worked: red-flag checklists, focus blocks, and solo offices. Avoid the $3,200/year cognitive load tax.</description>
-      <pubDate>Sat, 16 May 2026 21:42:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</guid>
     </item>
   </channel>
 </rss>
