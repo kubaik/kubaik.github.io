@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-17</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-17</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/avoid-429s-rate-limit-without-breaking-clients/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/trust-small-teams-not-zero-trust/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -83,7 +84,6 @@
 <url><loc>https://kubaik.github.io/stop-guessing-pool-sizes-the-real-way-to-tune-db-pools/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/message-queues-the-load-balancer-you-never-asked-for/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/redis-vs-memcached-3-million-opssec-test/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/rate-limit-clients-without-breaking-them/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/typescript-strict-pitfalls-5-silent-bugs/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/choose-postgresql-when-you-need-json-indexes/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/stop-overloading-portfolios-focus-on-depth/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>

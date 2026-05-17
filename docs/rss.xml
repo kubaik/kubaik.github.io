@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 22:46:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 23:16:51 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: hidden failure modes</title>
+      <link>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</link>
+      <description>Cut RAG token costs 63% and latency 97%—the real levers most tutorials skip: atomic indexes, cache guards, and prompt truncation. Learn from the failures we fixed in production.</description>
+      <pubDate>Sun, 17 May 2026 23:16:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</guid>
+    </item>
     <item>
       <title>Avoid 429s: Rate limit without breaking clients</title>
       <link>https://kubaik.github.io/avoid-429s-rate-limit-without-breaking-clients/</link>
@@ -138,13 +145,6 @@
       <description>Earned $22k/month from $3.2k by selling outcomes not hours. Includes audit scripts, Next.js 14.4 stack, and SLA templates used to triple hourly rate in 18 months.</description>
       <pubDate>Sun, 17 May 2026 17:18:59 +0000</pubDate>
       <guid>https://kubaik.github.io/earned-6-in-18-months-how-i-priced-myself-globally/</guid>
-    </item>
-    <item>
-      <title>Tune backends for 5G users in 5 steps</title>
-      <link>https://kubaik.github.io/tune-backends-for-5g-users-in-5-steps/</link>
-      <description>Cut mobile API latency 76% by reusing sockets and caching — socket reuse ratios, TLS handshakes, and the 5G carrier IP rotation pattern most teams ignore.</description>
-      <pubDate>Sun, 17 May 2026 16:49:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-backends-for-5g-users-in-5-steps/</guid>
     </item>
   </channel>
 </rss>
