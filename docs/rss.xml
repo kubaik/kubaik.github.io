@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 23:43:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 23:53:31 +0000</lastBuildDate>
+    <item>
+      <title>AI impact: measure velocity — not just vibes</title>
+      <link>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</link>
+      <description>Cut AI tool bloat 40% with GitHub Copilot audit — commit caps, artifact size limits, and the rework trap most teams miss in 2026</description>
+      <pubDate>Sun, 17 May 2026 23:53:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</guid>
+    </item>
     <item>
       <title>Bust the pool size myth for 2026</title>
       <link>https://kubaik.github.io/bust-the-pool-size-myth-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server latency 80% with async WebSocket transport — the transport choice, URI parsing traps, and cost savings most docs miss</description>
       <pubDate>Sun, 17 May 2026 17:52:54 +0000</pubDate>
       <guid>https://kubaik.github.io/why-mcp-servers-break-in-production/</guid>
-    </item>
-    <item>
-      <title>Portfolio beats pedigree for remote roles</title>
-      <link>https://kubaik.github.io/portfolio-beats-pedigree-for-remote-roles/</link>
-      <description>Portfolio projects that land remote jobs in 2026 aren’t polished clones—they’re proof-of-work systems with deployed demos, post-mortems, and domain depth. Build a real constraint, not a tutorial.</description>
-      <pubDate>Sun, 17 May 2026 17:43:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-beats-pedigree-for-remote-roles/</guid>
     </item>
   </channel>
 </rss>

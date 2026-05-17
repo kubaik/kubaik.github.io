@@ -24,5 +24,6 @@
   "API rate limiting patterns that don't break your clients",
   "RAG pipelines in production: what the tutorials skip",
   "PostgreSQL vs MySQL in 2026: the decision I keep making",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "Measuring the real impact of AI on your team's velocity (not just vibes)"
 ]
