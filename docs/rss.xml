@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 22:12:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 22:17:08 +0000</lastBuildDate>
+    <item>
+      <title>Trust small teams, not zero-trust</title>
+      <link>https://kubaik.github.io/trust-small-teams-not-zero-trust/</link>
+      <description>Cut security overhead 80% with contextual trust — latency benchmarks, cost data, and the zero-trust mistakes small teams keep making in 2026</description>
+      <pubDate>Sun, 17 May 2026 22:16:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/trust-small-teams-not-zero-trust/</guid>
+    </item>
     <item>
       <title>AI salaries 2026: PyTorch vs TensorFlow payoff</title>
       <link>https://kubaik.github.io/ai-salaries-2026-pytorch-vs-tensorflow-payoff/</link>
@@ -138,13 +145,6 @@
       <description>Pick the right remote dev platform in 2026 with real payout latency and take-home pay numbers from Lagos, Nairobi, and Johannesburg — Arc paid 40% faster than Toptal, but Toptal’s top clients paid 70% more per hour.</description>
       <pubDate>Sun, 17 May 2026 15:53:46 +0000</pubDate>
       <guid>https://kubaik.github.io/which-dev-platform-pays-african-devs-fastest-in-2026/</guid>
-    </item>
-    <item>
-      <title>Oops! 5 TypeScript strict failures</title>
-      <link>https://kubaik.github.io/oops-5-typescript-strict-failures/</link>
-      <description>Cut production incidents 40% with TypeScript strict mode and runtime validation — the real trade-offs between Zod schemas and TypeScript-only types in 2026.</description>
-      <pubDate>Sun, 17 May 2026 15:48:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/oops-5-typescript-strict-failures/</guid>
     </item>
   </channel>
 </rss>
