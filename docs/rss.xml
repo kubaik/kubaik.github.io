@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 12:52:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 13:37:18 +0000</lastBuildDate>
+    <item>
+      <title>Self-taught? Your interview will flunk unless you hack</title>
+      <link>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</link>
+      <description>Pass remote interviews without a CS degree: build production-ready artifacts, include observability, and focus on ownership. 3 concrete numbers included.</description>
+      <pubDate>Mon, 18 May 2026 13:37:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</guid>
+    </item>
     <item>
       <title>20 connections? Your DB just died</title>
       <link>https://kubaik.github.io/20-connections-your-db-just-died/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 60% and monthly cloud costs 86% by switching from Milvus 2.4 to PostgreSQL 16 with pgvector 0.7.0 — benchmark data, index tuning, and the one metric that matters.</description>
       <pubDate>Sun, 17 May 2026 21:38:42 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-vs-postgresql-16-the-exact-cutoff/</guid>
-    </item>
-    <item>
-      <title>Pick the Right Real-Time Protocol</title>
-      <link>https://kubaik.github.io/pick-the-right-real-time-protocol/</link>
-      <description>Cut API latency 75%: benchmark WebSocket vs SSE vs long polling with exact latency, memory, and cost figures for 2026</description>
-      <pubDate>Sun, 17 May 2026 21:17:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-real-time-protocol/</guid>
     </item>
   </channel>
 </rss>
