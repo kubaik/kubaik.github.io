@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 22:40:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 22:53:00 +0000</lastBuildDate>
+    <item>
+      <title>Burnout hacked: 7 freelance developer fixes</title>
+      <link>https://kubaik.github.io/burnout-hacked-7-freelance-developer-fixes/</link>
+      <description>Cut freelance burnout 70% in 6 months with 3 concrete metrics — sleep hours, billable hours, and client satisfaction — and the exact tools that worked in 2026.</description>
+      <pubDate>Mon, 18 May 2026 22:52:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/burnout-hacked-7-freelance-developer-fixes/</guid>
+    </item>
     <item>
       <title>MCP servers: why they broke my AI pipeline</title>
       <link>https://kubaik.github.io/mcp-servers-why-they-broke-my-ai-pipeline/</link>
@@ -138,13 +145,6 @@
       <description>Cut database timeout rate 70% by resizing your pool — the 2026 rules for max_connections and per-process pool size that most teams still get wrong.</description>
       <pubDate>Mon, 18 May 2026 12:52:32 +0000</pubDate>
       <guid>https://kubaik.github.io/20-connections-your-db-just-died/</guid>
-    </item>
-    <item>
-      <title>From $45k to $180k in 18 months: the moves that worked</title>
-      <link>https://kubaik.github.io/from-45k-to-180k-in-18-months-the-moves-that-worked/</link>
-      <description>Went from $45k to $180k in 18 months by fixing open-source performance bugs — the exact steps, numbers, and tools used to break into global remote work without relocating.</description>
-      <pubDate>Mon, 18 May 2026 11:01:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-45k-to-180k-in-18-months-the-moves-that-worked/</guid>
     </item>
   </channel>
 </rss>
