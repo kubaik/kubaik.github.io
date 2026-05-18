@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 13:37:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 14:34:19 +0000</lastBuildDate>
+    <item>
+      <title>AI-first apps: the boring patterns that survive</title>
+      <link>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</link>
+      <description>limb from 2% to 14% when traffic doubled. with AI-first apps boring patterns — watch error rates climb from 2% to 14% when traffic.</description>
+      <pubDate>Mon, 18 May 2026 14:34:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</guid>
+    </item>
     <item>
       <title>Self-taught? Your interview will flunk unless you hack</title>
       <link>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</link>
@@ -138,13 +145,6 @@
       <description>Reduce AI app latency 79% and costs 75% with per-user Redis caching, idempotency keys, and LiteLLM fallbacks — the boring stack that holds up in production.</description>
       <pubDate>Sun, 17 May 2026 21:47:50 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-apps-break-first-patterns-that-survive/</guid>
-    </item>
-    <item>
-      <title>Vector DBs vs PostgreSQL 16: the exact cutoff</title>
-      <link>https://kubaik.github.io/vector-dbs-vs-postgresql-16-the-exact-cutoff/</link>
-      <description>Cut vector search latency 60% and monthly cloud costs 86% by switching from Milvus 2.4 to PostgreSQL 16 with pgvector 0.7.0 — benchmark data, index tuning, and the one metric that matters.</description>
-      <pubDate>Sun, 17 May 2026 21:38:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-vs-postgresql-16-the-exact-cutoff/</guid>
     </item>
   </channel>
 </rss>
