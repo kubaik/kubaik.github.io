@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 23:53:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 02:33:31 +0000</lastBuildDate>
+    <item>
+      <title>Monoliths win again: 8 reasons why 2026 favors one big</title>
+      <link>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</link>
+      <description>ound that 78% of the latency came from inte with Monoliths again reasons favors — be a single misconfigured timeout — this post is wh.</description>
+      <pubDate>Mon, 18 May 2026 02:33:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</guid>
+    </item>
     <item>
       <title>AI impact: measure velocity — not just vibes</title>
       <link>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</link>
@@ -138,13 +145,6 @@
       <description>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</description>
       <pubDate>Sun, 17 May 2026 18:17:51 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</guid>
-    </item>
-    <item>
-      <title>Why MCP servers break in production</title>
-      <link>https://kubaik.github.io/why-mcp-servers-break-in-production/</link>
-      <description>Cut MCP server latency 80% with async WebSocket transport — the transport choice, URI parsing traps, and cost savings most docs miss</description>
-      <pubDate>Sun, 17 May 2026 17:52:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-mcp-servers-break-in-production/</guid>
     </item>
   </channel>
 </rss>
