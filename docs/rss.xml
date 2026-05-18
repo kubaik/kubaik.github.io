@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 11:43:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 08:46:15 +0000</lastBuildDate>
+    <item>
+      <title>Scan your repo, train your AI</title>
+      <link>https://kubaik.github.io/scan-your-repo-train-your-ai/</link>
+      <description>Cut onboarding time 71% with repository intelligence — GitHub Copilot Workspace 2026, Sourcegraph 2026, and CodeRabbit 2026 compared with real latency and cost data.</description>
+      <pubDate>Mon, 18 May 2026 08:46:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/scan-your-repo-train-your-ai/</guid>
+    </item>
     <item>
       <title>Edge functions: what actually works in 2026</title>
       <link>https://kubaik.github.io/edge-functions-what-actually-works-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer without a CS degree? 42% cost savings and 60% latency cuts from real systems — the skills that actually matter in 2026</description>
       <pubDate>Sun, 17 May 2026 18:46:03 +0000</pubDate>
       <guid>https://kubaik.github.io/cs-degree-skip-it-5-steps-to-senior/</guid>
-    </item>
-    <item>
-      <title>When queues help (and when they hurt)</title>
-      <link>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</link>
-      <description>ls from 0.8% to 0.001%. Ordering guarantee with Message queues they drop — taking the other with it.</description>
-      <pubDate>Sun, 17 May 2026 18:22:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</guid>
     </item>
   </channel>
 </rss>
