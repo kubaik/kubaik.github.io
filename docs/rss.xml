@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 22:53:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 23:36:45 +0000</lastBuildDate>
+    <item>
+      <title>Message queues: the 6-second trap most teams miss</title>
+      <link>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</link>
+      <description>Cut API latency 60% with Redis Streams queues — real benchmarks, poison message traps, and the 6-second trap most teams miss.</description>
+      <pubDate>Mon, 18 May 2026 23:36:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</guid>
+    </item>
     <item>
       <title>Burnout hacked: 7 freelance developer fixes</title>
       <link>https://kubaik.github.io/burnout-hacked-7-freelance-developer-fixes/</link>
@@ -138,13 +145,6 @@
       <description>Pass remote interviews without a CS degree: build production-ready artifacts, include observability, and focus on ownership. 3 concrete numbers included.</description>
       <pubDate>Mon, 18 May 2026 13:37:10 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</guid>
-    </item>
-    <item>
-      <title>20 connections? Your DB just died</title>
-      <link>https://kubaik.github.io/20-connections-your-db-just-died/</link>
-      <description>Cut database timeout rate 70% by resizing your pool — the 2026 rules for max_connections and per-process pool size that most teams still get wrong.</description>
-      <pubDate>Mon, 18 May 2026 12:52:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/20-connections-your-db-just-died/</guid>
     </item>
   </channel>
 </rss>
