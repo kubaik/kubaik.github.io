@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 20:50:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 21:00:16 +0000</lastBuildDate>
+    <item>
+      <title>5G Backends: 4 Cellular Gotchas</title>
+      <link>https://kubaik.github.io/5g-backends-4-cellular-gotchas/</link>
+      <description>Build backends 5G things: ops below 20%. Your background sync or conn. Practical guide with real examples.</description>
+      <pubDate>Mon, 18 May 2026 21:00:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-backends-4-cellular-gotchas/</guid>
+    </item>
     <item>
       <title>Learn your codebase with AI: the missing context trap</title>
       <link>https://kubaik.github.io/learn-your-codebase-with-ai-the-missing-context-trap/</link>
@@ -138,13 +145,6 @@
       <description>Expose 60% more outages before they hit production — add Prometheus metrics to any service in under 2 hours. observability gaps senior engineers</description>
       <pubDate>Mon, 18 May 2026 08:58:10 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</guid>
-    </item>
-    <item>
-      <title>Scan your repo, train your AI</title>
-      <link>https://kubaik.github.io/scan-your-repo-train-your-ai/</link>
-      <description>Cut onboarding time 71% with repository intelligence — GitHub Copilot Workspace 2026, Sourcegraph 2026, and CodeRabbit 2026 compared with real latency and cost data.</description>
-      <pubDate>Mon, 18 May 2026 08:46:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/scan-your-repo-train-your-ai/</guid>
     </item>
   </channel>
 </rss>
