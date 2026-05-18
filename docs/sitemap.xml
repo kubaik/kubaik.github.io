@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-18</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-18</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/20-connections-your-db-just-died/</loc><lastmod>2026-05-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/from-45k-to-180k-in-18-months-the-moves-that-worked/</loc><lastmod>2026-05-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/cut-cloud-carbon-30-without-slowing-apis/</loc><lastmod>2026-05-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/instrument-llm-pipelines-5-observability-must-haves/</loc><lastmod>2026-05-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -116,7 +117,6 @@
 <url><loc>https://kubaik.github.io/ai-multiplies-dev-power-the-real-split-between-senior/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/tech-salaries-2026-a-cold-shower/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/vibe-coding-burns-prod-hard-numbers/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/cut-cloud-carbon-38-without-slowing-down/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/land-4k-remote-roles-github-readme-portfolio/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/pick-fastapi-or-django-rest-the-real-trade-offs/</loc><lastmod>2026-05-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -568,8 +568,8 @@
 <url><loc>https://kubaik.github.io/digital-transformation-gone-wrong/</loc><lastmod>2026-04-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-cash-boost/</loc><lastmod>2026-04-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/zero-to-hired-in-12-months/</loc><lastmod>2026-04-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/ai-meets-privacy-federated-learning/</loc><lastmod>2026-04-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/serverless-costs-limits/</loc><lastmod>2026-04-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/ai-meets-privacy-federated-learning/</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/serverless-costs-limits/</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/push-notify-smarter/</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/build-in/</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/sre-principles/</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
