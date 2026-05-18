@@ -42,6 +42,12 @@ DUPLICATE_TITLE_THRESHOLD = 0.35
 MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1500
 
+# ── Maximum number of topic attempts before giving up entirely ────────────────
+MAX_GENERATION_ATTEMPTS = 5
+# Minimum words a generated post must have to be considered adequate.
+# This is the hard gate — posts below this threshold are never saved.
+MIN_ACCEPTABLE_WORDS = 1500
+
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
     """Convert multi-word tags to CamelCase single-word tags."""
@@ -1526,107 +1532,166 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
+        """
+        Generate a blog post that meets the minimum word-count requirement.
+
+        Strategy
+        --------
+        1. Try to generate a full bundle for *topic*.
+        2. If the content is short, attempt one expansion pass.
+        3. If still under MIN_ACCEPTABLE_WORDS, mark this attempt as failed and
+           loop: pick a new topic and try again.
+        4. After MAX_GENERATION_ATTEMPTS failures in a row, raise
+           InsufficientContentError so the caller can terminate cleanly
+           without saving anything.
+        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
-        existing_titles = _load_existing_titles(self.output_dir)
+        SEP = "─" * 60
 
-        try:
-            bundle = await self._generate_full_bundle(topic, keywords, existing_titles)
-        except Exception as e:
+        # Track every topic tried so we don't repeat within this run
+        attempted_topics: List[str] = []
+        current_topic = topic
+        current_keywords = keywords
+
+        for attempt_num in range(1, MAX_GENERATION_ATTEMPTS + 1):
+            attempted_topics.append(current_topic)
+            print(f"\n{SEP}")
             print(
-                f"All API providers exhausted after retries ({e}). "
-                f"Using local template content as last resort."
+                f"Generation attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} "
+                f"— topic: '{current_topic}'"
             )
-            return self._generate_fallback_post(topic)
+            print(SEP)
 
-        try:
-            title = bundle["title"].strip().strip('"')
-            _TITLE_FILLER = re.compile(
-                r'^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|'
-                r'introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|'
-                r'everything\s+you\s+need\s+to\s+know\s+about\s+)',
-                re.IGNORECASE,
-            )
-            title = _TITLE_FILLER.sub('', title).strip()
+            existing_titles = _load_existing_titles(self.output_dir)
 
-            if len(title) > 55:
-                title = title[:55].rsplit(' ', 1)[0].rstrip(',:;-')
-
-            content = bundle["content"].strip()
-            meta_description = bundle["meta_description"].strip()
-            seo_keywords = [k.strip()
-                            for k in bundle["seo_keywords"] if k.strip()]
-
-            if not meta_description:
+            # ── 1. Generate bundle ────────────────────────────────────────
+            try:
+                bundle = await self._generate_full_bundle(
+                    current_topic, current_keywords, existing_titles
+                )
+            except Exception as e:
                 print(
-                    "Warning: meta_description empty from API — deriving from content.")
-                meta_description = _derive_description(content, title)
+                    f"Bundle generation failed on attempt {attempt_num}: {e}")
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    continue
+                raise InsufficientContentError(
+                    f"All {MAX_GENERATION_ATTEMPTS} generation attempts failed at the "
+                    f"bundle stage. Last error: {e}"
+                )
 
-            _weak_openers = (
-                "this post", "in this article", "a guide to",
-                "learn about", "an overview", "this tutorial",
-                "this article", "we will", "you will learn",
-            )
-            if any(meta_description.lower().startswith(w) for w in _weak_openers):
-                print("Warning: meta_description has weak opener — re-deriving.")
-                meta_description = _derive_description(content, title)
+            # ── 2. Extract & clean fields ─────────────────────────────────
+            try:
+                title = bundle["title"].strip().strip('"')
+                _TITLE_FILLER = re.compile(
+                    r'^(a\s+|an\s+|the\s+|complete\s+|ultimate\s+|comprehensive\s+|'
+                    r'introduction\s+to\s+|guide\s+to\s+|overview\s+of\s+|'
+                    r'everything\s+you\s+need\s+to\s+know\s+about\s+)',
+                    re.IGNORECASE,
+                )
+                title = _TITLE_FILLER.sub('', title).strip()
 
-            if not keywords:
-                keywords = seo_keywords
+                if len(title) > 55:
+                    title = title[:55].rsplit(' ', 1)[0].rstrip(',:;-')
 
-            content = _scrub_stale_years(content)
+                content = bundle["content"].strip()
+                meta_description = bundle["meta_description"].strip()
+                seo_keywords = [k.strip()
+                                for k in bundle["seo_keywords"] if k.strip()]
 
-            word_count = _count_words(content)
-            print(f"Generated content: {word_count} words")
+                if not meta_description:
+                    print(
+                        "Warning: meta_description empty from API — deriving from content.")
+                    meta_description = _derive_description(content, title)
 
-            MIN_ACCEPTABLE = 1500
+                _weak_openers = (
+                    "this post", "in this article", "a guide to",
+                    "learn about", "an overview", "this tutorial",
+                    "this article", "we will", "you will learn",
+                )
+                if any(meta_description.lower().startswith(w) for w in _weak_openers):
+                    print("Warning: meta_description has weak opener — re-deriving.")
+                    meta_description = _derive_description(content, title)
 
+                if not current_keywords:
+                    current_keywords = seo_keywords
+
+                content = _scrub_stale_years(content)
+                word_count = _count_words(content)
+                print(f"Generated content: {word_count} words")
+
+            except Exception as e:
+                print(f"Post-processing error on attempt {attempt_num}: {e}")
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    continue
+                raise InsufficientContentError(
+                    f"Post-processing failed on all {MAX_GENERATION_ATTEMPTS} attempts. "
+                    f"Last error: {e}"
+                )
+
+            # ── 3. Expansion pass if needed ───────────────────────────────
             if word_count < MIN_WORD_COUNT:
-                print(f"Content short ({word_count} words). Expanding once...")
-                expanded = await self._expand_content(content, title, topic)
-                expanded_count = _count_words(expanded)
-                print(f"After expansion: {expanded_count} words")
+                print(
+                    f"Content short ({word_count} words, target ≥ {MIN_WORD_COUNT}). "
+                    f"Attempting one expansion pass..."
+                )
+                try:
+                    expanded = await self._expand_content(content, title, current_topic)
+                    expanded_count = _count_words(expanded)
+                    print(f"After expansion: {expanded_count} words")
 
-                if expanded_count > word_count:
-                    content = _scrub_stale_years(expanded)
-                    word_count = _count_words(content)
-                else:
-                    print(
-                        f"Warning: expansion reduced word count "
-                        f"({word_count} → {expanded_count}). Keeping original."
-                    )
-
-                if word_count < MIN_ACCEPTABLE:
-                    print(
-                        f"Post still too short ({word_count} words, min {MIN_ACCEPTABLE}). "
-                        f"Retrying with a new topic..."
-                    )
-                    existing_titles = _load_existing_titles(self.output_dir)
-                    retry_topic = self._pick_retry_topic(
-                        topic, existing_titles)
-                    print(f"Retry topic: {retry_topic}")
-                    bundle = await self._generate_full_bundle(
-                        retry_topic, keywords, existing_titles
-                    )
-                    title = bundle["title"].strip().strip('"')
-                    content = _scrub_stale_years(bundle["content"].strip())
-                    meta_description = bundle.get(
-                        "meta_description", "").strip()
-                    seo_keywords = [
-                        k.strip() for k in bundle.get("seo_keywords", []) if k.strip()
-                    ]
-                    word_count = _count_words(content)
-                    print(f"Retry generated: {word_count} words")
-
-                    if word_count < MIN_ACCEPTABLE:
+                    if expanded_count > word_count:
+                        content = _scrub_stale_years(expanded)
+                        word_count = _count_words(content)
+                    else:
                         print(
-                            f"Retry also short ({word_count} words). Proceeding anyway.")
+                            f"Expansion did not increase word count "
+                            f"({word_count} → {expanded_count}). Keeping original."
+                        )
+                except Exception as e:
+                    print(
+                        f"Expansion pass failed: {e}. Continuing with original content.")
 
-                    topic = retry_topic
-                    keywords = keywords or seo_keywords
+            # ── 4. Hard word-count gate ───────────────────────────────────
+            if word_count < MIN_ACCEPTABLE_WORDS:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"content has only {word_count} words "
+                    f"(minimum required: {MIN_ACCEPTABLE_WORDS})."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                # All attempts exhausted — raise so the caller never saves
+                raise InsufficientContentError(
+                    f"Failed to generate adequate content after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts across topics: "
+                    + ", ".join(f"'{t}'" for t in attempted_topics)
+                    + f". Each attempt produced fewer than {MIN_ACCEPTABLE_WORDS} words. "
+                    f"No post has been saved."
+                )
 
+            # ── 5. Adequate content — continue with normal post-processing ─
+            print(
+                f"\n✅  Attempt {attempt_num}: content adequate "
+                f"({word_count} words ≥ {MIN_ACCEPTABLE_WORDS})."
+            )
+
+            # Duplicate-title check (post-generation)
             existing_titles_now = _load_existing_titles(self.output_dir)
             is_dup, dup_match, dup_score = _is_duplicate_title(
                 title, existing_titles_now, threshold=DUPLICATE_TITLE_THRESHOLD
@@ -1642,7 +1707,7 @@ class BlogSystem:
                 title = await self._regenerate_title(
                     title=title,
                     content=content,
-                    topic=topic,
+                    topic=current_topic,
                     existing_titles=existing_titles_now,
                 )
                 print(f"  New title : '{title}'")
@@ -1669,7 +1734,7 @@ class BlogSystem:
 
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
-                seo_keywords, topic=topic, title=title, max_hashtags=5
+                seo_keywords, topic=current_topic, title=title, max_hashtags=5
             )
             print(f"Hashtags selected: {', '.join(hashtags)}")
 
@@ -1778,11 +1843,11 @@ class BlogSystem:
 
             return post
 
-        except Exception as e:
-            print(
-                f"Post-processing error ({e}). Using local template content as last resort."
-            )
-            return self._generate_fallback_post(topic)
+        # Should never reach here (loop always raises or returns), but just in case:
+        raise InsufficientContentError(
+            f"Exhausted {MAX_GENERATION_ATTEMPTS} generation attempts without "
+            f"producing adequate content. No post has been saved."
+        )
 
     # ─────────────────────────────────────────────────────────────
     # SINGLE BUNDLE CALL
@@ -1961,12 +2026,6 @@ Return ONLY the JSON object.""",
         topic: str,
         existing_titles: List[str],
     ) -> str:
-        """
-        Ask the LLM for a new title that covers the same content but is
-        meaningfully distinct from all existing published titles.
-        Called only when the post-generation duplicate check fires.
-        Returns the new title, or the original if the LLM fails.
-        """
         existing_hint = "\n".join(f'- "{t}"' for t in existing_titles[:20])
         excerpt = " ".join(content.split()[:300])
 
@@ -2633,9 +2692,22 @@ If you find a factual error, please reach out — corrections are applied within
         slug = re.sub(r'[\s_-]+', '-', slug)
         return slug.strip('-')[:60]
 
-    def _pick_retry_topic(self, failed_topic: str, existing_titles: List[str]) -> str:
-        """Pick a different topic for retry, avoiding the failed one and already-published titles."""
+    def _pick_retry_topic(
+        self,
+        failed_topic: str,
+        existing_titles: List[str],
+        exclude: List[str] = None,
+    ) -> str:
+        """
+        Pick the next topic to try, avoiding:
+        - the just-failed topic
+        - all topics in the `exclude` list (topics already attempted this run)
+        - topics already published (duplicate-title check)
+        Falls back gracefully if the pool is exhausted.
+        """
         import random as _random
+
+        exclude = exclude or []
 
         history_file = ".used_topics.json"
         used = []
@@ -2647,17 +2719,28 @@ If you find a factual error, please reach out — corrections are applied within
                 used = []
 
         all_topics = self.config.get("content_topics", [])
+
+        # Exclude topics already attempted in this run and the failed topic
         candidates = [
             t for t in all_topics
-            if t != failed_topic and t not in used
+            if t != failed_topic and t not in exclude and t not in used
         ]
 
         if not candidates:
+            # Relax the "not in used" constraint but keep excluding current run
+            candidates = [
+                t for t in all_topics
+                if t != failed_topic and t not in exclude
+            ]
+
+        if not candidates:
+            # Complete pool exhaustion — just avoid the immediately failed topic
             candidates = [t for t in all_topics if t != failed_topic]
 
         if not candidates:
             return failed_topic
 
+        # Further filter out topics that duplicate existing published titles
         if existing_titles:
             safe = []
             for candidate in candidates:
@@ -2724,6 +2807,18 @@ If you find a factual error, please reach out — corrections are applied within
             print(f"  - Prewritten tweet: {len(post.prewritten_tweet)} chars")
         print(
             f"  - has_code={post_data['has_code']} | has_table={post_data['has_table']}")
+
+
+# ─────────────────────────────────────────────────────────────────
+# Custom exception for clean CLI exit
+# ─────────────────────────────────────────────────────────────────
+
+class InsufficientContentError(Exception):
+    """
+    Raised when generate_blog_post exhausts all retry attempts without
+    producing content that meets the minimum word-count requirement.
+    The caller should treat this as a hard stop — no post must be saved.
+    """
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -3024,82 +3119,95 @@ if __name__ == "__main__":
                 topic = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
 
-                # ── Quality gate — log warnings but never block publishing ──
-                quality_warnings = _validate_content_quality(
-                    blog_post.content, blog_post.title)
-                if quality_warnings:
-                    print(
-                        f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
-                    for w in quality_warnings:
-                        print(f"   • {w}")
-                    print()
-                else:
-                    print("✅  Content quality check passed (0 warnings).")
-
-                inject_personal_intro(blog_post, topic)
-                # appends E-E-A-T footer
-                inject_eeat_signals(blog_post, topic)
-                blog_system.save_post(blog_post)
-
-                generator = StaticSiteGenerator(blog_system)
-                generator.generate_site()
-
-                print(f"\nPost '{blog_post.title}' generated successfully!")
-                print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
-
-                visibility = VisibilityAutomator(config)
-                prewritten = getattr(blog_post, "prewritten_tweet", "").strip()
-
-                if prewritten:
-                    final_tweet_text = prewritten
-                    tweet_source = "bundle (LLM-generated during content creation)"
-                else:
-                    preview = visibility.compose_tweet_preview(blog_post)
-                    final_tweet_text = preview["tweet_text"]
-                    tweet_source = f"template fallback (hook_style={preview['hook_style']})"
-
-                SEP = "─" * 68
-                print(SEP)
-                print("📝  TWEET PREVIEW (always logged)")
-                print(SEP)
-                print(f"  Post title    : {blog_post.title}")
-                print(f"  Slug          : {blog_post.slug}")
-                print(f"  Source        : {tweet_source}")
-                print(f"  Char count    : {len(final_tweet_text)} / 280")
-                print(SEP)
-                print("  Full tweet text:")
-                print(SEP)
-                for line in final_tweet_text.splitlines():
-                    print(f" {line}")
-                print(SEP + "\n")
-
-                if not _twitter_posting_enabled():
-                    print(
-                        "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
-                    print("  ↑ Tweet above is what would have been posted.\n")
-                else:
-                    print("Posting tweet...")
-                    post_result = visibility.post_prewritten_tweet(
-                        blog_post, final_tweet_text)
-
-                    if post_result["success"]:
-                        print(SEP)
-                        print("✅  X / TWITTER — POST COMPLETE")
-                        print(SEP)
-                        print(f"  URL           : {post_result['url']}")
-                        print(f"  Tweet ID      : {post_result['tweet_id']}")
-                        print(
-                            f"  Char count    : {post_result['char_count']} / 280")
-                        print(SEP + "\n")
-                    else:
-                        print("❌  X / TWITTER — POST FAILED (no retry)")
-                        print(f"  Error         : {post_result.get('error')}")
+            except InsufficientContentError as e:
+                # ── Hard stop: all attempts failed the word-count gate ─────────
+                print("\n" + "═" * 68)
+                print("🛑  GENERATION ABORTED — NO POST SAVED")
+                print("═" * 68)
+                print(f"  Reason : {e}")
+                print(
+                    f"  Action : Increase content_topics diversity in config.yaml,\n"
+                    f"           check API provider quotas, or raise MAX_GENERATION_ATTEMPTS\n"
+                    f"           (currently {MAX_GENERATION_ATTEMPTS}) in blog_system.py."
+                )
+                print("═" * 68 + "\n")
+                sys.exit(1)
 
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"Unexpected error: {e}")
                 import traceback
                 traceback.print_exc()
                 sys.exit(1)
+
+            # ── Quality gate — log warnings but never block publishing ──────
+            quality_warnings = _validate_content_quality(
+                blog_post.content, blog_post.title)
+            if quality_warnings:
+                print(
+                    f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
+                for w in quality_warnings:
+                    print(f"   • {w}")
+                print()
+            else:
+                print("✅  Content quality check passed (0 warnings).")
+
+            inject_personal_intro(blog_post, topic)
+            inject_eeat_signals(blog_post, topic)  # appends E-E-A-T footer
+            blog_system.save_post(blog_post)
+
+            generator = StaticSiteGenerator(blog_system)
+            generator.generate_site()
+
+            print(f"\nPost '{blog_post.title}' generated successfully!")
+            print(f"Twitter hashtags: {blog_post.twitter_hashtags}")
+
+            visibility = VisibilityAutomator(config)
+            prewritten = getattr(blog_post, "prewritten_tweet", "").strip()
+
+            if prewritten:
+                final_tweet_text = prewritten
+                tweet_source = "bundle (LLM-generated during content creation)"
+            else:
+                preview = visibility.compose_tweet_preview(blog_post)
+                final_tweet_text = preview["tweet_text"]
+                tweet_source = f"template fallback (hook_style={preview['hook_style']})"
+
+            SEP = "─" * 68
+            print(SEP)
+            print("📝  TWEET PREVIEW (always logged)")
+            print(SEP)
+            print(f"  Post title    : {blog_post.title}")
+            print(f"  Slug          : {blog_post.slug}")
+            print(f"  Source        : {tweet_source}")
+            print(f"  Char count    : {len(final_tweet_text)} / 280")
+            print(SEP)
+            print("  Full tweet text:")
+            print(SEP)
+            for line in final_tweet_text.splitlines():
+                print(f" {line}")
+            print(SEP + "\n")
+
+            if not _twitter_posting_enabled():
+                print(
+                    "⏭️  Twitter posting SKIPPED (ENABLE_TWITTER_POSTING != true).")
+                print("  ↑ Tweet above is what would have been posted.\n")
+            else:
+                print("Posting tweet...")
+                post_result = visibility.post_prewritten_tweet(
+                    blog_post, final_tweet_text)
+
+                if post_result["success"]:
+                    print(SEP)
+                    print("✅  X / TWITTER — POST COMPLETE")
+                    print(SEP)
+                    print(f"  URL           : {post_result['url']}")
+                    print(f"  Tweet ID      : {post_result['tweet_id']}")
+                    print(
+                        f"  Char count    : {post_result['char_count']} / 280")
+                    print(SEP + "\n")
+                else:
+                    print("❌  X / TWITTER — POST FAILED (no retry)")
+                    print(f"  Error         : {post_result.get('error')}")
 
         elif mode == "build":
             if not os.path.exists("config.yaml"):

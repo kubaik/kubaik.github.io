@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 06:49:48 +0000</lastBuildDate>
-    <item>
-      <title>$4k remote roles: TypeScript in Nairobi &amp; Lagos</title>
-      <link>https://kubaik.github.io/4k-remote-roles-typescript-in-nairobi-lagos/</link>
-      <description>Land $4k/month remote roles by cutting TypeScript strict mode build time 60% with noUncheckedIndexedAccess, strictNullChecks, and incremental builds — real 2026 metrics from Nairobi and Lagos teams.</description>
-      <pubDate>Mon, 18 May 2026 06:49:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/4k-remote-roles-typescript-in-nairobi-lagos/</guid>
-    </item>
+    <lastBuildDate>Mon, 18 May 2026 11:43:19 +0000</lastBuildDate>
     <item>
       <title>Edge functions: what actually works in 2026</title>
       <link>https://kubaik.github.io/edge-functions-what-actually-works-in-2026/</link>
@@ -145,6 +138,13 @@
       <description>Senior engineer without a CS degree? 42% cost savings and 60% latency cuts from real systems — the skills that actually matter in 2026</description>
       <pubDate>Sun, 17 May 2026 18:46:03 +0000</pubDate>
       <guid>https://kubaik.github.io/cs-degree-skip-it-5-steps-to-senior/</guid>
+    </item>
+    <item>
+      <title>When queues help (and when they hurt)</title>
+      <link>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</link>
+      <description>ls from 0.8% to 0.001%. Ordering guarantee with Message queues they drop — taking the other with it.</description>
+      <pubDate>Sun, 17 May 2026 18:22:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</guid>
     </item>
   </channel>
 </rss>
