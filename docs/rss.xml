@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 22:18:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 22:40:41 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: why they broke my AI pipeline</title>
+      <link>https://kubaik.github.io/mcp-servers-why-they-broke-my-ai-pipeline/</link>
+      <description>ound that 68% hit production incidents with with MCP servers they broke — a production pipeline in Q2 2026, the reality was d.</description>
+      <pubDate>Mon, 18 May 2026 22:40:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-why-they-broke-my-ai-pipeline/</guid>
+    </item>
     <item>
       <title>Hire me or ignore my GitHub</title>
       <link>https://kubaik.github.io/hire-me-or-ignore-my-github/</link>
@@ -138,13 +145,6 @@
       <description>Went from $45k to $180k in 18 months by fixing open-source performance bugs — the exact steps, numbers, and tools used to break into global remote work without relocating.</description>
       <pubDate>Mon, 18 May 2026 11:01:24 +0000</pubDate>
       <guid>https://kubaik.github.io/from-45k-to-180k-in-18-months-the-moves-that-worked/</guid>
-    </item>
-    <item>
-      <title>Cut cloud carbon 30% without slowing APIs</title>
-      <link>https://kubaik.github.io/cut-cloud-carbon-30-without-slowing-apis/</link>
-      <description>Cut API carbon 38% without adding latency or cost — PostgreSQL 16 tuning, ARM servers, Rust refactor, and energy-aware routing with concrete numbers and code examples.</description>
-      <pubDate>Mon, 18 May 2026 10:54:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-carbon-30-without-slowing-apis/</guid>
     </item>
   </channel>
 </rss>
