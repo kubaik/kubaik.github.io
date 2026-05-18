@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 16:39:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 17:25:18 +0000</lastBuildDate>
+    <item>
+      <title>Tenant isolation isn&apos;t free — do it right</title>
+      <link>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</link>
+      <description>Reduce SaaS tenant blast radius by 100% — tenant-per-database vs shared schema + RLS cost and latency benchmarks from 2026 production systems. $18.6k vs $4.2k monthly costs revealed.</description>
+      <pubDate>Mon, 18 May 2026 17:25:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</guid>
+    </item>
     <item>
       <title>Senior devs flee big tech’s process tax</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-techs-process-tax/</link>
@@ -138,13 +145,6 @@
       <description>Cut 429 errors 40x and support tickets 30x with adaptive backpressure — the rate-limiting pattern that keeps clients running instead of breaking them.</description>
       <pubDate>Sun, 17 May 2026 22:46:15 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-429s-rate-limit-without-breaking-clients/</guid>
-    </item>
-    <item>
-      <title>70-hour weeks to sustainable freelancing</title>
-      <link>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</link>
-      <description>Cut freelance burnout 70% with sustainable workload, context batching, and platform detox — real tools, real metrics, and the contract clause that actually works.</description>
-      <pubDate>Sun, 17 May 2026 22:37:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</guid>
     </item>
   </channel>
 </rss>
