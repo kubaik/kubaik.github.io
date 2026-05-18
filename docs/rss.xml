@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 21:00:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 21:05:14 +0000</lastBuildDate>
+    <item>
+      <title>38% salary boost with PyTorch in 2026</title>
+      <link>https://kubaik.github.io/38-salary-boost-with-pytorch-in-2026/</link>
+      <description>PyTorch 2.4 earns 38% higher salaries than TensorFlow 2.16 in 2026 — latency, cost, and tooling data that proves it. Learn which framework actually moves the paycheck needle.</description>
+      <pubDate>Mon, 18 May 2026 21:05:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/38-salary-boost-with-pytorch-in-2026/</guid>
+    </item>
     <item>
       <title>5G Backends: 4 Cellular Gotchas</title>
       <link>https://kubaik.github.io/5g-backends-4-cellular-gotchas/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev platform costs 67% and deploy time 91% — how we built an internal platform on $360/month that handled 3G drops without losing state. Includes CLI code, Traefik configs, and ROI numbers.</description>
       <pubDate>Mon, 18 May 2026 09:21:36 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-platform-under-2k-how-we-did-it/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech’s hidden drag</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</link>
-      <description>Expose 60% more outages before they hit production — add Prometheus metrics to any service in under 2 hours. observability gaps senior engineers</description>
-      <pubDate>Mon, 18 May 2026 08:58:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</guid>
     </item>
   </channel>
 </rss>
