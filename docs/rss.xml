@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 02:33:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 05:45:14 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: what actually works in 2026</title>
+      <link>https://kubaik.github.io/edge-functions-what-actually-works-in-2026/</link>
+      <description>promised 40% faster responses worldwide. A with Edge functions — move a high-traffic REST API from AWS Lambda in us-.</description>
+      <pubDate>Mon, 18 May 2026 05:45:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-what-actually-works-in-2026/</guid>
+    </item>
     <item>
       <title>Monoliths win again: 8 reasons why 2026 favors one big</title>
       <link>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</link>
@@ -138,13 +145,6 @@
       <description>ls from 0.8% to 0.001%. Ordering guarantee with Message queues they drop — taking the other with it.</description>
       <pubDate>Sun, 17 May 2026 18:22:14 +0000</pubDate>
       <guid>https://kubaik.github.io/when-queues-help-and-when-they-hurt/</guid>
-    </item>
-    <item>
-      <title>Over-engineering costs that hit in 2026</title>
-      <link>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</link>
-      <description>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</description>
-      <pubDate>Sun, 17 May 2026 18:17:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-costs-that-hit-in-2026/</guid>
     </item>
   </channel>
 </rss>
