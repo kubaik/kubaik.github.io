@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 17:25:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 17:28:26 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: the 3ms vs 300ms reality check</title>
+      <link>https://kubaik.github.io/vector-dbs-the-3ms-vs-300ms-reality-check/</link>
+      <description>Cut vector search latency 87% by skipping the dedicated DB — pgvector 0.7.0 beats Milvus 2.4.0 on cost, latency, and simplicity when your dataset is under 20 million vectors</description>
+      <pubDate>Mon, 18 May 2026 17:28:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-the-3ms-vs-300ms-reality-check/</guid>
+    </item>
     <item>
       <title>Tenant isolation isn&apos;t free — do it right</title>
       <link>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG token costs 63% and latency 97%—the real levers most tutorials skip: atomic indexes, cache guards, and prompt truncation. Learn from the failures we fixed in production.</description>
       <pubDate>Sun, 17 May 2026 23:16:41 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</guid>
-    </item>
-    <item>
-      <title>Avoid 429s: Rate limit without breaking clients</title>
-      <link>https://kubaik.github.io/avoid-429s-rate-limit-without-breaking-clients/</link>
-      <description>Cut 429 errors 40x and support tickets 30x with adaptive backpressure — the rate-limiting pattern that keeps clients running instead of breaking them.</description>
-      <pubDate>Sun, 17 May 2026 22:46:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-429s-rate-limit-without-breaking-clients/</guid>
     </item>
   </channel>
 </rss>
