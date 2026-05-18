@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 23:36:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 23:40:16 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time tool</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-tool/</link>
+      <description>Cut real-time latency 85% with WebSockets vs SSE vs long polling — exact benchmarks, code snippets, and the one setting every team misses first</description>
+      <pubDate>Mon, 18 May 2026 23:40:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-tool/</guid>
+    </item>
     <item>
       <title>Message queues: the 6-second trap most teams miss</title>
       <link>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</link>
@@ -138,13 +145,6 @@
       <description>limb from 2% to 14% when traffic doubled. with AI-first apps boring patterns — watch error rates climb from 2% to 14% when traffic.</description>
       <pubDate>Mon, 18 May 2026 14:34:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</guid>
-    </item>
-    <item>
-      <title>Self-taught? Your interview will flunk unless you hack</title>
-      <link>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</link>
-      <description>Pass remote interviews without a CS degree: build production-ready artifacts, include observability, and focus on ownership. 3 concrete numbers included.</description>
-      <pubDate>Mon, 18 May 2026 13:37:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-taught-your-interview-will-flunk-unless-you-hack/</guid>
     </item>
   </channel>
 </rss>
