@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 19:08:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 19:20:58 +0000</lastBuildDate>
+    <item>
+      <title>Skip the CS degree, not the work</title>
+      <link>https://kubaik.github.io/skip-the-cs-degree-not-the-work/</link>
+      <description>Cut 23% cloud costs and slash API latency from 4.2s to 85ms by pairing Redis 7.2 with Go 1.21 — the real path to senior developer in 2026 without a CS degree.</description>
+      <pubDate>Mon, 18 May 2026 19:20:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-cs-degree-not-the-work/</guid>
+    </item>
     <item>
       <title>PostgreSQL vs MySQL in 2026: pick smarter</title>
       <link>https://kubaik.github.io/postgresql-vs-mysql-in-2026-pick-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI tool bloat 40% with GitHub Copilot audit — commit caps, artifact size limits, and the rework trap most teams miss in 2026</description>
       <pubDate>Sun, 17 May 2026 23:53:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</guid>
-    </item>
-    <item>
-      <title>Bust the pool size myth for 2026</title>
-      <link>https://kubaik.github.io/bust-the-pool-size-myth-for-2026/</link>
-      <description>Reduce database p99 latency 60% by fixing connection pool sizing — the outdated CPU-core heuristic costs teams $18k/month in RDS over-provisioning and adds 2x tail latency. Learn the metrics that matter.</description>
-      <pubDate>Sun, 17 May 2026 23:42:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/bust-the-pool-size-myth-for-2026/</guid>
     </item>
   </channel>
 </rss>
