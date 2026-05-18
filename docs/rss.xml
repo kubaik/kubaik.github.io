@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 23:40:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 23:47:53 +0000</lastBuildDate>
+    <item>
+      <title>Monolith vs Microservices: the 2026 reset</title>
+      <link>https://kubaik.github.io/monolith-vs-microservices-the-2026-reset/</link>
+      <description>Cut infra cost 60% and on-call pages to zero by choosing the right pattern in 2026 — modular monolith beats microservices unless you hit 500 req/minute on payments.</description>
+      <pubDate>Mon, 18 May 2026 23:47:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/monolith-vs-microservices-the-2026-reset/</guid>
+    </item>
     <item>
       <title>Choose the right real-time tool</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-tool/</link>
@@ -138,13 +145,6 @@
       <description>Convert local rates to USD with &lt;1% FX cost — the rate card, contract clause, and tools I used to go from 80,000 COP/hour to $100/hour in 2026</description>
       <pubDate>Mon, 18 May 2026 14:46:06 +0000</pubDate>
       <guid>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</guid>
-    </item>
-    <item>
-      <title>AI-first apps: the boring patterns that survive</title>
-      <link>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</link>
-      <description>limb from 2% to 14% when traffic doubled. with AI-first apps boring patterns — watch error rates climb from 2% to 14% when traffic.</description>
-      <pubDate>Mon, 18 May 2026 14:34:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</guid>
     </item>
   </channel>
 </rss>
