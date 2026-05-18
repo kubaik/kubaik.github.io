@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 17:28:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 17:43:56 +0000</lastBuildDate>
+    <item>
+      <title>Nairobi to $4K: Remote roles decoded</title>
+      <link>https://kubaik.github.io/nairobi-to-4k-remote-roles-decoded/</link>
+      <description>Land $4k/month remote roles with a GitHub profile fix — production proof, observability, and the exact stack developers in Nairobi and Lagos used in 2026</description>
+      <pubDate>Mon, 18 May 2026 17:43:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/nairobi-to-4k-remote-roles-decoded/</guid>
+    </item>
     <item>
       <title>Vector DBs: the 3ms vs 300ms reality check</title>
       <link>https://kubaik.github.io/vector-dbs-the-3ms-vs-300ms-reality-check/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency 63% and deadlocks to zero by choosing PostgreSQL in 2026 — schema, indexes, and connection pooling that actually work under load.</description>
       <pubDate>Sun, 17 May 2026 23:31:38 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-postgresql-in-2026-heres-why/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: hidden failure modes</title>
-      <link>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</link>
-      <description>Cut RAG token costs 63% and latency 97%—the real levers most tutorials skip: atomic indexes, cache guards, and prompt truncation. Learn from the failures we fixed in production.</description>
-      <pubDate>Sun, 17 May 2026 23:16:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-hidden-failure-modes/</guid>
     </item>
   </channel>
 </rss>
