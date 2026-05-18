@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 14:46:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 14:50:11 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 3 silent killers in production</title>
+      <link>https://kubaik.github.io/rag-pipelines-3-silent-killers-in-production/</link>
+      <description>pped from 89% to 67%. Users got blank stare with RAG — solve) In late 2025, our team at a Jakarta-based fi.</description>
+      <pubDate>Mon, 18 May 2026 14:50:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-3-silent-killers-in-production/</guid>
+    </item>
     <item>
       <title>Salary hack: bill remote clients in USD</title>
       <link>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</link>
@@ -138,13 +145,6 @@
       <description>Cut security overhead 80% with contextual trust — latency benchmarks, cost data, and the zero-trust mistakes small teams keep making in 2026</description>
       <pubDate>Sun, 17 May 2026 22:16:58 +0000</pubDate>
       <guid>https://kubaik.github.io/trust-small-teams-not-zero-trust/</guid>
-    </item>
-    <item>
-      <title>AI salaries 2026: PyTorch vs TensorFlow payoff</title>
-      <link>https://kubaik.github.io/ai-salaries-2026-pytorch-vs-tensorflow-payoff/</link>
-      <description>PyTorch vs TensorFlow salaries in 2026 revealed — real benchmark data, hiring trends, and the 12% pay gap you can’t ignore. See who pays more and why.</description>
-      <pubDate>Sun, 17 May 2026 22:12:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salaries-2026-pytorch-vs-tensorflow-payoff/</guid>
     </item>
   </channel>
 </rss>
