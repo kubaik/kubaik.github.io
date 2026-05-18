@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 21:05:14 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 21:48:48 +0000</lastBuildDate>
+    <item>
+      <title>Zero-Trust for Tiny Teams: What Actually Matters</title>
+      <link>https://kubaik.github.io/zero-trust-for-tiny-teams-what-actually-matters/</link>
+      <description>Cut security overhead 80% for small teams — MFA on admin tools, auto-rotated secrets, and TLS everywhere beat full zero-trust stacks 9 out of 10 times.</description>
+      <pubDate>Mon, 18 May 2026 21:48:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-tiny-teams-what-actually-matters/</guid>
+    </item>
     <item>
       <title>38% salary boost with PyTorch in 2026</title>
       <link>https://kubaik.github.io/38-salary-boost-with-pytorch-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>at caused 40% of their errors. This guide f with LLMs — production in two weeks.</description>
       <pubDate>Mon, 18 May 2026 10:49:58 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llm-pipelines-5-observability-must-haves/</guid>
-    </item>
-    <item>
-      <title>Dev platform under $2k: how we did it</title>
-      <link>https://kubaik.github.io/dev-platform-under-2k-how-we-did-it/</link>
-      <description>Cut dev platform costs 67% and deploy time 91% — how we built an internal platform on $360/month that handled 3G drops without losing state. Includes CLI code, Traefik configs, and ROI numbers.</description>
-      <pubDate>Mon, 18 May 2026 09:21:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-platform-under-2k-how-we-did-it/</guid>
     </item>
   </channel>
 </rss>
