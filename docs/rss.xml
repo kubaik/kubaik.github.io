@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 19:20:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 19:29:20 +0000</lastBuildDate>
+    <item>
+      <title>Which dev platform pays African devs best in 2026</title>
+      <link>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</link>
+      <description>Choose the platform that actually pays African devs in 2026 — latency, payouts, and acceptance rates from 5,000 real requests. Andela vs Toptal vs Arc with exact numbers.</description>
+      <pubDate>Mon, 18 May 2026 19:29:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</guid>
+    </item>
     <item>
       <title>Skip the CS degree, not the work</title>
       <link>https://kubaik.github.io/skip-the-cs-degree-not-the-work/</link>
@@ -138,13 +145,6 @@
       <description>ound that 78% of the latency came from inte with Monoliths again reasons favors — be a single misconfigured timeout — this post is wh.</description>
       <pubDate>Mon, 18 May 2026 02:33:21 +0000</pubDate>
       <guid>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</guid>
-    </item>
-    <item>
-      <title>AI impact: measure velocity — not just vibes</title>
-      <link>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</link>
-      <description>Cut AI tool bloat 40% with GitHub Copilot audit — commit caps, artifact size limits, and the rework trap most teams miss in 2026</description>
-      <pubDate>Sun, 17 May 2026 23:53:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-impact-measure-velocity-not-just-vibes/</guid>
     </item>
   </channel>
 </rss>
