@@ -48,17 +48,56 @@ MAX_GENERATION_ATTEMPTS = 5
 # This is the hard gate — posts below this threshold are never saved.
 MIN_ACCEPTABLE_WORDS = 1500
 
+# ── Hashtag constraints ───────────────────────────────────────────────────────
+# Maximum number of source words a phrase may have to be eligible for hashtag
+# conversion.  Phrases longer than this are silently dropped instead of being
+# concatenated into an unreadable monster tag.
+_HASHTAG_MAX_SOURCE_WORDS = 3
+# Hard character cap on the final CamelCase tag string (excluding the leading #).
+_HASHTAG_MAX_CHARS = 24
+
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
-    """Convert multi-word tags to CamelCase single-word tags."""
+    """
+    Convert a list of tag strings into CamelCase single-word hashtags.
+
+    Rules (enforced strictly):
+    - Strip any leading '#' and surrounding whitespace.
+    - Split on whitespace, hyphens, or underscores.
+    - Drop the entire phrase if it contains more than _HASHTAG_MAX_SOURCE_WORDS
+      meaningful words — this is the primary guard against monster tags like
+      '#EdgeFunctionsIn2026WhenCloudflareWorkers…'.
+    - The resulting CamelCase string must be ≤ _HASHTAG_MAX_CHARS characters;
+      phrases that exceed this cap after joining are also dropped.
+    - Deduplicate case-insensitively.
+    """
     result = []
-    seen = set()
+    seen: set = set()
+
     for tag in tags:
+        # Normalise: strip leading '#', collapse whitespace
         tag = tag.lstrip('#').strip()
-        word = ''.join(w.capitalize() for w in re.split(r'[\s\-_]+', tag) if w)
-        if word and word.lower() not in seen:
-            seen.add(word.lower())
-            result.append(word)
+        if not tag:
+            continue
+
+        # Split on any non-alphanumeric delimiter
+        words = [w for w in re.split(r'[\s\-_/]+', tag) if w]
+
+        # Drop phrases that are too long to produce a readable hashtag
+        if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
+            continue
+
+        camel = ''.join(w.capitalize() for w in words if w)
+
+        # Drop the tag if the resulting string exceeds the character cap
+        if len(camel) > _HASHTAG_MAX_CHARS:
+            continue
+
+        key = camel.lower()
+        if camel and key not in seen:
+            seen.add(key)
+            result.append(camel)
+
     return result
 
 
@@ -612,25 +651,58 @@ _HASHTAG_TIERS = {
 }
 
 
+def _is_valid_hashtag(tag: str) -> bool:
+    """
+    Return True only if *tag* (without leading #) is safe to use as a hashtag.
+
+    Criteria:
+    - Must be non-empty and purely alphanumeric (no spaces, colons, slashes, etc.)
+    - Must not exceed _HASHTAG_MAX_CHARS characters
+    - Must not be a raw long-tail keyword phrase disguised as a tag
+    """
+    if not tag:
+        return False
+    if not re.match(r'^[A-Za-z0-9]+$', tag):
+        return False
+    if len(tag) > _HASHTAG_MAX_CHARS:
+        return False
+    return True
+
+
 def _derive_hashtags_from_keywords(
     keywords: List[str],
     topic: str = "",
     title: str = "",
     max_hashtags: int = 5,
 ) -> List[str]:
+    """
+    Derive up to *max_hashtags* single-word CamelCase hashtags from the tiered
+    lookup table.
+
+    The fallback path — which previously turned raw long-tail keyword phrases
+    into monster tags — now enforces the same word-count and character caps as
+    _to_single_word_tags().  Any keyword phrase with more than
+    _HASHTAG_MAX_SOURCE_WORDS words is silently skipped instead of being
+    concatenated into an unreadable string.
+    """
     combined = f" {' '.join([title, topic] + keywords).lower()} "
     selected: Dict[str, List[str]] = {
         "broad": [], "niche": [], "monetization": []}
+
     for tier, mapping in _HASHTAG_TIERS.items():
         for keyword, tags in mapping.items():
             if keyword in combined:
                 for tag in tags:
-                    if tag not in selected[tier]:
+                    # Every tag coming out of the tier tables goes through the
+                    # validity check — guards against any future bad entries.
+                    if _is_valid_hashtag(tag) and tag not in selected[tier]:
                         selected[tier].append(tag)
+
     result: List[str] = []
     result.extend(selected["broad"][:2])
     result.extend(selected["niche"][:2])
     result.extend(selected["monetization"][:1])
+
     if len(result) < max_hashtags:
         question_starters = {"how", "what", "why",
                              "when", "where", "which", "who"}
@@ -638,22 +710,32 @@ def _derive_hashtags_from_keywords(
             kw = kw.strip().lower()
             if not kw:
                 continue
-            words = kw.split()
+            words = [w for w in re.split(r'[\s\-_/]+', kw) if w]
+
+            # Skip question-based keywords and anything too long
             if words and words[0] in question_starters:
                 continue
-            if len(words) <= 2:
-                tag = "".join(w.capitalize() for w in words)
-                tag = re.sub(r"[^\w]", "", tag)
-                if tag and tag not in result:
-                    result.append(tag)
+            if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
+                continue
+
+            tag = "".join(w.capitalize() for w in words)
+            # Strip any non-alphanumeric characters (e.g. colons, dots)
+            tag = re.sub(r"[^\w]", "", tag)
+
+            if _is_valid_hashtag(tag) and tag not in result:
+                result.append(tag)
+
             if len(result) >= max_hashtags:
                 break
+
     seen: set = set()
     final: List[str] = []
     for tag in result:
-        if tag not in seen:
-            seen.add(tag)
+        key = tag.lower()
+        if key not in seen:
+            seen.add(key)
             final.append(tag)
+
     return final[:max_hashtags]
 
 
