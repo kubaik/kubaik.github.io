@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 19:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 20:15:00 +0000</lastBuildDate>
+    <item>
+      <title>Bypass TypeScript strict mode gaps</title>
+      <link>https://kubaik.github.io/bypass-typescript-strict-mode-gaps/</link>
+      <description>Cut runtime errors 80% with Zod 3.23 — the validation trap that slips past TypeScript strict mode and how to close it in 2026.</description>
+      <pubDate>Mon, 18 May 2026 20:14:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/bypass-typescript-strict-mode-gaps/</guid>
+    </item>
     <item>
       <title>Which dev platform pays African devs best in 2026</title>
       <link>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>promised 40% faster responses worldwide. A with Edge functions — move a high-traffic REST API from AWS Lambda in us-.</description>
       <pubDate>Mon, 18 May 2026 05:45:04 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-what-actually-works-in-2026/</guid>
-    </item>
-    <item>
-      <title>Monoliths win again: 8 reasons why 2026 favors one big</title>
-      <link>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</link>
-      <description>ound that 78% of the latency came from inte with Monoliths again reasons favors — be a single misconfigured timeout — this post is wh.</description>
-      <pubDate>Mon, 18 May 2026 02:33:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/monoliths-win-again-8-reasons-why-2026-favors-one-big/</guid>
     </item>
   </channel>
 </rss>
