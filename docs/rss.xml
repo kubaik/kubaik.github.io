@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 14:34:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 14:46:15 +0000</lastBuildDate>
+    <item>
+      <title>Salary hack: bill remote clients in USD</title>
+      <link>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</link>
+      <description>Convert local rates to USD with &lt;1% FX cost — the rate card, contract clause, and tools I used to go from 80,000 COP/hour to $100/hour in 2026</description>
+      <pubDate>Mon, 18 May 2026 14:46:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</guid>
+    </item>
     <item>
       <title>AI-first apps: the boring patterns that survive</title>
       <link>https://kubaik.github.io/ai-first-apps-the-boring-patterns-that-survive/</link>
@@ -138,13 +145,6 @@
       <description>PyTorch vs TensorFlow salaries in 2026 revealed — real benchmark data, hiring trends, and the 12% pay gap you can’t ignore. See who pays more and why.</description>
       <pubDate>Sun, 17 May 2026 22:12:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salaries-2026-pytorch-vs-tensorflow-payoff/</guid>
-    </item>
-    <item>
-      <title>AI apps break first: patterns that survive</title>
-      <link>https://kubaik.github.io/ai-apps-break-first-patterns-that-survive/</link>
-      <description>Reduce AI app latency 79% and costs 75% with per-user Redis caching, idempotency keys, and LiteLLM fallbacks — the boring stack that holds up in production.</description>
-      <pubDate>Sun, 17 May 2026 21:47:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-apps-break-first-patterns-that-survive/</guid>
     </item>
   </channel>
 </rss>
