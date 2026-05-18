@@ -177,67 +177,107 @@ jobs:
           fi
 
       # ── DEDUPLICATION ────────────────────────────────────────────────────────
-      # Runs on every watchdog execution (independent of the missing-slot logic).
-      # Step 1: dry-run to detect duplicates and capture the exit signal.
-      # Step 2: delete only when duplicates were actually found.
-      # Step 3: commit + push the cleaned docs/ tree so the deletion persists.
+      # Runs both delete_similar_posts.py and delete_fallback_posts.py on every
+      # watchdog execution. If either finds posts to delete, commits the cleaned
+      # docs/ tree and triggers a site rebuild.
 
-      - name: Deduplication dry-run (detect duplicates)
-        id: dedup_check
+      - name: Install deduplication dependencies
         run: |
-          echo "Running deduplication dry-run..."
+          pip install --quiet scikit-learn numpy
 
-          # Capture full output; the script exits 0 whether or not dupes exist.
-          OUTPUT=$(python deduplicate_posts.py 2>&1)
+      - name: Run delete_fallback_posts (dry-run detect)
+        id: fallback_check
+        run: |
+          echo "Running fallback post detection..."
+          OUTPUT=$(python delete_fallback_posts.py 2>&1)
           echo "$OUTPUT"
 
-          # The script prints "No duplicate posts found." when clean.
-          if echo "$OUTPUT" | grep -q "No duplicate posts found."; then
-            echo "has_duplicates=false" >> $GITHUB_OUTPUT
-            echo "✅ No duplicates detected."
+          if echo "$OUTPUT" | grep -q "No fallback posts detected."; then
+            echo "has_fallback=false" >> $GITHUB_OUTPUT
+            echo "✅ No fallback posts detected."
           else
-            # Verify there really is at least one duplicate pair line before flagging.
-            if echo "$OUTPUT" | grep -q "Similarity"; then
-              echo "has_duplicates=true" >> $GITHUB_OUTPUT
-              echo "⚠️ Duplicates detected — will delete in next step."
+            if echo "$OUTPUT" | grep -q "would be deleted"; then
+              echo "has_fallback=true" >> $GITHUB_OUTPUT
+              echo "⚠️ Fallback posts detected — will delete in next step."
             else
-              # Output was unexpected — treat as clean to avoid accidental mass-deletes.
-              echo "has_duplicates=false" >> $GITHUB_OUTPUT
-              echo "⚠️ Unexpected dedup output — defaulting to no-delete (review logs above)."
+              echo "has_fallback=false" >> $GITHUB_OUTPUT
+              echo "⚠️ Unexpected fallback output — defaulting to no-delete (review logs above)."
             fi
           fi
 
-      - name: Deduplication delete (remove duplicate posts)
-        id: dedup_delete
-        if: steps.dedup_check.outputs.has_duplicates == 'true'
+      - name: Run delete_fallback_posts (delete)
+        id: fallback_delete
+        if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
-          echo "Duplicates confirmed. Running deletion pass..."
-          # --no-rebuild: we commit the raw docs/ changes; the blog-automation
-          # workflow (or a manual build) will regenerate HTML as normal.
-          # If you want the HTML rebuilt immediately here too, remove --no-rebuild.
-          python deduplicate_posts.py --delete --no-rebuild
-          echo "Deletion complete."
+          echo "Deleting fallback posts..."
+          echo "yes" | python delete_fallback_posts.py --delete
+          echo "Fallback deletion complete."
 
-      - name: Commit and push deduplicated posts
-        if: steps.dedup_check.outputs.has_duplicates == 'true'
+      - name: Run delete_similar_posts (dry-run detect)
+        id: similar_check
+        run: |
+          echo "Running similar post detection..."
+          OUTPUT=$(python delete_similar_posts.py --threshold 0.75 2>&1)
+          echo "$OUTPUT"
+
+          if echo "$OUTPUT" | grep -q "No similar post groups found"; then
+            echo "has_similar=false" >> $GITHUB_OUTPUT
+            echo "✅ No similar posts detected."
+          else
+            if echo "$OUTPUT" | grep -q "would be deleted"; then
+              echo "has_similar=true" >> $GITHUB_OUTPUT
+              echo "⚠️ Similar posts detected — will delete in next step."
+            else
+              echo "has_similar=false" >> $GITHUB_OUTPUT
+              echo "⚠️ Unexpected similar-posts output — defaulting to no-delete (review logs above)."
+            fi
+          fi
+
+      - name: Run delete_similar_posts (delete)
+        id: similar_delete
+        if: steps.similar_check.outputs.has_similar == 'true'
+        run: |
+          echo "Deleting similar posts..."
+          echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
+          echo "Similar post deletion complete."
+
+      - name: Rebuild site after deletions
+        id: rebuild
+        if: >
+          steps.fallback_check.outputs.has_fallback == 'true' ||
+          steps.similar_check.outputs.has_similar == 'true'
+        run: |
+          echo "Deletions occurred — rebuilding site..."
+          python blog_system.py build
+          echo "Site rebuild complete."
+
+      - name: Commit and push cleaned posts + rebuilt site
+        if: >
+          steps.fallback_check.outputs.has_fallback == 'true' ||
+          steps.similar_check.outputs.has_similar == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage only the docs/ directory — don't accidentally commit other changes.
           git add docs/
 
-          # Nothing to commit if the delete step somehow produced no diff.
           if git diff --cached --quiet; then
-            echo "No changes to commit (docs/ unchanged after dedup)."
+            echo "No changes to commit (docs/ unchanged after dedup + rebuild)."
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "chore: remove duplicate blog posts [watchdog ${TIMESTAMP}]"
+            SUMMARY=""
+            if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
+              SUMMARY="${SUMMARY}fallback-posts "
+            fi
+            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
+              SUMMARY="${SUMMARY}similar-posts "
+            fi
+            git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
             git push
-            echo "Pushed deduplicated docs/ to main."
+            echo "Pushed cleaned docs/ to main."
           fi
 
-      # ── MISSING-SLOT RECOVERY (unchanged logic) ──────────────────────────────
+      # ── MISSING-SLOT RECOVERY ─────────────────────────────────────────────────
 
       - name: Safety pause before triggering
         if: steps.missing.outputs.has_missing == 'true'
@@ -336,18 +376,26 @@ jobs:
             echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
             echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
-            echo "| Duplicates found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo ""
             if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
               echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
             else
               echo "✅ **All cron slots running on schedule.**"
             fi
-            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+            if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
               echo ""
-              echo "⚠️ **Duplicate posts were detected and deleted. docs/ has been pushed.**"
+              echo "⚠️ **Fallback posts were detected and deleted. Site rebuilt and docs/ pushed.**"
             else
               echo ""
-              echo "✅ **No duplicate posts found.**"
+              echo "✅ **No fallback posts found.**"
+            fi
+            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
+              echo ""
+              echo "⚠️ **Similar/duplicate posts were detected and deleted. Site rebuilt and docs/ pushed.**"
+            else
+              echo ""
+              echo "✅ **No similar posts found.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
