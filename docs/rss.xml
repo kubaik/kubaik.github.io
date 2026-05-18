@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 14:50:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 16:39:27 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee big tech’s process tax</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-techs-process-tax/</link>
+      <description>Senior devs quit big tech for 60% less approval friction — latency, cost, and on-call data from 2026 benchmarks show why.</description>
+      <pubDate>Mon, 18 May 2026 16:39:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-process-tax/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 3 silent killers in production</title>
       <link>https://kubaik.github.io/rag-pipelines-3-silent-killers-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout 70% with sustainable workload, context batching, and platform detox — real tools, real metrics, and the contract clause that actually works.</description>
       <pubDate>Sun, 17 May 2026 22:37:22 +0000</pubDate>
       <guid>https://kubaik.github.io/70-hour-weeks-to-sustainable-freelancing/</guid>
-    </item>
-    <item>
-      <title>Trust small teams, not zero-trust</title>
-      <link>https://kubaik.github.io/trust-small-teams-not-zero-trust/</link>
-      <description>Cut security overhead 80% with contextual trust — latency benchmarks, cost data, and the zero-trust mistakes small teams keep making in 2026</description>
-      <pubDate>Sun, 17 May 2026 22:16:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/trust-small-teams-not-zero-trust/</guid>
     </item>
   </channel>
 </rss>
