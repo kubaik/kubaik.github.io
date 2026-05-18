@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 23:47:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 23:59:41 +0000</lastBuildDate>
+    <item>
+      <title>Rate limiters that don’t break clients</title>
+      <link>https://kubaik.github.io/rate-limiters-that-dont-break-clients/</link>
+      <description>Cut API 429s 99 % with a sliding-window limiter in Redis 7.2 — Lua scripts, connection pooling, and the retry header most teams miss. 3 concrete numbers included.</description>
+      <pubDate>Mon, 18 May 2026 23:59:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-limiters-that-dont-break-clients/</guid>
+    </item>
     <item>
       <title>Monolith vs Microservices: the 2026 reset</title>
       <link>https://kubaik.github.io/monolith-vs-microservices-the-2026-reset/</link>
@@ -138,13 +145,6 @@
       <description>pped from 89% to 67%. Users got blank stare with RAG — solve) In late 2025, our team at a Jakarta-based fi.</description>
       <pubDate>Mon, 18 May 2026 14:50:01 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-3-silent-killers-in-production/</guid>
-    </item>
-    <item>
-      <title>Salary hack: bill remote clients in USD</title>
-      <link>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</link>
-      <description>Convert local rates to USD with &lt;1% FX cost — the rate card, contract clause, and tools I used to go from 80,000 COP/hour to $100/hour in 2026</description>
-      <pubDate>Mon, 18 May 2026 14:46:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/salary-hack-bill-remote-clients-in-usd/</guid>
     </item>
   </channel>
 </rss>
