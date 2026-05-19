@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 19:24:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 19:28:23 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions in 2026: save or hemorrhage cash</title>
+      <link>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</link>
+      <description>Save $2k/month on API costs with edge functions — real latency and cost data for Cloudflare Workers vs Vercel Edge in 2026, plus the mistakes most teams make.</description>
+      <pubDate>Tue, 19 May 2026 19:28:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</guid>
+    </item>
     <item>
       <title>AI skills vs frameworks: what boosts salaries</title>
       <link>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</link>
@@ -138,13 +145,6 @@
       <description>proved to 65%, saving approximately $800/mo with LLMs — that the complexity of chaining these models with o.</description>
       <pubDate>Tue, 19 May 2026 12:12:46 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-what-llm-pipelines-miss/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee: 4 invisible Big Tech traps</title>
-      <link>https://kubaik.github.io/senior-devs-flee-4-invisible-big-tech-traps/</link>
-      <description>Cut attrition risk 19% by measuring 4 hidden drags — meetings, PR size, MTTR, lead time — using only Slack, GitHub, and PagerDuty APIs. Learn the real reasons senior devs leave and the metrics that predict it.</description>
-      <pubDate>Tue, 19 May 2026 11:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-4-invisible-big-tech-traps/</guid>
     </item>
   </channel>
 </rss>
