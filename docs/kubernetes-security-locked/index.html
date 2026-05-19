@@ -6,16 +6,29 @@
     <title>Kubernetes Security Locked - Tech Blog</title>
     <meta name="description" content="Container security in Kubernetes">
     <meta name="keywords" content="secret management, container security, vulnerability scanning, What is Kubernetes security, CyberSecurity, InfoSec, Container security tools, KubernetesSecurity, network policies, K8s, production environments, Kubernetes, Kubernetes security, Kubernetes security best practices, How to implement container security">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-19T23:15:27.288919">
     <meta name="article:modified_time" content="2026-04-19T23:15:27.288926">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Kubernetes Security Locked - Tech Blog">
+    <meta property="og:title" content="Kubernetes Security Locked">
     <meta property="og:description" content="Container security in Kubernetes">
+    <meta property="og:url" content="https://kubaik.github.io/kubernetes-security-locked/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/kubernetes-security-locked.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kubernetes Security Locked">
+    <meta name="twitter:description" content="Container security in Kubernetes">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/kubernetes-security-locked.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/kubernetes-security-locked/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -181,8 +194,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -225,17 +252,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">secret management</span>
+                    <a class="tag" href="/tag/secret-management/"
+                       style="text-decoration:none;">secret management</a>
                     
-                    <span class="tag">container security</span>
+                    <a class="tag" href="/tag/container-security/"
+                       style="text-decoration:none;">container security</a>
                     
-                    <span class="tag">CyberSecurity</span>
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">CyberSecurity</a>
                     
-                    <span class="tag">InfoSec</span>
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">InfoSec</a>
                     
-                    <span class="tag">KubernetesSecurity</span>
+                    <a class="tag" href="/tag/kubernetessecurity/"
+                       style="text-decoration:none;">KubernetesSecurity</a>
                     
-                    <span class="tag">network policies</span>
+                    <a class="tag" href="/tag/network-policies/"
+                       style="text-decoration:none;">network policies</a>
                     
                 </div>
                 
@@ -253,13 +286,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         12 min read
                         &nbsp;·&nbsp; 2451 words
                         
@@ -422,6 +448,18 @@ RetailWave embarked on a 6-month initiative to overhaul its container security u
 *   <strong>Security Incidents:</strong> <strong>0 significant security incidents</strong> reported in the quarter. Minor suspicious activities detected by <code>Falco</code> were automatically blocked or immediately investigated.
 *   <strong>Compliance:</strong> CIS Kubernetes Benchmark (version 1.6) compliance improved dramatically to <strong>92%</strong>.
 *   <strong>Detection Time:</strong> Average time to detect a suspicious activity or potential threat reduced by **98</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -436,15 +474,15 @@ RetailWave embarked on a 6-month initiative to overhaul its container security u
             </div>
 
             
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -452,6 +490,12 @@ RetailWave embarked on a 6-month initiative to overhaul its container security u
                     Code examples are tested on the stated platform and version.
                     If you spot an error, <a href="/contact/">please let us know</a> —
                     corrections are applied within 48 hours.
+                </p>
+                
+                <p style="margin-top:0.5rem">
+                    <strong>Affiliate disclosure:</strong> Some links in this article may earn
+                    the site a small commission at no cost to you.
+                    This does not influence which tools or services are recommended.
                 </p>
                 
             </div>
@@ -505,5 +549,29 @@ RetailWave embarked on a 6-month initiative to overhaul its container security u
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

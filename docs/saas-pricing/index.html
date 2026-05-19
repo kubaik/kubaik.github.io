@@ -6,16 +6,29 @@
     <title>SaaS Pricing - Tech Blog</title>
     <meta name="description" content="SaaS pricing strategy and implementation">
     <meta name="keywords" content="SaaS, how to implement SaaS pricing, pricing strategy examples, pricing strategy, ValuebasedPricing, tiered pricing, SaasPricing, SaaS pricing models, value-based pricing, TieredPricing, what is SaaS pricing, PricingStrategy, SaaS pricing">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-20T19:44:28.292138">
     <meta name="article:modified_time" content="2026-04-20T19:44:28.292145">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="SaaS Pricing - Tech Blog">
+    <meta property="og:title" content="SaaS Pricing">
     <meta property="og:description" content="SaaS pricing strategy and implementation">
+    <meta property="og:url" content="https://kubaik.github.io/saas-pricing/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/saas-pricing.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SaaS Pricing">
+    <meta name="twitter:description" content="SaaS pricing strategy and implementation">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/saas-pricing.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/saas-pricing/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">SaaS</span>
+                    <a class="tag" href="/tag/saas/"
+                       style="text-decoration:none;">SaaS</a>
                     
-                    <span class="tag">pricing strategy</span>
+                    <a class="tag" href="/tag/pricing-strategy/"
+                       style="text-decoration:none;">pricing strategy</a>
                     
-                    <span class="tag">ValuebasedPricing</span>
+                    <a class="tag" href="/tag/valuebasedpricing/"
+                       style="text-decoration:none;">ValuebasedPricing</a>
                     
-                    <span class="tag">tiered pricing</span>
+                    <a class="tag" href="/tag/tiered-pricing/"
+                       style="text-decoration:none;">tiered pricing</a>
                     
-                    <span class="tag">SaasPricing</span>
+                    <a class="tag" href="/tag/saaspricing/"
+                       style="text-decoration:none;">SaasPricing</a>
                     
-                    <span class="tag">value-based pricing</span>
+                    <a class="tag" href="/tag/value-based-pricing/"
+                       style="text-decoration:none;">value-based pricing</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         11 min read
                         &nbsp;·&nbsp; 2215 words
                         
@@ -390,6 +416,18 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
 - CAC remained flat at $985, but LTV rose from $1,128 to $2,340
 - <strong>LTV:CAC improved to 2.38:1</strong>, well above the 3:1 benchmark</p>
 <p>Monthly recurring revenue (MRR) grew from $82K to $194K, and annual contract value (ACV) increased by 142%. Most importantly, NPS rose from 32 to 58, indicating better perceived value alignment. We tracked these metrics using a Looker Studio dashboard fed by Stripe, Salesforce, and Amplitude. This case proves that thoughtful, data-backed pricing changes—especially moving from flat tiers to usage-aligned models—can unlock revenue without increasing customer acquisition spend. Flowlytics was acquired in Q1 2024 at a 7x revenue multiple, with pricing architecture cited as a key differentiator in due diligence.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -405,14 +443,10 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -473,5 +507,29 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

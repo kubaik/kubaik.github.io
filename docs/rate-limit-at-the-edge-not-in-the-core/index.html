@@ -6,16 +6,29 @@
     <title>Rate limit at the edge, not in the core - Tech Blog</title>
     <meta name="description" content="Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.">
     <meta name="keywords" content="RateLimitingApi, ApiRateLimitPatterns, EnvoyRateLimit, RedisRateLimiting, TokenBucketVsFixedWindow, ApiLatencyOptimization, DistributedRateLimiting, ApiRateLimitHeaders, Apis, Redis">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-13T05:36:39.818700">
     <meta name="article:modified_time" content="2026-05-13T05:36:39.818707">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Rate limit at the edge, not in the core - Tech Blog">
+    <meta property="og:title" content="Rate limit at the edge, not in the core">
     <meta property="og:description" content="Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.">
+    <meta property="og:url" content="https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/rate-limit-at-the-edge-not-in-the-core.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rate limit at the edge, not in the core">
+    <meta name="twitter:description" content="Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/rate-limit-at-the-edge-not-in-the-core.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -176,8 +189,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -220,17 +247,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">RateLimitingApi</span>
+                    <a class="tag" href="/tag/ratelimitingapi/"
+                       style="text-decoration:none;">RateLimitingApi</a>
                     
-                    <span class="tag">ApiRateLimitPatterns</span>
+                    <a class="tag" href="/tag/apiratelimitpatterns/"
+                       style="text-decoration:none;">ApiRateLimitPatterns</a>
                     
-                    <span class="tag">EnvoyRateLimit</span>
+                    <a class="tag" href="/tag/envoyratelimit/"
+                       style="text-decoration:none;">EnvoyRateLimit</a>
                     
-                    <span class="tag">RedisRateLimiting</span>
+                    <a class="tag" href="/tag/redisratelimiting/"
+                       style="text-decoration:none;">RedisRateLimiting</a>
                     
-                    <span class="tag">TokenBucketVsFixedWindow</span>
+                    <a class="tag" href="/tag/tokenbucketvsfixedwindow/"
+                       style="text-decoration:none;">TokenBucketVsFixedWindow</a>
                     
-                    <span class="tag">Apis</span>
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
                     
                 </div>
                 
@@ -248,13 +281,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         14 min read
                         &nbsp;·&nbsp; 2750 words
                         
@@ -436,6 +462,18 @@ No. If the sidecar rate-limit service cannot reach Redis and the circuit breaker
 Yes, if you’re already on Cloudflare or AWS. Cloudflare’s Rate Limiting rules run at the edge and can return custom 429 pages with headers. AWS WAF offers rate-based rules that also emit headers. The trade-off is lock-in: Cloudflare’s rules are JSON-based and can be versioned, but AWS WAF’s rate rules are managed rules that can’t be fine-tuned per client. We benchmarked Cloudflare’s edge vs our Envoy sidecar and found Cloudflare added 3–5ms of extra latency due to the extra hop. For internal APIs, Envoy inside the cluster is simpler; for public APIs, Cloudflare is easier to operate.</p>
 <p><strong>Does this pattern work for WebSocket connections?</strong>
 No, token bucket logic doesn’t map cleanly to long-lived connections. WebSockets need a different approach: count messages per connection in the application or use a fixed window per connection ID in Redis with a short TTL. We tried to reuse the Envoy filter for WebSockets and discovered that Envoy counts each message as a separate request, which drained tokens in seconds. We eventually moved WebSocket rate limiting into the application layer and used a Redis sorted set with a 10-second TTL to count messages per connection ID. That added 4ms of latency per message but kept the system stable under 10k concurrent connections.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -451,14 +489,10 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -519,5 +553,29 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

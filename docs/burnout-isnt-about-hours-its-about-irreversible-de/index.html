@@ -6,16 +6,29 @@
     <title>Burnout isn’t about hours — it’s about irreversible design decisions - Tech Blog</title>
     <meta name="description" content="Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.">
     <meta name="keywords" content="developer burnout prevention, burnout in software teams causes, SoftwareEngineering, DevWellbeing, observability prevent burnout, cost of change software development, Coding, irreversible technical decisions burnout, how to prevent developer burnout, automate deployments reduce burnout, modular architecture reduce burnout">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-04T07:43:07.669450">
     <meta name="article:modified_time" content="2026-05-04T07:43:07.669457">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Burnout isn’t about hours — it’s about irreversible design decisions - Tech Blog">
+    <meta property="og:title" content="Burnout isn’t about hours — it’s about irreversible design decisions">
     <meta property="og:description" content="Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.">
+    <meta property="og:url" content="https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/burnout-isnt-about-hours-its-about-irreversible-de.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Burnout isn’t about hours — it’s about irreversible design decisions">
+    <meta name="twitter:description" content="Cut team burnout by 60% by reducing irreversible technical decisions — modular architecture, observability, and automation benchmarks with real failure scenarios. developer burnout prevention guide for startups and enterprises.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/burnout-isnt-about-hours-its-about-irreversible-de.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/burnout-isnt-about-hours-its-about-irreversible-de/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -177,8 +190,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -221,17 +248,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">developer burnout prevention</span>
+                    <a class="tag" href="/tag/developer-burnout-prevention/"
+                       style="text-decoration:none;">developer burnout prevention</a>
                     
-                    <span class="tag">burnout in software teams causes</span>
+                    <a class="tag" href="/tag/burnout-in-software-teams-causes/"
+                       style="text-decoration:none;">burnout in software teams causes</a>
                     
-                    <span class="tag">SoftwareEngineering</span>
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">SoftwareEngineering</a>
                     
-                    <span class="tag">DevWellbeing</span>
+                    <a class="tag" href="/tag/devwellbeing/"
+                       style="text-decoration:none;">DevWellbeing</a>
                     
-                    <span class="tag">Coding</span>
+                    <a class="tag" href="/tag/coding/"
+                       style="text-decoration:none;">Coding</a>
                     
-                    <span class="tag">irreversible technical decisions burnout</span>
+                    <a class="tag" href="/tag/irreversible-technical-decisions-burnout/"
+                       style="text-decoration:none;">irreversible technical decisions burnout</a>
                     
                 </div>
                 
@@ -249,13 +282,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         13 min read
                         &nbsp;·&nbsp; 2698 words
                         
@@ -428,6 +454,18 @@ Automate your deployments first. If your CI/CD pipeline deploys to production on
 Yes, if the cost of change is increasing. I’ve seen teams add features for months without refactoring, only to hit a wall where every new feature takes twice as long. Stop adding features, fix the system, then resume. The short-term pain is worth avoiding the death spiral.</p>
 <p><strong>Why do irreversible decisions cause burnout long-term?</strong>
 Because they turn every change into a high-stakes gamble. If reversing a decision costs weeks or months, developers stop volunteering for anything but the smallest tasks. That kills ownership, and ownership is what keeps people engaged. The system becomes a prison, not a platform.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -443,14 +481,10 @@ Because they turn every change into a high-stakes gamble. If reversing a decisio
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -511,5 +545,29 @@ Because they turn every change into a high-stakes gamble. If reversing a decisio
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

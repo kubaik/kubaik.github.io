@@ -6,16 +6,29 @@
     <title>Building in Public vs Keeping it Private: Build or Break - Tech Blog</title>
     <meta name="description" content="Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.">
     <meta name="keywords" content="building in public, open source traction, IndieHacker, indie hacking, indie maker tips, Coding, build in public vs private, OpenSource, GitHub changelog strategy, SoftwareEngineering, developer tools growth, GitHub, private beta success">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-28T07:53:30.098892">
     <meta name="article:modified_time" content="2026-04-28T07:53:30.098899">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Building in Public vs Keeping it Private: Build or Break - Tech Blog">
+    <meta property="og:title" content="Building in Public vs Keeping it Private: Build or Break">
     <meta property="og:description" content="Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.">
+    <meta property="og:url" content="https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/building-in-public-vs-keeping-it-private-build-or-.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Building in Public vs Keeping it Private: Build or Break">
+    <meta name="twitter:description" content="Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/building-in-public-vs-keeping-it-private-build-or-.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">building in public</span>
+                    <a class="tag" href="/tag/building-in-public/"
+                       style="text-decoration:none;">building in public</a>
                     
-                    <span class="tag">open source traction</span>
+                    <a class="tag" href="/tag/open-source-traction/"
+                       style="text-decoration:none;">open source traction</a>
                     
-                    <span class="tag">IndieHacker</span>
+                    <a class="tag" href="/tag/indiehacker/"
+                       style="text-decoration:none;">IndieHacker</a>
                     
-                    <span class="tag">indie hacking</span>
+                    <a class="tag" href="/tag/indie-hacking/"
+                       style="text-decoration:none;">indie hacking</a>
                     
-                    <span class="tag">Coding</span>
+                    <a class="tag" href="/tag/coding/"
+                       style="text-decoration:none;">Coding</a>
                     
-                    <span class="tag">build in public vs private</span>
+                    <a class="tag" href="/tag/build-in-public-vs-private/"
+                       style="text-decoration:none;">build in public vs private</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         15 min read
                         &nbsp;·&nbsp; 2950 words
                         
@@ -504,6 +530,18 @@ A README, a public roadmap (even if it’s empty), and a changelog. That’s it.
 Don’t publish code, architecture diagrams, or business logic. Share outcomes, not internals. I open-sourced a CLI tool that wrapped a proprietary API, but I kept the API key private and the core logic closed. The public repo only contained the CLI and documentation. This way, I shared the process without exposing the secret sauce.</p>
 <p>Why does building in public work for some people and not others?
 It works when you treat it like product development, not content marketing. Posting daily tweets without shipping doesn’t work. Posting weekly updates while shipping consistently does work. I tried the former for 3 months and saw zero traction; I switched to the latter and grew to 2k followers in 6 weeks. The difference was consistency over noise.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -519,14 +557,10 @@ It works when you treat it like product development, not content marketing. Post
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -587,5 +621,29 @@ It works when you treat it like product development, not content marketing. Post
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

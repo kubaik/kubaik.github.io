@@ -6,16 +6,29 @@
     <title>Swift iOS Scaling Patterns - Tech Blog</title>
     <meta name="description" content="Swift iOS scaling patterns for maintainable apps">
     <meta name="keywords" content="Performance, Swift iOS, What is Swift iOS, iOSDev, SwiftIos, Swift performance optimization, Swift, iOS app development best practices, Swift scalability, How to optimize iOS app performance, iOS development, iOS architecture patterns">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-19T02:05:42.602226">
     <meta name="article:modified_time" content="2026-04-19T02:05:42.602234">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Swift iOS Scaling Patterns - Tech Blog">
+    <meta property="og:title" content="Swift iOS Scaling Patterns">
     <meta property="og:description" content="Swift iOS scaling patterns for maintainable apps">
+    <meta property="og:url" content="https://kubaik.github.io/swift-ios-scaling-patterns/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/swift-ios-scaling-patterns.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Swift iOS Scaling Patterns">
+    <meta name="twitter:description" content="Swift iOS scaling patterns for maintainable apps">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/swift-ios-scaling-patterns.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/swift-ios-scaling-patterns/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -178,8 +191,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -222,17 +249,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">Performance</span>
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
                     
-                    <span class="tag">Swift iOS</span>
+                    <a class="tag" href="/tag/swift-ios/"
+                       style="text-decoration:none;">Swift iOS</a>
                     
-                    <span class="tag">SwiftIos</span>
+                    <a class="tag" href="/tag/swiftios/"
+                       style="text-decoration:none;">SwiftIos</a>
                     
-                    <span class="tag">iOSDev</span>
+                    <a class="tag" href="/tag/iosdev/"
+                       style="text-decoration:none;">iOSDev</a>
                     
-                    <span class="tag">Swift performance optimization</span>
+                    <a class="tag" href="/tag/swift-performance-optimization/"
+                       style="text-decoration:none;">Swift performance optimization</a>
                     
-                    <span class="tag">Swift scalability</span>
+                    <a class="tag" href="/tag/swift-scalability/"
+                       style="text-decoration:none;">Swift scalability</a>
                     
                 </div>
                 
@@ -250,13 +283,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         11 min read
                         &nbsp;·&nbsp; 2288 words
                         
@@ -425,6 +451,18 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
 <li><strong>Monitor Performance</strong>: Tools like <strong>Instruments (version 12.4)</strong> and <strong>Firebase Performance Monitoring (version 8.11.0)</strong> are essential for identifying bottlenecks.</li>
 </ol>
 <p>This case study demonstrates that investing in scalable patterns and tools pays off in both technical and business outcomes. The upfront effort to refactor the app resulted in long-term gains in performance, stability, and developer productivity.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -440,14 +478,10 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -508,5 +542,29 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

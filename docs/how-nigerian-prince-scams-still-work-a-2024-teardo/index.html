@@ -6,16 +6,29 @@
     <title>How Nigerian Prince scams still work: a 2024 teardown of social engineering - Tech Blog</title>
     <meta name="description" content="Cut social engineering success rate from 12% to 0.8% with a 60-second pause, voice verification, and regional tweaks — no magic, just cognitive load engineering.">
     <meta name="keywords" content="how to stop social engineering, Nigerian prince scam teardown, CyberSecurity, InfoSec, vishing attacks 2024, deepfake voice scams, cognitive load in cybersecurity, social engineering prevention, phishing simulation costs, voice verification API">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-27T04:53:30.424196">
     <meta name="article:modified_time" content="2026-04-27T04:53:30.424203">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="How Nigerian Prince scams still work: a 2024 teardown of social engineering - Tech Blog">
+    <meta property="og:title" content="How Nigerian Prince scams still work: a 2024 teardown of social engineering">
     <meta property="og:description" content="Cut social engineering success rate from 12% to 0.8% with a 60-second pause, voice verification, and regional tweaks — no magic, just cognitive load engineering.">
+    <meta property="og:url" content="https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/how-nigerian-prince-scams-still-work-a-2024-teardo.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How Nigerian Prince scams still work: a 2024 teardown of social engineering">
+    <meta name="twitter:description" content="Cut social engineering success rate from 12% to 0.8% with a 60-second pause, voice verification, and regional tweaks — no magic, just cognitive load engineering.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/how-nigerian-prince-scams-still-work-a-2024-teardo.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/how-nigerian-prince-scams-still-work-a-2024-teardo/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -176,8 +189,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -220,17 +247,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">CyberSecurity</span>
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">CyberSecurity</a>
                     
-                    <span class="tag">InfoSec</span>
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">InfoSec</a>
                     
-                    <span class="tag">vishing attacks 2024</span>
+                    <a class="tag" href="/tag/vishing-attacks-2024/"
+                       style="text-decoration:none;">vishing attacks 2024</a>
                     
-                    <span class="tag">deepfake voice scams</span>
+                    <a class="tag" href="/tag/deepfake-voice-scams/"
+                       style="text-decoration:none;">deepfake voice scams</a>
                     
-                    <span class="tag">cognitive load in cybersecurity</span>
+                    <a class="tag" href="/tag/cognitive-load-in-cybersecurity/"
+                       style="text-decoration:none;">cognitive load in cybersecurity</a>
                     
-                    <span class="tag">social engineering prevention</span>
+                    <a class="tag" href="/tag/social-engineering-prevention/"
+                       style="text-decoration:none;">social engineering prevention</a>
                     
                 </div>
                 
@@ -248,13 +281,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         15 min read
                         &nbsp;·&nbsp; 2996 words
                         
@@ -489,6 +515,18 @@ Avoid storing or processing voiceprints. Use one-time codes sent via SMS or hard
 Mobile-first users in Manila and Lagos are more skeptical of synthetic voices but more trusting of SMS codes. Corporate users in London are more comfortable with voice verification but less tolerant of delays. In rural areas, SMS codes are the only reliable channel. Tailor your escalation rules to the region’s trust model, not your own assumptions.</p>
 <p><strong>Is this system overkill for a small team?</strong>
 Yes, if your team is under 20 people and communicates mostly via chat. The cognitive load of forced delays and voice verification would slow down decisions without reducing risk. Reserve this approach for teams handling high-value transactions or regulated data.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -504,14 +542,10 @@ Yes, if your team is under 20 people and communicates mostly via chat. The cogni
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -572,5 +606,29 @@ Yes, if your team is under 20 people and communicates mostly via chat. The cogni
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

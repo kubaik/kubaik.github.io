@@ -6,16 +6,29 @@
     <title>IoT Architecture Explained at Last - Tech Blog</title>
     <meta name="description" content="Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.">
     <meta name="keywords" content="SystemDesign, what is edge computing in IoT, SoftwareEngineering, IoT architecture, IotArchitecture, MQTT vs CoAP vs HTTP2, IoT system design, TimescaleDB for IoT, LoRaWAN gateway setup, why do IoT devices brick during firmware updates, how to choose IoT protocols, Coding">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-24T09:26:35.727361">
     <meta name="article:modified_time" content="2026-04-24T09:26:35.727368">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="IoT Architecture Explained at Last - Tech Blog">
+    <meta property="og:title" content="IoT Architecture Explained at Last">
     <meta property="og:description" content="Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.">
+    <meta property="og:url" content="https://kubaik.github.io/iot-architecture-explained-at-last/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/iot-architecture-explained-at-last.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IoT Architecture Explained at Last">
+    <meta name="twitter:description" content="Cut cloud egress costs by 72% and device bricking by 90% with a real IoT architecture — LoRaWAN, MQTT, TimescaleDB, and the mistakes that brick devices during firmware updates.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/iot-architecture-explained-at-last.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/iot-architecture-explained-at-last/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -178,8 +191,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -222,17 +249,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">SystemDesign</span>
+                    <a class="tag" href="/tag/systemdesign/"
+                       style="text-decoration:none;">SystemDesign</a>
                     
-                    <span class="tag">SoftwareEngineering</span>
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">SoftwareEngineering</a>
                     
-                    <span class="tag">IoT architecture</span>
+                    <a class="tag" href="/tag/iot-architecture/"
+                       style="text-decoration:none;">IoT architecture</a>
                     
-                    <span class="tag">IotArchitecture</span>
+                    <a class="tag" href="/tag/iotarchitecture/"
+                       style="text-decoration:none;">IotArchitecture</a>
                     
-                    <span class="tag">MQTT vs CoAP vs HTTP2</span>
+                    <a class="tag" href="/tag/mqtt-vs-coap-vs-http2/"
+                       style="text-decoration:none;">MQTT vs CoAP vs HTTP2</a>
                     
-                    <span class="tag">IoT system design</span>
+                    <a class="tag" href="/tag/iot-system-design/"
+                       style="text-decoration:none;">IoT system design</a>
                     
                 </div>
                 
@@ -250,13 +283,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         17 min read
                         &nbsp;·&nbsp; 3353 words
                         
@@ -461,6 +487,18 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
 <p>Firmware updates are CPU- and memory-intensive. If your gateway is also handling MQTT traffic, the update process can starve the network stack, causing packet loss. The fix is to pause MQTT traffic during updates or offload the update to a dedicated process with real-time scheduling. In our case, we added a firmware update queue with a circuit breaker. When an update starts, the queue stops accepting new messages until the update completes, preventing packet loss. This reduced firmware update failure rate from 12% to 1.5%.</p>
 <h2 id="the-one-sentence-summary-that-stays-in-your-head">The one-sentence summary that stays in your head</h2>
 <p>IoT architecture is a chain of constrained tiers—device, gateway, broker, cloud—where every hop has a latency, power, and cost budget, and the system only works when you measure each hop before you optimize it.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -476,14 +514,10 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -544,5 +578,29 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

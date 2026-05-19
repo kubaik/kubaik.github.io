@@ -6,16 +6,29 @@
     <title>Mobile app security flaws finally explained - Tech Blog</title>
     <meta name="description" content="Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.">
     <meta name="keywords" content="CyberSecurity, InfoSec, hard-coded API keys, ios app security, CertificatePinning, mobile app vulnerabilities, android app security, app security checklist, certificate pinning, mobile API security, mobile app security, how to secure mobile app, why mobile apps leak data">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-04T06:44:13.848521">
     <meta name="article:modified_time" content="2026-05-04T06:44:13.848528">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Mobile app security flaws finally explained - Tech Blog">
+    <meta property="og:title" content="Mobile app security flaws finally explained">
     <meta property="og:description" content="Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.">
+    <meta property="og:url" content="https://kubaik.github.io/mobile-app-security-flaws-finally-explained/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/mobile-app-security-flaws-finally-explained.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mobile app security flaws finally explained">
+    <meta name="twitter:description" content="Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/mobile-app-security-flaws-finally-explained.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/mobile-app-security-flaws-finally-explained/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">CyberSecurity</span>
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">CyberSecurity</a>
                     
-                    <span class="tag">InfoSec</span>
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">InfoSec</a>
                     
-                    <span class="tag">hard-coded API keys</span>
+                    <a class="tag" href="/tag/hard-coded-api-keys/"
+                       style="text-decoration:none;">hard-coded API keys</a>
                     
-                    <span class="tag">CertificatePinning</span>
+                    <a class="tag" href="/tag/certificatepinning/"
+                       style="text-decoration:none;">CertificatePinning</a>
                     
-                    <span class="tag">mobile app vulnerabilities</span>
+                    <a class="tag" href="/tag/mobile-app-vulnerabilities/"
+                       style="text-decoration:none;">mobile app vulnerabilities</a>
                     
-                    <span class="tag">app security checklist</span>
+                    <a class="tag" href="/tag/app-security-checklist/"
+                       style="text-decoration:none;">app security checklist</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         10 min read
                         &nbsp;·&nbsp; 2091 words
                         
@@ -377,6 +403,18 @@ adb shell run-as com.coupons ls /data/data/com.coupons/files
 <p>In synthetic benchmarks on a mid-tier Android 13 device with a 4G connection, plain HTTPS (TLS 1.2, no pinning) averaged 145 ms for a 1 KB JSON response. TLS 1.3 + certificate pinning added 38 ms (26% overhead), and pinning with a custom trust store added 52 ms (36% overhead). In real usage with image caching, the overhead dropped to 12 ms because most responses came from the disk cache. The latency spike only matters for the first request of a session; after that, the cost is negligible. We measured this with Android’s <code>StrictMode</code> thread policy and <code>OkHttp</code> event listeners.</p>
 <h2 id="the-one-thing-you-should-do-tomorrow-morning">The one thing you should do tomorrow morning</h2>
 <p>Open your app’s APK with <code>apktool d app.apk</code>, run <code>grep -rR "http://\\|https://\\|key\\|token\\|secret" .</code>, and count how many secrets you find. If the list is longer than your coffee break, pick the highest-value secret (usually an API key or JWT) and move it behind a lightweight serverless function that issues 1-hour JWTs. Deploy the change behind a feature flag, monitor error rates for 24 hours, and roll forward only if errors stay below 0.5%. That single move will eliminate 80% of your mobile attack surface without touching the user experience.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -392,14 +430,10 @@ adb shell run-as com.coupons ls /data/data/com.coupons/files
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -460,5 +494,29 @@ adb shell run-as com.coupons ls /data/data/com.coupons/files
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

@@ -6,16 +6,29 @@
     <title>Freelancer burnout: how I fixed it in 8 weeks - Tech Blog</title>
     <meta name="description" content="Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.">
     <meta name="keywords" content="FreelanceDeveloperBurnout, FreelanceBurnoutRecovery, FreelanceDeveloperContractTiers, DockerComposeStackIsolation, AsyncWorkflowForFreelancers, MarginsForFreelanceDevelopers, OuraRingSleepMetrics, CognitiveLoadIndexSurvey, Softwareengineering, Coding, Docker, Containers, Freelancing">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-13T20:58:55.319650">
     <meta name="article:modified_time" content="2026-05-13T20:58:55.319657">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Freelancer burnout: how I fixed it in 8 weeks - Tech Blog">
+    <meta property="og:title" content="Freelancer burnout: how I fixed it in 8 weeks">
     <meta property="og:description" content="Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.">
+    <meta property="og:url" content="https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/freelancer-burnout-how-i-fixed-it-in-8-weeks.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelancer burnout: how I fixed it in 8 weeks">
+    <meta name="twitter:description" content="Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/freelancer-burnout-how-i-fixed-it-in-8-weeks.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">FreelanceDeveloperBurnout</span>
+                    <a class="tag" href="/tag/freelancedeveloperburnout/"
+                       style="text-decoration:none;">FreelanceDeveloperBurnout</a>
                     
-                    <span class="tag">FreelanceBurnoutRecovery</span>
+                    <a class="tag" href="/tag/freelanceburnoutrecovery/"
+                       style="text-decoration:none;">FreelanceBurnoutRecovery</a>
                     
-                    <span class="tag">FreelanceDeveloperContractTiers</span>
+                    <a class="tag" href="/tag/freelancedevelopercontracttiers/"
+                       style="text-decoration:none;">FreelanceDeveloperContractTiers</a>
                     
-                    <span class="tag">DockerComposeStackIsolation</span>
+                    <a class="tag" href="/tag/dockercomposestackisolation/"
+                       style="text-decoration:none;">DockerComposeStackIsolation</a>
                     
-                    <span class="tag">AsyncWorkflowForFreelancers</span>
+                    <a class="tag" href="/tag/asyncworkflowforfreelancers/"
+                       style="text-decoration:none;">AsyncWorkflowForFreelancers</a>
                     
-                    <span class="tag">Softwareengineering</span>
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         15 min read
                         &nbsp;·&nbsp; 2901 words
                         
@@ -542,6 +568,18 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
 <h2 id="afterword-the-system-is-the-burnout-shield">Afterword: The system is the burnout shield</h2>
 <p>Burnout isn’t a personal failing; it’s a system failure. The fixes above aren’t about working less—they’re about redesigning the system so the work pays the right cognitive dividends. We still ship code. We still make money. The difference is that the system now prevents the burnout before it happens, not after.</p>
 <p>Next step: Pick one fix from this guide—TMVC, stack isolation, or async workflows—and implement it this quarter. Don’t wait for the burnout to hit. Build the shield before the arrows arrive.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -557,14 +595,10 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -625,5 +659,29 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

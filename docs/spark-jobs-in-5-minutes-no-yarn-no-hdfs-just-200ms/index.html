@@ -6,16 +6,29 @@
     <title>Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency - Tech Blog</title>
     <meta name="description" content="ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.">
     <meta name="keywords" content="apache spark without the headaches guide, apache spark without the headaches vs alternatives, apache spark without the headaches, apache spark without the headaches examples, apache spark without the headaches best practices, how to use apache spark without the headaches, what is apache spark without the headaches, apache spark without the headaches tutorial, TechJobs">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-27T19:10:49.334651">
     <meta name="article:modified_time" content="2026-04-27T19:10:49.334658">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency - Tech Blog">
+    <meta property="og:title" content="Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency">
     <meta property="og:description" content="ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.">
+    <meta property="og:url" content="https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Spark jobs in 5 minutes: no YARN, no HDFS, just 200ms latency">
+    <meta name="twitter:description" content="ly steals 10% of your driver memory before with Spark jobs minutes YARN — the driver, but the logs showed nothing useful.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/spark-jobs-in-5-minutes-no-yarn-no-hdfs-just-200ms/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -175,8 +188,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -219,17 +246,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">apache spark without the headaches guide</span>
+                    <a class="tag" href="/tag/apache-spark-without-the-headaches-guide/"
+                       style="text-decoration:none;">apache spark without the headaches guide</a>
                     
-                    <span class="tag">apache spark without the headaches</span>
+                    <a class="tag" href="/tag/apache-spark-without-the-headaches/"
+                       style="text-decoration:none;">apache spark without the headaches</a>
                     
-                    <span class="tag">apache spark without the headaches best practices</span>
+                    <a class="tag" href="/tag/apache-spark-without-the-headaches-best-practices/"
+                       style="text-decoration:none;">apache spark without the headaches best practices</a>
                     
-                    <span class="tag">how to use apache spark without the headaches</span>
+                    <a class="tag" href="/tag/how-to-use-apache-spark-without-the-headaches/"
+                       style="text-decoration:none;">how to use apache spark without the headaches</a>
                     
-                    <span class="tag">apache spark without the headaches tutorial</span>
+                    <a class="tag" href="/tag/apache-spark-without-the-headaches-tutorial/"
+                       style="text-decoration:none;">apache spark without the headaches tutorial</a>
                     
-                    <span class="tag">TechJobs</span>
+                    <a class="tag" href="/tag/techjobs/"
+                       style="text-decoration:none;">TechJobs</a>
                     
                 </div>
                 
@@ -247,13 +280,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         17 min read
                         &nbsp;·&nbsp; 3439 words
                         
@@ -544,6 +570,18 @@ kubectl wait --for=condition=completed sparkapplication/low-latency-agg --timeou
 <p><strong>The key takeaway here is:</strong> Spark Without the Headaches is wrong for petabyte-scale batch jobs, HDFS-only data, long-running services, teams without Kubernetes expertise, sub-100ms SLAs, or small clusters. Use YARN, Databricks, or Flink instead.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>After two months running Spark Without the Headaches in production, I’m convinced it’s the right choice for latency-sensitive, medium-sized workloads. The biggest win was eliminating YARN’s memory overhead and shuffle bottlenecks. The p99 latency improvement from 1.3s to 220ms made our batch jobs feel interactive, which delighted our product team. The cost savings were real: $1,700 per month on a 10-node cluster.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -559,14 +597,10 @@ kubectl wait --for=condition=completed sparkapplication/low-latency-agg --timeou
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -627,5 +661,29 @@ kubectl wait --for=condition=completed sparkapplication/low-latency-agg --timeou
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

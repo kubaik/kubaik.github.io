@@ -6,16 +6,29 @@
     <title>AI: Real or Fake? - Tech Blog</title>
     <meta name="description" content="Uncover the truth about AI-generated content: identify real vs fake, and spot manipulated media with expert insights.">
     <meta name="keywords" content="DataScience, what is AI-generated content used for, StartupLife, long-term effects of AI-generated news, detecting fake AI-generated content, can AI generate realistic content, Cloud, AI, how to identify AI-created videos, Blockchain, IoT, artificial intelligence, DigitalNomad, spotting fake AI-generated social media posts">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-12T13:45:50.499302">
     <meta name="article:modified_time" content="2026-04-12T13:45:50.499308">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="AI: Real or Fake? - Tech Blog">
+    <meta property="og:title" content="AI: Real or Fake?">
     <meta property="og:description" content="Uncover the truth about AI-generated content: identify real vs fake, and spot manipulated media with expert insights.">
+    <meta property="og:url" content="https://kubaik.github.io/ai-real-or-fake/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/ai-real-or-fake.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI: Real or Fake?">
+    <meta name="twitter:description" content="Uncover the truth about AI-generated content: identify real vs fake, and spot manipulated media with expert insights.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-real-or-fake.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-real-or-fake/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -180,8 +193,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -224,17 +251,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">DataScience</span>
+                    <a class="tag" href="/tag/datascience/"
+                       style="text-decoration:none;">DataScience</a>
                     
-                    <span class="tag">StartupLife</span>
+                    <a class="tag" href="/tag/startuplife/"
+                       style="text-decoration:none;">StartupLife</a>
                     
-                    <span class="tag">long-term effects of AI-generated news</span>
+                    <a class="tag" href="/tag/long-term-effects-of-ai-generated-news/"
+                       style="text-decoration:none;">long-term effects of AI-generated news</a>
                     
-                    <span class="tag">detecting fake AI-generated content</span>
+                    <a class="tag" href="/tag/detecting-fake-ai-generated-content/"
+                       style="text-decoration:none;">detecting fake AI-generated content</a>
                     
-                    <span class="tag">Cloud</span>
+                    <a class="tag" href="/tag/cloud/"
+                       style="text-decoration:none;">Cloud</a>
                     
-                    <span class="tag">AI</span>
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">AI</a>
                     
                 </div>
                 
@@ -252,13 +285,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         11 min read
                         &nbsp;·&nbsp; 2206 words
                         
@@ -367,6 +393,18 @@
 <p>The results were impressive. The website owners were able to publish an average of 10-12 high-quality blog posts per month, which led to a significant increase in engagement rates and SEO rankings. The AI-generated content was able to capture the tone and style of the website's brand, and the posts were often more informative and engaging than the human-written content.</p>
 <p>In terms of metrics, the website saw a 300% increase in organic traffic, a 25% increase in social media engagement, and a 15% increase in sales. The website owners were able to save around 8 hours per week on content creation, which they could allocate to other areas of the business.</p>
 <p>Overall, the case study demonstrates the potential of AI-generated content to transform the way businesses create and publish content. By leveraging AI-generated content, businesses can save time, increase efficiency, and improve the quality and consistency of their content, leading to better engagement rates, SEO benefits, and ultimately, revenue growth.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -381,15 +419,15 @@
             </div>
 
             
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -397,6 +435,12 @@
                     Code examples are tested on the stated platform and version.
                     If you spot an error, <a href="/contact/">please let us know</a> —
                     corrections are applied within 48 hours.
+                </p>
+                
+                <p style="margin-top:0.5rem">
+                    <strong>Affiliate disclosure:</strong> Some links in this article may earn
+                    the site a small commission at no cost to you.
+                    This does not influence which tools or services are recommended.
                 </p>
                 
             </div>
@@ -450,5 +494,29 @@
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

@@ -21,92 +21,36 @@
 
     <link rel="stylesheet" href="/static/style.css">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#6366f1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <script>
-        setTimeout(function () {
-            window.location.replace('/');
-        }, 3000);
-    </script>
+    <script>setTimeout(function(){window.location.replace('/');},3000);</script>
     <style>
-        .error-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 60vh;
-            text-align: center; padding: 2rem;
-        }
-        .error-code { font-size: 6rem; font-weight: 700; color: #6366f1; line-height: 1; margin-bottom: 1rem; }
-        .error-title { font-size: 1.5rem; color: #333; margin-bottom: 0.75rem; }
-        .error-message { color: #666; margin-bottom: 2rem; max-width: 420px; line-height: 1.6; }
-        .redirect-notice { font-size: 0.9rem; color: #888; margin-bottom: 1.5rem; }
-        .countdown { font-weight: 700; color: #6366f1; }
-        .home-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600; font-size: 1rem;
-        }
-        .home-button:hover { opacity: 0.9; }
-        .progress-bar-wrap {
-            width: 280px; height: 4px; background: #e0e0e0;
-            border-radius: 2px; margin: 1.5rem auto 0; overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%; width: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px; animation: drain 3s linear forwards; transform-origin: left;
-        }
-        @keyframes drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        .error-container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem}
+        .error-code{font-size:6rem;font-weight:700;color:#6366f1;line-height:1;margin-bottom:1rem}
+        .home-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.75rem 2rem;border-radius:50px;text-decoration:none;font-weight:600}
+        .progress-bar-wrap{width:280px;height:4px;background:#e0e0e0;border-radius:2px;margin:1.5rem auto 0;overflow:hidden}
+        .progress-bar{height:100%;width:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:2px;animation:drain 3s linear forwards;transform-origin:left}
+        @keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="/">Tech Blog</a></h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
-                <a href="/privacy-policy/">Privacy Policy</a>
-                <a href="/terms-of-service/">Terms of Service</a>
-            </nav>
-        </div>
-    </header>
+    <header><div class="container">
+        <h1><a href="/">Tech Blog</a></h1>
+        <nav><a href="/">Home</a><a href="/about/">About</a></nav>
+    </div></header>
     <main class="container">
         <div class="error-container">
             <div class="error-code">404</div>
-            <h2 class="error-title">Page Not Found</h2>
-            <p class="error-message">
-                This page may have been moved or deleted.
-                You'll be taken to the homepage automatically.
-            </p>
-            <p class="redirect-notice">
-                Redirecting in <span class="countdown" id="countdown">3</span> seconds&hellip;
-            </p>
+            <h2>Page Not Found</h2>
+            <p>This page may have been moved or deleted. You'll be redirected automatically.</p>
+            <p>Redirecting in <strong id="countdown">3</strong> seconds&hellip;</p>
             <a href="/" class="home-button">Go to Homepage Now</a>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar"></div>
-            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
         </div>
     </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Tech Blog</p>
-        </div>
-    </footer>
-    <script src="/static/navigation.js"></script>
+    <footer><div class="container"><p>&copy; 2026 Tech Blog</p></div></footer>
     <script>
-        var seconds = 3;
-        var el = document.getElementById('countdown');
-        var interval = setInterval(function () {
-            seconds -= 1;
-            if (el) el.textContent = seconds;
-            if (seconds <= 0) clearInterval(interval);
-        }, 1000);
+        var s=3,el=document.getElementById('countdown');
+        var iv=setInterval(function(){s-=1;if(el)el.textContent=s;if(s<=0)clearInterval(iv);},1000);
     </script>
-    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

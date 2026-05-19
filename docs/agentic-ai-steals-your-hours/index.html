@@ -6,16 +6,29 @@
     <title>Agentic AI steals your hours - Tech Blog</title>
     <meta name="description" content="Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.">
     <meta name="keywords" content="AI, agentic AI time savings, AI coding tools waste time, AI guardrails for developers, real-world agentic AI examples, AI debugging time cost, AgenticAI, ArtificialIntelligence, AI vs manual coding comparison, agentic AI solo developer, solo developer productivity tools">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-07T12:26:54.413399">
     <meta name="article:modified_time" content="2026-05-07T12:26:54.413406">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Agentic AI steals your hours - Tech Blog">
+    <meta property="og:title" content="Agentic AI steals your hours">
     <meta property="og:description" content="Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.">
+    <meta property="og:url" content="https://kubaik.github.io/agentic-ai-steals-your-hours/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/agentic-ai-steals-your-hours.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agentic AI steals your hours">
+    <meta name="twitter:description" content="Cut 70% dev time with agentic AI — here’s where it actually saves hours and where it wastes them with benchmarks, guardrails, and concrete examples from Brazil, Colombia, and Mexico deployments.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/agentic-ai-steals-your-hours.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/agentic-ai-steals-your-hours/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -177,8 +190,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -221,17 +248,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">AI</span>
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">AI</a>
                     
-                    <span class="tag">agentic AI time savings</span>
+                    <a class="tag" href="/tag/agentic-ai-time-savings/"
+                       style="text-decoration:none;">agentic AI time savings</a>
                     
-                    <span class="tag">AI coding tools waste time</span>
+                    <a class="tag" href="/tag/ai-coding-tools-waste-time/"
+                       style="text-decoration:none;">AI coding tools waste time</a>
                     
-                    <span class="tag">AI guardrails for developers</span>
+                    <a class="tag" href="/tag/ai-guardrails-for-developers/"
+                       style="text-decoration:none;">AI guardrails for developers</a>
                     
-                    <span class="tag">AgenticAI</span>
+                    <a class="tag" href="/tag/agenticai/"
+                       style="text-decoration:none;">AgenticAI</a>
                     
-                    <span class="tag">ArtificialIntelligence</span>
+                    <a class="tag" href="/tag/artificialintelligence/"
+                       style="text-decoration:none;">ArtificialIntelligence</a>
                     
                 </div>
                 
@@ -249,13 +282,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         18 min read
                         &nbsp;·&nbsp; 3596 words
                         
@@ -560,6 +586,18 @@ Only if the task is low risk and the cost is justified. For example, if you’re
 </tr>
 </tbody>
 </table>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -574,15 +612,15 @@ Only if the task is low risk and the cost is justified. For example, if you’re
             </div>
 
             
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -590,6 +628,12 @@ Only if the task is low risk and the cost is justified. For example, if you’re
                     Code examples are tested on the stated platform and version.
                     If you spot an error, <a href="/contact/">please let us know</a> —
                     corrections are applied within 48 hours.
+                </p>
+                
+                <p style="margin-top:0.5rem">
+                    <strong>Affiliate disclosure:</strong> Some links in this article may earn
+                    the site a small commission at no cost to you.
+                    This does not influence which tools or services are recommended.
                 </p>
                 
             </div>
@@ -643,5 +687,29 @@ Only if the task is low risk and the cost is justified. For example, if you’re
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

@@ -6,16 +6,29 @@
     <title>Your dev environment is lying to you — here’s how to fix it - Tech Blog</title>
     <meta name="description" content="How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.">
     <meta name="keywords" content="debug production locally, DevelopmentEnvironment, ToxiproxyLatency, Docker, docker buildx caching, ProductionSimulation, secrets in dev, production simulation, tilt local development, Containers, docker live reload, toxiproxy latency, development environment">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-23T17:56:58.247805">
     <meta name="article:modified_time" content="2026-04-23T17:56:58.247811">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Your dev environment is lying to you — here’s how to fix it - Tech Blog">
+    <meta property="og:title" content="Your dev environment is lying to you — here’s how to fix it">
     <meta property="og:description" content="How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.">
+    <meta property="og:url" content="https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/your-dev-environment-is-lying-to-you-heres-how-to-.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your dev environment is lying to you — here’s how to fix it">
+    <meta name="twitter:description" content="How to stop debugging environment differences and start shipping with confidence by running production-like containers locally with live code reload and network simulation.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/your-dev-environment-is-lying-to-you-heres-how-to-.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/your-dev-environment-is-lying-to-you-heres-how-to-/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">DevelopmentEnvironment</span>
+                    <a class="tag" href="/tag/developmentenvironment/"
+                       style="text-decoration:none;">DevelopmentEnvironment</a>
                     
-                    <span class="tag">ToxiproxyLatency</span>
+                    <a class="tag" href="/tag/toxiproxylatency/"
+                       style="text-decoration:none;">ToxiproxyLatency</a>
                     
-                    <span class="tag">Docker</span>
+                    <a class="tag" href="/tag/docker/"
+                       style="text-decoration:none;">Docker</a>
                     
-                    <span class="tag">ProductionSimulation</span>
+                    <a class="tag" href="/tag/productionsimulation/"
+                       style="text-decoration:none;">ProductionSimulation</a>
                     
-                    <span class="tag">production simulation</span>
+                    <a class="tag" href="/tag/production-simulation/"
+                       style="text-decoration:none;">production simulation</a>
                     
-                    <span class="tag">tilt local development</span>
+                    <a class="tag" href="/tag/tilt-local-development/"
+                       style="text-decoration:none;">tilt local development</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         16 min read
                         &nbsp;·&nbsp; 3150 words
                         
@@ -498,6 +524,18 @@ toxiproxy-cli toxic add --type packet_loss --toxicity 0.05 service-b-proxy downs
 <p>If it reports none of those, you’re already ahead. If it does, spend one day implementing the Tilt + toxiproxy pattern for your main service. Measure the difference in incident rate over the next two weeks. If you’re not convinced, revert and move on. But if you cut even one production fire, the experiment pays for itself.</p>
 <p>Start with a single service. Get it working end-to-end. Then expand to the services it calls. Don’t try to simulate the entire company on day one. The goal is fidelity, not completeness.</p>
 <p>And remember: the environment that doesn’t frustrate you is the one that fails in production first.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -513,14 +551,10 @@ toxiproxy-cli toxic add --type packet_loss --toxicity 0.05 service-b-proxy downs
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -581,5 +615,29 @@ toxiproxy-cli toxic add --type packet_loss --toxicity 0.05 service-b-proxy downs
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

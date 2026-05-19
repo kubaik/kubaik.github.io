@@ -6,16 +6,29 @@
     <title>We wasted 6 months over-engineering - Tech Blog</title>
     <meta name="description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
     <meta name="keywords" content="simplicity vs scalability, over-engineering costs, Performance, CloudComputing, Kubernetes, dashboard performance, Kafka vs cron jobs, microservices vs monolith, K8s, FastAPI vs Django, when to use Kubernetes, cloud cost optimization, TechJobs">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-07T19:26:11.076580">
     <meta name="article:modified_time" content="2026-05-07T19:26:11.076587">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="We wasted 6 months over-engineering - Tech Blog">
+    <meta property="og:title" content="We wasted 6 months over-engineering">
     <meta property="og:description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta property="og:url" content="https://kubaik.github.io/we-wasted-6-months-over-engineering/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/we-wasted-6-months-over-engineering.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="We wasted 6 months over-engineering">
+    <meta name="twitter:description" content="Cut dashboard latency from 1.2s to 85ms and cloud costs from $1,800 to $350 — the real cost of over-engineering an analytics dashboard we didn’t need">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/we-wasted-6-months-over-engineering.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/we-wasted-6-months-over-engineering/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -179,8 +192,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -223,17 +250,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">simplicity vs scalability</span>
+                    <a class="tag" href="/tag/simplicity-vs-scalability/"
+                       style="text-decoration:none;">simplicity vs scalability</a>
                     
-                    <span class="tag">over-engineering costs</span>
+                    <a class="tag" href="/tag/over-engineering-costs/"
+                       style="text-decoration:none;">over-engineering costs</a>
                     
-                    <span class="tag">Performance</span>
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
                     
-                    <span class="tag">CloudComputing</span>
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">CloudComputing</a>
                     
-                    <span class="tag">Kubernetes</span>
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
                     
-                    <span class="tag">dashboard performance</span>
+                    <a class="tag" href="/tag/dashboard-performance/"
+                       style="text-decoration:none;">dashboard performance</a>
                     
                 </div>
                 
@@ -251,13 +284,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         15 min read
                         &nbsp;·&nbsp; 3045 words
                         
@@ -555,6 +581,18 @@ async def health():
 <p>We’ve added 8 new features in the last 8 months. Each took 2–3 days. The codebase is 1,200 lines — easy to understand. We follow a simple rule: if a feature requires more than 50 lines of code, it goes in its own file. We’ve never hit the point where the monolith became unmaintainable. That point is usually much further away than teams assume.</p>
 <h3 id="how-did-you-convince-leadership-to-accept-a-simpler-solution">How did you convince leadership to accept a simpler solution?</h3>
 <p>We didn’t argue about architecture — we argued about outcomes. We showed them the numbers: 80% cost savings, 14x faster response time, 0 on-call incidents. We also ran a live demo: we built a new KPI dashboard in 2 hours using the simple stack. Leadership cares about speed, cost, and reliability — not architecture diagrams. We led with the results.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -570,14 +608,10 @@ async def health():
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -638,5 +672,29 @@ async def health():
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

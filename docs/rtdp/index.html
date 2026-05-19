@@ -6,16 +6,29 @@
     <title>RTDP - Tech Blog</title>
     <meta name="description" content="Real-time data processing at scale with Apache Kafka, Flink, and Storm">
     <meta name="keywords" content="Apache Storm, ApacheFlink, real-time data processing, What is real-time data processing used for, Benefits of real-time data processing, DistributedSystems, Apache Kafka, How does real-time data processing work, ApacheKafka, ApacheStorm, DataEngineering, Apache Flink, distributed systems, stream processing">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-04-21T14:39:09.086226">
     <meta name="article:modified_time" content="2026-04-21T14:39:09.086232">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="RTDP - Tech Blog">
+    <meta property="og:title" content="RTDP">
     <meta property="og:description" content="Real-time data processing at scale with Apache Kafka, Flink, and Storm">
+    <meta property="og:url" content="https://kubaik.github.io/rtdp/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/rtdp.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RTDP">
+    <meta name="twitter:description" content="Real-time data processing at scale with Apache Kafka, Flink, and Storm">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/rtdp.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rtdp/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -180,8 +193,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -224,17 +251,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">Apache Storm</span>
+                    <a class="tag" href="/tag/apache-storm/"
+                       style="text-decoration:none;">Apache Storm</a>
                     
-                    <span class="tag">ApacheFlink</span>
+                    <a class="tag" href="/tag/apacheflink/"
+                       style="text-decoration:none;">ApacheFlink</a>
                     
-                    <span class="tag">real-time data processing</span>
+                    <a class="tag" href="/tag/real-time-data-processing/"
+                       style="text-decoration:none;">real-time data processing</a>
                     
-                    <span class="tag">DistributedSystems</span>
+                    <a class="tag" href="/tag/distributedsystems/"
+                       style="text-decoration:none;">DistributedSystems</a>
                     
-                    <span class="tag">Apache Kafka</span>
+                    <a class="tag" href="/tag/apache-kafka/"
+                       style="text-decoration:none;">Apache Kafka</a>
                     
-                    <span class="tag">ApacheKafka</span>
+                    <a class="tag" href="/tag/apachekafka/"
+                       style="text-decoration:none;">ApacheKafka</a>
                     
                 </div>
                 
@@ -252,13 +285,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         11 min read
                         &nbsp;·&nbsp; 2210 words
                         
@@ -362,6 +388,18 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
 <p>We redesigned the system using <strong>Apache Flink 1.14.0</strong> on Kubernetes (EKS), ingesting data via <strong>Apache Kafka 3.1.0</strong> (150 partitions, 3 brokers). GPS devices streamed JSON messages to a <code>raw-tracker-events</code> topic at peak rates of 180K messages/sec. Flink consumed this stream, parsed GPS coordinates, enriched with geofence data from Redis 6.2, and computed <strong>real-time ETA predictions</strong> using a sliding 5-minute window. Processed events were written to <strong>Amazon DynamoDB</strong> for low-latency queries and to <strong>Snowflake</strong> for analytics.</p>
 <p>The results were dramatic. <strong>End-to-end latency dropped to 350–400ms</strong>, enabling live tracking in the customer portal. We implemented <strong>exactly-once processing</strong> via Flink’s Kafka source with <code>enable.idempotence=true</code> and <code>isolation.level=read_committed</code>. Checkpointing was set to every 10 seconds with <code>RocksDB</code> state backend, and we achieved 99.99% uptime over six months. The number of support tickets related to tracking dropped by 68%, and <strong>on-time delivery improved to 92%</strong> due to dynamic rerouting based on real-time traffic and location data.</p>
 <p>From a cost perspective, the Flink cluster (12 nodes, m5.2xlarge) cost $18.72/day, compared to the previous Airflow setup ($22.30/day with higher EC2 utilization). More importantly, <strong>customer retention increased by 15%</strong> within three months, directly attributed to improved transparency. This case study proves that moving from batch to real-time isn’t just about speed—it’s about unlocking new business value through timely decisions, better UX, and operational efficiency. The investment paid for itself in under 8 weeks.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -377,14 +415,10 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -445,5 +479,29 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

@@ -6,16 +6,29 @@
     <title>Vector search: when to use it — and when not to - Tech Blog</title>
     <meta name="description" content="Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.">
     <meta name="keywords" content="when to use vector database, VectorDB, vector database cost comparison, vector search recall vs latency, Database, Postgres vector search latency, Milvus vs Pinecone vs Weaviate, pgvector HNSW vs IVFFlat, PostgreSQL, dedicated vector database cost, pgvector vs milvus">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-09T07:03:03.310687">
     <meta name="article:modified_time" content="2026-05-09T07:03:03.310693">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Vector search: when to use it — and when not to - Tech Blog">
+    <meta property="og:title" content="Vector search: when to use it — and when not to">
     <meta property="og:description" content="Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.">
+    <meta property="og:url" content="https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/vector-search-when-to-use-it-and-when-not-to.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vector search: when to use it — and when not to">
+    <meta name="twitter:description" content="Cut API response time by 65% with pgvector vs Milvus — 12 ms vs 4 ms p95, $0.01 vs $0.04 per 100 k queries, and when to ignore the dedicated vector database.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/vector-search-when-to-use-it-and-when-not-to.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/vector-search-when-to-use-it-and-when-not-to/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -177,8 +190,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -221,17 +248,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">when to use vector database</span>
+                    <a class="tag" href="/tag/when-to-use-vector-database/"
+                       style="text-decoration:none;">when to use vector database</a>
                     
-                    <span class="tag">VectorDB</span>
+                    <a class="tag" href="/tag/vectordb/"
+                       style="text-decoration:none;">VectorDB</a>
                     
-                    <span class="tag">vector database cost comparison</span>
+                    <a class="tag" href="/tag/vector-database-cost-comparison/"
+                       style="text-decoration:none;">vector database cost comparison</a>
                     
-                    <span class="tag">Database</span>
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
                     
-                    <span class="tag">Postgres vector search latency</span>
+                    <a class="tag" href="/tag/postgres-vector-search-latency/"
+                       style="text-decoration:none;">Postgres vector search latency</a>
                     
-                    <span class="tag">Milvus vs Pinecone vs Weaviate</span>
+                    <a class="tag" href="/tag/milvus-vs-pinecone-vs-weaviate/"
+                       style="text-decoration:none;">Milvus vs Pinecone vs Weaviate</a>
                     
                 </div>
                 
@@ -249,13 +282,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         11 min read
                         &nbsp;·&nbsp; 2274 words
                         
@@ -539,6 +565,18 @@ results = collection.search(
 <p>On Postgres 16 with HNSW, expect 35–40 MB RSS per 1 M vectors. A 32 M vector index will use 1.1–1.3 GB RSS plus Postgres overhead. Monitor with <code>top -p $(pgrep -d, postgres)</code> and watch RSS growth during index build; if it spikes above 1.5 GB per 1 M vectors, your <code>work_mem</code> or <code>maintenance_work_mem</code> settings are too low.</p>
 <p>Can I run pgvector on Aurora Serverless v2?</p>
 <p>Yes, but expect higher latency and occasional cold starts. Aurora Serverless v2 does not cache the HNSW graph in memory, so the first query after idle can take 200–500 ms. If your workload has idle periods &gt;5 minutes, use provisioned Aurora or RDS Multi-AZ instead. I measured 82 ms p95 on Aurora Serverless v2 vs 14 ms on RDS Multi-AZ for the same 8 M vector dataset.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -554,14 +592,10 @@ results = collection.search(
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -622,5 +656,29 @@ results = collection.search(
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

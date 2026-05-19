@@ -6,16 +6,29 @@
     <title>Edge functions pay off only at 50k req/day - Tech Blog</title>
     <meta name="description" content="Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.">
     <meta name="keywords" content="EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense, EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseTutorial, EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseGuide, HowToUseEdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense, EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseBestPractices, EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseExamples, WhatIsEdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense, EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseVsAlternatives, Cloudcomputing">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-13T22:42:14.008799">
     <meta name="article:modified_time" content="2026-05-13T22:42:14.008805">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Edge functions pay off only at 50k req/day - Tech Blog">
+    <meta property="og:title" content="Edge functions pay off only at 50k req/day">
     <meta property="og:description" content="Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.">
+    <meta property="og:url" content="https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/edge-functions-pay-off-only-at-50k-reqday.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Edge functions pay off only at 50k req/day">
+    <meta name="twitter:description" content="Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/edge-functions-pay-off-only-at-50k-reqday.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/edge-functions-pay-off-only-at-50k-reqday/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -175,8 +188,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -219,17 +246,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense</span>
+                    <a class="tag" href="/tag/edgefunctionsin2026:whencloudflareworkersandverceledgeactuallymakesense/"
+                       style="text-decoration:none;">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense</a>
                     
-                    <span class="tag">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseTutorial</span>
+                    <a class="tag" href="/tag/edgefunctionsin2026:whencloudflareworkersandverceledgeactuallymakesensetutorial/"
+                       style="text-decoration:none;">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseTutorial</a>
                     
-                    <span class="tag">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseGuide</span>
+                    <a class="tag" href="/tag/edgefunctionsin2026:whencloudflareworkersandverceledgeactuallymakesenseguide/"
+                       style="text-decoration:none;">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseGuide</a>
                     
-                    <span class="tag">HowToUseEdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense</span>
+                    <a class="tag" href="/tag/howtouseedgefunctionsin2026:whencloudflareworkersandverceledgeactuallymakesense/"
+                       style="text-decoration:none;">HowToUseEdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSense</a>
                     
-                    <span class="tag">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseBestPractices</span>
+                    <a class="tag" href="/tag/edgefunctionsin2026:whencloudflareworkersandverceledgeactuallymakesensebestpractices/"
+                       style="text-decoration:none;">EdgeFunctionsIn2026:WhenCloudflareWorkersAndVercelEdgeActuallyMakeSenseBestPractices</a>
                     
-                    <span class="tag">Cloudcomputing</span>
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
                     
                 </div>
                 
@@ -247,13 +280,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         21 min read
                         &nbsp;·&nbsp; 4164 words
                         
@@ -531,6 +557,18 @@ No. Workers do not support TCP sockets, so you can’t connect to a PostgreSQL d
 At 50k daily requests, edge functions start to look interesting. At 100k daily requests, the cost of Workers or Vercel Edge ($10–$20/month) is often less than the origin bandwidth cost ($30–$50/month for 50 GB transferred). Below 50k daily requests, static HTML or a small origin server is cheaper. I measured this on a client’s blog: 40 GB/month from S3 CloudFront cost $8/month; moving to Workers cost $12/month but reduced origin bandwidth to 20 GB, saving $4/month net.",</p>
 <p>seo_keywords": ["edge functions cost","Cloudflare Workers vs Vercel Edge","edge functions pricing 2026","when to use edge functions","edge functions latency benchmarks","edge functions vs serverless","edge functions real world performance","edge functions for static sites"],
 "meta_description": "Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -546,14 +584,10 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -614,5 +648,29 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

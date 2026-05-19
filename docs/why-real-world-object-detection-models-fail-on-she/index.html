@@ -6,16 +6,29 @@
     <title>Why real-world object detection models fail on shelf images (and how to fix it) - Tech Blog</title>
     <meta name="description" content="Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.">
     <meta name="keywords" content="retail vision failures, real-world computer vision, SKU-110K training, Sku110kTraining, pose augmentation for vision, shelf detection accuracy, IndieHacker, retail product detection, object detection in retail, context-aware object detection">
-    <!-- Editorial / E-E-A-T meta tags -->
     <meta name="author" content="Kubai Kevin">
     <meta name="article:author" content="Kubai Kevin">
     <meta name="article:published_time" content="2026-05-05T19:05:13.681755">
     <meta name="article:modified_time" content="2026-05-05T19:05:13.681762">
     <meta name="article:section" content="Technology">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Why real-world object detection models fail on shelf images (and how to fix it) - Tech Blog">
+    <meta property="og:title" content="Why real-world object detection models fail on shelf images (and how to fix it)">
     <meta property="og:description" content="Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.">
+    <meta property="og:url" content="https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="og:image" content="https://kubaik.github.io/static/images/why-real-world-object-detection-models-fail-on-she.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Why real-world object detection models fail on shelf images (and how to fix it)">
+    <meta name="twitter:description" content="Cut retail product detection errors by 70% with pose augmentation, context labels, and shelf normalization under real store conditions, achieving 89% mAP and 84% recall across 12 stores.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-real-world-object-detection-models-fail-on-she.jpg">
+    <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-real-world-object-detection-models-fail-on-she/">
+    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -176,8 +189,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
+    <style>
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 9999; transition: width 0.1s linear;
+        }
+        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Table overflow on mobile */
+        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Inline ad spacing */
+        .ad-inline { margin: 2rem 0; text-align: center; }
+    </style>
 </head>
 <body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
@@ -220,17 +247,23 @@
                 
                 <div class="tags">
                     
-                    <span class="tag">real-world computer vision</span>
+                    <a class="tag" href="/tag/real-world-computer-vision/"
+                       style="text-decoration:none;">real-world computer vision</a>
                     
-                    <span class="tag">SKU-110K training</span>
+                    <a class="tag" href="/tag/sku-110k-training/"
+                       style="text-decoration:none;">SKU-110K training</a>
                     
-                    <span class="tag">Sku110kTraining</span>
+                    <a class="tag" href="/tag/sku110ktraining/"
+                       style="text-decoration:none;">Sku110kTraining</a>
                     
-                    <span class="tag">IndieHacker</span>
+                    <a class="tag" href="/tag/indiehacker/"
+                       style="text-decoration:none;">IndieHacker</a>
                     
-                    <span class="tag">shelf detection accuracy</span>
+                    <a class="tag" href="/tag/shelf-detection-accuracy/"
+                       style="text-decoration:none;">shelf detection accuracy</a>
                     
-                    <span class="tag">retail product detection</span>
+                    <a class="tag" href="/tag/retail-product-detection/"
+                       style="text-decoration:none;">retail product detection</a>
                     
                 </div>
                 
@@ -248,13 +281,6 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" aria-hidden="true"
-                            style="vertical-align:middle;margin-right:3px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
                         13 min read
                         &nbsp;·&nbsp; 2560 words
                         
@@ -512,6 +538,18 @@ def normalize_shelf_view(image, src_pts, dst_pts):
 </tbody>
 </table>
 <p>The key takeaway here is that small improvements in augmentation and context yield outsized gains in recall and swap rate, while TTA gives a final boost with minimal cost.</p>
+                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
@@ -527,14 +565,10 @@ def normalize_shelf_view(image, src_pts, dst_pts):
 
             
 
-            <!-- Content transparency footer (AdSense policy compliance) -->
             <div class="content-policy-footer" style="
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0;
-                font-size: 0.8rem;
-                color: #888;
-                line-height: 1.6;
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
             ">
                 <p>
                     <strong>Editorial standards:</strong> This article reflects the author's
@@ -595,5 +629,29 @@ def normalize_shelf_view(image, src_pts, dst_pts):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
+    <!-- Reading progress bar -->
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>
