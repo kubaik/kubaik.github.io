@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 13:50:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 13:53:03 +0000</lastBuildDate>
+    <item>
+      <title>From LeetCode to live systems</title>
+      <link>https://kubaik.github.io/from-leetcode-to-live-systems/</link>
+      <description>Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes.</description>
+      <pubDate>Tue, 19 May 2026 13:52:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/from-leetcode-to-live-systems/</guid>
+    </item>
     <item>
       <title>AI-first systems: 3 patterns that don’t collapse</title>
       <link>https://kubaik.github.io/ai-first-systems-3-patterns-that-dont-collapse/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time latency 85% with WebSockets vs SSE vs long polling — exact benchmarks, code snippets, and the one setting every team misses first</description>
       <pubDate>Mon, 18 May 2026 23:40:07 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-tool/</guid>
-    </item>
-    <item>
-      <title>Message queues: the 6-second trap most teams miss</title>
-      <link>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</link>
-      <description>Cut API latency 60% with Redis Streams queues — real benchmarks, poison message traps, and the 6-second trap most teams miss.</description>
-      <pubDate>Mon, 18 May 2026 23:36:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</guid>
     </item>
   </channel>
 </rss>
