@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 23:48:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 23:58:01 +0000</lastBuildDate>
+    <item>
+      <title>Freelance burnout fixed: what I cut first</title>
+      <link>https://kubaik.github.io/freelance-burnout-fixed-what-i-cut-first/</link>
+      <description>Cut screen time 40% and recover from freelance burnout — exact contracts, context batching, and global latency fixes I used to drop my burnout score from 0.9 to 0.2 in 60 days</description>
+      <pubDate>Tue, 19 May 2026 23:57:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-burnout-fixed-what-i-cut-first/</guid>
+    </item>
     <item>
       <title>Shrink cloud carbon 37% without latency loss</title>
       <link>https://kubaik.github.io/shrink-cloud-carbon-37-without-latency-loss/</link>
@@ -138,13 +145,6 @@
       <description>Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors.</description>
       <pubDate>Tue, 19 May 2026 16:46:59 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-saas-db-traps-multi-tenancy-done-right/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for small teams: skip the overkill</title>
-      <link>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-overkill/</link>
-      <description>Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn&apos;t, and how to secure without overengineering.</description>
-      <pubDate>Tue, 19 May 2026 16:38:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-overkill/</guid>
     </item>
   </channel>
 </rss>
