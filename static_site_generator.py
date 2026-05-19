@@ -72,6 +72,7 @@ class StaticSiteGenerator:
         self._generate_posts_json(posts)
         self._generate_robots_txt()
         self._generate_404_page()
+        self._generate_ads_txt()
         self._generate_pwa_files()
         print(f"Site generated successfully with {len(posts)} posts!")
 
