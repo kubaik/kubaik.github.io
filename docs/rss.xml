@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 12:56:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 10:00:42 +0000</lastBuildDate>
+    <item>
+      <title>Startup mistakes: when fancy tech delays the real product</title>
+      <link>https://kubaik.github.io/startup-mistakes-when-fancy-tech-delays-the-real-product/</link>
+      <description>Cut development time 75% by removing Redis, Kafka, and Lambda — the over-engineered API that cost $180/month and 8 weeks of work, replaced with FastAPI and PostgreSQL for $38/month and 45ms latency.</description>
+      <pubDate>Tue, 19 May 2026 10:00:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/startup-mistakes-when-fancy-tech-delays-the-real-product/</guid>
+    </item>
     <item>
       <title>Choose the right real-time protocol</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-protocol/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI refactor time 60% by fixing the missing context trap — Copilot, Cursor, and OpenTelemetry trace indexing in 2026 with concrete numbers and quick checks.</description>
       <pubDate>Mon, 18 May 2026 20:50:28 +0000</pubDate>
       <guid>https://kubaik.github.io/learn-your-codebase-with-ai-the-missing-context-trap/</guid>
-    </item>
-    <item>
-      <title>Bypass TypeScript strict mode gaps</title>
-      <link>https://kubaik.github.io/bypass-typescript-strict-mode-gaps/</link>
-      <description>Cut runtime errors 80% with Zod 3.23 — the validation trap that slips past TypeScript strict mode and how to close it in 2026.</description>
-      <pubDate>Mon, 18 May 2026 20:14:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/bypass-typescript-strict-mode-gaps/</guid>
     </item>
   </channel>
 </rss>

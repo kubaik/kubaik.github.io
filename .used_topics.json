@@ -3,5 +3,6 @@
   "Database connection pooling: the setting everyone gets wrong",
   "TypeScript mistakes that slip through even with strict mode",
   "Building a portfolio that gets you hired remotely from Africa",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
+  "The real cost of over-engineering: when simplicity beats the fancy architecture"
 ]
