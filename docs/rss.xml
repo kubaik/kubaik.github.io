@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 18:12:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 15:15:37 +0000</lastBuildDate>
+    <item>
+      <title>Beat Freelance Burnout Without Quitting</title>
+      <link>https://kubaik.github.io/beat-freelance-burnout-without-quitting/</link>
+      <description>Reduce freelance dev burnout 60% with 3 concrete fixes: focus budget, attention residue, and financial buffer. 2026 tools, metrics, and a 30-minute next step.</description>
+      <pubDate>Tue, 19 May 2026 15:15:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/beat-freelance-burnout-without-quitting/</guid>
+    </item>
     <item>
       <title>$6.3k/month: How I escaped local pay</title>
       <link>https://kubaik.github.io/63kmonth-how-i-escaped-local-pay/</link>
@@ -138,13 +145,6 @@
       <description>Freelance developer rates 2026 cheat sheet — realistic numbers, real mistakes, and a step-by-step model to set your rate without guessing. Includes costs, market data, and a first-person breakdown of what went wrong.</description>
       <pubDate>Tue, 19 May 2026 05:54:44 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</guid>
-    </item>
-    <item>
-      <title>Overbuilt stacks waste 40% of dev time</title>
-      <link>https://kubaik.github.io/overbuilt-stacks-waste-40-of-dev-time/</link>
-      <description>Cut API latency from 223 ms to 8 ms and AWS costs from $18k to $7.6k by replacing Kafka Streams and Redis cluster with a Node.js pipeline and single Redis instance — the real numbers and trade-offs.</description>
-      <pubDate>Tue, 19 May 2026 02:57:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/overbuilt-stacks-waste-40-of-dev-time/</guid>
     </item>
   </channel>
 </rss>
