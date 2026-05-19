@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 18:25:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 18:31:00 +0000</lastBuildDate>
+    <item>
+      <title>Price Your Work, Not Their Budget</title>
+      <link>https://kubaik.github.io/price-your-work-not-their-budget/</link>
+      <description>Set freelance developer rates 2026 with a data-backed calculator — taxes, buffer, client risk multipliers, and real 2026 market benchmarks included. Avoid underpricing traps and negotiation regrets.</description>
+      <pubDate>Tue, 19 May 2026 18:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-your-work-not-their-budget/</guid>
+    </item>
     <item>
       <title>MCP servers: the silent layer you’re already using</title>
       <link>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</link>
@@ -138,13 +145,6 @@
       <description>Learn to negotiate a remote salary from a lower-cost country. Use market data, position your value, and handle client pushback to land better pay.</description>
       <pubDate>Tue, 19 May 2026 10:31:46 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-across-borders-effectively/</guid>
-    </item>
-    <item>
-      <title>Startup mistakes: when fancy tech delays the real product</title>
-      <link>https://kubaik.github.io/startup-mistakes-when-fancy-tech-delays-the-real-product/</link>
-      <description>Cut development time 75% by removing Redis, Kafka, and Lambda — the over-engineered API that cost $180/month and 8 weeks of work, replaced with FastAPI and PostgreSQL for $38/month and 45ms latency.</description>
-      <pubDate>Tue, 19 May 2026 10:00:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/startup-mistakes-when-fancy-tech-delays-the-real-product/</guid>
     </item>
   </channel>
 </rss>
