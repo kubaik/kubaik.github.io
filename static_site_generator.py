@@ -1157,12 +1157,29 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
-        .post-grid .post-card {display: flex !important;flex-direction: column !important;overflow: hidden !important;}
-        .post-grid .post-card .tags {margin-top: auto !important;padding-top: 0.75rem !important;}
-    .post-grid .post-card .post-reading-time {
-        margin-top: 0.5rem !important;
-        margin-bottom: 0 !important;
-    }
+        .post-grid .post-card {
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+        .post-grid .post-card .post-excerpt {
+            flex: 1 1 auto;
+        }
+        .post-grid .post-card .card-footer {
+            margin-top: auto;
+            padding-top: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .post-grid .post-card .card-footer .tags {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        .post-grid .post-card .card-footer .post-reading-time {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
         .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
         .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -1224,20 +1241,22 @@ def _build_templates() -> dict:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                    <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
+                   <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
                     data-title="{{ post.title | e }}"
                     data-description="{{ post.meta_description | e }}"
                     data-tags="{{ post.tags | join(',') | e }}">
                         <h3>{{ post.title }}</h3>
                         {% if post.meta_description %}<p class="post-excerpt">{{ post.meta_description }}</p>{% endif %}
-                        <p class="post-reading-time">{{ post.reading_time | default(1) }} min read &nbsp;·&nbsp; {{ post.display_date }}</p>
-                        {% if post.short_tags or post.tags %}
+                        <div class="card-footer">
+                            {% if post.short_tags or post.tags %}
                             <div class="tags">
                                 {% for tag in (post.short_tags if post.short_tags else post.tags[:3]) %}
                                 <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
                                 {% endfor %}
                             </div>
                             {% endif %}
+                            <p class="post-reading-time">{{ post.reading_time | default(1) }} min read &nbsp;·&nbsp; {{ post.display_date }}</p>
+                        </div>
                     </a>
                     {% endfor %}
             </div>
@@ -1316,12 +1335,12 @@ def _build_templates() -> dict:
             a.className = 'post-card';
             a.href      = BASE_PATH + '/' + (post.slug || '') + '/';
 
-            // Title — always present
+            // Title
             var h3         = document.createElement('h3');
             h3.textContent = post.title || '(Untitled)';
             a.appendChild(h3);
 
-            // Excerpt — fall back through meta_description → content → empty
+            // Excerpt — grows to fill available space via flex: 1
             var excerpt = ((post.meta_description || post.description || '')).trim();
             if (!excerpt && post.content) {
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
@@ -1336,7 +1355,32 @@ def _build_templates() -> dict:
                 a.appendChild(p);
             }
 
-            // Reading time + date — guard both fields
+            // Card footer — contains tags + reading time, pinned to bottom via margin-top:auto
+            var footer       = document.createElement('div');
+            footer.className = 'card-footer';
+
+            // Tags inside footer
+            var tags = post.short_tags || post.tags || [];
+            if (!Array.isArray(tags)) tags = [];
+            var displayTags = tags.slice().sort(function (x, y) {
+                return (x || '').length - (y || '').length;
+            }).slice(0, 3);
+
+            if (displayTags.length) {
+                var tagsDiv       = document.createElement('div');
+                tagsDiv.className = 'tags';
+                displayTags.forEach(function (t) {
+                    if (!t) return;
+                    var sp         = document.createElement('a');
+                    sp.className   = 'tag';
+                    sp.textContent = t;
+                    sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                    tagsDiv.appendChild(sp);
+                });
+                footer.appendChild(tagsDiv);
+            }
+
+            // Reading time + date inside footer
             var readingTime = post.reading_time || post.readingTime;
             if (readingTime) {
                 var rt       = document.createElement('p');
@@ -1345,30 +1389,10 @@ def _build_templates() -> dict:
                     ? ' \u00b7 ' + (post.display_date || post.displayDate)
                     : '';
                 rt.textContent = readingTime + ' min read' + dateText;
-                a.appendChild(rt);
+                footer.appendChild(rt);
             }
 
-            // Tags — prefer short_tags if available, fall back to tags, default []
-            var tags = post.short_tags || post.tags || [];
-            if (!Array.isArray(tags)) tags = [];
-            var displayTags = tags.slice().sort(function (x, y) {
-                return (x || '').length - (y || '').length;
-            }).slice(0, 3);
-
-            if (displayTags.length) {
-                var div       = document.createElement('div');
-                div.className = 'tags';
-                displayTags.forEach(function (t) {
-                    if (!t) return;
-                    var sp         = document.createElement('a');
-                    sp.className   = 'tag';
-                    sp.textContent = t;
-                    sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
-                    div.appendChild(sp);
-                });
-                a.appendChild(div);
-            }
-
+            a.appendChild(footer);
             return a;
         }
 
