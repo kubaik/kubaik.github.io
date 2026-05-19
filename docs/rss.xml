@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 16:00:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 16:38:33 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for small teams: skip the overkill</title>
+      <link>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-overkill/</link>
+      <description>Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn&apos;t, and how to secure without overengineering.</description>
+      <pubDate>Tue, 19 May 2026 16:38:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-overkill/</guid>
+    </item>
     <item>
       <title>Edge functions: waste or weapon?</title>
       <link>https://kubaik.github.io/edge-functions-waste-or-weapon/</link>
@@ -138,13 +145,6 @@
       <description>7 AI coding tools empowering non-traditional developers to ship production-ready software. Detailed pros/cons, costs, and real-world results included.</description>
       <pubDate>Tue, 19 May 2026 07:31:05 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ai-tools-powering-self-taught-developers/</guid>
-    </item>
-    <item>
-      <title>Edge functions: the real cost and when they’re worth it</title>
-      <link>https://kubaik.github.io/edge-functions-the-real-cost-and-when-theyre-worth-it/</link>
-      <description>ate was 0.02% while Cloudflare’s was 0.008% with Edge functions cost they — scale to 100k requests per second during Black Frid.</description>
-      <pubDate>Tue, 19 May 2026 06:45:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-the-real-cost-and-when-theyre-worth-it/</guid>
     </item>
   </channel>
 </rss>
