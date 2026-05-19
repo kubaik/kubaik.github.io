@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 02:58:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 05:54:53 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates: 2026 cheat sheet</title>
+      <link>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</link>
+      <description>Freelance developer rates 2026 cheat sheet — realistic numbers, real mistakes, and a step-by-step model to set your rate without guessing. Includes costs, market data, and a first-person breakdown of what went wrong.</description>
+      <pubDate>Tue, 19 May 2026 05:54:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</guid>
+    </item>
     <item>
       <title>Overbuilt stacks waste 40% of dev time</title>
       <link>https://kubaik.github.io/overbuilt-stacks-waste-40-of-dev-time/</link>
@@ -138,13 +145,6 @@
       <description>Reduce SaaS tenant blast radius by 100% — tenant-per-database vs shared schema + RLS cost and latency benchmarks from 2026 production systems. $18.6k vs $4.2k monthly costs revealed.</description>
       <pubDate>Mon, 18 May 2026 17:25:08 +0000</pubDate>
       <guid>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech’s process tax</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-techs-process-tax/</link>
-      <description>Senior devs quit big tech for 60% less approval friction — latency, cost, and on-call data from 2026 benchmarks show why.</description>
-      <pubDate>Mon, 18 May 2026 16:39:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-process-tax/</guid>
     </item>
   </channel>
 </rss>
