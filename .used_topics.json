@@ -28,5 +28,6 @@
   "Monolith vs microservices in 2026: the pendulum is swinging back and here's why",
   "API rate limiting patterns that don't break your clients",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "Freelance developer rates: a realistic breakdown"
+  "Freelance developer rates: a realistic breakdown",
+  "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense"
 ]

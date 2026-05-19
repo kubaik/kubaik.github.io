@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 05:54:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 06:45:59 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: the real cost and when they’re worth it</title>
+      <link>https://kubaik.github.io/edge-functions-the-real-cost-and-when-theyre-worth-it/</link>
+      <description>ate was 0.02% while Cloudflare’s was 0.008% with Edge functions cost they — scale to 100k requests per second during Black Frid.</description>
+      <pubDate>Tue, 19 May 2026 06:45:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-the-real-cost-and-when-theyre-worth-it/</guid>
+    </item>
     <item>
       <title>Freelance rates: 2026 cheat sheet</title>
       <link>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 87% by skipping the dedicated DB — pgvector 0.7.0 beats Milvus 2.4.0 on cost, latency, and simplicity when your dataset is under 20 million vectors</description>
       <pubDate>Mon, 18 May 2026 17:28:18 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-the-3ms-vs-300ms-reality-check/</guid>
-    </item>
-    <item>
-      <title>Tenant isolation isn&apos;t free — do it right</title>
-      <link>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</link>
-      <description>Reduce SaaS tenant blast radius by 100% — tenant-per-database vs shared schema + RLS cost and latency benchmarks from 2026 production systems. $18.6k vs $4.2k monthly costs revealed.</description>
-      <pubDate>Mon, 18 May 2026 17:25:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/tenant-isolation-isnt-free-do-it-right/</guid>
     </item>
   </channel>
 </rss>
