@@ -1155,6 +1155,19 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
+    .post-grid .post-card {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+    }
+    .post-grid .post-card .tags {
+        margin-top: auto !important;
+        padding-top: 0.75rem !important;
+    }
+    .post-grid .post-card .post-reading-time {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0 !important;
+    }
         .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
         .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
