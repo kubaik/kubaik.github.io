@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 22:20:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 19:24:34 +0000</lastBuildDate>
+    <item>
+      <title>AI skills vs frameworks: what boosts salaries</title>
+      <link>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</link>
+      <description>In 2026, AI salaries hinge on core skills vs tool mastery. Learn which expertise pays more, from foundational ML to frameworks like Hugging Face and TensorFlow.</description>
+      <pubDate>Tue, 19 May 2026 19:24:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</guid>
+    </item>
     <item>
       <title>Nairobi &amp; Lagos devs score $4k remote roles</title>
       <link>https://kubaik.github.io/nairobi-lagos-devs-score-4k-remote-roles/</link>
@@ -138,13 +145,6 @@
       <description>Cut attrition risk 19% by measuring 4 hidden drags — meetings, PR size, MTTR, lead time — using only Slack, GitHub, and PagerDuty APIs. Learn the real reasons senior devs leave and the metrics that predict it.</description>
       <pubDate>Tue, 19 May 2026 11:37:42 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-4-invisible-big-tech-traps/</guid>
-    </item>
-    <item>
-      <title>Skip Message Queues: When Simplicity Wins</title>
-      <link>https://kubaik.github.io/skip-message-queues-when-simplicity-wins/</link>
-      <description>Message queues can decouple services, but they add latency and complexity. Learn when to use RabbitMQ, Kafka, or SQS — and when to skip them entirely.</description>
-      <pubDate>Tue, 19 May 2026 10:35:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-message-queues-when-simplicity-wins/</guid>
     </item>
   </channel>
 </rss>
