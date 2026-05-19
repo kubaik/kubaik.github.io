@@ -5,5 +5,6 @@
   "Building a portfolio that gets you hired remotely from Africa",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "Negotiating a remote salary when you're in a lower-cost country"
+  "Negotiating a remote salary when you're in a lower-cost country",
+  "When to use a message queue (and when it's overkill)"
 ]

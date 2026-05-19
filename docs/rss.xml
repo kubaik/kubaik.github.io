@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 10:31:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 10:36:05 +0000</lastBuildDate>
+    <item>
+      <title>Skip Message Queues: When Simplicity Wins</title>
+      <link>https://kubaik.github.io/skip-message-queues-when-simplicity-wins/</link>
+      <description>Message queues can decouple services, but they add latency and complexity. Learn when to use RabbitMQ, Kafka, or SQS — and when to skip them entirely.</description>
+      <pubDate>Tue, 19 May 2026 10:35:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-message-queues-when-simplicity-wins/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay across borders effectively</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-across-borders-effectively/</link>
@@ -138,13 +145,6 @@
       <description>PyTorch 2.4 earns 38% higher salaries than TensorFlow 2.16 in 2026 — latency, cost, and tooling data that proves it. Learn which framework actually moves the paycheck needle.</description>
       <pubDate>Mon, 18 May 2026 21:05:04 +0000</pubDate>
       <guid>https://kubaik.github.io/38-salary-boost-with-pytorch-in-2026/</guid>
-    </item>
-    <item>
-      <title>5G Backends: 4 Cellular Gotchas</title>
-      <link>https://kubaik.github.io/5g-backends-4-cellular-gotchas/</link>
-      <description>Build backends 5G things: ops below 20%. Your background sync or conn. Practical guide with real examples.</description>
-      <pubDate>Mon, 18 May 2026 21:00:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-backends-4-cellular-gotchas/</guid>
     </item>
   </channel>
 </rss>
