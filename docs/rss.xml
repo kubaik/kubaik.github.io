@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 20:27:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 21:53:01 +0000</lastBuildDate>
+    <item>
+      <title>When Vector DBs are overkill</title>
+      <link>https://kubaik.github.io/when-vector-dbs-are-overkill/</link>
+      <description>Vector DBs vs PostgreSQL: Compare cost, latency, and scale for embedding search. Save 90% on costs by choosing the right tool for your dataset size.</description>
+      <pubDate>Tue, 19 May 2026 21:52:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-vector-dbs-are-overkill/</guid>
+    </item>
     <item>
       <title>Master Remote Tech Interviews as a Self-Taught Dev</title>
       <link>https://kubaik.github.io/master-remote-tech-interviews-as-a-self-taught-dev/</link>
@@ -138,13 +145,6 @@
       <description>Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes.</description>
       <pubDate>Tue, 19 May 2026 13:52:54 +0000</pubDate>
       <guid>https://kubaik.github.io/from-leetcode-to-live-systems/</guid>
-    </item>
-    <item>
-      <title>AI-first systems: 3 patterns that don’t collapse</title>
-      <link>https://kubaik.github.io/ai-first-systems-3-patterns-that-dont-collapse/</link>
-      <description>Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders.</description>
-      <pubDate>Tue, 19 May 2026 13:49:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-first-systems-3-patterns-that-dont-collapse/</guid>
     </item>
   </channel>
 </rss>
