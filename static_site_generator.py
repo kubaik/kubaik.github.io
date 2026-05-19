@@ -809,6 +809,8 @@ Sitemap: {base_url}/rss.xml
         for p in posts:
             d = p.to_dict()
             d['reading_time'] = self._reading_time_minutes(p.content)
+            d['display_date'] = self._format_display_date(p.created_at)
+            d['short_tags'] = sorted(p.tags, key=len)[:3] if p.tags else []
             d['meta_description'] = _safe_excerpt(
                 p.meta_description, p.content, p.title)
             posts_data.append(d)
@@ -1155,15 +1157,8 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
-    .post-grid .post-card {
-        display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important;
-    }
-    .post-grid .post-card .tags {
-        margin-top: auto !important;
-        padding-top: 0.75rem !important;
-    }
+        .post-grid .post-card {display: flex !important;flex-direction: column !important;overflow: hidden !important;}
+        .post-grid .post-card .tags {margin-top: auto !important;padding-top: 0.75rem !important;}
     .post-grid .post-card .post-reading-time {
         margin-top: 0.5rem !important;
         margin-bottom: 0 !important;
@@ -1236,13 +1231,13 @@ def _build_templates() -> dict:
                         <h3>{{ post.title }}</h3>
                         {% if post.meta_description %}<p class="post-excerpt">{{ post.meta_description }}</p>{% endif %}
                         <p class="post-reading-time">{{ post.reading_time | default(1) }} min read &nbsp;·&nbsp; {{ post.display_date }}</p>
-                        {% if post.short_tags %}
-                        <div class="tags">
-                            {% for tag in post.short_tags %}
-                            <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
+                        {% if post.short_tags or post.tags %}
+                            <div class="tags">
+                                {% for tag in (post.short_tags if post.short_tags else post.tags[:3]) %}
+                                <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                     </a>
                     {% endfor %}
             </div>
@@ -1319,16 +1314,20 @@ def _build_templates() -> dict:
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
-            a.href      = BASE_PATH + '/' + post.slug + '/';
+            a.href      = BASE_PATH + '/' + (post.slug || '') + '/';
 
+            // Title — always present
             var h3         = document.createElement('h3');
-            h3.textContent = post.title;
+            h3.textContent = post.title || '(Untitled)';
             a.appendChild(h3);
 
-            var excerpt = (post.meta_description || '').trim();
+            // Excerpt — fall back through meta_description → content → empty
+            var excerpt = ((post.meta_description || post.description || '')).trim();
             if (!excerpt && post.content) {
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
+                if (excerpt.length >= 155) {
+                    excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
+                }
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -1337,28 +1336,39 @@ def _build_templates() -> dict:
                 a.appendChild(p);
             }
 
-            if (post.reading_time) {
-                var rt         = document.createElement('p');
-                rt.className   = 'post-reading-time';
-                var dateText   = post.display_date ? ' \\u00b7 ' + post.display_date : '';
-                rt.textContent = post.reading_time + ' min read' + dateText;
+            // Reading time + date — guard both fields
+            var readingTime = post.reading_time || post.readingTime;
+            if (readingTime) {
+                var rt       = document.createElement('p');
+                rt.className = 'post-reading-time';
+                var dateText = (post.display_date || post.displayDate || '')
+                    ? ' \u00b7 ' + (post.display_date || post.displayDate)
+                    : '';
+                rt.textContent = readingTime + ' min read' + dateText;
                 a.appendChild(rt);
             }
-            var tags = post.tags || [];
-            if (tags.length) {
+
+            // Tags — prefer short_tags if available, fall back to tags, default []
+            var tags = post.short_tags || post.tags || [];
+            if (!Array.isArray(tags)) tags = [];
+            var displayTags = tags.slice().sort(function (x, y) {
+                return (x || '').length - (y || '').length;
+            }).slice(0, 3);
+
+            if (displayTags.length) {
                 var div       = document.createElement('div');
                 div.className = 'tags';
-                tags.slice().sort(function (x, y) { return x.length - y.length; })
-                    .slice(0, 3)
-                    .forEach(function (t) {
-                        var sp         = document.createElement('a');
-                        sp.className   = 'tag';
-                        sp.textContent = t;
-                        sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
-                        div.appendChild(sp);
-                    });
+                displayTags.forEach(function (t) {
+                    if (!t) return;
+                    var sp         = document.createElement('a');
+                    sp.className   = 'tag';
+                    sp.textContent = t;
+                    sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                    div.appendChild(sp);
+                });
                 a.appendChild(div);
             }
+
             return a;
         }
 
