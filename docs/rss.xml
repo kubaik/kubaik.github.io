@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 19:28:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 20:16:24 +0000</lastBuildDate>
+    <item>
+      <title>Fancy stacks cost 200% more</title>
+      <link>https://kubaik.github.io/fancy-stacks-cost-200-more/</link>
+      <description>Cut AWS costs 71% and latency 72% by replacing microservices with a single Go process — the real cost of over-engineering exposed with hard numbers and benchmarks.</description>
+      <pubDate>Tue, 19 May 2026 20:16:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/fancy-stacks-cost-200-more/</guid>
+    </item>
     <item>
       <title>Edge functions in 2026: save or hemorrhage cash</title>
       <link>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</link>
@@ -138,13 +145,6 @@
       <description>Compare Andela vs Toptal vs Arc in 2026 with real latency, payout, and take-home numbers for African developers — choose the right platform in 45 minutes.</description>
       <pubDate>Tue, 19 May 2026 12:26:19 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-one-platform-andela-vs-toptal-vs-arc-in-2026/</guid>
-    </item>
-    <item>
-      <title>Spot what LLM pipelines miss</title>
-      <link>https://kubaik.github.io/spot-what-llm-pipelines-miss/</link>
-      <description>proved to 65%, saving approximately $800/mo with LLMs — that the complexity of chaining these models with o.</description>
-      <pubDate>Tue, 19 May 2026 12:12:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/spot-what-llm-pipelines-miss/</guid>
     </item>
   </channel>
 </rss>
