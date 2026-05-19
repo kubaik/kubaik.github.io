@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 12:30:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 13:50:06 +0000</lastBuildDate>
+    <item>
+      <title>AI-first systems: 3 patterns that don’t collapse</title>
+      <link>https://kubaik.github.io/ai-first-systems-3-patterns-that-dont-collapse/</link>
+      <description>Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders.</description>
+      <pubDate>Tue, 19 May 2026 13:49:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-first-systems-3-patterns-that-dont-collapse/</guid>
+    </item>
     <item>
       <title>Build cellular-aware backends in 2026</title>
       <link>https://kubaik.github.io/build-cellular-aware-backends-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% with Redis Streams queues — real benchmarks, poison message traps, and the 6-second trap most teams miss.</description>
       <pubDate>Mon, 18 May 2026 23:36:35 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-the-6-second-trap-most-teams-miss/</guid>
-    </item>
-    <item>
-      <title>Burnout hacked: 7 freelance developer fixes</title>
-      <link>https://kubaik.github.io/burnout-hacked-7-freelance-developer-fixes/</link>
-      <description>Cut freelance burnout 70% in 6 months with 3 concrete metrics — sleep hours, billable hours, and client satisfaction — and the exact tools that worked in 2026.</description>
-      <pubDate>Mon, 18 May 2026 22:52:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/burnout-hacked-7-freelance-developer-fixes/</guid>
     </item>
   </channel>
 </rss>
