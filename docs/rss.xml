@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 16:38:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 16:47:08 +0000</lastBuildDate>
+    <item>
+      <title>Avoid SaaS DB traps: multi-tenancy done right</title>
+      <link>https://kubaik.github.io/avoid-saas-db-traps-multi-tenancy-done-right/</link>
+      <description>Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors.</description>
+      <pubDate>Tue, 19 May 2026 16:46:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/avoid-saas-db-traps-multi-tenancy-done-right/</guid>
+    </item>
     <item>
       <title>Zero-trust for small teams: skip the overkill</title>
       <link>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-overkill/</link>
@@ -138,13 +145,6 @@
       <description>Fix database connection pooling mistakes. Cut latency by up to 80%, avoid timeouts, and optimize for real-world concurrency with this practical guide.</description>
       <pubDate>Tue, 19 May 2026 07:42:30 +0000</pubDate>
       <guid>https://kubaik.github.io/database-pools-size-them-right/</guid>
-    </item>
-    <item>
-      <title>5 AI Tools Powering Self-Taught Developers</title>
-      <link>https://kubaik.github.io/5-ai-tools-powering-self-taught-developers/</link>
-      <description>7 AI coding tools empowering non-traditional developers to ship production-ready software. Detailed pros/cons, costs, and real-world results included.</description>
-      <pubDate>Tue, 19 May 2026 07:31:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-ai-tools-powering-self-taught-developers/</guid>
     </item>
   </channel>
 </rss>

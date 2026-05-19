@@ -18,5 +18,6 @@
   "From local salary to global rate: the career moves that made the difference for me",
   "Burnout as a freelance developer: what helped me recover",
   "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
-  "Zero-trust architecture for small teams: what actually makes sense to implement"
+  "Zero-trust architecture for small teams: what actually makes sense to implement",
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]
