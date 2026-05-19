@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 16:47:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 16:53:04 +0000</lastBuildDate>
+    <item>
+      <title>5 Tools Helping Non-Traditional Devs Ship Real Products</title>
+      <link>https://kubaik.github.io/5-tools-helping-non-traditional-devs-ship-real-products/</link>
+      <description>6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code.</description>
+      <pubDate>Tue, 19 May 2026 16:52:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-tools-helping-non-traditional-devs-ship-real-products/</guid>
+    </item>
     <item>
       <title>Avoid SaaS DB traps: multi-tenancy done right</title>
       <link>https://kubaik.github.io/avoid-saas-db-traps-multi-tenancy-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut TypeScript runtime errors 37% with two lines of config — when strict mode fails and how to plug the gap without slowing down</description>
       <pubDate>Tue, 19 May 2026 08:30:01 +0000</pubDate>
       <guid>https://kubaik.github.io/bypass-typescript-strict-mode/</guid>
-    </item>
-    <item>
-      <title>Database pools: size them right</title>
-      <link>https://kubaik.github.io/database-pools-size-them-right/</link>
-      <description>Fix database connection pooling mistakes. Cut latency by up to 80%, avoid timeouts, and optimize for real-world concurrency with this practical guide.</description>
-      <pubDate>Tue, 19 May 2026 07:42:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-pools-size-them-right/</guid>
     </item>
   </channel>
 </rss>
