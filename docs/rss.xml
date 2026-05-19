@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 18:16:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 18:25:08 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: the silent layer you’re already using</title>
+      <link>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</link>
+      <description>Cut MCP server latency 60% and reduce memory leaks with bounded pools, circuit breakers, and Prometheus metrics — real numbers from a 2026 production deployment</description>
+      <pubDate>Tue, 19 May 2026 18:24:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</guid>
+    </item>
     <item>
       <title>No degree? Here’s how to reach senior</title>
       <link>https://kubaik.github.io/no-degree-heres-how-to-reach-senior/</link>
@@ -138,13 +145,6 @@
       <description>Cut development time 75% by removing Redis, Kafka, and Lambda — the over-engineered API that cost $180/month and 8 weeks of work, replaced with FastAPI and PostgreSQL for $38/month and 45ms latency.</description>
       <pubDate>Tue, 19 May 2026 10:00:32 +0000</pubDate>
       <guid>https://kubaik.github.io/startup-mistakes-when-fancy-tech-delays-the-real-product/</guid>
-    </item>
-    <item>
-      <title>Choose the right real-time protocol</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-protocol/</link>
-      <description>Cut real-time latency 60% with the right protocol — WebSocket vs SSE vs polling benchmarks, code, and the one metric to watch first in 2026.</description>
-      <pubDate>Tue, 19 May 2026 08:47:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol/</guid>
     </item>
   </channel>
 </rss>
