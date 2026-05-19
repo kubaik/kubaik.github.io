@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 08:44:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 08:47:13 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time protocol</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-protocol/</link>
+      <description>Cut real-time latency 60% with the right protocol — WebSocket vs SSE vs polling benchmarks, code, and the one metric to watch first in 2026.</description>
+      <pubDate>Tue, 19 May 2026 08:47:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol/</guid>
+    </item>
     <item>
       <title>Ship 3 projects or stay unemployed</title>
       <link>https://kubaik.github.io/ship-3-projects-or-stay-unemployed/</link>
@@ -138,13 +145,6 @@
       <description>Cut runtime errors 80% with Zod 3.23 — the validation trap that slips past TypeScript strict mode and how to close it in 2026.</description>
       <pubDate>Mon, 18 May 2026 20:14:52 +0000</pubDate>
       <guid>https://kubaik.github.io/bypass-typescript-strict-mode-gaps/</guid>
-    </item>
-    <item>
-      <title>Which dev platform pays African devs best in 2026</title>
-      <link>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</link>
-      <description>Choose the platform that actually pays African devs in 2026 — latency, payouts, and acceptance rates from 5,000 real requests. Andela vs Toptal vs Arc with exact numbers.</description>
-      <pubDate>Mon, 18 May 2026 19:29:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</guid>
     </item>
   </channel>
 </rss>
