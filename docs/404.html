@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — Tech Blog</title>
+    <title>Page Not Found - Tech Blog</title>
     <meta name="robots" content="noindex, nofollow">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
@@ -22,85 +22,35 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <script>setTimeout(function(){window.location.replace('/');},3000);</script>
     <style>
-        .error-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 60vh; text-align: center; padding: 2rem;
-        }
-        .error-code {
-            font-size: 5rem; font-weight: 700; color: #6366f1;
-            line-height: 1; margin-bottom: 0.5rem;
-        }
-        .error-links { margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .btn-primary {
-            display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600;
-        }
-        .btn-secondary {
-            display: inline-block; background: #f0f4ff; color: #6366f1;
-            padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600; border: 2px solid #6366f1;
-        }
-        .popular-posts { margin-top: 2.5rem; max-width: 480px; text-align: left; }
-        .popular-posts h3 { margin-bottom: 0.75rem; font-size: 1rem; color: #555; }
-        .popular-posts ul { list-style: none; padding: 0; margin: 0; }
-        .popular-posts li { margin-bottom: 0.5rem; }
-        .popular-posts a { color: #6366f1; text-decoration: none; font-size: 0.9rem; }
-        .popular-posts a:hover { text-decoration: underline; }
+        .error-container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem}
+        .error-code{font-size:6rem;font-weight:700;color:#6366f1;line-height:1;margin-bottom:1rem}
+        .home-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.75rem 2rem;border-radius:50px;text-decoration:none;font-weight:600}
+        .progress-bar-wrap{width:280px;height:4px;background:#e0e0e0;border-radius:2px;margin:1.5rem auto 0;overflow:hidden}
+        .progress-bar{height:100%;width:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:2px;animation:drain 3s linear forwards;transform-origin:left}
+        @keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="/">Tech Blog</a></h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
-            </nav>
-        </div>
-    </header>
+    <header><div class="container">
+        <h1><a href="/">Tech Blog</a></h1>
+        <nav><a href="/">Home</a><a href="/about/">About</a></nav>
+    </div></header>
     <main class="container">
         <div class="error-container">
             <div class="error-code">404</div>
             <h2>Page Not Found</h2>
-            <p style="color:#666; max-width:400px;">
-                This page may have moved or been removed. Use the links below to find what you need.
-            </p>
-            <div class="error-links">
-                <a href="/" class="btn-primary">Go to Homepage</a>
-                <a href="/about/" class="btn-secondary">About</a>
-            </div>
-            <div class="popular-posts">
-                <h3>Or browse recent posts:</h3>
-                <ul id="recent-links"><li><a href="/">View all articles →</a></li></ul>
-            </div>
+            <p>This page may have been moved or deleted. You'll be redirected automatically.</p>
+            <p>Redirecting in <strong id="countdown">3</strong> seconds&hellip;</p>
+            <a href="/" class="home-button">Go to Homepage Now</a>
+            <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
         </div>
     </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Tech Blog</p>
-        </div>
-    </footer>
+    <footer><div class="container"><p>&copy; 2026 Tech Blog</p></div></footer>
     <script>
-    // Populate recent posts from posts.json — no redirect, user chooses
-    fetch('/posts.json')
-        .then(r => r.ok ? r.json() : [])
-        .then(posts => {
-            if (!posts.length) return;
-            var ul = document.getElementById('recent-links');
-            ul.innerHTML = '';
-            posts.slice(0, 5).forEach(function(p) {
-                var li = document.createElement('li');
-                var a  = document.createElement('a');
-                a.href = '/' + p.slug + '/';
-                a.textContent = p.title;
-                li.appendChild(a);
-                ul.appendChild(li);
-            });
-        })
-        .catch(function() {});
+        var s=3,el=document.getElementById('countdown');
+        var iv=setInterval(function(){s-=1;if(el)el.textContent=s;if(s<=0)clearInterval(iv);},1000);
     </script>
 </body>
 </html>

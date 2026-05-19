@@ -65,11 +65,10 @@ class StaticSiteGenerator:
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
         self._generate_robots_txt()
-        self._generate_privacy_consent_banner()
-        self._generate_security_headers()
         self._generate_404_page()
         self._generate_ads_txt()
         self._generate_pwa_files()
+        # NEW: generate category / tag index pages for additional crawlable surface area
         self._generate_tag_pages(posts)
         print(f"Site generated successfully with {len(posts)} posts!")
 
@@ -143,7 +142,7 @@ Sitemap: {base_url}/rss.xml
             post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
             post_dict['meta_description'] = _safe_excerpt(
-                p.meta_description, p.content, p.title) or p.title
+                p.meta_description, p.content, p.title)
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -316,188 +315,6 @@ Sitemap: {base_url}/rss.xml
                 f'<script type="application/ld+json">\n{howto_schema}\n</script>')
 
         return '\n'.join(output_blocks)
-
-    def _generate_security_headers(self):
-        """
-        Writes docs/_headers for Netlify/Cloudflare Pages.
-
-        WHY: A Content-Security-Policy that allows AdSense scripts is required
-        for ads to actually load. A broken CSP means zero ad impressions = zero
-        revenue = AdSense sees the account as inactive.
-        Also writes a .htaccess snippet for Apache-based hosts.
-        """
-        # ── _headers (Netlify / Cloudflare Pages) ────────────────────────────
-        headers_content = """\
-            /*
-            X-Frame-Options: SAMEORIGIN
-            X-Content-Type-Options: nosniff
-            Referrer-Policy: strict-origin-when-cross-origin
-            Permissions-Policy: geolocation=(), microphone=(), camera=()
-            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com
-            """
-        with open("./docs/_headers", "w", encoding="utf-8") as f:
-            f.write(headers_content)
-
-        # ── .htaccess snippet (Apache / cPanel hosts) ─────────────────────────
-        htaccess_content = """\
-            # Security headers for Apache hosts
-            <IfModule mod_headers.c>
-                Header always set X-Frame-Options "SAMEORIGIN"
-                Header always set X-Content-Type-Options "nosniff"
-                Header always set Referrer-Policy "strict-origin-when-cross-origin"
-                Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-            </IfModule>
-            
-            # Gzip compression (improves Core Web Vitals / LCP — positive AdSense signal)
-            <IfModule mod_deflate.c>
-                AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
-            </IfModule>
-            
-            # Cache static assets
-            <IfModule mod_expires.c>
-                ExpiresActive On
-                ExpiresByType text/css "access plus 1 year"
-                ExpiresByType application/javascript "access plus 1 year"
-                ExpiresByType image/png "access plus 1 year"
-                ExpiresByType image/jpeg "access plus 1 year"
-                ExpiresByType image/svg+xml "access plus 1 year"
-            </IfModule>
-            """
-        with open("./docs/.htaccess", "w", encoding="utf-8") as f:
-            f.write(htaccess_content)
-
-        print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
-
-    def _generate_privacy_consent_banner(self):
-        """
-        Writes docs/static/consent.js — a lightweight GDPR cookie consent banner.
-
-        WHY THIS MATTERS FOR ADSENSE:
-        Google's own AdSense policy requires a consent mechanism for EU traffic.
-        Reviewers from the EU/UK check for this. Missing consent = policy violation
-        even after initial approval. This is a lightweight first-party implementation
-        that doesn't require a third-party CMP service.
-        """
-        config = self.blog_system.config
-        base_path = config.get("base_path", "")
-        privacy_url = f"{base_path}/privacy-policy/"
-
-        consent_js = """\
-            /* consent.js — lightweight GDPR cookie consent for Google AdSense */
-            /* Generated by StaticSiteGenerator — do not edit manually         */
-            (function () {
-                'use strict';
-            
-                var CONSENT_KEY = 'cookie_consent_v1';
-                var BANNER_ID   = 'cookie-consent-banner';
-            
-                function getCookie(name) {
-                    var m = document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
-                    return m ? decodeURIComponent(m[1]) : null;
-                }
-            
-                function setCookie(name, value, days) {
-                    var d = new Date(Date.now() + days * 864e5).toUTCString();
-                    document.cookie = name + '=' + encodeURIComponent(value) +
-                        '; expires=' + d + '; path=/; SameSite=Lax';
-                }
-            
-                function removeBanner() {
-                    var el = document.getElementById(BANNER_ID);
-                    if (el) { el.style.opacity = '0'; setTimeout(function(){ if(el.parentNode) el.remove(); }, 300); }
-                }
-            
-                function updateConsent(granted) {
-                    if (window.gtag) {
-                        window.gtag('consent', 'update', {
-                            ad_storage:        granted ? 'granted' : 'denied',
-                            analytics_storage: granted ? 'granted' : 'denied'
-                        });
-                    }
-                }
-            
-                function accept() {
-                    setCookie(CONSENT_KEY, 'accepted', 365);
-                    updateConsent(true);
-                    removeBanner();
-                }
-            
-                function decline() {
-                    setCookie(CONSENT_KEY, 'declined', 180);
-                    updateConsent(false);
-                    removeBanner();
-                }
-            
-                function showBanner() {
-                    if (document.getElementById(BANNER_ID)) return;
-            
-                    var banner = document.createElement('div');
-                    banner.id = BANNER_ID;
-                    banner.setAttribute('role', 'dialog');
-                    banner.setAttribute('aria-label', 'Cookie consent');
-                    banner.setAttribute('aria-modal', 'false');
-                    banner.innerHTML =
-                        '<div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;' +
-                        'align-items:center;gap:0.75rem 1.5rem;justify-content:space-between;">' +
-                        '<p style="margin:0;font-size:0.86rem;color:#333;flex:1 1 260px;line-height:1.5;">' +
-                        'We use cookies to improve your experience and serve relevant ads. ' +
-                        '<a href="PRIVACY_URL" style="color:#6366f1;text-decoration:underline;">Privacy Policy</a>' +
-                        '</p>' +
-                        '<div style="display:flex;gap:0.5rem;flex-shrink:0;">' +
-                        '<button id="cc-accept" aria-label="Accept cookies" ' +
-                        'style="background:#6366f1;color:#fff;border:none;padding:0.45rem 1.1rem;' +
-                        'border-radius:20px;cursor:pointer;font-size:0.84rem;font-weight:600;">' +
-                        'Accept</button>' +
-                        '<button id="cc-decline" aria-label="Decline cookies" ' +
-                        'style="background:#f0f0f0;color:#555;border:none;padding:0.45rem 1.1rem;' +
-                        'border-radius:20px;cursor:pointer;font-size:0.84rem;">' +
-                        'Decline</button>' +
-                        '</div></div>';
-            
-                    banner.innerHTML = banner.innerHTML.replace('PRIVACY_URL', """ + repr(privacy_url) + """);
-            
-                    Object.assign(banner.style, {
-                        position:       'fixed',
-                        bottom:         '0',
-                        left:           '0',
-                        right:          '0',
-                        background:     'rgba(255,255,255,0.96)',
-                        backdropFilter: 'blur(8px)',
-                        WebkitBackdropFilter: 'blur(8px)',
-                        borderTop:      '1px solid #e0e0e0',
-                        padding:        '0.9rem 1.25rem',
-                        zIndex:         '99999',
-                        boxShadow:      '0 -2px 16px rgba(0,0,0,0.07)',
-                        transition:     'opacity 0.3s ease',
-                    });
-            
-                    document.body.appendChild(banner);
-                    document.getElementById('cc-accept').addEventListener('click', accept);
-                    document.getElementById('cc-decline').addEventListener('click', decline);
-            
-                    /* Keyboard trap: Escape = decline */
-                    document.addEventListener('keydown', function onKey(e) {
-                        if (e.key === 'Escape') { decline(); document.removeEventListener('keydown', onKey); }
-                    });
-                }
-            
-                /* Only show to users who haven't chosen yet */
-                var existing = getCookie(CONSENT_KEY);
-                if (!existing) {
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', showBanner);
-                    } else {
-                        showBanner();
-                    }
-                }
-            }());
-            """
-
-        static_dir = Path("./docs/static")
-        static_dir.mkdir(exist_ok=True)
-        with open(static_dir / "consent.js", "w", encoding="utf-8") as f:
-            f.write(consent_js)
-        print("Generated docs/static/consent.js (GDPR consent banner)")
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -809,8 +626,6 @@ Sitemap: {base_url}/rss.xml
         for p in posts:
             d = p.to_dict()
             d['reading_time'] = self._reading_time_minutes(p.content)
-            d['display_date'] = self._format_display_date(p.created_at)
-            d['short_tags'] = sorted(p.tags, key=len)[:3] if p.tags else []
             d['meta_description'] = _safe_excerpt(
                 p.meta_description, p.content, p.title)
             posts_data.append(d)
@@ -888,10 +703,7 @@ def _build_templates() -> dict:
     <meta property="og:description" content="{{ post.meta_description }}">
     <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
     <meta property="og:site_name" content="{{ site_name }}">
-    {%- set og_img = base_url + '/static/images/' + post.slug + '.jpg' %}
-    {%- set og_img_fallback = base_url + '/static/icons/icon-512x512.png' %}
-    <meta property="og:image" content="{{ og_img }}">
-    <meta property="og:image:alt" content="{{ post.title }}">
+    <meta property="og:image" content="{{ base_url }}/static/images/{{ post.slug }}.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
@@ -1056,7 +868,6 @@ def _build_templates() -> dict:
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
     <!-- Reading progress bar -->
     <script>
     (function(){
@@ -1157,29 +968,6 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
-        .post-grid .post-card {
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
-        }
-        .post-grid .post-card .post-excerpt {
-            flex: 1 1 auto;
-        }
-        .post-grid .post-card .card-footer {
-            margin-top: auto;
-            padding-top: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .post-grid .post-card .card-footer .tags {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-        }
-        .post-grid .post-card .card-footer .post-reading-time {
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-        }
         .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
         .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -1241,24 +1029,24 @@ def _build_templates() -> dict:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                   <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
-                    data-title="{{ post.title | e }}"
-                    data-description="{{ post.meta_description | e }}"
-                    data-tags="{{ post.tags | join(',') | e }}">
-                        <h3>{{ post.title }}</h3>
-                        {% if post.meta_description %}<p class="post-excerpt">{{ post.meta_description }}</p>{% endif %}
-                        <div class="card-footer">
-                            {% if post.short_tags or post.tags %}
-                            <div class="tags">
-                                {% for tag in (post.short_tags if post.short_tags else post.tags[:3]) %}
-                                <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <p class="post-reading-time">{{ post.reading_time | default(1) }} min read &nbsp;·&nbsp; {{ post.display_date }}</p>
-                        </div>
-                    </a>
-                    {% endfor %}
+                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
+                   data-title="{{ post.title | e }}"
+                   data-description="{{ post.meta_description | e }}"
+                   data-tags="{{ post.tags | join(',') | e }}">
+                    <h3>{{ post.title }}</h3>
+                    <p class="post-excerpt">{{ post.meta_description }}</p>
+                    {% if post.reading_time %}
+                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
+                    {% endif %}
+                    {% if post.tags %}
+                    <div class="tags">
+                        {% for tag in post.short_tags %}
+                        <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </a>
+                {% endfor %}
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -1333,20 +1121,16 @@ def _build_templates() -> dict:
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
-            a.href      = BASE_PATH + '/' + (post.slug || '') + '/';
+            a.href      = BASE_PATH + '/' + post.slug + '/';
 
-            // Title
             var h3         = document.createElement('h3');
-            h3.textContent = post.title || '(Untitled)';
+            h3.textContent = post.title;
             a.appendChild(h3);
 
-            // Excerpt — grows to fill available space via flex: 1
-            var excerpt = ((post.meta_description || post.description || '')).trim();
+            var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length >= 155) {
-                    excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
-                }
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -1355,44 +1139,27 @@ def _build_templates() -> dict:
                 a.appendChild(p);
             }
 
-            // Card footer — contains tags + reading time, pinned to bottom via margin-top:auto
-            var footer       = document.createElement('div');
-            footer.className = 'card-footer';
-
-            // Tags inside footer
-            var tags = post.short_tags || post.tags || [];
-            if (!Array.isArray(tags)) tags = [];
-            var displayTags = tags.slice().sort(function (x, y) {
-                return (x || '').length - (y || '').length;
-            }).slice(0, 3);
-
-            if (displayTags.length) {
-                var tagsDiv       = document.createElement('div');
-                tagsDiv.className = 'tags';
-                displayTags.forEach(function (t) {
-                    if (!t) return;
-                    var sp         = document.createElement('a');
-                    sp.className   = 'tag';
-                    sp.textContent = t;
-                    sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
-                    tagsDiv.appendChild(sp);
-                });
-                footer.appendChild(tagsDiv);
+            if (post.reading_time) {
+                var rt         = document.createElement('p');
+                rt.className   = 'post-reading-time';
+                rt.textContent = post.reading_time + ' min read';
+                a.appendChild(rt);
             }
-
-            // Reading time + date inside footer
-            var readingTime = post.reading_time || post.readingTime;
-            if (readingTime) {
-                var rt       = document.createElement('p');
-                rt.className = 'post-reading-time';
-                var dateText = (post.display_date || post.displayDate || '')
-                    ? ' \u00b7 ' + (post.display_date || post.displayDate)
-                    : '';
-                rt.textContent = readingTime + ' min read' + dateText;
-                footer.appendChild(rt);
+            var tags = post.tags || [];
+            if (tags.length) {
+                var div       = document.createElement('div');
+                div.className = 'tags';
+                tags.slice().sort(function (x, y) { return x.length - y.length; })
+                    .slice(0, 3)
+                    .forEach(function (t) {
+                        var sp         = document.createElement('a');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        div.appendChild(sp);
+                    });
+                a.appendChild(div);
             }
-
-            a.appendChild(footer);
             return a;
         }
 
@@ -1594,7 +1361,6 @@ def _build_templates() -> dict:
     }());
     </script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -1678,7 +1444,7 @@ def _build_templates() -> dict:
             <div class="about-section" id="editorial">
                 <h2>Editorial process</h2>
                 <div class="process-step"><div class="step-num">1</div><p><strong>Topic selection</strong> — Topics are chosen based on direct production experience or questions that come up repeatedly in code reviews.</p></div>
-                <div class="process-step"><div class="step-num">2</div><p><strong>Research and drafting</strong> — I research each topic using official documentation, GitHub issues, and my own production notes. Drafts are written to reflect real decisions I have made on actual systems. External tools may assist with structure, but every claim is verified against primary sources before publishing.</p></div>
+                <div class="process-step"><div class="step-num">2</div><p><strong>AI-assisted drafting</strong> — I use Claude and GPT-4o to generate first drafts. The prompt requires specific tool names, version numbers, and benchmarks.</p></div>
                 <div class="process-step"><div class="step-num">3</div><p><strong>Review and editing</strong> — I read every draft and correct errors. Code examples are tested locally where practical.</p></div>
                 <div class="process-step"><div class="step-num">4</div><p><strong>My take section</strong> — Every article includes my personal opinion based on production experience.</p></div>
                 <p style="margin-top:1rem">If you find a factual error, please <a href="../contact/">contact me</a>. I update articles when errors are found.</p>
@@ -1874,91 +1640,41 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — {{ site_name }}</title>
+    <title>Page Not Found - {{ site_name }}</title>
     <meta name="robots" content="noindex, nofollow">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
+    <script>setTimeout(function(){window.location.replace('{{ base_path }}/');},3000);</script>
     <style>
-        .error-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 60vh; text-align: center; padding: 2rem;
-        }
-        .error-code {
-            font-size: 5rem; font-weight: 700; color: #6366f1;
-            line-height: 1; margin-bottom: 0.5rem;
-        }
-        .error-links { margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .btn-primary {
-            display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600;
-        }
-        .btn-secondary {
-            display: inline-block; background: #f0f4ff; color: #6366f1;
-            padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600; border: 2px solid #6366f1;
-        }
-        .popular-posts { margin-top: 2.5rem; max-width: 480px; text-align: left; }
-        .popular-posts h3 { margin-bottom: 0.75rem; font-size: 1rem; color: #555; }
-        .popular-posts ul { list-style: none; padding: 0; margin: 0; }
-        .popular-posts li { margin-bottom: 0.5rem; }
-        .popular-posts a { color: #6366f1; text-decoration: none; font-size: 0.9rem; }
-        .popular-posts a:hover { text-decoration: underline; }
+        .error-container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem}
+        .error-code{font-size:6rem;font-weight:700;color:#6366f1;line-height:1;margin-bottom:1rem}
+        .home-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.75rem 2rem;border-radius:50px;text-decoration:none;font-weight:600}
+        .progress-bar-wrap{width:280px;height:4px;background:#e0e0e0;border-radius:2px;margin:1.5rem auto 0;overflow:hidden}
+        .progress-bar{height:100%;width:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:2px;animation:drain 3s linear forwards;transform-origin:left}
+        @keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-            </nav>
-        </div>
-    </header>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a></nav>
+    </div></header>
     <main class="container">
         <div class="error-container">
             <div class="error-code">404</div>
             <h2>Page Not Found</h2>
-            <p style="color:#666; max-width:400px;">
-                This page may have moved or been removed. Use the links below to find what you need.
-            </p>
-            <div class="error-links">
-                <a href="{{ base_path }}/" class="btn-primary">Go to Homepage</a>
-                <a href="{{ base_path }}/about/" class="btn-secondary">About</a>
-            </div>
-            <div class="popular-posts">
-                <h3>Or browse recent posts:</h3>
-                <ul id="recent-links"><li><a href="{{ base_path }}/">View all articles →</a></li></ul>
-            </div>
+            <p>This page may have been moved or deleted. You'll be redirected automatically.</p>
+            <p>Redirecting in <strong id="countdown">3</strong> seconds&hellip;</p>
+            <a href="{{ base_path }}/" class="home-button">Go to Homepage Now</a>
+            <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
         </div>
     </main>
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}</p>
-        </div>
-    </footer>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
     <script>
-    // Populate recent posts from posts.json — no redirect, user chooses
-    fetch('{{ base_path }}/posts.json')
-        .then(r => r.ok ? r.json() : [])
-        .then(posts => {
-            if (!posts.length) return;
-            var ul = document.getElementById('recent-links');
-            ul.innerHTML = '';
-            posts.slice(0, 5).forEach(function(p) {
-                var li = document.createElement('li');
-                var a  = document.createElement('a');
-                a.href = '{{ base_path }}/' + p.slug + '/';
-                a.textContent = p.title;
-                li.appendChild(a);
-                ul.appendChild(li);
-            });
-        })
-        .catch(function() {});
+        var s=3,el=document.getElementById('countdown');
+        var iv=setInterval(function(){s-=1;if(el)el.textContent=s;if(s<=0)clearInterval(iv);},1000);
     </script>
 </body>
 </html>"""

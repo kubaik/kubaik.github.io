@@ -123,29 +123,6 @@
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; }
-        .post-grid .post-card {
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
-        }
-        .post-grid .post-card .post-excerpt {
-            flex: 1 1 auto;
-        }
-        .post-grid .post-card .card-footer {
-            margin-top: auto;
-            padding-top: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .post-grid .post-card .card-footer .tags {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-        }
-        .post-grid .post-card .card-footer .post-reading-time {
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-        }
         .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
         .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
         .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -207,226 +184,226 @@
             
             <div id="posts-container" class="post-grid">
                 
-                   <a class="post-card" href="/5-tools-helping-non-traditional-devs-ship-real-products/"
-                    data-title="5 Tools Helping Non-Traditional Devs Ship Real Products"
-                    data-description="6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code."
-                    data-tags="AiCoding,CopilotAlternatives,Ai,Artificialintelligence">
-                        <h3>5 Tools Helping Non-Traditional Devs Ship Real Products</h3>
-                        <p class="post-excerpt">6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/ai/">Ai</a>
-                                
-                                <a class="tag" href="/tag/aicoding/">AiCoding</a>
-                                
-                                <a class="tag" href="/tag/copilotalternatives/">CopilotAlternatives</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">11 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                <a class="post-card" href="/5-tools-helping-non-traditional-devs-ship-real-products/"
+                   data-title="5 Tools Helping Non-Traditional Devs Ship Real Products"
+                   data-description="6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code."
+                   data-tags="AiCoding,CopilotAlternatives,Ai,Artificialintelligence">
+                    <h3>5 Tools Helping Non-Traditional Devs Ship Real Products</h3>
+                    <p class="post-excerpt">6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code.</p>
                     
-                   <a class="post-card" href="/avoid-saas-db-traps-multi-tenancy-done-right/"
-                    data-title="Avoid SaaS DB traps: multi-tenancy done right"
-                    data-description="Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors."
-                    data-tags="MultiTenantDatabase,SaasDatabaseDesign,NoisyNeighborsSaas,Database,Postgresql,Saas">
-                        <h3>Avoid SaaS DB traps: multi-tenancy done right</h3>
-                        <p class="post-excerpt">Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/saas/">Saas</a>
-                                
-                                <a class="tag" href="/tag/database/">Database</a>
-                                
-                                <a class="tag" href="/tag/postgresql/">Postgresql</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">11 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                    <p class="post-reading-time">11 min read</p>
                     
-                   <a class="post-card" href="/zero-trust-for-small-teams-skip-the-overkill/"
-                    data-title="Zero-trust for small teams: skip the overkill"
-                    data-description="Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn&#39;t, and how to secure without overengineering."
-                    data-tags="ZeroTrust,SmallTeams,ZeroTrustArchitecture,Cybersecurity,Infosec">
-                        <h3>Zero-trust for small teams: skip the overkill</h3>
-                        <p class="post-excerpt">Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn't, and how to secure without overengineering.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/infosec/">Infosec</a>
-                                
-                                <a class="tag" href="/tag/zerotrust/">ZeroTrust</a>
-                                
-                                <a class="tag" href="/tag/smallteams/">SmallTeams</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">10 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
                     
-                   <a class="post-card" href="/edge-functions-waste-or-weapon/"
-                    data-title="Edge functions: waste or weapon?"
-                    data-description="Cut API response time 60% using Workers or Vercel Edge — when it’s worth it, what breaks, and the exact code to test in 30 minutes"
-                    data-tags="EdgeFunctions,CloudflareWorkers,VercelEdgeFunctions,EdgeComputingCosts,DurableObjectsPricing,Cloudcomputing,Apis">
-                        <h3>Edge functions: waste or weapon?</h3>
-                        <p class="post-excerpt">Cut API response time 60% using Workers or Vercel Edge — when it’s worth it, what breaks, and the exact code to test in 30 minutes</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/apis/">Apis</a>
-                                
-                                <a class="tag" href="/tag/edgefunctions/">EdgeFunctions</a>
-                                
-                                <a class="tag" href="/tag/cloudcomputing/">Cloudcomputing</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">15 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/ai/">Ai</a>
+                        
+                        <a class="tag" href="/tag/aicoding/">AiCoding</a>
+                        
+                        <a class="tag" href="/tag/copilotalternatives/">CopilotAlternatives</a>
+                        
+                    </div>
                     
-                   <a class="post-card" href="/beat-freelance-burnout-without-quitting/"
-                    data-title="Beat Freelance Burnout Without Quitting"
-                    data-description="Reduce freelance dev burnout 60% with 3 concrete fixes: focus budget, attention residue, and financial buffer. 2026 tools, metrics, and a 30-minute next step."
-                    data-tags="FreelanceBurnoutSymptoms,Softwareengineering,Coding,Freelancing,Developerfocustechniques">
-                        <h3>Beat Freelance Burnout Without Quitting</h3>
-                        <p class="post-excerpt">Reduce freelance dev burnout 60% with 3 concrete fixes: focus budget, attention residue, and financial buffer. 2026 tools, metrics, and a 30-minute next step.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/coding/">Coding</a>
-                                
-                                <a class="tag" href="/tag/freelancing/">Freelancing</a>
-                                
-                                <a class="tag" href="/tag/softwareengineering/">Softwareengineering</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">18 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                </a>
+                
+                <a class="post-card" href="/avoid-saas-db-traps-multi-tenancy-done-right/"
+                   data-title="Avoid SaaS DB traps: multi-tenancy done right"
+                   data-description="Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors."
+                   data-tags="MultiTenantDatabase,SaasDatabaseDesign,NoisyNeighborsSaas,Database,Postgresql,Saas">
+                    <h3>Avoid SaaS DB traps: multi-tenancy done right</h3>
+                    <p class="post-excerpt">Cut noisy neighbor issues by 40% with database per tenant. Learn when to avoid single DB traps and scale multi-tenant SaaS without costly refactors.</p>
                     
-                   <a class="post-card" href="/63kmonth-how-i-escaped-local-pay/"
-                    data-title="$6.3k/month: How I escaped local pay"
-                    data-description="I raised my net rate 3.5× in 18 months using fixed-scope packages and public case studies. Net income jumped from $1,800 to $6,300 with 50% from international clients. Learn the exact packages, benchmarks, and tools that made the difference."
-                    data-tags="Softwareengineering,Apis,Postgresql,Opensource,Freelancing">
-                        <h3>$6.3k/month: How I escaped local pay</h3>
-                        <p class="post-excerpt">I raised my net rate 3.5× in 18 months using fixed-scope packages and public case studies. Net income jumped from $1,800 to $6,300 with 50% from international clients. Learn the exact packages, benchmarks, and tools that made the difference.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/apis/">Apis</a>
-                                
-                                <a class="tag" href="/tag/postgresql/">Postgresql</a>
-                                
-                                <a class="tag" href="/tag/opensource/">Opensource</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">14 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                    <p class="post-reading-time">11 min read</p>
                     
-                   <a class="post-card" href="/decode-repo-context-before-ai-does/"
-                    data-title="Decode repo context before AI does"
-                    data-description="Cut AI PR error rates 60% by measuring what LLMs miss in your repo — ADRs, type hints, and coupling graphs before trusting autocomplete. Learn what to instrument first."
-                    data-tags="RepositoryIntelligence,AiCodeContext,LlmRepoUnderstanding,AdrDocumentation,SemanticCoupling,Ai,Artificialintelligence">
-                        <h3>Decode repo context before AI does</h3>
-                        <p class="post-excerpt">Cut AI PR error rates 60% by measuring what LLMs miss in your repo — ADRs, type hints, and coupling graphs before trusting autocomplete. Learn what to instrument first.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/ai/">Ai</a>
-                                
-                                <a class="tag" href="/tag/aicodecontext/">AiCodeContext</a>
-                                
-                                <a class="tag" href="/tag/adrdocumentation/">AdrDocumentation</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">14 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
                     
-                   <a class="post-card" href="/ai-pay-boost-prompt-vs-fine-tune-the-2026-data/"
-                    data-title="AI pay boost: prompt vs fine-tune — the 2026 data"
-                    data-description="Cut AI costs 65% and raise salary 25%: prompt vs fine-tune in 2026 with real benchmarks, salary ranges, and the one mistake that erases both."
-                    data-tags="AiSalary2026,MlEngineerSalary,Ai,Artificialintelligence,Finetuning,Promptengineering">
-                        <h3>AI pay boost: prompt vs fine-tune — the 2026 data</h3>
-                        <p class="post-excerpt">Cut AI costs 65% and raise salary 25%: prompt vs fine-tune in 2026 with real benchmarks, salary ranges, and the one mistake that erases both.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/ai/">Ai</a>
-                                
-                                <a class="tag" href="/tag/finetuning/">Finetuning</a>
-                                
-                                <a class="tag" href="/tag/aisalary2026/">AiSalary2026</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">15 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/saas/">Saas</a>
+                        
+                        <a class="tag" href="/tag/database/">Database</a>
+                        
+                        <a class="tag" href="/tag/postgresql/">Postgresql</a>
+                        
+                    </div>
                     
-                   <a class="post-card" href="/from-leetcode-to-live-systems/"
-                    data-title="From LeetCode to live systems"
-                    data-description="Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes."
-                    data-tags="LeetcodeAlternatives2026,Softwareengineering,Coding,Postgresql,Redis,Techjobs">
-                        <h3>From LeetCode to live systems</h3>
-                        <p class="post-excerpt">Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/redis/">Redis</a>
-                                
-                                <a class="tag" href="/tag/coding/">Coding</a>
-                                
-                                <a class="tag" href="/tag/techjobs/">Techjobs</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">16 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                </a>
+                
+                <a class="post-card" href="/zero-trust-for-small-teams-skip-the-overkill/"
+                   data-title="Zero-trust for small teams: skip the overkill"
+                   data-description="Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn&#39;t, and how to secure without overengineering."
+                   data-tags="ZeroTrust,SmallTeams,ZeroTrustArchitecture,Cybersecurity,Infosec">
+                    <h3>Zero-trust for small teams: skip the overkill</h3>
+                    <p class="post-excerpt">Reduce small team security costs by 40% with tailored zero-trust methods. Learn what works, what doesn't, and how to secure without overengineering.</p>
                     
-                   <a class="post-card" href="/ai-first-systems-3-patterns-that-dont-collapse/"
-                    data-title="AI-first systems: 3 patterns that don’t collapse"
-                    data-description="Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders."
-                    data-tags="AiApiPatterns,PromptCachingRedis,AiCostOptimization,LlmRetryLoop,Ai,Artificialintelligence,Redis">
-                        <h3>AI-first systems: 3 patterns that don’t collapse</h3>
-                        <p class="post-excerpt">Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders.</p>
-                        <div class="card-footer">
-                            
-                            <div class="tags">
-                                
-                                <a class="tag" href="/tag/ai/">Ai</a>
-                                
-                                <a class="tag" href="/tag/redis/">Redis</a>
-                                
-                                <a class="tag" href="/tag/llmretryloop/">LlmRetryLoop</a>
-                                
-                            </div>
-                            
-                            <p class="post-reading-time">13 min read &nbsp;·&nbsp; 19 May 2026</p>
-                        </div>
-                    </a>
+                    <p class="post-reading-time">10 min read</p>
                     
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/infosec/">Infosec</a>
+                        
+                        <a class="tag" href="/tag/zerotrust/">ZeroTrust</a>
+                        
+                        <a class="tag" href="/tag/smallteams/">SmallTeams</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/edge-functions-waste-or-weapon/"
+                   data-title="Edge functions: waste or weapon?"
+                   data-description="Cut API response time 60% using Workers or Vercel Edge — when it’s worth it, what breaks, and the exact code to test in 30 minutes"
+                   data-tags="EdgeFunctions,CloudflareWorkers,VercelEdgeFunctions,EdgeComputingCosts,DurableObjectsPricing,Cloudcomputing,Apis">
+                    <h3>Edge functions: waste or weapon?</h3>
+                    <p class="post-excerpt">Cut API response time 60% using Workers or Vercel Edge — when it’s worth it, what breaks, and the exact code to test in 30 minutes</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/apis/">Apis</a>
+                        
+                        <a class="tag" href="/tag/edgefunctions/">EdgeFunctions</a>
+                        
+                        <a class="tag" href="/tag/cloudcomputing/">Cloudcomputing</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/beat-freelance-burnout-without-quitting/"
+                   data-title="Beat Freelance Burnout Without Quitting"
+                   data-description="Reduce freelance dev burnout 60% with 3 concrete fixes: focus budget, attention residue, and financial buffer. 2026 tools, metrics, and a 30-minute next step."
+                   data-tags="FreelanceBurnoutSymptoms,Softwareengineering,Coding,Freelancing,Developerfocustechniques">
+                    <h3>Beat Freelance Burnout Without Quitting</h3>
+                    <p class="post-excerpt">Reduce freelance dev burnout 60% with 3 concrete fixes: focus budget, attention residue, and financial buffer. 2026 tools, metrics, and a 30-minute next step.</p>
+                    
+                    <p class="post-reading-time">18 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/coding/">Coding</a>
+                        
+                        <a class="tag" href="/tag/freelancing/">Freelancing</a>
+                        
+                        <a class="tag" href="/tag/softwareengineering/">Softwareengineering</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/63kmonth-how-i-escaped-local-pay/"
+                   data-title="$6.3k/month: How I escaped local pay"
+                   data-description="I raised my net rate 3.5× in 18 months using fixed-scope packages and public case studies. Net income jumped from $1,800 to $6,300 with 50% from international clients. Learn the exact packages, benchmarks, and tools that made the difference."
+                   data-tags="Softwareengineering,Apis,Postgresql,Opensource,Freelancing">
+                    <h3>$6.3k/month: How I escaped local pay</h3>
+                    <p class="post-excerpt">I raised my net rate 3.5× in 18 months using fixed-scope packages and public case studies. Net income jumped from $1,800 to $6,300 with 50% from international clients. Learn the exact packages, benchmarks, and tools that made the difference.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/apis/">Apis</a>
+                        
+                        <a class="tag" href="/tag/postgresql/">Postgresql</a>
+                        
+                        <a class="tag" href="/tag/opensource/">Opensource</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/decode-repo-context-before-ai-does/"
+                   data-title="Decode repo context before AI does"
+                   data-description="Cut AI PR error rates 60% by measuring what LLMs miss in your repo — ADRs, type hints, and coupling graphs before trusting autocomplete. Learn what to instrument first."
+                   data-tags="RepositoryIntelligence,AiCodeContext,LlmRepoUnderstanding,AdrDocumentation,SemanticCoupling,Ai,Artificialintelligence">
+                    <h3>Decode repo context before AI does</h3>
+                    <p class="post-excerpt">Cut AI PR error rates 60% by measuring what LLMs miss in your repo — ADRs, type hints, and coupling graphs before trusting autocomplete. Learn what to instrument first.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/ai/">Ai</a>
+                        
+                        <a class="tag" href="/tag/aicodecontext/">AiCodeContext</a>
+                        
+                        <a class="tag" href="/tag/adrdocumentation/">AdrDocumentation</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/ai-pay-boost-prompt-vs-fine-tune-the-2026-data/"
+                   data-title="AI pay boost: prompt vs fine-tune — the 2026 data"
+                   data-description="Cut AI costs 65% and raise salary 25%: prompt vs fine-tune in 2026 with real benchmarks, salary ranges, and the one mistake that erases both."
+                   data-tags="AiSalary2026,MlEngineerSalary,Ai,Artificialintelligence,Finetuning,Promptengineering">
+                    <h3>AI pay boost: prompt vs fine-tune — the 2026 data</h3>
+                    <p class="post-excerpt">Cut AI costs 65% and raise salary 25%: prompt vs fine-tune in 2026 with real benchmarks, salary ranges, and the one mistake that erases both.</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/ai/">Ai</a>
+                        
+                        <a class="tag" href="/tag/finetuning/">Finetuning</a>
+                        
+                        <a class="tag" href="/tag/aisalary2026/">AiSalary2026</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/from-leetcode-to-live-systems/"
+                   data-title="From LeetCode to live systems"
+                   data-description="Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes."
+                   data-tags="LeetcodeAlternatives2026,Softwareengineering,Coding,Postgresql,Redis,Techjobs">
+                    <h3>From LeetCode to live systems</h3>
+                    <p class="post-excerpt">Self-taught devs waste months on LeetCode drills. Build a $10/month system instead. FastAPI 0.111 + PostgreSQL 16 + Redis 7.2 examples, latency benchmarks, and hiring outcomes.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/redis/">Redis</a>
+                        
+                        <a class="tag" href="/tag/coding/">Coding</a>
+                        
+                        <a class="tag" href="/tag/techjobs/">Techjobs</a>
+                        
+                    </div>
+                    
+                </a>
+                
+                <a class="post-card" href="/ai-first-systems-3-patterns-that-dont-collapse/"
+                   data-title="AI-first systems: 3 patterns that don’t collapse"
+                   data-description="Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders."
+                   data-tags="AiApiPatterns,PromptCachingRedis,AiCostOptimization,LlmRetryLoop,Ai,Artificialintelligence,Redis">
+                    <h3>AI-first systems: 3 patterns that don’t collapse</h3>
+                    <p class="post-excerpt">Cut AI API costs 40% with prompt caching, staged pipelines, and cost-aware retries — the patterns that actually survive production for solo founders.</p>
+                    
+                    <p class="post-reading-time">13 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tag/ai/">Ai</a>
+                        
+                        <a class="tag" href="/tag/redis/">Redis</a>
+                        
+                        <a class="tag" href="/tag/llmretryloop/">LlmRetryLoop</a>
+                        
+                    </div>
+                    
+                </a>
+                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -503,20 +480,16 @@
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
-            a.href      = BASE_PATH + '/' + (post.slug || '') + '/';
+            a.href      = BASE_PATH + '/' + post.slug + '/';
 
-            // Title
             var h3         = document.createElement('h3');
-            h3.textContent = post.title || '(Untitled)';
+            h3.textContent = post.title;
             a.appendChild(h3);
 
-            // Excerpt — grows to fill available space via flex: 1
-            var excerpt = ((post.meta_description || post.description || '')).trim();
+            var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length >= 155) {
-                    excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
-                }
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -525,44 +498,27 @@
                 a.appendChild(p);
             }
 
-            // Card footer — contains tags + reading time, pinned to bottom via margin-top:auto
-            var footer       = document.createElement('div');
-            footer.className = 'card-footer';
-
-            // Tags inside footer
-            var tags = post.short_tags || post.tags || [];
-            if (!Array.isArray(tags)) tags = [];
-            var displayTags = tags.slice().sort(function (x, y) {
-                return (x || '').length - (y || '').length;
-            }).slice(0, 3);
-
-            if (displayTags.length) {
-                var tagsDiv       = document.createElement('div');
-                tagsDiv.className = 'tags';
-                displayTags.forEach(function (t) {
-                    if (!t) return;
-                    var sp         = document.createElement('a');
-                    sp.className   = 'tag';
-                    sp.textContent = t;
-                    sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
-                    tagsDiv.appendChild(sp);
-                });
-                footer.appendChild(tagsDiv);
+            if (post.reading_time) {
+                var rt         = document.createElement('p');
+                rt.className   = 'post-reading-time';
+                rt.textContent = post.reading_time + ' min read';
+                a.appendChild(rt);
             }
-
-            // Reading time + date inside footer
-            var readingTime = post.reading_time || post.readingTime;
-            if (readingTime) {
-                var rt       = document.createElement('p');
-                rt.className = 'post-reading-time';
-                var dateText = (post.display_date || post.displayDate || '')
-                    ? ' · ' + (post.display_date || post.displayDate)
-                    : '';
-                rt.textContent = readingTime + ' min read' + dateText;
-                footer.appendChild(rt);
+            var tags = post.tags || [];
+            if (tags.length) {
+                var div       = document.createElement('div');
+                div.className = 'tags';
+                tags.slice().sort(function (x, y) { return x.length - y.length; })
+                    .slice(0, 3)
+                    .forEach(function (t) {
+                        var sp         = document.createElement('a');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        div.appendChild(sp);
+                    });
+                a.appendChild(div);
             }
-
-            a.appendChild(footer);
             return a;
         }
 
@@ -764,6 +720,5 @@
     }());
     </script>
     <script defer src="/static/pwa.js"></script>
-    <script defer src="/static/consent.js"></script>
 </body>
 </html>
