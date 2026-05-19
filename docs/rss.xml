@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 08:30:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 08:44:31 +0000</lastBuildDate>
+    <item>
+      <title>Ship 3 projects or stay unemployed</title>
+      <link>https://kubaik.github.io/ship-3-projects-or-stay-unemployed/</link>
+      <description>Build 3 micro-projects, not a polished SaaS — live demo, one metric, boring tech. Remote hires in 2026 respond to user impact over GitHub stars.</description>
+      <pubDate>Tue, 19 May 2026 08:44:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-3-projects-or-stay-unemployed/</guid>
+    </item>
     <item>
       <title>Bypass TypeScript strict mode</title>
       <link>https://kubaik.github.io/bypass-typescript-strict-mode/</link>
@@ -138,13 +145,6 @@
       <description>Choose the platform that actually pays African devs in 2026 — latency, payouts, and acceptance rates from 5,000 real requests. Andela vs Toptal vs Arc with exact numbers.</description>
       <pubDate>Mon, 18 May 2026 19:29:12 +0000</pubDate>
       <guid>https://kubaik.github.io/which-dev-platform-pays-african-devs-best-in-2026/</guid>
-    </item>
-    <item>
-      <title>Skip the CS degree, not the work</title>
-      <link>https://kubaik.github.io/skip-the-cs-degree-not-the-work/</link>
-      <description>Cut 23% cloud costs and slash API latency from 4.2s to 85ms by pairing Redis 7.2 with Go 1.21 — the real path to senior developer in 2026 without a CS degree.</description>
-      <pubDate>Mon, 18 May 2026 19:20:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-cs-degree-not-the-work/</guid>
     </item>
   </channel>
 </rss>
