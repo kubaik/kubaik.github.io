@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 18:31:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 18:57:51 +0000</lastBuildDate>
+    <item>
+      <title>Nairobi &amp; Lagos devs score $4k remote roles</title>
+      <link>https://kubaik.github.io/nairobi-lagos-devs-score-4k-remote-roles/</link>
+      <description>Land $4k/month remote jobs as a developer in Nairobi or Lagos. Strategy guide: GitHub upgrades, interview prep, and payment tools for global roles.</description>
+      <pubDate>Tue, 19 May 2026 18:57:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/nairobi-lagos-devs-score-4k-remote-roles/</guid>
+    </item>
     <item>
       <title>Price Your Work, Not Their Budget</title>
       <link>https://kubaik.github.io/price-your-work-not-their-budget/</link>
@@ -138,13 +145,6 @@
       <description>Message queues can decouple services, but they add latency and complexity. Learn when to use RabbitMQ, Kafka, or SQS — and when to skip them entirely.</description>
       <pubDate>Tue, 19 May 2026 10:35:54 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-message-queues-when-simplicity-wins/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay across borders effectively</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-across-borders-effectively/</link>
-      <description>Learn to negotiate a remote salary from a lower-cost country. Use market data, position your value, and handle client pushback to land better pay.</description>
-      <pubDate>Tue, 19 May 2026 10:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-across-borders-effectively/</guid>
     </item>
   </channel>
 </rss>
