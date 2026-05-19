@@ -1327,7 +1327,8 @@ def _build_templates() -> dict:
             if (post.reading_time) {
                 var rt         = document.createElement('p');
                 rt.className   = 'post-reading-time';
-                rt.textContent = post.reading_time + ' min read';
+                var dateText   = post.display_date ? ' \\u00b7 ' + post.display_date : '';
+                rt.textContent = post.reading_time + ' min read' + dateText;
                 a.appendChild(rt);
             }
             var tags = post.tags || [];
