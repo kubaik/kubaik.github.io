@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 17:52:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 14:56:38 +0000</lastBuildDate>
+    <item>
+      <title>$6.3k/month: How I escaped local pay</title>
+      <link>https://kubaik.github.io/63kmonth-how-i-escaped-local-pay/</link>
+      <description>I raised my net rate 3.5× in 18 months using fixed-scope packages and public case studies. Net income jumped from $1,800 to $6,300 with 50% from international clients. Learn the exact packages, benchmarks, and tools that made the difference.</description>
+      <pubDate>Tue, 19 May 2026 14:56:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/63kmonth-how-i-escaped-local-pay/</guid>
+    </item>
     <item>
       <title>Decode repo context before AI does</title>
       <link>https://kubaik.github.io/decode-repo-context-before-ai-does/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency from 223 ms to 8 ms and AWS costs from $18k to $7.6k by replacing Kafka Streams and Redis cluster with a Node.js pipeline and single Redis instance — the real numbers and trade-offs.</description>
       <pubDate>Tue, 19 May 2026 02:57:56 +0000</pubDate>
       <guid>https://kubaik.github.io/overbuilt-stacks-waste-40-of-dev-time/</guid>
-    </item>
-    <item>
-      <title>Rate limiters that don’t break clients</title>
-      <link>https://kubaik.github.io/rate-limiters-that-dont-break-clients/</link>
-      <description>Cut API 429s 99 % with a sliding-window limiter in Redis 7.2 — Lua scripts, connection pooling, and the retry header most teams miss. 3 concrete numbers included.</description>
-      <pubDate>Mon, 18 May 2026 23:59:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/rate-limiters-that-dont-break-clients/</guid>
     </item>
   </channel>
 </rss>
