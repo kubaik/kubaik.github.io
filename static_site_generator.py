@@ -143,7 +143,7 @@ Sitemap: {base_url}/rss.xml
             post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
             post_dict['meta_description'] = _safe_excerpt(
-                p.meta_description, p.content, p.title)
+                p.meta_description, p.content, p.title) or p.title
             posts_data.append(post_dict)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
@@ -1216,24 +1216,22 @@ def _build_templates() -> dict:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
-                   data-title="{{ post.title | e }}"
-                   data-description="{{ post.meta_description | e }}"
-                   data-tags="{{ post.tags | join(',') | e }}">
-                    <h3>{{ post.title }}</h3>
-                    <p class="post-excerpt">{{ post.meta_description }}</p>
-                    {% if post.reading_time %}
-                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
-                    {% endif %}
-                    {% if post.tags %}
-                    <div class="tags">
-                        {% for tag in post.short_tags %}
-                        <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </a>
-                {% endfor %}
+                    <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
+                    data-title="{{ post.title | e }}"
+                    data-description="{{ post.meta_description | e }}"
+                    data-tags="{{ post.tags | join(',') | e }}">
+                        <h3>{{ post.title }}</h3>
+                        {% if post.meta_description %}<p class="post-excerpt">{{ post.meta_description }}</p>{% endif %}
+                        <p class="post-reading-time">{{ post.reading_time | default(1) }} min read &nbsp;·&nbsp; {{ post.display_date }}</p>
+                        {% if post.short_tags %}
+                        <div class="tags">
+                            {% for tag in post.short_tags %}
+                            <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
