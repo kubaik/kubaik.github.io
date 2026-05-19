@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 15:15:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 16:00:41 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: waste or weapon?</title>
+      <link>https://kubaik.github.io/edge-functions-waste-or-weapon/</link>
+      <description>Cut API response time 60% using Workers or Vercel Edge — when it’s worth it, what breaks, and the exact code to test in 30 minutes</description>
+      <pubDate>Tue, 19 May 2026 16:00:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-waste-or-weapon/</guid>
+    </item>
     <item>
       <title>Beat Freelance Burnout Without Quitting</title>
       <link>https://kubaik.github.io/beat-freelance-burnout-without-quitting/</link>
@@ -138,13 +145,6 @@
       <description>ate was 0.02% while Cloudflare’s was 0.008% with Edge functions cost they — scale to 100k requests per second during Black Frid.</description>
       <pubDate>Tue, 19 May 2026 06:45:49 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-the-real-cost-and-when-theyre-worth-it/</guid>
-    </item>
-    <item>
-      <title>Freelance rates: 2026 cheat sheet</title>
-      <link>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</link>
-      <description>Freelance developer rates 2026 cheat sheet — realistic numbers, real mistakes, and a step-by-step model to set your rate without guessing. Includes costs, market data, and a first-person breakdown of what went wrong.</description>
-      <pubDate>Tue, 19 May 2026 05:54:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-2026-cheat-sheet/</guid>
     </item>
   </channel>
 </rss>
