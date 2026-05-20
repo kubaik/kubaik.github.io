@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 08:44:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 08:46:49 +0000</lastBuildDate>
+    <item>
+      <title>Message queues: the 80% rule you need</title>
+      <link>https://kubaik.github.io/message-queues-the-80-rule-you-need/</link>
+      <description>Cut API bottleneck 70% with message queues — real latency, cost, and failure data from 2026 systems. Learn when to queue and when to dump the queue entirely.</description>
+      <pubDate>Wed, 20 May 2026 08:46:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/message-queues-the-80-rule-you-need/</guid>
+    </item>
     <item>
       <title>Show GitHub alone won’t land you a remote job</title>
       <link>https://kubaik.github.io/show-github-alone-wont-land-you-a-remote-job/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 71% and latency 72% by replacing microservices with a single Go process — the real cost of over-engineering exposed with hard numbers and benchmarks.</description>
       <pubDate>Tue, 19 May 2026 20:16:14 +0000</pubDate>
       <guid>https://kubaik.github.io/fancy-stacks-cost-200-more/</guid>
-    </item>
-    <item>
-      <title>Edge functions in 2026: save or hemorrhage cash</title>
-      <link>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</link>
-      <description>Save $2k/month on API costs with edge functions — real latency and cost data for Cloudflare Workers vs Vercel Edge in 2026, plus the mistakes most teams make.</description>
-      <pubDate>Tue, 19 May 2026 19:28:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</guid>
     </item>
   </channel>
 </rss>
