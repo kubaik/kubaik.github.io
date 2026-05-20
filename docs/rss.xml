@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 23:02:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 23:07:35 +0000</lastBuildDate>
+    <item>
+      <title>Data skills that move AI salaries in 2026</title>
+      <link>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</link>
+      <description>Python vs SQL that pays more in 2026 — benchmarked latency, TCO, and salary. Learn which AI skill actually moves your paycheck, with real code and data.</description>
+      <pubDate>Wed, 20 May 2026 23:07:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</guid>
+    </item>
     <item>
       <title>How AI coding empowers non-traditional devs</title>
       <link>https://kubaik.github.io/how-ai-coding-empowers-non-traditional-devs/</link>
@@ -138,13 +145,6 @@
       <description>GitHub Copilot cuts review: eviews 30–40% faster and juniors were still. Practical guide with real examples.</description>
       <pubDate>Wed, 20 May 2026 11:27:38 +0000</pubDate>
       <guid>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</guid>
-    </item>
-    <item>
-      <title>AI systems: the boring patterns that don’t melt</title>
-      <link>https://kubaik.github.io/ai-systems-the-boring-patterns-that-dont-melt/</link>
-      <description>ions from 2% to 18%. Reverting required a with AI systems boring patterns — a reliable product.</description>
-      <pubDate>Wed, 20 May 2026 10:23:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-systems-the-boring-patterns-that-dont-melt/</guid>
     </item>
   </channel>
 </rss>
