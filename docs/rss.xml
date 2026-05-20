@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 16:50:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 18:36:48 +0000</lastBuildDate>
+    <item>
+      <title>From $3k to $12k: how I re-rated my salary</title>
+      <link>https://kubaik.github.io/from-3k-to-12k-how-i-re-rated-my-salary/</link>
+      <description>earned 20–30% above the median, but I didn’ with 12k re-rated salary — solve) In 2023, my net monthly salary in Nairobi wa.</description>
+      <pubDate>Wed, 20 May 2026 18:36:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/from-3k-to-12k-how-i-re-rated-my-salary/</guid>
+    </item>
     <item>
       <title>Portfolio trap: 99% of remote devs get it wrong</title>
       <link>https://kubaik.github.io/portfolio-trap-99-of-remote-devs-get-it-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM pipeline debugging time 70% with OpenTelemetry — prompts, vectors, costs, and the cache stampede mistake most teams miss in 2026.</description>
       <pubDate>Wed, 20 May 2026 05:55:51 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llms-what-metrics-actually-matter/</guid>
-    </item>
-    <item>
-      <title>Stop burning cellular bandwidth: backend changes that</title>
-      <link>https://kubaik.github.io/stop-burning-cellular-bandwidth-backend-changes-that/</link>
-      <description>Cut 5G backend latency 69% and 5xx errors 90% with Redis 7.2 caching, pgbouncer 1.21 pooling, and TCP keep-alive tuning tuned for cellular handovers.</description>
-      <pubDate>Wed, 20 May 2026 02:38:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-burning-cellular-bandwidth-backend-changes-that/</guid>
     </item>
   </channel>
 </rss>
