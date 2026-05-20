@@ -180,7 +180,7 @@ jobs:
 
       - name: Install deduplication dependencies
         run: |
-          pip install --quiet scikit-learn numpy
+          pip install --quiet scikit-learn numpy tweepy
 
       - name: Run delete_fallback_posts (dry-run detect)
         id: fallback_check
