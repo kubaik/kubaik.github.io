@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 19:11:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 19:17:22 +0000</lastBuildDate>
+    <item>
+      <title>Remote salary hacks for lower-cost countries</title>
+      <link>https://kubaik.github.io/remote-salary-hacks-for-lower-cost-countries/</link>
+      <description>Cut remote salary friction 40% with a negotiation packet: salary bands, FX hedge, tech-cost savings, SOC 2 checklist. Nairobi-based engineer shows how to raise rates without losing deals.</description>
+      <pubDate>Wed, 20 May 2026 19:17:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-salary-hacks-for-lower-cost-countries/</guid>
+    </item>
     <item>
       <title>RAG in prod: 3 bottlenecks tutorials ignore</title>
       <link>https://kubaik.github.io/rag-in-prod-3-bottlenecks-tutorials-ignore/</link>
@@ -138,13 +145,6 @@
       <description>Repository AI cuts review cycles 35% by feeding LLMs the whole code graph instead of one file at a time. Learn the toolchain, benchmarks, and the one setup that works in a weekend.</description>
       <pubDate>Wed, 20 May 2026 07:38:25 +0000</pubDate>
       <guid>https://kubaik.github.io/repository-ai-when-context-gets-real/</guid>
-    </item>
-    <item>
-      <title>Fix database pools: common timeout flaw</title>
-      <link>https://kubaik.github.io/fix-database-pools-common-timeout-flaw/</link>
-      <description>Optimize database connection pooling settings to cut costs and boost performance. Learn why small pools and longer timeouts outperform outdated advice.</description>
-      <pubDate>Wed, 20 May 2026 06:59:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-database-pools-common-timeout-flaw/</guid>
     </item>
   </channel>
 </rss>
