@@ -910,6 +910,37 @@ def _build_templates() -> dict:
     #    WHY: Creates internal link network → improves crawl depth.
     # ─────────────────────────────────────────────────────────────
     INDEX_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }}</title>
+    <meta name="description" content="{{ site_description }}">
+    <link rel="canonical" href="{{ base_url }}/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ site_name }}">
+    <meta property="og:description" content="{{ site_description }}">
+    <meta property="og:url" content="{{ base_url }}/">
+    <meta property="og:image" content="{{ base_url }}/static/icons/icon-512x512.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    {{ global_meta_tags | safe }}
+    {{ homepage_meta_tags | safe }}
+    {{ organization_schema | safe }}
+    {{ website_schema | safe }}
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
         .search-container { margin: 0 0 1.5rem; max-width: 420px; }
         .search-wrapper {
@@ -991,7 +1022,391 @@ def _build_templates() -> dict:
         .post-lead { font-size: 1.05rem; color: #555; line-height: 1.6; margin: 0.25rem 0 1rem; font-style: italic; }
         .editorial-policy-note { background: #f0f4ff; border-left: 3px solid #6366f1; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #555; }
         .editorial-policy-note a { color: #6366f1; }
-    </style>"""
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <div class="hero">
+            <h2>Welcome to {{ site_name }}</h2>
+            <p>{{ site_description }}</p>
+        </div>
+
+        <div class="editorial-policy-note">
+            Articles are written by <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
+            with 10+ years of production experience. Every post is reviewed for accuracy before publishing.
+            <a href="{{ base_path }}/about/#editorial">Learn about our editorial process →</a>
+        </div>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" id="search-input" class="search-input"
+                    placeholder="Search posts..."
+                    autocomplete="off" autocorrect="off" autocapitalize="off"
+                    spellcheck="false" data-form-type="other">
+                <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="search-results-count" class="search-results-count"></div>
+        </div>
+
+        <section class="recent-posts">
+            <h2>Latest Posts</h2>
+            {% if posts %}
+            <div id="posts-container" class="post-grid">
+                {% for post in posts[:posts_per_page] %}
+                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
+                   data-title="{{ post.title | e }}"
+                   data-description="{{ post.meta_description | e }}"
+                   data-tags="{{ post.tags | join(',') | e }}">
+                    <h3>{{ post.title }}</h3>
+                    <p class="post-excerpt">{{ post.meta_description }}</p>
+                    {% if post.reading_time %}
+                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
+                    {% endif %}
+                    {% if post.tags %}
+                    <div class="tags">
+                        {% for tag in post.short_tags %}
+                        <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+
+            <div id="loading-spinner" class="loading-spinner" style="display:none;">
+                <div class="spinner"></div>
+                <p>Loading more posts...</p>
+            </div>
+
+            <div id="scroll-sentinel" style="height:1px;"></div>
+
+            {% else %}
+            <p>No posts yet. Check back soon!</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <button id="back-to-top" class="back-to-top" style="display:none;" aria-label="Back to top"><span>&#8593;</span></button>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }}</p>
+            <div class="social-links">
+                {% for platform, url in social_links.items() %}
+                <a href="{{ url }}" target="_blank" rel="noopener">{{ platform|title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ base_path }}/static/navigation.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var searchInput    = document.getElementById('search-input');
+        var clearBtn       = document.getElementById('clear-search');
+        var resultsCount   = document.getElementById('search-results-count');
+        var postsContainer = document.getElementById('posts-container');
+        var loadingSpinner = document.getElementById('loading-spinner');
+        var sentinel       = document.getElementById('scroll-sentinel');
+        var backToTopBtn   = document.getElementById('back-to-top');
+
+        var PAGE_SIZE = {{ posts_per_page }};
+        var BASE_PATH = '{{ base_path }}';
+
+        var fullPosts   = [];
+        var loadedCount = postsContainer
+            ? postsContainer.querySelectorAll('a.post-card').length
+            : 0;
+        var jsonReady   = false;
+        var isLoading   = false;
+        var searchMode  = false;
+        var observer    = null;
+
+        function startObserver() {
+            if (!sentinel || !window.IntersectionObserver || observer) return;
+            observer = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) onSentinelVisible();
+            }, { rootMargin: '0px 0px 400px 0px' });
+            observer.observe(sentinel);
+        }
+
+        function stopObserver() {
+            if (observer) { observer.disconnect(); observer = null; }
+        }
+
+        function onSentinelVisible() {
+            if (!jsonReady || isLoading || searchMode) return;
+            if (loadedCount >= fullPosts.length) { stopObserver(); return; }
+            loadNextPage();
+        }
+
+        function buildCard(post) {
+            var a       = document.createElement('a');
+            a.className = 'post-card';
+            a.href      = BASE_PATH + '/' + post.slug + '/';
+
+            var h3         = document.createElement('h3');
+            h3.textContent = post.title;
+            a.appendChild(h3);
+
+            var excerpt = (post.meta_description || '').trim();
+            if (!excerpt && post.content) {
+                excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
+            }
+            if (excerpt) {
+                var p         = document.createElement('p');
+                p.className   = 'post-excerpt';
+                p.textContent = excerpt;
+                a.appendChild(p);
+            }
+
+            if (post.reading_time) {
+                var rt         = document.createElement('p');
+                rt.className   = 'post-reading-time';
+                rt.textContent = post.reading_time + ' min read';
+                a.appendChild(rt);
+            }
+            var tags = post.tags || [];
+            if (tags.length) {
+                var div       = document.createElement('div');
+                div.className = 'tags';
+                tags.slice().sort(function (x, y) { return x.length - y.length; })
+                    .slice(0, 3)
+                    .forEach(function (t) {
+                        var sp         = document.createElement('a');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        div.appendChild(sp);
+                    });
+                a.appendChild(div);
+            }
+            return a;
+        }
+
+        function loadNextPage() {
+            isLoading = true;
+            if (loadingSpinner) loadingSpinner.style.display = 'flex';
+            setTimeout(function () {
+                var slice    = fullPosts.slice(loadedCount, loadedCount + PAGE_SIZE);
+                var fragment = document.createDocumentFragment();
+                var newCards = [];
+                slice.forEach(function (post) {
+                    var card = buildCard(post);
+                    card.classList.add('post-card--entering');
+                    fragment.appendChild(card);
+                    newCards.push(card);
+                });
+                postsContainer.appendChild(fragment);
+                loadedCount += slice.length;
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        newCards.forEach(function (el, i) {
+                            setTimeout(function () { el.classList.remove('post-card--entering'); }, i * 60);
+                        });
+                    });
+                });
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                isLoading = false;
+                if (loadedCount >= fullPosts.length) stopObserver();
+            }, 250);
+        }
+
+        fetch(BASE_PATH + '/posts.json')
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+            .then(function (posts) {
+                fullPosts = posts;
+                jsonReady = true;
+                if (loadedCount < fullPosts.length) startObserver();
+                if (searchMode && searchInput && searchInput.value.trim()) runSearch(searchInput.value.trim());
+            })
+            .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
+
+        function readText(el, selector) {
+            if (!el) return '';
+            var child = el.querySelector(selector);
+            return child ? (child.textContent || '') : '';
+        }
+
+        var domIndex = [];
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                domIndex.push({
+                    element:     el,
+                    title:       (el.dataset.title       || readText(el, 'h3')).toLowerCase(),
+                    description: (el.dataset.description || readText(el, '.post-excerpt')).toLowerCase(),
+                    tags:        (el.dataset.tags        || '').toLowerCase()
+                });
+            });
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            var lower  = text.toLowerCase();
+            var qLower = query.toLowerCase();
+            var result = '';
+            var pos    = 0;
+            var idx;
+            while ((idx = lower.indexOf(qLower, pos)) !== -1) {
+                result += escapeHtml(text.slice(pos, idx))
+                       +  '<mark class="search-highlight">'
+                       +  escapeHtml(text.slice(idx, idx + query.length))
+                       +  '</mark>';
+                pos = idx + query.length;
+            }
+            result += escapeHtml(text.slice(pos));
+            return result;
+        }
+
+        function escapeHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function runSearch(rawQuery) {
+            if (!postsContainer) return;
+            var query = rawQuery.toLowerCase().trim();
+            if (!query) { clearSearch(); return; }
+            searchMode = true;
+            stopObserver();
+            var matched;
+            if (jsonReady && fullPosts.length) {
+                matched = fullPosts.filter(function (p) {
+                    return (p.title            || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.meta_description || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.tags             || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
+                });
+                postsContainer.innerHTML = '';
+                matched.forEach(function (post) {
+                    var card    = buildCard(post);
+                    var h3      = card.querySelector('h3');
+                    var excerpt = card.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, rawQuery);
+                    postsContainer.appendChild(card);
+                });
+            } else {
+                matched = [];
+                domIndex.forEach(function (item) {
+                    var hit = item.title.indexOf(query) !== -1 ||
+                              item.description.indexOf(query) !== -1 ||
+                              item.tags.indexOf(query) !== -1;
+                    item.element.style.display = hit ? '' : 'none';
+                    if (hit) matched.push(item);
+                });
+                matched.forEach(function (item) {
+                    var h3      = item.element.querySelector('h3');
+                    var excerpt = item.element.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain      || h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, rawQuery);
+                });
+            }
+            var n = matched.length;
+            if (resultsCount) {
+                resultsCount.textContent = n === 0
+                    ? 'No results for "' + rawQuery + '"'
+                    : n === 1 ? '1 post found' : n + ' posts found';
+            }
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (n === 0) {
+                var msg       = document.createElement('div');
+                msg.id        = 'no-results-msg';
+                msg.className = 'no-results-message';
+                msg.innerHTML = '<p>No posts matched <strong>' + rawQuery + '</strong>. Try different keywords.</p>';
+                postsContainer.insertAdjacentElement('afterend', msg);
+            }
+        }
+
+        function clearSearch() {
+            searchMode = false;
+            domIndex.forEach(function (item) {
+                item.element.style.display = '';
+                var h3      = item.element.querySelector('h3');
+                var excerpt = item.element.querySelector('.post-excerpt');
+                if (h3)      h3.textContent      = h3.dataset.plain      || item.title;
+                if (excerpt) excerpt.textContent = excerpt.dataset.plain || item.description;
+            });
+            if (jsonReady && fullPosts.length) {
+                postsContainer.innerHTML = '';
+                var first = fullPosts.slice(0, PAGE_SIZE);
+                first.forEach(function (post) { postsContainer.appendChild(buildCard(post)); });
+                loadedCount = first.length;
+            } else {
+                postsContainer.querySelectorAll('a.post-card').forEach(function (el) { el.style.display = ''; });
+            }
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (resultsCount) resultsCount.textContent = '';
+            if (jsonReady && loadedCount < fullPosts.length) startObserver();
+        }
+
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                var h3      = el.querySelector('h3');
+                var excerpt = el.querySelector('.post-excerpt');
+                if (h3      && !h3.dataset.plain)      h3.dataset.plain      = h3.textContent;
+                if (excerpt && !excerpt.dataset.plain) excerpt.dataset.plain = excerpt.textContent;
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                var q = this.value.trim();
+                if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+                if (q) { runSearch(q); } else { clearSearch(); }
+            });
+            searchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { this.value = ''; if (clearBtn) clearBtn.style.display = 'none'; clearSearch(); }
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (searchInput) searchInput.value = '';
+                this.style.display = 'none';
+                clearSearch();
+                if (searchInput) searchInput.focus();
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            if (backToTopBtn)
+                backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
+        }, { passive: true });
+
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        }
+
+    }());
+    </script>
+    <script defer src="{{ base_path }}/static/pwa.js"></script>
+</body>
+</html>"""
 
     # ─────────────────────────────────────────────────────────────
     # ABOUT / CONTACT / PRIVACY / TERMS / 404 templates
