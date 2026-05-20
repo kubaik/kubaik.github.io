@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 22:50:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 22:55:47 +0000</lastBuildDate>
+    <item>
+      <title>Design tenant databases that won&apos;t break at scale</title>
+      <link>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</link>
+      <description>Cut multi-tenant SaaS costs 40% and scale to millions without schema-per-tenant — real examples from Linear, GitLab, Shopify with PostgreSQL 16, pg_partman 5.0, Redis 7.2.</description>
+      <pubDate>Wed, 20 May 2026 22:55:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</guid>
+    </item>
     <item>
       <title>Compare WebSocket, SSE, polling costs</title>
       <link>https://kubaik.github.io/compare-websocket-sse-polling-costs/</link>
@@ -138,13 +145,6 @@
       <description>Earned $150k gross in 18 months after leaving a $30k Nairobi salary — the contract-to-hire pipeline, productized services, and niche specialization that made it possible.</description>
       <pubDate>Wed, 20 May 2026 09:30:41 +0000</pubDate>
       <guid>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</guid>
-    </item>
-    <item>
-      <title>AI-coded products: how non-traditional devs shipped real code</title>
-      <link>https://kubaik.github.io/ai-coded-products-how-non-traditional-devs-shipped-real-code/</link>
-      <description>Cut first-month AWS bills 40% with AI-generated stacks — real latency, cost, and chaos-test results from 10 tools tested by a solo founder in 2026.</description>
-      <pubDate>Wed, 20 May 2026 09:10:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coded-products-how-non-traditional-devs-shipped-real-code/</guid>
     </item>
   </channel>
 </rss>
