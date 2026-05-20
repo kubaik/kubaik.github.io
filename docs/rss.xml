@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 12:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 09:30:52 +0000</lastBuildDate>
+    <item>
+      <title>From $30k to $150k: 5 moves that changed everything</title>
+      <link>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</link>
+      <description>Earned $150k gross in 18 months after leaving a $30k Nairobi salary — the contract-to-hire pipeline, productized services, and niche specialization that made it possible.</description>
+      <pubDate>Wed, 20 May 2026 09:30:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</guid>
+    </item>
     <item>
       <title>AI-coded products: how non-traditional devs shipped real code</title>
       <link>https://kubaik.github.io/ai-coded-products-how-non-traditional-devs-shipped-real-code/</link>
@@ -138,13 +145,6 @@
       <description>Pass remote tech interviews without polished apps — use a problem-solving journal instead. Learn how self-taught engineers land roles with real debugging stories, not side projects. 2026 guide.</description>
       <pubDate>Tue, 19 May 2026 20:27:41 +0000</pubDate>
       <guid>https://kubaik.github.io/master-remote-tech-interviews-as-a-self-taught-dev/</guid>
-    </item>
-    <item>
-      <title>Streamline Zero-Trust for Teams Under 50</title>
-      <link>https://kubaik.github.io/streamline-zero-trust-for-teams-under-50/</link>
-      <description>Reduce auth failures 90% and cut cloud bills 30% with lightweight zero trust—no VPNs, no firewalls, just hardware keys and short-lived tokens. Works for teams under 50 engineers in 2026.</description>
-      <pubDate>Tue, 19 May 2026 20:23:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/streamline-zero-trust-for-teams-under-50/</guid>
     </item>
   </channel>
 </rss>
