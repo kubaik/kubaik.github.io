@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 16:09:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 16:42:38 +0000</lastBuildDate>
+    <item>
+      <title>32% less cloud carbon, same API speed</title>
+      <link>https://kubaik.github.io/32-less-cloud-carbon-same-api-speed/</link>
+      <description>Cut AWS cloud carbon 32% per request without increasing p95 latency above 80 ms — payload pruning, Node.js JIT, and Graviton3 flags that saved $620/month.</description>
+      <pubDate>Wed, 20 May 2026 16:42:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/32-less-cloud-carbon-same-api-speed/</guid>
+    </item>
     <item>
       <title>Avoid edge hype: where Workers and Edge pay off</title>
       <link>https://kubaik.github.io/avoid-edge-hype-where-workers-and-edge-pay-off/</link>
@@ -138,13 +145,6 @@
       <description>Cut screen time 40% and recover from freelance burnout — exact contracts, context batching, and global latency fixes I used to drop my burnout score from 0.9 to 0.2 in 60 days</description>
       <pubDate>Tue, 19 May 2026 23:57:50 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-burnout-fixed-what-i-cut-first/</guid>
-    </item>
-    <item>
-      <title>Shrink cloud carbon 37% without latency loss</title>
-      <link>https://kubaik.github.io/shrink-cloud-carbon-37-without-latency-loss/</link>
-      <description>Cut AWS carbon footprint 35% without latency or cost spikes — service-level carbon accounting, Redis sharding, Graviton3, and cache warming for fintech workloads</description>
-      <pubDate>Tue, 19 May 2026 23:48:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/shrink-cloud-carbon-37-without-latency-loss/</guid>
     </item>
   </channel>
 </rss>
