@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 02:38:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 05:56:01 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLMs: what metrics actually matter</title>
+      <link>https://kubaik.github.io/instrument-llms-what-metrics-actually-matter/</link>
+      <description>Cut LLM pipeline debugging time 70% with OpenTelemetry — prompts, vectors, costs, and the cache stampede mistake most teams miss in 2026.</description>
+      <pubDate>Wed, 20 May 2026 05:55:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llms-what-metrics-actually-matter/</guid>
+    </item>
     <item>
       <title>Stop burning cellular bandwidth: backend changes that</title>
       <link>https://kubaik.github.io/stop-burning-cellular-bandwidth-backend-changes-that/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, 78% of AI features shipped by pro with PostgreSQL — discover their PostgreSQL 16 with pgvector 0.</description>
       <pubDate>Tue, 19 May 2026 18:08:31 +0000</pubDate>
       <guid>https://kubaik.github.io/when-postgresql-beats-a-vector-db/</guid>
-    </item>
-    <item>
-      <title>5 Tools Helping Non-Traditional Devs Ship Real Products</title>
-      <link>https://kubaik.github.io/5-tools-helping-non-traditional-devs-ship-real-products/</link>
-      <description>6 AI coding tools that help new developers ship products. From Copilot to Codeium, learn strengths, weaknesses, and real-world results for shipping code.</description>
-      <pubDate>Tue, 19 May 2026 16:52:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-tools-helping-non-traditional-devs-ship-real-products/</guid>
     </item>
   </channel>
 </rss>
