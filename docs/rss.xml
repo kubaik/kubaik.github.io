@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 22:55:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 23:02:50 +0000</lastBuildDate>
+    <item>
+      <title>How AI coding empowers non-traditional devs</title>
+      <link>https://kubaik.github.io/how-ai-coding-empowers-non-traditional-devs/</link>
+      <description>Cut deployment time 90% with Railway, Fly.io, and PocketBase — the AI-friendly stack that shipped real products in 2026 — no DevOps needed.</description>
+      <pubDate>Wed, 20 May 2026 23:02:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/how-ai-coding-empowers-non-traditional-devs/</guid>
+    </item>
     <item>
       <title>Design tenant databases that won&apos;t break at scale</title>
       <link>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>ions from 2% to 18%. Reverting required a with AI systems boring patterns — a reliable product.</description>
       <pubDate>Wed, 20 May 2026 10:23:15 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-systems-the-boring-patterns-that-dont-melt/</guid>
-    </item>
-    <item>
-      <title>From $30k to $150k: 5 moves that changed everything</title>
-      <link>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</link>
-      <description>Earned $150k gross in 18 months after leaving a $30k Nairobi salary — the contract-to-hire pipeline, productized services, and niche specialization that made it possible.</description>
-      <pubDate>Wed, 20 May 2026 09:30:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</guid>
     </item>
   </channel>
 </rss>
