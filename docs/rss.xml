@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 10:35:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 07:38:35 +0000</lastBuildDate>
+    <item>
+      <title>Repository AI: when context gets real</title>
+      <link>https://kubaik.github.io/repository-ai-when-context-gets-real/</link>
+      <description>Repository AI cuts review cycles 35% by feeding LLMs the whole code graph instead of one file at a time. Learn the toolchain, benchmarks, and the one setup that works in a weekend.</description>
+      <pubDate>Wed, 20 May 2026 07:38:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/repository-ai-when-context-gets-real/</guid>
+    </item>
     <item>
       <title>Fix database pools: common timeout flaw</title>
       <link>https://kubaik.github.io/fix-database-pools-common-timeout-flaw/</link>
@@ -138,13 +145,6 @@
       <description>Set freelance developer rates 2026 with a data-backed calculator — taxes, buffer, client risk multipliers, and real 2026 market benchmarks included. Avoid underpricing traps and negotiation regrets.</description>
       <pubDate>Tue, 19 May 2026 18:30:49 +0000</pubDate>
       <guid>https://kubaik.github.io/price-your-work-not-their-budget/</guid>
-    </item>
-    <item>
-      <title>MCP servers: the silent layer you’re already using</title>
-      <link>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</link>
-      <description>Cut MCP server latency 60% and reduce memory leaks with bounded pools, circuit breakers, and Prometheus metrics — real numbers from a 2026 production deployment</description>
-      <pubDate>Tue, 19 May 2026 18:24:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</guid>
     </item>
   </channel>
 </rss>
