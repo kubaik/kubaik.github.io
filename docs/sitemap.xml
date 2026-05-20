@@ -6,6 +6,7 @@
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-systems-the-boring-patterns-that-dont-melt/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/from-30k-to-150k-5-moves-that-changed-everything/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-coded-products-how-non-traditional-devs-shipped-real-code/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -585,9 +586,9 @@
 <url><loc>https://kubaik.github.io/sre-fixing-what-breaks-silent/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/how-hackers-really-breach-systems/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/aso-that-actually-moves-rankings/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/solo-dev-scale-like-a-pro/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://kubaik.github.io/fix-slow-queries-real-database-wins/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/solo-dev-scale-like-a-pro/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/fix-slow-queries-real-database-wins/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/why-your-code-docs-fail-and-how-to-fix-them/</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/create-your-ai-butler/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/ai-widens-wealth-gap/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/2026-data-breach-disasters/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

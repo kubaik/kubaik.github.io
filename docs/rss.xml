@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 14:19:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 11:27:49 +0000</lastBuildDate>
+    <item>
+      <title>GitHub Copilot cuts review time 40% — here’s how</title>
+      <link>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</link>
+      <description>GitHub Copilot cuts review: eviews 30–40% faster and juniors were still. Practical guide with real examples.</description>
+      <pubDate>Wed, 20 May 2026 11:27:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</guid>
+    </item>
     <item>
       <title>AI systems: the boring patterns that don’t melt</title>
       <link>https://kubaik.github.io/ai-systems-the-boring-patterns-that-dont-melt/</link>
@@ -138,13 +145,6 @@
       <description>nd, learn 80% of what they need on the job. with CS degree Don you — the degree, you’re fighting an uphill battle.</description>
       <pubDate>Tue, 19 May 2026 21:57:53 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-dont-let-it-slow-you-down/</guid>
-    </item>
-    <item>
-      <title>When Vector DBs are overkill</title>
-      <link>https://kubaik.github.io/when-vector-dbs-are-overkill/</link>
-      <description>Vector DBs vs PostgreSQL: Compare cost, latency, and scale for embedding search. Save 90% on costs by choosing the right tool for your dataset size.</description>
-      <pubDate>Tue, 19 May 2026 21:52:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-vector-dbs-are-overkill/</guid>
     </item>
   </channel>
 </rss>
