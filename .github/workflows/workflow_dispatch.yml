@@ -8,19 +8,19 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # upgraded from 'read' — needed for checkout + git push after dedup
+  contents: write
   actions: write
 
 jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 10 # bumped from 5 — dedup + site rebuild can take a few minutes
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # full history so git operations work correctly
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,9 +31,6 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --quiet pyyaml aiohttp requests
-          # Install any other deps your deduplicate_posts.py / blog_system.py need.
-          # Add lines here if requirements.txt exists:
-          # pip install --quiet -r requirements.txt
 
       - name: Determine which cron slots have passed today
         id: slots
@@ -177,9 +174,9 @@ jobs:
           fi
 
       # ── DEDUPLICATION ────────────────────────────────────────────────────────
-      # Runs both delete_similar_posts.py and delete_fallback_posts.py on every
-      # watchdog execution. If either finds posts to delete, commits the cleaned
-      # docs/ tree and triggers a site rebuild.
+      # Runs delete_similar_posts.py, delete_fallback_posts.py, and
+      # deduplicate_posts.py on every watchdog execution. If any finds posts
+      # to delete, commits the cleaned docs/ tree and triggers a site rebuild.
 
       - name: Install deduplication dependencies
         run: |
@@ -241,11 +238,40 @@ jobs:
           echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
           echo "Similar post deletion complete."
 
+      - name: Run deduplicate_posts (dry-run detect)
+        id: dedup_check
+        run: |
+          echo "Running deduplication detection..."
+          OUTPUT=$(python deduplicate_posts.py --threshold 0.5 2>&1)
+          echo "$OUTPUT"
+
+          if echo "$OUTPUT" | grep -q "No duplicate posts found"; then
+            echo "has_duplicates=false" >> $GITHUB_OUTPUT
+            echo "✅ No duplicate posts detected."
+          else
+            if echo "$OUTPUT" | grep -q "DELETE"; then
+              echo "has_duplicates=true" >> $GITHUB_OUTPUT
+              echo "⚠️ Duplicate posts detected — will delete in next step."
+            else
+              echo "has_duplicates=false" >> $GITHUB_OUTPUT
+              echo "⚠️ Unexpected dedup output — defaulting to no-delete (review logs above)."
+            fi
+          fi
+
+      - name: Run deduplicate_posts (delete)
+        id: dedup_delete
+        if: steps.dedup_check.outputs.has_duplicates == 'true'
+        run: |
+          echo "Deleting duplicate posts..."
+          python deduplicate_posts.py --delete --no-rebuild
+          echo "Deduplication complete."
+
       - name: Rebuild site after deletions
         id: rebuild
         if: >
           steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true'
+          steps.similar_check.outputs.has_similar == 'true' ||
+          steps.dedup_check.outputs.has_duplicates == 'true'
         run: |
           echo "Deletions occurred — rebuilding site..."
           python blog_system.py build
@@ -254,7 +280,8 @@ jobs:
       - name: Commit and push cleaned posts + rebuilt site
         if: >
           steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true'
+          steps.similar_check.outputs.has_similar == 'true' ||
+          steps.dedup_check.outputs.has_duplicates == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -271,6 +298,9 @@ jobs:
             fi
             if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
               SUMMARY="${SUMMARY}similar-posts "
+            fi
+            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+              SUMMARY="${SUMMARY}duplicate-posts "
             fi
             git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
             git push
@@ -378,6 +408,7 @@ jobs:
             echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
             echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo ""
             if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
               echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
@@ -397,5 +428,12 @@ jobs:
             else
               echo ""
               echo "✅ **No similar posts found.**"
+            fi
+            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+              echo ""
+              echo "⚠️ **Duplicate posts were detected and deleted. Site rebuilt and docs/ pushed.**"
+            else
+              echo ""
+              echo "✅ **No duplicate posts found.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
