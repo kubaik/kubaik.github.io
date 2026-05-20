@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 21:19:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 21:22:27 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates: the numbers that stuck in 2026</title>
+      <link>https://kubaik.github.io/freelance-rates-the-numbers-that-stuck-in-2026/</link>
+      <description>Freelance developer rates in 2026: actual numbers from 500+ contracts with platform fees, taxes, and scope volatility baked in — calculate your true hourly rate in 30 minutes.</description>
+      <pubDate>Wed, 20 May 2026 21:22:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-the-numbers-that-stuck-in-2026/</guid>
+    </item>
     <item>
       <title>Vector Search in Postgres vs Specialized DBs</title>
       <link>https://kubaik.github.io/vector-search-in-postgres-vs-specialized-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM costs 63% with MCP servers — real latency, Redis caching, and the mistakes teams repeat</description>
       <pubDate>Wed, 20 May 2026 08:40:50 +0000</pubDate>
       <guid>https://kubaik.github.io/why-mcp-servers-power-real-ai-apps/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, and polling in practice</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-and-polling-in-practice/</link>
-      <description>Cut cloud costs 75% with SSE instead of WebSocket — latency, CPU, and $/month numbers from 10 k users on a $12 droplet in 2026</description>
-      <pubDate>Wed, 20 May 2026 07:55:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-and-polling-in-practice/</guid>
     </item>
   </channel>
 </rss>
