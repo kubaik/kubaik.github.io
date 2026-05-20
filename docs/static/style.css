@@ -116,7 +116,6 @@ nav a:hover::after {
     width: 60%;
 }
 
-/* Mobile Menu Elements */
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -206,43 +205,67 @@ main {
 }
 
 /* ============================================
-   POST GRID & CARDS
+   POST GRID
    ============================================ */
 
 .post-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    /* minmax(0,1fr) prevents columns from expanding beyond container */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
+    /* align-items:stretch (the default) makes all cards in a row equal height */
     align-items: stretch;
 }
 
+/* ============================================
+   POST CARD — complete rewrite
+   Root cause of all screenshot bugs:
+   1. `height:100%` on a flex child inside a grid cell has no effect
+      (the grid stretch already handles it) but was causing blank-card
+      rendering in some browsers when the grid row height was computed
+      before content loaded.
+   2. `overflow:hidden` on the card clipped the tags row when it wrapped.
+   3. `white-space:nowrap` on h3 truncated every title to one line,
+      making cards with short titles have large empty gaps above the excerpt.
+   4. `.tags` had `position:relative` + `::after` gradient overlay that
+      visually hid the last tag and made the tags appear outside the card.
+   ============================================ */
+
 .post-card {
+    /* flex column so excerpt stretches and tags always sit at the bottom */
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding: 2rem;
+    /* DO NOT use height:100% here — grid stretch handles equal height */
+    padding: 1.5rem;
     border: 1px solid #e9ecef;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     text-decoration: none;
     color: inherit;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    /* CRITICAL FIX: overflow visible so wrapped tags are never clipped */
+    overflow: visible;
+    /* Guard against fully-empty cards rendering as thin slivers */
+    min-height: 180px;
 }
 
+/* Top accent bar — uses ::before so it doesn't affect layout */
 .post-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
     background: linear-gradient(90deg, #667eea, #764ba2);
     transform: scaleX(0);
+    transform-origin: left;
     transition: transform 0.3s ease;
 }
 
@@ -251,90 +274,144 @@ main {
 }
 
 .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.13);
     color: inherit;
     text-decoration: none;
 }
 
+/* ── Title
+   FIX: replace white-space:nowrap (which forced every title to one line
+   and left a large blank region below) with a 3-line clamp.
+   A 3-line clamp gives consistent vertical rhythm: short titles get
+   exactly 1 line of height, long ones wrap gracefully up to 3 lines.
+   ── */
 .post-card h3 {
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #2c3e50;
-    transition: color 0.3s ease;
-    white-space: nowrap;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease;
+
+    /* multi-line title clamp — replaces the broken nowrap */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    /* reserve minimum height for 1 line so single-word titles
+       don't create a tiny h3 that misaligns neighbouring cards */
+    min-height: calc(1.15rem * 1.35);
 }
 
 .post-card:hover h3 {
     color: #667eea;
 }
 
+/* ── Excerpt
+   flex:1 stretches the excerpt to fill available space so the
+   reading-time + tags always land at the card bottom regardless
+   of how much text is in the title.
+   4-line clamp prevents runaway long descriptions.
+   ── */
 .post-excerpt {
     color: #6c757d;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
     line-height: 1.6;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+
+    /* pushes reading-time and tags to card bottom */
     flex: 1;
-    transition: color 0.3s ease;
+
+    /* overflow guard — never let a massive description break the layout */
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    /* minimum so very-short excerpts don't collapse to near-zero */
+    min-height: calc(0.9rem * 1.6 * 2);
 }
 
 .post-card:hover .post-excerpt {
     color: #555;
 }
 
-.post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #6c757d;
-    font-size: 0.9rem;
-}
-
-.post-card .tags {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    overflow: hidden;
-    position: relative;
-}
-
-.post-card .tags::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 2rem;
-    background: linear-gradient(to right, transparent, #fff);
-    pointer-events: none;
-}
-
-.post-card .tag {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    white-space: nowrap;
+/* ── Reading time ── */
+.post-reading-time {
+    font-size: 0.78rem;
+    color: #999;
+    margin-bottom: 0.6rem;
+    /* never grows — stays pinned above tags */
     flex-shrink: 0;
 }
 
+/* ── Tags row
+   FIX: remove overflow:hidden, position:relative, and the ::after
+   gradient overlay — they were the direct cause of tags appearing
+   to "float outside" cards and being clipped in the screenshots.
+   ── */
+.post-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    /* allow wrapping rather than forcing overflow */
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+    /* no overflow:hidden, no position:relative, no ::after */
+    flex-shrink: 0;
+}
+
+/* ── Tag pills
+   FIX: explicit color:#fff so pills never inherit the card link
+   hover state (#667eea text on a purple gradient = invisible).
+   ── */
+.post-card .tag {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 0.18rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.6;
+    /* prevent a single long tag from stretching the card width */
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.post-card .tag:hover {
+    opacity: 0.85;
+    color: #fff;
+}
+
+/* ── Global .tag (used outside cards e.g. post header) ── */
 .tag {
     background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+    color: #fff;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* ── Post meta (date / reading time row at card bottom) ── */
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.3rem;
+    color: #6c757d;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: auto;
 }
 
 .post-content a:hover {
@@ -382,7 +459,7 @@ main {
 }
 
 /* ============================================
-   READING PROGRESS BAR  (post pages only)
+   READING PROGRESS BAR
    ============================================ */
 
 #reading-progress {
@@ -416,16 +493,13 @@ main {
     font-weight: bold;
     box-shadow: 0 4px 16px rgba(102, 126, 234, 0.45);
     z-index: 1001;
-    /* above content, below nav drawer (1001) */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Hidden by default — JS adds .visible */
     opacity: 0;
     transform: translateY(12px);
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    /* Ensure it never gets display:none from navigation.js */
     visibility: visible;
 }
 
@@ -444,13 +518,11 @@ main {
 }
 
 /* ============================================
-   MOBILE NAV — FULL FIX
-   Replace the existing @media (max-width: 768px) nav block
+   MOBILE NAV
    ============================================ */
 
 @media (max-width: 768px) {
 
-    /* ── Hamburger button ── */
     .mobile-menu-toggle {
         display: flex;
         align-items: center;
@@ -473,24 +545,20 @@ main {
         border-color: #6366f1;
     }
 
-    /* ── Drawer ── */
     nav {
         position: fixed;
-        /* Start BELOW the header, not from the very top */
         top: 0;
         right: -100%;
         height: 100vh;
         width: min(280px, 80vw);
         background: white;
         flex-direction: column;
-        /* Push links down past the close button */
         padding: 0 0 2rem 0;
         gap: 0;
         box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
         transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1001;
         overflow-y: auto;
-        /* Prevent links from sitting behind the header */
         display: flex;
     }
 
@@ -498,23 +566,20 @@ main {
         right: 0;
     }
 
-    /* ── Close button inside drawer ── */
     .mobile-menu-close {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         padding: 1rem 1.25rem 0.5rem;
-        background: none;
+        background: white;
         border: none;
         font-size: 2rem;
         line-height: 1;
         cursor: pointer;
         color: #2c3e50;
         width: 100%;
-        /* Sits at the very top of the drawer */
         position: sticky;
         top: 0;
-        background: white;
         z-index: 1;
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: 0.5rem;
@@ -524,7 +589,6 @@ main {
         color: #6366f1;
     }
 
-    /* ── Nav links inside drawer ── */
     nav a {
         width: 100%;
         text-align: left;
@@ -541,15 +605,12 @@ main {
         background: #f0f4ff;
         color: #6366f1;
         transform: none;
-        /* disable translateY on mobile */
     }
 
     nav a::after {
         display: none;
-        /* hide underline animation inside drawer */
     }
 
-    /* ── Overlay behind drawer ── */
     .mobile-menu-overlay {
         display: none;
         position: fixed;
@@ -559,7 +620,6 @@ main {
         bottom: 0;
         background: rgba(0, 0, 0, 0.45);
         z-index: 1000;
-        /* below drawer (1001), above content */
         backdrop-filter: blur(2px);
         -webkit-backdrop-filter: blur(2px);
     }
@@ -568,7 +628,6 @@ main {
         display: block;
     }
 
-    /* ── Header layout on mobile ── */
     header .container {
         padding: 0.75rem 1rem;
         gap: 0.5rem;
@@ -578,7 +637,6 @@ main {
         font-size: 1.15rem;
         flex: 1;
         min-width: 0;
-        /* allow truncation */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -695,7 +753,7 @@ footer a {
 }
 
 /* ============================================
-   STATIC PAGES (about, contact, etc.)
+   STATIC PAGES
    ============================================ */
 
 .page-content {
@@ -802,13 +860,6 @@ footer a {
     color: #6c757d;
 }
 
-.no-results-message svg {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 1rem;
-    color: #dee2e6;
-}
-
 .no-results-message h3 {
     color: #495057;
     margin-bottom: 0.5rem;
@@ -821,15 +872,14 @@ footer a {
 /* Infinite-scroll card entry animation */
 .post-card--entering {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .post-card:not(.post-card--entering) {
     opacity: 1;
     transform: translateY(0);
 }
-
 
 /* ============================================
    ANIMATIONS
@@ -845,17 +895,6 @@ footer a {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-.slide-in-left {
-    transform: translateX(-100%);
-    animation: slideInLeft 0.6s forwards;
-}
-
-@keyframes slideInLeft {
-    to {
-        transform: translateX(0);
     }
 }
 
@@ -951,19 +990,21 @@ footer a {
         padding: 1rem 0.75rem;
     }
 
+    /* single column on mobile */
     .post-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
     }
 
     .post-card {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
+    /* keep meta as a row on mobile — was collapsing to column */
     .post-meta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.3rem;
     }
 
     .ad-header,
@@ -976,14 +1017,15 @@ footer a {
     .back-to-top {
         bottom: 1rem;
         right: 1rem;
-        width: 45px;
-        height: 45px;
+        width: 42px;
+        height: 42px;
     }
 
     .search-container {
         max-width: 100%;
     }
 
+    /* prevent iOS zoom on focus */
     .search-input {
         font-size: 16px;
     }
