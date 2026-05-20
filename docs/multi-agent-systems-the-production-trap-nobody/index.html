@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/multi-agent-systems-the-production-trap-nobody.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/multi-agent-systems-the-production-trap-nobody/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Multi-agent systems: the production trap nobody</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Multi-agent systems: the production trap nobody</h1>
-
                 
                 <p class="post-lead">Cut agent round-trip latency from 140ms to 42ms in production systems — connection pooling, TLS overhead, and the 10ms hop budget nobody mentions</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p>When teams move multi-agent systems from demos to production, the first failure isn’t the agents—it’s the plumbing. I’ve burned five production rollouts trying to scale toy examples. The reality is that the latency budget for inter-agent RPC calls is usually 10ms per hop, yet most tutorials optimize for task completion, not round-trip time. A 2026 paper from Microsoft Research found that teams that overlook the transport layer see median agent round-trip latency jump from 18ms in staging to 140ms in production simply because they didn’t account for DNS resolution and TLS handshakes. What follows is what I wish existed when I started: the unvarnished gap between marketing slides and the reality of shipping multi-agent systems at 2026 scale.</p>
@@ -625,7 +615,6 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
 <li>Total monthly cost for 12k queries/min with 3 hops: $2,285</li>
 </ul>
 <p><em>Summary: Production-grade multi-agent systems require upfront investment in resilience, observability, and transport layers; plan for $2k–$3k/month for 10k–20k queries/min at 2026 prices.</em></p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -649,9 +638,7 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -666,7 +653,6 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -693,7 +679,6 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -716,7 +701,6 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -731,7 +715,6 @@ Switch when your median latency exceeds 50ms or when you have more than 8 agents
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

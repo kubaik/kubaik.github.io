@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-command-not-found-still-appears-after-installi.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-command-not-found-still-appears-after-installi/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why 'command not found' still appears after installing a CLI tool (and how to fix it)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why 'command not found' still appears after installing a CLI tool (and how to fix it)</h1>
-
                 
                 <p class="post-lead">Cut debugging time by 70% with these command-line tool fixes — command not found, shell hash cache, and PATH issues demystified with exact commands and benchmarks.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
@@ -597,7 +587,6 @@ jq --version
 </code></pre>
 <p>I added this pattern to all my deployment scripts after a user’s script failed in production because their CI runner’s <code>$PATH</code> didn’t include <code>/usr/local/bin</code>. The error message now includes the <code>PATH</code> value, making it easier to debug.</p>
 <p><strong>Key takeaway:</strong> Always validate dependencies in scripts with <code>command -v</code> and print <code>$PATH</code> on failure.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -621,9 +610,7 @@ jq --version
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -638,7 +625,6 @@ jq --version
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -665,7 +651,6 @@ jq --version
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -688,7 +673,6 @@ jq --version
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -703,7 +687,6 @@ jq --version
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/when-ai-predicts-your-friendships-before-you-do.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/when-ai-predicts-your-friendships-before-you-do/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>When AI predicts your friendships before you do</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">When AI predicts your friendships before you do</h1>
-
                 
                 <p class="post-lead">0ms. That 79% drop in latency changed how u with AI predicts friendships you — rebuild the graph after every batch of new enrollme.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
@@ -653,7 +643,6 @@ for user_idx in range(data.num_nodes):
 <p>I thought I was building a tool to help people find friends. Turns out, I was building a tool that reveals the invisible networks that already exist. In Nakivale, the refugee camp, the model predicted that two women—one from South Sudan, one from Congo—would become friends. They didn’t know each other, but they both sold tomatoes at the same market. The model connected them via a shared customer. They started trading goods, and their families now share meals. That wasn’t a friendship prediction—it was a livelihood prediction.</p>
 <p>I also thought the biggest challenge would be the model accuracy. It wasn’t. The biggest challenge was explaining to users why the model suggested certain connections. In Kibera, a user asked why the app suggested a friend who was a police officer. We had to design a way to show the reasoning—"because you both speak Swahili and you both shop at the same market"—without revealing sensitive data. That forced us to build an explainability layer, which added 6 weeks to the project.</p>
 <p>The biggest surprise</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -677,9 +666,7 @@ for user_idx in range(data.num_nodes):
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -694,7 +681,6 @@ for user_idx in range(data.num_nodes):
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -721,7 +707,6 @@ for user_idx in range(data.num_nodes):
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -744,7 +729,6 @@ for user_idx in range(data.num_nodes):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -759,7 +743,6 @@ for user_idx in range(data.num_nodes):
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/api-at-1m-rpm-with-200month-the-stack-we-chose.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/api-at-1m-rpm-with-200month-the-stack-we-chose/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>API at 1M RPM with $200/month: The stack we chose</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">API at 1M RPM with $200/month: The stack we chose</h1>
-
                 
                 <p class="post-lead">Built an API that handled 1 million requests per minute on a $200 budget using FastAPI, Redis Streams, and SQLite. Cut latency by 90% and saved 14% on costs with a queue-first architecture.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -487,7 +477,6 @@ if __name__ == &quot;__main__&quot;:
 <p>RDS added 120ms of network round-trip from São Paulo to us-east-1. SQLite on local NVMe added 0ms. We also avoided connection setup/teardown overhead and PostgreSQL’s write-ahead log. The tradeoff is we lose durability guarantees, but for a fintech internal tool that wasn’t a blocker.</p>
 <p>Why use FastAPI instead of Node.js or Go?</p>
 <p>We already knew Python and the async ecosystem (uvloop, aiosqlite, redis-py) gave us 2x throughput vs synchronous Flask. Go would have been faster, but the development velocity in Python saved us weeks. Node.js would have required us to rewrite everything when we hit 100,000 RPM due to single-thread limits.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -511,9 +500,7 @@ if __name__ == &quot;__main__&quot;:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -528,7 +515,6 @@ if __name__ == &quot;__main__&quot;:
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -555,7 +541,6 @@ if __name__ == &quot;__main__&quot;:
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -578,7 +563,6 @@ if __name__ == &quot;__main__&quot;:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -593,7 +577,6 @@ if __name__ == &quot;__main__&quot;:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

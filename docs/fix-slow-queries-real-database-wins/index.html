@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/fix-slow-queries-real-database-wins.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/fix-slow-queries-real-database-wins/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Fix Slow Queries: Real Database Wins</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Fix Slow Queries: Real Database Wins</h1>
-
                 
                 <p class="post-lead">Slow queries waste resources and hurt UX. Real fixes using PostgreSQL, indexes, and monitoring—backed by 94% performance gains and production war stories.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most developers assume slow queries are caused by large datasets or weak hardware. They throw more RAM at the database, scale vertically, or blame PostgreSQL or MySQL for being "slow." In reality, the root cause is often poor query patterns and missing or misused indexes. I've seen production systems with 100 GB of data running sub-millisecond queries while others with 1 GB crawl under load—all due to index misuse.</p>
@@ -383,7 +373,6 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
 <p>Next, implement monitoring. Set up alerts for query regressions using tools like pgHero or custom scripts. Update statistics after bulk operations. Avoid over-indexing write-heavy tables.</p>
 <p>For immediate gains, focus on the top 5 slowest queries by total time. One fintech company reduced their median API latency by 70% in two weeks by fixing just three queries. Don’t optimize everything—optimize what matters.</p>
 <p>Finally, challenge ORM dogma. Sometimes raw SQL with prepared statements is the fastest, clearest choice. Measure, don’t assume. And remember: the best optimization isn’t faster queries—it’s preventing bad ones from reaching production via automated checks in CI/CD.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -407,9 +396,7 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -424,7 +411,6 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -451,7 +437,6 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -474,7 +459,6 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -489,7 +473,6 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

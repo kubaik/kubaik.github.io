@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ddos-attack-defense.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ddos-attack-defense/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>DDoS Attack Defense</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">DDoS Attack Defense</h1>
-
                 
                 <p class="post-lead">DDoS attacks can bring down a website or application</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>DDoS attacks are a major concern for any organization with an online presence. Most developers focus on securing their applications against common web vulnerabilities like SQL injection and cross-site scripting (XSS), but often overlook the threat of DDoS attacks. A DDoS attack can bring down a website or application by overwhelming it with traffic from multiple sources. This can be done using a botnet, which is a network of compromised devices infected with malware. The problem most developers miss is that DDoS attacks can be launched from anywhere, at any time, and can be extremely difficult to defend against. For example, a study by Verisign found that the average cost of a DDoS attack is around $2.5 million per incident, with some attacks costing as much as $100 million. To mitigate this, developers can use tools like AWS Shield (version 2.5.3) to monitor and respond to DDoS attacks in real-time.</p>
@@ -370,7 +360,6 @@ Following this incident, ShopSavvy invested in a comprehensive DDoS mitigation s
 A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, was launched.
 *   <strong>Availability:</strong> No detectable outage. Application remained 99.99% available throughout the 4-hour attack duration.
 *   <strong>Latency:</strong> Average response time for legitimate users remained stable at ~220 ms</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -394,9 +383,7 @@ A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, wa
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -411,7 +398,6 @@ A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, wa
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -438,7 +424,6 @@ A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, wa
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -461,7 +446,6 @@ A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, wa
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -476,7 +460,6 @@ A similar multi-vector attack, peaking at 60 Gbps and 90,000 requests/second, wa
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

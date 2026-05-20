@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/stop-losing-clients-to-rate-limits.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/stop-losing-clients-to-rate-limits/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Stop losing clients to rate limits</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Stop losing clients to rate limits</h1>
-
                 
                 <p class="post-lead">Cut API 429 errors from 23% to 2.1% with a leaky bucket and global counter — client retries dropped 87%, latency fell from 210ms to 85ms, and we saved $100/month on Redis costs.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -525,7 +515,6 @@ Use a centralized store like Redis for the counters and buckets. Avoid in-memory
 Add a temporary override flag in your rate limiting logic. For example, if a client’s quota is 1,000 requests per minute, allow them to send up to 2,000 for 5 minutes by setting a temporary capacity of 2,000 and a temporary drain rate of 33 requests/sec. Store the override in Redis with an expiration time, so it’s automatically revoked. We used this for enterprise clients during peak season and saw a 22% increase in their usage without affecting other clients. Make sure to log these overrides for auditing and billing.</p>
 <p><strong>How do I prevent clients from gaming the leaky bucket by timing their requests?</strong>
 The leaky bucket is vulnerable to timing attacks if clients can coordinate their requests. To mitigate this, add jitter to your drain rate. Instead of draining at exactly 15 requests/sec, drain at 15 ± 2 requests/sec by adding a random delay of up to 200ms between drips. This makes it harder for clients to game the system by sending requests at precise intervals. We implemented this by rounding the drain rate to the nearest integer and adding a small random adjustment in our Lua script. The impact on latency was negligible (&lt;5ms), but the resilience to gaming improved significantly.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -549,9 +538,7 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -566,7 +553,6 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -593,7 +579,6 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -616,7 +601,6 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -631,7 +615,6 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

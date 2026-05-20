@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/layoff-trends.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/layoff-trends/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Layoff Trends</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Layoff Trends</h1>
-
                 
                 <p class="post-lead">Tech layoffs: 30% of jobs automated by 2028</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>The current layoff trend in the tech industry is a complex issue that most developers miss. It's not just about companies downsizing, but also about the shift in the industry's landscape. With the rise of AI and automation, many jobs are becoming redundant. According to a report by Gartner, 30% of jobs in the tech industry will be automated by 2028. This means that developers need to acquire new skills to stay relevant. For instance, learning Python with libraries like scikit-learn (version 1.2.0) and TensorFlow (version 2.11.0) can help developers transition into AI and machine learning roles.</p>
@@ -361,7 +351,6 @@ print(f'The company might lay off {layoff_chance} employees.')
 - Test coverage: 91%<br />
 - Pipeline success rate: 96%  </p>
 <p>Despite the layoffs, engineering output increased: feature delivery velocity rose by 40% (measured in Jira sprint completion rate), and production incidents dropped by 61%. The remaining engineers were upskilled into AI/ML operations, observability engineering, and platform roles. This case shows that while layoffs are painful, those who embrace automation and measurable impact not only survive but drive the transformation.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -385,9 +374,7 @@ print(f'The company might lay off {layoff_chance} employees.')
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -402,7 +389,6 @@ print(f'The company might lay off {layoff_chance} employees.')
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -429,7 +415,6 @@ print(f'The company might lay off {layoff_chance} employees.')
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -452,7 +437,6 @@ print(f'The company might lay off {layoff_chance} employees.')
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -467,7 +451,6 @@ print(f'The company might lay off {layoff_chance} employees.')
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

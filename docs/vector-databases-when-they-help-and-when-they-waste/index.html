@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/vector-databases-when-they-help-and-when-they-waste.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/vector-databases-when-they-help-and-when-they-waste/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Vector databases: when they help (and when they waste</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Vector databases: when they help (and when they waste</h1>
-
                 
                 <p class="post-lead">Cut vector search costs 60% with pgvector in PostgreSQL — RAM sizing, HNSW tuning, and the mistakes that spike latency to 400 ms</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -464,7 +454,6 @@ LIMIT 10;
 <p>If your vector set exceeds 50 GB, or you need multi-tenant isolation without schema sprawl, or your traffic is unpredictable and you want to scale to zero, choose a hosted vector database. Pinecone is the most mature option; Weaviate Cloud offers better filtering and multi-modal support. Budget for egress and expect 2–3× the cost of self-hosted pgvector at steady state.</p>
 <p>Measure before you migrate. Run a 24-hour load test with your peak QPS and vector dimensions. Compare p95/p99 latencies, RAM usage, and total cost. If pgvector’s p99 stays under 50 ms and your RAM usage is &lt; 80%, commit to it. If not, budget for the hosted option and accept the egress cost. The worst outcome is choosing a hosted vector database because “it’s easier,” then discovering your RAM-bound working set makes every query a disk seek.</p>
 <p>Start today: clone your production vectors into a pgvector instance, run <code>pgbench</code> with your real queries, and compare the latency histogram to your current system. If pgvector is within 20% of your SLA, ship it. If not, budget for Pinecone and negotiate a PoC budget with your finance team before you commit.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -488,9 +477,7 @@ LIMIT 10;
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -505,7 +492,6 @@ LIMIT 10;
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -532,7 +518,6 @@ LIMIT 10;
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -555,7 +540,6 @@ LIMIT 10;
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -570,7 +554,6 @@ LIMIT 10;
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/micro-fe.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/micro-fe/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Micro-FE</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Micro-FE</h1>
-
                 
                 <p class="post-lead">Micro-frontend architecture for scalable apps</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Building a scalable and maintainable frontend architecture is a challenge many developers face. Most solutions focus on monolithic architectures, which can lead to tight coupling and make it difficult to iterate on individual components. A micro-frontend architecture, on the other hand, allows for a more modular approach, where each component is developed, tested, and deployed independently. However, implementing such an architecture requires careful consideration of factors like communication between components, routing, and state management. For instance, using a library like <code>single-spa</code> (version 5.1.1) can help manage the complexity of micro-frontends.</p>
@@ -542,7 +532,6 @@ window.addEventListener('load', () =&gt; {
 <hr />
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, a micro-frontend architecture can be a powerful tool for building scalable and maintainable frontend applications. By following the steps outlined above, and using the right tools and libraries, developers can create complex applications with multiple independent components. However, it's essential to carefully consider the complexity of managing multiple micro-frontends, and to choose the right framework and tools for the job. Next steps might include exploring the use of <code>single-spa</code> and <code>OpenComponents</code> in a real-world application, and experimenting with different state management libraries like <code>Redux</code> and <code>MobX</code>. Additionally, developers may want to investigate the use of CI/CD pipeline tools like <code>Jenkins</code> and <code>GitLab CI/CD</code> to automate the deployment and testing of micro-frontends.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -566,13 +555,11 @@ window.addEventListener('load', () =&gt; {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -593,7 +580,6 @@ window.addEventListener('load', () =&gt; {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -620,7 +606,6 @@ window.addEventListener('load', () =&gt; {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -643,7 +628,6 @@ window.addEventListener('load', () =&gt; {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -658,7 +642,6 @@ window.addEventListener('load', () =&gt; {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

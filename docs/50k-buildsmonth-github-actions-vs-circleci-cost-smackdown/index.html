@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/50k-buildsmonth-github-actions-vs-circleci-cost-smackdown.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/50k-buildsmonth-github-actions-vs-circleci-cost-smackdown/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>50k builds/month: GitHub Actions vs CircleCI cost smackdown</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">50k builds/month: GitHub Actions vs CircleCI cost smackdown</h1>
-
                 
                 <p class="post-lead">Save $1,400/month at 50k builds: CircleCI beats GitHub Actions on egress-heavy workloads — runner-minute pricing, artifact storage, and the real cost drivers at scale for 2026.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen this done wrong in more codebases than I can count, including my own early work. This is the post I wish I'd had when I started.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
@@ -548,7 +538,6 @@ CircleCI’s server pricing starts at $2,500/month for up to 100k builds. That�
 GitHub Actions’ free tier caps at 20 concurrent jobs; GitHub Enterprise increases it to 100. At 50k builds/month, that’s 34 builds/minute on average. With 100 concurrency, you can process up to 100 jobs in parallel. If your average job is 2 minutes, you can handle ~50 builds/minute—enough for most systems. But if you have bursts (e.g., 500 builds in 5 minutes), you’ll hit the limit. CircleCI’s concurrency is higher (up to 500 on Performance plan), which matters for bursty workloads. I’ve seen teams hit GitHub Actions’ concurrency limit during release days and scramble to increase it.</p>
 <p><strong>What’s the real gotcha with CircleCI’s artifact retention?</strong>
 CircleCI’s Performance plan includes 2 TB of artifact storage, but older builds are purged after 30 days by default. If you rely on artifacts for compliance or debugging, you’ll need to archive them externally. GitHub Actions retains artifacts forever unless you delete them. We lost a week of debug logs at a Nairobi startup because CircleCI purged them after 30 days. The fix is to push artifacts to S3 or GHCR with a lifecycle policy. If you can’t automate archiving, GitHub Actions’ retention model is simpler.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -572,9 +561,7 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -589,7 +576,6 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -616,7 +602,6 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -639,7 +624,6 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -654,7 +638,6 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

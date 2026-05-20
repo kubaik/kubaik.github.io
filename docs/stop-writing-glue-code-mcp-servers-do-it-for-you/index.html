@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/stop-writing-glue-code-mcp-servers-do-it-for-you.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/stop-writing-glue-code-mcp-servers-do-it-for-you/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Stop writing glue code: MCP servers do it for you</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Stop writing glue code: MCP servers do it for you</h1>
-
                 
                 <p class="post-lead">Cut internal tooling maintenance by 80% with MCP servers — real benchmarks, failure modes, and a step-by-step implementation guide for production systems</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p>Production systems grow by accretion: one cron job, a queue consumer, a metrics exporter, a transformer that writes to S3. Across three projects I’ve worked on, these small utilities ballooned from 12 files to 90, each with its own config schema, health check, and log rotation policy. Engineers called it ‘glue code’; ops teams called it ‘another thing to monitor.’</p>
@@ -612,7 +602,6 @@ async def lifespan(app: FastAPI):
 <p><strong>Do MCP servers work with serverless platforms like AWS Lambda?</strong></p>
 <p>Technically yes, but practically no. Lambda expects short-lived invocations, while MCP servers are long-running. You’d need a WebSocket gateway or API Gateway WebSocket to keep the connection alive, which adds complexity and cost. For serverless, consider exposing the capability via REST or EventBridge instead.</p>
 <hr />
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -636,9 +625,7 @@ async def lifespan(app: FastAPI):
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -653,7 +640,6 @@ async def lifespan(app: FastAPI):
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -680,7 +666,6 @@ async def lifespan(app: FastAPI):
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -703,7 +688,6 @@ async def lifespan(app: FastAPI):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -718,7 +702,6 @@ async def lifespan(app: FastAPI):
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

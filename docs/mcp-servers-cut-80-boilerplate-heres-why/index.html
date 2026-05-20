@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/mcp-servers-cut-80-boilerplate-heres-why.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/mcp-servers-cut-80-boilerplate-heres-why/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>MCP servers cut 80% boilerplate. Here’s why.</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">MCP servers cut 80% boilerplate. Here’s why.</h1>
-
                 
                 <p class="post-lead">Cut MCP server latency by 80% with this guide—schema validation, rate limiting, and the mistakes that break production systems. Learn when to use MCP, when to avoid it, and how to debug it in real code.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p><strong>MCP servers are the missing layer between AI agents and your codebase.</strong> They let you expose functions, data, or tools to an LLM without rewriting your APIs or SDKs. Most teams treat them as black boxes; I’ve seen too many projects fail because they skipped understanding what happens under the hood. This post explains how MCP servers work in production, the hidden costs, and when to use them instead of REST or GraphQL.</p>
@@ -564,7 +554,6 @@ Yes. The <code>mcp-cli</code> library supports WebSocket transport, which reduce
 <p><strong>How do I debug MCP server issues?</strong>
 Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool call fails, check the server’s logs for validation errors or timeouts. For auth issues, enable verbose logging in the transport layer (e.g., WebSocket debug mode).</p>
 <hr />
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -588,9 +577,7 @@ Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool cal
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -605,7 +592,6 @@ Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool cal
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -632,7 +618,6 @@ Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool cal
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -655,7 +640,6 @@ Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool cal
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -670,7 +654,6 @@ Start with logs. Most MCP servers log JSON-RPC messages to stdout. If a tool cal
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/vector-dbs-when-to-use-them-and-when-to-skip.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/vector-dbs-when-to-use-them-and-when-to-skip/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Vector DBs: when to use them (and when to skip)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Vector DBs: when to use them (and when to skip)</h1>
-
                 
                 <p class="post-lead">Cut vector search latency from 60 ms to 8 ms and halve ingestion time with a simple schema change. Compare pgvector, Qdrant, and ClickHouse VectorIndex on real workloads and pick the right tool before you migrate.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -524,7 +514,6 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
 </tr>
 </tbody>
 </table>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -548,9 +537,7 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -565,7 +552,6 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -592,7 +578,6 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -615,7 +600,6 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -630,7 +614,6 @@ Postgres pgvector 0.7.0 requires Postgres 16, so teams on 15 or below must upgra
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

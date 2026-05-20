@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/6-essential-designs.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/6-essential-designs/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>6 Essential Designs</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">6 Essential Designs</h1>
-
                 
                 <p class="post-lead">Master 6 essential design patterns, boosting efficiency and code quality in your projects.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Design patterns are a fundamental part of software development, yet many developers struggle to apply them effectively in real-world projects. One common pain point is the lack of understanding of how design patterns can be used to solve specific problems. For instance, the Singleton pattern is often misused, leading to tight coupling and making code harder to test. A more effective approach is to use the Singleton pattern in conjunction with dependency injection, allowing for looser coupling and easier testing. According to a survey by Stack Overflow, 64% of developers consider themselves intermediate or beginner in terms of design pattern knowledge. This lack of understanding can lead to inefficient code, increased maintenance costs, and decreased scalability. To address this issue, developers need to focus on learning and applying a set of essential design patterns that can be used to solve common problems. </p>
@@ -421,7 +411,6 @@ public class MySingleton {
 <p>In conclusion, design patterns are a powerful tool for improving the quality and maintainability of code. By using design patterns, developers can reduce the amount of code that needs to be maintained, improve the overall scalability and reliability of the system, and reduce the risk of bugs and errors. However, design patterns should be used in a thoughtful and intentional way, and developers should be aware of the potential pitfalls and limitations of using design patterns. </p>
 <p>To get started with using design patterns, developers can begin by learning about the different types of design patterns, such as the Singleton pattern, the Factory pattern, and the Observer pattern. They can then practice applying these patterns to real-world projects, using tools and libraries such as the Apache Commons library and the Google Guava library. </p>
 <p>By following these steps and using design patterns in a thoughtful and intentional way, developers can improve the quality and maintainability of their code, and take their skills to the next level. With the right approach and mindset, design patterns can be a powerful tool for achieving success in software development.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -445,9 +434,7 @@ public class MySingleton {
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -462,7 +449,6 @@ public class MySingleton {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -489,7 +475,6 @@ public class MySingleton {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -512,7 +497,6 @@ public class MySingleton {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -527,7 +511,6 @@ public class MySingleton {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

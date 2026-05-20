@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/shortening-billions.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/shortening-billions/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Shortening Billions</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Shortening Billions</h1>
-
                 
                 <p class="post-lead">Designing a URL shortener for billions of requests</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Designing a URL shortener that handles billions of requests is not just about creating a simple redirect service. Most developers miss the fact that such a system requires a deep understanding of distributed systems, caching, and database optimization. A URL shortener must be able to handle a massive amount of traffic, store a huge number of URLs, and provide fast lookup and redirection. For example, if we assume that each request takes approximately 10 milliseconds to process, and we want to handle 100,000 requests per second, we need a system that can process 1,000,000,000 requests per day. This is equivalent to 365,000,000,000 requests per year, which is a staggering number. To put this into perspective, if we store each URL as a string of 20 characters, we would need approximately 7,300,000,000,000 bytes of storage, which is roughly 6.8 petabytes of data.</p>
@@ -450,7 +440,6 @@ As we can see, our URL shortener has significantly improved the click-through ra
 * Bounce rate
 * Average time on page
 By tracking these metrics, we can identify which links are performing well and which ones need improvement, and make data-driven decisions to optimize our content and increase engagement with our users.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -474,9 +463,7 @@ By tracking these metrics, we can identify which links are performing well and w
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -491,7 +478,6 @@ By tracking these metrics, we can identify which links are performing well and w
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -518,7 +504,6 @@ By tracking these metrics, we can identify which links are performing well and w
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -541,7 +526,6 @@ By tracking these metrics, we can identify which links are performing well and w
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -556,7 +540,6 @@ By tracking these metrics, we can identify which links are performing well and w
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

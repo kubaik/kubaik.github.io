@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/secure-your-cloud-apps-dev-friendly-guide.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/secure-your-cloud-apps-dev-friendly-guide/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Secure Your Cloud Apps: Dev-Friendly Guide</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Secure Your Cloud Apps: Dev-Friendly Guide</h1>
-
                 
                 <p class="post-lead">Practical cloud security: stop misconfigurations, enforce least-privilege IAM, rotate secrets, and audit with real AWS numbers and code.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Developers write code assuming the cloud is a magic black box. They push containers to Kubernetes, flip on HTTPS, and call it a day. The reality? 68% of cloud breaches start with misconfigured storage or exposed secrets according to the 2023 Verizon DBIR. I’ve seen teams deploy S3 buckets with <code>s3:*</code> IAM policies for "simplicity"—only to have ransomware hit within weeks. The biggest oversight isn’t encryption or firewalls. It’s identity sprawl. Every lambda, microservice, and cron job inherits permissions it doesn’t need, and by the time you audit it, the blast radius is terrifying. AWS IAM alone has over 7,000 policy actions. Most devs treat it like a light switch: on or off. That’s how you get breaches like Capital One’s 2019 leak, where an overly permissive EC2 instance role led to 100 million customer records exposed.</p>
@@ -416,7 +406,6 @@ LIMIT 10;
 3. Block public access to S3 buckets by default.</p>
 <p>You’ll cut your attack surface by 70% overnight. The rest is refinement.</p>
 <p>Next steps: Pick one service (S3, Lambda, RDS) and audit it this week. Use Checkov or Snyk to scan for misconfigurations. Fix the critical issues. Then, set up GuardDuty and CloudTrail. Measure your progress in 30 days. You won’t regret it.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -440,13 +429,11 @@ LIMIT 10;
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -467,7 +454,6 @@ LIMIT 10;
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -494,7 +480,6 @@ LIMIT 10;
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -517,7 +502,6 @@ LIMIT 10;
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -532,7 +516,6 @@ LIMIT 10;
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

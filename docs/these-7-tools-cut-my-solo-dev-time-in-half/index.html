@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/these-7-tools-cut-my-solo-dev-time-in-half.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/these-7-tools-cut-my-solo-dev-time-in-half/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>These 7 tools cut my solo dev time in half</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">These 7 tools cut my solo dev time in half</h1>
-
                 
                 <p class="post-lead">spike to 95% while the app returned 502s u with These tools cut solo — spin up a Next.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
@@ -559,7 +549,6 @@ Devbox replaces three tools (nvm, pyenv, and virtualenv) with one. Show them tha
 Skaffold is declarative—you define your build and deploy steps in a YAML file. Tilt is imperative—you define your build and deploy steps in a Python script (<code>Tiltfile</code>). Tilt’s imperative approach is more flexible for complex workflows, like multi-stage builds or conditional deployments. Skaffold is simpler for basic use cases, but Tilt scales better. If you’re already writing Kubernetes manifests, Tilt’s Python DSL will feel more natural.</p>
 <p><strong>Why does NextTrace add overhead in high-throughput endpoints, and how do I know when to stop using it?</strong>
 NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportional to the request rate. At 500 RPS, the overhead was 3.2ms per request, which pushed the average latency from 12ms to 15.2ms. To know when to stop using it, measure the overhead in your specific workload. If the overhead is more than 5% of your average latency, reduce the sampling rate with <code>--sampling-rate 50</code>. If you’re profiling a WebSocket handler, consider using Node.js’s built-in <code>--perf</code> flag without NextTrace.\</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -583,9 +572,7 @@ NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportio
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -600,7 +587,6 @@ NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportio
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -627,7 +613,6 @@ NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportio
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -650,7 +635,6 @@ NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportio
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -665,7 +649,6 @@ NextTrace samples at a fixed rate (default 100Hz), which adds overhead proportio
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

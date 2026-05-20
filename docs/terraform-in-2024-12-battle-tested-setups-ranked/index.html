@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/terraform-in-2024-12-battle-tested-setups-ranked.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/terraform-in-2024-12-battle-tested-setups-ranked/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Terraform in 2024: 12 battle-tested setups ranked</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Terraform in 2024: 12 battle-tested setups ranked</h1>
-
                 
                 <p class="post-lead">Cut cloud bills 18% and plan time 74% with 12 Terraform modules tested on 3G in Nigeria, Ghana, and Kenya — CIDR math, IPv6 egress savings, and the modules that survive intermittent VPNs.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've answered versions of this question in Slack, code reviews, and one-on-ones more times than I can count. Writing it down properly felt overdue.</p>
 <p>I spent 18 months running Terraform in production across three regions—Nigeria, Ghana, and East Africa—and what worked in Lagos often broke in Accra. I got this wrong at first. My first module assumed every VPC needed a NAT gateway; I didn’t account for 3G users who stay on public IPs because carriers won’t give out CGNAT ranges. That cost us 700 naira per NAT hour for 400,000 requests we didn’t need to route. After that, I learned: when you ship infrastructure for users on intermittent mobile data, you have to treat every API call as a potential retry and every provider as a state machine that can wedge itself into a deadlock. Below are the 12 tools, modules, and patterns that survived that gauntlet.</p>
@@ -477,7 +467,6 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only read one section, read this: start with terraform-aws-modules/vpc/aws (v5.5.0) and terragrunt (v0.55.8). The VPC module gives you a production-ready network that understands CGNAT and IPv6, and terragrunt gives you multi-environment isolation without state locks. Together they’ve survived 18 months of 3G drops, payroll spikes, and accidental schema drops in Accra, Lagos, and Nairobi.</p>
 <p>Next step: clone the VPC module into a new repo, set enable_nat_gateway = false for staging to cut costs, and run terraform plan on your 4G hotspot. If it plans in under 60 seconds and applies without errors, you’re ready to ship. If not, disable refresh with -refresh=false and target only the subnets you’re changing.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -501,9 +490,7 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -518,7 +505,6 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -545,7 +531,6 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -568,7 +553,6 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -583,7 +567,6 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

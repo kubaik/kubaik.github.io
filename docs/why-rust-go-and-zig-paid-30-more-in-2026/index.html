@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-rust-go-and-zig-paid-30-more-in-2026.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-rust-go-and-zig-paid-30-more-in-2026/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why Rust, Go, and Zig paid 30% more in 2026</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why Rust, Go, and Zig paid 30% more in 2026</h1>
-
                 
                 <p class="post-lead">Cut cloud costs by 77% by switching from Python and Node.js to Rust, Zig, and Go in 2026 — benchmarks, memory leaks, and the languages that paid off most</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -528,7 +518,6 @@ Zig’s arena allocator reused 95% of memory across events, eliminating allocati
 Use <code>jemalloc</code>’s profiling in Rust and <code>valgrind</code> in Zig. We added <code>jemalloc</code>’s profiling to Rust and ran <code>valgrind --leak-check=full</code> on the Zig parser. We also used <code>perf</code> to find memory hotspots. The key is to profile each language in isolation first, then together.</p>
 <p><strong>What’s the best way to deploy a Zig service in production?</strong>
 Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it with <code>upx</code> for compression. Run it as a static binary in a scratch container. We used Docker multi-stage builds to keep the image under 5 MB. For orchestration, use Kubernetes with a custom <code>readinessProbe</code> that checks the <code>/health</code> endpoint in under 50 ms.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -552,9 +541,7 @@ Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -569,7 +556,6 @@ Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -596,7 +582,6 @@ Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -619,7 +604,6 @@ Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -634,7 +618,6 @@ Compile Zig with <code>zig build-exe -O ReleaseSafe --strip</code> and bundle it
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

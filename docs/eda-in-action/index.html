@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/eda-in-action.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/eda-in-action/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>EDA in Action</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">EDA in Action</h1>
-
                 
                 <p class="post-lead">See EDA in action: real-world examples, implementation tips, and benefits of event-driven systems.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Developers often overlook the importance of designing systems that can handle failures and scale horizontally. A typical monolithic architecture can become a bottleneck as the system grows, leading to increased latency and decreased throughput. This is where Event-Driven Architecture (EDA) comes into play. EDA is a design pattern that focuses on producing and handling events, allowing for loose coupling between services and enabling systems to scale more efficiently. A well-designed EDA system can handle 10,000 requests per second, with an average latency of 20 milliseconds. However, implementing EDA requires careful consideration of the underlying infrastructure and the tradeoffs involved. For instance, using Apache Kafka 3.1.0 as a message broker can provide a high-throughput and fault-tolerant solution, but it also adds complexity to the system.</p>
@@ -345,7 +335,6 @@ producer.send('user_events', value=event_data)
 <p>A realistic case study of an EDA system can be seen in a large-scale e-commerce platform. The platform handles millions of requests per day, and requires a scalable and fault-tolerant solution to handle these requests. The platform uses an EDA system to handle events such as user logins, product purchases, and order updates. The EDA system is built using a combination of tools and libraries, including Apache Kafka 3.1.0, Apache Flink 1.14.0, and Apache Cassandra 3.11.6.</p>
 <p>Before implementing the EDA system, the platform experienced frequent downtime and errors, with an average response time of 500 milliseconds. However, after implementing the EDA system, the platform was able to handle millions of requests per day with a 99.99% uptime and an average response time of 50 milliseconds. The EDA system also provided a robust framework for real-time event processing and streaming analytics, allowing the platform to gain insights into user behavior and optimize its operations accordingly.</p>
 <p>In terms of before/after comparison, the implementation of the EDA system resulted in a 90% reduction in downtime and errors, and a 75% reduction in average response time. The platform was also able to handle a 50% increase in traffic without experiencing any significant issues. The EDA system also provided a robust framework for monitoring and alerting, allowing the platform to detect and respond to issues in real-time. Overall, the implementation of the EDA system was a major success, and provided a scalable and fault-tolerant solution for the platform's needs.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -369,9 +358,7 @@ producer.send('user_events', value=event_data)
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -386,7 +373,6 @@ producer.send('user_events', value=event_data)
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -413,7 +399,6 @@ producer.send('user_events', value=event_data)
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -436,7 +421,6 @@ producer.send('user_events', value=event_data)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -451,7 +435,6 @@ producer.send('user_events', value=event_data)
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

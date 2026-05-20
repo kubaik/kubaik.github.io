@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/building-in-public-vs-keeping-it-private-build-or-.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/building-in-public-vs-keeping-it-private-build-or-/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Building in Public vs Keeping it Private: Build or Break</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Building in Public vs Keeping it Private: Build or Break</h1>
-
                 
                 <p class="post-lead">Hit $5k MRR 2x faster with building in public — GitHub changelogs, Discord communities, and the hidden costs that break momentum. Learn what 18 indie projects taught me about transparency vs secrecy.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -530,7 +520,6 @@ A README, a public roadmap (even if it’s empty), and a changelog. That’s it.
 Don’t publish code, architecture diagrams, or business logic. Share outcomes, not internals. I open-sourced a CLI tool that wrapped a proprietary API, but I kept the API key private and the core logic closed. The public repo only contained the CLI and documentation. This way, I shared the process without exposing the secret sauce.</p>
 <p>Why does building in public work for some people and not others?
 It works when you treat it like product development, not content marketing. Posting daily tweets without shipping doesn’t work. Posting weekly updates while shipping consistently does work. I tried the former for 3 months and saw zero traction; I switched to the latter and grew to 2k followers in 6 weeks. The difference was consistency over noise.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -554,9 +543,7 @@ It works when you treat it like product development, not content marketing. Post
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -571,7 +558,6 @@ It works when you treat it like product development, not content marketing. Post
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -598,7 +584,6 @@ It works when you treat it like product development, not content marketing. Post
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -621,7 +606,6 @@ It works when you treat it like product development, not content marketing. Post
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -636,7 +620,6 @@ It works when you treat it like product development, not content marketing. Post
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

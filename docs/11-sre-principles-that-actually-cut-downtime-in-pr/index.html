@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/11-sre-principles-that-actually-cut-downtime-in-pr.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/11-sre-principles-that-actually-cut-downtime-in-pr/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>11 SRE principles that actually cut downtime in production</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">11 SRE principles that actually cut downtime in production</h1>
-
                 
                 <p class="post-lead">Cut mean time to recovery by 58% with these 11 SRE principles — real benchmarks, code examples, and the ones I dropped after outages. Learn which principles work in production today.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've answered versions of this question in Slack, code reviews, and one-on-ones more times than I can count. Writing it down properly felt overdue.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
@@ -546,7 +536,6 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Start with two principles: single SLO definition enforced by admission controller, and runbooks as runnable code. These two principles alone will cut your MTTR by at least 40% and give you a repeatable pattern for scaling reliability as your team grows. The admission controller forces reliability into the deployment pipeline, and runnable runbooks reduce MTTR by 40% because engineers don’t have to copy-paste commands from a wiki. After you’ve mastered these two, add error budget burn triggers and automated canary analysis. That’s the sequence I’ve seen work in three different companies, from a 5-engineer startup to a 500-engineer enterprise.</p>
 <p>Here’s the exact next step: clone the OpenSLO schema, create one SLO file for your main service, and add a GitHub Action that validates the file and blocks merges if the SLO is violated. You’ll need about two hours to set it up and immediate feedback on whether your SLO is realistic. I’ve seen teams spend weeks arguing about SLOs—this single automation ends the debate in minutes.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -570,9 +559,7 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -587,7 +574,6 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -614,7 +600,6 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -637,7 +622,6 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -652,7 +636,6 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

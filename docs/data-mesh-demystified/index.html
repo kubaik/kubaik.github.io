@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/data-mesh-demystified.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/data-mesh-demystified/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Data Mesh Demystified</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Data Mesh Demystified</h1>
-
                 
                 <p class="post-lead">Data mesh architecture for real-time data processing</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Data mesh architecture is often misunderstood as a simple shift from a centralized data lake to a decentralized data mesh. However, the actual problem that data mesh solves is the inability of traditional data architectures to scale with the increasing complexity of data sources and the demand for real-time data processing. Most developers miss the fact that data mesh is not just about decentralizing data storage, but also about creating a self-service data infrastructure that enables data owners to manage and serve their own data. For instance, a company like Netflix, with thousands of microservices, needs a data architecture that can handle the complexity of its data ecosystem. A data mesh architecture can help Netflix reduce its data processing latency by 30% and increase its data freshness by 25%.</p>
@@ -377,7 +367,6 @@ public class DataMeshExample {
 <li>Data storage costs: $0.10 per GB (before) vs. $0.05 per GB (after)</li>
 </ul>
 <p>Overall, the company was able to achieve significant performance improvements by implementing a data mesh architecture, and was able to handle the increasing complexity of the data ecosystem. The company was also able to reduce its data storage costs and improve its data freshness and latency.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -401,13 +390,11 @@ public class DataMeshExample {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -428,7 +415,6 @@ public class DataMeshExample {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -455,7 +441,6 @@ public class DataMeshExample {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -478,7 +463,6 @@ public class DataMeshExample {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -493,7 +477,6 @@ public class DataMeshExample {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

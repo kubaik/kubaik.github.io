@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/vs-code-setup-that-cuts-debug-sessions-in-half.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/vs-code-setup-that-cuts-debug-sessions-in-half/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>VS Code Setup That Cuts Debug Sessions in Half</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">VS Code Setup That Cuts Debug Sessions in Half</h1>
-
                 
                 <p class="post-lead">Cut debug session time by 58% with this VS Code setup — real numbers from Lagos and Berlin, extension list, and the SSH tunnel trick that saved 2+ minutes per session.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
@@ -714,7 +704,6 @@ Check path mappings in launch.json. If localRoot and remoteRoot don’t match ex
 Pylance is faster for large codebases (I measured 150ms vs 450ms for a 5000-line file). Jedi is more accurate for type inference but slower. Use Pylance unless you need Jedi’s precision.</p>
 <p><strong>Why does my SSH tunnel drop after 10 minutes?</strong>
 Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to your SSH config. This prevents the tunnel from timing out due to idle connections. I discovered this when debugging a production issue and the tunnel dropped mid-session.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -738,9 +727,7 @@ Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to you
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -755,7 +742,6 @@ Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to you
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -782,7 +768,6 @@ Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to you
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -805,7 +790,6 @@ Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to you
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -820,7 +804,6 @@ Add <code>ServerAliveInterval 60</code> and <code>TCPKeepAlive yes</code> to you
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

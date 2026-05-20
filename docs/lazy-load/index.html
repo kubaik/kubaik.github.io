@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/lazy-load.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/lazy-load/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Lazy Load</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Lazy Load</h1>
-
                 
                 <p class="post-lead">Improve web app performance with lazy loading and code splitting</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Lazy loading and code splitting are techniques used to improve the performance of web applications by reducing the amount of code that needs to be loaded initially. However, many developers miss the fact that these techniques require careful planning and implementation to be effective. A common mistake is to assume that simply splitting code into smaller chunks will automatically improve performance. In reality, the benefits of code splitting depend on how the chunks are loaded and executed. For example, if the chunks are loaded sequentially, the overall load time may not improve significantly. To illustrate this, consider a web application built with React 18.2.0 and Webpack 5.74.0, where the initial bundle size is 2.5 MB. By splitting the code into smaller chunks, the initial bundle size can be reduced to 1.2 MB, resulting in a 52% reduction in load time.</p>
@@ -415,7 +405,6 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
 </ul>
 <p>Crucially, we avoided lazy loading critical above-the-fold components (header, search bar, hero image) and used <strong>skeleton screens</strong> for lazy-loaded product grids to maintain perceived performance.</p>
 <p>This case study demonstrates that when lazy loading and code splitting are applied strategically—backed by real metrics and user behavior analysis—they deliver not just technical improvements, but tangible business outcomes.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -439,9 +428,7 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -456,7 +443,6 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -483,7 +469,6 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -506,7 +491,6 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -521,7 +505,6 @@ const LazyLoadedComponent = loadable(() =&gt; import('./LazyLoadedComponent'));
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

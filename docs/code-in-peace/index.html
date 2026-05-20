@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/code-in-peace.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/code-in-peace/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Code in Peace</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Code in Peace</h1>
-
                 
                 <p class="post-lead">Optimize your workflow: Set up a seamless dev environment to boost productivity and reduce coding headaches.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Developers often underestimate the impact of a poorly set up development environment on their productivity. A cluttered and disorganized workspace can lead to wasted time, frustration, and a higher likelihood of introducing bugs into the codebase. For example, a slow test suite can discourage developers from running tests frequently, leading to longer debug cycles and a lower quality codebase. According to a survey by JetBrains, 61% of developers consider slow test execution to be a major pain point. To address this issue, it's essential to focus on building a development environment that is efficient, reliable, and easy to use. This can be achieved by selecting the right tools, configuring them correctly, and implementing best practices such as continuous integration and continuous deployment (CI/CD). By doing so, developers can reduce the time spent on mundane tasks and focus on writing high-quality code. For instance, using a tool like Docker (version 20.10.12) can help streamline the development process by providing a consistent and reproducible environment for building and testing applications.</p>
@@ -435,7 +425,6 @@ jobs:
 * Team morale: high
 </code></pre>
 <p>This comparison illustrates the benefits of building a development environment that doesn't frustrate, including increased productivity, reduced bugs and issues, and improved team morale. By implementing a development environment that doesn't frustrate, developers can create a more efficient, reliable, and enjoyable development experience, allowing them to focus on what matters most: writing high-quality code.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -459,9 +448,7 @@ jobs:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -476,7 +463,6 @@ jobs:
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -503,7 +489,6 @@ jobs:
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -526,7 +511,6 @@ jobs:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -541,7 +525,6 @@ jobs:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

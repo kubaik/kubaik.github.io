@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/drift-detective.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/drift-detective/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Drift Detective</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Drift Detective</h1>
-
                 
                 <p class="post-lead">Detect AI model drift with real-time monitoring</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>AI model monitoring is often an afterthought, with many developers focusing on training and deploying models without considering the potential for concept drift. Concept drift occurs when the underlying data distribution changes over time, causing the model's performance to degrade. For example, a model trained on images of cars from 2010 may not perform well on images of cars from 2020 due to changes in car designs and camera technology. According to a study by Google, up to 80% of models in production experience some form of concept drift, resulting in a 15% decrease in accuracy over time. To catch drift before it hurts, developers must implement monitoring solutions that detect changes in the data distribution and alert them to take corrective action.</p>
@@ -398,7 +388,6 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
 <p>However, by Q1 2023, customer support began reporting increased complaints—patients were receiving reminders despite showing up, and no-shows were rising. Internal audits revealed that <strong>appointment patterns shifted post-COVID</strong>, with more evening and weekend bookings (up 41% YoY) and new insurance verification steps affecting scheduling behavior. The model’s precision dropped to <strong>58%</strong>, recall to <strong>52%</strong>, and F1 to <strong>0.55</strong>—a 32% degradation. Yet, because the team only monitored prediction volume and system uptime, the drift went unnoticed for <strong>11 weeks</strong>.</p>
 <p>We implemented a monitoring stack using <strong>NannyML 0.9.3</strong> for performance estimation without ground truth (using confidence-based imputation), <strong>Evidently 0.4.19</strong> for feature drift (PSI), and <strong>Prometheus/Grafana</strong> for alerting. Within two weeks, the system flagged <strong>high drift in the "appointment_lead_time_days"</strong> feature (PSI = 0.27) and <strong>"insurance_type"</strong> (PSI = 0.31). NannyML estimated a <strong>19-point drop in recall</strong>, prompting immediate action.</p>
 <p>The team retrained the model on updated data, introduced <strong>time-based stratification</strong> in training, and added <strong>calendar features</strong> (holiday proximity, day of week). The new model restored precision to <strong>81%</strong>, recall to <strong>76%</strong>, and F1 to <strong>0.78</strong>. After full deployment, <strong>no-show rates dropped from 29% back to 22%</strong>, recovering an estimated <strong>$210K in lost revenue</strong> over the next quarter. Monthly monitoring costs were $1,200 (cloud + tooling), but the solution paid for itself in <strong>under seven days</strong>. This case underscores that even high-performing models degrade silently—and that structured monitoring isn't overhead, it's insurance.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -422,13 +411,11 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -449,7 +436,6 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -476,7 +462,6 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -499,7 +484,6 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -514,7 +498,6 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

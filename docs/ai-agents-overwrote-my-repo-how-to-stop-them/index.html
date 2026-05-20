@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-agents-overwrote-my-repo-how-to-stop-them.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-agents-overwrote-my-repo-how-to-stop-them/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI agents overwrote my repo: how to stop them</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI agents overwrote my repo: how to stop them</h1>
-
                 
                 <p class="post-lead">Cut production incidents by 40% when AI agents modify code — the real constraints, semantic reviews, and load tests that caught our race conditions and memory leaks</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
@@ -537,7 +527,6 @@ The safest way is to give them read-only access and require a human to review an
 Tests often cover happy paths and don’t simulate load, race conditions, or environment-specific assumptions. To fix this, run the agent’s changes under production-like load in a staging environment. Use tools like <code>k6</code> or <code>Locust</code> to replay production traffic and monitor for memory leaks, race conditions, and data inconsistencies.</p>
 <h2 id="the-bottom-line">The bottom line</h2>
 <p>Treating AI agents like untrusted interns isn’t just paranoid—it’s necessary. The moment you give them write access or auto-merge privileges, you’re gambling that their optimization goals align with your system’s invariants. They won’t. So constrain them, review them, and test their changes under load. It adds time to your workflow, but it saves you from silent failures in production. Start today by disabling auto-merge for AI PRs and adding a semantic review label requirement. Then, audit your agent’s changes for the next two weeks and adjust your constraints accordingly.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -561,9 +550,7 @@ Tests often cover happy paths and don’t simulate load, race conditions, or env
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -578,7 +565,6 @@ Tests often cover happy paths and don’t simulate load, race conditions, or env
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -605,7 +591,6 @@ Tests often cover happy paths and don’t simulate load, race conditions, or env
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -628,7 +613,6 @@ Tests often cover happy paths and don’t simulate load, race conditions, or env
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -643,7 +627,6 @@ Tests often cover happy paths and don’t simulate load, race conditions, or env
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

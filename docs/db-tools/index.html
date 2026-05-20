@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/db-tools.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/db-tools/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>DB Tools</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">DB Tools</h1>
-
                 
                 <p class="post-lead">Essential database tools for optimizing performance and reducing downtime</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The Problem Most Developers Miss<br />
 When working with databases, most developers focus on the database management system itself, such as MySQL or PostgreSQL, and neglect the tools that can help them manage and optimize their databases. This can lead to inefficient database performance, data inconsistencies, and security vulnerabilities. For instance, not using a database migration tool like Flyway (version 9.0.0) can result in manual errors when updating the database schema, leading to downtime and data loss. In a recent project, I saw a 30% reduction in database downtime by implementing automated database migrations using Flyway.</p>
@@ -374,7 +364,6 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
 - <strong>Incident count (db-related)</strong>: 11/month → 2/month  </p>
 <p>The migration to Flyway also reduced deployment rollback time from 22 minutes (manual fix) to 90 seconds (automated rollback command). Quarterly DBA effort dropped from 35 hours to 12 hours due to automation and better visibility.</p>
 <p>This case proves that even mature applications can achieve dramatic gains with disciplined tooling adoption — not through magic, but through measurable, incremental improvements guided by data.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -398,9 +387,7 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -415,7 +402,6 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -442,7 +428,6 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -465,7 +450,6 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -480,7 +464,6 @@ In Q3 2024, a healthcare SaaS platform experienced chronic database performance 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

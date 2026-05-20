@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/d.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/d/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>D</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">D</h1>
-
                 
                 <p class="post-lead">Stop DDoS attacks with real-world strategies. Understand L3/L7 attacks, implement Nginx/Flask rate limits, and avoid common defense mistakes. Includes specific tools and original insights.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Many developers, even seasoned ones, fundamentally misunderstand the nature of Distributed Denial of Service (DDoS) attacks. They often delegate the problem mentally, assuming it's a 'network problem' that a CDN or their cloud provider will simply absorb. This perspective is dangerously naive. While volumetric Layer 3/4 attacks (like SYN floods or UDP amplification) are indeed handled effectively by major DDoS mitigation services, the real threat to most applications today stems from sophisticated Layer 7 (application layer) attacks. These aren't about raw bandwidth; they're about exploiting application logic and resource exhaustion. An attacker doesn't need terabits of traffic to bring down a system if they can craft requests that are disproportionately expensive for the server to process. For example, a few hundred requests per second targeting an unoptimized GraphQL introspection endpoint or a complex, unindexed database query can deplete CPU, memory, or database connections far faster than a simple static file request. We've seen production systems with robust network-level protection buckle under a mere 500 requests per second (RPS) of carefully crafted L7 traffic, demonstrating that the problem isn't just about the pipe size, but the fragility of the application itself. This blindness to application-specific vulnerabilities is the most critical gap in modern DDoS defense strategies, leaving many organizations exposed despite significant investments in generic network protection.</p>
@@ -442,7 +432,6 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
 }
 </code></pre>
 <p>This Terraform configuration defines a Web ACL named <code>production-web-acl</code> with a</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -466,9 +455,7 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -483,7 +470,6 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -510,7 +496,6 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -533,7 +518,6 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -548,7 +532,6 @@ resource &quot;aws_wafv2_web_acl_association&quot; &quot;alb_association&quot; {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

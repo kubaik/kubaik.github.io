@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/m-pesa-vs-flutterwave-vs-paystack-pick-the-right.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/m-pesa-vs-flutterwave-vs-paystack-pick-the-right/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>M-Pesa vs Flutterwave vs Paystack: pick the right</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">M-Pesa vs Flutterwave vs Paystack: pick the right</h1>
-
                 
                 <p class="post-lead">Cut webhook latency 60% and save 3 weeks of dev time choosing between M-Pesa, Flutterwave, and Paystack — real benchmarks, real costs, and the integration mistakes most teams make.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -530,7 +520,6 @@ No. Both rely on an initial STK push that requires an active USSD session. If th
 Yes. Flutterwave uses <code>/subscriptions</code> with a token returned from <code>/tokens</code>. Paystack uses <code>/plans</code> and <code>/subscriptions</code> with a <code>card_token</code>. Both charge at the interval you set, but Paystack’s token TTL is 12 months versus Flutterwave’s indefinite. Plan your renewal logic around token expiry.</p>
 <p><strong>What’s the real cost difference between 1.0% and 1.5% per transaction if I’m at 10,000 transactions/month?</strong>
 At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but with a KES 10 minimum, so KES 100,000 in minimums. Flutterwave charges KES 7,500 (1.5%) with no minimum. The difference is KES 97,500/month (~$730). If your gross margin is 15%, that’s 4.9% of revenue—enough to justify the extra engineering time for M-Pesa only if you have &gt;10,000 transactions.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -554,9 +543,7 @@ At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but wit
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -571,7 +558,6 @@ At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but wit
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -598,7 +584,6 @@ At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but wit
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -621,7 +606,6 @@ At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but wit
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -636,7 +620,6 @@ At 10,000 transactions of average KES 500, M-Pesa costs KES 5,000 (1.0%) but wit
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

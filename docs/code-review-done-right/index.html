@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/code-review-done-right.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/code-review-done-right/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Code Review Done Right</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Code Review Done Right</h1>
-
                 
                 <p class="post-lead">Improve code quality with effective review</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Code review is often seen as a necessary evil, a step that slows down the development process but is required for quality assurance. However, this perspective misses the point of code review entirely. It's not just about catching bugs or ensuring that the code follows certain standards; it's about improving the code itself, making it more maintainable, scalable, and efficient. Most developers focus on the former, neglecting the latter. For instance, when reviewing code, instead of just checking for syntax errors or adherence to coding standards, reviewers should also consider how the code interacts with the rest of the system, its performance implications, and how it aligns with the project's architectural vision. A good example of this is when using tools like SonarQube 9.9 to analyze code quality, which can help identify issues that might not be immediately apparent, such as duplicated code or complexity hotspots.</p>
@@ -371,7 +361,6 @@ def expensive_function(x):
 <li><strong>Standardized Guidelines:</strong> Developed clear, concise code review guidelines focusing on functionality, performance, security, maintainability, and architectural alignment. These were integrated into the company's internal wiki.</li>
 <li><strong>Automated Quality Gates:</strong> Integrated</li>
 </ol>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -395,9 +384,7 @@ def expensive_function(x):
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -412,7 +399,6 @@ def expensive_function(x):
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -439,7 +425,6 @@ def expensive_function(x):
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -462,7 +447,6 @@ def expensive_function(x):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -477,7 +461,6 @@ def expensive_function(x):
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

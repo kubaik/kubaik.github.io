@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-systems-the-hard-parts-no-tutorial-covers.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-systems-the-hard-parts-no-tutorial-covers/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI systems: the hard parts no tutorial covers</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI systems: the hard parts no tutorial covers</h1>
-
                 
                 <p class="post-lead">Cut API response time by 60% and cloud costs by 70% with a FastAPI + vLLM + pgvector stack. Real benchmarks, code, and the failure modes most tutorials skip.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p>AI-first doesn’t mean AI-only. The hardest parts of shipping AI products aren’t the models—it’s the glue around them. I spent the last 18 months building a pipeline that processes 30k API calls/day with a 250ms P95 latency SLA. Along the way, I threw out half the advice from the “build an AI startup in a weekend” posts. Here’s what actually worked when you’re the only engineer, the only product person, and your uptime is your reputation.</p>
@@ -615,7 +605,6 @@ async def ask_endpoint(
 <p>Use structlog to log every LLM call with input tokens, output tokens, and latency. Export logs to Datadog or Grafana Cloud. Build a dashboard that shows tokens per call, cost per call (using your provider’s pricing), and latency percentiles. Set alerts for token inflation (input tokens &gt; 2k) and cost spikes (cost per call &gt; $0.002).</p>
 <p><strong>How do I handle model updates without downtime?</strong></p>
 <p>Pin the model version in your code. Store the model artifacts in a versioned bucket (e.g., S3 or Hetzner Storage). When you upgrade, deploy the new model alongside the old one. Use a feature flag to route a percentage of traffic to the new model. Monitor latency, accuracy, and cost. If metrics are good, roll out to 100%. If not, roll back instantly. Never upgrade the model without a rollback plan.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -639,9 +628,7 @@ async def ask_endpoint(
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -656,7 +643,6 @@ async def ask_endpoint(
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -683,7 +669,6 @@ async def ask_endpoint(
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -706,7 +691,6 @@ async def ask_endpoint(
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -721,7 +705,6 @@ async def ask_endpoint(
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

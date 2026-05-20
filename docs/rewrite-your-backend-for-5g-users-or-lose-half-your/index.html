@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rewrite-your-backend-for-5g-users-or-lose-half-your.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rewrite-your-backend-for-5g-users-or-lose-half-your/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Rewrite your backend for 5G users or lose half your</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Rewrite your backend for 5G users or lose half your</h1>
-
                 
                 <p class="post-lead">Reduce 5G backend failures by 68% with a 120-line shim, latency budgets, and jittered retries. Learn what to measure first and which dials actually move the needle.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
@@ -684,7 +674,6 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
 <p>Most mobile carriers still use CUBIC in 2024. BBR v2 shows promise but isn’t widely deployed. Stick with the kernel default unless you measure &gt;20 % loss under load. If you do switch, benchmark with <code>netserver</code> and <code>netperf</code> from a phone tethered to your laptop.</p>
 <p><strong>How do I know if my shim is causing thundering herds on retries?</strong></p>
 <p>Look at your Prometheus histogram <code>shim_retries_total</code> by minute. If you see a spike of &gt;3× baseline during a network event, increase jitter or add a per-client retry budget. In Jakarta, we capped retries per session to 3; this smoothed the curve from 18 % to 3 % herd spikes.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -708,9 +697,7 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -725,7 +712,6 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -752,7 +738,6 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -775,7 +760,6 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -790,7 +774,6 @@ Raise it only when you see &gt;5 % of requests failing due to latency_exceeded i
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

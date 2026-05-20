@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/wasm-beyond-js-speed.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/wasm-beyond-js-speed/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>WASM: Beyond JS Speed</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">WASM: Beyond JS Speed</h1>
-
                 
                 <p class="post-lead">Dive into WebAssembly's real-world benefits beyond JavaScript for CPU-bound tasks. Learn implementation, performance, pitfalls, and the overlooked security advantages. Includes Rust/WASM code.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most web developers, myself included, spend years optimizing JavaScript. We learn about V8's hidden classes, JIT compilation, tree-shaking, and lazy loading. We push frameworks like React and Vue to their limits, achieving impressive responsiveness for UI-driven applications. But this focus often blinds us to a fundamental truth: JavaScript, by its very design, hits a wall for certain types of computational problems. It's not just about raw execution speed, which modern engines like Chrome's V8 (version 118+) have made remarkably competitive for typical application logic. The real bottleneck emerges in scenarios demanding predictable, low-level memory access, complex numerical computations, or tight loops that are sensitive to garbage collection pauses and dynamic typing overhead. Think about tasks like real-time video processing, advanced image manipulation filters, intricate 3D physics simulations, or cryptographic operations on large datasets. These aren't just 'slow' in JavaScript; they're often impractical, leading to dropped frames, noticeable latency, and a poor user experience. The illusion of speed for common DOM operations masks the underlying architectural limitations when you push beyond typical frontend concerns into true CPU-bound territory. The problem isn't JavaScript itself; it's the expectation that it can be a universal hammer for every nail, especially when you need direct control over memory layouts and execution timing without a runtime constantly interfering.</p>
@@ -372,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>WebAssembly stands as a critical technology, extending the capabilities of the web beyond the inherent limitations of JavaScript for computationally intensive tasks. It provides a pathway to bring high-performance, low-level code directly into the browser, enabling applications previously confined to desktop environments. We've seen how WASM achieves this through its compact binary format, stack-based VM, and direct memory access, leading to significant performance gains—often 5x to 10x for CPU-bound operations. However, WASM is not a panacea. It demands a careful understanding of its strengths and weaknesses, particularly regarding interop costs and memory management. The smart approach is to use WASM strategically: profile your application, identify the true CPU bottlenecks, and selectively port only those critical components. Rust with <code>wasm-pack</code> and <code>wasm-bindgen</code> offers an excellent developer experience for this. For existing C/C++ codebases, Emscripten remains the gold standard. Don't fall into the trap of over-optimizing trivial functions or using WASM for UI logic. Its power lies in augmentation, not replacement, of JavaScript for the frontend. Beyond the browser, WASM's role as a secure, portable, and deterministic runtime for serverless and edge computing is a transformative, yet often overlooked, aspect. The next steps for any serious developer involve experimenting: pick a small, numerically intensive algorithm in your current stack, try porting it to Rust or C++ and compile it to WASM. Benchmark it against your existing JavaScript implementation. Familiarize yourself with browser developer tools for WASM debugging. Look into the evolving WASM Component Model for better interop and module composition, and keep an eye on WASM GC and threading proposals. WebAssembly is here to stay, and understanding its nuances is becoming increasingly vital for building the next generation of high-performance web and edge applications.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -396,13 +385,11 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -423,7 +410,6 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -450,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -473,7 +458,6 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -488,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () =&gt; {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

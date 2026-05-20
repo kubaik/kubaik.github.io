@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-your-cloud-credentials-keep-leaking-and-how-to.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-your-cloud-credentials-keep-leaking-and-how-to/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why your cloud credentials keep leaking (and how to stop it)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why your cloud credentials keep leaking (and how to stop it)</h1>
-
                 
                 <p class="post-lead">Reduce cloud bill spikes by 92% by replacing long-lived AWS keys with OIDC federation and IAM roles — connection pooling, eviction policies, and the mistakes that cause credential leakage.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
@@ -499,7 +489,6 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
 <p>Another surprising pattern is the overuse of admin roles. I’ve seen teams grant <code>AdministratorAccess</code> to Lambda functions because “it’s easier.” That’s like leaving your house keys under the mat. The fix is to use permission boundaries and AWS managed policies like <code>AWSLambdaBasicExecutionRole</code> with least-privilege additions.</p>
 <p>Finally, don’t trust the default SDK behavior. The boto3 library caches credentials aggressively, and SDKs in containers often inherit stale credentials from parent images. Always test credential rotation in your CI pipeline by simulating a leak and verifying detection tools catch it.</p>
 <p><strong>The key takeaway here is to treat every credential as ephemeral, every policy as explicit, and every access pattern as audited.</strong></p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -523,13 +512,11 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -550,7 +537,6 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -577,7 +563,6 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -600,7 +585,6 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -615,7 +599,6 @@ This is often caused by resource-based policies (bucket policies, KMS key polici
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

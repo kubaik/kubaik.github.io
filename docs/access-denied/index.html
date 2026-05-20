@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/access-denied.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/access-denied/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Access Denied?</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Access Denied?</h1>
-
                 
                 <p class="post-lead">Understand web accessibility laws and coding standards to ensure compliance and inclusivity.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Web accessibility is a critical aspect of development that many developers overlook. According to the World Wide Web Consortium (W3C), approximately 15% of the global population lives with some form of disability, and this number is expected to increase to 25% by 2050. Despite this, a staggering 70% of websites fail to meet basic accessibility standards. The consequences of ignoring accessibility can be severe, with potential lawsuits and loss of revenue. For instance, in 2019, Domino's Pizza was sued for failing to provide an accessible website and mobile app, resulting in a $2.25 million settlement. Developers must prioritize accessibility to ensure equal access to information and services for all users. The Web Content Accessibility Guidelines (WCAG) 2.1 provide a comprehensive framework for achieving accessibility, with 61 guidelines and success criteria. By following these guidelines, developers can create inclusive and accessible web applications.</p>
@@ -455,7 +445,6 @@ button.addEventListener('click', () =&gt; {
 button.setAttribute('aria-label', 'Submit button');
 </code></pre>
 <p>In this example, we add alt text to images, use ARIA attributes to enhance the accessibility of dynamic content, and use CSS to provide a clear visual hierarchy of the content. By implementing accessibility features, we can improve the user experience and increase the conversion rate and average order value of the website.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -479,13 +468,11 @@ button.setAttribute('aria-label', 'Submit button');
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -506,7 +493,6 @@ button.setAttribute('aria-label', 'Submit button');
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -533,7 +519,6 @@ button.setAttribute('aria-label', 'Submit button');
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -556,7 +541,6 @@ button.setAttribute('aria-label', 'Submit button');
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -571,7 +555,6 @@ button.setAttribute('aria-label', 'Submit button');
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

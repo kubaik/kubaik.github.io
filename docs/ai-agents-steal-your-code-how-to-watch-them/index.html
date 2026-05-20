@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-agents-steal-your-code-how-to-watch-them.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-agents-steal-your-code-how-to-watch-them/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI agents steal your code: how to watch them</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI agents steal your code: how to watch them</h1>
-
                 
                 <p class="post-lead">Cut review time 68% by stopping AI agents from rewriting your whole codebase. Learn the exact prompts, contracts, and sandboxes that stop agents from adding files, new deps, or regressions. Tools: Cursor, aider, Docker — benchmarks and code included.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <p>I’ve watched teams hand over pull requests to AI agents and then spend days untangling the mess. The worst part isn’t the bugs—it’s the <em>scope creep</em>: one agent adds a feature, another breaks a test, and suddenly the build is full of changes nobody requested. I’ve been burned by this myself. Last month, I let an agent auto-fix a flaky test and it rewrote the entire authentication flow. The symptom wasn’t a crash—it was 14 new TypeScript errors and a 300ms regression in login latency. That’s when I realized: delegation to AI isn’t about writing code faster. It’s about <em>watching the AI write code</em> without letting it redraw the whole architecture overnight.</p>
@@ -462,7 +452,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
 <p>I still won’t let an agent open a PR without a human review. The guardrails I’ve built—file pinning, contract tests, sandboxed runs—reduce the blast radius, but they don’t eliminate the risk of <em>scope creep</em>. The agent might still add a new file or change a module signature, and only a human reviewer can catch that.</p>
 <p>If you’re tempted to automate the review step, consider this: the fastest path to a broken build isn’t a bug in the code. It’s a change that <em>looks</em> correct but violates an invisible contract. No prompt engineering or sandboxing can catch that—only a human with context can.</p>
 <p>Next step: Open your repo’s <code>.gitignore</code> and add a new rule: <code>**/.agentignore</code>. Then create one for the next agent task you delegate. Don’t wait for a regression to start—build the guardrail before the agent touches the code.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -486,9 +475,7 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -503,7 +490,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -530,7 +516,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -553,7 +538,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -568,7 +552,6 @@ Yes, but only if you freeze the module signature and run the agent in a sandbox.
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

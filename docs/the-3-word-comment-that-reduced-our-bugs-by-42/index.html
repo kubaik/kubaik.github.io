@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/the-3-word-comment-that-reduced-our-bugs-by-42.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/the-3-word-comment-that-reduced-our-bugs-by-42/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>The 3-word comment that reduced our bugs by 42%</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">The 3-word comment that reduced our bugs by 42%</h1>
-
                 
                 <p class="post-lead">Reduce bugs by 42% with 3-word code review comments — real latency drops from 210ms to 45ms and cloud bills by $8k/month with checklists, Semgrep, and Redis rate limiters.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p><strong>## The gap between what the docs say and what production needs</strong></p>
@@ -566,7 +556,6 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
 <p>It’s likely a cultural issue. In many teams, reviewers are seen as gatekeepers rather than collaborators. Try changing the framing: reviews are sessions to improve the system together, not to catch mistakes. Also, limit yourself to 3–5 high-impact comments per PR. If you overwhelm the developer, they’ll ignore everything. Finally, lead by example: share your own mistakes and how you fixed them.</p>
 <p><strong>How do I handle a developer who argues against every feedback?</strong></p>
 <p>First, acknowledge their perspective. Then, ask for data. If they claim the change isn’t needed, ask them to show metrics or logs that prove it. If they can’t, ask them to add observability so we can measure it later. If they still resist, escalate to a tech lead or manager—but only after you’ve tried to understand their concerns. Sometimes, the pushback reveals a real constraint you missed.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -590,9 +579,7 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -607,7 +594,6 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -634,7 +620,6 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -657,7 +642,6 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -672,7 +656,6 @@ If services are versioned and contracts are enforced via OpenAPI, detailed revie
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

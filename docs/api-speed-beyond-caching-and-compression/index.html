@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/api-speed-beyond-caching-and-compression.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/api-speed-beyond-caching-and-compression/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>API Speed: Beyond Caching and Compression</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">API Speed: Beyond Caching and Compression</h1>
-
                 
                 <p class="post-lead">Real-world API performance gains come from protobuf, HTTP/2, and edge caching. See 66% smaller payloads and 50% lower latency with gRPC-Web.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most API performance guides stop at caching, gzip, and connection pooling. But in high-throughput systems, those are table stakes. The real bottleneck often isn’t backend logic or database queries—it’s network serialization and client-server round-trip overhead. Developers optimize CPU and memory while ignoring how data moves across the wire, especially in microservice architectures where a single request fans out to 5–10 services.</p>
@@ -434,7 +424,6 @@ client.getUser(req, {}, (err, response) =&gt; {
 <p>Next, audit your CDN strategy. If cache hit rate is below 30%, investigate why. Can you add <code>Cache-Control</code> headers to more endpoints? Use <code>Vary</code> headers to cache per user ID?</p>
 <p>Finally, run load tests with k6 using realistic scenarios. Don’t just measure p95 latency—measure time to render on the client, including JSON parsing.</p>
 <p>The biggest gains come not from faster servers, but from smarter data delivery. Reduce what you send, send it faster, and avoid sending it at all when you can.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -458,9 +447,7 @@ client.getUser(req, {}, (err, response) =&gt; {
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -475,7 +462,6 @@ client.getUser(req, {}, (err, response) =&gt; {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -502,7 +488,6 @@ client.getUser(req, {}, (err, response) =&gt; {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -525,7 +510,6 @@ client.getUser(req, {}, (err, response) =&gt; {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -540,7 +524,6 @@ client.getUser(req, {}, (err, response) =&gt; {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

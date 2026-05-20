@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/saas-pricing.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/saas-pricing/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>SaaS Pricing</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">SaaS Pricing</h1>
-
                 
                 <p class="post-lead">SaaS pricing strategy and implementation</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Pricing a SaaS product is a complex task that involves considering multiple factors such as the target audience, competition, and revenue goals. Most developers miss the fact that pricing is not just about setting a number, but it's about creating a strategy that aligns with the product's value proposition. A well-designed pricing strategy can make or break a SaaS product, with 75% of companies reporting that pricing is a major factor in their revenue growth. For example, a study by McKinsey found that a 1% increase in price can lead to an 8.7% increase in profit. To develop an effective pricing strategy, developers need to understand their target audience, including their willingness to pay, and the value they perceive in the product.</p>
@@ -416,7 +406,6 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
 - CAC remained flat at $985, but LTV rose from $1,128 to $2,340
 - <strong>LTV:CAC improved to 2.38:1</strong>, well above the 3:1 benchmark</p>
 <p>Monthly recurring revenue (MRR) grew from $82K to $194K, and annual contract value (ACV) increased by 142%. Most importantly, NPS rose from 32 to 58, indicating better perceived value alignment. We tracked these metrics using a Looker Studio dashboard fed by Stripe, Salesforce, and Amplitude. This case proves that thoughtful, data-backed pricing changes—especially moving from flat tiers to usage-aligned models—can unlock revenue without increasing customer acquisition spend. Flowlytics was acquired in Q1 2024 at a 7x revenue multiple, with pricing architecture cited as a key differentiator in due diligence.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -440,9 +429,7 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -457,7 +444,6 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -484,7 +470,6 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -507,7 +492,6 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -522,7 +506,6 @@ print(pricing_strategy.get_price('basic'))  # Output: 9.99
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

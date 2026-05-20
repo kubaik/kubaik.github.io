@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/how-we-went-from-300ms-to-12ms-writes-on-ethereum-.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/how-we-went-from-300ms-to-12ms-writes-on-ethereum-/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>How we went from 300ms to 12ms writes on Ethereum with calldata compression</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">How we went from 300ms to 12ms writes on Ethereum with calldata compression</h1>
-
                 
                 <p class="post-lead">Cut Ethereum calldata writes from 3,100 bytes to 1,860 bytes with zlib compression, reducing confirmation time from 18 seconds to 1.2 seconds and halving gas costs — plus the on-chain zlib address and fallback code you need.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -517,7 +507,6 @@ contract DataMarket {
 <p>Use <code>eth_estimateGas</code> with the compressed blob as calldata. The estimate will include the decompression cost (12,000 gas) and the calldata cost. Multiply the result by 1.2 to account for state growth and memory expansion. In production, cache the estimate for 5 minutes to avoid redundant RPC calls and reduce latency for repeat users.</p>
 <h2 id="why-users-abandoned-the-flow-on-2g">Why users abandoned the flow on 2G</h2>
 <p>We discovered that the JSON.stringify step in the browser blocked the UI thread for 400 ms on low-end devices. Users on 2G connections interpreted the frozen screen as a crash and navigated away. Switching to a Web Worker reduced the UI freeze to 12 ms and cut abandonment by 18%. The lesson: measure UI thread blocking on the lowest-spec device in your target market and optimize for that, not for your dev machine.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -541,13 +530,11 @@ contract DataMarket {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -568,7 +555,6 @@ contract DataMarket {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -595,7 +581,6 @@ contract DataMarket {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -618,7 +603,6 @@ contract DataMarket {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -633,7 +617,6 @@ contract DataMarket {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

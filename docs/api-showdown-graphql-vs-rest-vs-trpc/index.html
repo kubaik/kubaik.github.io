@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/api-showdown-graphql-vs-rest-vs-trpc.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/api-showdown-graphql-vs-rest-vs-trpc/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>API Showdown: GraphQL vs REST vs tRPC</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">API Showdown: GraphQL vs REST vs tRPC</h1>
-
                 
                 <p class="post-lead">GraphQL vs REST vs tRPC in 2026</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>When it comes to choosing an API architecture, many developers focus on the differences between GraphQL, REST, and tRPC, but often overlook the underlying problems these architectures are trying to solve. For instance, a common issue is dealing with over-fetching or under-fetching of data. GraphQL, with its query language, allows clients to specify exactly what data they need, reducing the amount of data transferred. On the other hand, REST and tRPC rely on the server to define the data that will be returned, which can lead to either too much or too little data being transferred. For example, using <code>Apollo Client 3.5.10</code> with GraphQL can help mitigate this issue by enabling fine-grained control over queries and caching strategies.</p>
@@ -669,7 +659,6 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
 });
 </code></pre>
 <h3 id="step-4-use-trpc-with-react-query">Step 4: Use tRPC with React Query</h3>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -693,9 +682,7 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -710,7 +697,6 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -737,7 +723,6 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -760,7 +745,6 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -775,7 +759,6 @@ export const trpc = createTRPCProxyClient&lt;AppRouter&gt;({
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/react-showdown.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/react-showdown/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>React Showdown</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">React Showdown</h1>
-
                 
                 <p class="post-lead">React vs Next.js vs Remix: Choose the right tool</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>When choosing between React, Next.js, and Remix, most developers focus on the wrong factors, such as the number of GitHub stars or the popularity of the framework. However, the most critical aspect is understanding the problem you're trying to solve. Are you building a simple web application, a complex enterprise-level application, or a high-performance web application? Each framework has its strengths and weaknesses, and understanding these is crucial to making an informed decision. For example, React is ideal for building complex, data-driven applications, while Next.js is better suited for building server-rendered, static websites. Remix, on the other hand, is a relatively new framework that offers a unique approach to building web applications.</p>
@@ -454,7 +444,6 @@ export default async function ProductPage({ params }) {
 - <strong>DSI:</strong> 8.7/10 (faster local dev, instant feedback)  </p>
 <p>Additionally, <strong>Google Search Console</strong> showed a 40% increase in indexed pages due to faster crawling, and <strong>bounce rate dropped from 68% to 51%</strong>. The biggest win was operational: we reduced CI/CD costs by $1,200/month due to shorter build times and fewer timeouts.</p>
 <p>This case study proves that while React is powerful, the right framework (in this case, Next.js with modern features) can dramatically improve performance, cost, and team velocity—even on an existing, mature codebase.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -478,9 +467,7 @@ export default async function ProductPage({ params }) {
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -495,7 +482,6 @@ export default async function ProductPage({ params }) {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -522,7 +508,6 @@ export default async function ProductPage({ params }) {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -545,7 +530,6 @@ export default async function ProductPage({ params }) {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -560,7 +544,6 @@ export default async function ProductPage({ params }) {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

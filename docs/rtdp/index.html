@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rtdp.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rtdp/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>RTDP</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">RTDP</h1>
-
                 
                 <p class="post-lead">Real-time data processing at scale with Apache Kafka, Flink, and Storm</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Real-time data processing is a critical component of modern applications, but many developers overlook the complexities of scaling their systems to handle high volumes of data. As data streams in from various sources, such as IoT devices, social media, or sensors, the ability to process and analyze it in real-time becomes increasingly important. However, traditional batch processing approaches are often insufficient, leading to delayed insights and poor decision-making. For instance, a company like Apache Kafka can handle high-throughput and provides low-latency, fault-tolerant, and scalable data processing. With version 3.1.0, Apache Kafka has improved its performance and added new features such as KRaft mode.</p>
@@ -388,7 +378,6 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
 <p>We redesigned the system using <strong>Apache Flink 1.14.0</strong> on Kubernetes (EKS), ingesting data via <strong>Apache Kafka 3.1.0</strong> (150 partitions, 3 brokers). GPS devices streamed JSON messages to a <code>raw-tracker-events</code> topic at peak rates of 180K messages/sec. Flink consumed this stream, parsed GPS coordinates, enriched with geofence data from Redis 6.2, and computed <strong>real-time ETA predictions</strong> using a sliding 5-minute window. Processed events were written to <strong>Amazon DynamoDB</strong> for low-latency queries and to <strong>Snowflake</strong> for analytics.</p>
 <p>The results were dramatic. <strong>End-to-end latency dropped to 350–400ms</strong>, enabling live tracking in the customer portal. We implemented <strong>exactly-once processing</strong> via Flink’s Kafka source with <code>enable.idempotence=true</code> and <code>isolation.level=read_committed</code>. Checkpointing was set to every 10 seconds with <code>RocksDB</code> state backend, and we achieved 99.99% uptime over six months. The number of support tickets related to tracking dropped by 68%, and <strong>on-time delivery improved to 92%</strong> due to dynamic rerouting based on real-time traffic and location data.</p>
 <p>From a cost perspective, the Flink cluster (12 nodes, m5.2xlarge) cost $18.72/day, compared to the previous Airflow setup ($22.30/day with higher EC2 utilization). More importantly, <strong>customer retention increased by 15%</strong> within three months, directly attributed to improved transparency. This case study proves that moving from batch to real-time isn’t just about speed—it’s about unlocking new business value through timely decisions, better UX, and operational efficiency. The investment paid for itself in under 8 weeks.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -412,9 +401,7 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -429,7 +416,6 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -456,7 +442,6 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -479,7 +464,6 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -494,7 +478,6 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

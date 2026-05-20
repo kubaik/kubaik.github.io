@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-sprints-how-to-measure-if-its-helping-or-hurting.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI sprints: how to measure if it's helping or hurting</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI sprints: how to measure if it's helping or hurting</h1>
-
                 
                 <p class="post-lead">y went up 15%. The CEO wanted to double the with AI sprints measure helping — double the budget.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <p>Teams added GitHub Copilot in early 2026 and sprint velocity went up 15%. The CEO wanted to double the budget. The CFO asked for data. The engineering lead froze. What looked like progress was actually noise—feature count inflated by trivial autocomplete suggestions, bug counts masked by AI-generated fixes that failed in staging, and cycle time hiding the extra review rounds needed to untangle the AI’s context gaps.</p>
@@ -508,7 +498,6 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
 <li><strong>Prevent recurrence with automated gates and defect-type retros.</strong> Gate PR merge on integration test pass and categorize defects by source in every retro.</li>
 </ul>
 <p>Next step: Pick one repo, enable GitHub’s code suggestion telemetry, and run the query above. Measure the defect ratio for the last 14 days. If it’s above 0.30, your AI tool is costing you more than it’s worth—fix it before you scale.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -532,9 +521,7 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -549,7 +536,6 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -576,7 +562,6 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -599,7 +584,6 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -614,7 +598,6 @@ Start with three metrics: acceptance rate, defect ratio, and cycle time. Use Git
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

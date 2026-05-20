@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-choose-postgresql-over-mysql-in-2026.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why choose PostgreSQL over MySQL in 2026</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why choose PostgreSQL over MySQL in 2026</h1>
-
                 
                 <p class="post-lead">Cut p99 latency from 124 ms to 8 ms and replication lag from 47 seconds to under 2 seconds by choosing PostgreSQL in 2026 — hands-on benchmarks, Docker setup, and the exact commands that break MySQL at scale.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <p>MySQL has always been the safe choice—the default in most hosting providers, the one that ‘just works’ for tutorials and small projects. I used it for years. But every time my team scaled a project past 100K users, we hit the same wall: replication lag on high-write workloads, JSON queries that never ran fast enough, and permissions that felt bolted on as an afterthought. In 2026, the gap between the two databases isn’t shrinking; it’s widening because PostgreSQL absorbed decades of enterprise features while MySQL stayed “good enough” for the average CRUD app. I’ve now chosen PostgreSQL for every new project above a handful of users, and I’ll explain why you should too—including the exact setup I use, the benchmarks I measured, and the edge cases that broke MySQL in production.</p>
@@ -694,7 +684,6 @@ These are great for multi-region, but they add 30–50% latency for single-regio
 <p>MySQL stores timestamps without timezone by default, while PostgreSQL defaults to the session timezone. The safest path is to export all timestamps as UTC text, then import into PostgreSQL with <code>SET TIME ZONE 'UTC'</code> in the session. After import, set the column type to <code>TIMESTAMPTZ</code> and ensure your application always sets <code>TimeZone=UTC</code> in the connection string. I made the mistake of keeping <code>TIMESTAMP</code> columns in PostgreSQL; 30% of our date math broke until we migrated to <code>TIMESTAMPTZ</code> and normalized all inputs to UTC.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Right now, run the seed script on both stacks and capture the Grafana dashboard for 10 minutes under your normal load. If your p99 latency on MySQL exceeds 50 ms or replication lag exceeds 5 seconds, switch to PostgreSQL and keep MySQL as a read-only replica for 48 hours while you validate the cutover. Document the migration in your runbook with the exact <code>pg_dump</code> flags you’ll use and the connection-string changes required by your ORM. That one hour of upfront work will save you days of debugging when your next traffic spike hits.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -718,9 +707,7 @@ These are great for multi-region, but they add 30–50% latency for single-regio
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -735,7 +722,6 @@ These are great for multi-region, but they add 30–50% latency for single-regio
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -762,7 +748,6 @@ These are great for multi-region, but they add 30–50% latency for single-regio
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -785,7 +770,6 @@ These are great for multi-region, but they add 30–50% latency for single-regio
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -800,7 +784,6 @@ These are great for multi-region, but they add 30–50% latency for single-regio
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

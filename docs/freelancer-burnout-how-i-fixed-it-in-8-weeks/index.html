@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/freelancer-burnout-how-i-fixed-it-in-8-weeks.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/freelancer-burnout-how-i-fixed-it-in-8-weeks/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Freelancer burnout: how I fixed it in 8 weeks</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Freelancer burnout: how I fixed it in 8 weeks</h1>
-
                 
                 <p class="post-lead">Recovered from 80-hour freelance weeks to 1,200 billable hours a year with 250 hours for health. Margin rose from 34% to 48%, CLI from 41 to 27, and deep sleep increased by 50% using tiered contracts, stack isolation, and async workflows.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <p>We hit 80-hour weeks before we noticed the burnout. Not because the work was urgent, but because we kept saying yes to anything priced above $2k. That was three years ago. Last month, I hit 1,200 billable hours in a year with 250 hours left for health, code, and family. This post is the audit trail of what broke, what fixed it, and the tooling we still use daily.</p>
@@ -568,7 +558,6 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
 <h2 id="afterword-the-system-is-the-burnout-shield">Afterword: The system is the burnout shield</h2>
 <p>Burnout isn’t a personal failing; it’s a system failure. The fixes above aren’t about working less—they’re about redesigning the system so the work pays the right cognitive dividends. We still ship code. We still make money. The difference is that the system now prevents the burnout before it happens, not after.</p>
 <p>Next step: Pick one fix from this guide—TMVC, stack isolation, or async workflows—and implement it this quarter. Don’t wait for the burnout to hit. Build the shield before the arrows arrive.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -592,9 +581,7 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -609,7 +596,6 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -636,7 +622,6 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -659,7 +644,6 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -674,7 +658,6 @@ print(f&quot;CLI score: {cli:.1f}/50&quot;)
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

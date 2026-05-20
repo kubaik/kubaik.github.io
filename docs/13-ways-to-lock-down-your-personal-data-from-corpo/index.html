@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/13-ways-to-lock-down-your-personal-data-from-corpo.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/13-ways-to-lock-down-your-personal-data-from-corpo/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>13 ways to lock down your personal data from corporations in 2024</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">13 ways to lock down your personal data from corporations in 2024</h1>
-
                 
                 <p class="post-lead">more than 5% of tests was rejected. 2. Per with lock down personal data — solve) I got an email in January 2024 that looked l.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've answered versions of this question in Slack, code reviews, and one-on-ones more times than I can count. Writing it down properly felt overdue.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
@@ -513,7 +503,6 @@
 <p>Health portals often load tracking pixels via <strong>first-party domains</strong> (e.g., <code>healthportal.example.com</code> serves a pixel from <code>static.healthportal.example.com</code>). NextDNS only blocks subdomains listed in blocklists, so if the pixel is on the same domain, it slips through. To fix this, open the portal in Firefox, press F12 &gt; Network, reload the page, and inspect the “Initiator” column for any Facebook-related requests. If the initiator is <code>healthportal.example.com</code>, you need to block the specific path (e.g., <code>/tracking/pixel.js</code>) using uBlock Origin’s dynamic filtering or a custom NextDNS allow rule that blocks only the pixel endpoint. In my case, the portal was loading a pixel from <code>/static/tracking.js</code>—blocking that path in uBlock Origin reduced telemetry by 80%.</p>
 <h3 id="can-i-use-tor-browser-for-everyday-browsing-or-is-it-too-slow">Can I use Tor Browser for everyday browsing, or is it too slow?</h3>
 <p>Tor Browser is usable for everyday browsing if you adjust your expectations. On a 100 Mbit connection, median page-load time is 3–6 seconds for static sites and 8–12 seconds for JavaScript-heavy sites. I measured Wikipedia at 6.4 s and CNN at 12.2 s. The latency comes from the three-hop circuit and the exit-node selection. For comparison, stock Firefox on the same connection loads Wikipedia in 1.4 s. Tor is best for sensitive logins (banking</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -537,9 +526,7 @@
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -554,7 +541,6 @@
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -581,7 +567,6 @@
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -604,7 +589,6 @@
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -619,7 +603,6 @@
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

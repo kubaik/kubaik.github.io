@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rag-pipelines-failed-3-times-before-we-fixed-this.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-failed-3-times-before-we-fixed-this/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -186,7 +185,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -194,9 +192,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -226,21 +222,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>RAG pipelines failed 3 times before we fixed this</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">RAG pipelines failed 3 times before we fixed this</h1>
-
                 
                 <p class="post-lead">Cut RAG pipeline costs 37% and hallucinations 65% by indexing documents as trees, not chunks — with real numbers, code, and the mistakes that cost $4,200/month. RAG pipeline production pitfalls 2026, RAG hallucination rate target, transformer reranking cost per query 2026, Neo4j vector search latency 2026, sentence-transformers 2026 cost per embedding</p>
                 
-
                 
                 <div class="tags">
                     
@@ -265,7 +257,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -287,7 +278,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -539,7 +529,6 @@ class QueryRewriter:
 <p>Use <strong>real-time incremental indexing</strong> with Debezium 2.6 to stream changes from your knowledge base (e.g., Confluence, Notion) to Neo4j. Set up a Kafka connector to capture inserts, updates, and deletes. This adds 10-15 minutes to ingestion but prevents <strong>40% of early hallucinations</strong> on new policies. Without it, your bot will hallucinate on the latest rules until the next batch run.</p>
 <p><strong>What’s the best way to measure RAG success in production?</strong></p>
 <p>Don’t trust MRR@10 or token count. Measure <strong>answer completeness</strong> via human review, <strong>deflection rate</strong> by tracking agent ticket closure, and <strong>cost per query</strong> including embedding, reranking, and generation. Use a <strong>fine-tuned RoBERTa-base 2026 model</strong> to flag hallucinations automatically, but always validate with a <strong>human review panel</strong> weekly. Automation is useless if humans still clean up the mess.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -563,9 +552,7 @@ class QueryRewriter:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -580,7 +567,6 @@ class QueryRewriter:
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -607,7 +593,6 @@ class QueryRewriter:
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -630,7 +615,6 @@ class QueryRewriter:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -645,7 +629,6 @@ class QueryRewriter:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

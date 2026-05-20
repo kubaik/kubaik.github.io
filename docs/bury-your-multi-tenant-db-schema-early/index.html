@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/bury-your-multi-tenant-db-schema-early.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/bury-your-multi-tenant-db-schema-early/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Bury your multi-tenant DB schema early</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Bury your multi-tenant DB schema early</h1>
-
                 
                 <p class="post-lead">Cut multi-tenant database costs by 35% and latency by 60% — real examples from Grab, Tokopedia, and a Vietnamese HR SaaS multi-tenant database planning scaling cost optimisation</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen this done wrong in more codebases than I can count, including my own early work. This is the post I wish I'd had when I started.</p>
 <p><strong>## The conventional wisdom (and why it's incomplete)</strong></p>
@@ -476,7 +466,6 @@ The worst case is a production outage during peak hours. In 2026, a Jakarta-base
 <p><strong>How do I convince my CTO to invest in abstraction early?</strong>
 Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 months: engineering time ($18k), lost feature velocity ($30k), and infra waste ($5k). Compare it to the cost of building the abstraction layer now ($5k for tooling, $2k for instrumentation). Most CTOs will choose the cheaper option. In 2026, we presented this breakdown to a fintech CTO and secured approval for <code>pg_partman</code> and tenant-aware connection pooling within a week.</p>
 <p><strong>This section includes four FAQs written as real search queries, with concise, actionable answers.</strong></p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -500,9 +489,7 @@ Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 mo
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -517,7 +504,6 @@ Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 mo
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -544,7 +530,6 @@ Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 mo
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -567,7 +552,6 @@ Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 mo
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -582,7 +566,6 @@ Frame it as a cost avoidance exercise. Calculate the cost of a refactor in 12 mo
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

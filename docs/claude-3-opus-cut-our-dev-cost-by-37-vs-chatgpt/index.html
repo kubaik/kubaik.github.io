@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/claude-3-opus-cut-our-dev-cost-by-37-vs-chatgpt/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Claude 3 Opus cut our dev cost by 37% vs ChatGPT</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Claude 3 Opus cut our dev cost by 37% vs ChatGPT</h1>
-
                 
                 <p class="post-lead">Cut blended dev cost by 37% and human review time by 89% by switching from GPT-4 to Claude 3 Opus for strict JSON generation — real latency, token, and cost numbers from a live SaaS pipeline.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -457,7 +447,6 @@ Include a 20-token instruction like "Use camelCase for keys; do not use snake_ca
 Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry loop with exponential backoff (100 ms → 200 ms → 400 ms) eventually succeeds, but it adds 2–3 s to the P95. If you need sub-2 s SLA, cache responses aggressively or run a local model like Llama-3-70B-Instruct on a dedicated GPU.</p>
 <h2 id="a-one-step-action-for-you">A one-step action for you</h2>
 <p>Take the 20 most recent JSON inputs you’ve processed manually and run them through every model you’re considering today. Measure latency, token cost, and the human time to fix errors. The numbers will tell you which model actually wins for your workload.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -481,13 +470,11 @@ Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry l
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -508,7 +495,6 @@ Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry l
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -535,7 +521,6 @@ Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry l
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -558,7 +543,6 @@ Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry l
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -573,7 +557,6 @@ Anthropic and OpenAI both return 429 when their rate limits are hit. Our retry l
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

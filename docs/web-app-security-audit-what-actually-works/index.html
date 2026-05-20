@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/web-app-security-audit-what-actually-works.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/web-app-security-audit-what-actually-works/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Web App Security Audit: What Actually Works</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Web App Security Audit: What Actually Works</h1>
-
                 
                 <p class="post-lead">Real-world web app security audit process with Burp, Semgrep, and manual testing. 70% attack surface reduction, 40-hour case study, CSP and IDOR fixes.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most developers treat security audits like a compliance checkbox — run a scanner, fix the red alerts, and call it a day. That’s not a security audit. That’s a vulnerability sweep. The real problem? You’re missing logic flaws, business logic abuse, and misconfigurations that tools can’t detect. I’ve seen production apps pass OWASP ZAP scans with flying colors, only to be exploited through a password reset flow that allowed enumeration via timing differences. No tool flagged it. The team didn’t test it manually. The breach happened.</p>
@@ -386,7 +376,6 @@ snyk test --all-projects --fail-on=high
 <p>Running a real security audit means going beyond scanners. It’s manual testing, threat modeling, and continuous validation. Use tools like Burp, Semgrep, and Snyk, but don’t trust them blindly. Verify every finding. Focus on logic flaws and misconfigurations — they’re the real killers.</p>
 <p>Start small: run <code>semgrep</code> and <code>snyk test</code> on your next pull request. Add a security checklist to code reviews. Schedule a 4-hour manual test session every quarter. Gradually build muscle.</p>
 <p>Your goal isn’t zero vulnerabilities — that’s impossible. It’s reducing the likelihood and impact of breaches. Audit often, fix fast, and assume you’re already compromised. That mindset changes everything.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -410,13 +399,11 @@ snyk test --all-projects --fail-on=high
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -437,7 +424,6 @@ snyk test --all-projects --fail-on=high
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -464,7 +450,6 @@ snyk test --all-projects --fail-on=high
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -487,7 +472,6 @@ snyk test --all-projects --fail-on=high
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -502,7 +486,6 @@ snyk test --all-projects --fail-on=high
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

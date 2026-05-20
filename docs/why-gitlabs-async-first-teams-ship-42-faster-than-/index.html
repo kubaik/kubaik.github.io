@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-gitlabs-async-first-teams-ship-42-faster-than-.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-gitlabs-async-first-teams-ship-42-faster-than-/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why GitLab’s async-first teams ship 42% faster than everyone else</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why GitLab’s async-first teams ship 42% faster than everyone else</h1>
-
                 
                 <p class="post-lead">Ship code 42% faster with async-first workflows — real metrics from 45 engineers over 18 months, with GitHub automation and Slack SLA rules that cut lead time from 3.2 days to 1.9 days.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
@@ -536,7 +526,6 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
 <p>Because async postmortems are written in real-time instead of waiting for a scheduled retro. The median MTTR for async teams is 1.3 hours vs 2.1 hours for synchronous teams. The difference comes from parallelizing the investigation and documentation instead of serializing it in a meeting.</p>
 <p>How do I maintain team culture without synchronous interactions?</p>
 <p>Async culture thrives on artifacts: decision records, incident reports, PR comments. But it also needs social connection. Schedule async social events: virtual game nights, async trivia, Slack bots that share memes. The social connection will be weaker than happy hours, but the productivity impact will be positive.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -560,9 +549,7 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -577,7 +564,6 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -604,7 +590,6 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -627,7 +612,6 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -642,7 +626,6 @@ setInterval(checkUnansweredThreads, 24 * 60 * 60 * 1000);
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

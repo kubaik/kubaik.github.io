@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/circleci-costs-3-github-actions-at-50k-builds.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/circleci-costs-3-github-actions-at-50k-builds/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>CircleCI costs 3× GitHub Actions at 50k builds</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">CircleCI costs 3× GitHub Actions at 50k builds</h1>
-
                 
                 <p class="post-lead">CircleCI costs 3× GitHub Actions at 50k builds/month for Nairobi teams — real cost breakdown with $1200 savings, queue time costs, and artifact storage traps you’re ignoring.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen this done wrong in more codebases than I can count, including my own early work. This is the post I wish I'd had when I started.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
@@ -489,7 +479,6 @@ Both platforms charge $0.023/GB/month for artifact storage, but GitHub Actions i
 Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from Nairobi, while CircleCI eu-west-1 runners average 152ms. The 67ms difference adds 2 minutes per 30-minute build for a 50-job parallel suite — negligible. The real slowdown is queue time: CircleCI’s queue spikes during Nairobi business hours because their runners are in eu-west-1. GitHub Actions’ af-south-1 runners are within 100ms and rarely queue.</p>
 <h2 id="should-you-switch-today">Should you switch today?</h2>
 <p>Run this experiment for one week: measure your current CI costs, including runner minutes, artifact storage, and queue time. Then, migrate a non-critical repo to GitHub Actions af-south-1 runners and compare the numbers. If your builds run on Linux under 30 minutes and finish faster on af-south-1, switch your entire org. If your builds run longer than 30 minutes or need macOS runners, keep CircleCI but optimize caching and concurrency. The data will tell you the truth — not the marketing copy.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -513,9 +502,7 @@ Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from 
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -530,7 +517,6 @@ Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -557,7 +543,6 @@ Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -580,7 +565,6 @@ Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -595,7 +579,6 @@ Not for Nairobi teams. GitHub Actions af-south-1 runners average 85ms ping from 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

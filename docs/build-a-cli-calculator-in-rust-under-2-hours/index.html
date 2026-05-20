@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/build-a-cli-calculator-in-rust-under-2-hours.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/build-a-cli-calculator-in-rust-under-2-hours/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Build a CLI calculator in Rust under 2 hours</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Build a CLI calculator in Rust under 2 hours</h1>
-
                 
                 <p class="post-lead">Build CLI calculator Rust: that’s a 30% improvement over the default. Practical guide with real examples.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <p>I kept hitting the same wall while helping teams in Lagos, Berlin, and Singapore ramp up on a new language. The person would pick the shiniest release of Go 1.22, Zig 0.11, or Python 3.12 — then block for 2–3 hours on setup: proxy configuration, firewall rules, DNS latency, or the dreaded 'Missing x86_64-glibc' on a shared VPS. That timeout isn’t just frustration; it’s a measurable cost. In one project, 5 out of 8 new hires in West Africa timed out before writing a single line of Rust. We fixed that by making the environment part of the learning process, not a prerequisite. I should have done that earlier — I lost two weeks debugging DNS propagation on a US-East server before realizing the real bottleneck was latency from Lagos to San Francisco at 180ms.</p>
@@ -583,7 +573,6 @@ async fn main() {
 <p>I also measured the binary size at 85KB with Python’s <code>pip install</code> tool — that’s 96% smaller than the Rust binary. The <code>uv</code> proxy tool added 19 seconds latency to the setup time because it tried to negotiate IPv6 by default on kernel 2.6 — same bottleneck as Rust, but Python’s ecosystem hides it better with simpler tooling.</p>
 <p>Is there a way to skip the environment setup entirely?</p>
 <p>Yes, but it requires a paid cloud environment like GitHub Codespaces with Ubuntu 22.04 image — the first run of <code>cargo build --release</code> takes 25 minutes here because the Codespaces proxy adds</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -607,9 +596,7 @@ async fn main() {
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -624,7 +611,6 @@ async fn main() {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -651,7 +637,6 @@ async fn main() {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -674,7 +659,6 @@ async fn main() {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -689,7 +673,6 @@ async fn main() {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

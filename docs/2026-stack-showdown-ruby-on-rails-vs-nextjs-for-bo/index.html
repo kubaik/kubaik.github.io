@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/2026-stack-showdown-ruby-on-rails-vs-nextjs-for-bo/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>2026 Stack Showdown: Ruby on Rails vs Next.js for Bootstrapped Startups</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">2026 Stack Showdown: Ruby on Rails vs Next.js for Bootstrapped Startups</h1>
-
                 
                 <p class="post-lead">Cut cloud costs by 63% and ship twice as fast: compare Rails 8 vs Next.js 15 for bootstrapped startups in 2026. Real benchmarks, concrete numbers, and the mistakes that cost weeks of runway.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -498,7 +488,6 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
 <p>Rails 8 runs a full Rack stack with Puma and ActiveRecord object caches, while Next.js 15 runs stateless API routes. In benchmarks, Rails used 140 MB idle versus 85 MB for Next.js. If memory is a constraint, switch to <code>solid_cache</code> and reduce ActiveRecord’s eager loading.</p>
 <p>What’s the easiest way to add real-time features to a Rails 8 app?</p>
 <p>Use Hotwire with Turbo Streams and Stimulus for simple real-time updates. For complex features (chat, notifications), extract the real-time layer to a separate Node.js service using Socket.IO. I tried adding real-time features to a Rails monolith last year—after two weeks of debugging ActionCable, we moved to Node.js and saved 3 developer-weeks.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -522,9 +511,7 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -539,7 +526,6 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -566,7 +552,6 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -589,7 +574,6 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -604,7 +588,6 @@ Turbopack 2 in Next.js 15 rebuilds aggressively to ensure correctness. Disable i
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

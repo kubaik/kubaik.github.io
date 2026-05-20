@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/prompt-power.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/prompt-power/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Prompt Power</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Prompt Power</h1>
-
                 
                 <p class="post-lead">Unlock prompt engineering secrets for real-world apps, boosting efficiency and accuracy in AI models.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Prompt engineering is a critical component of natural language processing (NLP) and machine learning (ML) applications, yet many developers overlook its importance. A well-crafted prompt can mean the difference between a model that provides accurate and relevant results, and one that produces nonsensical or misleading output. The problem lies in the fact that most developers focus on the model itself, rather than the input that drives it. This is evident in the numerous examples of AI models that are touted as "state-of-the-art" but fail to deliver in real-world scenarios. For instance, a language model like BERT (version 1.0) may achieve impressive benchmarks on academic datasets, but its performance can degrade rapidly when faced with real-world text data. A specific example of this is the Stanford Question Answering Dataset (SQuAD), where a model may achieve an F1 score of 90%, but struggle to answer simple questions from a user.</p>
@@ -400,7 +390,6 @@ print(results)
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, prompt engineering is a critical component of NLP and ML applications, and can have a significant impact on their performance. By prioritizing prompt engineering and using techniques like prompt augmentation and prompt engineering, developers can unlock the full potential of their models and create more effective and user-friendly applications. To take the next step, developers can start by experimenting with different prompts and evaluating their performance using metrics like accuracy or F1 score. They can also explore the use of pre-trained models and prompts, and investigate the application of prompt engineering to specific tasks and domains.</p>
 <p>As the field of NLP continues to evolve, it is likely that prompt engineering will play an increasingly important role in the development of NLP applications. Developers who prioritize prompt engineering and invest time and effort into designing and testing their prompts will be well-positioned to take advantage of these advances and create applications that are more accurate, effective, and user-friendly. With the use of tools and libraries like the Hugging Face Transformers library, developers can streamline the process of prompt engineering and focus on creating applications that meet the needs of their users. By following the best practices outlined in this article, developers can create effective and optimized prompts that unlock the full potential of their models and drive business success.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -424,9 +413,7 @@ print(results)
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -441,7 +428,6 @@ print(results)
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -468,7 +454,6 @@ print(results)
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -491,7 +476,6 @@ print(results)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -506,7 +490,6 @@ print(results)
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

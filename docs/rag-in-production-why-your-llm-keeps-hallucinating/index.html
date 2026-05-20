@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rag-in-production-why-your-llm-keeps-hallucinating.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rag-in-production-why-your-llm-keeps-hallucinating/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>RAG in Production: Why Your LLM Keeps Hallucinating (and How to Fix It)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">RAG in Production: Why Your LLM Keeps Hallucinating (and How to Fix It)</h1>
-
                 
                 <p class="post-lead">How to build a RAG system that doesn’t hallucinate in production, with real code, benchmarks, and the mistakes I made first.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I ran into this problem while building a payment integration for a client in Nairobi. The official docs covered the happy path well. This post covers everything else.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
@@ -519,7 +509,6 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
 - A pre-configured Evidently project to detect embedding drift.
 - A 100-question eval set for measuring answer correctness.</p>
 <p>Run <code>make dev</code> to start the service, then <code>make eval</code> to grade the answers. Tweak the chunk size, reranker, and prompt template until you hit 90% correctness on your eval set. Deploy to a single Qdrant node and run a load test with 100 QPS for 30 minutes. If P99 latency stays below 2 seconds, you’re ready to scale. If not, add a Redis cache and rerun the test. Ship it when the eval set is green and the latency is stable.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -543,13 +532,11 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -570,7 +557,6 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -597,7 +583,6 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -620,7 +605,6 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -635,7 +619,6 @@ RAG can provide citations, but the LLM might omit them or cite the wrong chunk. 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/build-in.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/build-in/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -193,7 +192,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -201,9 +199,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -233,21 +229,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Build in</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Build in</h1>
-
                 
                 <p class="post-lead">Building in public: benefits and challenges</p>
                 
-
                 
                 <div class="tags">
                     
@@ -272,7 +264,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -294,7 +285,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Building in public is often romanticized as a way to build a community and gain traction for a product. However, most developers miss the fact that this approach requires a tremendous amount of transparency and openness. This can be daunting, especially for developers who are used to working behind closed doors. For instance, when using GitHub (version 2.28.0) to host and manage code, developers must be prepared to share their code, respond to issues, and engage with the community. A realistic example of this is the development of the Rust programming language, which has been built in the open since its inception.</p>
@@ -373,7 +363,6 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
 <p>The transformation was profound. The increased transparency led to a surge in community engagement, which directly translated into higher quality bug reports, innovative feature suggestions, and, most critically, a significant increase in external code contributions. The diverse perspectives from the community helped identify edge cases the internal team had missed, leading to a more robust and user-friendly product. CodeFlow's development velocity dramatically improved due to shared workload and immediate feedback loops, cutting bug resolution times by two-thirds. This case study demonstrates how a strategic shift to building in public can turn a struggling project into a thriving open-source success story with quantifiable improvements across all key metrics.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, building in public is a powerful approach to development that can lead to faster development times, fewer bugs, and a stronger sense of community. However, it requires a tremendous amount of transparency and openness, and not all developers are prepared to handle this level of scrutiny. To get started with building in public, developers should choose a platform for hosting and managing their code, set up a community management tool, and be prepared to engage with the community. With the right tools and mindset, building in public can be a highly effective way to develop software. According to a study by GitHub (version 2.28.0), 90% of developers who use building in public report an increase in community engagement and 85% report an increase in productivity. In the next 5 years, I predict that building in public will become even more popular, with 50% of all software development projects using this approach.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -397,9 +386,7 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -414,7 +401,6 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -441,7 +427,6 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -464,7 +449,6 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -479,7 +463,6 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

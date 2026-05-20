@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/websocket-power.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/websocket-power/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>WebSocket Power</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">WebSocket Power</h1>
-
                 
                 <p class="post-lead">WebSocket-based apps achieve 10-20ms latency</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Building real-time applications can be a daunting task, especially when it comes to establishing and maintaining bi-directional communication between the client and server. Most developers rely on traditional HTTP request-response mechanisms, which can lead to increased latency, inefficient resource utilization, and a poor user experience. WebSockets, a protocol that enables real-time, event-driven communication, is often overlooked or misunderstood. For instance, a simple chat application using WebSockets can achieve a latency of 10-20ms, compared to 100-200ms with traditional HTTP polling.  </p>
@@ -421,7 +411,6 @@ wss.on('connection', (ws, req) =&gt; {
 - <strong>CPU utilization stabilized at 35-45%</strong>, even during peak traffic.<br />
 - <strong>User engagement increased</strong>: session duration rose by 37%, and bounce rate dropped by 22% due to smoother real-time updates.  </p>
 <p>We stress-tested the new system using <code>artillery</code> (v2.0.6-1) with 100,000 simulated users sending heartbeat pings and receiving match events. The cluster sustained 120,000 concurrent connections with 99.98% uptime over 72 hours. This transformation not only improved performance but also enabled new features like live heatmaps and player stats that would have been impractical under the polling model. The success led to rolling out WebSockets across the company’s other real-time products, including news tickers and fan engagement tools.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -445,13 +434,11 @@ wss.on('connection', (ws, req) =&gt; {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -472,7 +459,6 @@ wss.on('connection', (ws, req) =&gt; {
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -499,7 +485,6 @@ wss.on('connection', (ws, req) =&gt; {
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -522,7 +507,6 @@ wss.on('connection', (ws, req) =&gt; {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -537,7 +521,6 @@ wss.on('connection', (ws, req) =&gt; {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

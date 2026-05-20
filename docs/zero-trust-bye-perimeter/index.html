@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/zero-trust-bye-perimeter.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/zero-trust-bye-perimeter/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Zero Trust: Bye Perimeter</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Zero Trust: Bye Perimeter</h1>
-
                 
                 <p class="post-lead">Say goodbye to perimeter defense. Get insider tips on implementing Zero Trust Security for a safer network.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Perimeter defense has been the cornerstone of network security for decades. The idea is simple: build a strong wall around your network, and you'll be safe from the outside world. However, this approach has a fatal flaw: it assumes that the inside of the network is trustworthy. In reality, most security breaches occur from within, whether through malicious insiders or compromised credentials. Developers often miss this problem because they're focused on securing the perimeter, not the internal network. A recent study by Palo Alto Networks found that 55% of organizations have experienced a security breach due to internal threats. To make matters worse, the average cost of a data breach is around $3.92 million, according to IBM's 2020 Cost of a Data Breach Report. Zero Trust security addresses this problem by assuming that all users and devices, whether inside or outside the network, are untrusted.</p>
@@ -451,7 +441,6 @@ spec:
 <p>The results are impressive. The company experiences a significant reduction in security breaches, and the network is much more secure and resilient. The company is also able to detect and respond to potential security threats in real-time, thanks to the behavioral analysis and monitoring capabilities of the Zero Trust security system.</p>
 <p>In terms of concrete numbers, the company experiences a 90% reduction in security breaches, and a 50% reduction in network latency. The company is also able to reduce its security operations costs by 30%, thanks to the automation and efficiency of the Zero Trust security system.</p>
 <p>Overall, the case study demonstrates the effectiveness of Zero Trust security in preventing security breaches and protecting networks from internal and external threats. By implementing Zero Trust security, companies can significantly reduce the risk of security breaches and improve their overall security posture.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -475,9 +464,7 @@ spec:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -492,7 +479,6 @@ spec:
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -519,7 +505,6 @@ spec:
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -542,7 +527,6 @@ spec:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -557,7 +541,6 @@ spec:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

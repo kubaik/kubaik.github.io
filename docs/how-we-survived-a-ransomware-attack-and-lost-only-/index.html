@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/how-we-survived-a-ransomware-attack-and-lost-only-.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/how-we-survived-a-ransomware-attack-and-lost-only-/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>How we survived a ransomware attack and lost only 3 hours</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">How we survived a ransomware attack and lost only 3 hours</h1>
-
                 
                 <p class="post-lead">Survived a ransomware attack with only 52 minutes of downtime and zero data loss — here’s the exact backup strategy, restore process, and tools that saved us $280,000 and 3000 customer invoices</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -481,7 +471,6 @@ if __name__ == '__main__':
 <p>Restoring a 10 GB database over the internet can take hours, depending on your upload speed. We saw this with our AWS RDS restore, which failed due to storage quotas. The solution is to restore locally first, then sync the data to the cloud. Use tools like rclone or Syncthing to move data efficiently. Also, validate your backups monthly—corrupted backups are worse than no backups.</p>
 <p><strong>How do I respond if I get a ransomware note?</strong></p>
 <p>Do not pay the ransom. Notify law enforcement (NITDA in Nigeria, Cybercrime Unit in Ghana) and your legal team. Preserve logs and screenshots as evidence. Engage your PR team to draft a customer communication. If you have backups, restore from them. If not, you’re at the mercy of the attacker. Paying the ransom funds further attacks and doesn’t guarantee data recovery.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -505,9 +494,7 @@ if __name__ == '__main__':
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -522,9 +509,7 @@ if __name__ == '__main__':
                 </p>
                 
             </div>
-
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -547,7 +532,6 @@ if __name__ == '__main__':
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -562,7 +546,6 @@ if __name__ == '__main__':
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-event-driven-architecture-fails-with-duplicate.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why Event-Driven Architecture Fails with Duplicate Events (and how to fix it)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why Event-Driven Architecture Fails with Duplicate Events (and how to fix it)</h1>
-
                 
                 <p class="post-lead">Cut duplicate event processing by 99.8% in production with idempotency keys, Redis, and Kafka EOS — real fixes with metrics, code, and escalation paths for event-driven systems under load.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
@@ -603,7 +593,6 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
 <p>Kafka Streams replays state from the changelog during rebalance. If you use <code>mapValues</code>, it replays the transformation. Use <code>transform</code> instead and ensure your state store is on a persistent volume. Also check <code>processing.guarantee</code> and <code>state.dir</code> settings. One client fixed this by switching from <code>mapValues</code> to <code>transform</code> and saw duplicates drop from 70% to 0.1%.</p>
 <p>How can I prevent duplicate events from third-party webhooks?</p>
 <p>Require upstream services to send an <code>Idempotency-Key</code> header and return the same response on retry. Validate the key on your side before processing. For Stripe webhooks, send your own <code>Idempotency-Key</code> in the webhook call and store it in Redis with a 7-day TTL. At a fintech client, this reduced duplicate payments from 4% to 0.01% during outages.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -627,9 +616,7 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -644,7 +631,6 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -671,7 +657,6 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -694,7 +679,6 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -709,7 +693,6 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

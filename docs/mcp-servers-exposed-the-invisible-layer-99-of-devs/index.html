@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/mcp-servers-exposed-the-invisible-layer-99-of-devs.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/mcp-servers-exposed-the-invisible-layer-99-of-devs/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>MCP servers exposed: the invisible layer 99% of devs miss</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">MCP servers exposed: the invisible layer 99% of devs miss</h1>
-
                 
                 <p class="post-lead">MCP servers exposed invisible: e result? 100% of subsequent calls failed wi. Practical guide with real examples.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This took me about three days to figure out properly. Most of the answers I found online were either outdated or skipped the parts that actually matter in production. Here's what I learned.</p>
 <p>I once spent three weeks debugging a 50-millisecond latency spike in a service that <em>should</em> have been returning in 2ms. Turns out, the real bottleneck wasn’t my code or the database—it was a hidden MCP server running on a single CPU core behind my stateless REST endpoint. This happens more often than you’d think because most docs treat MCP servers like magic boxes you plug in and forget. They’re not. Once you see how they actually work, you realize they’re the duct tape holding together modern AI pipelines, internal tools, and even some of the “serverless” functions you rely on every day.</p>
@@ -600,7 +590,6 @@ MCP servers assume a relatively stable network connection. Mobile clients on fla
 MCP servers are specialized orchestrators that expose tools via a standardized protocol, not arbitrary APIs. They assume clients will discover tools dynamically and call them by name, which is rare in microservices. MCP servers also manage tool lifecycle, including resource cleanup, which microservices typically leave to the runtime. Finally, MCP servers often run as sidecars or in the same pod as their clients, while microservices are usually separate processes or hosts.</p>
 <p><strong>Can I use MCP servers with serverless functions like AWS Lambda or Cloud Run?</strong>
 Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-driven triggers. You can run an MCP server</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -624,13 +613,11 @@ Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-dri
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -651,7 +638,6 @@ Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-dri
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -678,7 +664,6 @@ Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-dri
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -701,7 +686,6 @@ Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-dri
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -716,7 +700,6 @@ Yes, but not with stdio transport. Lambda and Cloud Run expect HTTP or event-dri
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

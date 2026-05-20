@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-learns-your-repo-the-context-trap-you-missed.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-learns-your-repo-the-context-trap-you-missed/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI learns your repo: the context trap you missed</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI learns your repo: the context trap you missed</h1>
-
                 
                 <p class="post-lead">Cut AI suggestion errors by 45% with repository intelligence — AST chunking, dependency graphs, and routing that actually understand your whole codebase in 2026</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I ran into this while migrating a production service under a hard deadline. The official docs covered the happy path well. This post covers everything else.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
@@ -522,7 +512,6 @@ Teams with ≥50 files and ≥3 engineers see ROI fastest. Below that, the setup
 Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering time saved. Use a simple voting system in Slack: after each AI suggestion, ask the engineer to thumbs-up/down. Accuracy = % thumbs-up. Time saved = estimate via PR review comments and build failures. At a 2026 startup, we measured 45% fewer incorrect suggestions and 2.1 hours saved per engineer per week after deploying repo intelligence.</p>
 <h2 id="first-next-step">First next step</h2>
 <p>Pick one repo with ≥50 files and ≥3 engineers. Run <code>tree-sitter</code> to parse a single file, extract one class, and embed it with <code>voyage-code-3</code>. Build a tiny Qdrant collection and test retrieval with a few real queries. Measure precision@3 with your own thumbs-up/down system. If precision is below 80%, iterate on chunking rules and dependency expansion before scaling to the whole repo. This single repo pilot will teach you whether the investment is worth the payoff before you touch the rest of your codebase.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -546,9 +535,7 @@ Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering 
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -563,7 +550,6 @@ Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -590,7 +576,6 @@ Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -613,7 +598,6 @@ Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -628,7 +612,6 @@ Instrument two metrics: suggestion accuracy (top-3 correctness) and engineering 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

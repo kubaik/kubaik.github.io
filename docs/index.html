@@ -122,17 +122,13 @@
         .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
- 
-        /* ── Post card (homepage grid) ── */
+
+        /* ── Post card ── */
         .post-card {
             display: flex;
             flex-direction: column;
             min-height: 200px;
         }
- 
-        /* FIX: was white-space:nowrap which truncated long titles to one line,
-                making dynamically-loaded cards (via buildCard JS) look
-                different from server-rendered ones */
         .post-card h3 {
             white-space: normal;
             overflow: hidden;
@@ -142,9 +138,6 @@
             line-height: 1.4;
             margin-bottom: 0.6rem;
         }
- 
-        /* FIX: flex:1 pushes meta/tags to card bottom for equal-height rows;
-                min-height prevents collapse on very short excerpts */
         .post-card .post-excerpt {
             flex: 1;
             display: -webkit-box;
@@ -153,8 +146,6 @@
             overflow: hidden;
             min-height: 3.2rem;
         }
- 
-        /* FIX: tags row — allow wrapping, remove overflow:hidden that clipped pills */
         .post-card .tags {
             overflow: visible;
             flex-wrap: wrap;
@@ -162,12 +153,20 @@
             margin-top: 0.5rem;
             flex-shrink: 0;
         }
- 
-        /* FIX: was color:inherit — inherited the card link hover purple which
-                is nearly invisible on the gradient pill background */
+        /*
+         * TAG PILLS ON HOMEPAGE CARDS: use <span> not <a> to avoid nested
+         * anchor elements (invalid HTML — browsers split cards in two).
+         * Navigation to tag pages is handled by JS event delegation below.
+         */
+        .post-card .tag {
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+        }
+        .post-card .tag:hover { opacity: 0.85; color: #fff; }
         .tag { text-decoration: none; color: #fff; }
         .tag:hover { text-decoration: none; opacity: 0.85; color: #fff; }
- 
+
         .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; margin-bottom: 2px; flex-shrink: 0; }
         .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
         .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
@@ -228,6 +227,7 @@
             
             <div id="posts-container" class="post-grid">
                 
+                
                 <a class="post-card" href="/message-queues-the-80-rule-you-need/"
                    data-title="Message queues: the 80% rule you need"
                    data-description="Cut API bottleneck 70% with message queues — real latency, cost, and failure data from 2026 systems. Learn when to queue and when to dump the queue entirely."
@@ -240,15 +240,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/apis/">Apis</a>
+                        <span class="tag"
+                              data-tag-href="/tag/apis/">Apis</span>
                         
-                        <a class="tag" href="/tag/redis/">Redis</a>
+                        <span class="tag"
+                              data-tag-href="/tag/redis/">Redis</span>
                         
-                        <a class="tag" href="/tag/performance/">Performance</a>
+                        <span class="tag"
+                              data-tag-href="/tag/performance/">Performance</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/show-github-alone-wont-land-you-a-remote-job/"
                    data-title="Show GitHub alone won’t land you a remote job"
@@ -262,15 +266,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/coding/">Coding</a>
+                        <span class="tag"
+                              data-tag-href="/tag/coding/">Coding</span>
                         
-                        <a class="tag" href="/tag/github/">Github</a>
+                        <span class="tag"
+                              data-tag-href="/tag/github/">Github</span>
                         
-                        <a class="tag" href="/tag/gethired/">Gethired</a>
+                        <span class="tag"
+                              data-tag-href="/tag/gethired/">Gethired</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/why-mcp-servers-power-real-ai-apps/"
                    data-title="Why MCP servers power real AI apps"
@@ -284,15 +292,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/ai/">Ai</a>
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
                         
-                        <a class="tag" href="/tag/rag/">Rag</a>
+                        <span class="tag"
+                              data-tag-href="/tag/rag/">Rag</span>
                         
-                        <a class="tag" href="/tag/mcptools/">McpTools</a>
+                        <span class="tag"
+                              data-tag-href="/tag/mcptools/">McpTools</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/compare-websockets-sse-and-polling-in-practice/"
                    data-title="Compare WebSockets, SSE, and polling in practice"
@@ -306,15 +318,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/tech/">Tech</a>
+                        <span class="tag"
+                              data-tag-href="/tag/tech/">Tech</span>
                         
-                        <a class="tag" href="/tag/redis/">Redis</a>
+                        <span class="tag"
+                              data-tag-href="/tag/redis/">Redis</span>
                         
-                        <a class="tag" href="/tag/webdev/">Webdev</a>
+                        <span class="tag"
+                              data-tag-href="/tag/webdev/">Webdev</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/repository-ai-when-context-gets-real/"
                    data-title="Repository AI: when context gets real"
@@ -328,15 +344,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/ai/">Ai</a>
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
                         
-                        <a class="tag" href="/tag/aicodereview/">AiCodeReview</a>
+                        <span class="tag"
+                              data-tag-href="/tag/aicodereview/">AiCodeReview</span>
                         
-                        <a class="tag" href="/tag/codebasecontext/">CodebaseContext</a>
+                        <span class="tag"
+                              data-tag-href="/tag/codebasecontext/">CodebaseContext</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/fix-database-pools-common-timeout-flaw/"
                    data-title="Fix database pools: common timeout flaw"
@@ -350,15 +370,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/database/">Database</a>
+                        <span class="tag"
+                              data-tag-href="/tag/database/">Database</span>
                         
-                        <a class="tag" href="/tag/performance/">Performance</a>
+                        <span class="tag"
+                              data-tag-href="/tag/performance/">Performance</span>
                         
-                        <a class="tag" href="/tag/databasepools/">DatabasePools</a>
+                        <span class="tag"
+                              data-tag-href="/tag/databasepools/">DatabasePools</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/5-ways-rag-pipelines-collapse-in-prod/"
                    data-title="5 ways RAG pipelines collapse in prod"
@@ -372,15 +396,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/rag/">Rag</a>
+                        <span class="tag"
+                              data-tag-href="/tag/rag/">Rag</span>
                         
-                        <a class="tag" href="/tag/redis/">Redis</a>
+                        <span class="tag"
+                              data-tag-href="/tag/redis/">Redis</span>
                         
-                        <a class="tag" href="/tag/database/">Database</a>
+                        <span class="tag"
+                              data-tag-href="/tag/database/">Database</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/instrument-llms-what-metrics-actually-matter/"
                    data-title="Instrument LLMs: what metrics actually matter"
@@ -394,15 +422,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/ai/">Ai</a>
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
                         
-                        <a class="tag" href="/tag/vectordb/">Vectordb</a>
+                        <span class="tag"
+                              data-tag-href="/tag/vectordb/">Vectordb</span>
                         
-                        <a class="tag" href="/tag/llmobservability/">LlmObservability</a>
+                        <span class="tag"
+                              data-tag-href="/tag/llmobservability/">LlmObservability</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/stop-burning-cellular-bandwidth-backend-changes-that/"
                    data-title="Stop burning cellular bandwidth: backend changes that"
@@ -416,15 +448,19 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/redis/">Redis</a>
+                        <span class="tag"
+                              data-tag-href="/tag/redis/">Redis</span>
                         
-                        <a class="tag" href="/tag/backend/">Backend</a>
+                        <span class="tag"
+                              data-tag-href="/tag/backend/">Backend</span>
                         
-                        <a class="tag" href="/tag/5gbackend/">5gBackend</a>
+                        <span class="tag"
+                              data-tag-href="/tag/5gbackend/">5gBackend</span>
                         
                     </div>
                     
                 </a>
+                
                 
                 <a class="post-card" href="/freelance-burnout-fixed-what-i-cut-first/"
                    data-title="Freelance burnout fixed: what I cut first"
@@ -438,11 +474,14 @@
                     
                     <div class="tags">
                         
-                        <a class="tag" href="/tag/github/">Github</a>
+                        <span class="tag"
+                              data-tag-href="/tag/github/">Github</span>
                         
-                        <a class="tag" href="/tag/freelancing/">Freelancing</a>
+                        <span class="tag"
+                              data-tag-href="/tag/freelancing/">Freelancing</span>
                         
-                        <a class="tag" href="/tag/cloudcomputing/">Cloudcomputing</a>
+                        <span class="tag"
+                              data-tag-href="/tag/cloudcomputing/">Cloudcomputing</span>
                         
                     </div>
                     
@@ -503,6 +542,21 @@
         var searchMode  = false;
         var observer    = null;
 
+        /* ── Tag-pill click delegation ───────────────────────────────────────
+         * Tag pills are <span data-tag-href="..."> (not <a>) to avoid the
+         * nested-anchor HTML violation that caused split cards.
+         * We intercept clicks on spans with data-tag-href and navigate there,
+         * stopping propagation so the parent card link is NOT also followed.
+         */
+        document.addEventListener('click', function (e) {
+            var el = e.target;
+            if (el && el.tagName === 'SPAN' && el.dataset.tagHref) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = el.dataset.tagHref;
+            }
+        }, true);
+
         function startObserver() {
             if (!sentinel || !window.IntersectionObserver || observer) return;
             observer = new IntersectionObserver(function (entries) {
@@ -521,6 +575,11 @@
             loadNextPage();
         }
 
+        /*
+         * buildCard: constructs a post card entirely in JS for infinite scroll
+         * and search results. Uses <span data-tag-href> for tag pills — same
+         * pattern as the server-rendered HTML — to avoid nested <a> elements.
+         */
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
@@ -548,6 +607,7 @@
                 rt.textContent = post.reading_time + ' min read';
                 a.appendChild(rt);
             }
+
             var tags = (post.tags || []).filter(function(t) { return t && t.trim(); });
             if (tags.length) {
                 var div       = document.createElement('div');
@@ -555,10 +615,14 @@
                 tags.slice().sort(function (x, y) { return x.length - y.length; })
                     .slice(0, 3)
                     .forEach(function (t) {
-                        var sp         = document.createElement('a');
-                        sp.className   = 'tag';
-                        sp.textContent = t;
-                        sp.href        = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        /*
+                         * Use <span> with data-tag-href, NOT <a>, to avoid
+                         * nesting an anchor inside the card anchor.
+                         */
+                        var sp              = document.createElement('span');
+                        sp.className        = 'tag';
+                        sp.textContent      = t;
+                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
                         div.appendChild(sp);
                     });
                 a.appendChild(div);
@@ -601,8 +665,12 @@
             .then(function (posts) {
                 fullPosts = posts;
                 jsonReady = true;
-                if (loadedCount < fullPosts.length) {requestAnimationFrame(function () { startObserver(); });}
-                if (searchMode && searchInput && searchInput.value.trim()) runSearch(searchInput.value.trim());
+                if (loadedCount < fullPosts.length) {
+                    requestAnimationFrame(function () { startObserver(); });
+                }
+                if (searchMode && searchInput && searchInput.value.trim()) {
+                    runSearch(searchInput.value.trim());
+                }
             })
             .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
 

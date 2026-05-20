@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ship-a-mobile-app-that-stays-on-phones-for-years.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ship-a-mobile-app-that-stays-on-phones-for-years/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Ship a Mobile App That Stays on Phones for Years</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Ship a Mobile App That Stays on Phones for Years</h1>
-
                 
                 <p class="post-lead">Ship a Mobile App That Stays on Phones for Years — learn SQLite retries, background sync survival, and crash-free session rates under 1% with real device tests in Lagos, Bangalore, and São Paulo to cut user churn by 70% and keep apps alive after OS restarts and low memory kills.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
@@ -680,7 +670,6 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
 <li>If your app targets emerging markets, add a data saver mode. Detect metered networks with <code>NetInfo</code> and disable non-essential features (auto-play videos, large images). Show a banner: “Data Saver: Off” with a toggle. This cut data usage by 55% in a São Paulo pilot and increased retention by 18%.</li>
 </ol>
 <p>The next step is your choice: compress images, switch to MMKV, or add data saver mode. Pick one, implement it in one day, and test on a low-end device before shipping. That’s how you turn an app that works on your machine into one users keep for years.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -704,9 +693,7 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -721,7 +708,6 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -748,7 +734,6 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -771,7 +756,6 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -786,7 +770,6 @@ Use Android Emulator’s device profiles. Create a custom profile for 2 GB RAM, 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/we-moved-security-left-without-slowing-deploys.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/we-moved-security-left-without-slowing-deploys/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>We moved security left without slowing deploys</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">We moved security left without slowing deploys</h1>
-
                 
                 <p class="post-lead">We cut PR merge time 31% and critical vulnerabilities 87% by turning security into a measurable signal instead of a gate. Here’s how we instrumented GitHub Actions, Kubernetes, and Prometheus to shift security left without slowing deploys.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <p>We shipped 4,200 safer deployments last quarter without adding a single minute to our CI pipeline. Moving security left used to mean 30-minute gates and angry Slack threads. This time we measured first: 18% of our container images had vulnerabilities, 7% of PRs touched secrets, and our mean time to detect a misconfiguration was 42 minutes. We didn’t start with a new tool or policy. We started by instrumenting what we already had: the pull request, the container registry, and the runtime environment. We added two new signals—static analysis on every PR and runtime drift detection in staging—and watched the queue time for our main service drop from 14 minutes to 9 minutes while vulnerability counts fell 87%. This is the story of how we turned "security slows us down" into "security makes us faster."</p>
@@ -719,7 +709,6 @@ if __name__ == &quot;__main__&quot;:
 <li>After: 12 minutes total. Security signals (static analysis + drift detection) added 2 minutes in CI.</li>
 <li><strong>Instrumentation</strong>: We added custom Prometheus metrics to GitHub Actions to measure queue time per step. The metrics showed that the security gates were</li>
 </ol>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -743,9 +732,7 @@ if __name__ == &quot;__main__&quot;:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -760,7 +747,6 @@ if __name__ == &quot;__main__&quot;:
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -787,7 +773,6 @@ if __name__ == &quot;__main__&quot;:
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -810,7 +795,6 @@ if __name__ == &quot;__main__&quot;:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -825,7 +809,6 @@ if __name__ == &quot;__main__&quot;:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

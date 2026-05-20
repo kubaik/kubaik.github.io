@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/figmas.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/figmas/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Figma's</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Figma's</h1>
-
                 
                 <p class="post-lead">Figma's architecture, built on WebAssembly and WebGL, redefined collaborative design. Unpack its tech stack and why Adobe's acquisition failed.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most developers, particularly those steeped in traditional desktop application development, fundamentally misunderstand the paradigm shift Figma initiated. The prevailing wisdom for complex graphical applications, like vector editors or CAD software, has always been to build native desktop applications. The rationale was sound: direct access to system resources, GPU acceleration via APIs like DirectX or Metal, and the perceived performance limitations of browser-based JavaScript. Adobe's own suite, from Illustrator 27.x to Photoshop 25.x, exemplifies this desktop-first approach, relying on deeply optimized C++ codebases compiled for specific operating systems. The problem Figma solved wasn't just "design in the browser"; it was the challenge of achieving near-native graphical performance and, more critically, real-time, high-fidelity collaboration for vector graphics <em>within the browser environment</em>. This meant overcoming the inherent latency of network communication, managing concurrent state changes without corruption, and rendering complex vector scenes at 60 frames per second on diverse hardware, all while being accessible through a simple URL. Many attempted this before, typically resulting in clunky, slow experiences. Figma cracked the code by embracing web technologies in a way few thought possible, shifting the bottleneck from the browser's capabilities to the ingenuity of the engineering team.</p>
@@ -356,7 +346,6 @@
 <li><strong>Reduced Design Drift:</strong> The single source of truth in Figma, combined with direct developer access and integrations like Storybook, significantly reduced discrepancies between design and implemented code, improving overall product quality and consistency.</li>
 </ul>
 <p>InnovateHQ's transition to Figma wasn't just a tool swap; it was a fundamental shift towards a more collaborative, efficient, and cost-effective product development paradigm, proving that the right web-based platform can yield substantial, measurable business benefits.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -380,9 +369,7 @@
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -397,7 +384,6 @@
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -424,7 +410,6 @@
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -447,7 +432,6 @@
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -462,7 +446,6 @@
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

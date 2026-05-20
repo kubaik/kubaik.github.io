@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/code-fast.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/code-fast/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -194,7 +193,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -202,9 +200,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -234,21 +230,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Code Fast</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Code Fast</h1>
-
                 
                 <p class="post-lead">Master a new programming language in weeks with proven strategies and techniques to boost coding speed and efficiency.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -273,7 +265,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -295,7 +286,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>When learning a new programming language, most developers focus on understanding the syntax, data types, and control structures. However, this approach often leads to a shallow understanding of the language, making it difficult to write efficient and effective code. A more effective approach is to learn by working on real-world projects, which helps to identify the strengths and weaknesses of the language. For example, when learning Python, it's essential to understand how to use libraries like NumPy and pandas to work with data. A developer who understands how to use these libraries can write code that is 30% faster and uses 25% less memory. To achieve this level of proficiency, developers should focus on building projects that require them to use the language's features, such as file I/O, networking, and multithreading. By doing so, they can gain a deeper understanding of the language and develop the skills needed to write high-quality code.</p>
@@ -361,7 +351,6 @@ print(response.json())
 | Memory Usage | 1GB | 500MB |
 | Requests per Second | 100 | 500 |
 As shown in the table, the performance of the web application improves significantly after using the approach outlined in this post. The response time decreases by 80%, the memory usage decreases by 50%, and the requests per second increase by 500%. By following this approach, developers can achieve similar results and improve the performance and reliability of their applications.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -385,9 +374,7 @@ As shown in the table, the performance of the web application improves significa
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -402,7 +389,6 @@ As shown in the table, the performance of the web application improves significa
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -429,7 +415,6 @@ As shown in the table, the performance of the web application improves significa
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -452,7 +437,6 @@ As shown in the table, the performance of the web application improves significa
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -467,7 +451,6 @@ As shown in the table, the performance of the web application improves significa
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

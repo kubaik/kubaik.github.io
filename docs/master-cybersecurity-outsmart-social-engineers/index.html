@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/master-cybersecurity-outsmart-social-engineers.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/master-cybersecurity-outsmart-social-engineers/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Master Cybersecurity: Outsmart Social Engineers</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Master Cybersecurity: Outsmart Social Engineers</h1>
-
                 
                 <p class="post-lead">Social engineering bypasses firewalls 74% of the time. Learn how to harden identity, monitor DMs, and automate response with real metrics and code examples.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h1 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h1>
 <p>Most developers treat social engineering as a side issue—something HR handles with annual phishing simulations. But that’s a losing bet. The Verizon 2023 DBIR found that 74% of all breaches involve a human element, and 83% of those are social attacks. What’s worse? The people writing the code are often the weakest link. I’ve seen teams build rock-solid authentication systems, only to fall for a $15 Amazon gift card scam. Developers don’t get extra training. They don’t practice spotting malicious DMs. They’re too busy shipping features to notice the attacker DMing them on Slack asking for ‘urgent help with the prod database backup.’</p>
@@ -467,7 +457,6 @@ def lambda_handler(event, context):
 - False positive rate in alerts</p>
 <p>If any metric doesn’t improve by 50% in 30 days, iterate. Change the tool, the training, or the workflow. But don’t blame the user.</p>
 <p>The goal isn’t to ‘train better people.’ It’s to build systems where the secure path is the easy path. That’s how you outsmart social engineers—and win.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -491,9 +480,7 @@ def lambda_handler(event, context):
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -508,7 +495,6 @@ def lambda_handler(event, context):
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -535,7 +521,6 @@ def lambda_handler(event, context):
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -558,7 +543,6 @@ def lambda_handler(event, context):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -573,7 +557,6 @@ def lambda_handler(event, context):
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

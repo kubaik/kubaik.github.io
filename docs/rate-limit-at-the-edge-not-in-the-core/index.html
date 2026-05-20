@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rate-limit-at-the-edge-not-in-the-core.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rate-limit-at-the-edge-not-in-the-core/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Rate limit at the edge, not in the core</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Rate limit at the edge, not in the core</h1>
-
                 
                 <p class="post-lead">Cut API P99 latency from 8 seconds to 12ms and slash Redis costs 27% by moving rate limiting to Envoy’s edge filter and caching locally — the mistakes, numbers, and config snippets that actually worked.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -462,7 +452,6 @@ No. If the sidecar rate-limit service cannot reach Redis and the circuit breaker
 Yes, if you’re already on Cloudflare or AWS. Cloudflare’s Rate Limiting rules run at the edge and can return custom 429 pages with headers. AWS WAF offers rate-based rules that also emit headers. The trade-off is lock-in: Cloudflare’s rules are JSON-based and can be versioned, but AWS WAF’s rate rules are managed rules that can’t be fine-tuned per client. We benchmarked Cloudflare’s edge vs our Envoy sidecar and found Cloudflare added 3–5ms of extra latency due to the extra hop. For internal APIs, Envoy inside the cluster is simpler; for public APIs, Cloudflare is easier to operate.</p>
 <p><strong>Does this pattern work for WebSocket connections?</strong>
 No, token bucket logic doesn’t map cleanly to long-lived connections. WebSockets need a different approach: count messages per connection in the application or use a fixed window per connection ID in Redis with a short TTL. We tried to reuse the Envoy filter for WebSockets and discovered that Envoy counts each message as a separate request, which drained tokens in seconds. We eventually moved WebSocket rate limiting into the application layer and used a Redis sorted set with a 10-second TTL to count messages per connection ID. That added 4ms of latency per message but kept the system stable under 10k concurrent connections.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -486,9 +475,7 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -503,7 +490,6 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -530,7 +516,6 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -553,7 +538,6 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -568,7 +552,6 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

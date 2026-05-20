@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/typescript-branded-types-vs-nominal-typing-pattern.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/typescript-branded-types-vs-nominal-typing-pattern/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>TypeScript: Branded Types vs Nominal Typing Patterns</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">TypeScript: Branded Types vs Nominal Typing Patterns</h1>
-
                 
                 <p class="post-lead">Cut API response latency by 40% and eliminate type-mixing bugs with TypeScript branded types — schema-driven generation, performance benchmarks, and the mistakes that waste hours of debugging.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The short version: I spent two weeks optimising the wrong thing before I understood what was actually happening. The longer version is below.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
@@ -556,7 +546,6 @@ export const userId = (value: string): UserId =&gt; value as UserId;
 <p>Branded types use intersection types with unique symbols to simulate nominal typing at compile time. They compile away to the base type, so there’s no runtime overhead. Nominal typing in TypeScript is usually implemented via classes, which are distinct at runtime but incur heap allocation and constructor overhead. Branding is preferred for performance; classes are used when runtime validation or OOP behavior is needed.</p>
 <p>Why does my branded type-based API client generate larger bundles than expected?</p>
 <p>Branded types don’t increase bundle size—the issue is likely elsewhere. Check if you’re importing the entire <code>zod</code> library or using complex type utilities. Use <code>ts-prune</code> to find unused exports and <code>esbuild</code> to analyze bundle size. For API clients, prefer <code>zod-to-ts</code> with tree-shaking to keep bundles small.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -580,9 +569,7 @@ export const userId = (value: string): UserId =&gt; value as UserId;
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -597,7 +584,6 @@ export const userId = (value: string): UserId =&gt; value as UserId;
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -624,7 +610,6 @@ export const userId = (value: string): UserId =&gt; value as UserId;
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -647,7 +632,6 @@ export const userId = (value: string): UserId =&gt; value as UserId;
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -662,7 +646,6 @@ export const userId = (value: string): UserId =&gt; value as UserId;
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

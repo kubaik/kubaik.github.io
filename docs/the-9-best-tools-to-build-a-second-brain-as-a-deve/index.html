@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/the-9-best-tools-to-build-a-second-brain-as-a-deve.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/the-9-best-tools-to-build-a-second-brain-as-a-deve/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>The 9 best tools to build a Second Brain as a developer in 2025</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">The 9 best tools to build a Second Brain as a developer in 2025</h1>
-
                 
                 <p class="post-lead">Cut Second Brain setup time by 60% with Logseq and Git-native tools — plain text, offline search under 0.1s, and a $5/month VPS tier for freelancers and startups</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I've answered versions of this question in Slack, code reviews, and one-on-ones more times than I can count. Writing it down properly felt overdue.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
@@ -477,7 +467,6 @@ Use Logseq’s query language: <code>{{query (and [[client/X]] (between 2024-04-
 Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone subway. The mobile web is usable, but edits often get stuck in a pending state after a week offline. Also, Roam’s pricing is $15/month at scale, which is hard to justify when Logseq is free and self-hosted. The final straw was the export fidelity: a 5,000-page workspace’s JSON export missed 127 images and 84 internal links. Logseq’s export is 100% Markdown, so I can always recover my data. The key takeaway is that developer Second Brains must be offline-first and plain-text—Roam hits neither.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only do one thing after reading this, <strong>install Logseq today on your laptop and your phone, then run the GitHub importer to pull your last 100 issues</strong>. Use the <code>github:</code> protocol to auto-link commits to issues. Measure your search latency on a 2018 laptop—if it’s under 0.2 seconds, you’ve made the right choice. If it’s slower, switch to TiddlyWiki on a $5 DigitalOcean droplet. The key is to start small, import your real data, and measure the latency and reliability before committing to a tool. Don’t abstract your knowledge—own it, in plain text, in Git. Then, set up a cron job to back up your vault to a second location. When your laptop dies or your client revokes access, you’ll still have your Second Brain intact.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -501,13 +490,11 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -528,7 +515,6 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -555,7 +541,6 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -578,7 +563,6 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -593,7 +577,6 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

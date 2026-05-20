@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/async-python-when-it-helps-when-it-hurts.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/async-python-when-it-helps-when-it-hurts/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -189,7 +188,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -197,9 +195,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -229,21 +225,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Async Python: when it helps, when it hurts</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Async Python: when it helps, when it hurts</h1>
-
                 
                 <p class="post-lead">Cut API response time 9.4x with async Python — real benchmarks, httpx vs requests, and the traps that cost 2 weeks of debugging in a fintech microservice.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -268,7 +260,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -290,7 +281,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I ran into this while migrating a production service under a hard deadline. The official docs covered the happy path well. This post covers everything else.</p>
 <p>Python’s <code>async</code>/<code>await</code> looks like magic: write sequential-looking code that runs in parallel under the hood. In practice it’s closer to a very opinionated concurrency model that only pays off in narrow circumstances. I shipped an async microservice for a Brazil-based fintech in 2022 that cut 95th-percentile latency from 320 ms to 45 ms when batching external calls, but I also spent two weeks debugging why the same code deadlocked in staging because I mixed <code>requests</code> with <code>aiohttp</code> in a single event loop. This post walks through the trade-offs so you can decide whether async is worth the complexity for your workload.</p>
@@ -541,7 +531,6 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
 </ul>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Pick one small service in your stack that fans out ≥10 external calls and measures its current latency with <code>time.perf_counter</code>. If the median I/O wait is &gt; 10 ms, refactor that endpoint to async using <code>httpx</code> and <code>asyncio.gather</code>. Otherwise, leave it synchronous and document the decision so the next engineer doesn’t waste two weeks debugging a 5 ms endpoint that regressed to 8 ms after async overhead.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -565,9 +554,7 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -582,7 +569,6 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -609,7 +595,6 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -632,7 +617,6 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -647,7 +631,6 @@ Yes, but keep them separate. Flask 2.0+ supports async routes (<code>@app.route(
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

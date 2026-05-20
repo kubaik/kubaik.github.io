@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/event-sourcing-when-its-worth-the-pain.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Event sourcing: when it’s worth the pain</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Event sourcing: when it’s worth the pain</h1>
-
                 
                 <p class="post-lead">Cut audit time from 4 days to 30 minutes with event sourcing — 8ms writes vs 200ms CRUD, but only if you invest in projections and snapshots.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>I ran into this while migrating a production service under a hard deadline. The official docs covered the happy path well. This post covers everything else.</p>
 <h1 id="event-sourcing-when-its-worth-the-pain">Event sourcing: when it’s worth the pain</h1>
@@ -753,7 +743,6 @@ async def append_with_trace(account_id, event_data):
 We tried event sourcing on a <strong>real-time chat service</strong> next. The latency numbers looked great (5 ms writes vs 18 ms CRUD), but the cognitive load overwhelmed junior developers. They kept writing projections that blocked the UI thread, and the team spent more time explaining event ordering than building features. We rolled back after six weeks and switched to a simple Redis pub/sub model.</p>
 <p><strong>Bottom line:</strong>
 Event sourcing is worth the complexity <strong>only when</strong> the domain’s compliance, audit, or replay needs justify the cognitive and operational overhead. Otherwise, it’s a net loss in velocity and maintainability. Measure before you migrate.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -777,9 +766,7 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -794,7 +781,6 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -821,7 +807,6 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -844,7 +829,6 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -859,7 +843,6 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

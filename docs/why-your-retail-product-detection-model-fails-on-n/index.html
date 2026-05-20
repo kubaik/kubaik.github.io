@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/why-your-retail-product-detection-model-fails-on-n.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/why-your-retail-product-detection-model-fails-on-n/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -187,7 +186,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -195,9 +193,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -227,21 +223,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Why your retail product detection model fails on new shelves (and how to fix it)</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Why your retail product detection model fails on new shelves (and how to fix it)</h1>
-
                 
                 <p class="post-lead">Cut on-shelf availability false positives by 80% with store-level holdouts, lighting augmentation, and geometric augmentation — the retail product detection failures we measured and the fixes that worked in production.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -263,7 +255,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -285,7 +276,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>The thing that frustrated me most when learning this was that every tutorial assumed a clean slate. Real systems never are. Here's how it actually goes.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
@@ -443,7 +433,6 @@ transform = A.Compose([
 <p>Use a shadow deployment: run the updated model in parallel with the old model, log predictions, and compare them to ground truth or human audits. Measure precision, recall, and false positives per 1000 images for each store. If the gap between old and new models is &lt;3% on key metrics, promote the new model. I used this approach for a client in 2023—it caught a 12% recall drop before it impacted business decisions.</p>
 <p>Why does my retail product detection model fail on reflective packaging?</p>
 <p>Models trained on matte packaging fail on glossy surfaces because the specular highlights change the appearance of the product. The fix is to add reflective packaging to the training set or use a model with built-in specularity robustness (e.g., YOLOv8-seg). I saw this with a beverage client—precision dropped from 0.91 to 0.65 on glossy bottles until we added reflective samples to training.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -467,9 +456,7 @@ transform = A.Compose([
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -484,9 +471,7 @@ transform = A.Compose([
                 </p>
                 
             </div>
-
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -509,7 +494,6 @@ transform = A.Compose([
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -524,7 +508,6 @@ transform = A.Compose([
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/rag-pipelines-what-production-breaks-first.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-what-production-breaks-first/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>RAG pipelines: what production breaks first</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">RAG pipelines: what production breaks first</h1>
-
                 
                 <p class="post-lead">Cut RAG pipeline cost 9x and hit 12k QPS with 138ms P99 latency on 8 vCPUs — connection pooling, cache tiers, and Qdrant bloom filters made the difference. Learn what tutorials skip about production RAG.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <p>We shipped a RAG pipeline that handled 12k QPS with 98th-percentile latency under 150ms on 8 vCPUs — and the first version fell over at 200 QPS. Tutorials never mention the parts that melt in production: cold starts on the LLM router, embedding cache misses during traffic spikes, and the fact that your vector DB becomes the bottleneck before the model itself. What actually breaks first is the plumbing, not the LLMs.</p>
@@ -558,7 +548,6 @@ For most teams, Redis 7.2+ is enough if you shard it and tune <code>maxmemory-po
 Start with <code>fail_max=10</code> and <code>reset_timeout=30</code>. If you see more than 10 failures in 30 seconds, trip the breaker and fall back to a local index or a simpler model. In our tests, this prevented cascading failures during Qdrant spikes without adding noticeable latency. Tune <code>fail_max</code> based on your QPS: for 10k QPS, <code>fail_max=20</code> is safer. Avoid aggressive thresholds — they can cause 0.5–1% extra latency due to breaker toggling.</p>
 <p><strong>Why did our Qdrant pods run out of ephemeral ports under load?</strong>
 The NGINX load balancer reused ephemeral ports aggressively when connection churn was high. At 12k QPS with 4 Qdrant pods, the load balancer recycled ports faster than the TCP TIME_WAIT timeout (60s), causing ‘address already in use’ errors. We fixed it by increasing <code>net.ipv4.tcp_tw_reuse=1</code> on the load balancer and setting <code>so_reuseport=1</code> on Qdrant’s gRPC sockets. For teams using Kubernetes, set <code>service.spec.sessionAffinity: ClientIP</code> and <code>service.spec.externalTrafficPolicy: Local</code> to reduce port churn.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -582,9 +571,7 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -599,7 +586,6 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -626,7 +612,6 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -649,7 +634,6 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -664,7 +648,6 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

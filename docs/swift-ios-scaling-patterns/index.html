@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/swift-ios-scaling-patterns.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/swift-ios-scaling-patterns/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Swift iOS Scaling Patterns</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Swift iOS Scaling Patterns</h1>
-
                 
                 <p class="post-lead">Swift iOS scaling patterns for maintainable apps</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>When building iOS applications with Swift, many developers focus on the UI and business logic, neglecting the underlying architecture. This can lead to scalability issues, making it difficult to maintain and update the app as it grows in complexity. A key problem is the lack of a clear separation of concerns, resulting in tightly coupled code that's hard to test and extend. For example, consider a simple Swift class that handles both data fetching and UI updates:</p>
@@ -451,7 +441,6 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
 <li><strong>Monitor Performance</strong>: Tools like <strong>Instruments (version 12.4)</strong> and <strong>Firebase Performance Monitoring (version 8.11.0)</strong> are essential for identifying bottlenecks.</li>
 </ol>
 <p>This case study demonstrates that investing in scalable patterns and tools pays off in both technical and business outcomes. The upfront effort to refactor the app resulted in long-term gains in performance, stability, and developer productivity.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -475,9 +464,7 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -492,7 +479,6 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -519,7 +505,6 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -542,7 +527,6 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -557,7 +541,6 @@ fail(&quot;Please add tests for your changes.&quot;) if git.modified_files.inclu
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

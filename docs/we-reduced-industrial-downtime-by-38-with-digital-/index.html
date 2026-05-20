@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/we-reduced-industrial-downtime-by-38-with-digital-.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/we-reduced-industrial-downtime-by-38-with-digital-/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -188,7 +187,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -196,9 +194,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -228,21 +224,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>We reduced industrial downtime by 38% with digital twins</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">We reduced industrial downtime by 38% with digital twins</h1>
-
                 
                 <p class="post-lead">Reduced industrial downtime by 38% with digital twin technology — physics-based simulation, real-time calibration, and prescriptive guidance delivered 150ms response time and saved €420,000 annually in maintenance costs.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -267,7 +259,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -289,7 +280,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
@@ -465,7 +455,6 @@ class SensorHealthMonitor:
 <p>False positives usually stem from three issues: inaccurate sensor data, oversimplified physics models, or lack of context about the plant’s operational state. In our case, the twin flagged a temperature spike in Reactor 3 as an anomaly, but it turned out Reactor 2 was offline for maintenance—reducing heat demand. We fixed this by adding operational context (maintenance schedules, product grades) to the twin’s state. Always validate false positives against historical data and involve operators in tuning thresholds.</p>
 <p>How do I handle legacy equipment that doesn’t have digital sensors?</p>
 <p>Start with retrofitting. We used Raspberry Pi 4 devices running python-opcua to bridge between analog sensors and our digital twin. Each Pi cost €120 and took 4 hours to install, including calibration. For equipment where sensors can’t be added, use soft sensors—mathematical models that estimate unmeasured variables from related measurements. For example, we estimated pump efficiency from motor power and flow rate using a simple regression model trained on historical data.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -489,9 +478,7 @@ class SensorHealthMonitor:
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -506,9 +493,7 @@ class SensorHealthMonitor:
                 </p>
                 
             </div>
-
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -531,7 +516,6 @@ class SensorHealthMonitor:
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -546,7 +530,6 @@ class SensorHealthMonitor:
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/neural-networks-uncovered.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/neural-networks-uncovered/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Neural Networks Uncovered</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Neural Networks Uncovered</h1>
-
                 
                 <p class="post-lead">Demystify neural network learning. Understand backpropagation, gradient descent, optimizers (Adam, SGD), and real-world tradeoffs. Avoid common pitfalls.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Many developers approach neural networks as opaque black boxes, treating <code>model.fit()</code> as a magical incantation. This API-centric view is a critical flaw. Without understanding the underlying mechanics of how these networks actually learn, you are fundamentally crippled when debugging performance issues, diagnosing training instabilities, or effectively tuning hyperparameters. You might grasp the concept of layers and activation functions, but the iterative process of optimization, the role of gradients, and the nuances of weight updates remain abstract. This superficial understanding leads to endless frustration when models refuse to converge, exhibit vanishing/exploding gradients, or generalize poorly despite high training accuracy. You become an operator, not an engineer, unable to diagnose why a ResNet-50 might plateau at 70% accuracy on CIFAR-10 when it should hit 90%+. This isn't just academic; it directly impacts project timelines, resource allocation, and ultimately, the success of your ML initiatives. The abstraction provided by high-level libraries like Keras (part of TensorFlow 2.15.0) or PyTorch Lightning (version 2.2.1) is a double-edged sword: it lowers the entry barrier but often prevents the deep comprehension necessary for production-grade machine learning. Relying solely on these abstractions without peering under the hood means you're flying blind when things go wrong, and in deep learning, things <em>will</em> go wrong.</p>
@@ -428,7 +418,6 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
 <li><strong>Read the Deep Learning Bible:</strong> Devote time to "Deep Learning" by Goodfellow, Bengio, and Courville, specifically Chapters 4 (Numerical Computation), 5 (Machine Learning Basics), and 8 (Optimization for Training Deep Models). This foundational text provides unparalleled depth and theoretical grounding.</li>
 </ol>
 <p>Mastering these concepts transforms you from an ML user into an ML engineer, capable of tackling complex, real-world problems with confidence and precision.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -452,9 +441,7 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -469,7 +456,6 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -496,7 +482,6 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -519,7 +504,6 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -534,7 +518,6 @@ print(f&quot;Loss after one step: {loss.item():.4f}&quot;)
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

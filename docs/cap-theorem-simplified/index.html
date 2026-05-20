@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/cap-theorem-simplified.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/cap-theorem-simplified/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -176,7 +175,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -184,9 +182,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -216,24 +212,19 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>CAP Theorem Simplified</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">CAP Theorem Simplified</h1>
-
                 
                 <p class="post-lead">The Problem Most Developers Miss Most developers, especially those new to distributed systems, fundamentally misunderstand the CAP theorem.</p>
                 
-
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -255,7 +246,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Most developers, especially those new to distributed systems, fundamentally misunderstand the CAP theorem. They treat it as an academic curiosity, a theoretical constraint that rarely bites in practice. This is a critical error. The problem isn't about choosing two out of three ideal properties; it's about acknowledging that <strong>Partition Tolerance (P) is a non-negotiable reality</strong> in any non-trivial distributed system. Networks <em>will</em> fail. Nodes <em>will</em> become isolated. Data centers <em>will</em> experience brownouts. When these partitions occur, you are left with an unavoidable choice between <strong>Consistency (C)</strong> and <strong>Availability (A)</strong>. The illusion of a perfect network, where nodes always communicate reliably, leads to designs that look great on a whiteboard but collapse under the first real-world network glitch. I’ve seen countless systems built on the implicit assumption of CA (Consistency and Availability without Partition Tolerance) only to face catastrophic outages when a rack switch failed, or a cross-datacenter link dropped. This isn't theoretical; it's the cost of production reality. Ignoring P means building a house on quicksand. The theorem forces you to confront this ugly truth upfront, not during a 3 AM pager storm.</p>
@@ -458,7 +448,6 @@ func main() {
 </ul>
 <h2 id="when-not-to-use-this-approach">When Not to Use This Approach</h2>
 <p>The "approach</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -482,13 +471,11 @@ func main() {
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -509,9 +496,7 @@ func main() {
                 </p>
                 
             </div>
-
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -534,7 +519,6 @@ func main() {
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -549,7 +533,6 @@ func main() {
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/choose-postgresql-in-2026-5-benchmarks.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/choose-postgresql-in-2026-5-benchmarks/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -190,7 +189,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -198,9 +196,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -230,21 +226,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Choose PostgreSQL in 2026: 5 benchmarks</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Choose PostgreSQL in 2026: 5 benchmarks</h1>
-
                 
                 <p class="post-lead">Run analytics workloads 4.4x faster with PostgreSQL 16.1 vs MySQL 8.0.36 — connection pooling, BRIN indexes, and the exact Docker stack used in 8 production migrations</p>
                 
-
                 
                 <div class="tags">
                     
@@ -269,7 +261,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -291,7 +282,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>A colleague asked me about this last week and I realised I couldn't explain it cleanly. Writing this post forced me to think it through properly — which is usually how it goes.</p>
 <p>I first had to pick between PostgreSQL and MySQL in 2019 for a payments API handling 120 req/s. Six years and eight production migrations later, I still come back to PostgreSQL every time—even when the team leans toward MySQL. The reason isn’t dogma; it’s that every time I tried to make MySQL work for a shape of data that keeps evolving, the cost of refactoring the schema, tuning the engine, or rewriting queries exceeded the cost of switching to PostgreSQL. MySQL’s simplicity is a feature, but that simplicity breaks when your product outgrows it. PostgreSQL’s cost of ownership flattens as your data grows. I’d rather pay a small premium in day-one setup than rewrite the entire data layer at 3 a.m. because the query planner started guessing wrong.</p>
@@ -736,7 +726,6 @@ cd pg-vs-mysql-2026
 <p>Start with <code>pg_stat_statements</code>, <code>pg_partman</code> for time-based partitioning, and <code>pg_cron</code> for scheduled jobs. If you need vector search, <code>pgvector</code> is already in our stack. On ARM hosts, <code>pg_qualstats</code> can help you spot index selectivity problems early.</p>
 <p><strong>How do I monitor disk usage and autovacuum?</strong></p>
 <p>Expose the <code>pg_stat_database</code> view in your metrics endpoint. Track <code>n_dead_tup</code>; if it grows above 20 % of <code>n_live_tup</code>, schedule a manual <code>VACUUM</code> or increase <code>autovacuum_vacuum_scale_factor</code>. In one incident the <code>n_dead_tup</code> grew to 60 % of live rows because autovacuum was throttled by a low <code>maintenance_work_mem</code>. Increasing <code>maintenance_work_mem</code> from 64 MB to 256 MB fixed the lag within one hour.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -760,9 +749,7 @@ cd pg-vs-mysql-2026
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -777,7 +764,6 @@ cd pg-vs-mysql-2026
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -804,7 +790,6 @@ cd pg-vs-mysql-2026
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -827,7 +812,6 @@ cd pg-vs-mysql-2026
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -842,7 +826,6 @@ cd pg-vs-mysql-2026
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/ai-finance.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/ai-finance/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -191,7 +190,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -199,9 +197,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -231,21 +227,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>AI Finance</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">AI Finance</h1>
-
                 
                 <p class="post-lead">AI finance tools analyze data, predict stock prices</p>
                 
-
                 
                 <div class="tags">
                     
@@ -270,7 +262,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -292,7 +283,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <h2 id="the-problem-most-developers-miss">The Problem Most Developers Miss</h2>
 <p>Developers often overlook the complexity of integrating AI into personal finance applications. A typical example is using machine learning libraries like scikit-learn 1.2.0 to predict stock prices, but neglecting to consider the impact of market volatility on model accuracy. For instance, a model trained on historical data may not perform well during times of high market stress, resulting in inaccurate predictions. To address this, developers can use techniques like walk-forward optimization to evaluate model performance on out-of-sample data.</p>
@@ -461,7 +451,6 @@ def normalize_scientific_notation(text):
 - Investment allocation shifted from 80% equities to a dynamic 60/30/10 (stocks/bonds/cash) model using risk-scoring from <strong>yfinance + volatility-adjusted Sharpe ratios</strong>. Portfolio return improved to +9.4% (vs. S&amp;P 500’s +6.8%) in H2 2023.<br />
 - Time spent on financial management dropped from 5–7 hours/month to 45 minutes, primarily for review.</p>
 <p>The AI model predicted a 23% income dip in Q4 due to contract churn, prompting Alex to secure two retainers early, mitigating the drop to 11%. The system’s mean forecasting error was 8.3%, with a 95% confidence interval validated via walk-forward analysis. Total cost: $200 in API fees and 40 hours of initial setup. ROI was evident within five months through tax savings and reduced overspending. This case underscores that AI in personal finance isn’t about replacing judgment—it’s about augmenting it with timely, data-driven context.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -485,13 +474,11 @@ def normalize_scientific_notation(text):
     </script>
 </div>
             </div>
-
             
             <div class="affiliate-disclaimer">
                 <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
             </div>
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -512,7 +499,6 @@ def normalize_scientific_notation(text):
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -539,7 +525,6 @@ def normalize_scientific_notation(text):
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -562,7 +547,6 @@ def normalize_scientific_notation(text):
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -577,7 +561,6 @@ def normalize_scientific_notation(text):
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;

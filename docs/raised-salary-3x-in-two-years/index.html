@@ -25,7 +25,6 @@
     <meta name="twitter:image" content="https://kubaik.github.io/static/images/raised-salary-3x-in-two-years.jpg">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="canonical" href="https://kubaik.github.io/raised-salary-3x-in-two-years/">
-    <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -192,7 +191,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tech Blog">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
-    <!-- Reading-progress bar (reduces bounce rate, increases dwell time) -->
     <style>
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -200,9 +198,7 @@
             z-index: 9999; transition: width 0.1s linear;
         }
         .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        /* Table overflow on mobile */
         .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        /* Inline ad spacing */
         .ad-inline { margin: 2rem 0; text-align: center; }
     </style>
 </head>
@@ -232,21 +228,17 @@
         </div>
     </header>
     <main class="container">
-
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
             <span>Raised salary 3x in two years</span>
         </nav>
-
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">Raised salary 3x in two years</h1>
-
                 
                 <p class="post-lead">Raised salary from $2,800 to $8,400 in two years by shifting from hourly coding to fixed-scope fractional CTO contracts, cutting latency from 210 ms to 48 ms, and using Neon Postgres and Fly.io to cut AWS costs 78 %. For engineers who want to price like a team, not an individual.</p>
                 
-
                 
                 <div class="tags">
                     
@@ -271,7 +263,6 @@
                 </div>
                 
             </header>
-
             <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
@@ -293,7 +284,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="post-content" itemprop="articleBody">
                 <p>This is a topic where the standard advice is technically correct but practically misleading. Here's the fuller picture, based on what I've seen work at scale.</p>
 <p>In March 2022 I was billing $2,800 per month for a single client in Nairobi. By June 2024 my highest invoice read $8,400 to a US-based SaaS. Between those dates I didn’t win 10 new clients; I raised rates with the same three accounts and added two more at $5,200 each. The jump wasn’t magic—it was a deliberate sequence of role changes, pricing experiments, and infrastructure bets that most freelancers skip because the steps feel too small or too scary. Below is the exact playbook I followed, the tools I used, the numbers that moved, and the one mistake I made that cost me $1,100 in back pay.</p>
@@ -412,7 +402,6 @@ Scope creep happened in month 4 with the mar-tech client. They wanted a real-tim
 <p><strong>How do you handle time zones when clients are in different cities?</strong>
 I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates for everything else. I also set a “do not disturb” on Slack from 9 pm–7 am Nairobi time. The only exception is PagerDuty for critical alerts—clients get my phone number only for Sev-1 outages.</p>
 <p><strong>Next step:</strong> Clone the Grafana dashboard I used, set up the SLA alerts, and run a 14-day test with a client you already have. Measure latency before and after, then send the client a one-page report. If the numbers improve, propose a fixed-scope engagement at 1.5× your current rate.</p>
-                <!-- INLINE AD: in-content ads have 2-3x higher CTR than header/footer -->
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -436,9 +425,7 @@ I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates 
     </script>
 </div>
             </div>
-
             
-
             <div class="content-policy-footer" style="
                 margin-top: 3rem; padding-top: 1.5rem;
                 border-top: 1px solid #e0e0e0; font-size: 0.8rem;
@@ -453,7 +440,6 @@ I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates 
                 </p>
                 
             </div>
-
             
             <section class="related-posts">
                 <h2>Related Articles</h2>
@@ -480,7 +466,6 @@ I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates 
                 </div>
             </section>
             
-
         </article>
     </main>
     <div class="ad-footer" style="text-align: center; margin: 20px 0;">
@@ -503,7 +488,6 @@ I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates 
     </footer>
     <script src="/static/navigation.js"></script>
     <script defer src="/static/pwa.js"></script>
-    <!-- Reading progress bar -->
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -518,7 +502,6 @@ I batch my US hours into a 3-hour block (2 pm–5 pm EST) and use async updates 
         update();
     })();
     </script>
-    <!-- Lazy-load images: improves LCP (Core Web Vitals) -->
     <script>
     (function(){
         if (!('loading' in HTMLImageElement.prototype)) return;
