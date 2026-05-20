@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 21:46:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 22:50:36 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSocket, SSE, polling costs</title>
+      <link>https://kubaik.github.io/compare-websocket-sse-polling-costs/</link>
+      <description>Pick the fastest, cheapest real-time pattern in minutes — median latency and cost figures for WebSocket vs SSE vs long polling in 2026</description>
+      <pubDate>Wed, 20 May 2026 22:50:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websocket-sse-polling-costs/</guid>
+    </item>
     <item>
       <title>Freelance burnout: the systems failure</title>
       <link>https://kubaik.github.io/freelance-burnout-the-systems-failure/</link>
@@ -138,13 +145,6 @@
       <description>Cut first-month AWS bills 40% with AI-generated stacks — real latency, cost, and chaos-test results from 10 tools tested by a solo founder in 2026.</description>
       <pubDate>Wed, 20 May 2026 09:10:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coded-products-how-non-traditional-devs-shipped-real-code/</guid>
-    </item>
-    <item>
-      <title>Message queues: the 80% rule you need</title>
-      <link>https://kubaik.github.io/message-queues-the-80-rule-you-need/</link>
-      <description>Cut API bottleneck 70% with message queues — real latency, cost, and failure data from 2026 systems. Learn when to queue and when to dump the queue entirely.</description>
-      <pubDate>Wed, 20 May 2026 08:46:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-the-80-rule-you-need/</guid>
     </item>
   </channel>
 </rss>
