@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 08:41:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 08:44:01 +0000</lastBuildDate>
+    <item>
+      <title>Show GitHub alone won’t land you a remote job</title>
+      <link>https://kubaik.github.io/show-github-alone-wont-land-you-a-remote-job/</link>
+      <description>Portfolio beats pedigree for remote jobs — cut rejection rates with incident reports, load tests, and postmortems from real 2026 systems. Proven artifacts that get you hired.</description>
+      <pubDate>Wed, 20 May 2026 08:43:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-github-alone-wont-land-you-a-remote-job/</guid>
+    </item>
     <item>
       <title>Why MCP servers power real AI apps</title>
       <link>https://kubaik.github.io/why-mcp-servers-power-real-ai-apps/</link>
@@ -138,13 +145,6 @@
       <description>Save $2k/month on API costs with edge functions — real latency and cost data for Cloudflare Workers vs Vercel Edge in 2026, plus the mistakes most teams make.</description>
       <pubDate>Tue, 19 May 2026 19:28:12 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-in-2026-save-or-hemorrhage-cash/</guid>
-    </item>
-    <item>
-      <title>AI skills vs frameworks: what boosts salaries</title>
-      <link>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</link>
-      <description>In 2026, AI salaries hinge on core skills vs tool mastery. Learn which expertise pays more, from foundational ML to frameworks like Hugging Face and TensorFlow.</description>
-      <pubDate>Tue, 19 May 2026 19:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</guid>
     </item>
   </channel>
 </rss>
