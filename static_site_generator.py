@@ -1189,7 +1189,7 @@ def _build_templates() -> dict:
                 rt.textContent = post.reading_time + ' min read';
                 a.appendChild(rt);
             }
-            var tags = post.tags || [];
+            var tags = (post.tags || []).filter(function(t) { return t && t.trim(); });
             if (tags.length) {
                 var div       = document.createElement('div');
                 div.className = 'tags';
@@ -1208,10 +1208,12 @@ def _build_templates() -> dict:
         }
 
         function loadNextPage() {
+            if (isLoading) return;
             isLoading = true;
+            var batchStart = loadedCount;
             if (loadingSpinner) loadingSpinner.style.display = 'flex';
             setTimeout(function () {
-                var slice    = fullPosts.slice(loadedCount, loadedCount + PAGE_SIZE);
+                var slice    = fullPosts.slice(batchStart, batchStart + PAGE_SIZE);
                 var fragment = document.createDocumentFragment();
                 var newCards = [];
                 slice.forEach(function (post) {
@@ -1221,7 +1223,7 @@ def _build_templates() -> dict:
                     newCards.push(card);
                 });
                 postsContainer.appendChild(fragment);
-                loadedCount += slice.length;
+                loadedCount = batchStart + slice.length;
                 requestAnimationFrame(function () {
                     requestAnimationFrame(function () {
                         newCards.forEach(function (el, i) {
@@ -1240,7 +1242,7 @@ def _build_templates() -> dict:
             .then(function (posts) {
                 fullPosts = posts;
                 jsonReady = true;
-                if (loadedCount < fullPosts.length) startObserver();
+                if (loadedCount < fullPosts.length) {requestAnimationFrame(function () { startObserver(); });}
                 if (searchMode && searchInput && searchInput.value.trim()) runSearch(searchInput.value.trim());
             })
             .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
@@ -1343,6 +1345,7 @@ def _build_templates() -> dict:
 
         function clearSearch() {
             searchMode = false;
+            stopObserver();
             domIndex.forEach(function (item) {
                 item.element.style.display = '';
                 var h3      = item.element.querySelector('h3');
@@ -1361,7 +1364,9 @@ def _build_templates() -> dict:
             var old = document.getElementById('no-results-msg');
             if (old) old.remove();
             if (resultsCount) resultsCount.textContent = '';
-            if (jsonReady && loadedCount < fullPosts.length) startObserver();
+            if (jsonReady && loadedCount < fullPosts.length) {
+                requestAnimationFrame(function () { startObserver(); });
+            }
         }
 
         if (postsContainer) {
