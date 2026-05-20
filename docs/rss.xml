@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 11:39:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 08:41:01 +0000</lastBuildDate>
+    <item>
+      <title>Why MCP servers power real AI apps</title>
+      <link>https://kubaik.github.io/why-mcp-servers-power-real-ai-apps/</link>
+      <description>Cut LLM costs 63% with MCP servers — real latency, Redis caching, and the mistakes teams repeat</description>
+      <pubDate>Wed, 20 May 2026 08:40:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-mcp-servers-power-real-ai-apps/</guid>
+    </item>
     <item>
       <title>Compare WebSockets, SSE, and polling in practice</title>
       <link>https://kubaik.github.io/compare-websockets-sse-and-polling-in-practice/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, AI salaries hinge on core skills vs tool mastery. Learn which expertise pays more, from foundational ML to frameworks like Hugging Face and TensorFlow.</description>
       <pubDate>Tue, 19 May 2026 19:24:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-vs-frameworks-what-boosts-salaries/</guid>
-    </item>
-    <item>
-      <title>Nairobi &amp; Lagos devs score $4k remote roles</title>
-      <link>https://kubaik.github.io/nairobi-lagos-devs-score-4k-remote-roles/</link>
-      <description>Land $4k/month remote jobs as a developer in Nairobi or Lagos. Strategy guide: GitHub upgrades, interview prep, and payment tools for global roles.</description>
-      <pubDate>Tue, 19 May 2026 18:57:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/nairobi-lagos-devs-score-4k-remote-roles/</guid>
     </item>
   </channel>
 </rss>
