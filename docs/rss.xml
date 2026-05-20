@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 13:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 13:34:45 +0000</lastBuildDate>
+    <item>
+      <title>Build backend for 5G users: latency traps revealed</title>
+      <link>https://kubaik.github.io/build-backend-for-5g-users-latency-traps-revealed/</link>
+      <description>Cut API response time 60% under 5G tower handovers with dynamic Redis pools — latency traps, pool sizing, and cost savings you missed</description>
+      <pubDate>Wed, 20 May 2026 13:34:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-backend-for-5g-users-latency-traps-revealed/</guid>
+    </item>
     <item>
       <title>That $50k over-engineering bill we paid</title>
       <link>https://kubaik.github.io/that-50k-over-engineering-bill-we-paid/</link>
@@ -138,13 +145,6 @@
       <description>Set freelance developer rates that pay in 2026 — concrete numbers, real client budgets, and the spreadsheet that saved me $12k.</description>
       <pubDate>Tue, 19 May 2026 23:38:05 +0000</pubDate>
       <guid>https://kubaik.github.io/what-to-charge-in-2026-freelance-dev-rates/</guid>
-    </item>
-    <item>
-      <title>Avoid multi-tenant traps: schema per tenant</title>
-      <link>https://kubaik.github.io/avoid-multi-tenant-traps-schema-per-tenant/</link>
-      <description>Cut multi-tenant database costs 75% with schema-per-tenant — real latency, cost, and scale numbers from 2026 SaaS systems.</description>
-      <pubDate>Tue, 19 May 2026 22:10:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-multi-tenant-traps-schema-per-tenant/</guid>
     </item>
   </channel>
 </rss>
