@@ -15,5 +15,6 @@
   "Burnout as a freelance developer: what helped me recover",
   "5G and mobile-first backends: what changes when your users are always on cellular",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "Database connection pooling: the setting everyone gets wrong"
 ]

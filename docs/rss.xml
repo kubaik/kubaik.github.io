@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 09:54:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 06:59:18 +0000</lastBuildDate>
+    <item>
+      <title>Fix database pools: common timeout flaw</title>
+      <link>https://kubaik.github.io/fix-database-pools-common-timeout-flaw/</link>
+      <description>Optimize database connection pooling settings to cut costs and boost performance. Learn why small pools and longer timeouts outperform outdated advice.</description>
+      <pubDate>Wed, 20 May 2026 06:59:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-database-pools-common-timeout-flaw/</guid>
+    </item>
     <item>
       <title>5 ways RAG pipelines collapse in prod</title>
       <link>https://kubaik.github.io/5-ways-rag-pipelines-collapse-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server latency 60% and reduce memory leaks with bounded pools, circuit breakers, and Prometheus metrics — real numbers from a 2026 production deployment</description>
       <pubDate>Tue, 19 May 2026 18:24:57 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-the-silent-layer-youre-already-using/</guid>
-    </item>
-    <item>
-      <title>No degree? Here’s how to reach senior</title>
-      <link>https://kubaik.github.io/no-degree-heres-how-to-reach-senior/</link>
-      <description>Reach senior engineer without a CS degree in 2 years by shipping real systems. Learn what actually works in 2026 — connection pools, cache stampedes, and the systems you must own.</description>
-      <pubDate>Tue, 19 May 2026 18:16:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-degree-heres-how-to-reach-senior/</guid>
     </item>
   </channel>
 </rss>
