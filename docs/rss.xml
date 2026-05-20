@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2026 19:17:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 21:19:03 +0000</lastBuildDate>
+    <item>
+      <title>Vector Search in Postgres vs Specialized DBs</title>
+      <link>https://kubaik.github.io/vector-search-in-postgres-vs-specialized-dbs/</link>
+      <description>Cut vector search latency 90% when moving from Postgres pgvector 0.7.0 to Qdrant 1.9.0 — real p99 measurements, cost data, and the exact moment teams should switch.</description>
+      <pubDate>Wed, 20 May 2026 21:18:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-search-in-postgres-vs-specialized-dbs/</guid>
+    </item>
     <item>
       <title>Remote salary hacks for lower-cost countries</title>
       <link>https://kubaik.github.io/remote-salary-hacks-for-lower-cost-countries/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 75% with SSE instead of WebSocket — latency, CPU, and $/month numbers from 10 k users on a $12 droplet in 2026</description>
       <pubDate>Wed, 20 May 2026 07:55:57 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-and-polling-in-practice/</guid>
-    </item>
-    <item>
-      <title>Repository AI: when context gets real</title>
-      <link>https://kubaik.github.io/repository-ai-when-context-gets-real/</link>
-      <description>Repository AI cuts review cycles 35% by feeding LLMs the whole code graph instead of one file at a time. Learn the toolchain, benchmarks, and the one setup that works in a weekend.</description>
-      <pubDate>Wed, 20 May 2026 07:38:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/repository-ai-when-context-gets-real/</guid>
     </item>
   </channel>
 </rss>
