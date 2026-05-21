@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 22:52:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 22:56:22 +0000</lastBuildDate>
+    <item>
+      <title>Local LLMs on a laptop: the real stack</title>
+      <link>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</link>
+      <description>Cut local LLM latency from 12 s to 1.8 s with the stack that actually works in 2026 — Rust tokenizers, vLLM, and pre-warmed inference. Real benchmarks and code.</description>
+      <pubDate>Thu, 21 May 2026 22:56:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</guid>
+    </item>
     <item>
       <title>Trace LLM pipelines end-to-end with OpenTelemetry</title>
       <link>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 37% without adding latency—ARM Graviton3, schema serialization, and structured logging wins with hard numbers and code.</description>
       <pubDate>Thu, 21 May 2026 10:56:30 +0000</pubDate>
       <guid>https://kubaik.github.io/37-less-cloud-carbon-same-99th-percentile/</guid>
-    </item>
-    <item>
-      <title>Which realtime tool fits your case</title>
-      <link>https://kubaik.github.io/which-realtime-tool-fits-your-case/</link>
-      <description>Choose between WebSockets, SSE, and long polling in 2026 with real latency, cost, and code metrics. Find the right tool for your use case in under 30 minutes.</description>
-      <pubDate>Thu, 21 May 2026 10:34:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-realtime-tool-fits-your-case/</guid>
     </item>
   </channel>
 </rss>
