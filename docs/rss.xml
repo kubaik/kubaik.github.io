@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 16:54:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 17:15:11 +0000</lastBuildDate>
+    <item>
+      <title>LeetCode won’t land you remote dev jobs</title>
+      <link>https://kubaik.github.io/leetcode-wont-land-you-remote-dev-jobs/</link>
+      <description>Ship a real service to pass remote tech interviews — the self-taught guide with Go, Redis, and Fly.io examples. 5 concrete steps and real latency numbers.</description>
+      <pubDate>Thu, 21 May 2026 17:14:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/leetcode-wont-land-you-remote-dev-jobs/</guid>
+    </item>
     <item>
       <title>AI coding: 5 stacks shipping today</title>
       <link>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</link>
@@ -138,13 +145,6 @@
       <description>Reduce LLM costs 40% and latency 79% with MCP servers — the open protocol turning ad-hoc API calls into a managed backend service that every developer should understand.</description>
       <pubDate>Thu, 21 May 2026 05:25:39 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-silent-infrastructure-for-ai-scaling/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for small teams: skip the bloat</title>
-      <link>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-bloat/</link>
-      <description>Cut $15k/year on zero-trust hype with a 4-hour session policy and hardware-backed MFA — real-world benchmarks and the threat budget model small teams actually need.</description>
-      <pubDate>Thu, 21 May 2026 02:32:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-bloat/</guid>
     </item>
   </channel>
 </rss>
