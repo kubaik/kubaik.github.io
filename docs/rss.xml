@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 11:58:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 09:02:28 +0000</lastBuildDate>
+    <item>
+      <title>Why live demos lie about production</title>
+      <link>https://kubaik.github.io/why-live-demos-lie-about-production/</link>
+      <description>Cut API response time 78% by bounding LLM connection pools — the silent socket leak most vibe-coded services miss</description>
+      <pubDate>Thu, 21 May 2026 09:02:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-live-demos-lie-about-production/</guid>
+    </item>
     <item>
       <title>AI pipelines: the cache you forgot to warm</title>
       <link>https://kubaik.github.io/ai-pipelines-the-cache-you-forgot-to-warm/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio trap: 99% of remote devs get it wrong — learn the 2026 hiring signals that actually matter and skip the polished-demo trap with real failure artifacts and load tests.</description>
       <pubDate>Wed, 20 May 2026 16:50:39 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-trap-99-of-remote-devs-get-it-wrong/</guid>
-    </item>
-    <item>
-      <title>32% less cloud carbon, same API speed</title>
-      <link>https://kubaik.github.io/32-less-cloud-carbon-same-api-speed/</link>
-      <description>Cut AWS cloud carbon 32% per request without increasing p95 latency above 80 ms — payload pruning, Node.js JIT, and Graviton3 flags that saved $620/month.</description>
-      <pubDate>Wed, 20 May 2026 16:42:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/32-less-cloud-carbon-same-api-speed/</guid>
     </item>
   </channel>
 </rss>
