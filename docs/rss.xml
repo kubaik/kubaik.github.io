@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 19:35:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 20:50:50 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers demystified for devs</title>
+      <link>https://kubaik.github.io/mcp-servers-demystified-for-devs/</link>
+      <description>M) with a 5% CPU utilization. - Cost: Runn with MCP servers you — implement a microservice architecture, you&apos;ve likel.</description>
+      <pubDate>Thu, 21 May 2026 20:50:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-demystified-for-devs/</guid>
+    </item>
     <item>
       <title>Tune your pool size: the one database setting you&apos;re</title>
       <link>https://kubaik.github.io/tune-your-pool-size-the-one-database-setting-youre/</link>
@@ -138,13 +145,6 @@
       <description>leave for 20% more stock. They leave becaus with senior devs quit tech — told me: “We paid them €120k base, €40k bonus, and.</description>
       <pubDate>Thu, 21 May 2026 09:16:19 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-when-on-call-sucks/</guid>
-    </item>
-    <item>
-      <title>Why live demos lie about production</title>
-      <link>https://kubaik.github.io/why-live-demos-lie-about-production/</link>
-      <description>Cut API response time 78% by bounding LLM connection pools — the silent socket leak most vibe-coded services miss</description>
-      <pubDate>Thu, 21 May 2026 09:02:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-live-demos-lie-about-production/</guid>
     </item>
   </channel>
 </rss>
