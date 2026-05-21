@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 21:13:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 21:21:56 +0000</lastBuildDate>
+    <item>
+      <title>AI salary boosters: transformers vs vector DBs in 2026</title>
+      <link>https://kubaik.github.io/ai-salary-boosters-transformers-vs-vector-dbs-in-2026/</link>
+      <description>In 2026, fine-tuning transformers pays 9–13 % more than running vector DBs, but only if the AI is the product. See latency, cost, and hiring data for both stacks.</description>
+      <pubDate>Thu, 21 May 2026 21:21:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-boosters-transformers-vs-vector-dbs-in-2026/</guid>
+    </item>
     <item>
       <title>Senior without CS: How I shipped my way up</title>
       <link>https://kubaik.github.io/senior-without-cs-how-i-shipped-my-way-up/</link>
@@ -138,13 +145,6 @@
       <description>Cut queue latency 70% with real benchmarks — RabbitMQ 3.13 vs Kafka 3.7 vs Redis Streams 7.2. Includes failure modes, code samples, and a 30-minute fix checklist.</description>
       <pubDate>Thu, 21 May 2026 09:38:13 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-30ms-vs-3s-failures/</guid>
-    </item>
-    <item>
-      <title>Cache before queries: why AI systems stall</title>
-      <link>https://kubaik.github.io/cache-before-queries-why-ai-systems-stall/</link>
-      <description>Cut AI API response time 97% with a three-layer cache — bloom filter, sharded Redis, and event-driven pre-warm. Benchmarks, code, and failure modes from a live 2026 system.</description>
-      <pubDate>Thu, 21 May 2026 09:27:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/cache-before-queries-why-ai-systems-stall/</guid>
     </item>
   </channel>
 </rss>
