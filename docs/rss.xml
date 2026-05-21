@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 10:35:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 10:56:42 +0000</lastBuildDate>
+    <item>
+      <title>37% less cloud carbon, same 99th percentile</title>
+      <link>https://kubaik.github.io/37-less-cloud-carbon-same-99th-percentile/</link>
+      <description>Cut cloud carbon 37% without adding latency—ARM Graviton3, schema serialization, and structured logging wins with hard numbers and code.</description>
+      <pubDate>Thu, 21 May 2026 10:56:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/37-less-cloud-carbon-same-99th-percentile/</guid>
+    </item>
     <item>
       <title>Which realtime tool fits your case</title>
       <link>https://kubaik.github.io/which-realtime-tool-fits-your-case/</link>
@@ -138,13 +145,6 @@
       <description>Cut 60% of system failures with message queues — real latency, cost, and failure data from 2026 systems. When to queue, when to skip it, and what breaks first.</description>
       <pubDate>Wed, 20 May 2026 21:27:13 +0000</pubDate>
       <guid>https://kubaik.github.io/dont-queue-this-up-unless-you-have-to/</guid>
-    </item>
-    <item>
-      <title>Freelance rates: the numbers that stuck in 2026</title>
-      <link>https://kubaik.github.io/freelance-rates-the-numbers-that-stuck-in-2026/</link>
-      <description>Freelance developer rates in 2026: actual numbers from 500+ contracts with platform fees, taxes, and scope volatility baked in — calculate your true hourly rate in 30 minutes.</description>
-      <pubDate>Wed, 20 May 2026 21:22:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-the-numbers-that-stuck-in-2026/</guid>
     </item>
   </channel>
 </rss>
