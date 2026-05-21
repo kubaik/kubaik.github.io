@@ -5,8 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K8S Articles — Tech Blog</title>
   <meta name="description" content="All articles tagged K8S on Tech Blog. Practical guides for developers.">
+  <!-- PATCH: noindex thin tag pages (<5 posts) to avoid AdSense thin-content flags -->
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://kubaik.github.io/tag/k8s/">
   <link rel="stylesheet" href="/static/style.css">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="K8S Articles — Tech Blog">
+  <meta property="og:description" content="All articles tagged K8S on Tech Blog.">
+  <meta property="og:url" content="https://kubaik.github.io/tag/k8s/">
+  <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"K8S Articles","url":"https://kubaik.github.io/tag/k8s/",
@@ -16,13 +24,17 @@
 <body>
   <header><div class="container">
     <h1><a href="/">Tech Blog</a></h1>
-    <nav><a href="/">Home</a><a href="/about/">About</a></nav>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
   </div></header>
   <main class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a> <span>›</span>
-      <a href="/tag/">Tags</a> <span>›</span>
-      <span>K8S</span>
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">K8S</span>
     </nav>
     <h2>20 articles tagged <em>K8S</em></h2>
     <div class="post-grid">
@@ -132,5 +144,7 @@
   <footer><div class="container">
     <p>&copy; 2026 Tech Blog</p>
   </div></footer>
+  <!-- PATCH: GDPR consent banner required for AdSense with EU traffic -->
+  <script defer src="/static/consent.js"></script>
 </body>
 </html>

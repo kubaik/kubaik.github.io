@@ -600,6 +600,7 @@ Sitemap: {base_url}/rss.xml
         site_name = config.get('site_name', 'Tech Blog')
         current_year = datetime.now().year
 
+        # Build tag → posts map
         tag_map: Dict[str, List[BlogPost]] = {}
         for post in posts:
             for tag in post.tags:
@@ -608,6 +609,7 @@ Sitemap: {base_url}/rss.xml
                     continue
                 tag_map.setdefault(clean, []).append(post)
 
+        # Only generate pages for tags with ≥ 2 posts (thin tag pages hurt SEO)
         qualifying = {t: ps for t, ps in tag_map.items() if len(ps) >= 2}
         if not qualifying:
             return
@@ -620,6 +622,13 @@ Sitemap: {base_url}/rss.xml
             tag_dir = tags_dir / tag_slug
             tag_dir.mkdir(exist_ok=True)
 
+            # ── PATCH: noindex thin tag pages to avoid low-value-content flags ──
+            # Tag pages with < 5 posts are thin content. AdSense reviewers will
+            # flag them. noindex keeps them out of Google's quality scoring while
+            # still allowing crawlers to follow the internal links.
+            robots_directive = "index, follow" if len(
+                tag_posts) >= 5 else "noindex, follow"
+
             posts_data = []
             for p in sorted(tag_posts, key=lambda x: x.created_at, reverse=True):
                 d = p.to_dict()
@@ -631,6 +640,10 @@ Sitemap: {base_url}/rss.xml
                 posts_data.append(d)
 
             tag_title = tag.title()
+
+            # ── PATCH: og:image uses real fallback, not a per-slug path ──────────
+            og_image = f"{base_url}/static/og-default.png"
+
             html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -638,8 +651,16 @@ Sitemap: {base_url}/rss.xml
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{tag_title} Articles — {site_name}</title>
   <meta name="description" content="All articles tagged {tag_title} on {site_name}. Practical guides for developers.">
+  <!-- PATCH: noindex thin tag pages (<5 posts) to avoid AdSense thin-content flags -->
+  <meta name="robots" content="{robots_directive}">
   <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
   <link rel="stylesheet" href="{base_path}/static/style.css">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{tag_title} Articles — {site_name}">
+  <meta property="og:description" content="All articles tagged {tag_title} on {site_name}.">
+  <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
+  <meta property="og:image" content="{og_image}">
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"CollectionPage",
     "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
@@ -649,13 +670,17 @@ Sitemap: {base_url}/rss.xml
 <body>
   <header><div class="container">
     <h1><a href="{base_path}/">{site_name}</a></h1>
-    <nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
+    <nav>
+      <a href="{base_path}/">Home</a>
+      <a href="{base_path}/about/">About</a>
+      <a href="{base_path}/contact/">Contact</a>
+    </nav>
   </div></header>
   <main class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{base_path}/">Home</a> <span>›</span>
-      <a href="{base_path}/tag/">Tags</a> <span>›</span>
-      <span>{tag_title}</span>
+      <a href="{base_path}/">Home</a> <span aria-hidden="true">›</span>
+      <a href="{base_path}/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">{tag_title}</span>
     </nav>
     <h2>{len(tag_posts)} article{"s" if len(tag_posts) != 1 else ""} tagged <em>{tag_title}</em></h2>
     <div class="post-grid">
@@ -670,11 +695,18 @@ Sitemap: {base_url}/rss.xml
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
+  <!-- PATCH: GDPR consent banner required for AdSense with EU traffic -->
+  <script defer src="{base_path}/static/consent.js"></script>
 </body>
 </html>'''
+
             with open(tag_dir / "index.html", 'w', encoding='utf-8') as f:
                 f.write(html)
 
+        # ── Generate tags index page ──────────────────────────────────────────
+        # The index page (/tag/) lists all tags. Always noindex — it's a
+        # navigation page, not a content page, and AdSense reviewers
+        # should not evaluate it as a content sample.
         all_tags_html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -682,20 +714,30 @@ Sitemap: {base_url}/rss.xml
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Topics — {site_name}</title>
   <meta name="description" content="Browse all topics covered on {site_name}.">
+  <!-- Tag index is a navigation page, not a content page — noindex it -->
+  <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="{base_url}/tag/">
   <link rel="stylesheet" href="{base_path}/static/style.css">
 </head>
 <body>
   <header><div class="container">
     <h1><a href="{base_path}/">{site_name}</a></h1>
-    <nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
+    <nav>
+      <a href="{base_path}/">Home</a>
+      <a href="{base_path}/about/">About</a>
+      <a href="{base_path}/contact/">Contact</a>
+    </nav>
   </div></header>
   <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{base_path}/">Home</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Topics</span>
+    </nav>
     <h2>All Topics</h2>
-    <p>{len(qualifying)} topics, {len(posts)} total articles</p>
+    <p>{len(qualifying)} topics across {len(posts)} articles</p>
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
 ''' + ''.join(
-            f'<a href="{base_path}/tag/{t.replace(" ","-")}/" '
+            f'<a href="{base_path}/tag/{t.replace(" ", "-")}/" '
             f'style="background:#f0f4ff;border:1px solid #6366f1;border-radius:20px;'
             f'padding:0.4rem 1rem;text-decoration:none;color:#333;font-size:0.9rem;">'
             f'{t.title()} ({len(ps)})</a>'
@@ -706,12 +748,19 @@ Sitemap: {base_url}/rss.xml
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
+  <script defer src="{base_path}/static/consent.js"></script>
 </body>
 </html>'''
+
         with open(tags_dir / "index.html", 'w', encoding='utf-8') as f:
             f.write(all_tags_html)
 
-        print(f"Generated {len(qualifying)} tag pages + /tag/ index")
+        indexed_count = sum(1 for ps in qualifying.values() if len(ps) >= 5)
+        noindex_count = sum(1 for ps in qualifying.values() if len(ps) < 5)
+        print(
+            f"Generated {len(qualifying)} tag pages + /tag/ index "
+            f"({indexed_count} indexed, {noindex_count} noindexed as thin)"
+        )
 
     def _generate_rss_feed(self, posts: List[BlogPost]):
         config = self.blog_system.config
