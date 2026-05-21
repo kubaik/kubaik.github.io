@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 13:54:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 13:59:03 +0000</lastBuildDate>
+    <item>
+      <title>pgvector beats vector DBs in most cases</title>
+      <link>https://kubaik.github.io/pgvector-beats-vector-dbs-in-most-cases/</link>
+      <description>Run semantic search 10x cheaper with PostgreSQL pgvector 0.7.0 — benchmark shows when a dedicated vector database only adds cost and latency.</description>
+      <pubDate>Thu, 21 May 2026 13:58:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/pgvector-beats-vector-dbs-in-most-cases/</guid>
+    </item>
     <item>
       <title>Rewrite mobile backends for 5G: 300ms to 30ms</title>
       <link>https://kubaik.github.io/rewrite-mobile-backends-for-5g-300ms-to-30ms/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-tenant SaaS costs 40% and scale to millions without schema-per-tenant — real examples from Linear, GitLab, Shopify with PostgreSQL 16, pg_partman 5.0, Redis 7.2.</description>
       <pubDate>Wed, 20 May 2026 22:55:36 +0000</pubDate>
       <guid>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</guid>
-    </item>
-    <item>
-      <title>Compare WebSocket, SSE, polling costs</title>
-      <link>https://kubaik.github.io/compare-websocket-sse-polling-costs/</link>
-      <description>Pick the fastest, cheapest real-time pattern in minutes — median latency and cost figures for WebSocket vs SSE vs long polling in 2026</description>
-      <pubDate>Wed, 20 May 2026 22:50:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websocket-sse-polling-costs/</guid>
     </item>
   </channel>
 </rss>
