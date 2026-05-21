@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 23:19:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 23:23:03 +0000</lastBuildDate>
+    <item>
+      <title>60k pay gap: prompt ops vs vector tuning</title>
+      <link>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</link>
+      <description>In 2026, prompt engineering with guardrails pays $152k median, vector search tuning pays $178k—combined skills hit $210k. See the benchmark results and decide which skill to learn first.</description>
+      <pubDate>Thu, 21 May 2026 23:22:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</guid>
+    </item>
     <item>
       <title>Local LLMs on a laptop: the real stack</title>
       <link>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salary 20% higher with Payscale API — average salary data for 10 countries, including Brazil and Mexico.</description>
       <pubDate>Thu, 21 May 2026 13:41:05 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-fair-remote-pay-across-borders/</guid>
-    </item>
-    <item>
-      <title>37% less cloud carbon, same 99th percentile</title>
-      <link>https://kubaik.github.io/37-less-cloud-carbon-same-99th-percentile/</link>
-      <description>Cut cloud carbon 37% without adding latency—ARM Graviton3, schema serialization, and structured logging wins with hard numbers and code.</description>
-      <pubDate>Thu, 21 May 2026 10:56:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/37-less-cloud-carbon-same-99th-percentile/</guid>
     </item>
   </channel>
 </rss>
