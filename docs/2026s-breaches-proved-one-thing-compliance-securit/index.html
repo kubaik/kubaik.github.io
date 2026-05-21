@@ -589,6 +589,12 @@ async def protected_route(token: str = Depends(OAuth2PasswordBearer(tokenUrl=&qu
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
+                    <a class="related-card" href="/multi-tenant-db-dont-lock-yourself-out/">
+                        <h3>Multi-tenant DB: don’t lock yourself out</h3>
+                        <p>Cut tenant isolation costs 40% by starting with separate PostgreSQL databases instead of RLS or schemas — real benchmarks, migration pitfalls, and a Go router you can deploy today</p>
+                        <span class="related-meta">19 min read · 21 May 2026</span>
+                    </a>
+                    
                     <a class="related-card" href="/we-moved-security-left-without-slowing-deploys/">
                         <h3>We moved security left without slowing deploys</h3>
                         <p>We cut PR merge time 31% and critical vulnerabilities 87% by turning security into a measurable signal instead of a gate. Here’s how we instrumented GitHub Actions, Kubernetes, and Prometheus to shift security left without slowing deploys.</p>
@@ -599,12 +605,6 @@ async def protected_route(token: str = Depends(OAuth2PasswordBearer(tokenUrl=&qu
                         <h3>Win $4k remote jobs: Next.js + Supabase stack</h3>
                         <p>Land $4k/month remote jobs using Next.js + Supabase: latency under 50ms, $4.56/month hosting, and the exact stack teams in Nairobi and Lagos use to sign contracts.</p>
                         <span class="related-meta">14 min read · 8 May 2026</span>
-                    </a>
-                    
-                    <a class="related-card" href="/mobile-app-security-flaws-finally-explained/">
-                        <h3>Mobile app security flaws finally explained</h3>
-                        <p>Cut mobile fraud losses by 80% with three concrete steps — hard-coded secrets removed, TLS 1.3 + pinning enabled, and remote attestation added — measured on real apps with benchmarks under 100 ms overhead.</p>
-                        <span class="related-meta">10 min read · 4 May 2026</span>
                     </a>
                     
                 </div>
