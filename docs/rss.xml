@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 22:15:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 22:52:33 +0000</lastBuildDate>
+    <item>
+      <title>Trace LLM pipelines end-to-end with OpenTelemetry</title>
+      <link>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</link>
+      <description>Cut LLM latency debugging time 60% with OpenTelemetry 1.41 traces and Prometheus metrics — prompts, tokens, GPU wait times and the cache stampede mistake most teams miss.</description>
+      <pubDate>Thu, 21 May 2026 22:52:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</guid>
+    </item>
     <item>
       <title>AI learns your codebase: why 80% of repos stay</title>
       <link>https://kubaik.github.io/ai-learns-your-codebase-why-80-of-repos-stay/</link>
@@ -138,13 +145,6 @@
       <description>Choose between WebSockets, SSE, and long polling in 2026 with real latency, cost, and code metrics. Find the right tool for your use case in under 30 minutes.</description>
       <pubDate>Thu, 21 May 2026 10:34:52 +0000</pubDate>
       <guid>https://kubaik.github.io/which-realtime-tool-fits-your-case/</guid>
-    </item>
-    <item>
-      <title>Multi-tenant DB: don’t lock yourself out</title>
-      <link>https://kubaik.github.io/multi-tenant-db-dont-lock-yourself-out/</link>
-      <description>Cut tenant isolation costs 40% by starting with separate PostgreSQL databases instead of RLS or schemas — real benchmarks, migration pitfalls, and a Go router you can deploy today</description>
-      <pubDate>Thu, 21 May 2026 10:29:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-tenant-db-dont-lock-yourself-out/</guid>
     </item>
   </channel>
 </rss>

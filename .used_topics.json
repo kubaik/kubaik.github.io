@@ -23,5 +23,6 @@
   "How I went from junior to senior without a CS degree",
   "AI skills that actually affect your salary in 2026: a data-backed breakdown",
   "Zero-trust architecture for small teams: what actually makes sense to implement",
-  "Repository intelligence: how AI is learning your entire codebase context"
+  "Repository intelligence: how AI is learning your entire codebase context",
+  "Observability for AI pipelines: what to instrument when your system includes an LLM"
 ]
