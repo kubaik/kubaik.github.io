@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -414,6 +434,7 @@ def create_product(product: ProductCreate) -&gt; int:
 <p>Start by piloting one tool — GitHub Copilot or Tabnine — on a non-critical project. Measure time saved, bug rates, and review load. Train your team on effective prompting. Integrate static analysis to catch AI-specific risks.</p>
 <p>Then, redefine roles. Don’t eliminate juniors — elevate them. Let AI handle boilerplate; make juniors focus on design, debugging, and ownership. Turn them into problem solvers, not code generators.</p>
 <p>The future isn’t human vs AI. It’s humans using AI to skip the rote work and get to real engineering faster. Embrace it — but don’t outsource your judgment.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -425,7 +446,9 @@ def create_product(product: ProductCreate) -&gt; int:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -435,7 +458,8 @@ def create_product(product: ProductCreate) -&gt; int:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -490,7 +514,7 @@ def create_product(product: ProductCreate) -&gt; int:
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -500,7 +524,7 @@ def create_product(product: ProductCreate) -&gt; int:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

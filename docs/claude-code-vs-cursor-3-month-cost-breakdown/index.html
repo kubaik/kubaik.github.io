@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -528,6 +548,7 @@ Yes, the tracker counts every prompt, even if the response is empty or the tool 
 <p>Pick one tool—Cursor or Claude Code—and run the tracker for 30 days. Don’t switch mid-experiment; the context switching alone will skew your numbers. After 30 days, export the CSV and compare it to your actual bill. If the numbers don’t match, you’re either missing duplicate prompts, model switches, or failed retries.</p>
 <p>Next week, set the tracker to auto-alert finance every Monday at 9am. The alert forces you to audit the spend before it balloons. If the numbers are within 10% of your bill, you’re done. If not, adjust your seat count or swap tools.</p>
 <p>Finally, share the tracker with your team. The best cost control is peer pressure: if everyone sees the bill, no one will run 20 open tabs.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -539,7 +560,9 @@ Yes, the tracker counts every prompt, even if the response is empty or the tool 
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -549,7 +572,8 @@ Yes, the tracker counts every prompt, even if the response is empty or the tool 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -594,7 +618,7 @@ Yes, the tracker counts every prompt, even if the response is empty or the tool 
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -604,7 +628,7 @@ Yes, the tracker counts every prompt, even if the response is empty or the tool 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

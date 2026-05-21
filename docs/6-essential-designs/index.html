@@ -210,12 +210,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -225,7 +245,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -420,6 +440,7 @@ public class MySingleton {
 <p>In conclusion, design patterns are a powerful tool for improving the quality and maintainability of code. By using design patterns, developers can reduce the amount of code that needs to be maintained, improve the overall scalability and reliability of the system, and reduce the risk of bugs and errors. However, design patterns should be used in a thoughtful and intentional way, and developers should be aware of the potential pitfalls and limitations of using design patterns. </p>
 <p>To get started with using design patterns, developers can begin by learning about the different types of design patterns, such as the Singleton pattern, the Factory pattern, and the Observer pattern. They can then practice applying these patterns to real-world projects, using tools and libraries such as the Apache Commons library and the Google Guava library. </p>
 <p>By following these steps and using design patterns in a thoughtful and intentional way, developers can improve the quality and maintainability of their code, and take their skills to the next level. With the right approach and mindset, design patterns can be a powerful tool for achieving success in software development.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -431,7 +452,9 @@ public class MySingleton {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -441,7 +464,8 @@ public class MySingleton {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -486,7 +510,7 @@ public class MySingleton {
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -496,7 +520,7 @@ public class MySingleton {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

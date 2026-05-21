@@ -204,12 +204,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -219,7 +239,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -752,6 +772,7 @@ async def append_with_trace(account_id, event_data):
 We tried event sourcing on a <strong>real-time chat service</strong> next. The latency numbers looked great (5 ms writes vs 18 ms CRUD), but the cognitive load overwhelmed junior developers. They kept writing projections that blocked the UI thread, and the team spent more time explaining event ordering than building features. We rolled back after six weeks and switched to a simple Redis pub/sub model.</p>
 <p><strong>Bottom line:</strong>
 Event sourcing is worth the complexity <strong>only when</strong> the domain’s compliance, audit, or replay needs justify the cognitive and operational overhead. Otherwise, it’s a net loss in velocity and maintainability. Measure before you migrate.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -763,7 +784,9 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -773,7 +796,8 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -818,7 +842,7 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -828,7 +852,7 @@ Event sourcing is worth the complexity <strong>only when</strong> the domain’s
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

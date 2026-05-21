@@ -204,12 +204,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -219,7 +239,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -457,6 +477,7 @@ LFU (Least Frequently Used) evicts keys based on access frequency, while LRU evi
 During failover, the replica promotes to primary and rebuilds the dataset. If the replica was lagging, it may need to load a large RDB snapshot, causing memory usage to spike temporarily. To mitigate, use <code>repl-disable-tcp-nodelay no</code> to reduce replication lag, and monitor <code>repl_backlog_size</code>.</p>
 <p>How to reduce Redis latency on Kubernetes?
 Colocate pods with Redis shards using <code>topology.kubernetes.io/zone</code> constraints. Measure RTT with <code>ping</code>, and aim for under 1 ms. Also, tune Redis <code>hz</code> to 300 and disable <code>save</code> snapshots to reduce fsync latency.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -468,7 +489,9 @@ Colocate pods with Redis shards using <code>topology.kubernetes.io/zone</code> c
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -478,7 +501,8 @@ Colocate pods with Redis shards using <code>topology.kubernetes.io/zone</code> c
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -523,7 +547,7 @@ Colocate pods with Redis shards using <code>topology.kubernetes.io/zone</code> c
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -533,7 +557,7 @@ Colocate pods with Redis shards using <code>topology.kubernetes.io/zone</code> c
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

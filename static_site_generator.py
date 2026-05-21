@@ -926,12 +926,32 @@ def _build_templates() -> dict:
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    {{ header_ad | safe }}
+    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
             <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
@@ -988,8 +1008,12 @@ def _build_templates() -> dict:
             </div>
             <div class="post-content" itemprop="articleBody">
                 {{ post.content_html | safe }}
+                {% if inline_ad %}
                 <div class="ad-inline">{{ inline_ad | safe }}</div>
-                {{ middle_ad | safe }}
+                {% endif %}
+                {% if middle_ad %}
+                <div class="ad-middle">{{ middle_ad | safe }}</div>
+                {% endif %}
             </div>
             {% if post.affiliate_links %}
             <div class="affiliate-disclaimer">
@@ -1032,7 +1056,7 @@ def _build_templates() -> dict:
             {% endif %}
         </article>
     </main>
-    {{ footer_ad | safe }}
+    {% if footer_ad %}<div class="ad-footer">{{ footer_ad | safe }}</div>{% endif %}
     <footer>
         <div class="container">
             <p>&copy; {{ current_year }} {{ site_name }}. Written by

@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -560,6 +580,7 @@ The fastest path is to build and operate a system that people actually use. Star
 Yes, but it’s harder—and it depends on the company. Staff engineers are judged on impact, not credentials. If you can demonstrate the ability to architect systems, mentor teams, and navigate organizational complexity, the degree won’t stop you. I’ve worked with staff engineers who didn’t have degrees, but they had a track record of shipping critical systems under tight constraints. The key is to focus on outcomes, not titles.</p>
 <p><strong>What are the 3 skills most senior engineers have that juniors overlook?</strong>
 First, <strong>operational awareness</strong>: knowing how your code behaves in production, how it degrades, and how to recover from failure. Second, <strong>cost consciousness</strong>: understanding how your architectural choices impact the cloud bill, and being able to optimize without sacrificing reliability. Third, <strong>communication under pressure</strong>: translating technical tradeoffs to non-technical stakeholders during an incident. Juniors focus on writing clean code; seniors focus on shipping clean systems.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -571,7 +592,9 @@ First, <strong>operational awareness</strong>: knowing how your code behaves in 
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -581,7 +604,8 @@ First, <strong>operational awareness</strong>: knowing how your code behaves in 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -626,7 +650,7 @@ First, <strong>operational awareness</strong>: knowing how your code behaves in 
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -636,7 +660,7 @@ First, <strong>operational awareness</strong>: knowing how your code behaves in 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

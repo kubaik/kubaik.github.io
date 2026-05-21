@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -382,6 +402,7 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
 <p>Next, implement monitoring. Set up alerts for query regressions using tools like pgHero or custom scripts. Update statistics after bulk operations. Avoid over-indexing write-heavy tables.</p>
 <p>For immediate gains, focus on the top 5 slowest queries by total time. One fintech company reduced their median API latency by 70% in two weeks by fixing just three queries. Don’t optimize everything—optimize what matters.</p>
 <p>Finally, challenge ORM dogma. Sometimes raw SQL with prepared statements is the fastest, clearest choice. Measure, don’t assume. And remember: the best optimization isn’t faster queries—it’s preventing bad ones from reaching production via automated checks in CI/CD.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -393,7 +414,9 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -403,7 +426,8 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -448,7 +472,7 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -458,7 +482,7 @@ EXPLAIN (ANALYZE) SELECT * FROM users WHERE created_at &gt; '2023-01-01';
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

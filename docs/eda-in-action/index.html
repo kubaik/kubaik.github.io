@@ -210,12 +210,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -225,7 +245,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -344,6 +364,7 @@ producer.send('user_events', value=event_data)
 <p>A realistic case study of an EDA system can be seen in a large-scale e-commerce platform. The platform handles millions of requests per day, and requires a scalable and fault-tolerant solution to handle these requests. The platform uses an EDA system to handle events such as user logins, product purchases, and order updates. The EDA system is built using a combination of tools and libraries, including Apache Kafka 3.1.0, Apache Flink 1.14.0, and Apache Cassandra 3.11.6.</p>
 <p>Before implementing the EDA system, the platform experienced frequent downtime and errors, with an average response time of 500 milliseconds. However, after implementing the EDA system, the platform was able to handle millions of requests per day with a 99.99% uptime and an average response time of 50 milliseconds. The EDA system also provided a robust framework for real-time event processing and streaming analytics, allowing the platform to gain insights into user behavior and optimize its operations accordingly.</p>
 <p>In terms of before/after comparison, the implementation of the EDA system resulted in a 90% reduction in downtime and errors, and a 75% reduction in average response time. The platform was also able to handle a 50% increase in traffic without experiencing any significant issues. The EDA system also provided a robust framework for monitoring and alerting, allowing the platform to detect and respond to issues in real-time. Overall, the implementation of the EDA system was a major success, and provided a scalable and fault-tolerant solution for the platform's needs.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -355,7 +376,9 @@ producer.send('user_events', value=event_data)
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -365,7 +388,8 @@ producer.send('user_events', value=event_data)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -410,7 +434,7 @@ producer.send('user_events', value=event_data)
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -420,7 +444,7 @@ producer.send('user_events', value=event_data)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

@@ -197,12 +197,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -212,7 +232,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -336,6 +356,7 @@ async def read_item_details(item_id: str) -&gt; Item:
 <p>Here's the inconvenient truth about Python's GIL removal that most blog posts and documentation won't emphasize: it's going to break a lot of existing C extensions and introduce a new class of subtle concurrency bugs for developers who aren't experts in thread safety. While the technical achievement is monumental, the average Python developer, accustomed to the GIL as a "safety net" that implicitly prevented many race conditions, will face a steep learning curve. The immediate impact won't be a uniform performance boost across the board; instead, it will be a period of painful library updates, unexpected crashes, and debugging session hell as C extension maintainers scramble to make their code truly thread-safe. Many popular numerical libraries like <code>NumPy</code> and <code>SciPy</code> already release the GIL during their heavy computations, so their primary users won't see a dramatic <em>relative</em> speedup. The real beneficiaries are new, pure-Python CPU-bound parallelism patterns that were previously impossible. But for the vast majority of existing Python applications, especially those using a broad ecosystem of C-backed libraries, the GIL-free transition will be a messy, years-long process, not a seamless upgrade. The focus on raw speed improvements, while commendable, often overshadows the more pressing need for a truly robust, consistently fast, and easy-to-use dependency management system, which <code>uv</code> is finally addressing more effectively than GIL removal ever will. The DX (Developer Experience) improvement from <code>uv</code>'s speed and reliability will have a far greater positive impact on daily productivity for most teams than the often-marginal or problematic gains from a GIL-free CPython in the short to medium term.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Python in 2026 is a more powerful, performant, and type-aware language than ever before, driven by foundational changes like optional GIL removal and continued investment in runtime optimizations. The ecosystem has matured with robust tooling that addresses long-standing developer pain points in packaging, linting, and formatting. To stay competitive, developers must move beyond legacy practices. Start by upgrading to CPython 3.13 or 3.14 as soon as stable, focusing on migrating your dependency management to <code>uv</code> and adopting <code>ruff</code> and <code>mypy</code> for code quality. Embrace <code>asyncio</code> for I/O-bound workloads, ensuring you correctly manage the event loop and avoid blocking calls. For CPU-bound sections, strategically explore GIL-free CPython, but do so with caution, thoroughly testing C extension compatibility. Invest time in understanding true concurrency patterns and thread safety if you plan to leverage the GIL-free mode extensively. Lastly, continuously profile your applications. Do not chase every new feature without understanding its real-world impact on your specific bottlenecks. The future of Python is faster and more powerful, but it demands a more deliberate, informed approach to development.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -347,7 +368,9 @@ async def read_item_details(item_id: str) -&gt; Item:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -357,7 +380,8 @@ async def read_item_details(item_id: str) -&gt; Item:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -402,7 +426,7 @@ async def read_item_details(item_id: str) -&gt; Item:
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -412,7 +436,7 @@ async def read_item_details(item_id: str) -&gt; Item:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

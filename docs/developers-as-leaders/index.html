@@ -197,12 +197,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -212,7 +232,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -323,6 +343,7 @@ next_steps:
 <p>The prevailing advice on "managing up" often frames it as a set of communication tactics: be concise, bring solutions, understand priorities. While these are necessary, they miss the fundamental, counterintuitive core: the most effective 'managing up' isn't about <em>telling</em> your manager what to do, but about <em>engineering their perception</em> of the optimal path. It's not about being right; it's about making them <em>believe</em> they arrived at the 'right' conclusion themselves, facilitated by your data and framing. This requires a subtle shift from direct advocacy to architectural thinking in communication. You aren't just presenting an idea; you're constructing an environment of information, data, and aligned objectives that naturally leads your manager to the conclusion you want, often feeling like it was their own insight. For instance, instead of saying "We need to migrate to Service Mesh," you might start by presenting data on current observability gaps, then show benchmarks of competitors using service meshes, and finally, offer a small, low-risk PoC that validates the benefits. By the time you formally propose the migration, they've already been primed, the problem is understood, and the solution feels like a logical, almost inevitable next step they've been nudged towards. This is about influencing the decision-making <em>process</em> itself, not just the outcome. It’s a higher-level abstraction of influence, moving beyond mere persuasion to a form of cognitive engineering, which is far more durable and powerful in the long run than simply arguing a point.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Building influence as a developer is not an optional soft skill; it's a critical component of career progression and organizational impact. Technical excellence alone won't get your best ideas implemented or your contributions recognized. You must proactively engage with your manager, understand their priorities, and consistently frame your work in terms of business value. Start today by identifying your manager's top three objectives for the current quarter. In your next 1:1, ask clarifying questions about these objectives and how your current work aligns. Pick one technical problem you've identified and draft a proposal using a structured format, focusing on quantifying the business impact rather than just technical elegance. Use a tool like Notion or Confluence to document this, and be prepared to present it with concrete data, even if it's an initial estimate. Practice translating technical details into a narrative of cost savings, efficiency gains, or risk reduction. The journey to becoming an influential leader starts with intentional, strategic communication. Don't wait for permission; start influencing the narrative around your work now. Consistent application of these principles will transform you from a valuable contributor into an indispensable strategic partner, opening doors to greater responsibility and impact within your organization.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -334,7 +355,9 @@ next_steps:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -344,7 +367,8 @@ next_steps:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -389,7 +413,7 @@ next_steps:
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -399,7 +423,7 @@ next_steps:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

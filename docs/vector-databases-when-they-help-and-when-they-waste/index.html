@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -463,6 +483,7 @@ LIMIT 10;
 <p>If your vector set exceeds 50 GB, or you need multi-tenant isolation without schema sprawl, or your traffic is unpredictable and you want to scale to zero, choose a hosted vector database. Pinecone is the most mature option; Weaviate Cloud offers better filtering and multi-modal support. Budget for egress and expect 2–3× the cost of self-hosted pgvector at steady state.</p>
 <p>Measure before you migrate. Run a 24-hour load test with your peak QPS and vector dimensions. Compare p95/p99 latencies, RAM usage, and total cost. If pgvector’s p99 stays under 50 ms and your RAM usage is &lt; 80%, commit to it. If not, budget for the hosted option and accept the egress cost. The worst outcome is choosing a hosted vector database because “it’s easier,” then discovering your RAM-bound working set makes every query a disk seek.</p>
 <p>Start today: clone your production vectors into a pgvector instance, run <code>pgbench</code> with your real queries, and compare the latency histogram to your current system. If pgvector is within 20% of your SLA, ship it. If not, budget for Pinecone and negotiate a PoC budget with your finance team before you commit.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -474,7 +495,9 @@ LIMIT 10;
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -484,7 +507,8 @@ LIMIT 10;
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -529,7 +553,7 @@ LIMIT 10;
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -539,7 +563,7 @@ LIMIT 10;
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

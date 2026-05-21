@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -524,6 +544,7 @@ Use a centralized store like Redis for the counters and buckets. Avoid in-memory
 Add a temporary override flag in your rate limiting logic. For example, if a client’s quota is 1,000 requests per minute, allow them to send up to 2,000 for 5 minutes by setting a temporary capacity of 2,000 and a temporary drain rate of 33 requests/sec. Store the override in Redis with an expiration time, so it’s automatically revoked. We used this for enterprise clients during peak season and saw a 22% increase in their usage without affecting other clients. Make sure to log these overrides for auditing and billing.</p>
 <p><strong>How do I prevent clients from gaming the leaky bucket by timing their requests?</strong>
 The leaky bucket is vulnerable to timing attacks if clients can coordinate their requests. To mitigate this, add jitter to your drain rate. Instead of draining at exactly 15 requests/sec, drain at 15 ± 2 requests/sec by adding a random delay of up to 200ms between drips. This makes it harder for clients to game the system by sending requests at precise intervals. We implemented this by rounding the drain rate to the nearest integer and adding a small random adjustment in our Lua script. The impact on latency was negligible (&lt;5ms), but the resilience to gaming improved significantly.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -535,7 +556,9 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -545,7 +568,8 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -590,7 +614,7 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -600,7 +624,7 @@ The leaky bucket is vulnerable to timing attacks if clients can coordinate their
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

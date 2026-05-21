@@ -197,12 +197,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -212,7 +232,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -451,6 +471,7 @@ messagingService.handleIncomingMessage(mockSocketAlice, {
 <p>Applying a purely algorithmic, data-driven approach to human relationships has clear limitations and can be detrimental in specific scenarios. You should <em>not</em> use this approach when the objective is to force or manipulate human interaction rather than facilitate it. For instance, if your system's design heavily gamifies interactions to drive addiction metrics, rather than foster genuine connection, you're on the wrong path. Similarly, relying solely on algorithmic matching for highly sensitive or niche communities where trust and nuanced understanding are paramount can fail spectacularly. Imagine a platform for individuals recovering from trauma; a cold algorithm, no matter how sophisticated, cannot replace human empathy and careful moderation. Furthermore, when the available data is inherently sparse, biased, or lacks the necessary depth to infer meaningful compatibility, an algorithmic approach will yield poor results, creating frustrating "cold start" problems for users or perpetuating unfair biases. Attempting to match users based on five data points and a shallow bio for a lifelong partnership is irresponsible; the noise-to-signal ratio is too high. Finally, if the privacy implications of collecting and processing deeply personal data outweigh the potential benefits for the user, then stepping back from an overly technical solution is the responsible choice. Not every human problem needs an AI-driven, data-intensive solution, especially when dealing with the delicate fabric of human emotions and personal lives. Sometimes, less technology, or technology designed with more human-centric constraints, is the superior solution.</p>
 <h2 id="my-take-what-nobody-else-is-saying">My Take: What Nobody Else Is Saying</h2>
 <p>Here’s</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -462,7 +483,9 @@ messagingService.handleIncomingMessage(mockSocketAlice, {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -472,7 +495,8 @@ messagingService.handleIncomingMessage(mockSocketAlice, {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -517,7 +541,7 @@ messagingService.handleIncomingMessage(mockSocketAlice, {
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -527,7 +551,7 @@ messagingService.handleIncomingMessage(mockSocketAlice, {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

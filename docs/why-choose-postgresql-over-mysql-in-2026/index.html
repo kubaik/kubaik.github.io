@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -693,6 +713,7 @@ These are great for multi-region, but they add 30–50% latency for single-regio
 <p>MySQL stores timestamps without timezone by default, while PostgreSQL defaults to the session timezone. The safest path is to export all timestamps as UTC text, then import into PostgreSQL with <code>SET TIME ZONE 'UTC'</code> in the session. After import, set the column type to <code>TIMESTAMPTZ</code> and ensure your application always sets <code>TimeZone=UTC</code> in the connection string. I made the mistake of keeping <code>TIMESTAMP</code> columns in PostgreSQL; 30% of our date math broke until we migrated to <code>TIMESTAMPTZ</code> and normalized all inputs to UTC.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Right now, run the seed script on both stacks and capture the Grafana dashboard for 10 minutes under your normal load. If your p99 latency on MySQL exceeds 50 ms or replication lag exceeds 5 seconds, switch to PostgreSQL and keep MySQL as a read-only replica for 48 hours while you validate the cutover. Document the migration in your runbook with the exact <code>pg_dump</code> flags you’ll use and the connection-string changes required by your ORM. That one hour of upfront work will save you days of debugging when your next traffic spike hits.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -704,7 +725,9 @@ These are great for multi-region, but they add 30–50% latency for single-regio
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -714,7 +737,8 @@ These are great for multi-region, but they add 30–50% latency for single-regio
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -759,7 +783,7 @@ These are great for multi-region, but they add 30–50% latency for single-regio
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -769,7 +793,7 @@ These are great for multi-region, but they add 30–50% latency for single-regio
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

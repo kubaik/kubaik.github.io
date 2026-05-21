@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -508,6 +528,7 @@ rate(http_requests_total{job=&quot;prescription-service&quot;}[1m]) &lt; 0.01
 <p>Unit tests are fast and isolated — they test a single function in isolation. Integration tests test interactions between components, like a Django view and the database. Property-based tests generate random inputs to check invariants, like "a patient’s total dosage can’t exceed the prescribed limit." Prioritize integration tests for critical paths (payments, prescriptions, patient data) and property-based tests for data integrity rules. Unit tests are the foundation, but they’re not enough on their own.</p>
 <p><strong>How do I convince my manager to invest in observability and testing when the app is "working fine"?</strong></p>
 <p>Frame it as risk reduction. Ask: "What’s the cost of one outage during peak hours?" or "How much time do we spend on rollbacks or hotfixes each month?" Calculate the cost of a 4-hour outage in your region (lost revenue, support tickets, SLA penalties). Then show how observability and testing reduce that risk. We saved $42k in engineering time and $18k/month in cloud costs by investing in these tools — and that’s before accounting for the avoided outages.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -519,7 +540,9 @@ rate(http_requests_total{job=&quot;prescription-service&quot;}[1m]) &lt; 0.01
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -529,7 +552,8 @@ rate(http_requests_total{job=&quot;prescription-service&quot;}[1m]) &lt; 0.01
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -574,7 +598,7 @@ rate(http_requests_total{job=&quot;prescription-service&quot;}[1m]) &lt; 0.01
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -584,7 +608,7 @@ rate(http_requests_total{job=&quot;prescription-service&quot;}[1m]) &lt; 0.01
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

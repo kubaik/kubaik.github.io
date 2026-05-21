@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -358,6 +378,7 @@ allow {
 <p>Nobody talks about how much of platform engineering is change management, not tech. The tools are the easy part. The hard part is getting teams to trust the platform. Early on, we had incidents where the platform failed silently—Argo CD timed out, but our API returned success. That killed trust. We rebuilt with strict error propagation and real-time status checks. But the real breakthrough was cultural: we made the platform team sit with product teams for a week each quarter. They saw the pain firsthand. We also published a public roadmap and let teams vote on features. That shifted perception from ‘corporate mandate’ to ‘shared tool.’ Another truth: most IDPs fail because they optimize for the wrong metric. Teams chase ‘number of services onboarded’ but ignore usability. We prioritized ‘time to fix a broken deploy’ instead. That led us to build one-click rollback and automated log correlation—features developers loved. And here’s a contrarian view: don’t aim for full automation. Some decisions should remain human. We intentionally left production promotions as manual approvals because it forces teams to review changes. Over-automation creates fragility. Finally, the best platforms are boring. They don’t use bleeding-edge tech. Ours runs on stable, old versions of tools because upgrades break things. Innovation is in UX, not stack.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Building an internal developer platform isn’t about technology—it’s about reducing friction. Start small: pick one workflow, automate it end-to-end, and measure developer time saved. Use Backstage, Argo CD, and OPA—they’re proven. Avoid over-investing in UIs early; focus on APIs and CLIs. Measure outcomes, not uptime. And most importantly, involve developers from day one. At our company, the platform team now has a ‘developer happiness’ KPI. If that drops, we pivot. The next step? We’re adding AI-assisted debugging—using LLMs to analyze logs and suggest fixes—but only after proving value in core workflows. Platform engineering isn’t a destination; it’s a loop of feedback, build, measure. Begin with pain, not tools.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -369,7 +390,9 @@ allow {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -379,7 +402,8 @@ allow {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -424,7 +448,7 @@ allow {
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -434,7 +458,7 @@ allow {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

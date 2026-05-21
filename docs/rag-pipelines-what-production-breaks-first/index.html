@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -557,6 +577,7 @@ For most teams, Redis 7.2+ is enough if you shard it and tune <code>maxmemory-po
 Start with <code>fail_max=10</code> and <code>reset_timeout=30</code>. If you see more than 10 failures in 30 seconds, trip the breaker and fall back to a local index or a simpler model. In our tests, this prevented cascading failures during Qdrant spikes without adding noticeable latency. Tune <code>fail_max</code> based on your QPS: for 10k QPS, <code>fail_max=20</code> is safer. Avoid aggressive thresholds — they can cause 0.5–1% extra latency due to breaker toggling.</p>
 <p><strong>Why did our Qdrant pods run out of ephemeral ports under load?</strong>
 The NGINX load balancer reused ephemeral ports aggressively when connection churn was high. At 12k QPS with 4 Qdrant pods, the load balancer recycled ports faster than the TCP TIME_WAIT timeout (60s), causing ‘address already in use’ errors. We fixed it by increasing <code>net.ipv4.tcp_tw_reuse=1</code> on the load balancer and setting <code>so_reuseport=1</code> on Qdrant’s gRPC sockets. For teams using Kubernetes, set <code>service.spec.sessionAffinity: ClientIP</code> and <code>service.spec.externalTrafficPolicy: Local</code> to reduce port churn.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -568,7 +589,9 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -578,7 +601,8 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -623,7 +647,7 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -633,7 +657,7 @@ The NGINX load balancer reused ephemeral ports aggressively when connection chur
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

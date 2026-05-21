@@ -210,12 +210,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -225,7 +245,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -385,6 +405,7 @@ print(data.head())
 <p>Building an AI-powered side hustle can be a lucrative venture, but it requires careful planning and execution. By following the steps outlined in this post, developers can build a successful AI-powered side hustle that generates significant revenue. However, developers must be aware of the potential tradeoffs and challenges, such as the need for large amounts of high-quality training data and the risk of overfitting.</p>
 <p>To get started, developers can explore the various AI tools and libraries available, such as TensorFlow 2.4, scikit-learn 0.24.2, and Rasa 2.8.1. They can also start gathering and preprocessing their dataset, using techniques like tokenization, stemming, and lemmatization. By following these steps and being aware of the potential challenges and tradeoffs, developers can build a successful AI-powered side hustle that generates significant revenue and achieves a high return on investment.</p>
 <p>In terms of next steps, developers can start by identifying a specific problem they want to solve and gathering a dataset related to that problem. They can then use a machine learning library like TensorFlow 2.4 or PyTorch 1.9.0 to train a model on the dataset. Once the model is trained, developers can evaluate its performance on a testing set and deploy it as a web application using a framework like Flask 2.0.1 or Django 3.2.5. By following these steps and being aware of the potential challenges and tradeoffs, developers can build a successful AI-powered side hustle that generates significant revenue and achieves a high return on investment.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -396,7 +417,9 @@ print(data.head())
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -406,7 +429,8 @@ print(data.head())
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -461,7 +485,7 @@ print(data.head())
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -471,7 +495,7 @@ print(data.head())
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

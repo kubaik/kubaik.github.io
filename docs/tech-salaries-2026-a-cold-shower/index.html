@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -481,6 +501,7 @@ print(model_comp(&quot;Tier 1&quot;, 500_000_000))  # ~$875k over 3 years
 <p>Aim for 0.1%–0.3% RSUs, vested over 4 years with a 1-year cliff. The exact percentage depends on the company’s stage (seed vs. Series A), traction ($1M–$10M ARR), and burn rate. If the company is pre-revenue, push for 0.2%–0.3% and negotiate for a cash bonus tied to model metrics (e.g., latency reduction, accuracy improvement). If the company is post-Series B with $20M+ ARR, 0.05%–0.1% is more realistic. Equity is illiquid until exit, so treat it as a lottery ticket, not a salary.</p>
 <p><strong>Is it worth taking a 20% pay cut to join a startup with strong AI narrative but lower base salary?</strong></p>
 <p>Only if the role is AI core and the startup has a path to monetization. If the role is generalist or early-stage R&amp;D without revenue, the pay cut is unlikely to pay off. In 2025, I saw a senior engineer take a 22% pay cut to join a pre-seed AI startup. Eighteen months later, the company pivoted, the equity was worthless, and the engineer had to job hunt from a lower base salary. The exception is if you’re early-career and the role gives you Tier 1 experience—then the pay cut is an investment in future comp.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -492,7 +513,9 @@ print(model_comp(&quot;Tier 1&quot;, 500_000_000))  # ~$875k over 3 years
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -502,7 +525,8 @@ print(model_comp(&quot;Tier 1&quot;, 500_000_000))  # ~$875k over 3 years
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -547,7 +571,7 @@ print(model_comp(&quot;Tier 1&quot;, 500_000_000))  # ~$875k over 3 years
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -557,7 +581,7 @@ print(model_comp(&quot;Tier 1&quot;, 500_000_000))  # ~$875k over 3 years
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

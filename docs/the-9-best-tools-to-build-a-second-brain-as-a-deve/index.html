@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -476,6 +496,7 @@ Use Logseq’s query language: <code>{{query (and [[client/X]] (between 2024-04-
 Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone subway. The mobile web is usable, but edits often get stuck in a pending state after a week offline. Also, Roam’s pricing is $15/month at scale, which is hard to justify when Logseq is free and self-hosted. The final straw was the export fidelity: a 5,000-page workspace’s JSON export missed 127 images and 84 internal links. Logseq’s export is 100% Markdown, so I can always recover my data. The key takeaway is that developer Second Brains must be offline-first and plain-text—Roam hits neither.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only do one thing after reading this, <strong>install Logseq today on your laptop and your phone, then run the GitHub importer to pull your last 100 issues</strong>. Use the <code>github:</code> protocol to auto-link commits to issues. Measure your search latency on a 2018 laptop—if it’s under 0.2 seconds, you’ve made the right choice. If it’s slower, switch to TiddlyWiki on a $5 DigitalOcean droplet. The key is to start small, import your real data, and measure the latency and reliability before committing to a tool. Don’t abstract your knowledge—own it, in plain text, in Git. Then, set up a cron job to back up your vault to a second location. When your laptop dies or your client revokes access, you’ll still have your Second Brain intact.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -487,7 +508,9 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -497,7 +520,8 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -552,7 +576,7 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -562,7 +586,7 @@ Roam is web-only, so I couldn’t use it offline on a plane or in a dead-zone su
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

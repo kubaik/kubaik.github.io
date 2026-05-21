@@ -197,12 +197,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -212,7 +232,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -417,6 +437,7 @@ func main() {
 <p>The tech industry's obsession with "grit" and "hustle" is a dangerous, thinly veiled excuse for poor management and unsustainable expectations. We've normalized suffering for the sake of innovation, convincing ourselves that intense pressure is a prerequisite for groundbreaking work. This is a lie. The true cost isn't just attrition; it's the mediocrity produced by exhausted, uninspired engineers. An engineer working 60-hour weeks isn't delivering 1.5x the value; they're delivering 0.8x the value with 2x the bugs, and burning out in the process. We fetishize the individual contributor's ability to "push through" instead of scrutinizing the organizational structures that demand such superhuman effort. The "culture fit" interview often filters out those who would challenge these unsustainable norms, perpetuating a self-reinforcing cycle of overwork. The solution isn't more "resilience training" for individuals; it's a fundamental re-evaluation of how we manage projects, people, and profits. We need to stop rewarding managers for hitting arbitrary deadlines at the expense of their team's well-being and start valuing sustainable pace and high-quality output over perceived speed. Until we dismantle the myth that suffering is a badge of honor, we'll continue to bleed talent and stifle genuine innovation, replacing it with the frantic, error-prone output of a chronically stressed workforce.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>The mental health crisis in tech is not a soft problem; it's an engineering challenge demanding structured, data-driven solutions. Ignoring it has tangible, negative impacts on code quality, project timelines, and talent retention. Leaders must move beyond performative wellness initiatives and commit to systemic changes: automating toil, establishing humane on-call rotations, enforcing realistic workloads, and fostering psychological safety. For individual contributors, advocate for these changes within your teams and push back on unsustainable demands. Document your toil, quantify its impact, and present data-backed cases for automation or process improvement. Organizations must invest in robust tooling – from advanced project management systems like Jira (v9.10.0) to comprehensive code quality analysis with SonarQube (v9.9 LTS) – not as a luxury, but as essential infrastructure for a sustainable engineering culture. Your next steps are clear: audit your team's stressors, identify areas for process improvement and automation, and begin implementing the cultural and technical shifts necessary to build a truly resilient, innovative, and humane engineering organization. This isn't just about being a 'good' employer; it's about building a sustainable, high-performing engineering function that delivers superior products consistently.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -428,7 +449,9 @@ func main() {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -438,7 +461,8 @@ func main() {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -483,7 +507,7 @@ func main() {
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -493,7 +517,7 @@ func main() {
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

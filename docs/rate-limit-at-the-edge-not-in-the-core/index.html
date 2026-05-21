@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -461,6 +481,7 @@ No. If the sidecar rate-limit service cannot reach Redis and the circuit breaker
 Yes, if you’re already on Cloudflare or AWS. Cloudflare’s Rate Limiting rules run at the edge and can return custom 429 pages with headers. AWS WAF offers rate-based rules that also emit headers. The trade-off is lock-in: Cloudflare’s rules are JSON-based and can be versioned, but AWS WAF’s rate rules are managed rules that can’t be fine-tuned per client. We benchmarked Cloudflare’s edge vs our Envoy sidecar and found Cloudflare added 3–5ms of extra latency due to the extra hop. For internal APIs, Envoy inside the cluster is simpler; for public APIs, Cloudflare is easier to operate.</p>
 <p><strong>Does this pattern work for WebSocket connections?</strong>
 No, token bucket logic doesn’t map cleanly to long-lived connections. WebSockets need a different approach: count messages per connection in the application or use a fixed window per connection ID in Redis with a short TTL. We tried to reuse the Envoy filter for WebSockets and discovered that Envoy counts each message as a separate request, which drained tokens in seconds. We eventually moved WebSocket rate limiting into the application layer and used a Redis sorted set with a 10-second TTL to count messages per connection ID. That added 4ms of latency per message but kept the system stable under 10k concurrent connections.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -472,7 +493,9 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -482,7 +505,8 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -527,7 +551,7 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -537,7 +561,7 @@ No, token bucket logic doesn’t map cleanly to long-lived connections. WebSocke
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

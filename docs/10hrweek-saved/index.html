@@ -209,12 +209,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -224,7 +244,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -434,6 +454,7 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
 <p>In terms of actual numbers, the project achieved a significant reduction in processing time, from 10 hours to 1 hour, which represents a time savings of 90%. Additionally, the project achieved a significant improvement in accuracy, from 80% to 95%, which represents an improvement of 18.75%. These results demonstrate the benefits of using AI workflow to automate the processing of large amounts of text data, and highlight the potential for significant time savings and productivity gains in a variety of applications.</p>
 <p>Before the implementation of AI workflow, the project required a team of 5 data scientists to process the data manually, which took around 10 hours to complete. After the implementation of AI workflow, the project was able to automate the processing of the data, which reduced the processing time to 1 hour and freed up the team to focus on more strategic and creative work. The team was able to achieve a significant improvement in accuracy, from 80% to 95%, which represents an improvement of 18.75%. The project also achieved a significant reduction in costs, from $10,000 to $1,000, which represents a cost savings of 90%.</p>
 <p>Overall, the project demonstrates the benefits of using AI workflow to automate the processing of large amounts of text data, and highlights the potential for significant time savings and productivity gains in a variety of applications. By automating the processing of the data, the project was able to free up the team to focus on more strategic and creative work, and achieve a significant improvement in accuracy and cost savings.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -445,7 +466,9 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -455,7 +478,8 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -510,7 +534,7 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -520,7 +544,7 @@ print('Accuracy:', accuracy_score(y_test, y_pred))
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

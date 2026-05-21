@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -476,6 +496,7 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only read one section, read this: start with terraform-aws-modules/vpc/aws (v5.5.0) and terragrunt (v0.55.8). The VPC module gives you a production-ready network that understands CGNAT and IPv6, and terragrunt gives you multi-environment isolation without state locks. Together they’ve survived 18 months of 3G drops, payroll spikes, and accidental schema drops in Accra, Lagos, and Nairobi.</p>
 <p>Next step: clone the VPC module into a new repo, set enable_nat_gateway = false for staging to cut costs, and run terraform plan on your 4G hotspot. If it plans in under 60 seconds and applies without errors, you’re ready to ship. If not, disable refresh with -refresh=false and target only the subnets you’re changing.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -487,7 +508,9 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -497,7 +520,8 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -542,7 +566,7 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -552,7 +576,7 @@ Use terraform-aws-modules/eks/aws (v19.21.0) with fargate profiles for sidecars.
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

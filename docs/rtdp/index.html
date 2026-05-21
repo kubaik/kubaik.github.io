@@ -209,12 +209,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -224,7 +244,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -387,6 +407,7 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
 <p>We redesigned the system using <strong>Apache Flink 1.14.0</strong> on Kubernetes (EKS), ingesting data via <strong>Apache Kafka 3.1.0</strong> (150 partitions, 3 brokers). GPS devices streamed JSON messages to a <code>raw-tracker-events</code> topic at peak rates of 180K messages/sec. Flink consumed this stream, parsed GPS coordinates, enriched with geofence data from Redis 6.2, and computed <strong>real-time ETA predictions</strong> using a sliding 5-minute window. Processed events were written to <strong>Amazon DynamoDB</strong> for low-latency queries and to <strong>Snowflake</strong> for analytics.</p>
 <p>The results were dramatic. <strong>End-to-end latency dropped to 350–400ms</strong>, enabling live tracking in the customer portal. We implemented <strong>exactly-once processing</strong> via Flink’s Kafka source with <code>enable.idempotence=true</code> and <code>isolation.level=read_committed</code>. Checkpointing was set to every 10 seconds with <code>RocksDB</code> state backend, and we achieved 99.99% uptime over six months. The number of support tickets related to tracking dropped by 68%, and <strong>on-time delivery improved to 92%</strong> due to dynamic rerouting based on real-time traffic and location data.</p>
 <p>From a cost perspective, the Flink cluster (12 nodes, m5.2xlarge) cost $18.72/day, compared to the previous Airflow setup ($22.30/day with higher EC2 utilization). More importantly, <strong>customer retention increased by 15%</strong> within three months, directly attributed to improved transparency. This case study proves that moving from batch to real-time isn’t just about speed—it’s about unlocking new business value through timely decisions, better UX, and operational efficiency. The investment paid for itself in under 8 weeks.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -398,7 +419,9 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -408,7 +431,8 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -453,7 +477,7 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -463,7 +487,7 @@ StormSubmitter.submitTopology(&quot;MyTopology&quot;, conf, builder.createTopolo
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

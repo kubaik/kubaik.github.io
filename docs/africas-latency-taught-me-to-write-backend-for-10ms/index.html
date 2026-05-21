@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -497,6 +517,7 @@ We run a 3-broker Kafka cluster in Lagos with <code>min.insync.replicas=2</code>
 We use event sourcing to make balance updates explicit. Every balance update is an event that’s processed locally in Lagos. We replicate the event stream to Cape Town asynchronously using Debezium. For reads, we serve from the local materialized view. For critical reads (e.g., fraud checks), we go to the global tier in Cape Town. We accept eventual consistency for non-critical reads like user profiles. We also run periodic reconciliation jobs to detect inconsistencies.</p>
 <p><strong>What tools did you use to monitor latency and replication lag?</strong>
 We used Prometheus with the SQLite exporter, Kafka exporter, and node exporter. We ran Grafana Loki for logs and Grafana for dashboards. We set up alerts for <code>sqlite_write_latency &gt; 10ms</code>, <code>kafka_produce_latency &gt; 50ms</code>, and <code>litestream_lag &gt; 1s</code>. We also used AWS CloudWatch for cross-region metrics. The total monitoring cost was $800/month, which we reduced by moving non-critical metrics to Grafana Cloud.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -508,7 +529,9 @@ We used Prometheus with the SQLite exporter, Kafka exporter, and node exporter. 
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -518,7 +541,8 @@ We used Prometheus with the SQLite exporter, Kafka exporter, and node exporter. 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -563,7 +587,7 @@ We used Prometheus with the SQLite exporter, Kafka exporter, and node exporter. 
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -573,7 +597,7 @@ We used Prometheus with the SQLite exporter, Kafka exporter, and node exporter. 
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

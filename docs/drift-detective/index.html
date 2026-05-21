@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -397,6 +417,7 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
 <p>However, by Q1 2023, customer support began reporting increased complaints—patients were receiving reminders despite showing up, and no-shows were rising. Internal audits revealed that <strong>appointment patterns shifted post-COVID</strong>, with more evening and weekend bookings (up 41% YoY) and new insurance verification steps affecting scheduling behavior. The model’s precision dropped to <strong>58%</strong>, recall to <strong>52%</strong>, and F1 to <strong>0.55</strong>—a 32% degradation. Yet, because the team only monitored prediction volume and system uptime, the drift went unnoticed for <strong>11 weeks</strong>.</p>
 <p>We implemented a monitoring stack using <strong>NannyML 0.9.3</strong> for performance estimation without ground truth (using confidence-based imputation), <strong>Evidently 0.4.19</strong> for feature drift (PSI), and <strong>Prometheus/Grafana</strong> for alerting. Within two weeks, the system flagged <strong>high drift in the "appointment_lead_time_days"</strong> feature (PSI = 0.27) and <strong>"insurance_type"</strong> (PSI = 0.31). NannyML estimated a <strong>19-point drop in recall</strong>, prompting immediate action.</p>
 <p>The team retrained the model on updated data, introduced <strong>time-based stratification</strong> in training, and added <strong>calendar features</strong> (holiday proximity, day of week). The new model restored precision to <strong>81%</strong>, recall to <strong>76%</strong>, and F1 to <strong>0.78</strong>. After full deployment, <strong>no-show rates dropped from 29% back to 22%</strong>, recovering an estimated <strong>$210K in lost revenue</strong> over the next quarter. Monthly monitoring costs were $1,200 (cloud + tooling), but the solution paid for itself in <strong>under seven days</strong>. This case underscores that even high-performing models degrade silently—and that structured monitoring isn't overhead, it's insurance.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -408,7 +429,9 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -418,7 +441,8 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -473,7 +497,7 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -483,7 +507,7 @@ mape_gauge.labels(model='prophet_demand', env='prod').set(mape)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

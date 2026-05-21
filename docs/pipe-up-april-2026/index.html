@@ -210,12 +210,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -225,7 +245,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -356,6 +376,7 @@ with beam.Pipeline(options=options) as p:
 <p>After building a data pipeline using Apache Beam and Apache Spark, the company was able to automate the data processing and analysis workflow. The pipeline ingested data from various sources, processed it in real-time, and stored it in a data warehouse for analysis. The company was able to gain real-time insights into customer behavior, including sales trends, customer demographics, and clickstream analysis.</p>
 <p>The pipeline also provided a number of benefits, including improved data quality, reduced processing time, and increased scalability. The company was able to handle large datasets and process them in real-time, which improved the accuracy and timeliness of the insights. The pipeline also provided a number of monitoring and logging features, which allowed the company to track pipeline performance and identify issues before they became critical.</p>
 <p>By building a reliable data pipeline, the company was able to improve its data analysis capabilities, reduce costs, and increase revenue. The pipeline provided a number of benefits, including improved data quality, reduced processing time, and increased scalability. The company was able to gain real-time insights into customer behavior, which improved its marketing and sales efforts. By using a data pipeline management tool, such as Apache Airflow, the company was also able to manage and monitor its pipeline, which improved its overall data processing workflow.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -367,7 +388,9 @@ with beam.Pipeline(options=options) as p:
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -377,7 +400,8 @@ with beam.Pipeline(options=options) as p:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -422,7 +446,7 @@ with beam.Pipeline(options=options) as p:
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -432,7 +456,7 @@ with beam.Pipeline(options=options) as p:
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

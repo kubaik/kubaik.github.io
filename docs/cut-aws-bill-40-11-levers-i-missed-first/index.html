@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -467,6 +487,7 @@ Start with 1 hour for HTML pages, 24 hours for CSS/JS, and 7 days for immutable 
 Only if you can cap the plan at 80% of your baseline usage. In 2026, Compute Savings Plans cover both EC2 and Lambda, so you can optimize across services. I measured my burst ratio at 1.8x and capped the plan at 80% baseline. The plan saved 18% on steady-state workloads and paid for itself in 60 days. If your workload is highly variable, stick with On-Demand and use Spot for batch jobs.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Start with a <strong>cleanup sprint</strong>: delete orphaned EBS snapshots, unused IAM roles, and abandoned Lambda versions. This alone can save $50–$200/month without touching production. Then, run <strong>S3 lifecycle transitions</strong> and <strong>CloudFront cache tuning</strong>—these two levers deliver the highest bang for buck with minimal risk. If you’re database-heavy, prioritize <strong>RDS rightsizing and gp3 storage</strong>. If you’re serverless-heavy, run <strong>Lambda Power Tuning</strong> and migrate to <strong>Graviton</strong>. Measure the impact after 30 days and double down on what works. Most teams stop at EC2 rightsizing and miss the 60% of savings hiding in the background services. Don’t let perfect be the enemy of good—start with the cleanup sprint tonight.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -478,7 +499,9 @@ Only if you can cap the plan at 80% of your baseline usage. In 2026, Compute Sav
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -488,7 +511,8 @@ Only if you can cap the plan at 80% of your baseline usage. In 2026, Compute Sav
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -533,7 +557,7 @@ Only if you can cap the plan at 80% of your baseline usage. In 2026, Compute Sav
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -543,7 +567,7 @@ Only if you can cap the plan at 80% of your baseline usage. In 2026, Compute Sav
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

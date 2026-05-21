@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -555,6 +575,7 @@ outputs = model.generate(**inputs, max_new_tokens=512)
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only remember one thing from this list, remember this: <strong>multi-modal AI is a pipeline problem, not a model problem.</strong> The best model is useless if your audio and image timestamps don’t align, or if your cost per user exceeds your revenue. Start with Qwen2-Audio-7B-Instruct if you need native alignment and can afford 16GB VRAM. If you’re on a tight budget, use Whisper-v3 + Phi-3-vision and accept the chaining tax—but only if you’re willing to write the alignment glue code.</p>
 <p>Here’s your next step: <strong>Sign up for Hugging Face and load Qwen2-Audio-7B-Instruct in a notebook.</strong> Run it on a single audio clip and image, and measure the latency and accuracy. If it works for your use case, migrate to a GPU instance and build a prototype. If it doesn’t, fall back to the Whisper+Phi-3 combo and start debugging the alignment layer. Don’t wait for the perfect model—build the pipeline now and iterate.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -566,7 +587,9 @@ outputs = model.generate(**inputs, max_new_tokens=512)
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -576,7 +599,8 @@ outputs = model.generate(**inputs, max_new_tokens=512)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -631,7 +655,7 @@ outputs = model.generate(**inputs, max_new_tokens=512)
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -641,7 +665,7 @@ outputs = model.generate(**inputs, max_new_tokens=512)
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

@@ -206,12 +206,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -221,7 +241,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -547,6 +567,7 @@ CircleCI’s server pricing starts at $2,500/month for up to 100k builds. That�
 GitHub Actions’ free tier caps at 20 concurrent jobs; GitHub Enterprise increases it to 100. At 50k builds/month, that’s 34 builds/minute on average. With 100 concurrency, you can process up to 100 jobs in parallel. If your average job is 2 minutes, you can handle ~50 builds/minute—enough for most systems. But if you have bursts (e.g., 500 builds in 5 minutes), you’ll hit the limit. CircleCI’s concurrency is higher (up to 500 on Performance plan), which matters for bursty workloads. I’ve seen teams hit GitHub Actions’ concurrency limit during release days and scramble to increase it.</p>
 <p><strong>What’s the real gotcha with CircleCI’s artifact retention?</strong>
 CircleCI’s Performance plan includes 2 TB of artifact storage, but older builds are purged after 30 days by default. If you rely on artifacts for compliance or debugging, you’ll need to archive them externally. GitHub Actions retains artifacts forever unless you delete them. We lost a week of debug logs at a Nairobi startup because CircleCI purged them after 30 days. The fix is to push artifacts to S3 or GHCR with a lifecycle policy. If you can’t automate archiving, GitHub Actions’ retention model is simpler.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -558,7 +579,9 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -568,7 +591,8 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -613,7 +637,7 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -623,7 +647,7 @@ CircleCI’s Performance plan includes 2 TB of artifact storage, but older build
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

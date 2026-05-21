@@ -204,12 +204,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -219,7 +239,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -512,6 +532,7 @@
 <p>Health portals often load tracking pixels via <strong>first-party domains</strong> (e.g., <code>healthportal.example.com</code> serves a pixel from <code>static.healthportal.example.com</code>). NextDNS only blocks subdomains listed in blocklists, so if the pixel is on the same domain, it slips through. To fix this, open the portal in Firefox, press F12 &gt; Network, reload the page, and inspect the “Initiator” column for any Facebook-related requests. If the initiator is <code>healthportal.example.com</code>, you need to block the specific path (e.g., <code>/tracking/pixel.js</code>) using uBlock Origin’s dynamic filtering or a custom NextDNS allow rule that blocks only the pixel endpoint. In my case, the portal was loading a pixel from <code>/static/tracking.js</code>—blocking that path in uBlock Origin reduced telemetry by 80%.</p>
 <h3 id="can-i-use-tor-browser-for-everyday-browsing-or-is-it-too-slow">Can I use Tor Browser for everyday browsing, or is it too slow?</h3>
 <p>Tor Browser is usable for everyday browsing if you adjust your expectations. On a 100 Mbit connection, median page-load time is 3–6 seconds for static sites and 8–12 seconds for JavaScript-heavy sites. I measured Wikipedia at 6.4 s and CNN at 12.2 s. The latency comes from the three-hop circuit and the exit-node selection. For comparison, stock Firefox on the same connection loads Wikipedia in 1.4 s. Tor is best for sensitive logins (banking</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -523,7 +544,9 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -533,7 +556,8 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -578,7 +602,7 @@
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -588,7 +612,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

@@ -204,12 +204,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -219,7 +239,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -556,6 +576,7 @@ No. Workers do not support TCP sockets, so you can’t connect to a PostgreSQL d
 At 50k daily requests, edge functions start to look interesting. At 100k daily requests, the cost of Workers or Vercel Edge ($10–$20/month) is often less than the origin bandwidth cost ($30–$50/month for 50 GB transferred). Below 50k daily requests, static HTML or a small origin server is cheaper. I measured this on a client’s blog: 40 GB/month from S3 CloudFront cost $8/month; moving to Workers cost $12/month but reduced origin bandwidth to 20 GB, saving $4/month net.",</p>
 <p>seo_keywords": ["edge functions cost","Cloudflare Workers vs Vercel Edge","edge functions pricing 2026","when to use edge functions","edge functions latency benchmarks","edge functions vs serverless","edge functions real world performance","edge functions for static sites"],
 "meta_description": "Cut origin server costs 30% by moving revalidations to edge functions — real latency benchmarks, CPU limits, and the 50k daily request breakpoint where Workers and Vercel Edge actually pay off.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -567,7 +588,9 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -577,7 +600,8 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -622,7 +646,7 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -632,7 +656,7 @@ At 50k daily requests, edge functions start to look interesting. At 100k daily r
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

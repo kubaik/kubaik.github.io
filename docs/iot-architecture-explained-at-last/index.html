@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -486,6 +506,7 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
 <p>Firmware updates are CPU- and memory-intensive. If your gateway is also handling MQTT traffic, the update process can starve the network stack, causing packet loss. The fix is to pause MQTT traffic during updates or offload the update to a dedicated process with real-time scheduling. In our case, we added a firmware update queue with a circuit breaker. When an update starts, the queue stops accepting new messages until the update completes, preventing packet loss. This reduced firmware update failure rate from 12% to 1.5%.</p>
 <h2 id="the-one-sentence-summary-that-stays-in-your-head">The one-sentence summary that stays in your head</h2>
 <p>IoT architecture is a chain of constrained tiers—device, gateway, broker, cloud—where every hop has a latency, power, and cost budget, and the system only works when you measure each hop before you optimize it.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -497,7 +518,9 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -507,7 +530,8 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -552,7 +576,7 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -562,7 +586,7 @@ sensorStream.transform(() -&gt; new Transformer&lt;String, JsonNode, KeyValue&lt
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

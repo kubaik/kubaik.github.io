@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -545,6 +565,7 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Start with two principles: single SLO definition enforced by admission controller, and runbooks as runnable code. These two principles alone will cut your MTTR by at least 40% and give you a repeatable pattern for scaling reliability as your team grows. The admission controller forces reliability into the deployment pipeline, and runnable runbooks reduce MTTR by 40% because engineers don’t have to copy-paste commands from a wiki. After you’ve mastered these two, add error budget burn triggers and automated canary analysis. That’s the sequence I’ve seen work in three different companies, from a 5-engineer startup to a 500-engineer enterprise.</p>
 <p>Here’s the exact next step: clone the OpenSLO schema, create one SLO file for your main service, and add a GitHub Action that validates the file and blocks merges if the SLO is violated. You’ll need about two hours to set it up and immediate feedback on whether your SLO is realistic. I’ve seen teams spend weeks arguing about SLOs—this single automation ends the debate in minutes.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -556,7 +577,9 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -566,7 +589,8 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -611,7 +635,7 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -621,7 +645,7 @@ Why dropped: No automation; we switched to runnable Markdown.</p>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

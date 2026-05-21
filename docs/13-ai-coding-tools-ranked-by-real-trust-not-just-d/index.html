@@ -207,12 +207,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -222,7 +242,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -401,6 +421,7 @@ Only if the tool has built-in safety checks. GitHub Copilot Chat blocked a PR th
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Start with <strong>Cursor’s free tier</strong> for two weeks. Use the metrics I described—acceptance rate, rework time, and edge-case warnings—to measure whether it earns your trust. If it does, upgrade to Pro ($20/month) and measure again. If it doesn’t, try <strong>Continue</strong> (open-source) or <strong>Amazon Q Developer</strong> (AWS-only). Avoid tools with pay-per-suggestion models or narrow scopes. The goal isn’t to use AI—it’s to reduce rework and ship faster without breaking things. Set up a Slack channel to log every AI-introduced bug, and review the logs weekly. If the bug rate climbs above 5%, drop the tool and try another. Trust is earned, not given.</p>
 <p>Next step: Install Cursor, index your repo, and run a 200-line AI-generated implementation of a paginated API. Time how long it takes to generate, how many tests it passes, and how many edge cases it misses. That one experiment will tell you more than any marketing page ever could.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -412,7 +433,9 @@ Only if the tool has built-in safety checks. GitHub Copilot Chat blocked a PR th
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -422,7 +445,8 @@ Only if the tool has built-in safety checks. GitHub Copilot Chat blocked a PR th
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -477,7 +501,7 @@ Only if the tool has built-in safety checks. GitHub Copilot Chat blocked a PR th
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -487,7 +511,7 @@ Only if the tool has built-in safety checks. GitHub Copilot Chat blocked a PR th
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

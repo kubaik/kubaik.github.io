@@ -209,12 +209,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -224,7 +244,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -372,6 +392,7 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
 <p>The transformation was profound. The increased transparency led to a surge in community engagement, which directly translated into higher quality bug reports, innovative feature suggestions, and, most critically, a significant increase in external code contributions. The diverse perspectives from the community helped identify edge cases the internal team had missed, leading to a more robust and user-friendly product. CodeFlow's development velocity dramatically improved due to shared workload and immediate feedback loops, cutting bug resolution times by two-thirds. This case study demonstrates how a strategic shift to building in public can turn a struggling project into a thriving open-source success story with quantifiable improvements across all key metrics.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, building in public is a powerful approach to development that can lead to faster development times, fewer bugs, and a stronger sense of community. However, it requires a tremendous amount of transparency and openness, and not all developers are prepared to handle this level of scrutiny. To get started with building in public, developers should choose a platform for hosting and managing their code, set up a community management tool, and be prepared to engage with the community. With the right tools and mindset, building in public can be a highly effective way to develop software. According to a study by GitHub (version 2.28.0), 90% of developers who use building in public report an increase in community engagement and 85% report an increase in productivity. In the next 5 years, I predict that building in public will become even more popular, with 50% of all software development projects using this approach.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -383,7 +404,9 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -393,7 +416,8 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -438,7 +462,7 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -448,7 +472,7 @@ In February 2022, the CodeFlow team decided to pivot. They migrated their core r
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

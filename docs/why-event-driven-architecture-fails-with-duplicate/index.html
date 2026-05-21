@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -602,6 +622,7 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
 <p>Kafka Streams replays state from the changelog during rebalance. If you use <code>mapValues</code>, it replays the transformation. Use <code>transform</code> instead and ensure your state store is on a persistent volume. Also check <code>processing.guarantee</code> and <code>state.dir</code> settings. One client fixed this by switching from <code>mapValues</code> to <code>transform</code> and saw duplicates drop from 70% to 0.1%.</p>
 <p>How can I prevent duplicate events from third-party webhooks?</p>
 <p>Require upstream services to send an <code>Idempotency-Key</code> header and return the same response on retry. Validate the key on your side before processing. For Stripe webhooks, send your own <code>Idempotency-Key</code> in the webhook call and store it in Redis with a 7-day TTL. At a fintech client, this reduced duplicate payments from 4% to 0.01% during outages.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -613,7 +634,9 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -623,7 +646,8 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -668,7 +692,7 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -678,7 +702,7 @@ duplicate_idempotency_keys_total{event_type=&quot;OrderCreated&quot;} 0
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

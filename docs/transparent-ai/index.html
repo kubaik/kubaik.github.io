@@ -208,12 +208,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -223,7 +243,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -393,6 +413,7 @@ for feature, weight in explanation.as_list():
 <p>Here's the brutal truth: XAI's primary value isn't building <em>trust</em> with end-users; it's a debugging tool for engineers and a compliance artifact for regulators. The idea that a layperson will scrutinize SHAP force plots or LIME bar charts and suddenly "trust" a model is largely a fantasy. Most end-users want <em>recourse</em>, <em>fairness</em>, and <em>predictable outcomes</em>, not a detailed mathematical breakdown of feature contributions. When a bank denies a loan, the applicant doesn't want to see a SHAP plot; they want to know <em>what they can do</em> to get approved next time, or if the decision was discriminatory. Providing a list of "top 5 factors" in plain language is often far more effective for user-facing transparency than raw XAI output. The real "transparency" that matters for building trust with <em>users</em> comes from robust governance, rigorous bias testing, transparent data practices, and clear communication channels for recourse, not just explaining the model's internal mechanics. Engineers, on the other hand, absolutely need XAI. It's an indispensable tool for identifying data leakage, uncovering spurious correlations, detecting subtle biases, and understanding when a model is relying on unexpected or irrelevant features. I've personally used SHAP to discover a credit risk model was heavily weighting an internal ID field that correlated with legacy risk scores, leading to unintended bias against new customers. This insight was invaluable for model refinement, but it was an <em>engineering</em> insight, not a user-facing one. We, as an industry, have over-indexed on the "user trust" narrative for XAI, when its most profound and practical impact is in empowering developers to build better, more robust, and less biased systems behind the scenes. The focus should shift from explaining <em>to</em> users to explaining <em>for</em> developers and auditors.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Transparent AI, through explainable AI techniques, is no longer a niche academic pursuit but a critical component of responsible AI development. We've established that the value extends far beyond abstract notions of trust, directly impacting debugging efficiency, regulatory compliance, and iterative model improvement. While methods like SHAP and LIME offer powerful lenses into black-box models, their application requires careful consideration of performance overhead and the potential for misinterpretation. Remember that XAI is a tool, not a magic wand; it provides insights, but those insights need human interpretation and action. For next steps, integrate XAI into your model development lifecycle from the outset, not as an afterthought. Start by instrumenting your models with SHAP or LIME explainers and generate explanations during your testing phases. Establish clear guidelines for what constitutes an "acceptable" explanation in your domain. Explore advanced techniques like causal inference to move beyond correlation-based explanations when true causality is required. Finally, prioritize the <em>user experience</em> of explanations, distilling complex XAI outputs into actionable, human-understandable insights, and crucially, focus on XAI as a <em>developer's diagnostic tool</em> first and foremost. The future of AI relies not just on building intelligent systems, but on building intelligent systems we can understand and, therefore, control and improve.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -404,7 +425,9 @@ for feature, weight in explanation.as_list():
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -414,7 +437,8 @@ for feature, weight in explanation.as_list():
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="affiliate-disclaimer">
@@ -469,7 +493,7 @@ for feature, weight in explanation.as_list():
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -479,7 +503,7 @@ for feature, weight in explanation.as_list():
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

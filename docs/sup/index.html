@@ -192,12 +192,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -207,7 +227,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -345,6 +365,7 @@ supabase
 <p>Most discussions around Supabase focus on its "Firebase alternative" aspect, emphasizing quick setup and real-time capabilities. This misses its profound, often underutilized, strength: its <strong>PostgreSQL-first philosophy</strong>. The counterintuitive insight here is that you <em>should</em> treat Supabase less like a simple BaaS and more like a highly optimized, feature-rich PostgreSQL instance that happens to have convenient APIs. Developers consistently fail to leverage the true power of PostgreSQL within Supabase. They use it as a dumb key-value store, mapping simple <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> operations from their client-side code directly to tables. This is a profound mistake. You are sitting on a world-class relational database capable of sophisticated operations. I advocate for aggressively using advanced SQL features: complex <code>jsonb</code> columns with GIN indexes for flexible, semi-structured data; <code>materialized views</code> for pre-calculating expensive reports; custom PostgreSQL functions for encapsulating complex business logic directly at the database layer; and triggers for maintaining data integrity or auditing. For instance, instead of fetching a list of items and then filtering/transforming them in your application code, write a SQL function that performs the filtering, pagination, and joins directly in the database, returning only the exact data needed. This dramatically reduces network traffic and offloads computation. Furthermore, the <code>supabase-cli</code> is severely underrated for local development and schema management. Relying solely on the Supabase dashboard for schema changes, RLS policies, and function deployments is a recipe for environment drift and unmanageable production systems. True production readiness demands local development with <code>supabase-cli</code> (specifically <code>supabase start</code>, <code>supabase db diff</code>, and <code>supabase migration save</code>), followed by controlled deployment through CI/CD. The CLI forces you to treat your database schema as code, which is the only sane way to manage a complex system over time. Don't just use Supabase; embrace PostgreSQL through Supabase.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Supabase provides an incredibly powerful and efficient platform for building production-ready applications, but its full potential is only unlocked when developers move beyond the initial "Firebase clone" mindset. The core strength lies in its robust PostgreSQL foundation and the ability to define granular security via Row Level Security policies directly within the database. Overlooking these fundamental aspects leads to insecure, unscalable applications. To truly leverage Supabase for production, prioritize comprehensive RLS implementation, understand the underlying PostgreSQL capabilities, and integrate the <code>supabase-cli</code> into your development and deployment workflows. For your next steps, I recommend diving deeper into advanced RLS patterns, such as multi-tenant isolation or role-based access control beyond <code>auth.uid()</code>. Explore the use of Supabase Edge Functions for offloading complex server-side logic, integrating third-party APIs, and handling webhooks. Establish a robust monitoring and alerting strategy that goes beyond basic dashboards, providing proactive insights into your application's health and performance. Finally, build out a comprehensive CI/CD pipeline using GitHub Actions or GitLab CI to automate testing, schema migrations via <code>supabase-cli</code>, and Edge Function deployments. This structured approach will ensure your Supabase application is not just functional, but truly production-ready.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -356,7 +377,9 @@ supabase
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -366,7 +389,8 @@ supabase
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -386,7 +410,7 @@ supabase
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -396,7 +420,7 @@ supabase
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by

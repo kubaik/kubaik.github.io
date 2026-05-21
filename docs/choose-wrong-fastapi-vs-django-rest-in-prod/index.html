@@ -205,12 +205,32 @@
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             /* Inline ad spacing */
-            .ad-inline { margin: 2rem 0; text-align: center; }
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
         </style>
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -220,7 +240,7 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <header>
         <div class="container">
             <h1><a href="/">Tech Blog</a></h1>
@@ -484,6 +504,7 @@ In our tests, a no-op async FastAPI endpoint returned 0.4ms p99 vs 0.3ms for a s
 Route your frontend to a new <code>/api/v2</code> path served by DRF, keep the old <code>/api/v1</code> FastAPI path, and use a feature flag to toggle traffic. We did this for a payments dashboard: the frontend stayed the same, but the DRF endpoints used the same Pydantic schemas via <code>pydantic-to-django</code>. It took 2 days and let us sunset FastAPI after the DRF feature set stabilized.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>If you’re starting a new project today, run a 30-minute spike: write the same simple CRUD endpoint in both stacks, deploy to two identical ECS services behind the same ALB, and load-test with Locust. Measure p99 latency and cost per 1k requests at 1k, 5k, and 10k RPS. The numbers will tell you which concurrency model fits your workload—before you’ve written 5k lines of code.</p>
+                
                 <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:block"
@@ -495,7 +516,9 @@ Route your frontend to a new <code>/api/v2</code> path served by DRF, keep the o
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div></div>
-                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -505,7 +528,8 @@ Route your frontend to a new <code>/api/v2</code> path served by DRF, keep the o
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
+                
             </div>
             
             <div class="content-policy-footer" style="
@@ -550,7 +574,7 @@ Route your frontend to a new <code>/api/v2</code> path served by DRF, keep the o
             
         </article>
     </main>
-    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -560,7 +584,7 @@ Route your frontend to a new <code>/api/v2</code> path served by DRF, keep the o
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-</div>
+</div></div>
     <footer>
         <div class="container">
             <p>&copy; 2026 Tech Blog. Written by
