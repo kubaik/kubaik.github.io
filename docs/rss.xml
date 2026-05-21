@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 21:53:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 22:15:19 +0000</lastBuildDate>
+    <item>
+      <title>AI learns your codebase: why 80% of repos stay</title>
+      <link>https://kubaik.github.io/ai-learns-your-codebase-why-80-of-repos-stay/</link>
+      <description>Cut codebase context confusion 80% with AI that learns your entire repo — static, runtime, and behavioral layers with 2026 tools, benchmarks, and real fixes. Repository intelligence explained for engineers.</description>
+      <pubDate>Thu, 21 May 2026 22:15:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-learns-your-codebase-why-80-of-repos-stay/</guid>
+    </item>
     <item>
       <title>Skip zero-trust overkill: small team tactics</title>
       <link>https://kubaik.github.io/skip-zero-trust-overkill-small-team-tactics/</link>
@@ -138,13 +145,6 @@
       <description>Cut tenant isolation costs 40% by starting with separate PostgreSQL databases instead of RLS or schemas — real benchmarks, migration pitfalls, and a Go router you can deploy today</description>
       <pubDate>Thu, 21 May 2026 10:29:59 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-tenant-db-dont-lock-yourself-out/</guid>
-    </item>
-    <item>
-      <title>Over-engineering kills velocity: our 2026 rewrite</title>
-      <link>https://kubaik.github.io/over-engineering-kills-velocity-our-2026-rewrite/</link>
-      <description>Cut API latency 97% and costs 91% by removing Kafka, Flink, and Kubernetes — here’s the exact Go + PostgreSQL stack that worked in 2026</description>
-      <pubDate>Thu, 21 May 2026 10:12:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-kills-velocity-our-2026-rewrite/</guid>
     </item>
   </channel>
 </rss>
