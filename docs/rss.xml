@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 00:20:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 02:32:46 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for small teams: skip the bloat</title>
+      <link>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-bloat/</link>
+      <description>Cut $15k/year on zero-trust hype with a 4-hour session policy and hardware-backed MFA — real-world benchmarks and the threat budget model small teams actually need.</description>
+      <pubDate>Thu, 21 May 2026 02:32:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-bloat/</guid>
+    </item>
     <item>
       <title>Data skills that move AI salaries in 2026</title>
       <link>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut promotion time 50% without a CS degree — focus on reliability, observability, and cost control, not credentials or LeetCode. Proven examples from real systems.</description>
       <pubDate>Wed, 20 May 2026 12:26:39 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-good-heres-what-actually-works/</guid>
-    </item>
-    <item>
-      <title>GitHub Copilot cuts review time 40% — here’s how</title>
-      <link>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</link>
-      <description>GitHub Copilot cuts review: eviews 30–40% faster and juniors were still. Practical guide with real examples.</description>
-      <pubDate>Wed, 20 May 2026 11:27:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/github-copilot-cuts-review-time-40-heres-how/</guid>
     </item>
   </channel>
 </rss>
