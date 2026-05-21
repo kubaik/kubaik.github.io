@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 13:49:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 13:54:01 +0000</lastBuildDate>
+    <item>
+      <title>Rewrite mobile backends for 5G: 300ms to 30ms</title>
+      <link>https://kubaik.github.io/rewrite-mobile-backends-for-5g-300ms-to-30ms/</link>
+      <description>TT and 10–20% packet loss you see on 5G mid with Rewrite mobile backends 5G — be a single misconfigured timeout — this post is wh.</description>
+      <pubDate>Thu, 21 May 2026 13:53:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/rewrite-mobile-backends-for-5g-300ms-to-30ms/</guid>
+    </item>
     <item>
       <title>Negotiate Fair Remote Pay Across Borders</title>
       <link>https://kubaik.github.io/negotiate-fair-remote-pay-across-borders/</link>
@@ -138,13 +145,6 @@
       <description>Pick the fastest, cheapest real-time pattern in minutes — median latency and cost figures for WebSocket vs SSE vs long polling in 2026</description>
       <pubDate>Wed, 20 May 2026 22:50:24 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websocket-sse-polling-costs/</guid>
-    </item>
-    <item>
-      <title>Freelance burnout: the systems failure</title>
-      <link>https://kubaik.github.io/freelance-burnout-the-systems-failure/</link>
-      <description>Cut burnout in 8 weeks: 3 concrete fixes that saved me $8k in lost productivity. Freelance burnout symptoms, contract clauses, and tooling audits that actually work in 2026.</description>
-      <pubDate>Wed, 20 May 2026 21:46:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-burnout-the-systems-failure/</guid>
     </item>
   </channel>
 </rss>
