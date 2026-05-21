@@ -1042,6 +1042,7 @@ def _build_templates() -> dict:
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
