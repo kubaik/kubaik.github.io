@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 11:34:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 08:38:17 +0000</lastBuildDate>
+    <item>
+      <title>AI pipelines: the cache you forgot to warm</title>
+      <link>https://kubaik.github.io/ai-pipelines-the-cache-you-forgot-to-warm/</link>
+      <description>ives a 50–70% hit-rate on day one, even bef with AI pipelines cache you — build a pipeline: fetch data, chunk it, embed it, s.</description>
+      <pubDate>Thu, 21 May 2026 08:38:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pipelines-the-cache-you-forgot-to-warm/</guid>
+    </item>
+    <item>
+      <title>Senior devs quit for autonomy, not cash</title>
+      <link>https://kubaik.github.io/senior-devs-quit-for-autonomy-not-cash/</link>
+      <description>Senior devs quit tech: 025. Only 12% named compensation as their t. Practical guide with real examples.</description>
+      <pubDate>Thu, 21 May 2026 08:22:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-for-autonomy-not-cash/</guid>
+    </item>
     <item>
       <title>Database pools: why 100 fails in 2026</title>
       <link>https://kubaik.github.io/database-pools-why-100-fails-in-2026/</link>
@@ -131,13 +145,6 @@
       <description>Cut AWS cloud carbon 32% per request without increasing p95 latency above 80 ms — payload pruning, Node.js JIT, and Graviton3 flags that saved $620/month.</description>
       <pubDate>Wed, 20 May 2026 16:42:27 +0000</pubDate>
       <guid>https://kubaik.github.io/32-less-cloud-carbon-same-api-speed/</guid>
-    </item>
-    <item>
-      <title>Avoid edge hype: where Workers and Edge pay off</title>
-      <link>https://kubaik.github.io/avoid-edge-hype-where-workers-and-edge-pay-off/</link>
-      <description>Cut API response time 75% with Cloudflare Workers in 2026 — real latency, cold start, and cost numbers from a 2.1M-rpd production system, plus when Vercel Edge Functions actually save money.</description>
-      <pubDate>Wed, 20 May 2026 16:09:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-edge-hype-where-workers-and-edge-pay-off/</guid>
     </item>
   </channel>
 </rss>
