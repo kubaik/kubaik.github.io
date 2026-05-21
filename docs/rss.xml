@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 13:59:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 14:25:41 +0000</lastBuildDate>
+    <item>
+      <title>Rate your worth: 2026 freelance data</title>
+      <link>https://kubaik.github.io/rate-your-worth-2026-freelance-data/</link>
+      <description>Set freelance rates that cover taxes, late fees, and your rent in 2026 — with a spreadsheet, contract clauses, and real invoices from 247 gigs.</description>
+      <pubDate>Thu, 21 May 2026 14:25:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-your-worth-2026-freelance-data/</guid>
+    </item>
     <item>
       <title>pgvector beats vector DBs in most cases</title>
       <link>https://kubaik.github.io/pgvector-beats-vector-dbs-in-most-cases/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment time 90% with Railway, Fly.io, and PocketBase — the AI-friendly stack that shipped real products in 2026 — no DevOps needed.</description>
       <pubDate>Wed, 20 May 2026 23:02:39 +0000</pubDate>
       <guid>https://kubaik.github.io/how-ai-coding-empowers-non-traditional-devs/</guid>
-    </item>
-    <item>
-      <title>Design tenant databases that won&apos;t break at scale</title>
-      <link>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</link>
-      <description>Cut multi-tenant SaaS costs 40% and scale to millions without schema-per-tenant — real examples from Linear, GitLab, Shopify with PostgreSQL 16, pg_partman 5.0, Redis 7.2.</description>
-      <pubDate>Wed, 20 May 2026 22:55:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</guid>
     </item>
   </channel>
 </rss>
