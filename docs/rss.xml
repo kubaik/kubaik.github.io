@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 21:21:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 21:53:42 +0000</lastBuildDate>
+    <item>
+      <title>Skip zero-trust overkill: small team tactics</title>
+      <link>https://kubaik.github.io/skip-zero-trust-overkill-small-team-tactics/</link>
+      <description>Save resources with practical zero-trust security for small teams. Cut $12,000/year by focusing on simple IAM roles, MFA, and secrets rotation.</description>
+      <pubDate>Thu, 21 May 2026 21:53:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-zero-trust-overkill-small-team-tactics/</guid>
+    </item>
     <item>
       <title>AI salary boosters: transformers vs vector DBs in 2026</title>
       <link>https://kubaik.github.io/ai-salary-boosters-transformers-vs-vector-dbs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 97% and costs 91% by removing Kafka, Flink, and Kubernetes — here’s the exact Go + PostgreSQL stack that worked in 2026</description>
       <pubDate>Thu, 21 May 2026 10:12:13 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-kills-velocity-our-2026-rewrite/</guid>
-    </item>
-    <item>
-      <title>Message queues: 30ms vs 3s failures</title>
-      <link>https://kubaik.github.io/message-queues-30ms-vs-3s-failures/</link>
-      <description>Cut queue latency 70% with real benchmarks — RabbitMQ 3.13 vs Kafka 3.7 vs Redis Streams 7.2. Includes failure modes, code samples, and a 30-minute fix checklist.</description>
-      <pubDate>Thu, 21 May 2026 09:38:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-30ms-vs-3s-failures/</guid>
     </item>
   </channel>
 </rss>
