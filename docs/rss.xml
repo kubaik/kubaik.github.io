@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 19:23:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 19:29:16 +0000</lastBuildDate>
+    <item>
+      <title>Rebuilt my freelance grind</title>
+      <link>https://kubaik.github.io/rebuilt-my-freelance-grind/</link>
+      <description>Cut freelance burnout 80% with 3 concrete fixes — hourly rate up 25%, error rate down 72%, and mood score up 56%. Learn what tools worked, what costs I cut, and the exact scripts I used.</description>
+      <pubDate>Thu, 21 May 2026 19:29:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/rebuilt-my-freelance-grind/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 60% latency hidden in serialization</title>
       <link>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</link>
@@ -138,13 +145,6 @@
       <description>ives a 50–70% hit-rate on day one, even bef with AI pipelines cache you — build a pipeline: fetch data, chunk it, embed it, s.</description>
       <pubDate>Thu, 21 May 2026 08:38:05 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pipelines-the-cache-you-forgot-to-warm/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit for autonomy, not cash</title>
-      <link>https://kubaik.github.io/senior-devs-quit-for-autonomy-not-cash/</link>
-      <description>Senior devs quit tech: 025. Only 12% named compensation as their t. Practical guide with real examples.</description>
-      <pubDate>Thu, 21 May 2026 08:22:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-for-autonomy-not-cash/</guid>
     </item>
   </channel>
 </rss>
