@@ -863,61 +863,72 @@ def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
     POST_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }} - {{ site_name }}</title>
-    <meta name="description" content="{{ post.meta_description }}">
-    {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
-    <meta name="author" content="Kubai Kevin">
-    <meta name="article:author" content="Kubai Kevin">
-    <meta name="article:published_time" content="{{ post.created_at }}">
-    <meta name="article:modified_time" content="{{ post.updated_at }}">
-    <meta name="article:section" content="Technology">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ post.title }}">
-    <meta property="og:description" content="{{ post.meta_description }}">
-    <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
-    <meta property="og:site_name" content="{{ site_name }}">
-    <meta property="og:image" content="{{ base_url }}/static/images/{{ post.slug }}.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ post.title }}">
-    <meta name="twitter:description" content="{{ post.meta_description }}">
-    <meta name="twitter:image" content="{{ base_url }}/static/images/{{ post.slug }}.jpg">
-    <meta name="twitter:site" content="@KubaiKevin">
-    <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-    <link rel="preconnect" href="https://www.google-analytics.com">
-    {{ global_meta_tags | safe }}
-    {{ meta_tags | safe }}
-    {{ structured_data | safe }}
-    {{ article_schema | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
-    <script defer src="{{ base_path }}/static/code_runner.js"></script>
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <meta name="theme-color" content="#6366f1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        #reading-progress {
-            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            z-index: 9999; transition: width 0.1s linear;
-        }
-        .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-        .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .ad-inline { margin: 2rem 0; text-align: center; }
-    </style>
-</head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ post.title }} - {{ site_name }}</title>
+        <meta name="description" content="{{ post.meta_description }}">
+        {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="{{ post.created_at}}">
+        <meta property="article:modified_time" content="{{ post.updated_at}}">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="{{ post.title }}">
+        <meta property="og:description" content="{{ post.meta_description }}">
+        <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
+        <meta property="og:site_name" content="{{ site_name }}">
+        <meta property="og:locale" content="en_US">
+        {%- set og_img = base_url + '/static/images/' + post.slug + '.jpg' %}
+        {%- set og_img_fallback = base_url + '/static/icons/icon-512x512.png' %}
+        <meta property="og:image" content="{{ og_img if post.has_image else og_img_fallback }}">
+        <meta property="og:image:alt" content="{{ post.title }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ post.title }}">
+        <meta name="twitter:description" content="{{ post.meta_description }}">
+        <meta name="twitter:image" content="{{ og_img if post.has_image else og_img_fallback }}">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
+
+        <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        {{ global_meta_tags | safe }}
+        {{ meta_tags | safe }}
+        {{ structured_data | safe }}
+        {{ article_schema | safe }}
+
+        <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
+        <script defer src="{{ base_path }}/static/code_runner.js"></script>
+        <link rel="manifest" href="{{ base_path }}/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+        <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            .ad-inline { margin: 2rem 0; text-align: center; }
+        </style>
+    </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     {{ header_ad | safe }}
