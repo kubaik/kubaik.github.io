@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 17:15:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 17:25:18 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions: stop guessing, measure first</title>
+      <link>https://kubaik.github.io/edge-functions-stop-guessing-measure-first/</link>
+      <description>Cut API p99 latency 65% with Workers or Edge — concrete benchmarks, code samples, and the hidden costs most docs omit</description>
+      <pubDate>Thu, 21 May 2026 17:25:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-stop-guessing-measure-first/</guid>
+    </item>
     <item>
       <title>LeetCode won’t land you remote dev jobs</title>
       <link>https://kubaik.github.io/leetcode-wont-land-you-remote-dev-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Pass remote tech interviews without LeetCode drills — focus on reliability, cost, and communication with concrete examples, tools, and benchmarks for 2026.</description>
       <pubDate>Thu, 21 May 2026 06:45:40 +0000</pubDate>
       <guid>https://kubaik.github.io/crush-remote-tech-interviews-without-leetcode/</guid>
-    </item>
-    <item>
-      <title>MCP servers: silent infrastructure for AI scaling</title>
-      <link>https://kubaik.github.io/mcp-servers-silent-infrastructure-for-ai-scaling/</link>
-      <description>Reduce LLM costs 40% and latency 79% with MCP servers — the open protocol turning ad-hoc API calls into a managed backend service that every developer should understand.</description>
-      <pubDate>Thu, 21 May 2026 05:25:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-silent-infrastructure-for-ai-scaling/</guid>
     </item>
   </channel>
 </rss>
