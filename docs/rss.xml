@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 13:05:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 10:12:25 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering kills velocity: our 2026 rewrite</title>
+      <link>https://kubaik.github.io/over-engineering-kills-velocity-our-2026-rewrite/</link>
+      <description>Cut API latency 97% and costs 91% by removing Kafka, Flink, and Kubernetes — here’s the exact Go + PostgreSQL stack that worked in 2026</description>
+      <pubDate>Thu, 21 May 2026 10:12:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-kills-velocity-our-2026-rewrite/</guid>
+    </item>
     <item>
       <title>Message queues: 30ms vs 3s failures</title>
       <link>https://kubaik.github.io/message-queues-30ms-vs-3s-failures/</link>
@@ -138,13 +145,6 @@
       <description>Cut remote salary friction 40% with a negotiation packet: salary bands, FX hedge, tech-cost savings, SOC 2 checklist. Nairobi-based engineer shows how to raise rates without losing deals.</description>
       <pubDate>Wed, 20 May 2026 19:17:11 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-salary-hacks-for-lower-cost-countries/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: 3 bottlenecks tutorials ignore</title>
-      <link>https://kubaik.github.io/rag-in-prod-3-bottlenecks-tutorials-ignore/</link>
-      <description>Cut RAG latency 83% and infra costs 27% by fixing three tutorial-blind bottlenecks: HNSW depth, missing cache, and sparse retrieval latency — with actual numbers and configs.</description>
-      <pubDate>Wed, 20 May 2026 19:11:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-3-bottlenecks-tutorials-ignore/</guid>
     </item>
   </channel>
 </rss>
