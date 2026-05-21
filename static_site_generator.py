@@ -1899,41 +1899,91 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found - {{ site_name }}</title>
+    <title>Page Not Found — {{ site_name }}</title>
     <meta name="robots" content="noindex, nofollow">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <script>setTimeout(function(){window.location.replace('{{ base_path }}/');},3000);</script>
     <style>
-        .error-container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem}
-        .error-code{font-size:6rem;font-weight:700;color:#6366f1;line-height:1;margin-bottom:1rem}
-        .home-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.75rem 2rem;border-radius:50px;text-decoration:none;font-weight:600}
-        .progress-bar-wrap{width:280px;height:4px;background:#e0e0e0;border-radius:2px;margin:1.5rem auto 0;overflow:hidden}
-        .progress-bar{height:100%;width:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:2px;animation:drain 3s linear forwards;transform-origin:left}
-        @keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+        .error-container {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 60vh; text-align: center; padding: 2rem;
+        }
+        .error-code {
+            font-size: 5rem; font-weight: 700; color: #6366f1;
+            line-height: 1; margin-bottom: 0.5rem;
+        }
+        .error-links { margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; padding: 0.75rem 2rem; border-radius: 50px;
+            text-decoration: none; font-weight: 600;
+        }
+        .btn-secondary {
+            display: inline-block; background: #f0f4ff; color: #6366f1;
+            padding: 0.75rem 2rem; border-radius: 50px;
+            text-decoration: none; font-weight: 600; border: 2px solid #6366f1;
+        }
+        .popular-posts { margin-top: 2.5rem; max-width: 480px; text-align: left; }
+        .popular-posts h3 { margin-bottom: 0.75rem; font-size: 1rem; color: #555; }
+        .popular-posts ul { list-style: none; padding: 0; margin: 0; }
+        .popular-posts li { margin-bottom: 0.5rem; }
+        .popular-posts a { color: #6366f1; text-decoration: none; font-size: 0.9rem; }
+        .popular-posts a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <header><div class="container">
-        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a></nav>
-    </div></header>
+    <header>
+        <div class="container">
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+            </nav>
+        </div>
+    </header>
     <main class="container">
         <div class="error-container">
             <div class="error-code">404</div>
             <h2>Page Not Found</h2>
-            <p>This page may have been moved or deleted. You'll be redirected automatically.</p>
-            <p>Redirecting in <strong id="countdown">3</strong> seconds&hellip;</p>
-            <a href="{{ base_path }}/" class="home-button">Go to Homepage Now</a>
-            <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+            <p style="color:#666; max-width:400px;">
+                This page may have moved or been removed. Use the links below to find what you need.
+            </p>
+            <div class="error-links">
+                <a href="{{ base_path }}/" class="btn-primary">Go to Homepage</a>
+                <a href="{{ base_path }}/about/" class="btn-secondary">About</a>
+            </div>
+            <div class="popular-posts">
+                <h3>Or browse recent posts:</h3>
+                <ul id="recent-links"><li><a href="{{ base_path }}/">View all articles →</a></li></ul>
+            </div>
         </div>
     </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }}</p>
+        </div>
+    </footer>
     <script>
-        var s=3,el=document.getElementById('countdown');
-        var iv=setInterval(function(){s-=1;if(el)el.textContent=s;if(s<=0)clearInterval(iv);},1000);
+    // Populate recent posts from posts.json — no redirect, user chooses
+    fetch('{{ base_path }}/posts.json')
+        .then(r => r.ok ? r.json() : [])
+        .then(posts => {
+            if (!posts.length) return;
+            var ul = document.getElementById('recent-links');
+            ul.innerHTML = '';
+            posts.slice(0, 5).forEach(function(p) {
+                var li = document.createElement('li');
+                var a  = document.createElement('a');
+                a.href = '{{ base_path }}/' + p.slug + '/';
+                a.textContent = p.title;
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
+        })
+        .catch(function() {});
     </script>
 </body>
 </html>"""
