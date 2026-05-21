@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 05:25:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 06:45:51 +0000</lastBuildDate>
+    <item>
+      <title>Crush remote tech interviews without LeetCode</title>
+      <link>https://kubaik.github.io/crush-remote-tech-interviews-without-leetcode/</link>
+      <description>Pass remote tech interviews without LeetCode drills — focus on reliability, cost, and communication with concrete examples, tools, and benchmarks for 2026.</description>
+      <pubDate>Thu, 21 May 2026 06:45:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/crush-remote-tech-interviews-without-leetcode/</guid>
+    </item>
     <item>
       <title>MCP servers: silent infrastructure for AI scaling</title>
       <link>https://kubaik.github.io/mcp-servers-silent-infrastructure-for-ai-scaling/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% under 5G tower handovers with dynamic Redis pools — latency traps, pool sizing, and cost savings you missed</description>
       <pubDate>Wed, 20 May 2026 13:34:34 +0000</pubDate>
       <guid>https://kubaik.github.io/build-backend-for-5g-users-latency-traps-revealed/</guid>
-    </item>
-    <item>
-      <title>That $50k over-engineering bill we paid</title>
-      <link>https://kubaik.github.io/that-50k-over-engineering-bill-we-paid/</link>
-      <description>Cut AWS costs 93% and latency 83% by removing Kafka, gRPC, and event sourcing. The real cost of over-engineering in 2026 — with concrete numbers, benchmarks, and code.</description>
-      <pubDate>Wed, 20 May 2026 13:27:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/that-50k-over-engineering-bill-we-paid/</guid>
     </item>
   </channel>
 </rss>
