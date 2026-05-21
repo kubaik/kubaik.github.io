@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 17:25:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 18:56:25 +0000</lastBuildDate>
+    <item>
+      <title>From 12k to 220k: how I priced my skills globally</title>
+      <link>https://kubaik.github.io/from-12k-to-220k-how-i-priced-my-skills-globally/</link>
+      <description>Earned $220/hour globally after starting at $30/hour locally — the pricing model, contracts, and case studies that worked in 2026</description>
+      <pubDate>Thu, 21 May 2026 18:56:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/from-12k-to-220k-how-i-priced-my-skills-globally/</guid>
+    </item>
     <item>
       <title>Edge functions: stop guessing, measure first</title>
       <link>https://kubaik.github.io/edge-functions-stop-guessing-measure-first/</link>
@@ -138,13 +145,6 @@
       <description>he app. - 90% latency at P99 &gt; 8 seconds. - with Set max pool size — this when I inherited a Spring Boot 3.</description>
       <pubDate>Thu, 21 May 2026 08:05:03 +0000</pubDate>
       <guid>https://kubaik.github.io/database-pools-why-100-fails-in-2026/</guid>
-    </item>
-    <item>
-      <title>Crush remote tech interviews without LeetCode</title>
-      <link>https://kubaik.github.io/crush-remote-tech-interviews-without-leetcode/</link>
-      <description>Pass remote tech interviews without LeetCode drills — focus on reliability, cost, and communication with concrete examples, tools, and benchmarks for 2026.</description>
-      <pubDate>Thu, 21 May 2026 06:45:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/crush-remote-tech-interviews-without-leetcode/</guid>
     </item>
   </channel>
 </rss>
