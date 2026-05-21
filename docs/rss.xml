@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 18:56:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 19:23:06 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 60% latency hidden in serialization</title>
+      <link>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</link>
+      <description>Cut RAG pipeline latency 93% to 55 ms at 5 000 users with one serialization fix and cache redesign — the moves tutorials skip and the exact versions that worked in production 2026.</description>
+      <pubDate>Thu, 21 May 2026 19:22:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</guid>
+    </item>
     <item>
       <title>From 12k to 220k: how I priced my skills globally</title>
       <link>https://kubaik.github.io/from-12k-to-220k-how-i-priced-my-skills-globally/</link>
@@ -138,13 +145,6 @@
       <description>Senior devs quit tech: 025. Only 12% named compensation as their t. Practical guide with real examples.</description>
       <pubDate>Thu, 21 May 2026 08:22:26 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-for-autonomy-not-cash/</guid>
-    </item>
-    <item>
-      <title>Database pools: why 100 fails in 2026</title>
-      <link>https://kubaik.github.io/database-pools-why-100-fails-in-2026/</link>
-      <description>he app. - 90% latency at P99 &gt; 8 seconds. - with Set max pool size — this when I inherited a Spring Boot 3.</description>
-      <pubDate>Thu, 21 May 2026 08:05:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-pools-why-100-fails-in-2026/</guid>
     </item>
   </channel>
 </rss>
