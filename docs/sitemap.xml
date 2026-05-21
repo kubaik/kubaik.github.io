@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-05-20</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-<url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-<url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-<url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-05-21</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/how-ai-coding-empowers-non-traditional-devs/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/design-tenant-databases-that-wont-break-at-scale/</loc><lastmod>2026-05-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -158,7 +158,6 @@
 <url><loc>https://kubaik.github.io/ai-sprints-how-to-measure-if-its-helping-or-hurting/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/codebase-graphs-ai-sees-what-you-miss/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/multi-tenant-databases-the-schema-mistake-everyone/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/data-skills-that-boost-ai-salaries/</loc><lastmod>2026-05-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/why-choose-postgresql-over-mysql-in-2026/</loc><lastmod>2026-05-16</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/freelance-burnouts-hidden-buffer-fix/</loc><lastmod>2026-05-16</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/message-queues-the-two-questions-that-break-everything/</loc><lastmod>2026-05-16</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
