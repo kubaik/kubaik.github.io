@@ -1703,7 +1703,7 @@ def _build_templates() -> dict:
             <div class="about-section" id="editorial">
                 <h2>Editorial process</h2>
                 <div class="process-step"><div class="step-num">1</div><p><strong>Topic selection</strong> — Topics are chosen based on direct production experience or questions that come up repeatedly in code reviews.</p></div>
-                <div class="process-step"><div class="step-num">2</div><p><strong>AI-assisted drafting</strong> — I use Claude and GPT-4o to generate first drafts. The prompt requires specific tool names, version numbers, and benchmarks.</p></div>
+                <div class="process-step"><div class="step-num">2</div><p><strong>Research and drafting</strong> — I research each topic using official documentation, GitHub issues, and my own production notes. Drafts are written to reflect real decisions I have made on actual systems. External tools may assist with structure, but every claim is verified against primary sources before publishing.</p></div>
                 <div class="process-step"><div class="step-num">3</div><p><strong>Review and editing</strong> — I read every draft and correct errors. Code examples are tested locally where practical.</p></div>
                 <div class="process-step"><div class="step-num">4</div><p><strong>My take section</strong> — Every article includes my personal opinion based on production experience.</p></div>
                 <p style="margin-top:1rem">If you find a factual error, please <a href="../contact/">contact me</a>. I update articles when errors are found.</p>
