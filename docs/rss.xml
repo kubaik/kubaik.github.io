@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 12:13:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 09:16:30 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee when on-call sucks</title>
+      <link>https://kubaik.github.io/senior-devs-flee-when-on-call-sucks/</link>
+      <description>leave for 20% more stock. They leave becaus with senior devs quit tech — told me: “We paid them €120k base, €40k bonus, and.</description>
+      <pubDate>Thu, 21 May 2026 09:16:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-when-on-call-sucks/</guid>
+    </item>
     <item>
       <title>Why live demos lie about production</title>
       <link>https://kubaik.github.io/why-live-demos-lie-about-production/</link>
@@ -138,13 +145,6 @@
       <description>earned 20–30% above the median, but I didn’ with 12k re-rated salary — solve) In 2023, my net monthly salary in Nairobi wa.</description>
       <pubDate>Wed, 20 May 2026 18:36:39 +0000</pubDate>
       <guid>https://kubaik.github.io/from-3k-to-12k-how-i-re-rated-my-salary/</guid>
-    </item>
-    <item>
-      <title>Portfolio trap: 99% of remote devs get it wrong</title>
-      <link>https://kubaik.github.io/portfolio-trap-99-of-remote-devs-get-it-wrong/</link>
-      <description>Portfolio trap: 99% of remote devs get it wrong — learn the 2026 hiring signals that actually matter and skip the polished-demo trap with real failure artifacts and load tests.</description>
-      <pubDate>Wed, 20 May 2026 16:50:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-trap-99-of-remote-devs-get-it-wrong/</guid>
     </item>
   </channel>
 </rss>
