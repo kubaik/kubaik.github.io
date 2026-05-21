@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 16:39:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 16:54:59 +0000</lastBuildDate>
+    <item>
+      <title>AI coding: 5 stacks shipping today</title>
+      <link>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</link>
+      <description>Cut deployment time 80% with FastAPI + SQLite + Fly.io — zero DevOps, $0 cost at 100 users, and a 0.7% error rate under load</description>
+      <pubDate>Thu, 21 May 2026 16:54:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</guid>
+    </item>
     <item>
       <title>Portfolio beats platforms: remote hiring from Africa</title>
       <link>https://kubaik.github.io/portfolio-beats-platforms-remote-hiring-from-africa/</link>
@@ -138,13 +145,6 @@
       <description>Cut $15k/year on zero-trust hype with a 4-hour session policy and hardware-backed MFA — real-world benchmarks and the threat budget model small teams actually need.</description>
       <pubDate>Thu, 21 May 2026 02:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-for-small-teams-skip-the-bloat/</guid>
-    </item>
-    <item>
-      <title>Data skills that move AI salaries in 2026</title>
-      <link>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</link>
-      <description>Python vs SQL that pays more in 2026 — benchmarked latency, TCO, and salary. Learn which AI skill actually moves your paycheck, with real code and data.</description>
-      <pubDate>Wed, 20 May 2026 23:07:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-skills-that-move-ai-salaries-in-2026/</guid>
     </item>
   </channel>
 </rss>
