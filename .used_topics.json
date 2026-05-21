@@ -4,5 +4,6 @@
   "Designing systems for AI-first applications: the patterns that actually hold up",
   "When to use a message queue (and when it's overkill)",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "How to design a multi-tenant SaaS database without painting yourself into a corner"
+  "How to design a multi-tenant SaaS database without painting yourself into a corner",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
