@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 20:32:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 21:41:38 +0000</lastBuildDate>
+    <item>
+      <title>Charge clients from low-cost countries</title>
+      <link>https://kubaik.github.io/charge-clients-from-low-cost-countries/</link>
+      <description>Increase remote salary from $3k to $15k/month — real negotiation scripts, rate card, and cold email that closes 48% of leads in 2026.</description>
+      <pubDate>Fri, 22 May 2026 21:41:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/charge-clients-from-low-cost-countries/</guid>
+    </item>
     <item>
       <title>Integrate African payment APIs cleanly</title>
       <link>https://kubaik.github.io/integrate-african-payment-apis-cleanly/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio gets you hired remotely from Africa — ship one endpoint, expose one metric, land the interview. Use FastAPI 0.111, PostgreSQL 16, AWS RDS t4g.micro. Live demo beats polished README by 78% callbacks.</description>
       <pubDate>Fri, 22 May 2026 09:59:59 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-star-projects-show-work-not-words/</guid>
-    </item>
-    <item>
-      <title>Edge functions in 2026: when they actually help</title>
-      <link>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</link>
-      <description>pped from 60 ms to 14 ms, but the dashboard s with Edge functions them waste — solve latency by running code closer to users.</description>
-      <pubDate>Fri, 22 May 2026 08:38:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</guid>
     </item>
   </channel>
 </rss>
