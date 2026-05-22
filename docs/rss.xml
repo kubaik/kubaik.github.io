@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 21:51:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 22:01:53 +0000</lastBuildDate>
+    <item>
+      <title>No CS degree? Break senior glass</title>
+      <link>https://kubaik.github.io/no-cs-degree-break-senior-glass/</link>
+      <description>Break the senior glass without a CS degree in 2026 — latency benchmarks, cost savings, and the leverage mindset most teams miss. Learn from real systems that promoted self-taught engineers.</description>
+      <pubDate>Fri, 22 May 2026 22:01:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-cs-degree-break-senior-glass/</guid>
+    </item>
     <item>
       <title>Zero-trust for small teams: what works</title>
       <link>https://kubaik.github.io/zero-trust-for-small-teams-what-works/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector DB costs 70% with pgvector 0.7.0 — benchmarked insert rates, p99 latency, and $216/year vs $688/year in 2026.</description>
       <pubDate>Fri, 22 May 2026 12:06:16 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-waste-of-money/</guid>
-    </item>
-    <item>
-      <title>From $500 to $8k/month: the 4 moves that worked</title>
-      <link>https://kubaik.github.io/from-500-to-8kmonth-the-4-moves-that-worked/</link>
-      <description>From $500 to $8k/month in 4 moves: how one developer flipped the script on global rates, saved 20 % in fees, and cut invoice time from 6 weeks to 3 days.</description>
-      <pubDate>Fri, 22 May 2026 10:19:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-500-to-8kmonth-the-4-moves-that-worked/</guid>
     </item>
   </channel>
 </rss>
