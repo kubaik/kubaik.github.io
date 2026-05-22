@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 18:17:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 18:26:11 +0000</lastBuildDate>
+    <item>
+      <title>Instrument AI pipelines: LLM metrics that matter</title>
+      <link>https://kubaik.github.io/instrument-ai-pipelines-llm-metrics-that-matter/</link>
+      <description>Cut AI pipeline outages 80% with 5 instrumentations — prompt drift, embedding drift, LLM judge, refusal rates, and token latency — using Prometheus 2.52 and LangChain 0.2.15.</description>
+      <pubDate>Fri, 22 May 2026 18:25:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-ai-pipelines-llm-metrics-that-matter/</guid>
+    </item>
     <item>
       <title>Simplicity beats microservices until it doesn&apos;t</title>
       <link>https://kubaik.github.io/simplicity-beats-microservices-until-it-doesnt/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, prompt engineering with guardrails pays $152k median, vector search tuning pays $178k—combined skills hit $210k. See the benchmark results and decide which skill to learn first.</description>
       <pubDate>Thu, 21 May 2026 23:22:51 +0000</pubDate>
       <guid>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</guid>
-    </item>
-    <item>
-      <title>Local LLMs on a laptop: the real stack</title>
-      <link>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</link>
-      <description>Cut local LLM latency from 12 s to 1.8 s with the stack that actually works in 2026 — Rust tokenizers, vLLM, and pre-warmed inference. Real benchmarks and code.</description>
-      <pubDate>Thu, 21 May 2026 22:56:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</guid>
     </item>
   </channel>
 </rss>
