@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 12:06:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 12:42:38 +0000</lastBuildDate>
+    <item>
+      <title>Fake the interview: self-taught path to remote roles</title>
+      <link>https://kubaik.github.io/fake-the-interview-self-taught-path-to-remote-roles/</link>
+      <description>Pass remote tech interviews by mastering system design stories, not LeetCode drills — 3 real designs, 30-minute prep, and the exact commands to mock a distributed system locally in 2026.</description>
+      <pubDate>Fri, 22 May 2026 12:42:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/fake-the-interview-self-taught-path-to-remote-roles/</guid>
+    </item>
     <item>
       <title>Vector DBs: Waste of money?</title>
       <link>https://kubaik.github.io/vector-dbs-waste-of-money/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout 80% with 3 concrete fixes — hourly rate up 25%, error rate down 72%, and mood score up 56%. Learn what tools worked, what costs I cut, and the exact scripts I used.</description>
       <pubDate>Thu, 21 May 2026 19:29:04 +0000</pubDate>
       <guid>https://kubaik.github.io/rebuilt-my-freelance-grind/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: 60% latency hidden in serialization</title>
-      <link>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</link>
-      <description>Cut RAG pipeline latency 93% to 55 ms at 5 000 users with one serialization fix and cache redesign — the moves tutorials skip and the exact versions that worked in production 2026.</description>
-      <pubDate>Thu, 21 May 2026 19:22:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</guid>
     </item>
   </channel>
 </rss>
