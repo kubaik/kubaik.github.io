@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 20:12:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 20:16:28 +0000</lastBuildDate>
+    <item>
+      <title>Beat remote salary lowballs with Levels.fyi data</title>
+      <link>https://kubaik.github.io/beat-remote-salary-lowballs-with-levelsfyi-data/</link>
+      <description>Increase remote salary 78% using Levels.fyi data — fetch 2026 US tech salary bands, render a one-page PDF, and attach to your next Slack message</description>
+      <pubDate>Fri, 22 May 2026 20:16:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/beat-remote-salary-lowballs-with-levelsfyi-data/</guid>
+    </item>
     <item>
       <title>Non-traditional devs ship real products now</title>
       <link>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</link>
@@ -138,13 +145,6 @@
       <description>Reduce attack surface 70% with zero-trust for small teams — MFA, short-lived tokens, and 3 concrete steps to start today.</description>
       <pubDate>Fri, 22 May 2026 02:34:41 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-noise/</guid>
-    </item>
-    <item>
-      <title>Pick the right live update tech in 2026</title>
-      <link>https://kubaik.github.io/pick-the-right-live-update-tech-in-2026/</link>
-      <description>Choose WebSockets, Server-Sent Events, or long polling in 2026 with real benchmarks and cost data — avoid the 1.2 second lag I debugged in production.</description>
-      <pubDate>Thu, 21 May 2026 23:55:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-live-update-tech-in-2026/</guid>
     </item>
   </channel>
 </rss>
