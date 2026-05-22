@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 12:42:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 13:20:28 +0000</lastBuildDate>
+    <item>
+      <title>Mis-setting pool size wastes cash</title>
+      <link>https://kubaik.github.io/mis-setting-pool-size-wastes-cash/</link>
+      <description>Cut database costs 22% by fixing one pool setting — connection pooling tuning, latency benchmarks, and the max_pool_size mistake most teams make in 2026.</description>
+      <pubDate>Fri, 22 May 2026 13:20:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/mis-setting-pool-size-wastes-cash/</guid>
+    </item>
     <item>
       <title>Fake the interview: self-taught path to remote roles</title>
       <link>https://kubaik.github.io/fake-the-interview-self-taught-path-to-remote-roles/</link>
@@ -138,13 +145,6 @@
       <description>Cut database wait time 60% by right-sizing your pool — the textbook formula is wrong in 2026, and here is the real math with concrete benchmarks and tools.</description>
       <pubDate>Thu, 21 May 2026 19:34:56 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-your-pool-size-the-one-database-setting-youre/</guid>
-    </item>
-    <item>
-      <title>Rebuilt my freelance grind</title>
-      <link>https://kubaik.github.io/rebuilt-my-freelance-grind/</link>
-      <description>Cut freelance burnout 80% with 3 concrete fixes — hourly rate up 25%, error rate down 72%, and mood score up 56%. Learn what tools worked, what costs I cut, and the exact scripts I used.</description>
-      <pubDate>Thu, 21 May 2026 19:29:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/rebuilt-my-freelance-grind/</guid>
     </item>
   </channel>
 </rss>
