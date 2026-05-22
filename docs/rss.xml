@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 18:10:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 18:17:49 +0000</lastBuildDate>
+    <item>
+      <title>Simplicity beats microservices until it doesn&apos;t</title>
+      <link>https://kubaik.github.io/simplicity-beats-microservices-until-it-doesnt/</link>
+      <description>Cut API response time 62% and AWS costs 96% by replacing 12 microservices with a single FastAPI app — connection pooling, Redis caching, and the premature abstraction trap most teams fall into</description>
+      <pubDate>Fri, 22 May 2026 18:17:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/simplicity-beats-microservices-until-it-doesnt/</guid>
+    </item>
     <item>
       <title>AI-first plumbing patterns that last</title>
       <link>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</link>
@@ -138,13 +145,6 @@
       <description>Cut local LLM latency from 12 s to 1.8 s with the stack that actually works in 2026 — Rust tokenizers, vLLM, and pre-warmed inference. Real benchmarks and code.</description>
       <pubDate>Thu, 21 May 2026 22:56:10 +0000</pubDate>
       <guid>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</guid>
-    </item>
-    <item>
-      <title>Trace LLM pipelines end-to-end with OpenTelemetry</title>
-      <link>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</link>
-      <description>Cut LLM latency debugging time 60% with OpenTelemetry 1.41 traces and Prometheus metrics — prompts, tokens, GPU wait times and the cache stampede mistake most teams miss.</description>
-      <pubDate>Thu, 21 May 2026 22:52:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</guid>
     </item>
   </channel>
 </rss>
