@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 02:34:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 05:42:31 +0000</lastBuildDate>
+    <item>
+      <title>Big tech exodus: what they won’t tell you</title>
+      <link>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</link>
+      <description>Cut mean API response time 40 % with Prometheus SLOs — learn what senior engineers at Google, Meta, and Amazon say they really left for, and how to measure velocity decay before it kills your team.</description>
+      <pubDate>Fri, 22 May 2026 05:42:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</guid>
+    </item>
     <item>
       <title>Zero-trust for 5-person teams: skip the noise</title>
       <link>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-noise/</link>
@@ -138,13 +145,6 @@
       <description>Set freelance rates that cover taxes, late fees, and your rent in 2026 — with a spreadsheet, contract clauses, and real invoices from 247 gigs.</description>
       <pubDate>Thu, 21 May 2026 14:25:30 +0000</pubDate>
       <guid>https://kubaik.github.io/rate-your-worth-2026-freelance-data/</guid>
-    </item>
-    <item>
-      <title>pgvector beats vector DBs in most cases</title>
-      <link>https://kubaik.github.io/pgvector-beats-vector-dbs-in-most-cases/</link>
-      <description>Run semantic search 10x cheaper with PostgreSQL pgvector 0.7.0 — benchmark shows when a dedicated vector database only adds cost and latency.</description>
-      <pubDate>Thu, 21 May 2026 13:58:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/pgvector-beats-vector-dbs-in-most-cases/</guid>
     </item>
   </channel>
 </rss>
