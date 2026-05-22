@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-05-21</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-<url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-<url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-<url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-05-22</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-05-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-noise/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/pick-the-right-live-update-tech-in-2026/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -610,7 +611,7 @@
 <url><loc>https://kubaik.github.io/ai-finance/</loc><lastmod>2026-04-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/websocket-power/</loc><lastmod>2026-04-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/apples-pricing-edge/</loc><lastmod>2026-04-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/db-tools/</loc><lastmod>2026-04-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/db-tools/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/design-like-pro/</loc><lastmod>2026-04-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/ai-ethics/</loc><lastmod>2026-04-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/rtdp/</loc><lastmod>2026-04-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
