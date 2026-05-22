@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 15:28:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 16:07:45 +0000</lastBuildDate>
+    <item>
+      <title>Calculate Freelance Rates That Work</title>
+      <link>https://kubaik.github.io/calculate-freelance-rates-that-work/</link>
+      <description>t. Add 20-30% to your baseline rate for a c with Set freelance rates realistic — give conflicting advice.</description>
+      <pubDate>Fri, 22 May 2026 16:07:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/calculate-freelance-rates-that-work/</guid>
+    </item>
     <item>
       <title>Shrink cloud carbon 24 MWh/month</title>
       <link>https://kubaik.github.io/shrink-cloud-carbon-24-mwhmonth/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, fine-tuning transformers pays 9–13 % more than running vector DBs, but only if the AI is the product. See latency, cost, and hiring data for both stacks.</description>
       <pubDate>Thu, 21 May 2026 21:21:44 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-boosters-transformers-vs-vector-dbs-in-2026/</guid>
-    </item>
-    <item>
-      <title>Senior without CS: How I shipped my way up</title>
-      <link>https://kubaik.github.io/senior-without-cs-how-i-shipped-my-way-up/</link>
-      <description>Senior engineer without a CS degree: measure before optimizing, own the stack, and learn from outages. Latency drops from 2.8s to 320ms, losses cut from $18k to $800, and cloud bills normalized with Terraform 1.6 and Prometheus 2.47.</description>
-      <pubDate>Thu, 21 May 2026 21:13:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-without-cs-how-i-shipped-my-way-up/</guid>
     </item>
   </channel>
 </rss>
