@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 13:27:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 15:28:48 +0000</lastBuildDate>
+    <item>
+      <title>Shrink cloud carbon 24 MWh/month</title>
+      <link>https://kubaik.github.io/shrink-cloud-carbon-24-mwhmonth/</link>
+      <description>Slash cloud carbon 30% without slowing down — zero-copy ingestion, carbon-aware routing, and Kepler profiling cut energy per request from 0.022 Wh to 0.015 Wh in 3 months.</description>
+      <pubDate>Fri, 22 May 2026 15:28:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/shrink-cloud-carbon-24-mwhmonth/</guid>
+    </item>
     <item>
       <title>Multi-tenant DBs: don&apos;t start with schema-per-tenant</title>
       <link>https://kubaik.github.io/multi-tenant-dbs-dont-start-with-schema-per-tenant/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer without a CS degree: measure before optimizing, own the stack, and learn from outages. Latency drops from 2.8s to 320ms, losses cut from $18k to $800, and cloud bills normalized with Terraform 1.6 and Prometheus 2.47.</description>
       <pubDate>Thu, 21 May 2026 21:13:39 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-without-cs-how-i-shipped-my-way-up/</guid>
-    </item>
-    <item>
-      <title>MCP servers demystified for devs</title>
-      <link>https://kubaik.github.io/mcp-servers-demystified-for-devs/</link>
-      <description>M) with a 5% CPU utilization. - Cost: Runn with MCP servers you — implement a microservice architecture, you&apos;ve likel.</description>
-      <pubDate>Thu, 21 May 2026 20:50:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-demystified-for-devs/</guid>
     </item>
   </channel>
 </rss>
