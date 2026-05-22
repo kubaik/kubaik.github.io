@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 21:41:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 21:45:29 +0000</lastBuildDate>
+    <item>
+      <title>Ship AI without the CS degree</title>
+      <link>https://kubaik.github.io/ship-ai-without-the-cs-degree/</link>
+      <description>Ship real products in 2026 with AI-assisted stacks that work in production — compare Supabase, Bun, FastAPI, and more with real benchmarks and cost data</description>
+      <pubDate>Fri, 22 May 2026 21:45:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-ai-without-the-cs-degree/</guid>
+    </item>
     <item>
       <title>Charge clients from low-cost countries</title>
       <link>https://kubaik.github.io/charge-clients-from-low-cost-countries/</link>
@@ -138,13 +145,6 @@
       <description>Recover from freelance burnout in 8 weeks with real systems—financial buffer, scope protection, and recovery blocks. Track your true hourly rate, bug rate, and client satisfaction with version-pinned tools like Linear 2026.3 and Toggl Track 2026.1.</description>
       <pubDate>Fri, 22 May 2026 10:04:43 +0000</pubDate>
       <guid>https://kubaik.github.io/fixed-burnout-in-8-weeks-freelance-dev-recovery/</guid>
-    </item>
-    <item>
-      <title>Skip the star projects: show work not words</title>
-      <link>https://kubaik.github.io/skip-the-star-projects-show-work-not-words/</link>
-      <description>Portfolio gets you hired remotely from Africa — ship one endpoint, expose one metric, land the interview. Use FastAPI 0.111, PostgreSQL 16, AWS RDS t4g.micro. Live demo beats polished README by 78% callbacks.</description>
-      <pubDate>Fri, 22 May 2026 09:59:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-star-projects-show-work-not-words/</guid>
     </item>
   </channel>
 </rss>
