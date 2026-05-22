@@ -12,5 +12,6 @@
   "From local salary to global rate: the career moves that made the difference for me",
   "How vector databases work (and when you don't need one)",
   "How to pass technical interviews for remote roles when you're self-taught",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]
