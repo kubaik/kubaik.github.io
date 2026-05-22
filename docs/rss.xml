@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 23:06:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 23:24:58 +0000</lastBuildDate>
+    <item>
+      <title>Freelance devs: stop burning out</title>
+      <link>https://kubaik.github.io/freelance-devs-stop-burning-out/</link>
+      <description>3 freelance developer burnout fixes that cut hours 30% and raised income—Clockify caps, Scope Contracts, and the Third Space Strategy.</description>
+      <pubDate>Fri, 22 May 2026 23:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-devs-stop-burning-out/</guid>
+    </item>
     <item>
       <title>AI skills that pay: prompts vs pipelines in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-prompts-vs-pipelines-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut database costs 22% by fixing one pool setting — connection pooling tuning, latency benchmarks, and the max_pool_size mistake most teams make in 2026.</description>
       <pubDate>Fri, 22 May 2026 13:20:16 +0000</pubDate>
       <guid>https://kubaik.github.io/mis-setting-pool-size-wastes-cash/</guid>
-    </item>
-    <item>
-      <title>Fake the interview: self-taught path to remote roles</title>
-      <link>https://kubaik.github.io/fake-the-interview-self-taught-path-to-remote-roles/</link>
-      <description>Pass remote tech interviews by mastering system design stories, not LeetCode drills — 3 real designs, 30-minute prep, and the exact commands to mock a distributed system locally in 2026.</description>
-      <pubDate>Fri, 22 May 2026 12:42:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/fake-the-interview-self-taught-path-to-remote-roles/</guid>
     </item>
   </channel>
 </rss>
