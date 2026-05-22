@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 05:42:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 06:43:30 +0000</lastBuildDate>
+    <item>
+      <title>Queues work until they don&apos;t</title>
+      <link>https://kubaik.github.io/queues-work-until-they-dont/</link>
+      <description>e hitting 100% CPU, queues backing up, and j with Queues until they don — this when I inherited a system that used RabbitMQ 3.</description>
+      <pubDate>Fri, 22 May 2026 06:43:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/queues-work-until-they-dont/</guid>
+    </item>
     <item>
       <title>Big tech exodus: what they won’t tell you</title>
       <link>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</link>
@@ -138,13 +145,6 @@
       <description>Land remote backend roles from Nairobi with a portfolio that proves impact, not just code. Includes latency benchmarks, cost breakdowns, and Terraform deployments—metrics that get interviews at US fintechs.</description>
       <pubDate>Thu, 21 May 2026 16:39:36 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-beats-platforms-remote-hiring-from-africa/</guid>
-    </item>
-    <item>
-      <title>Rate your worth: 2026 freelance data</title>
-      <link>https://kubaik.github.io/rate-your-worth-2026-freelance-data/</link>
-      <description>Set freelance rates that cover taxes, late fees, and your rent in 2026 — with a spreadsheet, contract clauses, and real invoices from 247 gigs.</description>
-      <pubDate>Thu, 21 May 2026 14:25:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/rate-your-worth-2026-freelance-data/</guid>
     </item>
   </channel>
 </rss>
