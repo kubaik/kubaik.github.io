@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 10:20:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 12:06:28 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: Waste of money?</title>
+      <link>https://kubaik.github.io/vector-dbs-waste-of-money/</link>
+      <description>Cut vector DB costs 70% with pgvector 0.7.0 — benchmarked insert rates, p99 latency, and $216/year vs $688/year in 2026.</description>
+      <pubDate>Fri, 22 May 2026 12:06:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-waste-of-money/</guid>
+    </item>
     <item>
       <title>From $500 to $8k/month: the 4 moves that worked</title>
       <link>https://kubaik.github.io/from-500-to-8kmonth-the-4-moves-that-worked/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 93% to 55 ms at 5 000 users with one serialization fix and cache redesign — the moves tutorials skip and the exact versions that worked in production 2026.</description>
       <pubDate>Thu, 21 May 2026 19:22:54 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-60-latency-hidden-in-serialization/</guid>
-    </item>
-    <item>
-      <title>From 12k to 220k: how I priced my skills globally</title>
-      <link>https://kubaik.github.io/from-12k-to-220k-how-i-priced-my-skills-globally/</link>
-      <description>Earned $220/hour globally after starting at $30/hour locally — the pricing model, contracts, and case studies that worked in 2026</description>
-      <pubDate>Thu, 21 May 2026 18:56:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-12k-to-220k-how-i-priced-my-skills-globally/</guid>
     </item>
   </channel>
 </rss>
