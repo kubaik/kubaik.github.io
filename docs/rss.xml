@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 20:22:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 20:29:56 +0000</lastBuildDate>
+    <item>
+      <title>Understand your codebase with AI</title>
+      <link>https://kubaik.github.io/understand-your-codebase-with-ai/</link>
+      <description>Cut AI rework 60% with repository intelligence — dependency graphs, runtime contracts, and the cache invalidation mistake most teams miss in 2026.</description>
+      <pubDate>Fri, 22 May 2026 20:29:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/understand-your-codebase-with-ai/</guid>
+    </item>
     <item>
       <title>Stop Leaking Latency with MCP</title>
       <link>https://kubaik.github.io/stop-leaking-latency-with-mcp/</link>
@@ -138,13 +145,6 @@
       <description>e hitting 100% CPU, queues backing up, and j with Queues until they don — this when I inherited a system that used RabbitMQ 3.</description>
       <pubDate>Fri, 22 May 2026 06:43:18 +0000</pubDate>
       <guid>https://kubaik.github.io/queues-work-until-they-dont/</guid>
-    </item>
-    <item>
-      <title>Big tech exodus: what they won’t tell you</title>
-      <link>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</link>
-      <description>Cut mean API response time 40 % with Prometheus SLOs — learn what senior engineers at Google, Meta, and Amazon say they really left for, and how to measure velocity decay before it kills your team.</description>
-      <pubDate>Fri, 22 May 2026 05:42:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</guid>
     </item>
   </channel>
 </rss>
