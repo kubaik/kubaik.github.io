@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 23:42:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 23:49:14 +0000</lastBuildDate>
+    <item>
+      <title>Crush LLMs on a Laptop Without Melting It</title>
+      <link>https://kubaik.github.io/crush-llms-on-a-laptop-without-melting-it/</link>
+      <description>nel spent 40% of CPU time in . The bigger o with LLMs — run a quantized 7B model on your laptop with and ca.</description>
+      <pubDate>Fri, 22 May 2026 23:49:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/crush-llms-on-a-laptop-without-melting-it/</guid>
+    </item>
     <item>
       <title>Vector DBs vs brute-force: 100ms vs 500ms in 2026</title>
       <link>https://kubaik.github.io/vector-dbs-vs-brute-force-100ms-vs-500ms-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Slash cloud carbon 30% without slowing down — zero-copy ingestion, carbon-aware routing, and Kepler profiling cut energy per request from 0.022 Wh to 0.015 Wh in 3 months.</description>
       <pubDate>Fri, 22 May 2026 15:28:36 +0000</pubDate>
       <guid>https://kubaik.github.io/shrink-cloud-carbon-24-mwhmonth/</guid>
-    </item>
-    <item>
-      <title>Multi-tenant DBs: don&apos;t start with schema-per-tenant</title>
-      <link>https://kubaik.github.io/multi-tenant-dbs-dont-start-with-schema-per-tenant/</link>
-      <description>Cut API latency 60% and AWS bills 78% with shared-table PostgreSQL 16 + RLS for multi-tenant SaaS — real benchmarks, quotas, and migration steps from 1.2M tenants in 2026.</description>
-      <pubDate>Fri, 22 May 2026 13:26:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-tenant-dbs-dont-start-with-schema-per-tenant/</guid>
     </item>
   </channel>
 </rss>
