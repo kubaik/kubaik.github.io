@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 20:16:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 20:22:19 +0000</lastBuildDate>
+    <item>
+      <title>Stop Leaking Latency with MCP</title>
+      <link>https://kubaik.github.io/stop-leaking-latency-with-mcp/</link>
+      <description>Cut API latency 54% and cloud costs 36% with MCP servers — Python 3.11, Node 20, and the real failure modes most docs omit.</description>
+      <pubDate>Fri, 22 May 2026 20:22:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-leaking-latency-with-mcp/</guid>
+    </item>
     <item>
       <title>Beat remote salary lowballs with Levels.fyi data</title>
       <link>https://kubaik.github.io/beat-remote-salary-lowballs-with-levelsfyi-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut mean API response time 40 % with Prometheus SLOs — learn what senior engineers at Google, Meta, and Amazon say they really left for, and how to measure velocity decay before it kills your team.</description>
       <pubDate>Fri, 22 May 2026 05:42:19 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for 5-person teams: skip the noise</title>
-      <link>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-noise/</link>
-      <description>Reduce attack surface 70% with zero-trust for small teams — MFA, short-lived tokens, and 3 concrete steps to start today.</description>
-      <pubDate>Fri, 22 May 2026 02:34:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-5-person-teams-skip-the-noise/</guid>
     </item>
   </channel>
 </rss>
