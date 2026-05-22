@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 16:18:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 18:10:41 +0000</lastBuildDate>
+    <item>
+      <title>AI-first plumbing patterns that last</title>
+      <link>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</link>
+      <description>gs showed 95% of requests timing out becaus with AI systems here first — this when I tried to bolt an LLM onto a Django mono.</description>
+      <pubDate>Fri, 22 May 2026 18:10:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</guid>
+    </item>
     <item>
       <title>Trap 3 latency kills RAG in prod</title>
       <link>https://kubaik.github.io/trap-3-latency-kills-rag-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM latency debugging time 60% with OpenTelemetry 1.41 traces and Prometheus metrics — prompts, tokens, GPU wait times and the cache stampede mistake most teams miss.</description>
       <pubDate>Thu, 21 May 2026 22:52:21 +0000</pubDate>
       <guid>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</guid>
-    </item>
-    <item>
-      <title>AI learns your codebase: why 80% of repos stay</title>
-      <link>https://kubaik.github.io/ai-learns-your-codebase-why-80-of-repos-stay/</link>
-      <description>Cut codebase context confusion 80% with AI that learns your entire repo — static, runtime, and behavioral layers with 2026 tools, benchmarks, and real fixes. Repository intelligence explained for engineers.</description>
-      <pubDate>Thu, 21 May 2026 22:15:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-learns-your-codebase-why-80-of-repos-stay/</guid>
     </item>
   </channel>
 </rss>
