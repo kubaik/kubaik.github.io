@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 09:55:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 10:00:09 +0000</lastBuildDate>
+    <item>
+      <title>Skip the star projects: show work not words</title>
+      <link>https://kubaik.github.io/skip-the-star-projects-show-work-not-words/</link>
+      <description>Portfolio gets you hired remotely from Africa — ship one endpoint, expose one metric, land the interview. Use FastAPI 0.111, PostgreSQL 16, AWS RDS t4g.micro. Live demo beats polished README by 78% callbacks.</description>
+      <pubDate>Fri, 22 May 2026 09:59:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-star-projects-show-work-not-words/</guid>
+    </item>
     <item>
       <title>Edge functions in 2026: when they actually help</title>
       <link>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</link>
@@ -138,13 +145,6 @@
       <description>Ship a real service to pass remote tech interviews — the self-taught guide with Go, Redis, and Fly.io examples. 5 concrete steps and real latency numbers.</description>
       <pubDate>Thu, 21 May 2026 17:14:58 +0000</pubDate>
       <guid>https://kubaik.github.io/leetcode-wont-land-you-remote-dev-jobs/</guid>
-    </item>
-    <item>
-      <title>AI coding: 5 stacks shipping today</title>
-      <link>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</link>
-      <description>Cut deployment time 80% with FastAPI + SQLite + Fly.io — zero DevOps, $0 cost at 100 users, and a 0.7% error rate under load</description>
-      <pubDate>Thu, 21 May 2026 16:54:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</guid>
     </item>
   </channel>
 </rss>
