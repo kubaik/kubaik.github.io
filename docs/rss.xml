@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 21:45:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 21:51:19 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for small teams: what works</title>
+      <link>https://kubaik.github.io/zero-trust-for-small-teams-what-works/</link>
+      <description>Cut zero-trust overhead 70% with one strong gate — MFA, cloud firewalls, and audit alerts beat SPIRE and sidecars for teams under 50. Focus on credential leaks, not lateral movement.</description>
+      <pubDate>Fri, 22 May 2026 21:51:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-small-teams-what-works/</guid>
+    </item>
     <item>
       <title>Ship AI without the CS degree</title>
       <link>https://kubaik.github.io/ship-ai-without-the-cs-degree/</link>
@@ -138,13 +145,6 @@
       <description>From $500 to $8k/month in 4 moves: how one developer flipped the script on global rates, saved 20 % in fees, and cut invoice time from 6 weeks to 3 days.</description>
       <pubDate>Fri, 22 May 2026 10:19:58 +0000</pubDate>
       <guid>https://kubaik.github.io/from-500-to-8kmonth-the-4-moves-that-worked/</guid>
-    </item>
-    <item>
-      <title>Fixed burnout in 8 weeks: freelance dev recovery</title>
-      <link>https://kubaik.github.io/fixed-burnout-in-8-weeks-freelance-dev-recovery/</link>
-      <description>Recover from freelance burnout in 8 weeks with real systems—financial buffer, scope protection, and recovery blocks. Track your true hourly rate, bug rate, and client satisfaction with version-pinned tools like Linear 2026.3 and Toggl Track 2026.1.</description>
-      <pubDate>Fri, 22 May 2026 10:04:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/fixed-burnout-in-8-weeks-freelance-dev-recovery/</guid>
     </item>
   </channel>
 </rss>
