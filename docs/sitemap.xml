@@ -6,6 +6,7 @@
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://kubaik.github.io/vector-dbs-vs-brute-force-100ms-vs-500ms-in-2026/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/freelance-devs-stop-burning-out/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-skills-that-pay-prompts-vs-pipelines-in-2026/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/no-cs-degree-break-senior-glass/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -623,7 +624,7 @@
 <url><loc>https://kubaik.github.io/prompt-engineering/</loc><lastmod>2026-04-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-agents/</loc><lastmod>2026-04-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/sql-simplifies-code/</loc><lastmod>2026-04-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/react-showdown/</loc><lastmod>2026-04-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/react-showdown/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/machines-fail/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/lazy-load/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/micro-fe/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
