@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 06:43:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 08:38:21 +0000</lastBuildDate>
+    <item>
+      <title>Edge functions in 2026: when they actually help</title>
+      <link>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</link>
+      <description>pped from 60 ms to 14 ms, but the dashboard s with Edge functions them waste — solve latency by running code closer to users.</description>
+      <pubDate>Fri, 22 May 2026 08:38:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</guid>
+    </item>
     <item>
       <title>Queues work until they don&apos;t</title>
       <link>https://kubaik.github.io/queues-work-until-they-dont/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment time 80% with FastAPI + SQLite + Fly.io — zero DevOps, $0 cost at 100 users, and a 0.7% error rate under load</description>
       <pubDate>Thu, 21 May 2026 16:54:49 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-5-stacks-shipping-today/</guid>
-    </item>
-    <item>
-      <title>Portfolio beats platforms: remote hiring from Africa</title>
-      <link>https://kubaik.github.io/portfolio-beats-platforms-remote-hiring-from-africa/</link>
-      <description>Land remote backend roles from Nairobi with a portfolio that proves impact, not just code. Includes latency benchmarks, cost breakdowns, and Terraform deployments—metrics that get interviews at US fintechs.</description>
-      <pubDate>Thu, 21 May 2026 16:39:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-beats-platforms-remote-hiring-from-africa/</guid>
     </item>
   </channel>
 </rss>
