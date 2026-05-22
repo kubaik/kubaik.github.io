@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2026 18:26:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 18:31:16 +0000</lastBuildDate>
+    <item>
+      <title>Non-traditional devs ship real products now</title>
+      <link>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</link>
+      <description>Cut first deploy time 80% with Railway, Fly.io, Cloudflare Workers — 5 tools non-traditional devs use to ship real products in 2026 without deep DevOps</description>
+      <pubDate>Fri, 22 May 2026 18:31:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</guid>
+    </item>
     <item>
       <title>Instrument AI pipelines: LLM metrics that matter</title>
       <link>https://kubaik.github.io/instrument-ai-pipelines-llm-metrics-that-matter/</link>
@@ -138,13 +145,6 @@
       <description>Choose WebSockets, Server-Sent Events, or long polling in 2026 with real benchmarks and cost data — avoid the 1.2 second lag I debugged in production.</description>
       <pubDate>Thu, 21 May 2026 23:55:57 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-live-update-tech-in-2026/</guid>
-    </item>
-    <item>
-      <title>60k pay gap: prompt ops vs vector tuning</title>
-      <link>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</link>
-      <description>In 2026, prompt engineering with guardrails pays $152k median, vector search tuning pays $178k—combined skills hit $210k. See the benchmark results and decide which skill to learn first.</description>
-      <pubDate>Thu, 21 May 2026 23:22:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</guid>
     </item>
   </channel>
 </rss>
