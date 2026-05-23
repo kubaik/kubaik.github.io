@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 07:18:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 08:28:40 +0000</lastBuildDate>
+    <item>
+      <title>Tech lead pay: when 300k isn&apos;t enough</title>
+      <link>https://kubaik.github.io/tech-lead-pay-when-300k-isnt-enough/</link>
+      <description>Cut unpaid engineer hours 66% by fixing latency and connection pool frictions — the real reasons senior engineers leave big tech in 2026.</description>
+      <pubDate>Sat, 23 May 2026 08:28:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-lead-pay-when-300k-isnt-enough/</guid>
+    </item>
     <item>
       <title>Optimize LLM Pipeline Metrics for Production Success</title>
       <link>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 62% and AWS costs 96% by replacing 12 microservices with a single FastAPI app — connection pooling, Redis caching, and the premature abstraction trap most teams fall into</description>
       <pubDate>Fri, 22 May 2026 18:17:38 +0000</pubDate>
       <guid>https://kubaik.github.io/simplicity-beats-microservices-until-it-doesnt/</guid>
-    </item>
-    <item>
-      <title>AI-first plumbing patterns that last</title>
-      <link>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</link>
-      <description>gs showed 95% of requests timing out becaus with AI systems here first — this when I tried to bolt an LLM onto a Django mono.</description>
-      <pubDate>Fri, 22 May 2026 18:10:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</guid>
     </item>
   </channel>
 </rss>
