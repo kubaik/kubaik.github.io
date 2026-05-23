@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 21:47:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 22:45:46 +0000</lastBuildDate>
+    <item>
+      <title>Build portfolios that pass remote audits</title>
+      <link>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</link>
+      <description>Ship three projects and stay jobless — real portfolios that got African engineers remote jobs in 2026 used operational artifacts, not just code. Load tests, incident logs, and Grafana dashboards turned applicants into hires.</description>
+      <pubDate>Sat, 23 May 2026 22:45:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</guid>
+    </item>
     <item>
       <title>Pools exhaust your DB in 3 minutes</title>
       <link>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Self-taught devs waste months on LeetCode drills. Build one real system instead — with metrics, logs, and post-mortems. Reduces interview prep time by 60% and increases offer rates by 3x.</description>
       <pubDate>Sat, 23 May 2026 02:11:18 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-skip-the-leetcode-parade/</guid>
-    </item>
-    <item>
-      <title>Crush LLMs on a Laptop Without Melting It</title>
-      <link>https://kubaik.github.io/crush-llms-on-a-laptop-without-melting-it/</link>
-      <description>nel spent 40% of CPU time in . The bigger o with LLMs — run a quantized 7B model on your laptop with and ca.</description>
-      <pubDate>Fri, 22 May 2026 23:49:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/crush-llms-on-a-laptop-without-melting-it/</guid>
     </item>
   </channel>
 </rss>
