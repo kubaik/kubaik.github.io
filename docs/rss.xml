@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 22:45:46 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 23:51:56 +0000</lastBuildDate>
+    <item>
+      <title>Queues that don’t melt: pick the right one</title>
+      <link>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</link>
+      <description>. because 2% of messages drifted into the with Queues don melt pick — a queue and everything scales effortlessly.</description>
+      <pubDate>Sat, 23 May 2026 23:51:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</guid>
+    </item>
     <item>
       <title>Build portfolios that pass remote audits</title>
       <link>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 31% with zero latency penalty — the AWS Customer Carbon Footprint Tool, CloudWatch Synthetics, and a 180-line Lambda@Edge router that routes traffic to the cleanest grid.</description>
       <pubDate>Sat, 23 May 2026 05:31:20 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</guid>
-    </item>
-    <item>
-      <title>Self-taught? Skip the LeetCode parade</title>
-      <link>https://kubaik.github.io/self-taught-skip-the-leetcode-parade/</link>
-      <description>Self-taught devs waste months on LeetCode drills. Build one real system instead — with metrics, logs, and post-mortems. Reduces interview prep time by 60% and increases offer rates by 3x.</description>
-      <pubDate>Sat, 23 May 2026 02:11:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-taught-skip-the-leetcode-parade/</guid>
     </item>
   </channel>
 </rss>
