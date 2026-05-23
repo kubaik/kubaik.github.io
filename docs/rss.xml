@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 05:31:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 06:02:10 +0000</lastBuildDate>
+    <item>
+      <title>5G’s backend blind spots</title>
+      <link>https://kubaik.github.io/5gs-backend-blind-spots/</link>
+      <description>Cut 5G backend latency 60% with Redis caching, connection pool tuning, and HTTP/2 — the real mistakes teams make on cellular networks</description>
+      <pubDate>Sat, 23 May 2026 06:01:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/5gs-backend-blind-spots/</guid>
+    </item>
     <item>
       <title>Cut cloud carbon 30% without latency</title>
       <link>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 56% by fixing three hidden traps: prompt normalization, vector search caching, and LLM context compression. Real numbers from a 1.2M QPS Vietnamese e-commerce copilot.</description>
       <pubDate>Fri, 22 May 2026 16:18:08 +0000</pubDate>
       <guid>https://kubaik.github.io/trap-3-latency-kills-rag-in-prod/</guid>
-    </item>
-    <item>
-      <title>Make mobile backends bulletproof: 5G edge rules</title>
-      <link>https://kubaik.github.io/make-mobile-backends-bulletproof-5g-edge-rules/</link>
-      <description>Cut mobile backend errors 75% by tuning 5G timeouts, QUIC, and circuit breakers — concrete numbers and Prometheus queries included.</description>
-      <pubDate>Fri, 22 May 2026 16:10:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/make-mobile-backends-bulletproof-5g-edge-rules/</guid>
     </item>
   </channel>
 </rss>
