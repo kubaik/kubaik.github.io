@@ -19,5 +19,6 @@
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "Freelance developer rates: a realistic breakdown",
   "RAG pipelines in production: what the tutorials skip",
-  "Repository intelligence: how AI is learning your entire codebase context"
+  "Repository intelligence: how AI is learning your entire codebase context",
+  "When to use a message queue (and when it's overkill)"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 15:25:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 15:58:47 +0000</lastBuildDate>
+    <item>
+      <title>When queues backfire</title>
+      <link>https://kubaik.github.io/when-queues-backfire/</link>
+      <description>Queue you: eue added 50 ms of latency on every transacti. Practical guide with real examples.</description>
+      <pubDate>Sat, 23 May 2026 15:58:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-queues-backfire/</guid>
+    </item>
     <item>
       <title>Expose your codebase to AI without drowning it</title>
       <link>https://kubaik.github.io/expose-your-codebase-to-ai-without-drowning-it/</link>
@@ -138,13 +145,6 @@
       <description>Ship real products in 2026 with AI-assisted stacks that work in production — compare Supabase, Bun, FastAPI, and more with real benchmarks and cost data</description>
       <pubDate>Fri, 22 May 2026 21:45:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-ai-without-the-cs-degree/</guid>
-    </item>
-    <item>
-      <title>Charge clients from low-cost countries</title>
-      <link>https://kubaik.github.io/charge-clients-from-low-cost-countries/</link>
-      <description>Increase remote salary from $3k to $15k/month — real negotiation scripts, rate card, and cold email that closes 48% of leads in 2026.</description>
-      <pubDate>Fri, 22 May 2026 21:41:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/charge-clients-from-low-cost-countries/</guid>
     </item>
   </channel>
 </rss>
