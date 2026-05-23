@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 02:11:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 05:31:32 +0000</lastBuildDate>
+    <item>
+      <title>Cut cloud carbon 30% without latency</title>
+      <link>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</link>
+      <description>Cut cloud carbon 31% with zero latency penalty — the AWS Customer Carbon Footprint Tool, CloudWatch Synthetics, and a 180-line Lambda@Edge router that routes traffic to the cleanest grid.</description>
+      <pubDate>Sat, 23 May 2026 05:31:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</guid>
+    </item>
     <item>
       <title>Self-taught? Skip the LeetCode parade</title>
       <link>https://kubaik.github.io/self-taught-skip-the-leetcode-parade/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile backend errors 75% by tuning 5G timeouts, QUIC, and circuit breakers — concrete numbers and Prometheus queries included.</description>
       <pubDate>Fri, 22 May 2026 16:10:36 +0000</pubDate>
       <guid>https://kubaik.github.io/make-mobile-backends-bulletproof-5g-edge-rules/</guid>
-    </item>
-    <item>
-      <title>Calculate Freelance Rates That Work</title>
-      <link>https://kubaik.github.io/calculate-freelance-rates-that-work/</link>
-      <description>t. Add 20-30% to your baseline rate for a c with Set freelance rates realistic — give conflicting advice.</description>
-      <pubDate>Fri, 22 May 2026 16:07:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/calculate-freelance-rates-that-work/</guid>
     </item>
   </channel>
 </rss>
