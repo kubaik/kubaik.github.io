@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 09:19:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 10:24:42 +0000</lastBuildDate>
+    <item>
+      <title>Ship one project. Get hired remotely.</title>
+      <link>https://kubaik.github.io/ship-one-project-get-hired-remotely/</link>
+      <description>Build one project, not three. Deploy it, measure it, document it. Remote job offers from Africa follow real impact — not GitHub stars. 2026 playbook with real stacks, metrics, and hiring pipelines.</description>
+      <pubDate>Sat, 23 May 2026 10:24:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-one-project-get-hired-remotely/</guid>
+    </item>
     <item>
       <title>From 2K to 12K monthly: how I went global</title>
       <link>https://kubaik.github.io/from-2k-to-12k-monthly-how-i-went-global/</link>
@@ -138,13 +145,6 @@
       <description>Cut first deploy time 80% with Railway, Fly.io, Cloudflare Workers — 5 tools non-traditional devs use to ship real products in 2026 without deep DevOps</description>
       <pubDate>Fri, 22 May 2026 18:31:04 +0000</pubDate>
       <guid>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</guid>
-    </item>
-    <item>
-      <title>Instrument AI pipelines: LLM metrics that matter</title>
-      <link>https://kubaik.github.io/instrument-ai-pipelines-llm-metrics-that-matter/</link>
-      <description>Cut AI pipeline outages 80% with 5 instrumentations — prompt drift, embedding drift, LLM judge, refusal rates, and token latency — using Prometheus 2.52 and LangChain 0.2.15.</description>
-      <pubDate>Fri, 22 May 2026 18:25:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-ai-pipelines-llm-metrics-that-matter/</guid>
     </item>
   </channel>
 </rss>
