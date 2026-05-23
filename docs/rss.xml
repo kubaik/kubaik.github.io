@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 07:14:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 07:18:45 +0000</lastBuildDate>
+    <item>
+      <title>Optimize LLM Pipeline Metrics for Production Success</title>
+      <link>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</link>
+      <description>Add observability to LLM pipelines with Prometheus: track latency, token usage, and error rates. Cut response times by 25% with retries and validation.</description>
+      <pubDate>Sat, 23 May 2026 07:18:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</guid>
+    </item>
     <item>
       <title>5G’s backend blind spots</title>
       <link>https://kubaik.github.io/5gs-backend-blind-spots/</link>
@@ -138,13 +145,6 @@
       <description>gs showed 95% of requests timing out becaus with AI systems here first — this when I tried to bolt an LLM onto a Django mono.</description>
       <pubDate>Fri, 22 May 2026 18:10:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-first-plumbing-patterns-that-last/</guid>
-    </item>
-    <item>
-      <title>Trap 3 latency kills RAG in prod</title>
-      <link>https://kubaik.github.io/trap-3-latency-kills-rag-in-prod/</link>
-      <description>Cut RAG pipeline latency 56% by fixing three hidden traps: prompt normalization, vector search caching, and LLM context compression. Real numbers from a 1.2M QPS Vietnamese e-commerce copilot.</description>
-      <pubDate>Fri, 22 May 2026 16:18:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/trap-3-latency-kills-rag-in-prod/</guid>
     </item>
   </channel>
 </rss>
