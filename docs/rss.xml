@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 19:39:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 20:09:22 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune or prompt? Pick wrong, waste weeks</title>
+      <link>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</link>
+      <description>Fine-tuning vs prompt engineering: when to choose each. Learn how to save weeks and $10k+ by picking the right approach for your AI tasks.</description>
+      <pubDate>Sat, 23 May 2026 20:09:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</guid>
+    </item>
     <item>
       <title>10 connections? Kill your database</title>
       <link>https://kubaik.github.io/10-connections-kill-your-database/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 75% in 2026 with the right stack. Compare Pinecone 2.10 vs DuckDB + NumPy on p99, cost, and recall — with concrete benchmarks and the exact filter metric that flips the winner.</description>
       <pubDate>Fri, 22 May 2026 23:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-vs-brute-force-100ms-vs-500ms-in-2026/</guid>
-    </item>
-    <item>
-      <title>Freelance devs: stop burning out</title>
-      <link>https://kubaik.github.io/freelance-devs-stop-burning-out/</link>
-      <description>3 freelance developer burnout fixes that cut hours 30% and raised income—Clockify caps, Scope Contracts, and the Third Space Strategy.</description>
-      <pubDate>Fri, 22 May 2026 23:24:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-devs-stop-burning-out/</guid>
     </item>
   </channel>
 </rss>
