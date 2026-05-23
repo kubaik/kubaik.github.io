@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 18:46:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 19:00:32 +0000</lastBuildDate>
+    <item>
+      <title>10 connections? Kill your database</title>
+      <link>https://kubaik.github.io/10-connections-kill-your-database/</link>
+      <description>Cut database connection wait time 70% by setting max pool size to 95th percentile concurrency × 1.5 — modern defaults vs 2018 myths exposed with HikariCP 5.0.1, pgbouncer 1.21, and Aurora PostgreSQL 16.1 benchmarks.</description>
+      <pubDate>Sat, 23 May 2026 19:00:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/10-connections-kill-your-database/</guid>
+    </item>
     <item>
       <title>Compare WebSockets, SSE, long polling</title>
       <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>3 freelance developer burnout fixes that cut hours 30% and raised income—Clockify caps, Scope Contracts, and the Third Space Strategy.</description>
       <pubDate>Fri, 22 May 2026 23:24:46 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-devs-stop-burning-out/</guid>
-    </item>
-    <item>
-      <title>AI skills that pay: prompts vs pipelines in 2026</title>
-      <link>https://kubaik.github.io/ai-skills-that-pay-prompts-vs-pipelines-in-2026/</link>
-      <description>Boost your 2026 AI salary 15–20% by choosing between prompt pipelines and end-to-end models — latency benchmarks, cost breakdowns, and a step-by-step decision guide.</description>
-      <pubDate>Fri, 22 May 2026 23:06:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-that-pay-prompts-vs-pipelines-in-2026/</guid>
     </item>
   </channel>
 </rss>
