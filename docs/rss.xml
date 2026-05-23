@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 10:24:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 11:57:06 +0000</lastBuildDate>
+    <item>
+      <title>AI APIs: cache, queue, retry or die</title>
+      <link>https://kubaik.github.io/ai-apis-cache-queue-retry-or-die/</link>
+      <description>Cut AI API costs 38% with batching, cache, and retries — latency drops from 8.4s to 1.2s in a live Manila system with 8k users.</description>
+      <pubDate>Sat, 23 May 2026 11:56:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-apis-cache-queue-retry-or-die/</guid>
+    </item>
     <item>
       <title>Ship one project. Get hired remotely.</title>
       <link>https://kubaik.github.io/ship-one-project-get-hired-remotely/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary 78% using Levels.fyi data — fetch 2026 US tech salary bands, render a one-page PDF, and attach to your next Slack message</description>
       <pubDate>Fri, 22 May 2026 20:16:18 +0000</pubDate>
       <guid>https://kubaik.github.io/beat-remote-salary-lowballs-with-levelsfyi-data/</guid>
-    </item>
-    <item>
-      <title>Non-traditional devs ship real products now</title>
-      <link>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</link>
-      <description>Cut first deploy time 80% with Railway, Fly.io, Cloudflare Workers — 5 tools non-traditional devs use to ship real products in 2026 without deep DevOps</description>
-      <pubDate>Fri, 22 May 2026 18:31:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/non-traditional-devs-ship-real-products-now/</guid>
     </item>
   </channel>
 </rss>
