@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 12:16:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 13:05:50 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates: what actually pays in 2026</title>
+      <link>https://kubaik.github.io/freelance-rates-what-actually-pays-in-2026/</link>
+      <description>Real freelance rates for 2026 with step-by-step calculator — costs, taxes, buffer, and the hidden gotchas most guides miss</description>
+      <pubDate>Sat, 23 May 2026 13:05:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-what-actually-pays-in-2026/</guid>
+    </item>
     <item>
       <title>When abstraction hurts: Go’s 450ms lesson</title>
       <link>https://kubaik.github.io/when-abstraction-hurts-gos-450ms-lesson/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI rework 60% with repository intelligence — dependency graphs, runtime contracts, and the cache invalidation mistake most teams miss in 2026.</description>
       <pubDate>Fri, 22 May 2026 20:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/understand-your-codebase-with-ai/</guid>
-    </item>
-    <item>
-      <title>Stop Leaking Latency with MCP</title>
-      <link>https://kubaik.github.io/stop-leaking-latency-with-mcp/</link>
-      <description>Cut API latency 54% and cloud costs 36% with MCP servers — Python 3.11, Node 20, and the real failure modes most docs omit.</description>
-      <pubDate>Fri, 22 May 2026 20:22:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-leaking-latency-with-mcp/</guid>
     </item>
   </channel>
 </rss>
