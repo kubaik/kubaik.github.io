@@ -21,5 +21,6 @@
   "RAG pipelines in production: what the tutorials skip",
   "Repository intelligence: how AI is learning your entire codebase context",
   "When to use a message queue (and when it's overkill)",
-  "How to design a multi-tenant SaaS database without painting yourself into a corner"
+  "How to design a multi-tenant SaaS database without painting yourself into a corner",
+  "MCP servers explained: what they are and why every developer should understand them"
 ]

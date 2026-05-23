@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 16:55:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 17:58:12 +0000</lastBuildDate>
+    <item>
+      <title>Decode MCP servers before they break prod</title>
+      <link>https://kubaik.github.io/decode-mcp-servers-before-they-break-prod/</link>
+      <description>Cut MCP server latency 60% with WebSocket transport, Redis caching, and health checks — real production numbers, failure modes, and code you can run today.</description>
+      <pubDate>Sat, 23 May 2026 17:58:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/decode-mcp-servers-before-they-break-prod/</guid>
+    </item>
     <item>
       <title>Multi-tenant databases: stop over-engineering</title>
       <link>https://kubaik.github.io/multi-tenant-databases-stop-over-engineering/</link>
@@ -138,13 +145,6 @@
       <description>Break the senior glass without a CS degree in 2026 — latency benchmarks, cost savings, and the leverage mindset most teams miss. Learn from real systems that promoted self-taught engineers.</description>
       <pubDate>Fri, 22 May 2026 22:01:41 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-break-senior-glass/</guid>
-    </item>
-    <item>
-      <title>Zero-trust for small teams: what works</title>
-      <link>https://kubaik.github.io/zero-trust-for-small-teams-what-works/</link>
-      <description>Cut zero-trust overhead 70% with one strong gate — MFA, cloud firewalls, and audit alerts beat SPIRE and sidecars for teams under 50. Focus on credential leaks, not lateral movement.</description>
-      <pubDate>Fri, 22 May 2026 21:51:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-for-small-teams-what-works/</guid>
     </item>
   </channel>
 </rss>
