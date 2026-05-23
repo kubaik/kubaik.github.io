@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 20:09:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2026 21:47:24 +0000</lastBuildDate>
+    <item>
+      <title>Pools exhaust your DB in 3 minutes</title>
+      <link>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</link>
+      <description>Cut database CPU 30% and p95 latency 77% by fixing the idleTimeout mistake most teams make in 2026. Learn the sustainable pool sizing rule used on PostgreSQL 16, AWS RDS, and Aurora Serverless v2 today.</description>
+      <pubDate>Sat, 23 May 2026 21:47:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</guid>
+    </item>
     <item>
       <title>Fine-tune or prompt? Pick wrong, waste weeks</title>
       <link>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</link>
@@ -138,13 +145,6 @@
       <description>nel spent 40% of CPU time in . The bigger o with LLMs — run a quantized 7B model on your laptop with and ca.</description>
       <pubDate>Fri, 22 May 2026 23:49:02 +0000</pubDate>
       <guid>https://kubaik.github.io/crush-llms-on-a-laptop-without-melting-it/</guid>
-    </item>
-    <item>
-      <title>Vector DBs vs brute-force: 100ms vs 500ms in 2026</title>
-      <link>https://kubaik.github.io/vector-dbs-vs-brute-force-100ms-vs-500ms-in-2026/</link>
-      <description>Cut vector search latency 75% in 2026 with the right stack. Compare Pinecone 2.10 vs DuckDB + NumPy on p99, cost, and recall — with concrete benchmarks and the exact filter metric that flips the winner.</description>
-      <pubDate>Fri, 22 May 2026 23:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-vs-brute-force-100ms-vs-500ms-in-2026/</guid>
     </item>
   </channel>
 </rss>
