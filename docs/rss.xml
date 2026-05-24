@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 13:04:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 14:05:34 +0000</lastBuildDate>
+    <item>
+      <title>Slashed cloud carbon 37% without losing speed</title>
+      <link>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</link>
+      <description>Cut cloud carbon 37% without sacrificing speed — real-time analytics pipeline went from 37 to 23 metric tons CO₂/month while lowering latency and bill 32%. How we did it: incremental aggregation, Graviton3, and Redis Streams.</description>
+      <pubDate>Sun, 24 May 2026 14:05:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay: country cost index 2026</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tuning vs prompt engineering: when to choose each. Learn how to save weeks and $10k+ by picking the right approach for your AI tasks.</description>
       <pubDate>Sat, 23 May 2026 20:09:10 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</guid>
-    </item>
-    <item>
-      <title>10 connections? Kill your database</title>
-      <link>https://kubaik.github.io/10-connections-kill-your-database/</link>
-      <description>Cut database connection wait time 70% by setting max pool size to 95th percentile concurrency × 1.5 — modern defaults vs 2018 myths exposed with HikariCP 5.0.1, pgbouncer 1.21, and Aurora PostgreSQL 16.1 benchmarks.</description>
-      <pubDate>Sat, 23 May 2026 19:00:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/10-connections-kill-your-database/</guid>
     </item>
   </channel>
 </rss>
