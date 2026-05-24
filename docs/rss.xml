@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 21:41:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 21:49:32 +0000</lastBuildDate>
+    <item>
+      <title>No CS degree? Build systems anyway</title>
+      <link>https://kubaik.github.io/no-cs-degree-build-systems-anyway/</link>
+      <description>Build systems without a CS degree: three real services, benchmarks, and cost savings from 2026. Ship, measure, debug—senior-level impact without the gatekeeping.</description>
+      <pubDate>Sun, 24 May 2026 21:49:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-cs-degree-build-systems-anyway/</guid>
+    </item>
     <item>
       <title>50% less carbon, same speed: real trade-offs</title>
       <link>https://kubaik.github.io/50-less-carbon-same-speed-real-trade-offs/</link>
@@ -138,13 +145,6 @@
       <description>2026 freelance developer rate calculator — realistic hourly rates by region, platform fees, currency spreads, and tax rules. Avoid undercharging and walk away from bad deals in 30 seconds.</description>
       <pubDate>Sun, 24 May 2026 15:37:51 +0000</pubDate>
       <guid>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</guid>
-    </item>
-    <item>
-      <title>MCP servers: why your next tool should run one</title>
-      <link>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</link>
-      <description>Cut MCP server response time 40% with Rust vs Node.js benchmarks — memory leaks, 30-second timeouts, and the URI trap most teams miss.</description>
-      <pubDate>Sun, 24 May 2026 14:58:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</guid>
     </item>
   </channel>
 </rss>
