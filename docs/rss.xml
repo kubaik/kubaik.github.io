@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 18:00:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 18:44:32 +0000</lastBuildDate>
+    <item>
+      <title>Freelance burnout’s hidden cause</title>
+      <link>https://kubaik.github.io/freelance-burnouts-hidden-cause/</link>
+      <description>Freelance dev burnout: how I fixed it in 8 weeks with data, contracts, and a recovery protocol. Tracked decision fatigue, expert tax, and maintenance time to prove what works.</description>
+      <pubDate>Sun, 24 May 2026 18:44:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-burnouts-hidden-cause/</guid>
+    </item>
     <item>
       <title>Thermal Throttling When Running 7B LLMs Locally</title>
       <link>https://kubaik.github.io/thermal-throttling-when-running-7b-llms-locally/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 80%: BM25 filter, hybrid rerank, Redis cache, and LLM early exit saved $90/month and avoided a $5k GPU purchase — the real levers most tutorials skip.</description>
       <pubDate>Sun, 24 May 2026 11:06:33 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-rag-pipelines-hidden-latency-costs/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech: hidden costs</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-costs/</link>
-      <description>Senior devs quit tech: In 2026, 68% of mid-size teams that failed. Practical guide with real examples.</description>
-      <pubDate>Sun, 24 May 2026 10:58:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-costs/</guid>
     </item>
   </channel>
 </rss>
