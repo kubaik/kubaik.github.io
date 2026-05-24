@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 23:21:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 23:46:04 +0000</lastBuildDate>
+    <item>
+      <title>AI stacks that shipped: 3 real products made in 2026</title>
+      <link>https://kubaik.github.io/ai-stacks-that-shipped-3-real-products-made-in-2026/</link>
+      <description>Cut API response time 60% with FastAPI + Fly.io + Neon Postgres — the solo stack that shipped real products in 2026 and the hidden costs most teams miss.</description>
+      <pubDate>Sun, 24 May 2026 23:45:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-stacks-that-shipped-3-real-products-made-in-2026/</guid>
+    </item>
     <item>
       <title>Production-grade AI: 5 patterns that survive</title>
       <link>https://kubaik.github.io/production-grade-ai-5-patterns-that-survive/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 75% with shared Postgres tables — how 3 Southeast Asian startups avoided tenant-isolation tax and scaled to 150k tenants on $1.2k/month.</description>
       <pubDate>Sun, 24 May 2026 17:35:08 +0000</pubDate>
       <guid>https://kubaik.github.io/postgres-per-tenant-try-shared-tables-first/</guid>
-    </item>
-    <item>
-      <title>AI skills: which pay 30K more in 2026?</title>
-      <link>https://kubaik.github.io/ai-skills-which-pay-30k-more-in-2026/</link>
-      <description>Fine-tuned LLMs pay 28K more than generic AI skills in 2026. Compare Mistral-7B fine-tuning vs CrewAI agents on latency, cost, and security—with real benchmarks and setup steps.</description>
-      <pubDate>Sun, 24 May 2026 17:21:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-which-pay-30k-more-in-2026/</guid>
     </item>
   </channel>
 </rss>
