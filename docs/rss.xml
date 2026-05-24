@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 04:42:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 05:39:33 +0000</lastBuildDate>
+    <item>
+      <title>Earn $10k/month without leaving Africa</title>
+      <link>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</link>
+      <description>Went from $2k to $12k/month in two years with containerized benchmarks and a public /health endpoint — the exact files, commands, and numbers that recruiters audited.</description>
+      <pubDate>Sun, 24 May 2026 05:39:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</guid>
+    </item>
     <item>
       <title>Data skills that move the AI salary needle in 2026</title>
       <link>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Add observability to LLM pipelines with Prometheus: track latency, token usage, and error rates. Cut response times by 25% with retries and validation.</description>
       <pubDate>Sat, 23 May 2026 07:18:32 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</guid>
-    </item>
-    <item>
-      <title>5G’s backend blind spots</title>
-      <link>https://kubaik.github.io/5gs-backend-blind-spots/</link>
-      <description>Cut 5G backend latency 60% with Redis caching, connection pool tuning, and HTTP/2 — the real mistakes teams make on cellular networks</description>
-      <pubDate>Sat, 23 May 2026 06:01:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/5gs-backend-blind-spots/</guid>
     </item>
   </channel>
 </rss>
