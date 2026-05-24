@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 09:10:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 09:13:34 +0000</lastBuildDate>
+    <item>
+      <title>5 AI stacks shipping real products in 2026</title>
+      <link>https://kubaik.github.io/5-ai-stacks-shipping-real-products-in-2026/</link>
+      <description>Ship a production product in one weekend using 5 AI-friendly stacks that cost $0–$50/month at 1 k users/day — comparison table, code snippets, and real failure modes</description>
+      <pubDate>Sun, 24 May 2026 09:13:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-ai-stacks-shipping-real-products-in-2026/</guid>
+    </item>
     <item>
       <title>Embeddings vs. Vector DBs: The Real Math</title>
       <link>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI API costs 38% with batching, cache, and retries — latency drops from 8.4s to 1.2s in a live Manila system with 8k users.</description>
       <pubDate>Sat, 23 May 2026 11:56:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-apis-cache-queue-retry-or-die/</guid>
-    </item>
-    <item>
-      <title>Ship one project. Get hired remotely.</title>
-      <link>https://kubaik.github.io/ship-one-project-get-hired-remotely/</link>
-      <description>Build one project, not three. Deploy it, measure it, document it. Remote job offers from Africa follow real impact — not GitHub stars. 2026 playbook with real stacks, metrics, and hiring pipelines.</description>
-      <pubDate>Sat, 23 May 2026 10:24:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-one-project-get-hired-remotely/</guid>
     </item>
   </channel>
 </rss>
