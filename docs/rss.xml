@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 23:46:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 23:54:37 +0000</lastBuildDate>
+    <item>
+      <title>6 signals to watch in LLM pipelines</title>
+      <link>https://kubaik.github.io/6-signals-to-watch-in-llm-pipelines/</link>
+      <description>Cut LLM pipeline outages 46% with 6 metrics that break first — prompt length, token budget, latency, retrieval cost, generation tokens, and cache hit ratio.</description>
+      <pubDate>Sun, 24 May 2026 23:54:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-signals-to-watch-in-llm-pipelines/</guid>
+    </item>
     <item>
       <title>AI stacks that shipped: 3 real products made in 2026</title>
       <link>https://kubaik.github.io/ai-stacks-that-shipped-3-real-products-made-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Data from 82,000 developers reveals why senior engineers quit big tech — and it’s not about pay. See the hidden workload tax and how to measure it in your team.</description>
       <pubDate>Sun, 24 May 2026 17:44:11 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-burnout-the-real-reasons-seniors-quit/</guid>
-    </item>
-    <item>
-      <title>Postgres per-tenant? Try shared tables first</title>
-      <link>https://kubaik.github.io/postgres-per-tenant-try-shared-tables-first/</link>
-      <description>Cut AWS costs 75% with shared Postgres tables — how 3 Southeast Asian startups avoided tenant-isolation tax and scaled to 150k tenants on $1.2k/month.</description>
-      <pubDate>Sun, 24 May 2026 17:35:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-per-tenant-try-shared-tables-first/</guid>
     </item>
   </channel>
 </rss>
