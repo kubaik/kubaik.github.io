@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 15:46:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 15:51:51 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune or prompt: which wins?</title>
+      <link>https://kubaik.github.io/fine-tune-or-prompt-which-wins/</link>
+      <description>Cut production failures 40% by choosing between fine-tuning and prompt engineering using frozen models, prompt contracts, and guardrails — real 2026 benchmarks.</description>
+      <pubDate>Sun, 24 May 2026 15:51:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-or-prompt-which-wins/</guid>
+    </item>
     <item>
       <title>Choose the right real-time tech</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-tech/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS bills $5,400/year and API latency 60% by stripping GraphQL, Redis, and microservices — the real cost of over-engineering in 2026 stacks</description>
       <pubDate>Sun, 24 May 2026 06:31:46 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-hype-simple-code-wins/</guid>
-    </item>
-    <item>
-      <title>Earn $10k/month without leaving Africa</title>
-      <link>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</link>
-      <description>Went from $2k to $12k/month in two years with containerized benchmarks and a public /health endpoint — the exact files, commands, and numbers that recruiters audited.</description>
-      <pubDate>Sun, 24 May 2026 05:39:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</guid>
     </item>
   </channel>
 </rss>
