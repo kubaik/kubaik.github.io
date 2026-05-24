@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 14:58:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 15:38:04 +0000</lastBuildDate>
+    <item>
+      <title>Hidden costs of freelance developer rates</title>
+      <link>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</link>
+      <description>2026 freelance developer rate calculator — realistic hourly rates by region, platform fees, currency spreads, and tax rules. Avoid undercharging and walk away from bad deals in 30 seconds.</description>
+      <pubDate>Sun, 24 May 2026 15:37:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</guid>
+    </item>
     <item>
       <title>MCP servers: why your next tool should run one</title>
       <link>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</link>
@@ -138,13 +145,6 @@
       <description>Python vs SQL AI skills: $158k hybrid roles vs $142k Python vs $129k SQL in 2026 — benchmarked latency, cost, and the one metric that actually drives promotions.</description>
       <pubDate>Sun, 24 May 2026 02:30:14 +0000</pubDate>
       <guid>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</guid>
-    </item>
-    <item>
-      <title>Queues that don’t melt: pick the right one</title>
-      <link>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</link>
-      <description>. because 2% of messages drifted into the with Queues don melt pick — a queue and everything scales effortlessly.</description>
-      <pubDate>Sat, 23 May 2026 23:51:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</guid>
     </item>
   </channel>
 </rss>
