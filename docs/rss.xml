@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 20:45:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 21:16:58 +0000</lastBuildDate>
+    <item>
+      <title>What MCP servers actually do</title>
+      <link>https://kubaik.github.io/what-mcp-servers-actually-do/</link>
+      <description>Cut tool sprawl costs 62% with MCP servers — cold start, memory, and failure modes most teams miss before shipping to production</description>
+      <pubDate>Sun, 24 May 2026 21:16:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/what-mcp-servers-actually-do/</guid>
+    </item>
     <item>
       <title>Wrong max pool size? DB chokes under load</title>
       <link>https://kubaik.github.io/wrong-max-pool-size-db-chokes-under-load/</link>
@@ -138,13 +145,6 @@
       <description>Recover freelance dev burnout in 90 days with rate hikes, sprint cadence, and hardware upgrades. Save 18 work hours per week and raise client NPS from 68 to 82.</description>
       <pubDate>Sun, 24 May 2026 14:11:53 +0000</pubDate>
       <guid>https://kubaik.github.io/fixed-3-freelance-burnout-cycles-in-90-days/</guid>
-    </item>
-    <item>
-      <title>Slashed cloud carbon 37% without losing speed</title>
-      <link>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</link>
-      <description>Cut cloud carbon 37% without sacrificing speed — real-time analytics pipeline went from 37 to 23 metric tons CO₂/month while lowering latency and bill 32%. How we did it: incremental aggregation, Graviton3, and Redis Streams.</description>
-      <pubDate>Sun, 24 May 2026 14:05:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</guid>
     </item>
   </channel>
 </rss>
