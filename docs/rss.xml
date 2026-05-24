@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 14:16:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 14:58:19 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: why your next tool should run one</title>
+      <link>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</link>
+      <description>Cut MCP server response time 40% with Rust vs Node.js benchmarks — memory leaks, 30-second timeouts, and the URI trap most teams miss.</description>
+      <pubDate>Sun, 24 May 2026 14:58:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</guid>
+    </item>
     <item>
       <title>Multi-tenant DB: schema or share?</title>
       <link>https://kubaik.github.io/multi-tenant-db-schema-or-share/</link>
@@ -138,13 +145,6 @@
       <description>. because 2% of messages drifted into the with Queues don melt pick — a queue and everything scales effortlessly.</description>
       <pubDate>Sat, 23 May 2026 23:51:44 +0000</pubDate>
       <guid>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</guid>
-    </item>
-    <item>
-      <title>Build portfolios that pass remote audits</title>
-      <link>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</link>
-      <description>Ship three projects and stay jobless — real portfolios that got African engineers remote jobs in 2026 used operational artifacts, not just code. Load tests, incident logs, and Grafana dashboards turned applicants into hires.</description>
-      <pubDate>Sat, 23 May 2026 22:45:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</guid>
     </item>
   </channel>
 </rss>
