@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 19:56:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 20:34:56 +0000</lastBuildDate>
+    <item>
+      <title>Architecture or bust: when simple wins</title>
+      <link>https://kubaik.github.io/architecture-or-bust-when-simple-wins/</link>
+      <description>Cut AWS bill 95% and ship 3x faster by replacing microservices with a monolith — real numbers, real code, and the architecture trap most teams fall for in 2026.</description>
+      <pubDate>Sun, 24 May 2026 20:34:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/architecture-or-bust-when-simple-wins/</guid>
+    </item>
     <item>
       <title>Optimize Node 22 for 5G mobile backends</title>
       <link>https://kubaik.github.io/optimize-node-22-for-5g-mobile-backends/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote pay with a 2026 country cost index — concrete rates, formula, and negotiation scripts to stop guessing and start charging what clients expect to pay.</description>
       <pubDate>Sun, 24 May 2026 13:04:33 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</guid>
-    </item>
-    <item>
-      <title>Laptops can run LLMs: stop outsourcing the model</title>
-      <link>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</link>
-      <description>Run 7B LLMs locally on a laptop — cost $0, latency 450 ms, accuracy 87%. Benchmarks, cost breakdowns, and the exact tools to avoid cloud waste.</description>
-      <pubDate>Sun, 24 May 2026 12:50:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</guid>
     </item>
   </channel>
 </rss>
