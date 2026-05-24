@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 18:46:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 18:50:54 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay from low-cost lands</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</link>
+      <description>Turn public rate data into a 2.0x salary bump — Puppeteer 22.6 scrapers, 2026 benchmarks, and negotiation scripts for lower-cost countries</description>
+      <pubDate>Sun, 24 May 2026 18:50:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</guid>
+    </item>
     <item>
       <title>Freelance burnout’s hidden cause</title>
       <link>https://kubaik.github.io/freelance-burnouts-hidden-cause/</link>
@@ -138,13 +145,6 @@
       <description>Instrument LLM pipelines with 30 metrics and traces to cut latency 46% and errors 95% — FastAPI, LangChain, OpenTelemetry, Prometheus, Grafana in 2026.</description>
       <pubDate>Sun, 24 May 2026 11:10:47 +0000</pubDate>
       <guid>https://kubaik.github.io/track-7-signals-in-llm-pipelines/</guid>
-    </item>
-    <item>
-      <title>Fix RAG pipelines’ hidden latency costs</title>
-      <link>https://kubaik.github.io/fix-rag-pipelines-hidden-latency-costs/</link>
-      <description>Cut RAG latency 80%: BM25 filter, hybrid rerank, Redis cache, and LLM early exit saved $90/month and avoided a $5k GPU purchase — the real levers most tutorials skip.</description>
-      <pubDate>Sun, 24 May 2026 11:06:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-rag-pipelines-hidden-latency-costs/</guid>
     </item>
   </channel>
 </rss>
