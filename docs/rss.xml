@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 17:17:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 17:21:20 +0000</lastBuildDate>
+    <item>
+      <title>AI skills: which pay 30K more in 2026?</title>
+      <link>https://kubaik.github.io/ai-skills-which-pay-30k-more-in-2026/</link>
+      <description>Fine-tuned LLMs pay 28K more than generic AI skills in 2026. Compare Mistral-7B fine-tuning vs CrewAI agents on latency, cost, and security—with real benchmarks and setup steps.</description>
+      <pubDate>Sun, 24 May 2026 17:21:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-which-pay-30k-more-in-2026/</guid>
+    </item>
     <item>
       <title>AI reads your repo: context gap every team misses</title>
       <link>https://kubaik.github.io/ai-reads-your-repo-context-gap-every-team-misses/</link>
@@ -138,13 +145,6 @@
       <description>Ship a production product in one weekend using 5 AI-friendly stacks that cost $0–$50/month at 1 k users/day — comparison table, code snippets, and real failure modes</description>
       <pubDate>Sun, 24 May 2026 09:13:23 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ai-stacks-shipping-real-products-in-2026/</guid>
-    </item>
-    <item>
-      <title>Embeddings vs. Vector DBs: The Real Math</title>
-      <link>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</link>
-      <description>loyments, 58 % of teams using vector search with Vector Databases — hit a wall when similarity search latency climbs ab.</description>
-      <pubDate>Sun, 24 May 2026 09:10:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</guid>
     </item>
   </channel>
 </rss>
