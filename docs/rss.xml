@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 15:59:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 17:00:53 +0000</lastBuildDate>
+    <item>
+      <title>AI reads your repo: context gap every team misses</title>
+      <link>https://kubaik.github.io/ai-reads-your-repo-context-gap-every-team-misses/</link>
+      <description>Cut AI review time 80% by feeding your repo context to LLMs — the repository intelligence graph you’re missing and how to build it in 3 minutes with Python 3.12 and SQLite.</description>
+      <pubDate>Sun, 24 May 2026 17:00:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-reads-your-repo-context-gap-every-team-misses/</guid>
+    </item>
     <item>
       <title>Instrument LLM pipelines: 14 signals you’re missing</title>
       <link>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</link>
@@ -138,13 +145,6 @@
       <description>loyments, 58 % of teams using vector search with Vector Databases — hit a wall when similarity search latency climbs ab.</description>
       <pubDate>Sun, 24 May 2026 09:10:08 +0000</pubDate>
       <guid>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</guid>
-    </item>
-    <item>
-      <title>Skip the LeetCode grind for remote roles</title>
-      <link>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</link>
-      <description>Pass remote tech interviews as a self-taught dev in 2026 with real debugging practice, not LeetCode. Concrete tools, latency drops, and cost-saving hacks included.</description>
-      <pubDate>Sun, 24 May 2026 08:06:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</guid>
     </item>
   </channel>
 </rss>
