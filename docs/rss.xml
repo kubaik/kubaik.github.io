@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 05:39:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 06:31:57 +0000</lastBuildDate>
+    <item>
+      <title>Skip the hype: simple code wins</title>
+      <link>https://kubaik.github.io/skip-the-hype-simple-code-wins/</link>
+      <description>Cut AWS bills $5,400/year and API latency 60% by stripping GraphQL, Redis, and microservices — the real cost of over-engineering in 2026 stacks</description>
+      <pubDate>Sun, 24 May 2026 06:31:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-hype-simple-code-wins/</guid>
+    </item>
     <item>
       <title>Earn $10k/month without leaving Africa</title>
       <link>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</link>
@@ -138,13 +145,6 @@
       <description>Cut unpaid engineer hours 66% by fixing latency and connection pool frictions — the real reasons senior engineers leave big tech in 2026.</description>
       <pubDate>Sat, 23 May 2026 08:28:29 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-lead-pay-when-300k-isnt-enough/</guid>
-    </item>
-    <item>
-      <title>Optimize LLM Pipeline Metrics for Production Success</title>
-      <link>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</link>
-      <description>Add observability to LLM pipelines with Prometheus: track latency, token usage, and error rates. Cut response times by 25% with retries and validation.</description>
-      <pubDate>Sat, 23 May 2026 07:18:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-llm-pipeline-metrics-for-production-success/</guid>
     </item>
   </channel>
 </rss>
