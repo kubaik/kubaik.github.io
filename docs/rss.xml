@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 06:31:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 08:06:18 +0000</lastBuildDate>
+    <item>
+      <title>Skip the LeetCode grind for remote roles</title>
+      <link>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</link>
+      <description>Pass remote tech interviews as a self-taught dev in 2026 with real debugging practice, not LeetCode. Concrete tools, latency drops, and cost-saving hacks included.</description>
+      <pubDate>Sun, 24 May 2026 08:06:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</guid>
+    </item>
     <item>
       <title>Skip the hype: simple code wins</title>
       <link>https://kubaik.github.io/skip-the-hype-simple-code-wins/</link>
@@ -138,13 +145,6 @@
       <description>From $2.1K to $12.4K monthly: how one engineer turned a single open source fix into a global rate with uvicorn and FastAPI.</description>
       <pubDate>Sat, 23 May 2026 09:19:21 +0000</pubDate>
       <guid>https://kubaik.github.io/from-2k-to-12k-monthly-how-i-went-global/</guid>
-    </item>
-    <item>
-      <title>Tech lead pay: when 300k isn&apos;t enough</title>
-      <link>https://kubaik.github.io/tech-lead-pay-when-300k-isnt-enough/</link>
-      <description>Cut unpaid engineer hours 66% by fixing latency and connection pool frictions — the real reasons senior engineers leave big tech in 2026.</description>
-      <pubDate>Sat, 23 May 2026 08:28:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-lead-pay-when-300k-isnt-enough/</guid>
     </item>
   </channel>
 </rss>
