@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 08:06:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 09:10:20 +0000</lastBuildDate>
+    <item>
+      <title>Embeddings vs. Vector DBs: The Real Math</title>
+      <link>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</link>
+      <description>loyments, 58 % of teams using vector search with Vector Databases — hit a wall when similarity search latency climbs ab.</description>
+      <pubDate>Sun, 24 May 2026 09:10:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/embeddings-vs-vector-dbs-the-real-math/</guid>
+    </item>
     <item>
       <title>Skip the LeetCode grind for remote roles</title>
       <link>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</link>
@@ -138,13 +145,6 @@
       <description>Build one project, not three. Deploy it, measure it, document it. Remote job offers from Africa follow real impact — not GitHub stars. 2026 playbook with real stacks, metrics, and hiring pipelines.</description>
       <pubDate>Sat, 23 May 2026 10:24:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-one-project-get-hired-remotely/</guid>
-    </item>
-    <item>
-      <title>From 2K to 12K monthly: how I went global</title>
-      <link>https://kubaik.github.io/from-2k-to-12k-monthly-how-i-went-global/</link>
-      <description>From $2.1K to $12.4K monthly: how one engineer turned a single open source fix into a global rate with uvicorn and FastAPI.</description>
-      <pubDate>Sat, 23 May 2026 09:19:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/from-2k-to-12k-monthly-how-i-went-global/</guid>
     </item>
   </channel>
 </rss>
