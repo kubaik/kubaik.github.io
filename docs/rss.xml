@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 17:35:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 17:44:24 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech burnout: the real reasons seniors quit</title>
+      <link>https://kubaik.github.io/big-tech-burnout-the-real-reasons-seniors-quit/</link>
+      <description>Data from 82,000 developers reveals why senior engineers quit big tech — and it’s not about pay. See the hidden workload tax and how to measure it in your team.</description>
+      <pubDate>Sun, 24 May 2026 17:44:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-burnout-the-real-reasons-seniors-quit/</guid>
+    </item>
     <item>
       <title>Postgres per-tenant? Try shared tables first</title>
       <link>https://kubaik.github.io/postgres-per-tenant-try-shared-tables-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut 5G backend latency 26% and errors 85% with connection pooling, TLS timeouts, and p99 instrumentation. Learn carrier-grade tuning rules that break common assumptions.</description>
       <pubDate>Sun, 24 May 2026 10:16:10 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-backend-design-rules-cellular-latency-traps/</guid>
-    </item>
-    <item>
-      <title>AI apps: 3 patterns that don&apos;t break</title>
-      <link>https://kubaik.github.io/ai-apps-3-patterns-that-dont-break/</link>
-      <description>Cut embedding costs 60% with a write-through cache and async pipelines — Redis 7.2, Qdrant 1.9, FastAPI 0.115, and the cache stampede fix most teams miss.</description>
-      <pubDate>Sun, 24 May 2026 09:16:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-apps-3-patterns-that-dont-break/</guid>
     </item>
   </channel>
 </rss>
