@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 19:45:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 19:56:26 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Node 22 for 5G mobile backends</title>
+      <link>https://kubaik.github.io/optimize-node-22-for-5g-mobile-backends/</link>
+      <description>Cut Node 22 API latency 91% on 5G — pgBouncer timeouts, DNS pinning, and heap caps that actually save money in Jakarta and Dublin.</description>
+      <pubDate>Sun, 24 May 2026 19:56:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-node-22-for-5g-mobile-backends/</guid>
+    </item>
     <item>
       <title>Portfolio beats projects: 2026 remote hire hack</title>
       <link>https://kubaik.github.io/portfolio-beats-projects-2026-remote-hire-hack/</link>
@@ -138,13 +145,6 @@
       <description>Run 7B LLMs locally on a laptop — cost $0, latency 450 ms, accuracy 87%. Benchmarks, cost breakdowns, and the exact tools to avoid cloud waste.</description>
       <pubDate>Sun, 24 May 2026 12:50:12 +0000</pubDate>
       <guid>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</guid>
-    </item>
-    <item>
-      <title>AI sees your repo: the context gap most teams miss</title>
-      <link>https://kubaik.github.io/ai-sees-your-repo-the-context-gap-most-teams-miss/</link>
-      <description>Build repository intelligence graphs to cut AI PR review errors 83% — import-analyzer, networkx, and embeddings that actually understand your codebase contracts</description>
-      <pubDate>Sun, 24 May 2026 12:20:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sees-your-repo-the-context-gap-most-teams-miss/</guid>
     </item>
   </channel>
 </rss>
