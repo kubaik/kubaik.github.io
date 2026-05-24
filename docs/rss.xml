@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 20:34:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 20:45:59 +0000</lastBuildDate>
+    <item>
+      <title>Wrong max pool size? DB chokes under load</title>
+      <link>https://kubaik.github.io/wrong-max-pool-size-db-chokes-under-load/</link>
+      <description>Cut database pool costs 40%: the real max pool size formula for PostgreSQL 16.2, HikariCP 5.0.1, and pg-pool v3.6 — connection churn, memory overhead, and latency traps exposed.</description>
+      <pubDate>Sun, 24 May 2026 20:45:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/wrong-max-pool-size-db-chokes-under-load/</guid>
+    </item>
     <item>
       <title>Architecture or bust: when simple wins</title>
       <link>https://kubaik.github.io/architecture-or-bust-when-simple-wins/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 37% without sacrificing speed — real-time analytics pipeline went from 37 to 23 metric tons CO₂/month while lowering latency and bill 32%. How we did it: incremental aggregation, Graviton3, and Redis Streams.</description>
       <pubDate>Sun, 24 May 2026 14:05:22 +0000</pubDate>
       <guid>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay: country cost index 2026</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</link>
-      <description>Negotiate remote pay with a 2026 country cost index — concrete rates, formula, and negotiation scripts to stop guessing and start charging what clients expect to pay.</description>
-      <pubDate>Sun, 24 May 2026 13:04:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</guid>
     </item>
   </channel>
 </rss>
