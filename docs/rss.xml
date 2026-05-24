@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 14:12:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 14:16:47 +0000</lastBuildDate>
+    <item>
+      <title>Multi-tenant DB: schema or share?</title>
+      <link>https://kubaik.github.io/multi-tenant-db-schema-or-share/</link>
+      <description>Cut database costs 40% and latency 60% with schema-per-tenant in a shared cluster — connection pooling, RLS traps, and the migration path most teams miss</description>
+      <pubDate>Sun, 24 May 2026 14:16:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-tenant-db-schema-or-share/</guid>
+    </item>
     <item>
       <title>Fixed 3 freelance burnout cycles in 90 days</title>
       <link>https://kubaik.github.io/fixed-3-freelance-burnout-cycles-in-90-days/</link>
@@ -138,13 +145,6 @@
       <description>Ship three projects and stay jobless — real portfolios that got African engineers remote jobs in 2026 used operational artifacts, not just code. Load tests, incident logs, and Grafana dashboards turned applicants into hires.</description>
       <pubDate>Sat, 23 May 2026 22:45:34 +0000</pubDate>
       <guid>https://kubaik.github.io/build-portfolios-that-pass-remote-audits/</guid>
-    </item>
-    <item>
-      <title>Pools exhaust your DB in 3 minutes</title>
-      <link>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</link>
-      <description>Cut database CPU 30% and p95 latency 77% by fixing the idleTimeout mistake most teams make in 2026. Learn the sustainable pool sizing rule used on PostgreSQL 16, AWS RDS, and Aurora Serverless v2 today.</description>
-      <pubDate>Sat, 23 May 2026 21:47:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</guid>
     </item>
   </channel>
 </rss>
