@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 15:38:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 15:46:23 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time tech</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-tech/</link>
+      <description>Cut real-time latency 60% in 2026 by picking SSE over WebSockets or long polling — concrete benchmarks, code snippets, and the one mistake most teams make first.</description>
+      <pubDate>Sun, 24 May 2026 15:46:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-tech/</guid>
+    </item>
     <item>
       <title>Hidden costs of freelance developer rates</title>
       <link>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</link>
@@ -138,13 +145,6 @@
       <description>Went from $2k to $12k/month in two years with containerized benchmarks and a public /health endpoint — the exact files, commands, and numbers that recruiters audited.</description>
       <pubDate>Sun, 24 May 2026 05:39:20 +0000</pubDate>
       <guid>https://kubaik.github.io/earn-10kmonth-without-leaving-africa/</guid>
-    </item>
-    <item>
-      <title>Data skills that move the AI salary needle in 2026</title>
-      <link>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</link>
-      <description>Python vs SQL AI skills: $158k hybrid roles vs $142k Python vs $129k SQL in 2026 — benchmarked latency, cost, and the one metric that actually drives promotions.</description>
-      <pubDate>Sun, 24 May 2026 02:30:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</guid>
     </item>
   </channel>
 </rss>
