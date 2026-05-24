@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 22:44:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 22:51:30 +0000</lastBuildDate>
+    <item>
+      <title>Choose the Right Real-Time Protocol in 60 Seconds</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-in-60-seconds/</link>
+      <description>Pick the right realtime protocol in 90 seconds — WebSocket vs SSE vs long polling benchmarks, code, and the one mistake that cost me three weeks.</description>
+      <pubDate>Sun, 24 May 2026 22:51:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-in-60-seconds/</guid>
+    </item>
     <item>
       <title>Vector DBs: the 0.5ms vs 50ms performance split</title>
       <link>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI review time 80% by feeding your repo context to LLMs — the repository intelligence graph you’re missing and how to build it in 3 minutes with Python 3.12 and SQLite.</description>
       <pubDate>Sun, 24 May 2026 17:00:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-reads-your-repo-context-gap-every-team-misses/</guid>
-    </item>
-    <item>
-      <title>Instrument LLM pipelines: 14 signals you’re missing</title>
-      <link>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</link>
-      <description>LLMs: rate from 8% to 0.3% and saved $18k per mo. Practical guide with real examples.</description>
-      <pubDate>Sun, 24 May 2026 15:59:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</guid>
     </item>
   </channel>
 </rss>

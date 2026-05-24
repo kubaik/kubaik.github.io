@@ -19,5 +19,6 @@
   "How I went from junior to senior without a CS degree",
   "When to use a message queue (and when it's overkill)",
   "RAG pipelines in production: what the tutorials skip",
-  "How vector databases work (and when you don't need one)"
+  "How vector databases work (and when you don't need one)",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
