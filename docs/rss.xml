@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 22:35:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 22:44:10 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs: the 0.5ms vs 50ms performance split</title>
+      <link>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</link>
+      <description>Cut vector search latency from 45 ms to 3 ms with Milvus 2.4.5 or keep pgvector 0.7.0 for under 50M vectors and $560/month infrastructure</description>
+      <pubDate>Sun, 24 May 2026 22:43:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</guid>
+    </item>
     <item>
       <title>AI answer latency: 80ms or bust</title>
       <link>https://kubaik.github.io/ai-answer-latency-80ms-or-bust/</link>
@@ -138,13 +145,6 @@
       <description>LLMs: rate from 8% to 0.3% and saved $18k per mo. Practical guide with real examples.</description>
       <pubDate>Sun, 24 May 2026 15:59:46 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</guid>
-    </item>
-    <item>
-      <title>Fine-tune or prompt: which wins?</title>
-      <link>https://kubaik.github.io/fine-tune-or-prompt-which-wins/</link>
-      <description>Cut production failures 40% by choosing between fine-tuning and prompt engineering using frozen models, prompt contracts, and guardrails — real 2026 benchmarks.</description>
-      <pubDate>Sun, 24 May 2026 15:51:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-or-prompt-which-wins/</guid>
     </item>
   </channel>
 </rss>

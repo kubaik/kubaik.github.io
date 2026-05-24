@@ -18,5 +18,6 @@
   "Sustainable software engineering: cutting cloud carbon without cutting performance",
   "How I went from junior to senior without a CS degree",
   "When to use a message queue (and when it's overkill)",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "How vector databases work (and when you don't need one)"
 ]
