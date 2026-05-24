@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 14:08:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 14:12:05 +0000</lastBuildDate>
+    <item>
+      <title>Fixed 3 freelance burnout cycles in 90 days</title>
+      <link>https://kubaik.github.io/fixed-3-freelance-burnout-cycles-in-90-days/</link>
+      <description>Recover freelance dev burnout in 90 days with rate hikes, sprint cadence, and hardware upgrades. Save 18 work hours per week and raise client NPS from 68 to 82.</description>
+      <pubDate>Sun, 24 May 2026 14:11:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/fixed-3-freelance-burnout-cycles-in-90-days/</guid>
+    </item>
     <item>
       <title>Slashed cloud carbon 37% without losing speed</title>
       <link>https://kubaik.github.io/slashed-cloud-carbon-37-without-losing-speed/</link>
@@ -138,13 +145,6 @@
       <description>Cut database CPU 30% and p95 latency 77% by fixing the idleTimeout mistake most teams make in 2026. Learn the sustainable pool sizing rule used on PostgreSQL 16, AWS RDS, and Aurora Serverless v2 today.</description>
       <pubDate>Sat, 23 May 2026 21:47:11 +0000</pubDate>
       <guid>https://kubaik.github.io/pools-exhaust-your-db-in-3-minutes/</guid>
-    </item>
-    <item>
-      <title>Fine-tune or prompt? Pick wrong, waste weeks</title>
-      <link>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</link>
-      <description>Fine-tuning vs prompt engineering: when to choose each. Learn how to save weeks and $10k+ by picking the right approach for your AI tasks.</description>
-      <pubDate>Sat, 23 May 2026 20:09:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-wrong-waste-weeks/</guid>
     </item>
   </channel>
 </rss>
