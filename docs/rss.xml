@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 12:50:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 13:04:46 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay: country cost index 2026</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</link>
+      <description>Negotiate remote pay with a 2026 country cost index — concrete rates, formula, and negotiation scripts to stop guessing and start charging what clients expect to pay.</description>
+      <pubDate>Sun, 24 May 2026 13:04:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-country-cost-index-2026/</guid>
+    </item>
     <item>
       <title>Laptops can run LLMs: stop outsourcing the model</title>
       <link>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection wait time 70% by setting max pool size to 95th percentile concurrency × 1.5 — modern defaults vs 2018 myths exposed with HikariCP 5.0.1, pgbouncer 1.21, and Aurora PostgreSQL 16.1 benchmarks.</description>
       <pubDate>Sat, 23 May 2026 19:00:20 +0000</pubDate>
       <guid>https://kubaik.github.io/10-connections-kill-your-database/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, long polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
-      <description>Pick the right realtime tool in 2026 — latency, cost, and code size compared for WebSockets vs SSE vs long polling with 3 concrete benchmarks and a 30-minute next step.</description>
-      <pubDate>Sat, 23 May 2026 18:46:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
