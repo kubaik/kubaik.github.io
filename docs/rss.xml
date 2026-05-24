@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 15:51:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 15:59:58 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLM pipelines: 14 signals you’re missing</title>
+      <link>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</link>
+      <description>LLMs: rate from 8% to 0.3% and saved $18k per mo. Practical guide with real examples.</description>
+      <pubDate>Sun, 24 May 2026 15:59:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llm-pipelines-14-signals-youre-missing/</guid>
+    </item>
     <item>
       <title>Fine-tune or prompt: which wins?</title>
       <link>https://kubaik.github.io/fine-tune-or-prompt-which-wins/</link>
@@ -138,13 +145,6 @@
       <description>Pass remote tech interviews as a self-taught dev in 2026 with real debugging practice, not LeetCode. Concrete tools, latency drops, and cost-saving hacks included.</description>
       <pubDate>Sun, 24 May 2026 08:06:08 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-leetcode-grind-for-remote-roles/</guid>
-    </item>
-    <item>
-      <title>Skip the hype: simple code wins</title>
-      <link>https://kubaik.github.io/skip-the-hype-simple-code-wins/</link>
-      <description>Cut AWS bills $5,400/year and API latency 60% by stripping GraphQL, Redis, and microservices — the real cost of over-engineering in 2026 stacks</description>
-      <pubDate>Sun, 24 May 2026 06:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-hype-simple-code-wins/</guid>
     </item>
   </channel>
 </rss>
