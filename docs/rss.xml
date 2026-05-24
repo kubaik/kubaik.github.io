@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 10:12:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 10:16:23 +0000</lastBuildDate>
+    <item>
+      <title>5G backend design rules: cellular latency traps</title>
+      <link>https://kubaik.github.io/5g-backend-design-rules-cellular-latency-traps/</link>
+      <description>Cut 5G backend latency 26% and errors 85% with connection pooling, TLS timeouts, and p99 instrumentation. Learn carrier-grade tuning rules that break common assumptions.</description>
+      <pubDate>Sun, 24 May 2026 10:16:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-backend-design-rules-cellular-latency-traps/</guid>
+    </item>
     <item>
       <title>AI apps: 3 patterns that don&apos;t break</title>
       <link>https://kubaik.github.io/ai-apps-3-patterns-that-dont-break/</link>
@@ -138,13 +145,6 @@
       <description>Real freelance rates for 2026 with step-by-step calculator — costs, taxes, buffer, and the hidden gotchas most guides miss</description>
       <pubDate>Sat, 23 May 2026 13:05:38 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-what-actually-pays-in-2026/</guid>
-    </item>
-    <item>
-      <title>When abstraction hurts: Go’s 450ms lesson</title>
-      <link>https://kubaik.github.io/when-abstraction-hurts-gos-450ms-lesson/</link>
-      <description>Cut API latency 91% and cloud spend 79% by removing hexagonal architecture and adding a two-tier cache. Real numbers from a 2026 Go service rewrite.</description>
-      <pubDate>Sat, 23 May 2026 12:16:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-abstraction-hurts-gos-450ms-lesson/</guid>
     </item>
   </channel>
 </rss>
