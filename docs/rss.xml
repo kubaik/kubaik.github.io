@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 18:50:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 19:19:37 +0000</lastBuildDate>
+    <item>
+      <title>I tripled my salary in 18 months</title>
+      <link>https://kubaik.github.io/i-tripled-my-salary-in-18-months/</link>
+      <description>From $1,200 to $145k: how one engineer used latency optimization to land a US remote role with 0.2% RSUs and $15k signing bonus in 18 months.</description>
+      <pubDate>Sun, 24 May 2026 19:19:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/i-tripled-my-salary-in-18-months/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay from low-cost lands</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</link>
@@ -138,13 +145,6 @@
       <description>ps from 0.2% to 18% in 90 seconds. It does with Self-taught senior path one — a CS degree goes like this: build projects, contri.</description>
       <pubDate>Sun, 24 May 2026 11:48:15 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-to-senior-the-real-path-no-one-admits/</guid>
-    </item>
-    <item>
-      <title>Track 7 signals in LLM pipelines</title>
-      <link>https://kubaik.github.io/track-7-signals-in-llm-pipelines/</link>
-      <description>Instrument LLM pipelines with 30 metrics and traces to cut latency 46% and errors 95% — FastAPI, LangChain, OpenTelemetry, Prometheus, Grafana in 2026.</description>
-      <pubDate>Sun, 24 May 2026 11:10:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/track-7-signals-in-llm-pipelines/</guid>
     </item>
   </channel>
 </rss>
