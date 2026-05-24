@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 22:13:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 22:17:46 +0000</lastBuildDate>
+    <item>
+      <title>Message queues: use them only here</title>
+      <link>https://kubaik.github.io/message-queues-use-them-only-here/</link>
+      <description>Save $18k/month and 4 hours of debugging: when message queues actually help—and when they burn your budget. Real benchmarks, failure modes, and a step-by-step Python example with Redis Streams 7.2.</description>
+      <pubDate>Sun, 24 May 2026 22:17:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/message-queues-use-them-only-here/</guid>
+    </item>
     <item>
       <title>No CS degree? Build systems anyway</title>
       <link>https://kubaik.github.io/no-cs-degree-build-systems-anyway/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time latency 60% in 2026 by picking SSE over WebSockets or long polling — concrete benchmarks, code snippets, and the one mistake most teams make first.</description>
       <pubDate>Sun, 24 May 2026 15:46:10 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-tech/</guid>
-    </item>
-    <item>
-      <title>Hidden costs of freelance developer rates</title>
-      <link>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</link>
-      <description>2026 freelance developer rate calculator — realistic hourly rates by region, platform fees, currency spreads, and tax rules. Avoid undercharging and walk away from bad deals in 30 seconds.</description>
-      <pubDate>Sun, 24 May 2026 15:37:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/hidden-costs-of-freelance-developer-rates/</guid>
     </item>
   </channel>
 </rss>
