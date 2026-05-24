@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 21:35:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 21:41:48 +0000</lastBuildDate>
+    <item>
+      <title>50% less carbon, same speed: real trade-offs</title>
+      <link>https://kubaik.github.io/50-less-carbon-same-speed-real-trade-offs/</link>
+      <description>Cut API carbon footprint 53% without adding latency — schema audits, Bun on ARM, and CPU frequency scaling in real numbers.</description>
+      <pubDate>Sun, 24 May 2026 21:41:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/50-less-carbon-same-speed-real-trade-offs/</guid>
+    </item>
     <item>
       <title>Ace remote interviews: self-taught guide</title>
       <link>https://kubaik.github.io/ace-remote-interviews-self-taught-guide/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server response time 40% with Rust vs Node.js benchmarks — memory leaks, 30-second timeouts, and the URI trap most teams miss.</description>
       <pubDate>Sun, 24 May 2026 14:58:07 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-why-your-next-tool-should-run-one/</guid>
-    </item>
-    <item>
-      <title>Multi-tenant DB: schema or share?</title>
-      <link>https://kubaik.github.io/multi-tenant-db-schema-or-share/</link>
-      <description>Cut database costs 40% and latency 60% with schema-per-tenant in a shared cluster — connection pooling, RLS traps, and the migration path most teams miss</description>
-      <pubDate>Sun, 24 May 2026 14:16:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-tenant-db-schema-or-share/</guid>
     </item>
   </channel>
 </rss>
