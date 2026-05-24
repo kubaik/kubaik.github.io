@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2026 12:20:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 12:50:24 +0000</lastBuildDate>
+    <item>
+      <title>Laptops can run LLMs: stop outsourcing the model</title>
+      <link>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</link>
+      <description>Run 7B LLMs locally on a laptop — cost $0, latency 450 ms, accuracy 87%. Benchmarks, cost breakdowns, and the exact tools to avoid cloud waste.</description>
+      <pubDate>Sun, 24 May 2026 12:50:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/laptops-can-run-llms-stop-outsourcing-the-model/</guid>
+    </item>
     <item>
       <title>AI sees your repo: the context gap most teams miss</title>
       <link>https://kubaik.github.io/ai-sees-your-repo-the-context-gap-most-teams-miss/</link>
@@ -138,13 +145,6 @@
       <description>Pick the right realtime tool in 2026 — latency, cost, and code size compared for WebSockets vs SSE vs long polling with 3 concrete benchmarks and a 30-minute next step.</description>
       <pubDate>Sat, 23 May 2026 18:46:32 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
-    </item>
-    <item>
-      <title>Decode MCP servers before they break prod</title>
-      <link>https://kubaik.github.io/decode-mcp-servers-before-they-break-prod/</link>
-      <description>Cut MCP server latency 60% with WebSocket transport, Redis caching, and health checks — real production numbers, failure modes, and code you can run today.</description>
-      <pubDate>Sat, 23 May 2026 17:58:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/decode-mcp-servers-before-they-break-prod/</guid>
     </item>
   </channel>
 </rss>

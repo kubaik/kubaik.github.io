@@ -15,5 +15,6 @@
   "RAG pipelines in production: what the tutorials skip",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
   "How I went from junior to senior without a CS degree",
-  "Repository intelligence: how AI is learning your entire codebase context"
+  "Repository intelligence: how AI is learning your entire codebase context",
+  "Building a local LLM setup that actually runs on a laptop"
 ]
