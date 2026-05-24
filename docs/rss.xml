@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 May 2026 23:51:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2026 02:30:27 +0000</lastBuildDate>
+    <item>
+      <title>Data skills that move the AI salary needle in 2026</title>
+      <link>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</link>
+      <description>Python vs SQL AI skills: $158k hybrid roles vs $142k Python vs $129k SQL in 2026 — benchmarked latency, cost, and the one metric that actually drives promotions.</description>
+      <pubDate>Sun, 24 May 2026 02:30:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-skills-that-move-the-ai-salary-needle-in-2026/</guid>
+    </item>
     <item>
       <title>Queues that don’t melt: pick the right one</title>
       <link>https://kubaik.github.io/queues-that-dont-melt-pick-the-right-one/</link>
@@ -138,13 +145,6 @@
       <description>Cut 5G backend latency 60% with Redis caching, connection pool tuning, and HTTP/2 — the real mistakes teams make on cellular networks</description>
       <pubDate>Sat, 23 May 2026 06:01:58 +0000</pubDate>
       <guid>https://kubaik.github.io/5gs-backend-blind-spots/</guid>
-    </item>
-    <item>
-      <title>Cut cloud carbon 30% without latency</title>
-      <link>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</link>
-      <description>Cut cloud carbon 31% with zero latency penalty — the AWS Customer Carbon Footprint Tool, CloudWatch Synthetics, and a 180-line Lambda@Edge router that routes traffic to the cleanest grid.</description>
-      <pubDate>Sat, 23 May 2026 05:31:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-carbon-30-without-latency/</guid>
     </item>
   </channel>
 </rss>
