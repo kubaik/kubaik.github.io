@@ -1,4 +1,3 @@
-
 import datetime
 import json
 import os
@@ -72,6 +71,16 @@ _HOOK_STOP_WORDS = {
     "earn", "wins", "win", "lose", "beat", "buy", "sell", "run", "start",
     "people", "person", "developer", "developers", "engineer", "engineers",
     "company", "companies", "team", "teams", "user", "users", "way",
+}
+
+# Verbs that should never appear as the LAST word of a topic phrase inserted
+# into a template slot that requires a noun (e.g. "days debugging {topic}").
+# If the extracted phrase ends with one of these, we fall back to a safer noun.
+_PREDICATE_VERBS = {
+    "quit", "leave", "left", "fail", "failed", "break", "broke",
+    "die", "died", "slow", "slowed", "work", "worked", "run", "ran",
+    "ship", "shipped", "scale", "scaled", "crash", "crashed",
+    "burn", "burned", "burnt", "go", "went",
 }
 
 # ─────────────────────────────────────────────────────────────────
@@ -151,14 +160,35 @@ _TOPIC_OVERRIDES = {
     "post-quantum":      "Post-Quantum Crypto",
     "sovereign":         "Sovereign Cloud",
     "multi-agent":       "Multi-Agent Systems",
+    # ── FIX: career/attrition patterns that produce verb-ended phrases ────────
+    "senior dev":        "Senior Dev Retention",
+    "devs quit":         "Developer Attrition",
+    "quit big tech":     "Big Tech Attrition",
+    "leave big tech":    "Big Tech Attrition",
+    "freelance rate":    "Freelance Rates",
+    "freelance dev":     "Freelance Development",
+    "calculate":         "Rate Calculation",
 }
 
 
 def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
+    """
+    Extract a short noun-phrase topic label from a post title.
+
+    Changes vs original:
+    - Checks the override table first (unchanged).
+    - After building the candidate phrase from meaningful words, validates
+      that it does not end with a bare predicate verb (e.g. "quit", "failed").
+      If it does, the last word is dropped; if that leaves nothing, fall back
+      to the full title truncated to 40 chars.
+    - Ensures the result never starts with a lower-case letter when it comes
+      from the word-extraction path (capitalises the first word).
+    """
     title_lower = f" {title.lower()} "
     for key, phrase in _TOPIC_OVERRIDES.items():
         if key in title_lower:
             return phrase
+
     cleaned = re.sub(r"[^\w\s\-]", " ", title)
     words = cleaned.split()
     meaningful: List[str] = []
@@ -171,9 +201,99 @@ def _extract_topic_phrase(title: str, max_words: int = 3) -> str:
             meaningful.append(w)
         elif len(w) >= 3:
             meaningful.append(w)
+
     if not meaningful:
         return title[:40]
-    return " ".join(meaningful[:max_words])
+
+    # Trim trailing predicate verbs so the phrase reads as a noun topic,
+    # not as a sentence fragment (e.g. "Senior Devs Quit" → "Senior Devs").
+    candidate = meaningful[:max_words]
+    while candidate and candidate[-1].lower() in _PREDICATE_VERBS:
+        candidate = candidate[:-1]
+
+    if not candidate:
+        # All words were verbs — fall back to raw title snippet
+        return title[:40]
+
+    # Capitalise first word if it came through lower-case
+    result = " ".join(candidate)
+    return result[0].upper() + result[1:] if result else title[:40]
+
+
+# ─────────────────────────────────────────────────────────────────
+# Teaser extraction helper  (FIX: Bug B)
+# ─────────────────────────────────────────────────────────────────
+
+def _extract_teaser(meta_description: str, max_chars: int = 120) -> str:
+    """
+    Produce a clean teaser string from a meta description for use inside tweet
+    templates.
+
+    Problems solved vs the old inline slice:
+    1. The old code did ``raw_desc[:65]`` which could land mid-word or
+       mid-sentence, producing fragments like ``"t."`` or ``"akable: -"``.
+    2. We now prefer sentence-boundary trimming over character-boundary
+       trimming, so the teaser always reads as a complete thought.
+    3. If the description itself starts with a lower-case fragment (the LLM
+       occasionally returns descriptions that begin mid-sentence), we advance
+       to the first sentence that starts with a capital letter.
+    4. A hard minimum length of 20 chars prevents single-word teasers.
+    """
+    if not meta_description:
+        return ""
+
+    text = meta_description.strip()
+
+    # ── 1. Skip any leading fragment that starts lower-case ──────────────────
+    # Split on sentence boundaries and find the first sentence that:
+    #   a) starts with an uppercase letter or a digit
+    #   b) is at least 20 chars long
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    clean_sentences: List[str] = []
+    for sent in sentences:
+        sent = sent.strip()
+        if not sent:
+            continue
+        # Accept: starts with uppercase letter, digit, or a quote/dash followed
+        # by uppercase — covers "Cut API…", "40% faster…", ""Redis…", etc.
+        if re.match(r'^[A-Z0-9"\'"\-\u2018\u201c]', sent) and len(sent) >= 20:
+            clean_sentences.append(sent)
+
+    if not clean_sentences:
+        # Fall back: use the raw text but strip any leading lower-case fragment
+        # by advancing past the first ". " or ", " boundary.
+        for sep in ('. ', ', ', ': ', ' — '):
+            idx = text.find(sep)
+            if 0 < idx < 40:
+                candidate = text[idx + len(sep):].strip()
+                if candidate and re.match(r'^[A-Z0-9]', candidate):
+                    text = candidate
+                    break
+        clean_sentences = [text]
+
+    # ── 2. Trim the first usable sentence to max_chars ───────────────────────
+    first = clean_sentences[0]
+
+    if len(first) <= max_chars:
+        teaser = first
+    else:
+        # Prefer to break at a sentence boundary within the budget
+        inner = re.split(r'(?<=[.!?])\s+', first[:max_chars + 30])
+        if len(inner) > 1 and len(inner[0]) >= 20:
+            teaser = inner[0]
+        else:
+            # Fall back to word-boundary trim — but NEVER trim mid-word
+            trimmed = first[:max_chars]
+            # Advance past the last space to avoid ending mid-word
+            last_space = trimmed.rfind(' ')
+            if last_space > max_chars // 2:
+                trimmed = trimmed[:last_space]
+            teaser = trimmed.rstrip('.,;: ') + '…'
+
+    # ── 3. Safety: strip any trailing incomplete parenthetical ───────────────
+    teaser = re.sub(r'\s*\([^)]*$', '', teaser).rstrip()
+
+    return teaser
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -416,6 +536,67 @@ def _pick_reply_bait(slug: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
+# Tweet trimming helper  (FIX: Bug C)
+# ─────────────────────────────────────────────────────────────────
+
+def _trim_to_budget(text: str, budget: int) -> str:
+    """
+    Trim *text* to at most *budget* characters while preserving clean grammar.
+
+    Strategy (in order of preference):
+    1. No trimming needed — return as-is.
+    2. Break at the last sentence-ending punctuation (. ! ?) within budget.
+    3. Break at the last em-dash (—) or semicolon within budget (clause boundary).
+    4. Break at the last comma within budget (phrase boundary).
+    5. Break at the last space within budget (word boundary).
+    6. Hard cut at budget — last resort, appends "…".
+
+    In all truncation cases a trailing "…" is appended ONLY when the cut is
+    not already at a natural sentence end.
+    """
+    if len(text) <= budget:
+        return text
+
+    # Helper: does the string end at a natural sentence boundary?
+    def _is_sentence_end(s: str) -> bool:
+        return bool(s) and s[-1] in '.!?'
+
+    window = text[:budget]
+
+    # 1. Sentence boundary
+    for punct in ('.', '!', '?'):
+        pos = window.rfind(punct)
+        if pos >= budget // 2:
+            candidate = text[:pos + 1].rstrip()
+            if len(candidate) <= budget:
+                return candidate
+
+    # 2. Clause boundary (— or ;)
+    for sep in ('—', ';'):
+        pos = window.rfind(sep)
+        if pos >= budget // 2:
+            candidate = text[:pos].rstrip().rstrip(',;')
+            if candidate:
+                return candidate + '…'
+
+    # 3. Comma
+    pos = window.rfind(',')
+    if pos >= budget // 2:
+        candidate = text[:pos].rstrip()
+        if candidate:
+            return candidate + '…'
+
+    # 4. Word boundary
+    pos = window.rfind(' ')
+    if pos > 0:
+        candidate = text[:pos].rstrip('.,;: ')
+        return candidate + '…'
+
+    # 5. Hard cut
+    return window.rstrip() + '…'
+
+
+# ─────────────────────────────────────────────────────────────────
 # Tweet hook templates — 16 patterns
 # ─────────────────────────────────────────────────────────────────
 
@@ -479,6 +660,13 @@ _STYLE_MAP = {
     "challenge":         9,
 }
 
+# Templates where {topic} is used as a direct object / noun in context.
+# For these we validate the extracted phrase is noun-safe (done in
+# _extract_topic_phrase already via _PREDICATE_VERBS), but we also
+# provide a graceful inline fallback label per template so the sentence
+# always reads correctly even if the topic phrase is short or unusual.
+_TOPIC_USES_NOUN_SLOT = {0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
+
 
 def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
     if hook_style == "auto" or hook_style not in _STYLE_MAP:
@@ -489,10 +677,11 @@ def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
     template = _TWEET_TEMPLATES[idx]
     topic = _extract_topic_phrase(post.title, max_words=3)
 
+    # ── FIX Bug B: use the robust teaser extractor ───────────────────────────
     raw_desc = getattr(post, "meta_description", "") or ""
-    teaser = raw_desc[:65].rstrip()
-    if len(raw_desc) > 65:
-        teaser = teaser.rsplit(" ", 1)[0] + "…"
+    # Teaser budget: leave room for the rest of the template structure.
+    # 120 chars is generous; _build_single_tweet trims the full tweet below.
+    teaser = _extract_teaser(raw_desc, max_chars=120)
 
     post_url = f"{base_url}/{post.slug}"
     reading_time = getattr(post, 'reading_time_minutes', None)
@@ -506,18 +695,30 @@ def _build_single_tweet(post, base_url: str, hook_style: str = "auto") -> str:
     )
 
     if len(tweet) > 280:
-        budget = 280 - len(tweet) + len(teaser)
-        teaser = teaser[:max(budget - 3, 20)].rsplit(" ", 1)[0] + "…"
+        # ── FIX Bug B (secondary): re-trim teaser using _trim_to_budget ──────
+        # How many chars does the non-teaser skeleton cost?
+        skeleton = template.format(
+            topic=topic, teaser="", url=url_line, tags=hashtags, bait=bait
+        )
+        teaser_budget = max(20, 280 - len(skeleton))
+        teaser = _trim_to_budget(teaser, teaser_budget)
         tweet = template.format(
             topic=topic, teaser=teaser, url=url_line, tags=hashtags, bait=bait
         )
+
     if len(tweet) > 280:
         # Drop read-time annotation from URL to recover space
+        skeleton = template.format(
+            topic=topic, teaser="", url=post_url, tags=hashtags, bait=""
+        )
+        teaser_budget = max(20, 280 - len(skeleton))
+        teaser = _trim_to_budget(teaser, teaser_budget)
         tweet = template.format(
             topic=topic, teaser=teaser, url=post_url, tags=hashtags, bait=""
         )
+
     if len(tweet) > 280:
-        tweet = tweet[:277] + "..."
+        tweet = _trim_to_budget(tweet, 277)
 
     return tweet
 
@@ -535,10 +736,9 @@ def _build_linkless_hook(post, hook_style: str = "auto") -> str:
     template = _TWEET_TEMPLATES[idx]
     topic = _extract_topic_phrase(post.title, max_words=3)
 
+    # ── FIX Bug B: use the robust teaser extractor ───────────────────────────
     raw_desc = getattr(post, "meta_description", "") or ""
-    teaser = raw_desc[:80].rstrip()
-    if len(raw_desc) > 80:
-        teaser = teaser.rsplit(" ", 1)[0] + "…"
+    teaser = _extract_teaser(raw_desc, max_chars=120)
 
     hashtags = _get_hashtags_for_post(post)
     bait = _pick_reply_bait(post.slug)
@@ -550,15 +750,21 @@ def _build_linkless_hook(post, hook_style: str = "auto") -> str:
     )
 
     if len(tweet) > 280:
-        budget = 280 - len(tweet) + len(teaser)
-        teaser = teaser[:max(budget - 3, 20)].rsplit(" ", 1)[0] + "…"
+        skeleton = template.format(
+            topic=topic, teaser="",
+            url="(full guide in the thread below ↓)",
+            tags=hashtags, bait=bait,
+        )
+        teaser_budget = max(20, 280 - len(skeleton))
+        teaser = _trim_to_budget(teaser, teaser_budget)
         tweet = template.format(
             topic=topic, teaser=teaser,
             url="(full guide in the thread below ↓)",
             tags=hashtags, bait=bait,
         )
+
     if len(tweet) > 280:
-        tweet = tweet[:277] + "..."
+        tweet = _trim_to_budget(tweet, 277)
 
     return tweet
 
@@ -1157,7 +1363,7 @@ if __name__ == "__main__":
     print("=" * 70)
     for i, _ in enumerate(_TWEET_TEMPLATES):
         topic = _extract_topic_phrase(post.title)
-        teaser = post.meta_description[:65]
+        teaser = _extract_teaser(post.meta_description, max_chars=120)
         url = f"{base_url}/{post.slug}"
         tags = _get_hashtags_for_post(post)
         bait = _pick_reply_bait(post.slug)

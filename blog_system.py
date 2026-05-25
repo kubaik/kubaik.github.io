@@ -1157,21 +1157,21 @@ def inject_personal_intro(post, topic: str) -> None:
 # ─────────────────────────────────────────────────────────────────
 
 _EEAT_FOOTER_TEMPLATE = """
- 
+
 ---
- 
+
 ### About this article
- 
+
 **Author:** Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years of \
 experience building production Python and Node.js backends, primarily in fintech. He has \
 worked with teams in East Africa, Europe, and Southeast Asia on systems handling millions \
 of requests per day. [More about the author →](/about/)
- 
+
 **Editorial process:** Articles on this site are based on direct production experience \
 and verified against official documentation before publishing. Code examples are tested \
 locally. If you find a factual error, [please reach out](/contact/) — corrections are \
 applied within 48 hours.
- 
+
 **Last reviewed:** {review_date}
 """
 
@@ -1911,18 +1911,7 @@ class BlogSystem:
                 body_budget = TWITTER_LIMIT - fixed_cost - tags_cost - bait_cost
 
                 if len(bundle_tweet) > body_budget:
-                    trimmed = bundle_tweet[:body_budget]
-                    sentence_end = max(
-                        trimmed.rfind(". "),
-                        trimmed.rfind(".\n"),
-                        trimmed.rfind("! "),
-                        trimmed.rfind("? "),
-                    )
-                    if sentence_end > body_budget // 2:
-                        bundle_tweet = bundle_tweet[:sentence_end + 1].rstrip()
-                    else:
-                        bundle_tweet = trimmed.rsplit(
-                            " ", 1)[0].rstrip(".,;:") + "…"
+                    bundle_tweet = _trim_to_budget(bundle_tweet, body_budget)
                     print(
                         f"Note: tweet body trimmed to {len(bundle_tweet)} chars "
                         f"(budget was {body_budget})."
@@ -2589,6 +2578,60 @@ _HISTORICAL_MARKERS = re.compile(
     r'as of|back in|historically|in a|the \d{4}|a \d{4})\b',
     re.IGNORECASE,
 )
+
+
+def _trim_to_budget(text: str, budget: int) -> str:
+    """
+    Trim *text* to at most *budget* characters at a clean grammatical boundary.
+
+    Priority order:
+    1. Already within budget — return as-is.
+    2. Last sentence end (. ! ?) within budget.
+    3. Last em-dash or semicolon — clause boundary.
+    4. Last comma — phrase boundary.
+    5. Last space — word boundary.
+    6. Hard cut — last resort, appends "…".
+
+    Replaces the old inline rsplit() fallback that produced broken fragments
+    like "t. Add 20-30% to your baseline rate for a c with Set…"
+    """
+    import re as _re
+    if len(text) <= budget:
+        return text
+
+    window = text[:budget]
+
+    # 1. Sentence boundary
+    for punct in ('.', '!', '?'):
+        pos = window.rfind(punct)
+        if pos >= budget // 2:
+            candidate = text[:pos + 1].rstrip()
+            if len(candidate) <= budget:
+                return candidate
+
+    # 2. Clause boundary (em-dash or semicolon)
+    for sep in ('—', ';'):
+        pos = window.rfind(sep)
+        if pos >= budget // 2:
+            candidate = text[:pos].rstrip().rstrip(',;')
+            if candidate:
+                return candidate + '…'
+
+    # 3. Comma
+    pos = window.rfind(',')
+    if pos >= budget // 2:
+        candidate = text[:pos].rstrip()
+        if candidate:
+            return candidate + '…'
+
+    # 4. Word boundary
+    pos = window.rfind(' ')
+    if pos > 0:
+        candidate = text[:pos].rstrip('.,;: ')
+        return candidate + '…'
+
+    # 5. Hard cut
+    return window.rstrip() + '…'
 
 
 def _scrub_stale_years(text: str) -> str:
