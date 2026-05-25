@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 20:21:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 20:24:00 +0000</lastBuildDate>
+    <item>
+      <title>Debug Node.js memory leaks in under an hour</title>
+      <link>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</link>
+      <description>Stop Node.js memory leaks in 20 min — 70% are unbounded caches or closures. Heap snapshots, LRU cache fixes, and production monitoring tactics that cut memory growth 85% in one cycle.</description>
+      <pubDate>Mon, 25 May 2026 20:23:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</guid>
+    </item>
     <item>
       <title>RAG pipelines: the latency trap you didn’t see coming</title>
       <link>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</link>
@@ -138,13 +145,6 @@
       <description>Build one production-grade system to land remote backend roles from Africa — latency benchmarks, cost breakdowns, and hiring callbacks from real systems in 2026.</description>
       <pubDate>Mon, 25 May 2026 06:14:02 +0000</pubDate>
       <guid>https://kubaik.github.io/build-one-african-dev-portfolio-that-hires-you/</guid>
-    </item>
-    <item>
-      <title>Bootstrapped with AI in 2026</title>
-      <link>https://kubaik.github.io/bootstrapped-with-ai-in-2026/</link>
-      <description>Ship a SaaS in 2026 with 4 AI tools under $50/month — Cursor, GitHub Copilot Workspace, Zed AI, and Codeium Enterprise benchmarks and real failures</description>
-      <pubDate>Mon, 25 May 2026 02:38:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/bootstrapped-with-ai-in-2026/</guid>
     </item>
   </channel>
 </rss>
