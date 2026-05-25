@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 06:55:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 07:06:52 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSocket, SSE, and polling in 2026</title>
+      <link>https://kubaik.github.io/compare-websocket-sse-and-polling-in-2026/</link>
+      <description>Cut real-time API costs 30% by choosing the right protocol—SSE beats WebSocket for read-only updates, polling when nothing else works. Includes latency, memory, and firewall benchmarks from 1000-connection tests on EC2 t3.medium.</description>
+      <pubDate>Mon, 25 May 2026 07:06:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websocket-sse-and-polling-in-2026/</guid>
+    </item>
     <item>
       <title>Vector DB vs plain SQL: 97ms vs 2ms search</title>
       <link>https://kubaik.github.io/vector-db-vs-plain-sql-97ms-vs-2ms-search/</link>
@@ -138,13 +145,6 @@
       <description>From $1,200 to $145k: how one engineer used latency optimization to land a US remote role with 0.2% RSUs and $15k signing bonus in 18 months.</description>
       <pubDate>Sun, 24 May 2026 19:19:25 +0000</pubDate>
       <guid>https://kubaik.github.io/i-tripled-my-salary-in-18-months/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay from low-cost lands</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</link>
-      <description>Turn public rate data into a 2.0x salary bump — Puppeteer 22.6 scrapers, 2026 benchmarks, and negotiation scripts for lower-cost countries</description>
-      <pubDate>Sun, 24 May 2026 18:50:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</guid>
     </item>
   </channel>
 </rss>
