@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 20:24:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 20:47:08 +0000</lastBuildDate>
+    <item>
+      <title>Africa&apos;s remote portfolio secrets</title>
+      <link>https://kubaik.github.io/africas-remote-portfolio-secrets/</link>
+      <description>Land remote jobs with one portfolio project — deploy, monitor, document. 2026 hiring data, real examples, and the exact artifacts that got developers hired.</description>
+      <pubDate>Mon, 25 May 2026 20:46:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/africas-remote-portfolio-secrets/</guid>
+    </item>
     <item>
       <title>Debug Node.js memory leaks in under an hour</title>
       <link>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 search latency from 200 ms to 6 ms with pgvector vs Pinecone in 2026 benchmarks — exact costs, recall numbers, and code snippets to decide whether you even need a vector database.</description>
       <pubDate>Mon, 25 May 2026 06:55:46 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-db-vs-plain-sql-97ms-vs-2ms-search/</guid>
-    </item>
-    <item>
-      <title>Build *one* African dev portfolio that hires you</title>
-      <link>https://kubaik.github.io/build-one-african-dev-portfolio-that-hires-you/</link>
-      <description>Build one production-grade system to land remote backend roles from Africa — latency benchmarks, cost breakdowns, and hiring callbacks from real systems in 2026.</description>
-      <pubDate>Mon, 25 May 2026 06:14:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-one-african-dev-portfolio-that-hires-you/</guid>
     </item>
   </channel>
 </rss>
