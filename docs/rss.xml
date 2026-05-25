@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 11:46:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 14:39:10 +0000</lastBuildDate>
+    <item>
+      <title>Land remote rate at $110k: one sheet trick</title>
+      <link>https://kubaik.github.io/land-remote-rate-at-110k-one-sheet-trick/</link>
+      <description>Land a $110k remote salary from Kenya in 2026 using one Google Sheet and three Numbeo indices — step-by-step with tax, equity, and edge cases</description>
+      <pubDate>Mon, 25 May 2026 14:38:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-remote-rate-at-110k-one-sheet-trick/</guid>
+    </item>
     <item>
       <title>Split the tenant column or regret it</title>
       <link>https://kubaik.github.io/split-the-tenant-column-or-regret-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut tool sprawl costs 62% with MCP servers — cold start, memory, and failure modes most teams miss before shipping to production</description>
       <pubDate>Sun, 24 May 2026 21:16:44 +0000</pubDate>
       <guid>https://kubaik.github.io/what-mcp-servers-actually-do/</guid>
-    </item>
-    <item>
-      <title>Wrong max pool size? DB chokes under load</title>
-      <link>https://kubaik.github.io/wrong-max-pool-size-db-chokes-under-load/</link>
-      <description>Cut database pool costs 40%: the real max pool size formula for PostgreSQL 16.2, HikariCP 5.0.1, and pg-pool v3.6 — connection churn, memory overhead, and latency traps exposed.</description>
-      <pubDate>Sun, 24 May 2026 20:45:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/wrong-max-pool-size-db-chokes-under-load/</guid>
     </item>
   </channel>
 </rss>
