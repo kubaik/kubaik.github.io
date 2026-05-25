@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 18:23:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 18:30:28 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI Skills That Pay the Most</title>
+      <link>https://kubaik.github.io/2026-ai-skills-that-pay-the-most/</link>
+      <description>Cut AI skill acquisition time 50% with NLP — job demand, salary range, and growth potential</description>
+      <pubDate>Mon, 25 May 2026 18:30:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-skills-that-pay-the-most/</guid>
+    </item>
     <item>
       <title>Rewrite REST for 5G: latency cuts in 20 lines</title>
       <link>https://kubaik.github.io/rewrite-rest-for-5g-latency-cuts-in-20-lines/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency from 45 ms to 3 ms with Milvus 2.4.5 or keep pgvector 0.7.0 for under 50M vectors and $560/month infrastructure</description>
       <pubDate>Sun, 24 May 2026 22:43:56 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</guid>
-    </item>
-    <item>
-      <title>AI answer latency: 80ms or bust</title>
-      <link>https://kubaik.github.io/ai-answer-latency-80ms-or-bust/</link>
-      <description>Cut RAG answer latency from 1.4s to 68ms — the retrieval tricks tutorials skip: early-exit search, sharding, and a 2-stage BM25+vector pipeline. All pinned versions, real AWS savings, and the profiling tool we wish we’d used first.</description>
-      <pubDate>Sun, 24 May 2026 22:35:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-answer-latency-80ms-or-bust/</guid>
     </item>
   </channel>
 </rss>
