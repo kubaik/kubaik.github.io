@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 17:02:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 17:12:32 +0000</lastBuildDate>
+    <item>
+      <title>Slash cloud carbon 24%—here’s how</title>
+      <link>https://kubaik.github.io/slash-cloud-carbon-24heres-how/</link>
+      <description>Cut cloud carbon 24% without slowing down — carbon-per-request budgets, Graviton3, Redis TTL consolidation, and AWS Batch Spot jobs with real metrics and code. For engineers who need to hit sustainability targets without breaking latency SLAs.</description>
+      <pubDate>Mon, 25 May 2026 17:12:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/slash-cloud-carbon-24heres-how/</guid>
+    </item>
     <item>
       <title>Connection pools: the timeout you set wrong</title>
       <link>https://kubaik.github.io/connection-pools-the-timeout-you-set-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Cut API carbon footprint 53% without adding latency — schema audits, Bun on ARM, and CPU frequency scaling in real numbers.</description>
       <pubDate>Sun, 24 May 2026 21:41:36 +0000</pubDate>
       <guid>https://kubaik.github.io/50-less-carbon-same-speed-real-trade-offs/</guid>
-    </item>
-    <item>
-      <title>Ace remote interviews: self-taught guide</title>
-      <link>https://kubaik.github.io/ace-remote-interviews-self-taught-guide/</link>
-      <description>Self-taught engineers pass remote tech interviews in 2026 by building one live system, explaining trade-offs, and mastering cost-aware systems thinking—not LeetCode alone. 3 real systems, latency and cost numbers included.</description>
-      <pubDate>Sun, 24 May 2026 21:34:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-remote-interviews-self-taught-guide/</guid>
     </item>
   </channel>
 </rss>
