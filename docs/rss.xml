@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 06:14:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 06:55:59 +0000</lastBuildDate>
+    <item>
+      <title>Vector DB vs plain SQL: 97ms vs 2ms search</title>
+      <link>https://kubaik.github.io/vector-db-vs-plain-sql-97ms-vs-2ms-search/</link>
+      <description>Cut p99 search latency from 200 ms to 6 ms with pgvector vs Pinecone in 2026 benchmarks — exact costs, recall numbers, and code snippets to decide whether you even need a vector database.</description>
+      <pubDate>Mon, 25 May 2026 06:55:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-db-vs-plain-sql-97ms-vs-2ms-search/</guid>
+    </item>
     <item>
       <title>Build *one* African dev portfolio that hires you</title>
       <link>https://kubaik.github.io/build-one-african-dev-portfolio-that-hires-you/</link>
@@ -138,13 +145,6 @@
       <description>Turn public rate data into a 2.0x salary bump — Puppeteer 22.6 scrapers, 2026 benchmarks, and negotiation scripts for lower-cost countries</description>
       <pubDate>Sun, 24 May 2026 18:50:42 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</guid>
-    </item>
-    <item>
-      <title>Freelance burnout’s hidden cause</title>
-      <link>https://kubaik.github.io/freelance-burnouts-hidden-cause/</link>
-      <description>Freelance dev burnout: how I fixed it in 8 weeks with data, contracts, and a recovery protocol. Tracked decision fatigue, expert tax, and maintenance time to prove what works.</description>
-      <pubDate>Sun, 24 May 2026 18:44:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-burnouts-hidden-cause/</guid>
     </item>
   </channel>
 </rss>
