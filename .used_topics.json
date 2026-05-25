@@ -6,5 +6,6 @@
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
   "Repository intelligence: how AI is learning your entire codebase context",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "How I went from junior to senior without a CS degree"
+  "How I went from junior to senior without a CS degree",
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]
