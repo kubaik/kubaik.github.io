@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 20:56:49 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 21:09:41 +0000</lastBuildDate>
+    <item>
+      <title>Local LLM: it’s slower than you think</title>
+      <link>https://kubaik.github.io/local-llm-its-slower-than-you-think/</link>
+      <description>Cut local LLM latency 60% with the right model and tooling — context limits, 4-bit quantization, and why most benchmarks lie</description>
+      <pubDate>Mon, 25 May 2026 21:09:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/local-llm-its-slower-than-you-think/</guid>
+    </item>
     <item>
       <title>Measure vector search before buying a DB</title>
       <link>https://kubaik.github.io/measure-vector-search-before-buying-a-db/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI hallucinations 85% by pinning repo context to tags and TTLs — measure embeddings size and latency before you fix stale branches.</description>
       <pubDate>Mon, 25 May 2026 09:15:37 +0000</pubDate>
       <guid>https://kubaik.github.io/repo-context-leaks-why-ai-remembers-too-much/</guid>
-    </item>
-    <item>
-      <title>Compare WebSocket, SSE, and polling in 2026</title>
-      <link>https://kubaik.github.io/compare-websocket-sse-and-polling-in-2026/</link>
-      <description>Cut real-time API costs 30% by choosing the right protocol—SSE beats WebSocket for read-only updates, polling when nothing else works. Includes latency, memory, and firewall benchmarks from 1000-connection tests on EC2 t3.medium.</description>
-      <pubDate>Mon, 25 May 2026 07:06:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websocket-sse-and-polling-in-2026/</guid>
     </item>
   </channel>
 </rss>
