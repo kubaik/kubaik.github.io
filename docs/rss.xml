@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 18:12:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 18:23:18 +0000</lastBuildDate>
+    <item>
+      <title>Rewrite REST for 5G: latency cuts in 20 lines</title>
+      <link>https://kubaik.github.io/rewrite-rest-for-5g-latency-cuts-in-20-lines/</link>
+      <description>Cut API response time 55% on 5G with 20 lines of code — connection-aware retries, mobile tagging, and the tower handoff mistake most teams miss.</description>
+      <pubDate>Mon, 25 May 2026 18:23:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/rewrite-rest-for-5g-latency-cuts-in-20-lines/</guid>
+    </item>
     <item>
       <title>Queue now or pay later</title>
       <link>https://kubaik.github.io/queue-now-or-pay-later/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG answer latency from 1.4s to 68ms — the retrieval tricks tutorials skip: early-exit search, sharding, and a 2-stage BM25+vector pipeline. All pinned versions, real AWS savings, and the profiling tool we wish we’d used first.</description>
       <pubDate>Sun, 24 May 2026 22:35:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-answer-latency-80ms-or-bust/</guid>
-    </item>
-    <item>
-      <title>Message queues: use them only here</title>
-      <link>https://kubaik.github.io/message-queues-use-them-only-here/</link>
-      <description>Save $18k/month and 4 hours of debugging: when message queues actually help—and when they burn your budget. Real benchmarks, failure modes, and a step-by-step Python example with Redis Streams 7.2.</description>
-      <pubDate>Sun, 24 May 2026 22:17:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-use-them-only-here/</guid>
     </item>
   </channel>
 </rss>

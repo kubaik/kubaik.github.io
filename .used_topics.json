@@ -12,5 +12,6 @@
   "Database connection pooling: the setting everyone gets wrong",
   "Sustainable software engineering: cutting cloud carbon without cutting performance",
   "Designing systems for AI-first applications: the patterns that actually hold up",
-  "When to use a message queue (and when it's overkill)"
+  "When to use a message queue (and when it's overkill)",
+  "5G and mobile-first backends: what changes when your users are always on cellular"
 ]
