@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 23:39:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 23:42:18 +0000</lastBuildDate>
+    <item>
+      <title>Context maps beat token counts</title>
+      <link>https://kubaik.github.io/context-maps-beat-token-counts/</link>
+      <description>Cut AI context mistakes 50% by indexing build files, env vars, and import graphs — concrete toolchain, benchmarks, and commands for 2026.</description>
+      <pubDate>Mon, 25 May 2026 23:42:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/context-maps-beat-token-counts/</guid>
+    </item>
     <item>
       <title>Measure 5G backend costs before you ship</title>
       <link>https://kubaik.github.io/measure-5g-backend-costs-before-you-ship/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 55% on 5G with 20 lines of code — connection-aware retries, mobile tagging, and the tower handoff mistake most teams miss.</description>
       <pubDate>Mon, 25 May 2026 18:23:05 +0000</pubDate>
       <guid>https://kubaik.github.io/rewrite-rest-for-5g-latency-cuts-in-20-lines/</guid>
-    </item>
-    <item>
-      <title>Queue now or pay later</title>
-      <link>https://kubaik.github.io/queue-now-or-pay-later/</link>
-      <description>easured a 22% throughput drop when we switc with Queue now pay later — this when a team I joined decided Redis Streams wou.</description>
-      <pubDate>Mon, 25 May 2026 18:11:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/queue-now-or-pay-later/</guid>
     </item>
   </channel>
 </rss>
