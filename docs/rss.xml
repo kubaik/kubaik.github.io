@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 23:42:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 23:53:58 +0000</lastBuildDate>
     <item>
-      <title>Context maps beat token counts</title>
-      <link>https://kubaik.github.io/context-maps-beat-token-counts/</link>
-      <description>Cut AI context mistakes 50% by indexing build files, env vars, and import graphs — concrete toolchain, benchmarks, and commands for 2026.</description>
-      <pubDate>Mon, 25 May 2026 23:42:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/context-maps-beat-token-counts/</guid>
+      <title>Design multi-tenant SaaS without locking yourself out</title>
+      <link>https://kubaik.github.io/design-multi-tenant-saas-without-locking-yourself-out/</link>
+      <description>Cut multi-tenant SaaS costs 60% by splitting databases per tenant — when to use tenant_id column vs registry pattern with Postgres 16, Neon, and Fly.io in 2026</description>
+      <pubDate>Mon, 25 May 2026 23:53:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-multi-tenant-saas-without-locking-yourself-out/</guid>
     </item>
     <item>
       <title>Measure 5G backend costs before you ship</title>
