@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 18:54:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 18:58:30 +0000</lastBuildDate>
+    <item>
+      <title>Salary to global rate in 18 months</title>
+      <link>https://kubaik.github.io/salary-to-global-rate-in-18-months/</link>
+      <description>Earned 2.34× jump in take-home pay by reframing open-source impact as measurable results—cut memory 38%, saved 2,300 dev-hours/month, landed 10,500 USD remote role</description>
+      <pubDate>Mon, 25 May 2026 18:58:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/salary-to-global-rate-in-18-months/</guid>
+    </item>
     <item>
       <title>2026 AI Skills That Pay the Most</title>
       <link>https://kubaik.github.io/2026-ai-skills-that-pay-the-most/</link>
@@ -138,13 +145,6 @@
       <description>Pick the right realtime protocol in 90 seconds — WebSocket vs SSE vs long polling benchmarks, code, and the one mistake that cost me three weeks.</description>
       <pubDate>Sun, 24 May 2026 22:51:17 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-in-60-seconds/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: the 0.5ms vs 50ms performance split</title>
-      <link>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</link>
-      <description>Cut vector search latency from 45 ms to 3 ms with Milvus 2.4.5 or keep pgvector 0.7.0 for under 50M vectors and $560/month infrastructure</description>
-      <pubDate>Sun, 24 May 2026 22:43:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-the-05ms-vs-50ms-performance-split/</guid>
     </item>
   </channel>
 </rss>
