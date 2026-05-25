@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 20:11:49 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 20:21:15 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: the latency trap you didn’t see coming</title>
+      <link>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</link>
+      <description>Cut RAG pipeline latency 75% and costs 47% by normalizing queries, caching embeddings, and switching to Qdrant gRPC — the hidden costs tutorials never mention.</description>
+      <pubDate>Mon, 25 May 2026 20:21:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</guid>
+    </item>
     <item>
       <title>Laptops can’t run LLMs—here’s why</title>
       <link>https://kubaik.github.io/laptops-cant-run-llmsheres-why/</link>
@@ -138,13 +145,6 @@
       <description>Ship a SaaS in 2026 with 4 AI tools under $50/month — Cursor, GitHub Copilot Workspace, Zed AI, and Codeium Enterprise benchmarks and real failures</description>
       <pubDate>Mon, 25 May 2026 02:38:28 +0000</pubDate>
       <guid>https://kubaik.github.io/bootstrapped-with-ai-in-2026/</guid>
-    </item>
-    <item>
-      <title>6 signals to watch in LLM pipelines</title>
-      <link>https://kubaik.github.io/6-signals-to-watch-in-llm-pipelines/</link>
-      <description>Cut LLM pipeline outages 46% with 6 metrics that break first — prompt length, token budget, latency, retrieval cost, generation tokens, and cache hit ratio.</description>
-      <pubDate>Sun, 24 May 2026 23:54:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-signals-to-watch-in-llm-pipelines/</guid>
     </item>
   </channel>
 </rss>
