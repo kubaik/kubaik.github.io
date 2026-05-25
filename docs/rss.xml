@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 17:48:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 18:12:07 +0000</lastBuildDate>
+    <item>
+      <title>Queue now or pay later</title>
+      <link>https://kubaik.github.io/queue-now-or-pay-later/</link>
+      <description>easured a 22% throughput drop when we switc with Queue now pay later — this when a team I joined decided Redis Streams wou.</description>
+      <pubDate>Mon, 25 May 2026 18:11:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/queue-now-or-pay-later/</guid>
+    </item>
     <item>
       <title>Designing AI systems that actually work</title>
       <link>https://kubaik.github.io/designing-ai-systems-that-actually-work/</link>
@@ -138,13 +145,6 @@
       <description>Save $18k/month and 4 hours of debugging: when message queues actually help—and when they burn your budget. Real benchmarks, failure modes, and a step-by-step Python example with Redis Streams 7.2.</description>
       <pubDate>Sun, 24 May 2026 22:17:36 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-use-them-only-here/</guid>
-    </item>
-    <item>
-      <title>No CS degree? Build systems anyway</title>
-      <link>https://kubaik.github.io/no-cs-degree-build-systems-anyway/</link>
-      <description>Build systems without a CS degree: three real services, benchmarks, and cost savings from 2026. Ship, measure, debug—senior-level impact without the gatekeeping.</description>
-      <pubDate>Sun, 24 May 2026 21:49:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-cs-degree-build-systems-anyway/</guid>
     </item>
   </channel>
 </rss>
