@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 01:31:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 02:38:41 +0000</lastBuildDate>
+    <item>
+      <title>Bootstrapped with AI in 2026</title>
+      <link>https://kubaik.github.io/bootstrapped-with-ai-in-2026/</link>
+      <description>Ship a SaaS in 2026 with 4 AI tools under $50/month — Cursor, GitHub Copilot Workspace, Zed AI, and Codeium Enterprise benchmarks and real failures</description>
+      <pubDate>Mon, 25 May 2026 02:38:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/bootstrapped-with-ai-in-2026/</guid>
+    </item>
     <item>
       <title>6 signals to watch in LLM pipelines</title>
       <link>https://kubaik.github.io/6-signals-to-watch-in-llm-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Run LLMs locally without melting your GPU — 2–18 tokens/sec benchmarks, thermal throttling fixes, and a 16 GB RAM cutoff for RAG on laptops in 2026.</description>
       <pubDate>Sun, 24 May 2026 18:00:23 +0000</pubDate>
       <guid>https://kubaik.github.io/thermal-throttling-when-running-7b-llms-locally/</guid>
-    </item>
-    <item>
-      <title>Big Tech burnout: the real reasons seniors quit</title>
-      <link>https://kubaik.github.io/big-tech-burnout-the-real-reasons-seniors-quit/</link>
-      <description>Data from 82,000 developers reveals why senior engineers quit big tech — and it’s not about pay. See the hidden workload tax and how to measure it in your team.</description>
-      <pubDate>Sun, 24 May 2026 17:44:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-burnout-the-real-reasons-seniors-quit/</guid>
     </item>
   </channel>
 </rss>
