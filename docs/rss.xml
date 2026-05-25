@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 09:27:46 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 09:31:45 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering costs you now</title>
+      <link>https://kubaik.github.io/over-engineering-costs-you-now/</link>
+      <description>Cut cloud costs 80% by removing Kubernetes and Redis — 450 lines replaced 8,200, latency dropped 70%, and we learned the real cost of over-engineering in 2026.</description>
+      <pubDate>Mon, 25 May 2026 09:31:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-costs-you-now/</guid>
+    </item>
     <item>
       <title>Repo context leaks: why AI remembers too much</title>
       <link>https://kubaik.github.io/repo-context-leaks-why-ai-remembers-too-much/</link>
@@ -138,13 +145,6 @@
       <description>Cut Node 22 API latency 91% on 5G — pgBouncer timeouts, DNS pinning, and heap caps that actually save money in Jakarta and Dublin.</description>
       <pubDate>Sun, 24 May 2026 19:56:14 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-node-22-for-5g-mobile-backends/</guid>
-    </item>
-    <item>
-      <title>Portfolio beats projects: 2026 remote hire hack</title>
-      <link>https://kubaik.github.io/portfolio-beats-projects-2026-remote-hire-hack/</link>
-      <description>Portfolio beats projects: one system with monitoring and a runbook gets remote hires from Africa in 2026. Live demo, 150ms latency, 3.2x interview rate.</description>
-      <pubDate>Sun, 24 May 2026 19:45:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-beats-projects-2026-remote-hire-hack/</guid>
     </item>
   </channel>
 </rss>
