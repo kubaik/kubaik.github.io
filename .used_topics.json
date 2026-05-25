@@ -4,5 +4,6 @@
   "Sustainable software engineering: cutting cloud carbon without cutting performance",
   "How vector databases work (and when you don't need one)",
   "Building a local LLM setup that actually runs on a laptop",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]

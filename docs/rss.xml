@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 21:45:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 22:00:34 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right real-time protocol in 2026</title>
+      <link>https://kubaik.github.io/pick-the-right-real-time-protocol-in-2026/</link>
+      <description>Choose WebSocket, SSE, or long polling in 2026 with real latency, cost, and memory data from Node 20, Python 3.12, and Redis 7.2 benchmarks.</description>
+      <pubDate>Mon, 25 May 2026 22:00:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-real-time-protocol-in-2026/</guid>
+    </item>
     <item>
       <title>Set maxPoolSize=10? Wrong default</title>
       <link>https://kubaik.github.io/set-maxpoolsize10-wrong-default/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer without a CS degree in 2026: the real path to promotion with 3 concrete examples, latency drops from 500ms to 60ms, and Redis cache stampede fix saving $1,200/month.</description>
       <pubDate>Mon, 25 May 2026 09:47:15 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-build-senior-skills-instead/</guid>
-    </item>
-    <item>
-      <title>Over-engineering costs you now</title>
-      <link>https://kubaik.github.io/over-engineering-costs-you-now/</link>
-      <description>Cut cloud costs 80% by removing Kubernetes and Redis — 450 lines replaced 8,200, latency dropped 70%, and we learned the real cost of over-engineering in 2026.</description>
-      <pubDate>Mon, 25 May 2026 09:31:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-costs-you-now/</guid>
     </item>
   </channel>
 </rss>
