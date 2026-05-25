@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 19:12:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 19:32:13 +0000</lastBuildDate>
+    <item>
+      <title>Freelance devs: 3 silent burnout killers</title>
+      <link>https://kubaik.github.io/freelance-devs-3-silent-burnout-killers/</link>
+      <description>Cut freelance burnout 42% by capping clients, standardizing stacks, and wiping local dev every 30 days — real metrics, real tools, real recovery</description>
+      <pubDate>Mon, 25 May 2026 19:32:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-devs-3-silent-burnout-killers/</guid>
+    </item>
     <item>
       <title>Senior exodus: what speed kills at big tech</title>
       <link>https://kubaik.github.io/senior-exodus-what-speed-kills-at-big-tech/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with FastAPI + Fly.io + Neon Postgres — the solo stack that shipped real products in 2026 and the hidden costs most teams miss.</description>
       <pubDate>Sun, 24 May 2026 23:45:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-stacks-that-shipped-3-real-products-made-in-2026/</guid>
-    </item>
-    <item>
-      <title>Production-grade AI: 5 patterns that survive</title>
-      <link>https://kubaik.github.io/production-grade-ai-5-patterns-that-survive/</link>
-      <description>Cut AI response time 60% with Redis Streams, circuit breakers, and idempotency keys — the boring patterns that survive model failures and rate limits in 2026.</description>
-      <pubDate>Sun, 24 May 2026 23:21:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-grade-ai-5-patterns-that-survive/</guid>
     </item>
   </channel>
 </rss>
