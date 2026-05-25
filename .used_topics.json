@@ -8,5 +8,6 @@
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "How I went from junior to senior without a CS degree",
   "How to design a multi-tenant SaaS database without painting yourself into a corner",
-  "Negotiating a remote salary when you're in a lower-cost country"
+  "Negotiating a remote salary when you're in a lower-cost country",
+  "Database connection pooling: the setting everyone gets wrong"
 ]

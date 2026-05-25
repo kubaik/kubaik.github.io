@@ -6,6 +6,7 @@
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-05-25</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://kubaik.github.io/connection-pools-the-timeout-you-set-wrong/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/land-remote-rate-at-110k-one-sheet-trick/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/split-the-tenant-column-or-regret-it/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/no-cs-build-senior-skills-instead/</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -616,9 +617,9 @@
 <url><loc>https://kubaik.github.io/how-stripe-uses-idempotency-keys-vs-exactly-once-q/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/iterm2-vs-warp-terminals-for-speed-and-sanity/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/why-ai-generated-personalized-study-plans-stall-at/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/how-we-raised-our-starting-offers-by-25-with-one-s/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/typescript-patterns-that-cut-bugs-by-60-in-3-month/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://kubaik.github.io/12-best-ai-agents-in-2025-ranked-by-real-use-cases/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/top-down-vs-bottom-up-two-ways-to-read-code/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/supabase-in-production-one-query-to-rule-them-all/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/why-event-driven-architecture-fails-with-duplicate/</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

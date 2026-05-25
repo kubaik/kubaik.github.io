@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 14:39:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 17:02:23 +0000</lastBuildDate>
+    <item>
+      <title>Connection pools: the timeout you set wrong</title>
+      <link>https://kubaik.github.io/connection-pools-the-timeout-you-set-wrong/</link>
+      <description>Cut PostgreSQL idle costs 28% by tuning connection pool timeouts — real 2026 benchmarks, PgBouncer 1.21 settings, and the latency trap most teams miss</description>
+      <pubDate>Mon, 25 May 2026 17:02:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/connection-pools-the-timeout-you-set-wrong/</guid>
+    </item>
     <item>
       <title>Land remote rate at $110k: one sheet trick</title>
       <link>https://kubaik.github.io/land-remote-rate-at-110k-one-sheet-trick/</link>
@@ -138,13 +145,6 @@
       <description>Self-taught engineers pass remote tech interviews in 2026 by building one live system, explaining trade-offs, and mastering cost-aware systems thinking—not LeetCode alone. 3 real systems, latency and cost numbers included.</description>
       <pubDate>Sun, 24 May 2026 21:34:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ace-remote-interviews-self-taught-guide/</guid>
-    </item>
-    <item>
-      <title>What MCP servers actually do</title>
-      <link>https://kubaik.github.io/what-mcp-servers-actually-do/</link>
-      <description>Cut tool sprawl costs 62% with MCP servers — cold start, memory, and failure modes most teams miss before shipping to production</description>
-      <pubDate>Sun, 24 May 2026 21:16:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/what-mcp-servers-actually-do/</guid>
     </item>
   </channel>
 </rss>
