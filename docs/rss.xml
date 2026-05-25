@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 23:04:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 23:39:30 +0000</lastBuildDate>
+    <item>
+      <title>Measure 5G backend costs before you ship</title>
+      <link>https://kubaik.github.io/measure-5g-backend-costs-before-you-ship/</link>
+      <description>Cut 5G backend latency 55% with streaming uploads, adaptive timeouts, and netem traces — measure TCP resets, TLS renegotiations, and carrier NAT timeouts before you ship</description>
+      <pubDate>Mon, 25 May 2026 23:39:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/measure-5g-backend-costs-before-you-ship/</guid>
+    </item>
     <item>
       <title>AI built my first 5 apps: what actually shipped</title>
       <link>https://kubaik.github.io/ai-built-my-first-5-apps-what-actually-shipped/</link>
@@ -138,13 +145,6 @@
       <description>easured a 22% throughput drop when we switc with Queue now pay later — this when a team I joined decided Redis Streams wou.</description>
       <pubDate>Mon, 25 May 2026 18:11:57 +0000</pubDate>
       <guid>https://kubaik.github.io/queue-now-or-pay-later/</guid>
-    </item>
-    <item>
-      <title>Designing AI systems that actually work</title>
-      <link>https://kubaik.github.io/designing-ai-systems-that-actually-work/</link>
-      <description>Cut AI response time 78% and token cost 72% with prompt sharding, embedding caching, and circuit breakers — the boring patterns that survive week 1 and beyond.</description>
-      <pubDate>Mon, 25 May 2026 17:48:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/designing-ai-systems-that-actually-work/</guid>
     </item>
   </channel>
 </rss>
