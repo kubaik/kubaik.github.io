@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 22:00:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 22:04:49 +0000</lastBuildDate>
+    <item>
+      <title>Killed by good intentions: over-engineering costs</title>
+      <link>https://kubaik.github.io/killed-by-good-intentions-over-engineering-costs/</link>
+      <description>Cut API latency 76% and cost 80% by replacing microservices with a tamed monolith — the real cost of over-engineering in 2026.</description>
+      <pubDate>Mon, 25 May 2026 22:04:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/killed-by-good-intentions-over-engineering-costs/</guid>
+    </item>
     <item>
       <title>Pick the right real-time protocol in 2026</title>
       <link>https://kubaik.github.io/pick-the-right-real-time-protocol-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-tenant database costs 60% by splitting tenants into schemas instead of sharing tables. See real latency and cost numbers from Indonesian, Vietnamese, and Philippine SaaS in 2026.</description>
       <pubDate>Mon, 25 May 2026 11:46:13 +0000</pubDate>
       <guid>https://kubaik.github.io/split-the-tenant-column-or-regret-it/</guid>
-    </item>
-    <item>
-      <title>No CS? Build senior skills instead</title>
-      <link>https://kubaik.github.io/no-cs-build-senior-skills-instead/</link>
-      <description>Senior engineer without a CS degree in 2026: the real path to promotion with 3 concrete examples, latency drops from 500ms to 60ms, and Redis cache stampede fix saving $1,200/month.</description>
-      <pubDate>Mon, 25 May 2026 09:47:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-cs-build-senior-skills-instead/</guid>
     </item>
   </channel>
 </rss>
