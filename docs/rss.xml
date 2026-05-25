@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2026 18:58:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2026 19:12:30 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: what speed kills at big tech</title>
+      <link>https://kubaik.github.io/senior-exodus-what-speed-kills-at-big-tech/</link>
+      <description>Measure PR to prod latency in 30 mins — 5 real teams, 1,847 deployments, and the exact scripts to spot velocity decay before seniors quit.</description>
+      <pubDate>Mon, 25 May 2026 19:12:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-what-speed-kills-at-big-tech/</guid>
+    </item>
     <item>
       <title>Salary to global rate in 18 months</title>
       <link>https://kubaik.github.io/salary-to-global-rate-in-18-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI response time 60% with Redis Streams, circuit breakers, and idempotency keys — the boring patterns that survive model failures and rate limits in 2026.</description>
       <pubDate>Sun, 24 May 2026 23:21:30 +0000</pubDate>
       <guid>https://kubaik.github.io/production-grade-ai-5-patterns-that-survive/</guid>
-    </item>
-    <item>
-      <title>Choose the Right Real-Time Protocol in 60 Seconds</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-in-60-seconds/</link>
-      <description>Pick the right realtime protocol in 90 seconds — WebSocket vs SSE vs long polling benchmarks, code, and the one mistake that cost me three weeks.</description>
-      <pubDate>Sun, 24 May 2026 22:51:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-in-60-seconds/</guid>
     </item>
   </channel>
 </rss>
