@@ -6,5 +6,6 @@
   "Building a local LLM setup that actually runs on a laptop",
   "Database connection pooling: the setting everyone gets wrong",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture"
+  "The real cost of over-engineering: when simplicity beats the fancy architecture",
+  "RAG pipelines in production: what the tutorials skip"
 ]
