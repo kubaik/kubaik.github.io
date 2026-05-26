@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 15:21:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 13:52:07 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: the context gap kills production apps</title>
+      <link>https://kubaik.github.io/rag-pipelines-the-context-gap-kills-production-apps/</link>
+      <description>Cut RAG hallucinations 87% with a reranker and hybrid search — the context gap most tutorials ignore and the exact steps we used with Redis, Pinecone, and BAAI reranker v1.5.0.</description>
+      <pubDate>Tue, 26 May 2026 13:51:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-the-context-gap-kills-production-apps/</guid>
+    </item>
     <item>
       <title>Queue it or lose it: when message queues help</title>
       <link>https://kubaik.github.io/queue-it-or-lose-it-when-message-queues-help/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM pipeline latency 60% with 7 metrics most teams miss — prompt cache hit ratio, token budget, embedding cache, generation latency, hallucination rate, model drift, upstream RTT.</description>
       <pubDate>Mon, 25 May 2026 22:23:58 +0000</pubDate>
       <guid>https://kubaik.github.io/track-7-silent-llm-pipeline-failures/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: the 40ms lie in tutorials</title>
-      <link>https://kubaik.github.io/rag-pipelines-the-40ms-lie-in-tutorials/</link>
-      <description>Cut RAG latency 96% without adding servers — batch retrieval, query rewriting, and chunk-ID caching in production. 3.2M queries served at p95 42ms on $240/month Kubernetes.</description>
-      <pubDate>Mon, 25 May 2026 22:21:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-the-40ms-lie-in-tutorials/</guid>
     </item>
   </channel>
 </rss>
