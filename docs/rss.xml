@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 22:06:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 22:53:10 +0000</lastBuildDate>
+    <item>
+      <title>Rebuilt my freelance dev system</title>
+      <link>https://kubaik.github.io/rebuilt-my-freelance-dev-system/</link>
+      <description>Your client dashboard shows 92% utilisation, but the fine print says ‘utilisation after context switching.’ I once billed 112 hours in a single week on…</description>
+      <pubDate>Tue, 26 May 2026 22:52:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/rebuilt-my-freelance-dev-system/</guid>
+    </item>
     <item>
       <title>Vector DB or not? Benchmark the gap</title>
       <link>https://kubaik.github.io/vector-db-or-not-benchmark-the-gap/</link>
@@ -138,13 +145,6 @@
       <description>Pick WebSocket, SSE or long polling in 60 seconds — latency, cost and ops trade-offs with Node 20, Python 3.11 and Redis 7.2 benchmarks.</description>
       <pubDate>Tue, 26 May 2026 16:28:42 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-real-time-protocol/</guid>
-    </item>
-    <item>
-      <title>AI skills 2026: what pays $240k vs $110k</title>
-      <link>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</link>
-      <description>Cut AI salary gap 42% with the right skills — prompt engineering vs fine-tuning ROI data for 2026 salaries. See concrete benchmarks, costs, and artifacts that pay off.</description>
-      <pubDate>Tue, 26 May 2026 14:40:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</guid>
     </item>
   </channel>
 </rss>
