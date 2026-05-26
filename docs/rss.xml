@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 05:14:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 05:18:59 +0000</lastBuildDate>
+    <item>
+      <title>No CS degree? Bypass the gatekeeping</title>
+      <link>https://kubaik.github.io/no-cs-degree-bypass-the-gatekeeping/</link>
+      <description>Cut time to senior engineer 50% without a CS degree — the only metrics that matter, tools to master, and the systems that got people promoted in 2026.</description>
+      <pubDate>Tue, 26 May 2026 05:18:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-cs-degree-bypass-the-gatekeeping/</guid>
+    </item>
     <item>
       <title>Non-traditional stacks shipping today</title>
       <link>https://kubaik.github.io/non-traditional-stacks-shipping-today/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 35% in 2026 without adding latency — concrete numbers, async Python 3.12, SQS FIFO batching, and the idle-CPU mistake most teams miss.</description>
       <pubDate>Mon, 25 May 2026 20:49:35 +0000</pubDate>
       <guid>https://kubaik.github.io/slash-cloud-carbon-35-yet-keep-speed/</guid>
-    </item>
-    <item>
-      <title>Debug Node.js memory leaks in under an hour</title>
-      <link>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</link>
-      <description>Stop Node.js memory leaks in 20 min — 70% are unbounded caches or closures. Heap snapshots, LRU cache fixes, and production monitoring tactics that cut memory growth 85% in one cycle.</description>
-      <pubDate>Mon, 25 May 2026 20:23:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</guid>
     </item>
   </channel>
 </rss>
