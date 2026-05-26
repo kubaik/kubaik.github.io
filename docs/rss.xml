@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 08:02:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 09:02:00 +0000</lastBuildDate>
+    <item>
+      <title>Queue it or lose it: when message queues help</title>
+      <link>https://kubaik.github.io/queue-it-or-lose-it-when-message-queues-help/</link>
+      <description>rites by ~30% and adds ~5 ms latency on wri with Queue message queues — this when I inherited a billing service that used R.</description>
+      <pubDate>Tue, 26 May 2026 09:01:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/queue-it-or-lose-it-when-message-queues-help/</guid>
+    </item>
     <item>
       <title>Make LLMs hum on a laptop</title>
       <link>https://kubaik.github.io/make-llms-hum-on-a-laptop/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 96% without adding servers — batch retrieval, query rewriting, and chunk-ID caching in production. 3.2M queries served at p95 42ms on $240/month Kubernetes.</description>
       <pubDate>Mon, 25 May 2026 22:21:01 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-the-40ms-lie-in-tutorials/</guid>
-    </item>
-    <item>
-      <title>Killed by good intentions: over-engineering costs</title>
-      <link>https://kubaik.github.io/killed-by-good-intentions-over-engineering-costs/</link>
-      <description>Cut API latency 76% and cost 80% by replacing microservices with a tamed monolith — the real cost of over-engineering in 2026.</description>
-      <pubDate>Mon, 25 May 2026 22:04:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/killed-by-good-intentions-over-engineering-costs/</guid>
     </item>
   </channel>
 </rss>

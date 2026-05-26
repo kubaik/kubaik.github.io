@@ -6,5 +6,6 @@
   "Database connection pooling: the setting everyone gets wrong",
   "Why senior developers leave big tech (it's not always the money)",
   "Observability for AI pipelines: what to instrument when your system includes an LLM",
-  "Building a local LLM setup that actually runs on a laptop"
+  "Building a local LLM setup that actually runs on a laptop",
+  "When to use a message queue (and when it's overkill)"
 ]
