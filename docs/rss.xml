@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 05:03:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 05:07:06 +0000</lastBuildDate>
+    <item>
+      <title>Non-traditional stacks shipping today</title>
+      <link>https://kubaik.github.io/non-traditional-stacks-shipping-today/</link>
+      <description>Cut API latency 50% with Bun + Elysia in 2026 — the non-traditional stacks real developers shipped with. See cost breakdowns, setup times, and the one mistake I made when I assumed everyone needed Kubernetes.</description>
+      <pubDate>Tue, 26 May 2026 05:06:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/non-traditional-stacks-shipping-today/</guid>
+    </item>
     <item>
       <title>Cut Node.js carbon 30% without latency loss</title>
       <link>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</link>
@@ -138,13 +145,6 @@
       <description>Stop Node.js memory leaks in 20 min — 70% are unbounded caches or closures. Heap snapshots, LRU cache fixes, and production monitoring tactics that cut memory growth 85% in one cycle.</description>
       <pubDate>Mon, 25 May 2026 20:23:47 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-nodejs-memory-leaks-in-under-an-hour/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: the latency trap you didn’t see coming</title>
-      <link>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</link>
-      <description>Cut RAG pipeline latency 75% and costs 47% by normalizing queries, caching embeddings, and switching to Qdrant gRPC — the hidden costs tutorials never mention.</description>
-      <pubDate>Mon, 25 May 2026 20:21:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</guid>
     </item>
   </channel>
 </rss>
