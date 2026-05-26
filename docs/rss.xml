@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 17:01:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 17:24:34 +0000</lastBuildDate>
+    <item>
+      <title>Freelance burnout: what fixed the code freeze</title>
+      <link>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</link>
+      <description>Turns out my brain was the leaky component—VS Code’s memory usage actually dropped 18% after I fixed my sleep schedule.</description>
+      <pubDate>Tue, 26 May 2026 17:24:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</guid>
+    </item>
     <item>
       <title>Portfolio that hires you: not projects, not LeetCode</title>
       <link>https://kubaik.github.io/portfolio-that-hires-you-not-projects-not-leetcode/</link>
@@ -138,13 +145,6 @@
       <description>Senior in 18 months without a CS degree — real systems, real metrics, and the hiring pipeline that actually rewards impact, not algorithms. Reduce API latency 70%, cut AWS costs 40%, and prove seniority with production ownership.</description>
       <pubDate>Tue, 26 May 2026 02:57:10 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-to-senior-no-degree-no-excuses/</guid>
-    </item>
-    <item>
-      <title>Message queues: the hype vs the hard data</title>
-      <link>https://kubaik.github.io/message-queues-the-hype-vs-the-hard-data/</link>
-      <description>Message queues hype data: owed that 68% had adopted a message queue (. Practical guide with real examples.</description>
-      <pubDate>Tue, 26 May 2026 01:34:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/message-queues-the-hype-vs-the-hard-data/</guid>
     </item>
   </channel>
 </rss>
