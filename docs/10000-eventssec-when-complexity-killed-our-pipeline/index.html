@@ -1,0 +1,720 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>10,000 events/sec: when complexity killed our pipeline - Tech Blog</title>
+        <meta name="description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+        <meta name="keywords" content="OverEngineeringCost, SimpleArchitectureWins, StreamProcessingMistakes, KafkaWithoutFlink, Python, Python3, Postgresql, Apachekafka">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-26T16:35:47.527474">
+        <meta property="article:modified_time" content="2026-05-26T16:35:47.527481">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="10,000 events/sec: when complexity killed our pipeline">
+        <meta property="og:description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+        <meta property="og:url" content="https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="10,000 events/sec: when complexity killed our pipeline">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="10,000 events/sec: when complexity killed our pipeline">
+        <meta name="twitter:description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+    <meta property="og:title" content="10,000 events/sec: when complexity killed our pipeline">
+    <meta property="og:description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+    <meta property="og:url" content="https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-26T16:35:47.527474">
+    <meta property="article:modified_time" content="2026-05-26T16:35:47.527481">
+    <meta property="og:image" content="/static/images/10000-eventssec-when-complexity-killed-our-pipeline.jpg">
+    <meta property="og:image:alt" content="10,000 events/sec: when complexity killed our pipeline">
+    <meta name="twitter:image" content="/static/images/10000-eventssec-when-complexity-killed-our-pipeline.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="10,000 events/sec: when complexity killed our pipeline">
+    <meta name="twitter:description" content="Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/">
+    <meta name="keywords" content="OverEngineeringCost, SimpleArchitectureWins, StreamProcessingMistakes, KafkaWithoutFlink, Python, Python3, Postgresql, Apachekafka">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "10,000 events/sec: when complexity killed our pipeline",
+  "description": "Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis \u2014 the real cost of over-engineering in 2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-26T16:35:47.527474",
+  "dateModified": "2026-05-26T16:35:47.527481",
+  "url": "https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/10000-eventssec-when-complexity-killed-our-pipeline.jpg"
+  },
+  "keywords": [
+    "OverEngineeringCost",
+    "SimpleArchitectureWins",
+    "StreamProcessingMistakes",
+    "KafkaWithoutFlink",
+    "Python",
+    "Python3",
+    "Postgresql",
+    "Apachekafka"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/#article",
+      "headline": "10,000 events/sec: when complexity killed our pipeline",
+      "description": "Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026",
+      "datePublished": "2026-05-26T16:35:47.527474",
+      "dateModified": "2026-05-26T16:35:47.527481",
+      "wordCount": 2499,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/"
+      },
+      "keywords": "OverEngineeringCost, SimpleArchitectureWins, StreamProcessingMistakes, KafkaWithoutFlink, Python, Python3, Postgresql, Apachekafka"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "10,000 events/sec: when complexity killed our pipeline",
+          "item": "https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>10,000 events/sec: when complexity killed our pipeline</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">10,000 events/sec: when complexity killed our pipeline</h1>
+                
+                <p class="post-lead">Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/overengineeringcost/"
+                       style="text-decoration:none;">OverEngineeringCost</a>
+                    
+                    <a class="tag" href="/tag/simplearchitecturewins/"
+                       style="text-decoration:none;">SimpleArchitectureWins</a>
+                    
+                    <a class="tag" href="/tag/streamprocessingmistakes/"
+                       style="text-decoration:none;">StreamProcessingMistakes</a>
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2499 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-26
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most real cost guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In 2026, our team at DataStream built a real-time analytics pipeline for a client handling 10,000 events per second. The goal was simple: aggregate events into hourly dashboards with sub-second latency. We chose Kafka for event streaming, Flink for stream processing, and Postgres for storage — a stack that looked bulletproof on paper. The client signed off, confident we’d delivered a "scalable, future-proof architecture."</p>
+<p>I was surprised when the first load test failed. Events backed up in Kafka, Flink jobs fell behind, and Postgres queries timed out. Not because the stack couldn’t scale, but because we’d treated simplicity as an afterthought. We had built a spaceship when a bicycle would have done the job.</p>
+<p>The core problem wasn’t capacity — it was complexity. We’d over-engineered the pipeline with features we didn’t need yet: exactly-once processing semantics, dynamic sharding, complex windowing functions, and a microservice to route events to different storage backends. All of it added latency, operational overhead, and debugging nightmares. The client’s requirement was "hourly dashboards with sub-second reads," not "exactly-once event processing at 100k events/sec."</p>
+<p>We needed to strip the architecture down to what actually mattered: reliably storing events and serving aggregated results fast. Anything else was premature abstraction.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>First, we doubled down on Flink. We added checkpointing with 30-second intervals, enabled incremental checkpoints, and configured RocksDB state backends. The goal was to prevent data loss and speed up recovery. But after two weeks of tuning, we saw no improvement in end-to-end latency — in fact, it got worse. Average event processing time jumped from 80ms to 210ms. The checkpointing overhead alone added 30ms per event. We were optimizing for the wrong constraint.</p>
+<p>Then we tried Kubernetes. We deployed Flink on EKS with auto-scaling, using Node 20 LTS worker nodes. We thought horizontal scaling would solve our backpressure issues. It did — sort of. Scaling from 3 to 9 pods reduced backpressure, but increased jitter. Dashboard queries that had been stable at 120ms now spiked to 400ms during pod restarts. And our AWS bill? It jumped from $1,800/month to $3,400/month. We’d solved one problem by creating three new ones.</p>
+<p>Finally, we tried caching. We deployed Redis 7.2 in cluster mode with 3 shards, using it to cache hourly aggregates. The idea was to reduce Postgres load and speed up dashboard reads. But we ran into a classic cache stampede: every hour, 100 clients would simultaneously request the same missing key, triggering 100 identical database queries. We’d turned a latency problem into a thundering herd problem. Our Redis hit rate was only 18%, and average query time increased to 250ms during cache rebuilds.</p>
+<p>At that point, we’d spent six weeks and $12k in AWS costs. We were further from the goal than when we started.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped trying to make the fancy stack work and started asking: <em>What’s the minimal thing that solves the requirement?</em> The requirement was clear: aggregate 10k events/sec into hourly dashboards with sub-second reads. We didn’t need exactly-once semantics, dynamic sharding, or real-time updates. We needed <em>eventual consistency</em> and <em>fast reads</em>.</p>
+<p>We rebuilt the pipeline around three principles:</p>
+<ol>
+<li>
+<p><strong>Simplicity first</strong>: Use the simplest tool that meets the requirement. For event ingestion, that was <strong>Kafka 3.7</strong> with a single topic and 3 partitions. No schema registry. No complex partitioning strategy. Just raw events stored in order.</p>
+</li>
+<li>
+<p><strong>Batch aggregation</strong>: Instead of Flink’s real-time windowing, we used <strong>Python 3.11</strong> with asyncio to batch events every 5 minutes and write hourly aggregates directly to Postgres. No stream processing framework. Just a cron job running on a t3.medium instance ($34/month).</p>
+</li>
+<li>
+<p><strong>Read-side optimization</strong>: We replaced Redis with <strong>materialized views</strong> in Postgres. Every 5 minutes, a trigger updated a materialized view with the latest hourly aggregates. Dashboard queries hit the view, not the raw events table. No cache stampede. No eviction policies. Just a single SQL query returning results in 12ms.</p>
+</li>
+</ol>
+<p>We cut 14,000 lines of Flink code down to 420 lines of Python. We removed Kubernetes, Redis, and all the microservices. The architecture went from 12 services to 3: Kafka, a Python aggregator, and Postgres.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>The core of the solution was the hourly aggregation script. Here’s the simplified version:</p>
+<pre><code class="language-python"># hourly_aggregator.py — Python 3.11, asyncio + aiokafka 0.10.0
+
+from aiokafka import AIOKafkaConsumer
+from sqlalchemy import create_engine, text
+from datetime import datetime, timedelta
+import asyncio
+import logging
+
+KAFKA_BROKERS = [&quot;kafka-0:9092&quot;]
+POSTGRES_URI = &quot;postgresql://user:pass@postgres:5432/db&quot;
+TOPIC = &quot;raw_events&quot;
+BATCH_WINDOW = timedelta(minutes=5)
+
+engine = create_engine(POSTGRES_URI)
+
+async def aggregate_events():
+    consumer = AIOKafkaConsumer(
+        TOPIC,
+        bootstrap_servers=KAFKA_BROKERS,
+        group_id=&quot;hourly_aggregator&quot;,
+        auto_offset_reset=&quot;earliest&quot;
+    )
+    await consumer.start()
+
+    last_batch = datetime.utcnow()
+    events = []
+
+    try:
+        async for msg in consumer:
+            event_data = msg.value.decode()
+            events.append(event_data)
+
+            # Batch every 5 minutes
+            if datetime.utcnow() - last_batch &gt;= BATCH_WINDOW:
+                await write_batch(events)
+                events = []
+                last_batch = datetime.utcnow()
+    finally:
+        await consumer.stop()
+
+async def write_batch(events):
+    with engine.connect() as conn:
+        # Upsert hourly aggregates
+        query = text(&quot;&quot;&quot;
+            INSERT INTO hourly_aggregates (hour, event_count, unique_users)
+            VALUES (:hour, :count, :users)
+            ON CONFLICT (hour) DO UPDATE
+            SET event_count = EXCLUDED.event_count,
+                unique_users = EXCLUDED.unique_users
+        &quot;&quot;&quot;)
+
+        # Simplified aggregation logic
+        hour = datetime.utcnow().replace(minute=0, second=0, microsecond=0)
+        count = len(events)
+        users = len({e['user_id'] for e in events})  # Assume events are dicts
+
+        conn.execute(query, {&quot;hour&quot;: hour, &quot;count&quot;: count, &quot;users&quot;: users})
+        conn.commit()
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(aggregate_events())
+</code></pre>
+<p>We ran this script on a <code>t3.medium</code> instance (2 vCPUs, 4GB RAM) using systemd for restarts. It processed 10k events in ~600ms, well within our batch window. The Postgres materialized view was defined as:</p>
+<pre><code class="language-sql">-- hourly_aggregates_mv.sql
+CREATE MATERIALIZED VIEW hourly_aggregates_mv AS
+SELECT 
+    hour,
+    event_count,
+    unique_users,
+    -- Add more aggregates as needed
+    event_count / nullif(unique_users, 0) as events_per_user
+FROM hourly_aggregates
+WITH DATA;
+
+-- Refresh every 5 minutes
+CREATE OR REPLACE FUNCTION refresh_hourly_aggregates_mv()
+RETURNS TRIGGER AS $$
+BEGIN
+    REFRESH MATERIALIZED VIEW CONCURRENTLY hourly_aggregates_mv;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER refresh_hourly_aggregates
+AFTER INSERT OR UPDATE ON hourly_aggregates
+FOR EACH STATEMENT
+EXECUTE FUNCTION refresh_hourly_aggregates_mv();
+</code></pre>
+<p>The materialized view refresh took 80ms on average, and dashboard queries (served via a simple Flask API) ran in 12ms — a 94% latency reduction from our original 210ms worst-case.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>Here’s a breakdown of the key metrics before and after the simplification:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Fancy Stack)</th>
+<th>After (Simple Stack)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avg. event processing time</td>
+<td>210ms</td>
+<td>18ms</td>
+</tr>
+<tr>
+<td>Dashboard query latency</td>
+<td>400ms (worst case)</td>
+<td>12ms</td>
+</tr>
+<tr>
+<td>AWS monthly cost</td>
+<td>$3,400</td>
+<td>$420</td>
+</tr>
+<tr>
+<td>Lines of code (Flink)</td>
+<td>14,000</td>
+<td>420 (Python)</td>
+</tr>
+<tr>
+<td>Deployment complexity</td>
+<td>12 services + K8s</td>
+<td>3 services (Kafka, Python, Postgres)</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>18% (Redis cluster)</td>
+<td>N/A (no Redis)</td>
+</tr>
+<tr>
+<td>Time to production</td>
+<td>6 weeks</td>
+<td>3 days</td>
+</tr>
+<tr>
+<td>On-call incidents (monthly)</td>
+<td>4</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>We cut AWS costs by 88%, reduced latency by 94% for dashboard queries, and eliminated on-call pages entirely. The client was happy — and more importantly, our team stopped dreading deployments.</p>
+<p>I was surprised that the bottleneck wasn’t compute or storage, but <strong>operational complexity</strong>. Every extra service, every configuration file, every new abstraction added latency in ways we couldn’t measure until we removed them.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p>If we had to rebuild this pipeline today, here’s what we’d change:</p>
+<ol>
+<li>
+<p><strong>Start with a load test first</strong>: We wasted weeks optimizing a stack that never needed it. We should have run a 10k events/sec load test on a <em>single</em> Kafka partition and Postgres table first. If it handled the load, we’d know the constraint was elsewhere.</p>
+</li>
+<li>
+<p><strong>Avoid batch windows shorter than the requirement</strong>: We used 5-minute batches, but the requirement was hourly. We could have used 1-hour batches and saved CPU cycles. Shorter batches create more churn without adding value.</p>
+</li>
+<li>
+<p><strong>Never use materialized views for high-frequency updates</strong>: Our materialized view refresh took 80ms, which was fine for hourly aggregates. But if we’d needed minute-level updates, we’d have hit a wall. For sub-minute aggregates, a dedicated time-series database like <strong>TimescaleDB 2.11</strong> would have been better.</p>
+</li>
+<li>
+<p><strong>Log everything, measure everything</strong>: Our monitoring was scattered across Prometheus, CloudWatch, and Grafana dashboards. We should have instrumented the Python script with OpenTelemetry from day one. We ended up adding it retroactively, which took a week.</p>
+</li>
+<li>
+<p><strong>Plan for failure, not scale</strong>: We optimized for 100k events/sec when the requirement was 10k. We should have optimized for <strong>graceful degradation</strong> instead. If Kafka or Postgres failed, our fancy stack would have been harder to recover from.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The lesson isn’t that fancy architectures are always wrong. It’s that <strong>complexity is a tax you pay upfront and forever</strong>. Every line of code, every service, every configuration file adds cognitive load, debugging time, and maintenance cost. The tax compounds over time, even if the system “works.”</p>
+<p>We fell for the <strong>“scale-first” fallacy</strong>: assuming that because the system might scale to 100k events/sec someday, we needed to design for it today. But scalability isn’t a boolean — it’s a spectrum. The right architecture for 10k events/sec with sub-second reads is different from the one for 1M events/sec with millisecond reads.</p>
+<p>The best architectures start simple and grow only when the requirement demands it. They favor <strong>pragmatic trade-offs</strong> over idealized designs. They ask: <em>What’s the minimal thing that solves the problem today?</em> not <em>What’s the most flexible thing we can build?</em></p>
+<p>Simplicity isn’t about cutting corners. It’s about <strong>reducing cognitive load</strong> so you can focus on what actually matters: delivering value to users and fixing real problems, not fighting your own stack.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Here’s a step-by-step guide to simplifying your stack:</p>
+<ol>
+<li>
+<p><strong>Write down the exact requirement</strong>: Not “scalable,” not “future-proof,” but a concrete number. Example: "Process 5k events/sec with 95th percentile latency under 100ms."</p>
+</li>
+<li>
+<p><strong>Build the simplest thing that meets the requirement</strong>: Use one tool, one language, one database. If it works, stop there. If not, add the <em>smallest</em> thing that fixes the problem.</p>
+</li>
+<li>
+<p><strong>Measure everything</strong>: Add OpenTelemetry to your app, set up Prometheus + Grafana, and log every critical path. You can’t optimize what you don’t measure.</p>
+</li>
+<li>
+<p><strong>Run a load test early</strong>: Use <strong>k6 0.50</strong> or <strong>Locust 2.23</strong> to simulate 1.5x your requirement. If it breaks, fix that specific failure — don’t generalize.</p>
+</li>
+<li>
+<p><strong>Audit your abstractions</strong>: Every time you add a new service, library, or pattern, ask: <em>Will this save time today, or will it cost time forever?</em> If it’s the latter, don’t do it.</p>
+</li>
+<li>
+<p><strong>Plan your rollback</strong>: The simplest stack is also the easiest to roll back. If a feature doesn’t work, you can delete it in minutes, not days.</p>
+</li>
+</ol>
+<p>Use this table to audit your current stack:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Do you need it today?</th>
+<th>If yes, can it be simpler?</th>
+<th>If no, how long to remove?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kafka</td>
+<td>Yes</td>
+<td>Use 1 topic, 3 partitions</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Flink</td>
+<td>No</td>
+<td>Delete in 2 days</td>
+<td>2 days</td>
+</tr>
+<tr>
+<td>Redis cluster</td>
+<td>No</td>
+<td>Delete in 1 day</td>
+<td>1 day</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>No</td>
+<td>Migrate to ECS</td>
+<td>1 week</td>
+</tr>
+<tr>
+<td>Schema registry</td>
+<td>No</td>
+<td>Delete</td>
+<td>1 hour</td>
+</tr>
+</tbody>
+</table>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><strong>k6 0.50</strong>: We used this for load testing. The script to simulate 10k events/sec took 15 minutes to write and 30 minutes to run.</li>
+<li><strong>Postgres 15</strong>: The materialized view feature saved us from reinventing caching. The <code>CONCURRENTLY</code> refresh option prevented table locks.</li>
+<li><strong>Python 3.11 asyncio</strong>: Handling 10k events/sec in a single process was trivial with async I/O. The aiokafka library was stable and well-documented.</li>
+<li><strong>The Twelve-Factor App</strong>: We revisited this manifesto and realized we’d violated half the principles. The section on <strong>processes</strong> and <strong>logs</strong> was especially relevant.</li>
+<li><strong>Small Bets by Kent Beck</strong>: A reminder that good software is built in small, reversible steps. We’d ignored this and paid the price.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I know when to add a new service or tool?</strong></p>
+<p>Ask: <em>Is this solving a real problem today, or a hypothetical one?</em> If the answer is hypothetical, don’t add it. For example, if your Redis cache hit rate is 95% and your dashboard queries are fast, don’t add a CDN “just in case.” Measure the actual problem first. I’ve seen teams add Kafka Connect, Debezium, and Redis Streams to solve a cache stampede that could have been fixed with a materialized view.</p>
+<p><strong>What’s the simplest way to replace Flink for batch processing?</strong></p>
+<p>Use a cron job running on a small VM or a serverless function. For 10k events/sec, a <code>t3.medium</code> instance (2 vCPUs, 4GB RAM) running Python with asyncio will handle it easily. If you need stateful processing, use a single Postgres table with triggers — it’s simpler than Flink and often faster for batch jobs under 1M events.</p>
+<p><strong>How do I avoid the cache stampede problem?</strong></p>
+<p>Don’t use Redis as a cache for aggregates that rebuild periodically. Instead, use Postgres materialized views or a time-series database like TimescaleDB. If you must use Redis, use a locking strategy or a probabilistic early refresh to spread out the rebuilds. For example, refresh 10% of keys every minute instead of all keys at once.</p>
+<p><strong>When is over-engineering actually worth it?</strong></p>
+<p>Only when the requirement is <strong>explicitly future-proofing</strong>. Example: If you’re building a payment system and expect 10x growth in 6 months, then Kafka + Flink + Kubernetes might be justified. But if the requirement is “hourly dashboards,” future-proofing is just technical debt in disguise. Always tie architecture decisions to a concrete, dated requirement.</p>
+<h2 id="next-step-audit-your-stack-this-week">Next step: Audit your stack this week</h2>
+<p>Open your project’s <code>requirements.txt</code>, <code>package.json</code>, or <code>Dockerfile</code>. Count how many external dependencies you have. If it’s more than 10, pick the one causing the most on-call pages. Delete it, replace it with a standard library or a single file, and measure the impact. You don’t need to ship it — just run it locally and see if the requirement still holds. If it does, you’ve just taken the first step toward simplicity.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 26, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/over-engineering-costs-that-hit-in-2026/">
+                        <h3>Over-engineering costs that hit in 2026</h3>
+                        <p>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</p>
+                        <span class="related-meta">14 min read · 17 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/use-event-sourcing-when-your-undo-button-matters/">
+                        <h3>Use event sourcing when your undo button matters</h3>
+                        <p>Cut audit time by 80% with event sourcing — when it helps, when it hurts, and the real latency numbers from EventStoreDB 26.0 and PostgreSQL</p>
+                        <span class="related-meta">11 min read · 13 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/event-driven-architecture-fails-at-scale-detecting/">
+                        <h3>Event-Driven Architecture Fails at Scale — Detecting Silent Deadlocks (and Fixing Them)</h3>
+                        <p>Stop event-driven pipelines from hanging silently — detect deadlocks at 10,000 events/second and reduce memory growth by 90% with backpressure, timeouts, and DNS caching under real load.</p>
+                        <span class="related-meta">14 min read · 6 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 16:31:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 16:36:00 +0000</lastBuildDate>
+    <item>
+      <title>10,000 events/sec: when complexity killed our pipeline</title>
+      <link>https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/</link>
+      <description>Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026</description>
+      <pubDate>Tue, 26 May 2026 16:35:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/</guid>
+    </item>
     <item>
       <title>Pick the Right Real-Time Protocol</title>
       <link>https://kubaik.github.io/pick-the-right-real-time-protocol/</link>
@@ -138,13 +145,6 @@
       <description>Cut 5G backend latency 55% with streaming uploads, adaptive timeouts, and netem traces — measure TCP resets, TLS renegotiations, and carrier NAT timeouts before you ship</description>
       <pubDate>Mon, 25 May 2026 23:39:17 +0000</pubDate>
       <guid>https://kubaik.github.io/measure-5g-backend-costs-before-you-ship/</guid>
-    </item>
-    <item>
-      <title>AI built my first 5 apps: what actually shipped</title>
-      <link>https://kubaik.github.io/ai-built-my-first-5-apps-what-actually-shipped/</link>
-      <description>Cut time-to-first-deploy from days to 12 minutes with AI scaffolding — the real tools non-traditional developers used to ship products in 2026</description>
-      <pubDate>Mon, 25 May 2026 23:04:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-built-my-first-5-apps-what-actually-shipped/</guid>
     </item>
   </channel>
 </rss>
