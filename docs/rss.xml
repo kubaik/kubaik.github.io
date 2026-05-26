@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 22:03:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 22:06:15 +0000</lastBuildDate>
+    <item>
+      <title>Vector DB or not? Benchmark the gap</title>
+      <link>https://kubaik.github.io/vector-db-or-not-benchmark-the-gap/</link>
+      <description>pgvector 0.7 vs Milvus 2.4 benchmark: measure the 95th percentile gap before buying a vector database. Save $1k/month on embeddings with the right index first.</description>
+      <pubDate>Tue, 26 May 2026 22:06:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-db-or-not-benchmark-the-gap/</guid>
+    </item>
     <item>
       <title>Run LLMs locally on laptops — real limits</title>
       <link>https://kubaik.github.io/run-llms-locally-on-laptops-real-limits/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary gap 42% with the right skills — prompt engineering vs fine-tuning ROI data for 2026 salaries. See concrete benchmarks, costs, and artifacts that pay off.</description>
       <pubDate>Tue, 26 May 2026 14:40:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: the context gap kills production apps</title>
-      <link>https://kubaik.github.io/rag-pipelines-the-context-gap-kills-production-apps/</link>
-      <description>Cut RAG hallucinations 87% with a reranker and hybrid search — the context gap most tutorials ignore and the exact steps we used with Redis, Pinecone, and BAAI reranker v1.5.0.</description>
-      <pubDate>Tue, 26 May 2026 13:51:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-the-context-gap-kills-production-apps/</guid>
     </item>
   </channel>
 </rss>
