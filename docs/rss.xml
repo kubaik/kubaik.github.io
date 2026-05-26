@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 14:40:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 16:28:53 +0000</lastBuildDate>
+    <item>
+      <title>Pick the Right Real-Time Protocol</title>
+      <link>https://kubaik.github.io/pick-the-right-real-time-protocol/</link>
+      <description>Pick WebSocket, SSE or long polling in 60 seconds — latency, cost and ops trade-offs with Node 20, Python 3.11 and Redis 7.2 benchmarks.</description>
+      <pubDate>Tue, 26 May 2026 16:28:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-real-time-protocol/</guid>
+    </item>
     <item>
       <title>AI skills 2026: what pays $240k vs $110k</title>
       <link>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</link>
@@ -138,13 +145,6 @@
       <description>Cut time-to-first-deploy from days to 12 minutes with AI scaffolding — the real tools non-traditional developers used to ship products in 2026</description>
       <pubDate>Mon, 25 May 2026 23:04:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-built-my-first-5-apps-what-actually-shipped/</guid>
-    </item>
-    <item>
-      <title>Salary boosts from AI infra in 2026</title>
-      <link>https://kubaik.github.io/salary-boosts-from-ai-infra-in-2026/</link>
-      <description>2026 AI salary data: prompt-tuning vs vector-search infra — the skills that actually move the paycheck with concrete benchmarks and cost numbers.</description>
-      <pubDate>Mon, 25 May 2026 22:45:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/salary-boosts-from-ai-infra-in-2026/</guid>
     </item>
   </channel>
 </rss>
