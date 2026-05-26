@@ -2,5 +2,6 @@
   "AI-generated code and security: the new vulnerabilities teams are missing",
   "Repository intelligence: how AI is learning your entire codebase context",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Observability for AI pipelines: what to instrument when your system includes an LLM"
+  "Observability for AI pipelines: what to instrument when your system includes an LLM",
+  "5G and mobile-first backends: what changes when your users are always on cellular"
 ]
