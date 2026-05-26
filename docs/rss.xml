@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 16:54:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 16:58:30 +0000</lastBuildDate>
+    <item>
+      <title>Repository intelligence: AI can&apos;t see your call graphs</title>
+      <link>https://kubaik.github.io/repository-intelligence-ai-cant-see-your-call-graphs/</link>
+      <description>Cut false positives 44% by instrumenting repository intelligence — measure symbol tables, call graphs, and constraints before trusting AI suggestions. 2026 guide with Python 3.11, OpenTelemetry 1.25, and Redis 7.2.</description>
+      <pubDate>Tue, 26 May 2026 16:58:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/repository-intelligence-ai-cant-see-your-call-graphs/</guid>
+    </item>
     <item>
       <title>Stop your mobile backend from melting at 3am</title>
       <link>https://kubaik.github.io/stop-your-mobile-backend-from-melting-at-3am/</link>
@@ -138,13 +145,6 @@
       <description>Exit interviews with 22 engineers reveal why senior talent flees big tech in 2026 — decision fatigue, impact erosion, and context switching costs, not salary.</description>
       <pubDate>Tue, 26 May 2026 00:17:39 +0000</pubDate>
       <guid>https://kubaik.github.io/why-seniors-flee-big-tech/</guid>
-    </item>
-    <item>
-      <title>Sell higher, not cheaper from abroad</title>
-      <link>https://kubaik.github.io/sell-higher-not-cheaper-from-abroad/</link>
-      <description>Negotiate remote pay from lower-cost countries using real 2026 data and a pricing calculator that converts your cost into a defensible rate. Learn how to justify $118/hour without apologizing for your location.</description>
-      <pubDate>Mon, 25 May 2026 23:59:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/sell-higher-not-cheaper-from-abroad/</guid>
     </item>
   </channel>
 </rss>

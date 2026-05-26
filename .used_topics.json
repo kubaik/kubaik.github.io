@@ -13,5 +13,6 @@
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "How vector databases work (and when you don't need one)",
-  "5G and mobile-first backends: what changes when your users are always on cellular"
+  "5G and mobile-first backends: what changes when your users are always on cellular",
+  "Repository intelligence: how AI is learning your entire codebase context"
 ]
