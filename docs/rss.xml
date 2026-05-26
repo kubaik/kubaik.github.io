@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 04:40:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 04:45:49 +0000</lastBuildDate>
+    <item>
+      <title>Cut Node.js carbon 30% without latency loss</title>
+      <link>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</link>
+      <description>Cut cloud carbon 30% without slowing APIs — Node.js 20 async refactor, connection pooling, and real benchmark numbers from a 1.2M-user Latin American stack.</description>
+      <pubDate>Tue, 26 May 2026 04:45:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</guid>
+    </item>
     <item>
       <title>Freelance dev burnout: it wasn’t hours</title>
       <link>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 75% and costs 47% by normalizing queries, caching embeddings, and switching to Qdrant gRPC — the hidden costs tutorials never mention.</description>
       <pubDate>Mon, 25 May 2026 20:21:01 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-the-latency-trap-you-didnt-see-coming/</guid>
-    </item>
-    <item>
-      <title>Laptops can’t run LLMs—here’s why</title>
-      <link>https://kubaik.github.io/laptops-cant-run-llmsheres-why/</link>
-      <description>Run a 7B LLM locally in under 2 seconds on a laptop — hardware picks, version pins, and the swap trap most guides ignore.</description>
-      <pubDate>Mon, 25 May 2026 20:11:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/laptops-cant-run-llmsheres-why/</guid>
     </item>
   </channel>
 </rss>
