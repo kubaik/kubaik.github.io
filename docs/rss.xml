@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 13:52:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 14:40:50 +0000</lastBuildDate>
+    <item>
+      <title>AI skills 2026: what pays $240k vs $110k</title>
+      <link>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</link>
+      <description>Cut AI salary gap 42% with the right skills — prompt engineering vs fine-tuning ROI data for 2026 salaries. See concrete benchmarks, costs, and artifacts that pay off.</description>
+      <pubDate>Tue, 26 May 2026 14:40:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-2026-what-pays-240k-vs-110k/</guid>
+    </item>
     <item>
       <title>RAG pipelines: the context gap kills production apps</title>
       <link>https://kubaik.github.io/rag-pipelines-the-context-gap-kills-production-apps/</link>
@@ -138,13 +145,6 @@
       <description>2026 AI salary data: prompt-tuning vs vector-search infra — the skills that actually move the paycheck with concrete benchmarks and cost numbers.</description>
       <pubDate>Mon, 25 May 2026 22:45:39 +0000</pubDate>
       <guid>https://kubaik.github.io/salary-boosts-from-ai-infra-in-2026/</guid>
-    </item>
-    <item>
-      <title>Track 7 silent LLM pipeline failures</title>
-      <link>https://kubaik.github.io/track-7-silent-llm-pipeline-failures/</link>
-      <description>Cut LLM pipeline latency 60% with 7 metrics most teams miss — prompt cache hit ratio, token budget, embedding cache, generation latency, hallucination rate, model drift, upstream RTT.</description>
-      <pubDate>Mon, 25 May 2026 22:23:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/track-7-silent-llm-pipeline-failures/</guid>
     </item>
   </channel>
 </rss>
