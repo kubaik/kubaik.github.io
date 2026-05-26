@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 21:21:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 21:27:51 +0000</lastBuildDate>
+    <item>
+      <title>Reduce cloud carbon 30% sustainably</title>
+      <link>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</link>
+      <description>Cut cloud carbon 30% without slowing code — Lambda arm64, Aurora Serverless v2, and Redis two-tier caching in a real Latin American health-tech API.</description>
+      <pubDate>Tue, 26 May 2026 21:27:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</guid>
+    </item>
     <item>
       <title>AI tools that turned non-devs into solo founders</title>
       <link>https://kubaik.github.io/ai-tools-that-turned-non-devs-into-solo-founders/</link>
@@ -138,13 +145,6 @@
       <description>Local LLM latency cut from 47s to 5s on a 2021 M1 MacBook — the hidden costs, benchmarks, and version pins most guides omit</description>
       <pubDate>Tue, 26 May 2026 08:02:16 +0000</pubDate>
       <guid>https://kubaik.github.io/make-llms-hum-on-a-laptop/</guid>
-    </item>
-    <item>
-      <title>Track what LLM pipelines really miss</title>
-      <link>https://kubaik.github.io/track-what-llm-pipelines-really-miss/</link>
-      <description>Cut LLM pipeline failures 50% with 42 new metrics — context overflow, cache stampede, token burn. Instrument gpt-4o-2025-05-14, LangChain 0.3.7, Prometheus 2.47 now.</description>
-      <pubDate>Tue, 26 May 2026 07:39:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/track-what-llm-pipelines-really-miss/</guid>
     </item>
   </channel>
 </rss>
