@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 19:36:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 19:59:47 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineered? You’re burning cash now</title>
+      <link>https://kubaik.github.io/over-engineered-youre-burning-cash-now/</link>
+      <description>Cut cloud costs 80% and latency 14x by replacing Kafka + Redis Streams with PostgreSQL LISTEN/NOTIFY and SSE in a real-time dashboard — the simplicity strategy most teams skip.</description>
+      <pubDate>Tue, 26 May 2026 19:59:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineered-youre-burning-cash-now/</guid>
+    </item>
     <item>
       <title>Build one killer project from Africa</title>
       <link>https://kubaik.github.io/build-one-killer-project-from-africa/</link>
@@ -138,13 +145,6 @@
       <description>Cut connection timeouts 70% by abandoning maxPoolSize=10 — real benchmarks, metrics, and the pool size formula teams miss in 2026</description>
       <pubDate>Tue, 26 May 2026 05:58:42 +0000</pubDate>
       <guid>https://kubaik.github.io/10-connection-pools-too-few/</guid>
-    </item>
-    <item>
-      <title>Negotiate pay in weak currencies</title>
-      <link>https://kubaik.github.io/negotiate-pay-in-weak-currencies/</link>
-      <description>Close remote offers 86 % faster and cut FX loss 95 % using Stack Overflow 2026 salary bands and Wise Business hedging — exact scripts and templates included</description>
-      <pubDate>Tue, 26 May 2026 05:55:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-pay-in-weak-currencies/</guid>
     </item>
   </channel>
 </rss>
