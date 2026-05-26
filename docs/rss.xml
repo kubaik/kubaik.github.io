@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 19:16:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 19:19:10 +0000</lastBuildDate>
+    <item>
+      <title>5 signals to watch in LLM pipelines</title>
+      <link>https://kubaik.github.io/5-signals-to-watch-in-llm-pipelines/</link>
+      <description>Reduce LLM pipeline outages 60% with 5 signals: queue depth, cache hit ratio, latency, empty responses, and token rate. Real 2026 numbers and code for FastAPI, vLLM, Prometheus, and OTel.</description>
+      <pubDate>Tue, 26 May 2026 19:18:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-signals-to-watch-in-llm-pipelines/</guid>
+    </item>
     <item>
       <title>Choose WebSocket, SSE, or long-poll in 5 minutes</title>
       <link>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 50% with Bun + Elysia in 2026 — the non-traditional stacks real developers shipped with. See cost breakdowns, setup times, and the one mistake I made when I assumed everyone needed Kubernetes.</description>
       <pubDate>Tue, 26 May 2026 05:06:52 +0000</pubDate>
       <guid>https://kubaik.github.io/non-traditional-stacks-shipping-today/</guid>
-    </item>
-    <item>
-      <title>Cut Node.js carbon 30% without latency loss</title>
-      <link>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</link>
-      <description>Cut cloud carbon 30% without slowing APIs — Node.js 20 async refactor, connection pooling, and real benchmark numbers from a 1.2M-user Latin American stack.</description>
-      <pubDate>Tue, 26 May 2026 04:45:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</guid>
     </item>
   </channel>
 </rss>
