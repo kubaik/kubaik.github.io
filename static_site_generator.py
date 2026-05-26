@@ -1,14 +1,13 @@
-import json
-import markdown as md
-from pathlib import Path
-from typing import Dict, List
-from datetime import datetime
-from jinja2 import Template, Environment, BaseLoader
-
-from blog_post import BlogPost
-from seo_optimizer import SEOOptimizer
-from visibility_automator import VisibilityAutomator
 from monetization_manager import MonetizationManager
+from visibility_automator import VisibilityAutomator
+from seo_optimizer import SEOOptimizer
+from blog_post import BlogPost
+from jinja2 import Template, Environment, BaseLoader
+from datetime import datetime
+from typing import Dict, List
+from pathlib import Path
+import markdown as md
+import json
 
 
 def _safe_excerpt(meta_description: str, content: str, title: str = "",
@@ -16,7 +15,15 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     import re
 
     desc = (meta_description or "").strip()
-    if desc:
+
+    _WEAK_OPENERS = (
+        "this post", "in this article", "a guide to", "learn about",
+        "an overview", "this tutorial", "this article", "we will",
+        "you will learn", "i wrote this", "a colleague asked",
+        "this took me", "i've seen this", "the short version",
+        "i ran into this", "i've answered",
+    )
+    if desc and not any(desc.lower().startswith(w) for w in _WEAK_OPENERS):
         return desc
 
     text = re.sub(r"```[\s\S]*?```", " ", content or "")
@@ -25,20 +32,79 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
     text = re.sub(r"[*_]{1,3}", "", text)
     text = re.sub(r"\s+", " ", text).strip()
-
     sentences = re.split(r'(?<=[.!?])\s+', text)
+    _INTRO_PATTERNS = re.compile(
+        r'^(I |A colleague|This took me|I\'ve|The short version|I ran|'
+        r'I spent|I have|Here\'s what|Writing this|This is a topic)',
+        re.IGNORECASE
+    )
     for sentence in sentences:
         sentence = sentence.strip()
-        if len(sentence) >= 40:
-            if len(sentence) > max_len:
-                sentence = sentence[:max_len].rsplit(
-                    " ", 1)[0].rstrip(".,;:") + "…"
-            return sentence
+        if len(sentence) < 40:
+            continue
+        if _INTRO_PATTERNS.match(sentence):
+            continue
+        if len(sentence) > max_len:
+            sentence = sentence[:max_len].rsplit(
+                " ", 1)[0].rstrip(".,;:") + "…"
+        return sentence
 
-    fallback = text[:max_len] if text else (title or "")
-    if len(fallback) == max_len:
-        fallback = fallback.rsplit(" ", 1)[0] + "…"
+    fallback = f"Practical guide to {title}." if title else text[:max_len]
     return fallback
+
+
+AUTHOR_PAGE_TEMPLATE = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubai Kevin — Software Developer and Writer</title>
+    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya. He writes about AI, backend engineering, and developer careers at {site_name}.">
+    <link rel="canonical" href="{base_url}/author/kubai-kevin/">
+    <link rel="stylesheet" href="{base_path}/static/style.css">
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {{
+        "@type": "Person",
+        "@id": "{base_url}/about/#author",
+        "name": "Kubai Kevin",
+        "url": "{base_url}/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ]
+      }}
+    }}
+    </script>
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{base_path}/">{site_name}</a></h1>
+        <nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
+    </div></header>
+    <main class="container">
+        <h1>Kubai Kevin</h1>
+        <p>Software developer based in Nairobi, Kenya. Writing about AI, backend engineering,
+        and developer careers at <a href="{base_url}/">{site_name}</a>.</p>
+        <p>
+            <a href="{base_path}/about/">Full bio and editorial process →</a>
+        </p>
+        <p>
+            <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener">LinkedIn</a> ·
+            <a href="https://twitter.com/KubaiKevin" target="_blank" rel="noopener">Twitter</a> ·
+            <a href="https://github.com/kubaik" target="_blank" rel="noopener">GitHub</a>
+        </p>
+        {posts_html}
+    </main>
+    <footer><div class="container">
+        <p>&copy; {year} {site_name}</p>
+    </div></footer>
+</body>
+</html>"""
 
 
 class StaticSiteGenerator:
@@ -57,6 +123,7 @@ class StaticSiteGenerator:
         self._generate_homepage(posts)
         self._generate_post_pages(posts)
         self._generate_static_pages(posts)
+        self._generate_author_page(posts)  # Added Fix 4 call
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
@@ -306,15 +373,6 @@ Sitemap: {base_url}/rss.xml
         return '\n'.join(output_blocks)
 
     def _generate_security_headers(self):
-        """
-        Writes docs/_headers for Netlify/Cloudflare Pages.
-
-        WHY: A Content-Security-Policy that allows AdSense scripts is required
-        for ads to actually load. A broken CSP means zero ad impressions = zero
-        revenue = AdSense sees the account as inactive.
-        Also writes a .htaccess snippet for Apache-based hosts.
-        """
-        # ── _headers (Netlify / Cloudflare Pages) ────────────────────────────
         headers_content = """\
             /*
             X-Frame-Options: SAMEORIGIN
@@ -326,7 +384,6 @@ Sitemap: {base_url}/rss.xml
         with open("./docs/_headers", "w", encoding="utf-8") as f:
             f.write(headers_content)
 
-        # ── .htaccess snippet (Apache / cPanel hosts) ─────────────────────────
         htaccess_content = """\
             # Security headers for Apache hosts
             <IfModule mod_headers.c>
@@ -357,15 +414,6 @@ Sitemap: {base_url}/rss.xml
         print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
 
     def _generate_privacy_consent_banner(self):
-        """
-        Writes docs/static/consent.js — a lightweight GDPR cookie consent banner.
-
-        WHY THIS MATTERS FOR ADSENSE:
-        Google's own AdSense policy requires a consent mechanism for EU traffic.
-        Reviewers from the EU/UK check for this. Missing consent = policy violation
-        even after initial approval. This is a lightweight first-party implementation
-        that doesn't require a third-party CMP service.
-        """
         config = self.blog_system.config
         base_path = config.get("base_path", "")
         privacy_url = f"{base_path}/privacy-policy/"
@@ -593,6 +641,36 @@ Sitemap: {base_url}/rss.xml
                 f.write(html)
         print("Generated static pages: about, contact, privacy, terms")
 
+    # ── FIX 4: Implemented and logic patched Author Page Generation ───────
+    def _generate_author_page(self, posts: List[BlogPost]):
+        config = self.blog_system.config
+        base_url = config.get('base_url', '')
+        base_path = config.get('base_path', '')
+        site_name = config.get('site_name', 'Tech Blog')
+
+        author_dir = Path("./docs/author/kubai-kevin")
+        author_dir.mkdir(parents=True, exist_ok=True)
+
+        posts_html = ""
+        if posts:
+            items = "\n".join(
+                f'<li><a href="{base_path}/{p.slug}/">{p.title}</a> '
+                f'<span style="color:#999;font-size:0.85rem">— {p.created_at[:10]}</span></li>'
+                for p in posts[:20]
+            )
+            posts_html = f"<h2>Recent Articles</h2>\n<ul style='list-style:none;padding:0;'>\n{items}\n</ul>"
+
+        html = AUTHOR_PAGE_TEMPLATE.format(
+            site_name=site_name,
+            base_url=base_url,
+            base_path=base_path,
+            year=datetime.now().year,
+            posts_html=posts_html
+        )
+        with open(author_dir / "index.html", 'w', encoding='utf-8') as f:
+            f.write(html)
+        print("Generated author page (/author/kubai-kevin/)")
+
     def _generate_tag_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
         base_url = config.get('base_url', '')
@@ -600,7 +678,6 @@ Sitemap: {base_url}/rss.xml
         site_name = config.get('site_name', 'Tech Blog')
         current_year = datetime.now().year
 
-        # Build tag → posts map
         tag_map: Dict[str, List[BlogPost]] = {}
         for post in posts:
             for tag in post.tags:
@@ -609,7 +686,6 @@ Sitemap: {base_url}/rss.xml
                     continue
                 tag_map.setdefault(clean, []).append(post)
 
-        # Only generate pages for tags with ≥ 2 posts (thin tag pages hurt SEO)
         qualifying = {t: ps for t, ps in tag_map.items() if len(ps) >= 2}
         if not qualifying:
             return
@@ -622,10 +698,6 @@ Sitemap: {base_url}/rss.xml
             tag_dir = tags_dir / tag_slug
             tag_dir.mkdir(exist_ok=True)
 
-            # ── PATCH: noindex thin tag pages to avoid low-value-content flags ──
-            # Tag pages with < 5 posts are thin content. AdSense reviewers will
-            # flag them. noindex keeps them out of Google's quality scoring while
-            # still allowing crawlers to follow the internal links.
             robots_directive = "index, follow" if len(
                 tag_posts) >= 5 else "noindex, follow"
 
@@ -640,8 +712,6 @@ Sitemap: {base_url}/rss.xml
                 posts_data.append(d)
 
             tag_title = tag.title()
-
-            # ── PATCH: og:image uses real fallback, not a per-slug path ──────────
             og_image = f"{base_url}/static/og-default.png"
 
             html = f'''<!DOCTYPE html>
@@ -651,18 +721,16 @@ Sitemap: {base_url}/rss.xml
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{tag_title} Articles — {site_name}</title>
   <meta name="description" content="All articles tagged {tag_title} on {site_name}. Practical guides for developers.">
-  <!-- PATCH: noindex thin tag pages (<5 posts) to avoid AdSense thin-content flags -->
   <meta name="robots" content="{robots_directive}">
   <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
   <link rel="stylesheet" href="{base_path}/static/style.css">
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="{tag_title} Articles — {site_name}">
   <meta property="og:description" content="All articles tagged {tag_title} on {site_name}.">
   <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
   <meta property="og:image" content="{og_image}">
   <script type="application/ld+json">
-  {{"@context":"https://schema.org","@type":"CollectionPage",
+  {{"@context":"[https://schema.org](https://schema.org)","@type":"CollectionPage",
     "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
     "description":"Articles tagged {tag_title}"}}
   </script>
@@ -695,7 +763,6 @@ Sitemap: {base_url}/rss.xml
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
-  <!-- PATCH: GDPR consent banner required for AdSense with EU traffic -->
   <script defer src="{base_path}/static/consent.js"></script>
 </body>
 </html>'''
@@ -703,10 +770,6 @@ Sitemap: {base_url}/rss.xml
             with open(tag_dir / "index.html", 'w', encoding='utf-8') as f:
                 f.write(html)
 
-        # ── Generate tags index page ──────────────────────────────────────────
-        # The index page (/tag/) lists all tags. Always noindex — it's a
-        # navigation page, not a content page, and AdSense reviewers
-        # should not evaluate it as a content sample.
         all_tags_html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -714,7 +777,6 @@ Sitemap: {base_url}/rss.xml
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Topics — {site_name}</title>
   <meta name="description" content="Browse all topics covered on {site_name}.">
-  <!-- Tag index is a navigation page, not a content page — noindex it -->
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="{base_url}/tag/">
   <link rel="stylesheet" href="{base_path}/static/style.css">
@@ -822,7 +884,7 @@ Sitemap: {base_url}/rss.xml
                 f'<priority>{priority}</priority></url>'
             )
         sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="[http://www.sitemaps.org/schemas/sitemap/0.9](http://www.sitemaps.org/schemas/sitemap/0.9)">
   {chr(10).join(urls)}
 </urlset>"""
         with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
@@ -896,10 +958,9 @@ def _build_templates() -> dict:
 
         <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
 
-        <!-- PRECONNECT: cuts 150-300ms from ad/font load (Core Web Vitals LCP improvement) -->
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-        <link rel="preconnect" href="https://www.google-analytics.com">
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
 
         {{ global_meta_tags | safe }}
         {{ meta_tags | safe }}
@@ -970,7 +1031,7 @@ def _build_templates() -> dict:
             <span>›</span>
             <span>{{ post.title }}</span>
         </nav>
-        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
             <header class="post-header">
                 <h1 itemprop="headline">{{ post.title }}</h1>
                 {% if post.meta_description %}
@@ -985,7 +1046,7 @@ def _build_templates() -> dict:
                 </div>
                 {% endif %}
             </header>
-            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
                     <p class="author-name" itemprop="name">
@@ -1092,25 +1153,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ─────────────────────────────────────────────────────────────
-    # INDEX_TMPL
-    #
-    # ROOT CAUSE FIX: Nested <a> elements are invalid HTML (spec §4.5.1).
-    # The homepage post card is an <a class="post-card">. Previously the
-    # tag pills inside each card were also <a class="tag"> elements.
-    # Browsers auto-correct nested <a> by closing the outer <a> the moment
-    # they encounter the inner one — splitting one card into two elements:
-    #   1. <a class="post-card"> containing title + desc + reading-time (closed early)
-    #   2. Orphaned <a class="tag"> siblings containing only the tag pills
-    # This produced the "empty card / tags-only card" pairs seen in screenshots.
-    #
-    # FIX: Tag pills on the homepage grid are now <span class="tag"> elements.
-    # Clicking the card navigates to the post (outer <a> href).
-    # Tag navigation uses event delegation on the container — clicking a span
-    # with data-tag-href routes to the tag page without needing nested <a>.
-    # The post detail page (POST_TMPL) is unaffected: tags there are outside
-    # any card <a>, so nested anchors are not an issue.
-    # ─────────────────────────────────────────────────────────────
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1127,9 +1169,9 @@ def _build_templates() -> dict:
     <meta property="og:image" content="{{ base_url }}/static/icons/icon-512x512.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@KubaiKevin">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-    <link rel="preconnect" href="https://www.google-analytics.com">
+    <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+    <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+    <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
     {{ global_meta_tags | safe }}
     {{ homepage_meta_tags | safe }}
     {{ organization_schema | safe }}
@@ -1651,105 +1693,358 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # ── FIX 2: Replaced About Template ──────────────────────────────────────
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - {{ site_name }}</title>
-    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi writing about AI, backend systems, and developer careers.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Kubai Kevin — {{ site_name }}</title>
+    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years building production Python and Node.js backends in fintech. He writes about AI, backend systems, and developer careers from direct production experience.">
     <link rel="canonical" href="{{ base_url }}/about/">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="About Kubai Kevin — {{ site_name }}">
+    <meta property="og:description" content="Software developer in Nairobi writing about AI, backend systems, and developer careers from 10+ years of production experience.">
+    <meta property="og:url" content="{{ base_url }}/about/">
+    <meta property="profile:first_name" content="Kevin">
+    <meta property="profile:last_name" content="Kubai">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "[https://schema.org](https://schema.org)",
+      "@type": "Person",
+      "@id": "{{ base_url }}/about/#author",
+      "name": "Kubai Kevin",
+      "givenName": "Kevin",
+      "familyName": "Kubai",
+      "jobTitle": "Software Developer",
+      "description": "Software developer based in Nairobi, Kenya with 10+ years experience in Python, Node.js, and AWS. Specialises in fintech backends and AI integration.",
+      "url": "{{ base_url }}/about/",
+      "email": "aiblogauto@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      },
+      "sameAs": [
+        "[https://www.linkedin.com/in/kevin-kubai-22b61b37/](https://www.linkedin.com/in/kevin-kubai-22b61b37/)",
+        "[https://twitter.com/KubaiKevin](https://twitter.com/KubaiKevin)",
+        "[https://github.com/kubaik](https://github.com/kubaik)"
+      ],
+      "knowsAbout": [
+        "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
+        "Redis", "Machine Learning", "LLMs", "API Design",
+        "Fintech Systems", "Backend Engineering", "Android Development"
+      ],
+      "alumniOf": {
+        "@type": "Organization",
+        "name": "Self-taught, supplemented with industry certifications"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <meta name="theme-color" content="#6366f1">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
-        .about-section{background:#f8f9fa;padding:1.5rem 2rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .about-section h2{color:#333;margin-top:0;margin-bottom:1rem}
-        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin:1.5rem 0}
-        .feature-card{background:white;padding:1.5rem;border-radius:8px;border:2px solid #e0e0e0}
-        .feature-card h3{color:#6366f1;margin-top:0}
-        .author-card{background:white;padding:1.5rem 2rem;border-radius:8px;border:2px solid #6366f1;margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:flex-start}
-        @media(max-width:600px){.author-card{flex-direction:column;align-items:center;text-align:center;padding:1.25rem;gap:1rem}}
-        .author-avatar-lg{width:100px;height:100px;border-radius:50%;overflow:hidden;flex-shrink:0}
-        .author-photo{width:100%;height:100%;object-fit:cover}
-        .author-card h3{margin-top:0;color:#333;font-size:1.2rem}
-        .author-card .credentials{color:#6366f1;font-size:0.88rem;margin-bottom:0.75rem;font-weight:600}
-        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
-        .stat-card{background:#f0f4ff;padding:1.5rem;border-radius:8px;text-align:center;border:2px solid #6366f1}
-        .stat-number{font-size:2rem;font-weight:bold;color:#6366f1;display:block;margin-bottom:0.25rem}
-        .cta-box{background:#fff3cd;border-left:4px solid #ffc107;padding:1.5rem;border-radius:8px;margin:1.5rem 0;text-align:center}
-        .cta-button{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;margin-top:0.8rem}
-        .process-step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
-        .step-num{background:#6366f1;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;margin-top:2px}
-        .paragraph-spacing{margin-bottom:16px}
-        .linkedin-link{font-weight:600;font-size:1.1rem;text-decoration:none}
-        .linkedin-link:hover{text-decoration:underline}
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 3rem 2rem; border-radius: 12px;
+            margin-bottom: 2rem; text-align: center;
+        }
+        .about-hero h1 { font-size: 2rem; margin-bottom: 0.5rem; color: white; }
+        .about-hero p { opacity: 0.9; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+        .author-profile {
+            display: flex; gap: 2rem; align-items: flex-start;
+            background: #f8f9fa; padding: 2rem; border-radius: 12px;
+            border: 1px solid #e0e0e0; margin-bottom: 2rem;
+        }
+        @media (max-width: 600px) {
+            .author-profile { flex-direction: column; align-items: center; text-align: center; }
+        }
+        .author-avatar-svg {
+            width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 700; color: white;
+        }
+        .author-name { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin: 0 0 0.25rem; }
+        .author-title { color: #6366f1; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .author-bio { color: #444; line-height: 1.7; margin-bottom: 1rem; }
+        .author-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .author-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem;
+            font-weight: 600; text-decoration: none; border: 2px solid;
+            transition: all 0.2s;
+        }
+        .author-link-linkedin { color: #0077b5; border-color: #0077b5; }
+        .author-link-linkedin:hover { background: #0077b5; color: white; }
+        .author-link-twitter { color: #1da1f2; border-color: #1da1f2; }
+        .author-link-twitter:hover { background: #1da1f2; color: white; }
+        .author-link-github { color: #333; border-color: #333; }
+        .author-link-github:hover { background: #333; color: white; }
+
+        .section-card {
+            background: white; border: 1px solid #e0e0e0; border-radius: 12px;
+            padding: 1.75rem; margin-bottom: 1.5rem;
+        }
+        .section-card h2 {
+            font-size: 1.25rem; color: #1a1a2e; margin-top: 0; margin-bottom: 1rem;
+            padding-bottom: 0.6rem; border-bottom: 2px solid #f0f0f0;
+        }
+        .tech-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem; margin-top: 0.75rem;
+        }
+        .tech-pill {
+            background: #f0f4ff; border: 1px solid #c7d2fe;
+            border-radius: 6px; padding: 0.35rem 0.75rem;
+            font-size: 0.82rem; color: #3730a3; text-align: center;
+        }
+        .process-step { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
+        .step-num {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px;
+        }
+        .step-body strong { color: #1a1a2e; }
+        .step-body p { margin: 0.25rem 0 0; color: #555; font-size: 0.9rem; line-height: 1.6; }
+        .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-box { text-align: center; background: #f8f9fa; border-radius: 8px; padding: 1rem; }
+        .stat-num { font-size: 1.8rem; font-weight: 700; color: #6366f1; display: block; }
+        .stat-label { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+        .correction-box {
+            background: #fff3cd; border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin-top: 1rem;
+        }
+        .correction-box p { margin: 0; font-size: 0.9rem; color: #856404; }
+        .recent-posts-list { list-style: none; padding: 0; margin: 0; }
+        .recent-posts-list li { border-bottom: 1px solid #f0f0f0; }
+        .recent-posts-list li:last-child { border-bottom: none; }
+        .recent-posts-list a {
+            display: block; padding: 0.75rem 0; text-decoration: none;
+            color: #333; font-size: 0.9rem; transition: color 0.2s;
+        }
+        .recent-posts-list a:hover { color: #6366f1; }
+        .post-date { font-size: 0.78rem; color: #999; margin-top: 0.2rem; }
     </style>
 </head>
 <body>
-    <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
-    </div></header>
+    <header>
+        <div class="container">
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="container">
-        <div class="hero"><h2>About {{ site_name }}</h2><p>Practical technology writing from a working developer</p></div>
-        <article class="page-content" itemscope itemtype="https://schema.org/Person">
-            <div class="about-section">
-                <h2>The Author</h2>
-                <div class="author-card">
-                    <div class="author-avatar-lg">
-                        <img src="../static/photo.jpg" alt="Kubai Kevin" class="author-photo" loading="lazy">
-                    </div>
-                    <div>
-                        <h3 itemprop="name">Kubai Kevin</h3>
-                        <p class="credentials" itemprop="jobTitle">Software Developer · Nairobi, Kenya</p>
-                        <p itemprop="description" class="paragraph-spacing">
-                            Software Developer building production systems, with 10+ years experience in the financial services industry.
-                            I specialize in Python backends, Node.js (TypeScript), Android (Java/Kotlin), and AWS serverless architectures.
-                        </p>
-                        <p class="paragraph-spacing">My work focuses on API design, automation, and integrating AI/LLMs into practical, maintainable workflows.</p>
-                        <p><a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener noreferrer" class="linkedin-link">View full experience on LinkedIn →</a></p>
+        <div class="about-hero">
+            <h1>About This Blog</h1>
+            <p>Practical writing about software development, AI, and developer careers — based on real production experience, not tutorials.</p>
+        </div>
+
+        <article itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)"
+                 id="author"
+                 itemprop="author">
+            <meta itemprop="name" content="Kubai Kevin">
+            <meta itemprop="url" content="{{ base_url }}/about/">
+
+            <div class="author-profile">
+                <div class="author-avatar-svg" aria-hidden="true">KK</div>
+                <div>
+                    <h2 class="author-name" itemprop="name">Kubai Kevin</h2>
+                    <p class="author-title" itemprop="jobTitle">
+                        Software Developer · Nairobi, Kenya
+                        <span itemprop="address" itemscope itemtype="[https://schema.org/PostalAddress](https://schema.org/PostalAddress)">
+                            <meta itemprop="addressLocality" content="Nairobi">
+                            <meta itemprop="addressCountry" content="KE">
+                        </span>
+                    </p>
+                    <p class="author-bio" itemprop="description">
+                        I'm a software developer with over a decade of experience building production
+                        systems in the financial services sector in East Africa. My day-to-day work
+                        involves Python and Node.js backends, AWS serverless infrastructure, and
+                        integrating AI/LLMs into real workflows. I also build Android applications
+                        in Java and Kotlin.
+                    </p>
+                    <p class="author-bio">
+                        I started writing here because the guides I needed when solving production
+                        problems didn't exist — or they existed but skipped the parts that matter
+                        when things go wrong at 2am. Everything I write comes from something I
+                        have personally built, debugged, or deployed.
+                    </p>
+                    <div class="author-links">
+                        <a href="[https://www.linkedin.com/in/kevin-kubai-22b61b37/](https://www.linkedin.com/in/kevin-kubai-22b61b37/)"
+                           class="author-link author-link-linkedin"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            LinkedIn profile
+                        </a>
+                        <a href="[https://twitter.com/KubaiKevin](https://twitter.com/KubaiKevin)"
+                           class="author-link author-link-twitter"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            @KubaiKevin
+                        </a>
+                        <a href="[https://github.com/kubaik](https://github.com/kubaik)"
+                           class="author-link author-link-github"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            GitHub
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="about-section">
-                <h2>What This Blog Covers</h2>
-                <div class="feature-grid">
-                    <div class="feature-card"><h3>AI &amp; LLMs</h3><p>Practical applications of language models, prompt engineering, retrieval systems, and what actually works beyond the demos.</p></div>
-                    <div class="feature-card"><h3>Backend Systems</h3><p>APIs, databases, queues, and distributed systems problems. Focus on decisions that matter at 10,000 req/min.</p></div>
-                    <div class="feature-card"><h3>Developer Tools</h3><p>CI/CD, observability, and developer experience. What saves real time and what sounds good on paper but adds friction.</p></div>
-                    <div class="feature-card"><h3>Tech Careers</h3><p>How the industry is changing, what skills matter in 2026, with particular attention to African tech markets.</p></div>
+
+            <div class="section-card">
+                <h2>Technologies I work with regularly</h2>
+                <p style="color:#555;font-size:0.9rem;margin-bottom:0.5rem">
+                    These are tools I use in production systems, not just tutorials I've read.
+                </p>
+                <div class="tech-grid">
+                    <span class="tech-pill">Python 3.11+</span>
+                    <span class="tech-pill">Node.js / TypeScript</span>
+                    <span class="tech-pill">FastAPI</span>
+                    <span class="tech-pill">AWS Lambda</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">Redis</span>
+                    <span class="tech-pill">Android (Kotlin)</span>
+                    <span class="tech-pill">M-Pesa / Paystack</span>
+                    <span class="tech-pill">GitHub Actions</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">LLM APIs</span>
+                    <span class="tech-pill">RAG pipelines</span>
                 </div>
             </div>
-            <div class="about-section" id="editorial">
+
+            <div class="section-card">
+                <h2>By the numbers</h2>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <span class="stat-num">{{ posts|length }}</span>
+                        <div class="stat-label">Articles published</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">10+</span>
+                        <div class="stat-label">Years in production</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">2014</span>
+                        <div class="stat-label">Started professionally</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">EAT</span>
+                        <div class="stat-label">UTC+3 · Nairobi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="editorial">
                 <h2>Editorial process</h2>
-                <div class="process-step"><div class="step-num">1</div><p><strong>Topic selection</strong> — Topics are chosen based on direct production experience or questions that come up repeatedly in code reviews.</p></div>
-                <div class="process-step"><div class="step-num">2</div><p><strong>Research and drafting</strong> — I research each topic using official documentation, GitHub issues, and my own production notes. Drafts are written to reflect real decisions I have made on actual systems. External tools may assist with structure, but every claim is verified against primary sources before publishing.</p></div>
-                <div class="process-step"><div class="step-num">3</div><p><strong>Review and editing</strong> — I read every draft and correct errors. Code examples are tested locally where practical.</p></div>
-                <div class="process-step"><div class="step-num">4</div><p><strong>My take section</strong> — Every article includes my personal opinion based on production experience.</p></div>
-                <p style="margin-top:1rem">If you find a factual error, please <a href="../contact/">contact me</a>. I update articles when errors are found.</p>
+                <p style="color:#555;font-size:0.9rem;margin-bottom:1.25rem">
+                    This matters because Google AdSense and Google Search both evaluate whether
+                    content demonstrates first-hand experience and editorial accountability.
+                    Here is exactly how articles on this site are produced:
+                </p>
+
+                <div class="process-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <strong>Topic selection from direct experience</strong>
+                        <p>Topics come from problems I encountered in production, questions that
+                        came up in code reviews I've done, or tools I've actually evaluated.
+                        I don't write about things I've only read about.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <strong>Research and drafting</strong>
+                        <p>I research each topic using official documentation, GitHub issues,
+                        and my own production notes. AI tools assist with structure and drafting,
+                        but every factual claim is verified against primary sources. Code examples
+                        are tested locally before publication.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>Personal review before publishing</strong>
+                        <p>I read every article before it goes live. I correct errors, add
+                        specifics from my own experience, and remove anything that feels generic
+                        or that I can't personally verify. Articles that don't meet this bar
+                        are held or deleted.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Ongoing corrections</strong>
+                        <p>Technology changes. When an article becomes outdated or a reader
+                        reports an error, I update it. The "Last reviewed" date in each article
+                        reflects when it was last checked for accuracy.</p>
+                    </div>
+                </div>
+
+                <div class="correction-box">
+                    <p>Found a factual error?
+                    <a href="{{ base_path }}/contact/" style="color:#856404;font-weight:600;">
+                        Email me directly</a> —
+                    corrections are applied within 48 hours and the article is updated with
+                    the correction noted.</p>
+                </div>
             </div>
-            <div class="stat-grid">
-                <div class="stat-card"><span class="stat-number">{{ posts|length }}</span><span>Posts published</span></div>
-                <div class="stat-card"><span class="stat-number">2014</span><span>Started coding professionally</span></div>
-                <div class="stat-card"><span class="stat-number">Free</span><span>Always and forever</span></div>
+
+            {% if posts %}
+            <div class="section-card">
+                <h2>Recent articles</h2>
+                <ul class="recent-posts-list">
+                    {% for post in posts[:8] %}
+                    <li>
+                        <a href="{{ base_path }}/{{ post.slug }}/">
+                            {{ post.title }}
+                            <div class="post-date">{{ post.created_at[:10] }}</div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% if posts|length > 8 %}
+                <p style="margin-top:1rem;text-align:center">
+                    <a href="{{ base_path }}/" style="color:#6366f1;text-decoration:none;font-weight:600;">
+                        View all {{ posts|length }} articles →
+                    </a>
+                </p>
+                {% endif %}
             </div>
-            <div class="cta-box">
-                <h3>Questions or Corrections?</h3>
-                <p>I respond to every email. Factual corrections are especially welcome.</p>
-                <a href="../contact/" class="cta-button">Contact Me</a>
-            </div>
+            {% endif %}
+
         </article>
     </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
-    <script src="../static/navigation.js"></script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
+        </div>
+    </footer>
+    <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
+    # ── Original Privacy Template Preserved ─────────────────────────────────
     PRIVACY_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1804,7 +2099,7 @@ def _build_templates() -> dict:
                         <tr><td>Advertising</td><td>Google AdSense ad targeting</td><td>Up to 1 year</td></tr>
                     </tbody>
                 </table>
-                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p></div>
+                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="[https://policies.google.com/privacy](https://policies.google.com/privacy)" target="_blank" rel="noopener">[policies.google.com/privacy](https://policies.google.com/privacy)</a></p></div>
             <div class="privacy-section"><h3>5. Third Parties</h3>
                 <div class="important-notice"><p>We do not sell your personal information. We use Google Analytics and Google AdSense.</p></div></div>
             <div class="highlight-box"><h3>6. Contact</h3>
@@ -1872,48 +2167,161 @@ def _build_templates() -> dict:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - {{ site_name }}</title>
-    <meta name="description" content="Contact Kubai Kevin at {{ site_name }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Kubai Kevin — {{ site_name }}</title>
+    <meta name="description" content="Contact Kubai Kevin, software developer and author of {{ site_name }}. Based in Nairobi, Kenya. Responds within 3–5 business days.">
     <link rel="canonical" href="{{ base_url }}/contact/">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "[https://schema.org](https://schema.org)",
+      "@type": "ContactPage",
+      "name": "Contact Kubai Kevin",
+      "url": "{{ base_url }}/contact/",
+      "description": "Contact the author of {{ site_name }}",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Kubai Kevin",
+        "email": "aiblogauto@gmail.com",
+        "url": "{{ base_url }}/about/"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
-        .contact-method{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .contact-method h3{color:#333;margin-top:0}
-        .contact-email{color:#6366f1;font-weight:600;font-size:1.1rem}
-        .contact-footer{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin-top:1.5rem}
+        .contact-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 2.5rem 2rem; border-radius: 12px;
+            text-align: center; margin-bottom: 2rem;
+        }
+        .contact-hero h1 { color: white; font-size: 2rem; margin-bottom: 0.5rem; }
+        .contact-hero p { opacity: 0.9; max-width: 500px; margin: 0 auto; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+        .contact-card {
+            background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .contact-card h2 {
+            font-size: 1.1rem; color: #1a1a2e; margin-top: 0; margin-bottom: 0.75rem;
+        }
+        .contact-card p { color: #555; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+        .contact-email-block {
+            background: white; border: 2px solid #6366f1; border-radius: 12px;
+            padding: 1.75rem; text-align: center; margin-bottom: 1.5rem;
+        }
+        .contact-email-block p { color: #555; margin-bottom: 1rem; font-size: 0.95rem; }
+        .email-link {
+            display: inline-block; font-size: 1.15rem; font-weight: 700;
+            color: #6366f1; text-decoration: none; padding: 0.6rem 1.5rem;
+            background: #f0f4ff; border-radius: 8px; transition: all 0.2s;
+        }
+        .email-link:hover { background: #6366f1; color: white; }
+        .response-note {
+            font-size: 0.8rem; color: #888; margin-top: 0.75rem !important;
+        }
+        .appropriate-list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+        .appropriate-list li {
+            padding: 0.4rem 0; border-bottom: 1px solid #e8e8e8;
+            font-size: 0.88rem; color: #555; padding-left: 1.2rem; position: relative;
+        }
+        .appropriate-list li::before {
+            content: "✓"; position: absolute; left: 0; color: #6366f1; font-weight: 700;
+        }
+        .appropriate-list li:last-child { border-bottom: none; }
+        .not-list li::before { content: "✗"; color: #dc3545; }
     </style>
 </head>
 <body>
-    <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
-    </div></header>
+    <header>
+        <div class="container">
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="container">
-        <div class="hero"><h2>Contact</h2><p>Get in touch with Kubai Kevin</p></div>
-        <article class="page-content">
-            <div class="contact-method"><h3>Email</h3>
-                <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
-                <p>I typically respond within 3–5 working days (EAT, UTC+3).</p></div>
-            <div class="contact-method"><h3>What to reach out about</h3>
-                <ul>
-                    <li>Factual errors or corrections in articles</li>
-                    <li>Topic suggestions or questions about content</li>
-                    <li>Collaboration or guest post proposals</li>
-                </ul></div>
-            <div class="contact-footer">
-                <p>Prefer email over social media for anything requiring a substantive reply.
-                For quick questions, Twitter DMs (<a href="https://twitter.com/KubaiKevin" style="color:#fff;text-decoration:underline;" target="_blank" rel="noopener">@KubaiKevin</a>) also work.</p>
+        <div class="contact-hero">
+            <h1>Contact</h1>
+            <p>Get in touch with Kubai Kevin, the author of {{ site_name }}.</p>
+        </div>
+
+        <div class="contact-email-block">
+            <p>The best way to reach me is by email. I read every message.</p>
+            <a href="mailto:aiblogauto@gmail.com" class="email-link">
+                aiblogauto@gmail.com
+            </a>
+            <p class="response-note">
+                Based in Nairobi, Kenya (UTC+3 / East Africa Time).
+                Typical response time: 3–5 business days.
+            </p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h2>Good reasons to write</h2>
+                <ul class="appropriate-list">
+                    <li>Factual error in an article — I always want to know</li>
+                    <li>Outdated code example or deprecated API reference</li>
+                    <li>Question about something specific in an article</li>
+                    <li>Topic suggestion based on a real problem you're solving</li>
+                    <li>Collaboration or guest contribution proposal</li>
+                </ul>
             </div>
-        </article>
+            <div class="contact-card">
+                <h2>What I don't respond to</h2>
+                <ul class="appropriate-list not-list">
+                    <li>Paid link insertion requests</li>
+                    <li>Guest posts that aren't from practitioners</li>
+                    <li>Generic "I love your blog" outreach with no specific question</li>
+                    <li>Requests to endorse tools I haven't used</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="contact-card" style="margin-bottom:1.5rem">
+            <h2>Social media</h2>
+            <p>For quick questions or to follow new articles as they publish:</p>
+            <ul class="appropriate-list" style="margin-top:0.75rem">
+                <li>
+                    Twitter / X:
+                    <a href="[https://twitter.com/KubaiKevin](https://twitter.com/KubaiKevin)" target="_blank" rel="noopener"
+                       style="color:#6366f1;font-weight:600;">@KubaiKevin</a>
+                    — DMs open for short questions
+                </li>
+                <li>
+                    LinkedIn:
+                    <a href="[https://www.linkedin.com/in/kevin-kubai-22b61b37/](https://www.linkedin.com/in/kevin-kubai-22b61b37/)"
+                       target="_blank" rel="noopener"
+                       style="color:#6366f1;font-weight:600;">Kevin Kubai</a>
+                    — connect if you want to discuss opportunities
+                </li>
+            </ul>
+        </div>
     </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
-    <script src="../static/navigation.js"></script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
+        </div>
+    </footer>
+    <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 

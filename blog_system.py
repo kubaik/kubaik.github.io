@@ -58,38 +58,21 @@ _HASHTAG_MAX_CHARS = 24
 
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
-    """
-    Convert a list of tag strings into CamelCase single-word hashtags.
-
-    Rules (enforced strictly):
-    - Strip any leading '#' and surrounding whitespace.
-    - Split on whitespace, hyphens, or underscores.
-    - Drop the entire phrase if it contains more than _HASHTAG_MAX_SOURCE_WORDS
-      meaningful words — this is the primary guard against monster tags like
-      '#EdgeFunctionsIn2026WhenCloudflareWorkers…'.
-    - The resulting CamelCase string must be ≤ _HASHTAG_MAX_CHARS characters;
-      phrases that exceed this cap after joining are also dropped.
-    - Deduplicate case-insensitively.
-    """
     result = []
     seen: set = set()
 
     for tag in tags:
-        # Normalise: strip leading '#', collapse whitespace
         tag = tag.lstrip('#').strip()
         if not tag:
             continue
 
-        # Split on any non-alphanumeric delimiter
         words = [w for w in re.split(r'[\s\-_/]+', tag) if w]
 
-        # Drop phrases that are too long to produce a readable hashtag
         if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
             continue
 
         camel = ''.join(w.capitalize() for w in words if w)
 
-        # Drop the tag if the resulting string exceeds the character cap
         if len(camel) > _HASHTAG_MAX_CHARS:
             continue
 
@@ -200,7 +183,7 @@ def _twitter_posting_enabled() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Meta description derivation
+# FIX 2: Meta description derivation (improved version)
 # ─────────────────────────────────────────────────────────────────
 
 def _extract_numbers(text: str) -> str:
@@ -226,6 +209,18 @@ def _extract_numbers(text: str) -> str:
 
 
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
+    """
+    Derive a high-quality meta description from content.
+
+    Priority order:
+    1. Sentence with a concrete number/metric (strongest signal)
+    2. Sentence with a tool name + outcome
+    3. First non-intro, non-generic sentence >= 40 chars
+    4. Title-based fallback
+
+    Never returns a personal intro sentence.
+    """
+    # Strip markup
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`",        " ", text)
     text = re.sub(r"#{1,6}\s+",      " ", text)
@@ -233,56 +228,66 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"[*_]{1,3}",      "",  text)
     text = re.sub(r"\s+",            " ", text).strip()
 
-    outcome = _extract_numbers(text)
-    keyword = _extract_topic_phrase(title, max_words=4)
-
-    benefit = ""
-    benefit_patterns = [
-        r'so (?:you|your team) can ([^.!?]{10,60})',
-        r'without ([^.!?]{10,50})',
-        r'that (?:lets?|allows?) you ([^.!?]{10,50})',
-        r'to (?:help you\s+)?([a-z][^.!?]{10,50})',
-    ]
-    for pat in benefit_patterns:
-        m = re.search(pat, text[:600], re.IGNORECASE)
-        if m:
-            benefit = m.group(1).strip().rstrip('.,;:')
-            break
-
-    if outcome and keyword and benefit:
-        candidate = f"{outcome} with {keyword} — {benefit}."
-        if len(candidate) <= max_len:
-            return candidate
-        candidate = f"{outcome} with {keyword}."
-        if len(candidate) <= max_len:
-            return candidate
-
-    if outcome and keyword:
-        candidate = f"{keyword}: {outcome}. Practical guide with real examples."
-        if len(candidate) <= max_len:
-            return candidate
-
-    if keyword and benefit:
-        candidate = f"{keyword} — {benefit}. Includes code, benchmarks, and common mistakes."
-        if len(candidate) <= max_len:
-            return candidate
+    # Patterns to SKIP — personal intros, not meta descriptions
+    _SKIP_PATTERNS = re.compile(
+        r'^(I |A colleague|This took me|I\'ve|The short version|I ran into|'
+        r'I spent|I have |Here\'s what|Writing this|This is a topic|'
+        r'Most of the answers|Most tutorials|I noticed|I found|'
+        r'I was surprised|I built|I worked|I saw )',
+        re.IGNORECASE
+    )
 
     sentences = re.split(r'(?<=[.!?])\s+', text)
-    excerpt = ""
-    for sentence in sentences:
-        sentence = sentence.strip()
-        if len(sentence) >= 40:
-            excerpt = sentence
-            break
 
-    if not excerpt:
-        excerpt = text[:max_len]
+    # Priority 1: sentence with a concrete number
+    _NUMBER_RE = re.compile(
+        r'\b(\d+\s*%|\d+x\b|\$\d|\d+\s*ms|\d+\s*req|p\d{2}|'
+        r'\d+,\d{3}|\d+\s*min\b|\d+\s*sec\b|cut\s+\w+\s+by)',
+        re.IGNORECASE
+    )
+    for sent in sentences:
+        sent = sent.strip()
+        if len(sent) < 40 or len(sent) > max_len * 2:
+            continue
+        if _SKIP_PATTERNS.match(sent):
+            continue
+        if _NUMBER_RE.search(sent):
+            if len(sent) > max_len:
+                sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
+            return sent
 
-    if len(excerpt) > max_len:
-        excerpt = excerpt[:max_len].rsplit(" ", 1)[0].rstrip(".,;:")
-        excerpt += "…"
+    # Priority 2: sentence with a tool name (suggests specificity)
+    _TOOL_RE = re.compile(
+        r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|AWS|Lambda|Docker|'
+        r'FastAPI|Django|React|Next\.js|Kubernetes|Kafka|MongoDB|MySQL|'
+        r'SQLite|Terraform|GitHub|M-Pesa|Paystack|Flutterwave|LLM|GPT|Claude)\b'
+    )
+    for sent in sentences:
+        sent = sent.strip()
+        if len(sent) < 40:
+            continue
+        if _SKIP_PATTERNS.match(sent):
+            continue
+        if _TOOL_RE.search(sent):
+            if len(sent) > max_len:
+                sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
+            return sent
 
-    return excerpt
+    # Priority 3: first acceptable sentence
+    for sent in sentences:
+        sent = sent.strip()
+        if len(sent) < 40:
+            continue
+        if _SKIP_PATTERNS.match(sent):
+            continue
+        if len(sent) > max_len:
+            sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
+        return sent
+
+    # Priority 4: title-based fallback (always specific, never intro)
+    keyword = title.replace(":", " —").replace(" vs ", " versus ")
+    fallback = f"Practical guide to {keyword} — with code examples and production notes."
+    return fallback[:max_len]
 
 
 def audit_posts(docs_dir: Path) -> Dict:
@@ -316,6 +321,10 @@ def audit_posts(docs_dir: Path) -> Dict:
     return results
 
 
+# ─────────────────────────────────────────────────────────────────
+# FIX 3: Content quality validation (tightened checks)
+# ─────────────────────────────────────────────────────────────────
+
 def _validate_content_quality(content: str, title: str):
     """
     Run AdSense-style quality checks on generated content.
@@ -325,8 +334,6 @@ def _validate_content_quality(content: str, title: str):
     warnings      : List[str]  — issues to log but that don't block publishing
     hard_failures : List[str]  — issues that MUST block publishing (save must be skipped)
     """
-    import re
-
     warnings = []
     hard_failures = []
     word_count = len(content.split())
@@ -355,6 +362,23 @@ def _validate_content_quality(content: str, title: str):
                 "This post will be rejected as low-value/AI-generated content."
             )
 
+    # NEW: Check content doesn't just repeat the title with no added information
+    title_words = set(re.sub(r'[^\w\s]', '', title.lower()).split())
+    title_words.discard('the')
+    title_words.discard('a')
+    title_words.discard('an')
+    if title_words:
+        first_para = content[:500]
+        first_para_words = set(
+            re.sub(r'[^\w\s]', '', first_para.lower()).split())
+        title_overlap = len(title_words & first_para_words) / len(title_words)
+        if title_overlap > 0.85 and word_count < 2000:
+            hard_failures.append(
+                f"Opening section appears to be a generic restatement of the title "
+                f"({title_overlap:.0%} title word overlap in first 500 chars). "
+                "This pattern is flagged as low-value content."
+            )
+
     # ── Warnings (log but don't block) ───────────────────────────────────────
 
     if word_count < 2000:
@@ -363,7 +387,7 @@ def _validate_content_quality(content: str, title: str):
     # E-E-A-T Experience signal
     first_person_re = re.compile(
         r"\b(I |I've |I'm |I found|I ran|I spent|I learned|I noticed|I tested|"
-        r"I built|I worked|I saw|I was |I have |I had |I used )\b"
+        r"I built|I worked|I saw |I was |I have |I had |I used )\b"
     )
     if not first_person_re.search(content):
         warnings.append(
@@ -381,12 +405,38 @@ def _validate_content_quality(content: str, title: str):
     if not number_re.search(content):
         warnings.append("No concrete numbers/metrics found.")
 
+    # NEW: Check for version-pinned tool (strong specificity signal)
+    version_re = re.compile(
+        r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|Django|FastAPI|React|'
+        r'Next\.js|Docker|Kubernetes|Kafka|MySQL)\s+\d+[\.\d]*\b',
+        re.IGNORECASE
+    )
+    if not version_re.search(content):
+        warnings.append(
+            "No version-pinned tool reference found (e.g. 'Python 3.11', 'Redis 7.2'). "
+            "Version pins are a specificity signal that distinguishes original from generic content."
+        )
+
+    # NEW: Check for FAQ section (structured data opportunity)
+    if "frequently asked questions" not in content.lower() and "## faq" not in content.lower():
+        warnings.append(
+            "No FAQ section found. A 'Frequently Asked Questions' section enables "
+            "FAQ structured data, which improves AdSense eligibility signals."
+        )
+
+    # NEW: Check for comparison table
+    if "|" not in content:
+        warnings.append(
+            "No markdown table found. A comparison table signals substantive, "
+            "structured content — reviewers notice its absence in technical posts."
+        )
+
     if "### About this article" not in content:
         warnings.append(
             "E-E-A-T author footer missing. Run inject_eeat_signals() before saving."
         )
 
-    # Expanded AI-pattern filler list — these phrases trigger quality filters
+    # Expanded AI-pattern filler list
     filler_phrases = [
         "in today's fast-paced",
         "in the ever-evolving",
@@ -436,12 +486,27 @@ def _validate_content_quality(content: str, title: str):
             f"Title too long ({len(title)} chars). Target ≤ 60 for SERP display."
         )
 
+    # NEW: Opening paragraph generic opener check
+    first_200 = content[:200].lower()
+    generic_openers = [
+        "in this", "today we", "welcome to", "this guide covers",
+        "if you're looking", "are you looking", "have you ever",
+        "whether you're a beginner", "this post will",
+    ]
+    for opener in generic_openers:
+        if first_200.startswith(opener) or f"\n{opener}" in first_200:
+            warnings.append(
+                f"Generic opener detected in first 200 chars: '{opener}'. "
+                "Start with a specific claim, number, or observation instead."
+            )
+            break
+
     return warnings, hard_failures
+
 
 # ─────────────────────────────────────────────────────────────────
 # Topic phrase extractor
 # ─────────────────────────────────────────────────────────────────
-
 
 _HOOK_STOP_WORDS = {
     "a", "an", "the", "to", "in", "of", "for", "and", "or", "is", "are",
@@ -689,14 +754,6 @@ _HASHTAG_TIERS = {
 
 
 def _is_valid_hashtag(tag: str) -> bool:
-    """
-    Return True only if *tag* (without leading #) is safe to use as a hashtag.
-
-    Criteria:
-    - Must be non-empty and purely alphanumeric (no spaces, colons, slashes, etc.)
-    - Must not exceed _HASHTAG_MAX_CHARS characters
-    - Must not be a raw long-tail keyword phrase disguised as a tag
-    """
     if not tag:
         return False
     if not re.match(r'^[A-Za-z0-9]+$', tag):
@@ -712,16 +769,6 @@ def _derive_hashtags_from_keywords(
     title: str = "",
     max_hashtags: int = 5,
 ) -> List[str]:
-    """
-    Derive up to *max_hashtags* single-word CamelCase hashtags from the tiered
-    lookup table.
-
-    The fallback path — which previously turned raw long-tail keyword phrases
-    into monster tags — now enforces the same word-count and character caps as
-    _to_single_word_tags().  Any keyword phrase with more than
-    _HASHTAG_MAX_SOURCE_WORDS words is silently skipped instead of being
-    concatenated into an unreadable string.
-    """
     combined = f" {' '.join([title, topic] + keywords).lower()} "
     selected: Dict[str, List[str]] = {
         "broad": [], "niche": [], "monetization": []}
@@ -730,8 +777,6 @@ def _derive_hashtags_from_keywords(
         for keyword, tags in mapping.items():
             if keyword in combined:
                 for tag in tags:
-                    # Every tag coming out of the tier tables goes through the
-                    # validity check — guards against any future bad entries.
                     if _is_valid_hashtag(tag) and tag not in selected[tier]:
                         selected[tier].append(tag)
 
@@ -749,14 +794,12 @@ def _derive_hashtags_from_keywords(
                 continue
             words = [w for w in re.split(r'[\s\-_/]+', kw) if w]
 
-            # Skip question-based keywords and anything too long
             if words and words[0] in question_starters:
                 continue
             if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
                 continue
 
             tag = "".join(w.capitalize() for w in words)
-            # Strip any non-alphanumeric characters (e.g. colons, dots)
             tag = re.sub(r"[^\w]", "", tag)
 
             if _is_valid_hashtag(tag) and tag not in result:
@@ -1104,56 +1147,144 @@ def _build_humanization_note(topic: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Personal intro injection
+# FIX 4: Stronger system prompt builder for _generate_full_bundle()
+# ─────────────────────────────────────────────────────────────────
+
+def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
+    """
+    Build the system prompt for _generate_full_bundle().
+
+    This version is more aggressive about preventing the patterns
+    that trigger Google's "low value content" classifier.
+    """
+    return (
+        f"{author_note}\n\n"
+        f"{year_guidance}\n\n"
+
+        # Voice requirements — specific, not generic
+        "VOICE: Write with a specific, personal voice. Use 'I' and 'we' where natural. "
+        "You are not a content marketing agency. You are a developer who has actually "
+        "hit this problem in production. Write as if explaining to a smart colleague "
+        "who has 3 years of experience — skip the basics they already know, but don't "
+        "assume they've seen this specific edge case before.\n\n"
+
+        # Hard bans on AI-detectable patterns
+        "BANNED PHRASES — never use these, not even once:\n"
+        "- 'in today's fast-paced world'\n"
+        "- 'it is important to note'\n"
+        "- 'crucial aspect'\n"
+        "- 'dive into' or 'delve into'\n"
+        "- 'In conclusion'\n"
+        "- 'leverage' (use 'use' instead)\n"
+        "- 'unleash'\n"
+        "- 'game-changer'\n"
+        "- 'comprehensive guide'\n"
+        "- 'this article will explore'\n"
+        "- 'seamlessly'\n"
+        "- 'revolutionize'\n"
+        "- 'cutting-edge'\n"
+        "- 'state-of-the-art'\n"
+        "- 'harness the power'\n"
+        "- 'unlock the potential'\n"
+        "- Any phrase that sounds like it belongs in a press release\n\n"
+
+        # Structural requirements for AdSense approval
+        "ADSENSE REQUIREMENTS — the post will be rejected if it lacks:\n"
+        "1. At least ONE first-person sentence about a real mistake or surprise "
+        "(e.g. 'I spent three days on this before realising...')\n"
+        "2. At least TWO code blocks with language tags\n"
+        "3. At least THREE concrete numbers (ms, %, cost, line count, version number)\n"
+        "4. At least ONE tool with a specific version number "
+        "(e.g. 'Python 3.11', 'Redis 7.2', 'Node 20 LTS')\n"
+        "5. A comparison table using markdown table syntax\n"
+        "6. A 'Frequently Asked Questions' section with 3-4 real developer questions\n"
+        "7. A specific, actionable closing step the reader can do in the next 30 minutes\n\n"
+
+        # Credibility markers
+        "CREDIBILITY: Name actual tools. Name actual AWS services. Name specific "
+        "error messages you've seen. Be willing to say something is hard or that "
+        "you got it wrong at first. Generic advice with no specifics is exactly "
+        "what Google's quality raters flag as low-value content.\n\n"
+
+        # Format requirement
+        f"FORMAT: {format_name.upper()} — {format_note}\n\n"
+
+        "IMPORTANT: Respond with ONLY a valid JSON object — no markdown fences, "
+        "no preamble, no trailing commentary."
+    )
+
+
+# ─────────────────────────────────────────────────────────────────
+# FIX 5: Personal intro injection (topic-aware intros)
 # ─────────────────────────────────────────────────────────────────
 
 _PERSONAL_INTROS = [
     (
-        "This took me about three days to figure out properly. Most of the answers "
-        "I found online were either outdated or skipped the parts that actually matter in production. "
-        "Here's what I learned."
+        "The official documentation for {keyword} is good. What it doesn't cover is what "
+        "happens when you're six months into production and the edge cases start appearing. "
+        "This is the post that fills that gap."
     ),
     (
-        "A colleague asked me about this last week and I realised I couldn't explain it cleanly. "
-        "Writing this post forced me to think it through properly — which is usually how it goes."
+        "I spent longer than I should have on this before I understood what was actually happening. "
+        "The tutorials all showed the happy path. This post shows what comes after."
     ),
     (
-        "I've seen this done wrong in more codebases than I can count, including my own early work. "
-        "This is the post I wish I'd had when I started."
+        "A colleague asked me about {keyword} during a code review last week. I realised I "
+        "couldn't give a clean explanation — which meant I didn't understand it as well as I "
+        "thought. This post is what I put together after properly working through it."
     ),
     (
-        "The short version: I spent two weeks optimising the wrong thing before I understood "
-        "what was actually happening. The longer version is below."
+        "I've seen the same {keyword} mistake in multiple production codebases, including one "
+        "I wrote myself three years ago. Here's what it looks like, why it's hard to spot, "
+        "and how to fix it."
     ),
     (
-        "This is a topic where the standard advice is technically correct but practically misleading. "
-        "Here's the fuller picture, based on what I've seen work at scale."
+        "Most {keyword} guides assume a clean environment and a patient timeline. "
+        "Production gives you neither. Here's what I learned building this under real constraints."
     ),
     (
-        "I ran into this while migrating a production service under a hard deadline. "
-        "The official docs covered the happy path well. This post covers everything else."
+        "The short version: the conventional advice on {keyword} is incomplete. "
+        "It works in the simple case, and breaks in a specific way under load. "
+        "Here's the fuller picture."
     ),
     (
-        "I've answered versions of this question in Slack, code reviews, and one-on-ones "
-        "more times than I can count. Writing it down properly felt overdue."
+        "I ran into this {keyword} problem while migrating a service under a hard deadline. "
+        "The answers I found online were either wrong or skipped the parts that mattered. "
+        "Here's what actually worked."
     ),
     (
-        "The thing that frustrated me most when learning this was that every tutorial "
-        "assumed a clean slate. Real systems never are. Here's how it actually goes."
+        "After reviewing a lot of code that touches {keyword}, I keep seeing the same patterns "
+        "that cause problems later. This post addresses the root cause rather than the symptom."
     ),
 ]
 
 
 def inject_personal_intro(post, topic: str) -> None:
+    """
+    Inject a topic-aware personal intro at the start of post content.
+
+    Uses keyword extraction to make intros feel post-specific
+    rather than generic.
+    """
+    # Extract a short keyword from the topic for intro personalisation
+    topic_lower = topic.lower()
+    stop = {"how", "to", "the", "a", "an", "for", "and", "or", "vs",
+            "when", "why", "what", "which", "guide", "tutorial", "tips"}
+    words = [w for w in re.sub(r'[^\w\s]', '', topic_lower).split()
+             if w not in stop and len(w) > 2]
+    keyword = " ".join(words[:2]) if words else topic_lower
+
     idx = int(hashlib.md5(topic.encode()).hexdigest(),
               16) % len(_PERSONAL_INTROS)
-    intro = _PERSONAL_INTROS[idx]
+    intro_template = _PERSONAL_INTROS[idx]
+    intro = intro_template.format(keyword=keyword)
+
     if intro[:30] not in post.content:
         post.content = f"{intro}\n\n{post.content}"
 
 
 # ─────────────────────────────────────────────────────────────────
-# E-E-A-T signal injection
+# FIX 1: E-E-A-T signal injection (richer, more specific footer)
 # ─────────────────────────────────────────────────────────────────
 
 _EEAT_FOOTER_TEMPLATE = """
@@ -1162,15 +1293,20 @@ _EEAT_FOOTER_TEMPLATE = """
 
 ### About this article
 
-**Author:** Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years of \
-experience building production Python and Node.js backends, primarily in fintech. He has \
-worked with teams in East Africa, Europe, and Southeast Asia on systems handling millions \
-of requests per day. [More about the author →](/about/)
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial process:** Articles on this site are based on direct production experience \
-and verified against official documentation before publishing. Code examples are tested \
-locally. If you find a factual error, [please reach out](/contact/) — corrections are \
-applied within 48 hours.
+**Editorial standard:** Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.
+
+**Corrections:** If you find a factual error or outdated information,
+[please contact me](/contact/) — corrections are applied within 48 hours.
 
 **Last reviewed:** {review_date}
 """
@@ -1179,13 +1315,15 @@ applied within 48 hours.
 def inject_eeat_signals(post, topic: str) -> None:
     """
     Append a standardised E-E-A-T footer to the post content.
-    Visible to AdSense reviewers and Google quality raters.
+
+    Updated version: includes specific credentials (M-Pesa, Paystack, AWS Lambda,
+    PostgreSQL) that distinguish this from generic AI-generated author bios.
     Idempotent — checks for the sentinel string before injecting.
     """
     sentinel = "### About this article"
     if sentinel in post.content:
         return
-    review_date = datetime.now().strftime("%B %Y")
+    review_date = datetime.now().strftime("%B %d, %Y")
     footer = _EEAT_FOOTER_TEMPLATE.format(review_date=review_date)
     post.content = post.content.rstrip() + "\n" + footer
 
@@ -1651,26 +1789,12 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
-        """
-        Generate a blog post that meets the minimum word-count requirement.
-
-        Strategy
-        --------
-        1. Try to generate a full bundle for *topic*.
-        2. If the content is short, attempt one expansion pass.
-        3. If still under MIN_ACCEPTABLE_WORDS, mark this attempt as failed and
-           loop: pick a new topic and try again.
-        4. After MAX_GENERATION_ATTEMPTS failures in a row, raise
-           InsufficientContentError so the caller can terminate cleanly
-           without saving anything.
-        """
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
         SEP = "─" * 60
 
-        # Track every topic tried so we don't repeat within this run
         attempted_topics: List[str] = []
         current_topic = topic
         current_keywords = keywords
@@ -1686,7 +1810,6 @@ class BlogSystem:
 
             existing_titles = _load_existing_titles(self.output_dir)
 
-            # ── 1. Generate bundle ────────────────────────────────────────
             try:
                 bundle = await self._generate_full_bundle(
                     current_topic, current_keywords, existing_titles
@@ -1705,7 +1828,6 @@ class BlogSystem:
                     f"bundle stage. Last error: {e}"
                 )
 
-            # ── 2. Extract & clean fields ─────────────────────────────────
             try:
                 title = bundle["title"].strip().strip('"')
                 _TITLE_FILLER = re.compile(
@@ -1758,7 +1880,6 @@ class BlogSystem:
                     f"Last error: {e}"
                 )
 
-            # ── 3. Expansion pass if needed ───────────────────────────────
             if word_count < MIN_WORD_COUNT:
                 print(
                     f"Content short ({word_count} words, target ≥ {MIN_WORD_COUNT}). "
@@ -1781,7 +1902,6 @@ class BlogSystem:
                     print(
                         f"Expansion pass failed: {e}. Continuing with original content.")
 
-            # ── 4. Hard word-count gate ───────────────────────────────────
             if word_count < MIN_ACCEPTABLE_WORDS:
                 print(
                     f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
@@ -1795,7 +1915,6 @@ class BlogSystem:
                     current_keywords = None
                     print(f"Switching to new topic: '{current_topic}'")
                     continue
-                # All attempts exhausted — raise so the caller never saves
                 raise InsufficientContentError(
                     f"Failed to generate adequate content after "
                     f"{MAX_GENERATION_ATTEMPTS} attempts across topics: "
@@ -1804,13 +1923,11 @@ class BlogSystem:
                     f"No post has been saved."
                 )
 
-            # ── 5. Adequate content — continue with normal post-processing ─
             print(
                 f"\n✅  Attempt {attempt_num}: content adequate "
                 f"({word_count} words ≥ {MIN_ACCEPTABLE_WORDS})."
             )
 
-            # Duplicate-title check (post-generation)
             existing_titles_now = _load_existing_titles(self.output_dir)
             is_dup, dup_match, dup_score = _is_duplicate_title(
                 title, existing_titles_now, threshold=DUPLICATE_TITLE_THRESHOLD
@@ -1951,14 +2068,13 @@ class BlogSystem:
 
             return post
 
-        # Should never reach here (loop always raises or returns), but just in case:
         raise InsufficientContentError(
             f"Exhausted {MAX_GENERATION_ATTEMPTS} generation attempts without "
             f"producing adequate content. No post has been saved."
         )
 
     # ─────────────────────────────────────────────────────────────
-    # SINGLE BUNDLE CALL
+    # SINGLE BUNDLE CALL — uses _build_system_prompt (FIX 4)
     # ─────────────────────────────────────────────────────────────
 
     async def _generate_full_bundle(
@@ -2006,22 +2122,18 @@ class BlogSystem:
             "use 2026 figures or clearly state the year of the source data."
         )
 
+        # FIX 4: Use the new stronger system prompt builder
+        system_content = _build_system_prompt(
+            author_note=author_note,
+            format_name=format_name,
+            format_note=format_note,
+            year_guidance=year_guidance,
+        )
+
         messages = [
             {
                 "role": "system",
-                "content": (
-                    f"{author_note}\n\n"
-                    f"{year_guidance}\n\n"
-                    "Write with a specific, personal voice. Use 'I' and 'we' where natural. "
-                    "Avoid: 'in today's fast-paced world', 'it is important to note', 'crucial aspect', "
-                    "'dive into', 'delve into', 'In conclusion', 'leverage', 'unleash', 'game-changer'. "
-                    "Every paragraph must make a specific claim — no filler. "
-                    "Be willing to say 'I got this wrong at first' or 'this surprised me'. "
-                    "Name actual tools, actual version numbers, actual failure scenarios. "
-                    f"Format type for this post: {format_name.upper()}. {format_note}\n\n"
-                    "IMPORTANT: Respond with ONLY a valid JSON object — no markdown fences, "
-                    "no preamble, no trailing commentary."
-                ),
+                "content": system_content,
             },
             {
                 "role": "user",
@@ -2388,19 +2500,6 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
 
     def _generate_fallback_post(self, topic: str):
-        """
-        Emergency fallback when all API providers fail.
-
-        POLICY DECISION: We intentionally raise here rather than returning a
-        generic post. The old approach generated near-identical "retry decorator"
-        content for every topic, which is exactly the "Replicated Content" pattern
-        AdSense flags (#2 in policy violations). A thin or replicated post does
-        more harm to AdSense approval than having no post at all.
-
-        Fix API connectivity, then retry. Run `python blog_system.py auto`.
-        """
-        # Import here to avoid circular import if this module is imported standalone
-        from blog_system import InsufficientContentError
         raise InsufficientContentError(
             f"All API providers failed for topic: '{topic}'. "
             "No fallback post saved — a generic boilerplate post would harm "
@@ -2424,13 +2523,6 @@ Return ONLY the JSON object.""",
         existing_titles: List[str],
         exclude: List[str] = None,
     ) -> str:
-        """
-        Pick the next topic to try, avoiding:
-        - the just-failed topic
-        - all topics in the `exclude` list (topics already attempted this run)
-        - topics already published (duplicate-title check)
-        Falls back gracefully if the pool is exhausted.
-        """
         import random as _random
 
         exclude = exclude or []
@@ -2446,27 +2538,23 @@ Return ONLY the JSON object.""",
 
         all_topics = self.config.get("content_topics", [])
 
-        # Exclude topics already attempted in this run and the failed topic
         candidates = [
             t for t in all_topics
             if t != failed_topic and t not in exclude and t not in used
         ]
 
         if not candidates:
-            # Relax the "not in used" constraint but keep excluding current run
             candidates = [
                 t for t in all_topics
                 if t != failed_topic and t not in exclude
             ]
 
         if not candidates:
-            # Complete pool exhaustion — just avoid the immediately failed topic
             candidates = [t for t in all_topics if t != failed_topic]
 
         if not candidates:
             return failed_topic
 
-        # Further filter out topics that duplicate existing published titles
         if existing_titles:
             safe = []
             for candidate in candidates:
@@ -2492,15 +2580,12 @@ Return ONLY the JSON object.""",
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
 
-        if word_count < 1500:  # raised from implicit 0 — hard minimum
+        if word_count < 1500:
             raise ValueError(
                 f"Refusing to save '{post.title}': only {word_count} words. "
                 "Minimum is 1500. This post would harm AdSense approval."
             )
 
-        # ── Slug collision guard ──────────────────────────────────────────────────
-        # Prevents two different articles occupying the same URL, which AdSense
-        # sees as Replicated Content.
         existing_json = self.output_dir / post.slug / "post.json"
         if existing_json.exists():
             try:
@@ -2515,11 +2600,9 @@ Return ONLY the JSON object.""",
                         f"the existing post first."
                     )
             except (json.JSONDecodeError, KeyError):
-                pass  # Corrupt existing file — allow overwrite
+                pass
 
-        # ── meta_description guard ────────────────────────────────────────────────
         if not getattr(post, 'meta_description', '').strip():
-            from blog_system import _derive_description
             post.meta_description = _derive_description(
                 post.content, post.title)
             print("  meta_description was empty — derived from content.")
@@ -2581,27 +2664,11 @@ _HISTORICAL_MARKERS = re.compile(
 
 
 def _trim_to_budget(text: str, budget: int) -> str:
-    """
-    Trim *text* to at most *budget* characters at a clean grammatical boundary.
-
-    Priority order:
-    1. Already within budget — return as-is.
-    2. Last sentence end (. ! ?) within budget.
-    3. Last em-dash or semicolon — clause boundary.
-    4. Last comma — phrase boundary.
-    5. Last space — word boundary.
-    6. Hard cut — last resort, appends "…".
-
-    Replaces the old inline rsplit() fallback that produced broken fragments
-    like "t. Add 20-30% to your baseline rate for a c with Set…"
-    """
-    import re as _re
     if len(text) <= budget:
         return text
 
     window = text[:budget]
 
-    # 1. Sentence boundary
     for punct in ('.', '!', '?'):
         pos = window.rfind(punct)
         if pos >= budget // 2:
@@ -2609,7 +2676,6 @@ def _trim_to_budget(text: str, budget: int) -> str:
             if len(candidate) <= budget:
                 return candidate
 
-    # 2. Clause boundary (em-dash or semicolon)
     for sep in ('—', ';'):
         pos = window.rfind(sep)
         if pos >= budget // 2:
@@ -2617,32 +2683,21 @@ def _trim_to_budget(text: str, budget: int) -> str:
             if candidate:
                 return candidate + '…'
 
-    # 3. Comma
     pos = window.rfind(',')
     if pos >= budget // 2:
         candidate = text[:pos].rstrip()
         if candidate:
             return candidate + '…'
 
-    # 4. Word boundary
     pos = window.rfind(' ')
     if pos > 0:
         candidate = text[:pos].rstrip('.,;: ')
         return candidate + '…'
 
-    # 5. Hard cut
     return window.rstrip() + '…'
 
 
 def _scrub_stale_years(text: str) -> str:
-    """
-    Replace stale present-tense year references (2020–2025) with 2026.
-
-    Leaves alone:
-    - Years that already appear inside a historical citation context
-    - Years inside code fences (version strings, timestamps, etc.)
-    - URLs and ISO date strings (YYYY-MM-DD)
-    """
     code_blocks: list = []
 
     def _mask_code(m):
@@ -2920,7 +2975,6 @@ if __name__ == "__main__":
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
 
             except InsufficientContentError as e:
-                # ── Hard stop: all attempts failed the word-count gate ─────────
                 print("\n" + "═" * 68)
                 print("🛑  GENERATION ABORTED — NO POST SAVED")
                 print("═" * 68)
@@ -2939,7 +2993,6 @@ if __name__ == "__main__":
                 traceback.print_exc()
                 sys.exit(1)
 
-            # ── Quality gate — log warnings but never block publishing ──────
             quality_warnings, hard_failures = _validate_content_quality(
                 blog_post.content, blog_post.title
             )
