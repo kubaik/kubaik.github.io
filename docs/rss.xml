@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 23:05:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 23:27:07 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech exodus: the non-money reasons in 2026</title>
+      <link>https://kubaik.github.io/big-tech-exodus-the-non-money-reasons-in-2026/</link>
+      <description>Cut on-call pages 62% and promotion cycles 50% — the non-money reasons senior engineers left big tech in 2026 and what to check first</description>
+      <pubDate>Tue, 26 May 2026 23:26:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus-the-non-money-reasons-in-2026/</guid>
+    </item>
     <item>
       <title>Skip the degree, learn systems</title>
       <link>https://kubaik.github.io/skip-the-degree-learn-systems/</link>
@@ -138,13 +145,6 @@
       <description>Cut false positives 44% by instrumenting repository intelligence — measure symbol tables, call graphs, and constraints before trusting AI suggestions. 2026 guide with Python 3.11, OpenTelemetry 1.25, and Redis 7.2.</description>
       <pubDate>Tue, 26 May 2026 16:58:15 +0000</pubDate>
       <guid>https://kubaik.github.io/repository-intelligence-ai-cant-see-your-call-graphs/</guid>
-    </item>
-    <item>
-      <title>Stop your mobile backend from melting at 3am</title>
-      <link>https://kubaik.github.io/stop-your-mobile-backend-from-melting-at-3am/</link>
-      <description>Cut mobile backend latency 72% with NGINX 1.25.3 and Node 20 — keep-alive timeouts, TLS jitter, and the handshake tail you’re not measuring</description>
-      <pubDate>Tue, 26 May 2026 16:41:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-your-mobile-backend-from-melting-at-3am/</guid>
     </item>
   </channel>
 </rss>
