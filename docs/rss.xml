@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 21:27:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 21:44:59 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: Lessons from 3 million queries</title>
+      <link>https://kubaik.github.io/rag-pipelines-lessons-from-3-million-queries/</link>
+      <description>Cut RAG vector search costs 70% with hybrid pipelines — exact-match filters, dynamic pruning, and the recall trap most teams miss.</description>
+      <pubDate>Tue, 26 May 2026 21:44:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-lessons-from-3-million-queries/</guid>
+    </item>
     <item>
       <title>Reduce cloud carbon 30% sustainably</title>
       <link>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</link>
@@ -138,13 +145,6 @@
       <description>rites by ~30% and adds ~5 ms latency on wri with Queue message queues — this when I inherited a billing service that used R.</description>
       <pubDate>Tue, 26 May 2026 09:01:47 +0000</pubDate>
       <guid>https://kubaik.github.io/queue-it-or-lose-it-when-message-queues-help/</guid>
-    </item>
-    <item>
-      <title>Make LLMs hum on a laptop</title>
-      <link>https://kubaik.github.io/make-llms-hum-on-a-laptop/</link>
-      <description>Local LLM latency cut from 47s to 5s on a 2021 M1 MacBook — the hidden costs, benchmarks, and version pins most guides omit</description>
-      <pubDate>Tue, 26 May 2026 08:02:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/make-llms-hum-on-a-laptop/</guid>
     </item>
   </channel>
 </rss>
