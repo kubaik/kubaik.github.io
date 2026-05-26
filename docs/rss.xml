@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 16:58:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 17:01:15 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio that hires you: not projects, not LeetCode</title>
+      <link>https://kubaik.github.io/portfolio-that-hires-you-not-projects-not-leetcode/</link>
+      <description>Build one production system, not three projects: €65k remote offers from Nairobi using Python 3.11, FastAPI 0.104 and CloudWatch metrics.</description>
+      <pubDate>Tue, 26 May 2026 17:01:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-that-hires-you-not-projects-not-leetcode/</guid>
+    </item>
     <item>
       <title>Repository intelligence: AI can&apos;t see your call graphs</title>
       <link>https://kubaik.github.io/repository-intelligence-ai-cant-see-your-call-graphs/</link>
@@ -138,13 +145,6 @@
       <description>Message queues hype data: owed that 68% had adopted a message queue (. Practical guide with real examples.</description>
       <pubDate>Tue, 26 May 2026 01:34:35 +0000</pubDate>
       <guid>https://kubaik.github.io/message-queues-the-hype-vs-the-hard-data/</guid>
-    </item>
-    <item>
-      <title>Why seniors flee big tech</title>
-      <link>https://kubaik.github.io/why-seniors-flee-big-tech/</link>
-      <description>Exit interviews with 22 engineers reveal why senior talent flees big tech in 2026 — decision fatigue, impact erosion, and context switching costs, not salary.</description>
-      <pubDate>Tue, 26 May 2026 00:17:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-seniors-flee-big-tech/</guid>
     </item>
   </channel>
 </rss>
