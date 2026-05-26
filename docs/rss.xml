@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 22:57:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 23:02:41 +0000</lastBuildDate>
+    <item>
+      <title>Don&apos;t guess—measure your pool size</title>
+      <link>https://kubaik.github.io/dont-guessmeasure-your-pool-size/</link>
+      <description>Cut API response time 70% by fixing connection pool misconfigurations — connection establishment time, not query time, is the real bottleneck in 2026 systems.</description>
+      <pubDate>Tue, 26 May 2026 23:02:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/dont-guessmeasure-your-pool-size/</guid>
+    </item>
     <item>
       <title>2026 salaries: prompts vs embeddings data</title>
       <link>https://kubaik.github.io/2026-salaries-prompts-vs-embeddings-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 75% with FAISS vs pgvector — benchmark p99, RAM, and cost for 1 M vectors in 2026. Learn when Postgres is enough and when to skip the DB.</description>
       <pubDate>Tue, 26 May 2026 16:38:43 +0000</pubDate>
       <guid>https://kubaik.github.io/when-to-skip-a-vector-db/</guid>
-    </item>
-    <item>
-      <title>10,000 events/sec: when complexity killed our pipeline</title>
-      <link>https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/</link>
-      <description>Cut AWS costs 88% and latency 94% by removing Kafka, Flink, and Redis — the real cost of over-engineering in 2026</description>
-      <pubDate>Tue, 26 May 2026 16:35:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/10000-eventssec-when-complexity-killed-our-pipeline/</guid>
     </item>
   </channel>
 </rss>
