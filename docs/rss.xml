@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 18:43:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 18:47:34 +0000</lastBuildDate>
+    <item>
+      <title>Bury AI secrets before prod</title>
+      <link>https://kubaik.github.io/bury-ai-secrets-before-prod/</link>
+      <description>Cut AI security risks 75% with 5 concrete patterns most teams miss — hardcoded secrets, unsafe imports, race conditions and more. GitHub Advanced Security, Snyk, Semgrep, Checkov and DeepSource ranked with 2026 data.</description>
+      <pubDate>Tue, 26 May 2026 18:47:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/bury-ai-secrets-before-prod/</guid>
+    </item>
     <item>
       <title>Freelance burnout: what fixed the code freeze</title>
       <link>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance developer burnout 40% with stack isolation, notification firewall, and clean-slate environments — real metrics, tools, and exact commands you can use today.</description>
       <pubDate>Tue, 26 May 2026 04:40:29 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</guid>
-    </item>
-    <item>
-      <title>Self-taught to senior: no degree, no excuses</title>
-      <link>https://kubaik.github.io/self-taught-to-senior-no-degree-no-excuses/</link>
-      <description>Senior in 18 months without a CS degree — real systems, real metrics, and the hiring pipeline that actually rewards impact, not algorithms. Reduce API latency 70%, cut AWS costs 40%, and prove seniority with production ownership.</description>
-      <pubDate>Tue, 26 May 2026 02:57:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-taught-to-senior-no-degree-no-excuses/</guid>
     </item>
   </channel>
 </rss>

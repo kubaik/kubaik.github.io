@@ -1,20 +1,3 @@
 [
-  "Sustainable software engineering: cutting cloud carbon without cutting performance",
-  "Non-traditional developers shipping real products: what the AI coding wave made possible",
-  "How I went from junior to senior without a CS degree",
-  "Negotiating a remote salary when you're in a lower-cost country",
-  "Database connection pooling: the setting everyone gets wrong",
-  "Why senior developers leave big tech (it's not always the money)",
-  "Observability for AI pipelines: what to instrument when your system includes an LLM",
-  "Building a local LLM setup that actually runs on a laptop",
-  "When to use a message queue (and when it's overkill)",
-  "RAG pipelines in production: what the tutorials skip",
-  "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "How vector databases work (and when you don't need one)",
-  "5G and mobile-first backends: what changes when your users are always on cellular",
-  "Repository intelligence: how AI is learning your entire codebase context",
-  "Building a portfolio that gets you hired remotely from Africa",
-  "Burnout as a freelance developer: what helped me recover"
+  "AI-generated code and security: the new vulnerabilities teams are missing"
 ]
