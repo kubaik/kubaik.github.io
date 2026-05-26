@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 02:57:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 04:40:40 +0000</lastBuildDate>
+    <item>
+      <title>Freelance dev burnout: it wasn’t hours</title>
+      <link>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</link>
+      <description>Cut freelance developer burnout 40% with stack isolation, notification firewall, and clean-slate environments — real metrics, tools, and exact commands you can use today.</description>
+      <pubDate>Tue, 26 May 2026 04:40:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</guid>
+    </item>
     <item>
       <title>Self-taught to senior: no degree, no excuses</title>
       <link>https://kubaik.github.io/self-taught-to-senior-no-degree-no-excuses/</link>
@@ -138,13 +145,6 @@
       <description>Run a 7B LLM locally in under 2 seconds on a laptop — hardware picks, version pins, and the swap trap most guides ignore.</description>
       <pubDate>Mon, 25 May 2026 20:11:42 +0000</pubDate>
       <guid>https://kubaik.github.io/laptops-cant-run-llmsheres-why/</guid>
-    </item>
-    <item>
-      <title>Freelance devs: 3 silent burnout killers</title>
-      <link>https://kubaik.github.io/freelance-devs-3-silent-burnout-killers/</link>
-      <description>Cut freelance burnout 42% by capping clients, standardizing stacks, and wiping local dev every 30 days — real metrics, real tools, real recovery</description>
-      <pubDate>Mon, 25 May 2026 19:32:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-devs-3-silent-burnout-killers/</guid>
     </item>
   </channel>
 </rss>
