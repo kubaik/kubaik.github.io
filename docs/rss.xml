@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 19:10:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 19:16:07 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSocket, SSE, or long-poll in 5 minutes</title>
+      <link>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</link>
+      <description>Cut real-time update latency 60% by picking WebSocket, SSE, or long-poll based on 2026 production data from 1000 concurrent users on Node 20 LTS and Redis 7.2</description>
+      <pubDate>Tue, 26 May 2026 19:15:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</guid>
+    </item>
     <item>
       <title>AI reads your repo: when context fails</title>
       <link>https://kubaik.github.io/ai-reads-your-repo-when-context-fails/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 30% without slowing APIs — Node.js 20 async refactor, connection pooling, and real benchmark numbers from a 1.2M-user Latin American stack.</description>
       <pubDate>Tue, 26 May 2026 04:45:35 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-nodejs-carbon-30-without-latency-loss/</guid>
-    </item>
-    <item>
-      <title>Freelance dev burnout: it wasn’t hours</title>
-      <link>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</link>
-      <description>Cut freelance developer burnout 40% with stack isolation, notification firewall, and clean-slate environments — real metrics, tools, and exact commands you can use today.</description>
-      <pubDate>Tue, 26 May 2026 04:40:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-dev-burnout-it-wasnt-hours/</guid>
     </item>
   </channel>
 </rss>
