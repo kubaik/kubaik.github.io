@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 23:02:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 23:05:42 +0000</lastBuildDate>
+    <item>
+      <title>Skip the degree, learn systems</title>
+      <link>https://kubaik.github.io/skip-the-degree-learn-systems/</link>
+      <description>Cut 47 minutes of Redis outages and $18k in SLA penalties by learning systems without a CS degree. Real failure modes, tools, and habits that move you from junior to senior in 18 months.</description>
+      <pubDate>Tue, 26 May 2026 23:05:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-degree-learn-systems/</guid>
+    </item>
     <item>
       <title>Don&apos;t guess—measure your pool size</title>
       <link>https://kubaik.github.io/dont-guessmeasure-your-pool-size/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile backend latency 72% with NGINX 1.25.3 and Node 20 — keep-alive timeouts, TLS jitter, and the handshake tail you’re not measuring</description>
       <pubDate>Tue, 26 May 2026 16:41:32 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-your-mobile-backend-from-melting-at-3am/</guid>
-    </item>
-    <item>
-      <title>When to skip a vector DB</title>
-      <link>https://kubaik.github.io/when-to-skip-a-vector-db/</link>
-      <description>Cut vector search latency 75% with FAISS vs pgvector — benchmark p99, RAM, and cost for 1 M vectors in 2026. Learn when Postgres is enough and when to skip the DB.</description>
-      <pubDate>Tue, 26 May 2026 16:38:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-to-skip-a-vector-db/</guid>
     </item>
   </channel>
 </rss>
