@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 05:18:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 05:56:03 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate pay in weak currencies</title>
+      <link>https://kubaik.github.io/negotiate-pay-in-weak-currencies/</link>
+      <description>Close remote offers 86 % faster and cut FX loss 95 % using Stack Overflow 2026 salary bands and Wise Business hedging — exact scripts and templates included</description>
+      <pubDate>Tue, 26 May 2026 05:55:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-pay-in-weak-currencies/</guid>
+    </item>
     <item>
       <title>No CS degree? Bypass the gatekeeping</title>
       <link>https://kubaik.github.io/no-cs-degree-bypass-the-gatekeeping/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector DB costs 60% with pgvector vs Milvus — latency benchmarks, cache hit tactics, and the exact metric to check before you buy.</description>
       <pubDate>Mon, 25 May 2026 20:56:35 +0000</pubDate>
       <guid>https://kubaik.github.io/measure-vector-search-before-buying-a-db/</guid>
-    </item>
-    <item>
-      <title>Slash cloud carbon 35% yet keep speed</title>
-      <link>https://kubaik.github.io/slash-cloud-carbon-35-yet-keep-speed/</link>
-      <description>Cut cloud carbon 35% in 2026 without adding latency — concrete numbers, async Python 3.12, SQS FIFO batching, and the idle-CPU mistake most teams miss.</description>
-      <pubDate>Mon, 25 May 2026 20:49:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/slash-cloud-carbon-35-yet-keep-speed/</guid>
     </item>
   </channel>
 </rss>
