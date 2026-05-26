@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 07:58:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 08:02:31 +0000</lastBuildDate>
+    <item>
+      <title>Make LLMs hum on a laptop</title>
+      <link>https://kubaik.github.io/make-llms-hum-on-a-laptop/</link>
+      <description>Local LLM latency cut from 47s to 5s on a 2021 M1 MacBook — the hidden costs, benchmarks, and version pins most guides omit</description>
+      <pubDate>Tue, 26 May 2026 08:02:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/make-llms-hum-on-a-laptop/</guid>
+    </item>
     <item>
       <title>Track what LLM pipelines really miss</title>
       <link>https://kubaik.github.io/track-what-llm-pipelines-really-miss/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 76% and cost 80% by replacing microservices with a tamed monolith — the real cost of over-engineering in 2026.</description>
       <pubDate>Mon, 25 May 2026 22:04:35 +0000</pubDate>
       <guid>https://kubaik.github.io/killed-by-good-intentions-over-engineering-costs/</guid>
-    </item>
-    <item>
-      <title>Pick the right real-time protocol in 2026</title>
-      <link>https://kubaik.github.io/pick-the-right-real-time-protocol-in-2026/</link>
-      <description>Choose WebSocket, SSE, or long polling in 2026 with real latency, cost, and memory data from Node 20, Python 3.12, and Redis 7.2 benchmarks.</description>
-      <pubDate>Mon, 25 May 2026 22:00:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-real-time-protocol-in-2026/</guid>
     </item>
   </channel>
 </rss>
