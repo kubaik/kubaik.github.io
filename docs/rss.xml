@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 02:38:24 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 04:52:20 +0000</lastBuildDate>
+    <item>
+      <title>AI misses your codebase&apos;s blind spots</title>
+      <link>https://kubaik.github.io/ai-misses-your-codebases-blind-spots/</link>
+      <description>Cut AI suggestion failures 60% by giving models real query plans and latency data — pgMustard, OpenTelemetry, and Cody Pro in 2026.</description>
+      <pubDate>Wed, 27 May 2026 04:52:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-misses-your-codebases-blind-spots/</guid>
+    </item>
     <item>
       <title>Laptop LLM setup that really works</title>
       <link>https://kubaik.github.io/laptop-llm-setup-that-really-works/</link>
@@ -138,13 +145,6 @@
       <description>Reduce LLM pipeline outages 60% with 5 signals: queue depth, cache hit ratio, latency, empty responses, and token rate. Real 2026 numbers and code for FastAPI, vLLM, Prometheus, and OTel.</description>
       <pubDate>Tue, 26 May 2026 19:18:58 +0000</pubDate>
       <guid>https://kubaik.github.io/5-signals-to-watch-in-llm-pipelines/</guid>
-    </item>
-    <item>
-      <title>Choose WebSocket, SSE, or long-poll in 5 minutes</title>
-      <link>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</link>
-      <description>Cut real-time update latency 60% by picking WebSocket, SSE, or long-poll based on 2026 production data from 1000 concurrent users on Node 20 LTS and Redis 7.2</description>
-      <pubDate>Tue, 26 May 2026 19:15:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</guid>
     </item>
   </channel>
 </rss>
