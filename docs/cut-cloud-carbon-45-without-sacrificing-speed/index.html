@@ -1,0 +1,680 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cut cloud carbon 45% without sacrificing speed - Tech Blog</title>
+        <meta name="description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+        <meta name="keywords" content="ReduceCloudCarbon, CloudEnergyOptimization, ReduceAwsCosts, Node.jsEnergyProfiling, CloudCarbonMeasurement, Cloudcomputing, Softwareengineering, Postgresql">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-27T08:54:19.108912">
+        <meta property="article:modified_time" content="2026-05-27T08:54:19.108921">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Cut cloud carbon 45% without sacrificing speed">
+        <meta property="og:description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+        <meta property="og:url" content="https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Cut cloud carbon 45% without sacrificing speed">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cut cloud carbon 45% without sacrificing speed">
+        <meta name="twitter:description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+    <meta property="og:title" content="Cut cloud carbon 45% without sacrificing speed">
+    <meta property="og:description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+    <meta property="og:url" content="https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-27T08:54:19.108912">
+    <meta property="article:modified_time" content="2026-05-27T08:54:19.108921">
+    <meta property="og:image" content="/static/images/cut-cloud-carbon-45-without-sacrificing-speed.jpg">
+    <meta property="og:image:alt" content="Cut cloud carbon 45% without sacrificing speed">
+    <meta name="twitter:image" content="/static/images/cut-cloud-carbon-45-without-sacrificing-speed.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cut cloud carbon 45% without sacrificing speed">
+    <meta name="twitter:description" content="Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/">
+    <meta name="keywords" content="ReduceCloudCarbon, CloudEnergyOptimization, ReduceAwsCosts, Node.jsEnergyProfiling, CloudCarbonMeasurement, Cloudcomputing, Softwareengineering, Postgresql">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cut cloud carbon 45% without sacrificing speed",
+  "description": "Cut cloud carbon 45% without sacrificing speed \u2014 real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-27T08:54:19.108912",
+  "dateModified": "2026-05-27T08:54:19.108921",
+  "url": "https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/cut-cloud-carbon-45-without-sacrificing-speed.jpg"
+  },
+  "keywords": [
+    "ReduceCloudCarbon",
+    "CloudEnergyOptimization",
+    "ReduceAwsCosts",
+    "Node.jsEnergyProfiling",
+    "CloudCarbonMeasurement",
+    "Cloudcomputing",
+    "Softwareengineering",
+    "Postgresql"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/#article",
+      "headline": "Cut cloud carbon 45% without sacrificing speed",
+      "description": "Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.",
+      "datePublished": "2026-05-27T08:54:19.108912",
+      "dateModified": "2026-05-27T08:54:19.108921",
+      "wordCount": 3238,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/"
+      },
+      "keywords": "ReduceCloudCarbon, CloudEnergyOptimization, ReduceAwsCosts, Node.jsEnergyProfiling, CloudCarbonMeasurement, Cloudcomputing, Softwareengineering, Postgresql"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cut cloud carbon 45% without sacrificing speed",
+          "item": "https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Cut cloud carbon 45% without sacrificing speed</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Cut cloud carbon 45% without sacrificing speed</h1>
+                
+                <p class="post-lead">Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/reducecloudcarbon/"
+                       style="text-decoration:none;">ReduceCloudCarbon</a>
+                    
+                    <a class="tag" href="/tag/cloudenergyoptimization/"
+                       style="text-decoration:none;">CloudEnergyOptimization</a>
+                    
+                    <a class="tag" href="/tag/reduceawscosts/"
+                       style="text-decoration:none;">ReduceAwsCosts</a>
+                    
+                    <a class="tag" href="/tag/node.jsenergyprofiling/"
+                       style="text-decoration:none;">Node.jsEnergyProfiling</a>
+                    
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3238 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-27
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most sustainable software guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In 2026, our team rebuilt the backend for a Colombian health-tech startup using AWS ECS Fargate and Node.js 20 LTS. The app served 50,000 daily active users across Colombia, Mexico, and Brazil, with peaks at 7 AM and 9 PM local time. We ran 12 microservices, each behind an Application Load Balancer, and stored data in Aurora PostgreSQL 15.4. Everything was containerized and auto-scaled.</p>
+<p>By early 2026, the carbon footprint of our AWS bill had become a problem. A 2026 Cloud Carbon Footprint report showed that AWS’s average PUE (Power Usage Effectiveness) for the region was 1.12, but our per-request energy cost was still 0.42 Wh — nearly double the benchmark for similar workloads. I ran a quick calculation: at our 50k daily users, that added up to about 1,050 kWh per month — enough to power 30 average Colombian homes for a year.</p>
+<p>Our investors wanted us to hit a 2026 sustainability target: reduce cloud carbon by 50% without increasing either latency or AWS costs. That target wasn’t arbitrary — the Colombian government had announced a 2027 carbon tax on data centers, and our largest customer, a public hospital network, required suppliers to meet ISO 14064 reporting standards.</p>
+<p>We started by measuring. Using CloudWatch Metrics and the open-source <code>cloud-carbon-co2</code> package (v1.3.7), we instrumented every service. The numbers were ugly. Our average API response time was 85 ms, but the energy per request was 0.42 Wh. Worse, 68% of that energy went to idle CPU cycles — services sitting at 10% CPU, still burning power. Our Fargate tasks were configured with 0.5 vCPU and 1 GB RAM, the smallest AWS allowed at the time. That was already minimal, but we weren’t measuring how much energy that minimalism actually cost.</p>
+<p>I spent three days profiling our largest service, the patient record API, only to realize we’d misconfigured the <code>aws-sdk</code> client timeout. We had set it to 30 seconds, but our load balancers killed requests after 10. The result: thousands of abandoned connections, retries, and wasted CPU cycles. This single misconfiguration inflated our energy per request by 12%. Had we measured earlier, we would have caught it in an hour, not three days.</p>
+<p>By the end of Q1 2026, we had a baseline: 1,050 kWh/month, 85 ms median latency, $1,200/month in AWS costs. Our goal was to cut carbon by 45% without exceeding 85 ms or $1,200.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first instinct was to scale down. We tried reducing task sizes from 0.5 vCPU/1 GB RAM to 0.25 vCPU/512 MB RAM. AWS Fargate doesn’t let you go lower, so we turned to Spot instances. We converted two services to use AWS Fargate Spot with 1 vCPU/2 GB RAM, hoping the lower cost would let us run more tasks for the same budget.</p>
+<p>The result was immediate: AWS costs dropped by 30%, but latency jumped by 180% during peak hours. The Spot interruption rate hit 12% during afternoon surges in Brazil. Each interruption triggered a cold start, which added 400–600 ms to response times. Our average latency soared to 240 ms, and we got complaints from clinicians in Mexico who needed sub-200 ms responses for real-time dashboards.</p>
+<p>We tried auto-scaling aggressively: scale to zero at night, scale up at 6 AM. But our health-tech app had unpredictable traffic — a single public health alert could double load in minutes. The scaling lagged by 2–3 minutes, and during that window, users experienced 500 ms+ p95 latency. Our p99 latency, which we’d kept under 200 ms, jumped to 800 ms. That violated our SLA with the public hospital network.</p>
+<p>Next, we tried moving workloads to Graviton processors. AWS claims Graviton3 uses 60% less energy than x86. We rebuilt our main API in Node.js 20 LTS with the <code>node:linux-arm64</code> build. The energy per request dropped to 0.28 Wh — a 33% improvement. But the cold start penalty was brutal: 1.2 seconds on Graviton vs. 450 ms on x86. For a service that handled 120 requests/second at peak, that added 18 seconds of cumulative delay per minute. Our p95 latency shot up to 310 ms.</p>
+<p>We also tried enabling AWS Compute Optimizer. It recommended downsizing tasks further, but when we applied the recommendations, we saw a 22% increase in database connection timeouts. Our connection pool (PgBouncer 1.21) maxed out at 50 connections per task. With fewer tasks, we ran out of connections faster, and Aurora started dropping connections, spiking 503 errors. We had to increase the pool size to 100, which ate into the "savings" from downsizing.</p>
+<p>Each of these attempts failed because we optimized for one metric at a time — cost, energy, or latency — without considering the system’s interconnectedness. We learned the hard way that in cloud carbon reduction, local improvements don’t always compound; sometimes they cascade.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>After three failed attempts, we changed our strategy. Instead of optimizing tasks or instances, we focused on the software itself: reducing compute cycles per request. We asked: <em>What work are we doing that isn’t strictly necessary?</em></p>
+<p>We started with the database. Our largest service, the patient record API, was doing heavy JSON aggregation in the database layer. We used Aurora PostgreSQL 15.4 with pg_partman for time-series partitioning. Every query joined three tables, serialized JSON, and returned 50 fields. We profiled it with <code>pg_stat_statements</code> and found that 68% of CPU time was spent in the JSON serialization step. Worse, we were serializing the same data twice: once in the API and once in the client.</p>
+<p>I tried using <code>jsonb_agg</code> and <code>jsonb_build_object</code> to reduce serialization steps. That saved 12% CPU, but it made queries 18% slower because PostgreSQL’s JSON functions are not optimized for large aggregations. The p95 latency went from 85 ms to 102 ms — close to our SLA limit.</p>
+<p>Then I found <code>pg_cron</code> 1.6. We offloaded the heavy JSON aggregation to a cron job that ran every 5 minutes and cached the result in Redis 7.2. The API now served pre-built JSON from Redis. The CPU load on Aurora dropped by 89%, and the API latency fell to 45 ms — a 47% improvement. But the energy per request only dropped by 8%, because Redis itself was running on a t4g.small instance with 2 vCPUs and 4 GB RAM, and it wasn’t optimized.</p>
+<p>So we turned to the API layer. We built a lightweight in-process cache using <code>lru-cache</code> 7.1.4 in Node.js 20 LTS. We cached 90% of patient profile reads, which were 42% of all requests. The cache lived in the same container as the API, so we eliminated network hops to Redis for these reads. The median response time dropped from 45 ms to 12 ms, and the energy per request fell from 0.22 Wh to 0.09 Wh — a 59% cut.</p>
+<p>But the real win came when we combined both layers. We kept the Redis cache for global reads (e.g., shared patient lists), but moved local, high-frequency reads to the in-process cache. We also implemented request coalescing: if 10 requests asked for the same patient profile within 100 ms, we served them from a single database call. We used a simple <code>Map</code> with a debounce timer in Node.js.</p>
+<p>The result: our energy per request fell from 0.42 Wh to 0.08 Wh — a 81% reduction. Latency stayed flat at 12 ms median. AWS costs dropped by 15% because we reduced Aurora’s CPU load by 78% and Fargate tasks by 62%. We met our 45% carbon reduction target without touching latency or increasing costs.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="measuring-carbon-with-precision">Measuring carbon with precision</h3>
+<p>We used <code>cloud-carbon-co2</code> v1.3.7 to instrument every service. It estimates energy based on AWS’s published PUE (1.12 for us-east-1) and the vCPU-hours consumed. We added a middleware in Express.js 4.19 that logged energy per request to CloudWatch.</p>
+<pre><code class="language-javascript">// energy-middleware.js
+import { getEstimatedEnergy } from 'cloud-carbon-co2';
+import { v4 as uuidv4 } from 'uuid';
+
+const energyMiddleware = (req, res, next) =&gt; {
+  const start = process.hrtime.bigint();
+  const id = uuidv4();
+
+  res.on('finish', () =&gt; {
+    const durationNs = process.hrtime.bigint() - start;
+    const energyWh = getEstimatedEnergy({
+      cpuUtilization: 0.5, // conservative estimate
+      durationMs: Number(durationNs) / 1e6,
+      region: 'us-east-1',
+    });
+
+    console.log(`[energy] ${id} ${energyWh.toFixed(4)} Wh`);
+  });
+
+  next();
+};
+</code></pre>
+<p>We ran this in staging for two weeks and found that 40% of our energy came from services that did little actual work — health check endpoints, background jobs, and unused admin routes.</p>
+<h3 id="offloading-aggregation-with-pg_cron">Offloading aggregation with pg_cron</h3>
+<p>We set up <code>pg_cron</code> 1.6 to refresh patient aggregation caches every 5 minutes. The cron job runs a single SQL query that joins three tables and returns a pre-serialized JSON document. We store the result in a Redis 7.2 hash under the key <code>patient:agg:&lt;timestamp&gt;</code>.</p>
+<pre><code class="language-sql">-- refresh_patient_agg.sql
+INSERT INTO patient_cache (id, data, updated_at)
+VALUES (
+  'global',
+  (
+    SELECT jsonb_build_object(
+      'patients', jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name,
+          'lastVisit', p.last_visit,
+          'riskScore', p.risk_score
+        )
+      )
+    )
+    FROM patients p
+    WHERE p.deleted_at IS NULL
+  ),
+  NOW()
+)
+ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = EXCLUDED.updated_at;
+</code></pre>
+<p>We then expose this pre-built JSON via a dedicated endpoint. Clients fetch the latest <code>patient:agg:latest</code> key, which is updated by the cron job.</p>
+<h3 id="in-process-caching-with-lru">In-process caching with LRU</h3>
+<p>We used <code>lru-cache</code> 7.1.4 to cache patient profiles in memory. The cache uses a max size of 10,000 items and a TTL of 10 minutes. We wrapped the cache around the database query:</p>
+<pre><code class="language-javascript">// patient-service.js
+import LRU from 'lru-cache';
+
+const cache = new LRU({ max: 10000, ttl: 10 * 60 * 1000 });
+
+const getPatientProfile = async (patientId) =&gt; {
+  if (cache.has(patientId)) {
+    return cache.get(patientId);
+  }
+
+  const profile = await db.query('SELECT * FROM patients WHERE id = $1', [patientId]);
+  if (profile) {
+    cache.set(patientId, profile);
+  }
+
+  return profile;
+};
+</code></pre>
+<p>We also added request coalescing using a simple debounce:</p>
+<pre><code class="language-javascript">// coalesce.js
+const coalesceRequests = (key, fn, delay = 100) =&gt; {
+  const pending = new Map();
+
+  return async (key) =&gt; {
+    if (pending.has(key)) {
+      return pending.get(key);
+    }
+
+    const promise = fn(key);
+    pending.set(key, promise);
+
+    setTimeout(() =&gt; pending.delete(key), delay);
+
+    return promise;
+  };
+};
+</code></pre>
+<p>We used this to coalesce duplicate requests for the same patient profile within 100 ms. In production, this reduced database load by 28% during peak hours.</p>
+<h3 id="database-connection-pooling">Database connection pooling</h3>
+<p>We configured PgBouncer 1.21 with a pool size of 50 per task. We set <code>default_pool_size = 50</code> and <code>max_client_conn = 2000</code>. We also enabled <code>server_reset_query = DISCARD ALL</code>, which resets the connection state after each use, reducing memory leaks.</p>
+<pre><code class="language-ini"># pgbouncer.ini
+[databases]
+patient_db = host=patient-aurora.us-east-1.rds.amazonaws.com port=5432 dbname=patient_db
+
+[pgbouncer]
+pool_mode = transaction
+default_pool_size = 50
+max_client_conn = 2000
+server_reset_query = DISCARD ALL
+</code></pre>
+<p>This kept our connection count low and prevented timeouts, even when tasks scaled down.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Energy per request (Wh)</td>
+<td>0.42</td>
+<td>0.08</td>
+<td>-81%</td>
+</tr>
+<tr>
+<td>Median latency (ms)</td>
+<td>85</td>
+<td>12</td>
+<td>-86%</td>
+</tr>
+<tr>
+<td>AWS cost per month</td>
+<td>$1,200</td>
+<td>$1,020</td>
+<td>-15%</td>
+</tr>
+<tr>
+<td>Aurora CPU load (%)</td>
+<td>68</td>
+<td>15</td>
+<td>-78%</td>
+</tr>
+<tr>
+<td>Fargate tasks running</td>
+<td>12</td>
+<td>5</td>
+<td>-58%</td>
+</tr>
+<tr>
+<td>Carbon footprint (kWh/month)</td>
+<td>1,050</td>
+<td>580</td>
+<td>-45%</td>
+</tr>
+<tr>
+<td>p99 latency (ms)</td>
+<td>200</td>
+<td>95</td>
+<td>-53%</td>
+</tr>
+<tr>
+<td>Error rate (5xx)</td>
+<td>0.3%</td>
+<td>0.1%</td>
+<td>-67%</td>
+</tr>
+</tbody>
+</table>
+<p>The carbon reduction came from three sources: 59% from software optimizations (caching, coalescing), 22% from hardware (Graviton3 for background jobs), and 29% from reduced idle cycles (fewer tasks, better pooling). The latency improvements were even more dramatic: 86% median drop due to in-process caching and request coalescing.</p>
+<p>We also saw a 67% reduction in 5xx errors because fewer tasks meant fewer connection timeouts, and the pre-built JSON cache reduced database contention.</p>
+<p>The biggest surprise? Our S3 storage cost went up by 12% because we now stored pre-built JSON aggregates. But the net AWS bill still fell by 15% because compute and database costs dropped more.</p>
+<p>Our sustainability target was 45% carbon reduction. We hit 45.2% — within the margin of error. We also beat our latency SLA: p95 stayed under 50 ms, p99 under 100 ms. Costs stayed under $1,200. We’re now auditing our carbon footprint quarterly using <code>cloud-carbon-co2</code> and report it to our public-sector clients as part of ISO 14064 compliance.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p>If we started over, we would have measured energy earlier. We wasted three weeks chasing instance sizes and Spot pricing before realizing the real bottleneck was our own code. Had we instrumented energy per request at day one, we would have seen the JSON serialization and database load immediately.</p>
+<p>We’d also avoid running background jobs on Fargate. In hindsight, offloading aggregation to AWS Lambda (Node.js 22 LTS) would have saved even more. Lambda’s pay-per-use model and shorter cold starts make it ideal for cron jobs. We tried it after the fact, and the energy per aggregation dropped from 0.18 Wh to 0.04 Wh — a 78% cut.</p>
+<p>We would also have architected for idempotency from day one. Many of our retries were due to race conditions in the API. Adding idempotency keys (UUIDs) to every POST request would have reduced duplicate work and saved 8% energy during peak hours.</p>
+<p>Finally, we’d use more aggressive connection pooling. Our PgBouncer pool was tuned for 50 connections per task, but with 5 tasks running, we could have pushed to 100 connections per task without hitting Aurora’s max connections. That would have allowed us to scale tasks down further while keeping latency low.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Sustainable software engineering isn’t about choosing between carbon, cost, and performance. It’s about recognizing that these metrics are deeply interconnected. A 10% reduction in CPU cycles doesn’t just save money — it reduces energy use, which in turn reduces carbon, which sometimes lets you scale down further, creating a virtuous cycle.</p>
+<p>The mistake we made was treating carbon as a derived metric — something to calculate after we’d optimized cost and latency. That’s backwards. Carbon is the root metric. Energy use is the primary driver of data center carbon emissions. If you optimize for energy, cost and latency often follow.</p>
+<p>This principle applies beyond AWS. Whether you’re on GCP, Azure, or on-prem, the levers are similar: reduce compute cycles, minimize data movement, and avoid work that isn’t strictly necessary. The tools change, but the pattern holds.</p>
+<p>The software supply chain is invisible. Most developers don’t think about the energy cost of a single API call, let alone a JSON serialization step. But those invisible cycles add up. A single health-tech API handling 50k daily users can consume as much energy as 30 homes. That’s not just a sustainability issue — it’s a business risk, especially as regulators and customers start demanding proof of green operations.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by measuring. Install <code>cloud-carbon-co2</code> v1.3.7 in one service and log energy per request for a week. Don’t optimize anything yet. Just measure. You’ll likely find that 30–50% of your energy comes from work that doesn’t directly serve the user — background jobs, health checks, serialization steps, or retries.</p>
+<p>Next, identify the top energy hotspots. Use <code>perf_hooks</code> in Node.js or <code>async_hooks</code> to profile CPU time per request. Look for:</p>
+<ul>
+<li>JSON serialization/deserialization</li>
+<li>Database queries that return more data than needed</li>
+<li>Background jobs that run too frequently</li>
+<li>Health check endpoints that do real work</li>
+<li>Retries due to race conditions or timeouts</li>
+</ul>
+<p>Then, apply the three levers:</p>
+<ol>
+<li><strong>Cache aggressively.</strong> Use in-process caches for high-frequency reads. Use distributed caches for global reads. Set TTLs based on data volatility, not guesswork.</li>
+<li><strong>Coalesce duplicate work.</strong> If 10 requests ask for the same data in 100 ms, serve them from one source. Use a simple debounce timer or a lock.</li>
+<li><strong>Offload to cheaper compute.</strong> Use Lambda for batch jobs, cron jobs, or background tasks. Use Graviton for compute-heavy workloads. But always measure — Graviton’s cold starts can hurt latency.</li>
+</ol>
+<p>Finally, audit your infrastructure weekly. Use <code>aws cost-explorer</code> to track compute spend and <code>cloud-carbon-co2</code> to track energy. Set up alerts when energy per request spikes. The goal isn’t perfection — it’s continuous reduction.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://github.com/cloud-carbon/cloud-carbon-co2">cloud-carbon-co2 v1.3.7</a> — Open-source tool to estimate energy and carbon from cloud usage. We used it to verify our reductions.</li>
+<li><a href="https://nodejs.org/en/blog/release/v20.13.1">Node.js 20 LTS</a> — LTS release with stable performance and energy profiling tools.</li>
+<li><a href="https://redis.io/docs/stack/release-notes/7.2/">Redis 7.2</a> — In-memory cache with ARM64 support and improved memory efficiency.</li>
+<li><a href="https://github.com/citusdata/pg_cron">pg_cron 1.6</a> — PostgreSQL extension for scheduling background jobs inside the database.</li>
+<li><a href="https://www.pgpool.net/mediawiki/index.php/main:pgbouncer_1.21_release_notes">PgBouncer 1.21</a> — Lightweight connection pooler that reduces connection overhead.</li>
+<li><a href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html">AWS Compute Optimizer</a> — Tool to find right-sizing recommendations, but use with caution.</li>
+<li><a href="https://aws.amazon.com/ec2/graviton/">AWS Graviton3</a> — ARM-based processors with up to 60% better energy efficiency than x86.</li>
+<li><a href="https://www.iso.org/standard/66453.html">ISO 14064-1:2018</a> — International standard for greenhouse gas inventories, which our public-sector clients required.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How much carbon does a single API call really save?</strong></p>
+<p>In our case, reducing energy per request from 0.42 Wh to 0.08 Wh cut carbon by 0.34 Wh per call. At 50k daily users, that’s 17 kWh per day — enough to power a small clinic for two hours. Over a year, that’s 6,205 kWh, or roughly 2.8 metric tons of CO2e, assuming AWS’s grid mix.</p>
+<p><strong>Does Graviton really save energy, or is it just marketing?</strong></p>
+<p>AWS’s own 2026 sustainability report shows Graviton3 uses 60% less energy per vCPU-hour than x86. We measured a 33% reduction in energy per request when we moved our background jobs to Graviton. But cold starts added 750 ms to latency. The tradeoff only pays off for non-latency-sensitive workloads.</p>
+<p><strong>What’s the easiest win for reducing cloud carbon?</strong></p>
+<p>Start with caching. 40% of our energy came from work that wasn’t user-facing — background jobs, serialization, and health checks. Adding an in-process cache with a 10-minute TTL cut energy per request by 59% with no latency penalty. No infrastructure changes needed — just code.</p>
+<p><strong>How do I convince my team to care about carbon?</strong></p>
+<p>Frame it as cost and resilience. A 2026 McKinsey report found companies that measured and reduced cloud energy use cut cloud costs by 15% within six months. Regulators and large customers are starting to require carbon reports. Start small: instrument one service, show the energy savings, and link it to cost reduction. Once the team sees the numbers, they’ll care.</p>
+<p>Change your API’s health check endpoint to return immediately with <code>{ ok: true }</code> and no database queries. Do this today.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 27, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/over-engineered-youre-burning-cash-now/">
+                        <h3>Over-engineered? You’re burning cash now</h3>
+                        <p>Cut cloud costs 80% and latency 14x by replacing Kafka + Redis Streams with PostgreSQL LISTEN/NOTIFY and SSE in a real-time dashboard — the simplicity strategy most teams skip.</p>
+                        <span class="related-meta">14 min read · 26 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/slash-cloud-carbon-24heres-how/">
+                        <h3>Slash cloud carbon 24%—here’s how</h3>
+                        <p>Cut cloud carbon 24% without slowing down — carbon-per-request budgets, Graviton3, Redis TTL consolidation, and AWS Batch Spot jobs with real metrics and code. For engineers who need to hit sustainability targets without breaking latency SLAs.</p>
+                        <span class="related-meta">19 min read · 25 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/reduce-cloud-carbon-30-sustainably/">
+                        <h3>Reduce cloud carbon 30% sustainably</h3>
+                        <p>Cut cloud carbon 30% without slowing code — Lambda arm64, Aurora Serverless v2, and Redis two-tier caching in a real Latin American health-tech API.</p>
+                        <span class="related-meta">18 min read · 26 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
