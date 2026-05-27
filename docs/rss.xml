@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 05:13:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 06:05:22 +0000</lastBuildDate>
+    <item>
+      <title>5G’s 8-second socket trap</title>
+      <link>https://kubaik.github.io/5gs-8-second-socket-trap/</link>
+      <description>Cut mobile write failures 89% by tuning Redis connection pools for 5G latency spikes — socket timeouts, deduplication, and Prometheus metrics you can deploy today.</description>
+      <pubDate>Wed, 27 May 2026 06:05:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/5gs-8-second-socket-trap/</guid>
+    </item>
     <item>
       <title>Build a portfolio Africa remote hires want</title>
       <link>https://kubaik.github.io/build-a-portfolio-africa-remote-hires-want/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 80% and latency 14x by replacing Kafka + Redis Streams with PostgreSQL LISTEN/NOTIFY and SSE in a real-time dashboard — the simplicity strategy most teams skip.</description>
       <pubDate>Tue, 26 May 2026 19:59:33 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineered-youre-burning-cash-now/</guid>
-    </item>
-    <item>
-      <title>Build one killer project from Africa</title>
-      <link>https://kubaik.github.io/build-one-killer-project-from-africa/</link>
-      <description>Build one polished service, not five projects, to land remote roles from Africa — production-ready code beats toy apps every time</description>
-      <pubDate>Tue, 26 May 2026 19:36:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-one-killer-project-from-africa/</guid>
     </item>
   </channel>
 </rss>
