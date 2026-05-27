@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 22:20:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 22:27:02 +0000</lastBuildDate>
+    <item>
+      <title>Debugged AI salary boosters in 2026</title>
+      <link>https://kubaik.github.io/debugged-ai-salary-boosters-in-2026/</link>
+      <description>Cut to the chase: engineers with production AI models earn 30% more in 2026. See the exact skills that moved the needle — tabular ML vs modern GenAI — with benchmarks, costs, and code that actually works.</description>
+      <pubDate>Wed, 27 May 2026 22:26:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugged-ai-salary-boosters-in-2026/</guid>
+    </item>
     <item>
       <title>Vector DBs: 80ms vs 3ms for your use case</title>
       <link>https://kubaik.github.io/vector-dbs-80ms-vs-3ms-for-your-use-case/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer without CS degree: the 41% callback rate for self-taught devs proves the myth wrong. Learn connection pooling, Redis 7.2 tuning, and PostgreSQL 14 knobs to hit senior level.</description>
       <pubDate>Wed, 27 May 2026 14:27:11 +0000</pubDate>
       <guid>https://kubaik.github.io/degree-no-senior-engineer-yes/</guid>
-    </item>
-    <item>
-      <title>AI’s impact on non-traditional dev teams</title>
-      <link>https://kubaik.github.io/ais-impact-on-non-traditional-dev-teams/</link>
-      <description>Ship your first product in 28 minutes with AI tools tested on real teams in 2026 — latency benchmarks, security catches, and the one hidden cost most teams miss.</description>
-      <pubDate>Wed, 27 May 2026 14:23:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ais-impact-on-non-traditional-dev-teams/</guid>
     </item>
   </channel>
 </rss>
