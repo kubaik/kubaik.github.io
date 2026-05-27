@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 18:19:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 19:18:05 +0000</lastBuildDate>
+    <item>
+      <title>Hire Nairobi devs: timezone hack for EU startups</title>
+      <link>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</link>
+      <description>Cut dev costs 35% by hiring Nairobi engineers — 5-hour overlap, async hand-offs, and the CI/CD fix that dropped latency from 180 ms to 30 ms.</description>
+      <pubDate>Wed, 27 May 2026 19:17:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</guid>
+    </item>
     <item>
       <title>2026 salary split: prompt vs fine-tune</title>
       <link>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</link>
@@ -138,13 +145,6 @@
       <description>The goal was simple: reduce ticket volume by 40% within six months without adding headcount.</description>
       <pubDate>Wed, 27 May 2026 08:57:31 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-the-missing-checklist/</guid>
-    </item>
-    <item>
-      <title>Cut cloud carbon 45% without sacrificing speed</title>
-      <link>https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/</link>
-      <description>Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.</description>
-      <pubDate>Wed, 27 May 2026 08:54:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/</guid>
     </item>
   </channel>
 </rss>
