@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 11:06:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 11:10:20 +0000</lastBuildDate>
+    <item>
+      <title>Profile 5G backend calls in 2026</title>
+      <link>https://kubaik.github.io/profile-5g-backend-calls-in-2026/</link>
+      <description>Cut mobile backend errors 80% by profiling 5G latency — DNS, TCP, TLS breakdowns, DoH failover, undici pool tuning in Node 20 LTS.</description>
+      <pubDate>Wed, 27 May 2026 11:10:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/profile-5g-backend-calls-in-2026/</guid>
+    </item>
     <item>
       <title>No CS degree? No problem</title>
       <link>https://kubaik.github.io/no-cs-degree-no-problem/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 62% and promotion cycles 50% — the non-money reasons senior engineers left big tech in 2026 and what to check first</description>
       <pubDate>Tue, 26 May 2026 23:26:53 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus-the-non-money-reasons-in-2026/</guid>
-    </item>
-    <item>
-      <title>Skip the degree, learn systems</title>
-      <link>https://kubaik.github.io/skip-the-degree-learn-systems/</link>
-      <description>Cut 47 minutes of Redis outages and $18k in SLA penalties by learning systems without a CS degree. Real failure modes, tools, and habits that move you from junior to senior in 18 months.</description>
-      <pubDate>Tue, 26 May 2026 23:05:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-degree-learn-systems/</guid>
     </item>
   </channel>
 </rss>
