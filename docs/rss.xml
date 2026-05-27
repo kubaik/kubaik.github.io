@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 18:12:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 18:16:31 +0000</lastBuildDate>
+    <item>
+      <title>WebSockets vs SSE vs Polling: Pick Fast</title>
+      <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
+      <description>Cut real-time transport choice from days to 90 seconds — latency, cost, and code differences for WebSocket, SSE, and long polling in 2026</description>
+      <pubDate>Wed, 27 May 2026 18:16:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
+    </item>
     <item>
       <title>RAG in prod: what tutorials omit</title>
       <link>https://kubaik.github.io/rag-in-prod-what-tutorials-omit/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote pay in 2026 with a free Python CLI that adjusts for FX and local cost of living — saves 3–4 hours per negotiation and increases final offers by 14–99%</description>
       <pubDate>Wed, 27 May 2026 08:04:45 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-pay-fx-vs-local-costs/</guid>
-    </item>
-    <item>
-      <title>Fine-tuning pays 25% more in 2026</title>
-      <link>https://kubaik.github.io/fine-tuning-pays-25-more-in-2026/</link>
-      <description>Fine-tuning pays 25–40% more than prompt engineering in 2026 — the real ROI breakdown on salaries, costs, and benchmarks. Use this data to pick the skill that actually moves the needle.</description>
-      <pubDate>Wed, 27 May 2026 07:57:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tuning-pays-25-more-in-2026/</guid>
     </item>
   </channel>
 </rss>
