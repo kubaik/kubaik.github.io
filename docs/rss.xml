@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 16:52:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 16:55:01 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS carbon 25% without CPU hikes</title>
+      <link>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</link>
+      <description>Cut Scope 2 emissions 35% without adding latency — how we moved API calls to the greenest hours in us-east-1 using Node 20, Spot instances, and WattTime’s carbon API</description>
+      <pubDate>Wed, 27 May 2026 16:54:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</guid>
+    </item>
     <item>
       <title>Leverage local pay in global remote roles</title>
       <link>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 98% by replacing a microservices cluster with a single service — connection pooling, caching, and the simplicity mistake most teams make.</description>
       <pubDate>Wed, 27 May 2026 06:54:12 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</guid>
-    </item>
-    <item>
-      <title>Skip the vector DB?</title>
-      <link>https://kubaik.github.io/skip-the-vector-db/</link>
-      <description>Cut vector search costs 60% by measuring p99 first — FAISS 1.8 vs Pinecone Serverless 2026.09 benchmark, recall trade-offs, and the one metric every team skips until it’s too late.</description>
-      <pubDate>Wed, 27 May 2026 06:49:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-vector-db/</guid>
     </item>
   </channel>
 </rss>
