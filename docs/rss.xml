@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 14:48:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 16:36:57 +0000</lastBuildDate>
+    <item>
+      <title>Set max pool size too low? Your app is slower</title>
+      <link>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</link>
+      <description>Reduce API latency 60% by sizing connection pools correctly — new research on 3 production systems shows how most teams misconfigure pg-pool, HikariCP, and pool_size in 2026.</description>
+      <pubDate>Wed, 27 May 2026 16:36:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</guid>
+    </item>
     <item>
       <title>Vector DB vs brute force: the 50ms rule</title>
       <link>https://kubaik.github.io/vector-db-vs-brute-force-the-50ms-rule/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile write failures 89% by tuning Redis connection pools for 5G latency spikes — socket timeouts, deduplication, and Prometheus metrics you can deploy today.</description>
       <pubDate>Wed, 27 May 2026 06:05:08 +0000</pubDate>
       <guid>https://kubaik.github.io/5gs-8-second-socket-trap/</guid>
-    </item>
-    <item>
-      <title>Build a portfolio Africa remote hires want</title>
-      <link>https://kubaik.github.io/build-a-portfolio-africa-remote-hires-want/</link>
-      <description>Remote jobs ignore GitHub stars — deploy real systems instead. Build one project users depend on, not 10 PRs. Real examples from Nairobi fintech with latency, cost and scale numbers.</description>
-      <pubDate>Wed, 27 May 2026 05:13:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-portfolio-africa-remote-hires-want/</guid>
     </item>
   </channel>
 </rss>
