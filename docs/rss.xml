@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 19:41:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 19:57:34 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time transport</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-transport/</link>
+      <description>Cut real-time transport latency 80% by choosing SSE for one-way or WebSockets for two-way traffic — RAM, cost, and browser limits for 2026</description>
+      <pubDate>Wed, 27 May 2026 19:57:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-transport/</guid>
+    </item>
     <item>
       <title>Overpaying for idle DB connections</title>
       <link>https://kubaik.github.io/overpaying-for-idle-db-connections/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer without a CS degree? Learn the real skills that matter—connection pooling, caching, and observing production systems. Real case studies, benchmarks, and actionable steps.</description>
       <pubDate>Wed, 27 May 2026 10:55:11 +0000</pubDate>
       <guid>https://kubaik.github.io/no-cs-degree-no-problem/</guid>
-    </item>
-    <item>
-      <title>Choose the Right Realtime Protocol in 30 Minutes</title>
-      <link>https://kubaik.github.io/choose-the-right-realtime-protocol-in-30-minutes/</link>
-      <description>Pick the right realtime protocol in 5 minutes — latency, cost, and browser support compared for WebSocket, SSE, and long polling (2026 data).</description>
-      <pubDate>Wed, 27 May 2026 10:50:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-realtime-protocol-in-30-minutes/</guid>
     </item>
   </channel>
 </rss>

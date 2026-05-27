@@ -1,5 +1,6 @@
 [
   "The timezone advantage: why European startups are hiring East African engineers",
   "Repository intelligence: how AI is learning your entire codebase context",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
