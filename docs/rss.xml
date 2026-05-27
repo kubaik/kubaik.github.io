@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 01:39:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 02:38:24 +0000</lastBuildDate>
+    <item>
+      <title>Laptop LLM setup that really works</title>
+      <link>https://kubaik.github.io/laptop-llm-setup-that-really-works/</link>
+      <description>Cut LLM costs to zero with a laptop setup that actually works — real benchmarks, version-pinned tools, and the mistakes I made running Mistral 7B on M2 Macs in 2026.</description>
+      <pubDate>Wed, 27 May 2026 02:38:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/laptop-llm-setup-that-really-works/</guid>
+    </item>
     <item>
       <title>Recover from freelance burnout in 3 steps</title>
       <link>https://kubaik.github.io/recover-from-freelance-burnout-in-3-steps/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time update latency 60% by picking WebSocket, SSE, or long-poll based on 2026 production data from 1000 concurrent users on Node 20 LTS and Redis 7.2</description>
       <pubDate>Tue, 26 May 2026 19:15:53 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websocket-sse-or-long-poll-in-5-minutes/</guid>
-    </item>
-    <item>
-      <title>AI reads your repo: when context fails</title>
-      <link>https://kubaik.github.io/ai-reads-your-repo-when-context-fails/</link>
-      <description>Cut AI review mistakes 85% with repo context fidelity metrics — static vs dynamic call site coverage and behavioral traces with OpenTelemetry 1.42.0</description>
-      <pubDate>Tue, 26 May 2026 19:10:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-reads-your-repo-when-context-fails/</guid>
     </item>
   </channel>
 </rss>
