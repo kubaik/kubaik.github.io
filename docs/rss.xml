@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 06:50:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 06:54:26 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineered APIs cost $30k/month</title>
+      <link>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</link>
+      <description>Cut AWS costs 98% by replacing a microservices cluster with a single service — connection pooling, caching, and the simplicity mistake most teams make.</description>
+      <pubDate>Wed, 27 May 2026 06:54:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</guid>
+    </item>
     <item>
       <title>Skip the vector DB?</title>
       <link>https://kubaik.github.io/skip-the-vector-db/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev time 10x with 3 stacks that actually scale — concrete costs, benchmarks, and the free-tier gotchas most tutorials skip. Proven in 2026 production.</description>
       <pubDate>Tue, 26 May 2026 21:21:31 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-that-turned-non-devs-into-solo-founders/</guid>
-    </item>
-    <item>
-      <title>Double your remote salary: the ask script</title>
-      <link>https://kubaik.github.io/double-your-remote-salary-the-ask-script/</link>
-      <description>Negotiate remote salary for lower-cost countries — median uplift $12,400 in 2026 using Levels.fyi, Mercer PPP, and a one-page PDF ask</description>
-      <pubDate>Tue, 26 May 2026 21:15:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-your-remote-salary-the-ask-script/</guid>
     </item>
   </channel>
 </rss>
