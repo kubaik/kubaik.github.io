@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 10:42:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 10:46:16 +0000</lastBuildDate>
+    <item>
+      <title>AI pair programmers: what 15k devs shipped in 2026</title>
+      <link>https://kubaik.github.io/ai-pair-programmers-what-15k-devs-shipped-in-2026/</link>
+      <description>Ship a SaaS in hours not weeks using Next.js 15, tRPC, Drizzle &amp; Vercel — the 2026 stack that turns AI pair programmers into real products.</description>
+      <pubDate>Wed, 27 May 2026 10:46:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-programmers-what-15k-devs-shipped-in-2026/</guid>
+    </item>
     <item>
       <title>RAG in prod: the missing checklist</title>
       <link>https://kubaik.github.io/rag-in-prod-the-missing-checklist/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary offers $60k by choosing prompt vs embeddings in 2026 — latency, token costs, and compliance numbers from 47 audited systems. Regulated domains pay top dollar for embeddings engineering.</description>
       <pubDate>Tue, 26 May 2026 22:57:19 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salaries-prompts-vs-embeddings-data/</guid>
-    </item>
-    <item>
-      <title>Rebuilt my freelance dev system</title>
-      <link>https://kubaik.github.io/rebuilt-my-freelance-dev-system/</link>
-      <description>Your client dashboard shows 92% utilisation, but the fine print says ‘utilisation after context switching.’ I once billed 112 hours in a single week on…</description>
-      <pubDate>Tue, 26 May 2026 22:52:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/rebuilt-my-freelance-dev-system/</guid>
     </item>
   </channel>
 </rss>
