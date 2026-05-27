@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 23:43:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 23:52:28 +0000</lastBuildDate>
+    <item>
+      <title>AI scaffolding for non-traditional devs</title>
+      <link>https://kubaik.github.io/ai-scaffolding-for-non-traditional-devs/</link>
+      <description>Go from Python script to live API in 5 minutes with Deta Space and Railway in 2026. Free tiers, global edge networks, and rollback features compared for non-traditional developers.</description>
+      <pubDate>Wed, 27 May 2026 23:52:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-scaffolding-for-non-traditional-devs/</guid>
+    </item>
     <item>
       <title>Portfolio that hires: Africa&apos;s remote edge</title>
       <link>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</link>
@@ -138,13 +145,6 @@
       <description>Cut Scope 2 emissions 35% without adding latency — how we moved API calls to the greenest hours in us-east-1 using Node 20, Spot instances, and WattTime’s carbon API</description>
       <pubDate>Wed, 27 May 2026 16:54:49 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</guid>
-    </item>
-    <item>
-      <title>Leverage local pay in global remote roles</title>
-      <link>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</link>
-      <description>Negotiate remote pay 3x higher — cost-of-living adjustments, stale salary bands, and the productivity argument that actually works in 2026</description>
-      <pubDate>Wed, 27 May 2026 16:51:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</guid>
     </item>
   </channel>
 </rss>
