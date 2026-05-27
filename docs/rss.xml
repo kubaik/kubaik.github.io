@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 16:55:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 17:52:28 +0000</lastBuildDate>
+    <item>
+      <title>Big tech burnout: what actually drives exits</title>
+      <link>https://kubaik.github.io/big-tech-burnout-what-actually-drives-exits/</link>
+      <description>Senior engineers quit big tech jobs not for salary but for systems that break under real load — here’s how three hidden patterns cause burnout and how to fix them in 2026</description>
+      <pubDate>Wed, 27 May 2026 17:52:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-burnout-what-actually-drives-exits/</guid>
+    </item>
     <item>
       <title>Cut AWS carbon 25% without CPU hikes</title>
       <link>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM pipeline debugging time 96% with OpenTelemetry 1.33: add per-stage latency, GPU memory, token counters, and sampling rules that cost $18/day on Grafana Cloud.</description>
       <pubDate>Wed, 27 May 2026 06:58:36 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llms-dont-just-call-them/</guid>
-    </item>
-    <item>
-      <title>Over-engineered APIs cost $30k/month</title>
-      <link>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</link>
-      <description>Cut AWS costs 98% by replacing a microservices cluster with a single service — connection pooling, caching, and the simplicity mistake most teams make.</description>
-      <pubDate>Wed, 27 May 2026 06:54:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</guid>
     </item>
   </channel>
 </rss>
