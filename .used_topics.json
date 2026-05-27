@@ -1,4 +1,5 @@
 [
   "5G and mobile-first backends: what changes when your users are always on cellular",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture"
+  "The real cost of over-engineering: when simplicity beats the fancy architecture",
+  "Observability for AI pipelines: what to instrument when your system includes an LLM"
 ]

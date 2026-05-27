@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 12:23:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 12:36:57 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLM pipelines: what breaks in prod</title>
+      <link>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</link>
+      <description>Cut AI pipeline outages 78% by instrumenting raw model calls, tokenization, and rate limits. OpenTelemetry 1.27 patterns that catch prompt drift, GPU memory pressure, and provider throttling.</description>
+      <pubDate>Wed, 27 May 2026 12:36:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</guid>
+    </item>
     <item>
       <title>Over-engineering’s $12k/year tax</title>
       <link>https://kubaik.github.io/over-engineerings-12kyear-tax/</link>
@@ -138,13 +145,6 @@
       <description>Cut database wait time 70% by dropping the maxPoolSize=10 myth. Measure concurrency, not CPU cores, to tune connection pooling in PostgreSQL, MySQL, and Redis.</description>
       <pubDate>Wed, 27 May 2026 00:10:30 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-myths-holding-you-back/</guid>
-    </item>
-    <item>
-      <title>Decode MCP servers: hidden traps in AI tooling</title>
-      <link>https://kubaik.github.io/decode-mcp-servers-hidden-traps-in-ai-tooling/</link>
-      <description>Cut MCP latency 94% and save 77% on costs — the tooling choices, pooling sizes, and ping loop tweaks most teams miss when wiring AI agents to databases, files, and legacy systems in 2026.</description>
-      <pubDate>Tue, 26 May 2026 23:40:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/decode-mcp-servers-hidden-traps-in-ai-tooling/</guid>
     </item>
   </channel>
 </rss>
