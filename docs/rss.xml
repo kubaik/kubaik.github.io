@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 19:18:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 19:38:22 +0000</lastBuildDate>
+    <item>
+      <title>AI knows your codebase: what it can&apos;t fix</title>
+      <link>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</link>
+      <description>Cut PR review time 40% with AI that maps every change to runtime impact — 3 concrete steps to measure blast radius before you merge.</description>
+      <pubDate>Wed, 27 May 2026 19:38:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</guid>
+    </item>
     <item>
       <title>Hire Nairobi devs: timezone hack for EU startups</title>
       <link>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</link>
@@ -138,13 +145,6 @@
       <description>Ship a SaaS in hours not weeks using Next.js 15, tRPC, Drizzle &amp; Vercel — the 2026 stack that turns AI pair programmers into real products.</description>
       <pubDate>Wed, 27 May 2026 10:46:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-programmers-what-15k-devs-shipped-in-2026/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: the missing checklist</title>
-      <link>https://kubaik.github.io/rag-in-prod-the-missing-checklist/</link>
-      <description>The goal was simple: reduce ticket volume by 40% within six months without adding headcount.</description>
-      <pubDate>Wed, 27 May 2026 08:57:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-the-missing-checklist/</guid>
     </item>
   </channel>
 </rss>
