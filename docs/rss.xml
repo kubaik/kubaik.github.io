@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 12:36:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 12:40:23 +0000</lastBuildDate>
+    <item>
+      <title>Skip LinkedIn: build the portfolio remote teams</title>
+      <link>https://kubaik.github.io/skip-linkedin-build-the-portfolio-remote-teams/</link>
+      <description>Build a portfolio that EU recruiters actually open: live endpoints, IaC, and 500 ms latency from Nairobi. Costs under $12/month and gets interviews faster than LinkedIn spam.</description>
+      <pubDate>Wed, 27 May 2026 12:40:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-linkedin-build-the-portfolio-remote-teams/</guid>
+    </item>
     <item>
       <title>Instrument LLM pipelines: what breaks in prod</title>
       <link>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut freelance burnout in 30 days with real metrics, contract firewalls, and a 12-minute ritual. Three concrete numbers and a first-person mistake included.</description>
       <pubDate>Wed, 27 May 2026 01:38:48 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-from-freelance-burnout-in-3-steps/</guid>
-    </item>
-    <item>
-      <title>Pool size myths holding you back</title>
-      <link>https://kubaik.github.io/pool-size-myths-holding-you-back/</link>
-      <description>Cut database wait time 70% by dropping the maxPoolSize=10 myth. Measure concurrency, not CPU cores, to tune connection pooling in PostgreSQL, MySQL, and Redis.</description>
-      <pubDate>Wed, 27 May 2026 00:10:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-myths-holding-you-back/</guid>
     </item>
   </channel>
 </rss>
