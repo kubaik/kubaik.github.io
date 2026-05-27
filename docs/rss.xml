@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 00:10:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 01:39:03 +0000</lastBuildDate>
+    <item>
+      <title>Recover from freelance burnout in 3 steps</title>
+      <link>https://kubaik.github.io/recover-from-freelance-burnout-in-3-steps/</link>
+      <description>Cut freelance burnout in 30 days with real metrics, contract firewalls, and a 12-minute ritual. Three concrete numbers and a first-person mistake included.</description>
+      <pubDate>Wed, 27 May 2026 01:38:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-from-freelance-burnout-in-3-steps/</guid>
+    </item>
     <item>
       <title>Pool size myths holding you back</title>
       <link>https://kubaik.github.io/pool-size-myths-holding-you-back/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI review mistakes 85% with repo context fidelity metrics — static vs dynamic call site coverage and behavioral traces with OpenTelemetry 1.42.0</description>
       <pubDate>Tue, 26 May 2026 19:10:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-reads-your-repo-when-context-fails/</guid>
-    </item>
-    <item>
-      <title>Freelance burnout: what fixed the code freeze</title>
-      <link>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</link>
-      <description>Turns out my brain was the leaky component—VS Code’s memory usage actually dropped 18% after I fixed my sleep schedule.</description>
-      <pubDate>Tue, 26 May 2026 17:24:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</guid>
     </item>
   </channel>
 </rss>
