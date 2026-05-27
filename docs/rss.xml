@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 21:49:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 22:12:23 +0000</lastBuildDate>
+    <item>
+      <title>Cellular backend tuning: the 5 rules you can’t ignore</title>
+      <link>https://kubaik.github.io/cellular-backend-tuning-the-5-rules-you-cant-ignore/</link>
+      <description>Cut P99 latency 82% on mobile traffic — PostgreSQL pool tuning, Redis TTL, and the RRC state mistake most teams miss.</description>
+      <pubDate>Wed, 27 May 2026 22:12:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/cellular-backend-tuning-the-5-rules-you-cant-ignore/</guid>
+    </item>
     <item>
       <title>Cut 30% cloud carbon, keep 95th latency</title>
       <link>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</link>
@@ -138,13 +145,6 @@
       <description>Build a portfolio that EU recruiters actually open: live endpoints, IaC, and 500 ms latency from Nairobi. Costs under $12/month and gets interviews faster than LinkedIn spam.</description>
       <pubDate>Wed, 27 May 2026 12:40:07 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-linkedin-build-the-portfolio-remote-teams/</guid>
-    </item>
-    <item>
-      <title>Instrument LLM pipelines: what breaks in prod</title>
-      <link>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</link>
-      <description>Cut AI pipeline outages 78% by instrumenting raw model calls, tokenization, and rate limits. OpenTelemetry 1.27 patterns that catch prompt drift, GPU memory pressure, and provider throttling.</description>
-      <pubDate>Wed, 27 May 2026 12:36:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</guid>
     </item>
   </channel>
 </rss>
