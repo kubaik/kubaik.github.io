@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 19:38:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 19:41:07 +0000</lastBuildDate>
+    <item>
+      <title>Overpaying for idle DB connections</title>
+      <link>https://kubaik.github.io/overpaying-for-idle-db-connections/</link>
+      <description>Save $1,800/month on RDS costs by fixing one connection pool mistake most teams still copy from 2018 docs. Includes PostgreSQL 15 and Node.js 20 LTS examples and benchmarks.</description>
+      <pubDate>Wed, 27 May 2026 19:40:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/overpaying-for-idle-db-connections/</guid>
+    </item>
     <item>
       <title>AI knows your codebase: what it can&apos;t fix</title>
       <link>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</link>
@@ -138,13 +145,6 @@
       <description>Pick the right realtime protocol in 5 minutes — latency, cost, and browser support compared for WebSocket, SSE, and long polling (2026 data).</description>
       <pubDate>Wed, 27 May 2026 10:50:49 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-realtime-protocol-in-30-minutes/</guid>
-    </item>
-    <item>
-      <title>AI pair programmers: what 15k devs shipped in 2026</title>
-      <link>https://kubaik.github.io/ai-pair-programmers-what-15k-devs-shipped-in-2026/</link>
-      <description>Ship a SaaS in hours not weeks using Next.js 15, tRPC, Drizzle &amp; Vercel — the 2026 stack that turns AI pair programmers into real products.</description>
-      <pubDate>Wed, 27 May 2026 10:46:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-programmers-what-15k-devs-shipped-in-2026/</guid>
     </item>
   </channel>
 </rss>
