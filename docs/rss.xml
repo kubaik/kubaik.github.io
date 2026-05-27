@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 May 2026 23:40:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 00:10:43 +0000</lastBuildDate>
+    <item>
+      <title>Pool size myths holding you back</title>
+      <link>https://kubaik.github.io/pool-size-myths-holding-you-back/</link>
+      <description>Cut database wait time 70% by dropping the maxPoolSize=10 myth. Measure concurrency, not CPU cores, to tune connection pooling in PostgreSQL, MySQL, and Redis.</description>
+      <pubDate>Wed, 27 May 2026 00:10:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-myths-holding-you-back/</guid>
+    </item>
     <item>
       <title>Decode MCP servers: hidden traps in AI tooling</title>
       <link>https://kubaik.github.io/decode-mcp-servers-hidden-traps-in-ai-tooling/</link>
@@ -138,13 +145,6 @@
       <description>Turns out my brain was the leaky component—VS Code’s memory usage actually dropped 18% after I fixed my sleep schedule.</description>
       <pubDate>Tue, 26 May 2026 17:24:19 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-burnout-what-fixed-the-code-freeze/</guid>
-    </item>
-    <item>
-      <title>Portfolio that hires you: not projects, not LeetCode</title>
-      <link>https://kubaik.github.io/portfolio-that-hires-you-not-projects-not-leetcode/</link>
-      <description>Build one production system, not three projects: €65k remote offers from Nairobi using Python 3.11, FastAPI 0.104 and CloudWatch metrics.</description>
-      <pubDate>Tue, 26 May 2026 17:01:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-hires-you-not-projects-not-leetcode/</guid>
     </item>
   </channel>
 </rss>
