@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 23:52:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 23:55:37 +0000</lastBuildDate>
+    <item>
+      <title>No CS degree needed to become senior engineer</title>
+      <link>https://kubaik.github.io/no-cs-degree-needed-to-become-senior-engineer/</link>
+      <description>Cut 78% AWS cost without a CS degree — how debugging velocity, systems knowledge, and impact visibility beat LeetCode and formal education for senior roles in 2026.</description>
+      <pubDate>Wed, 27 May 2026 23:55:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-cs-degree-needed-to-become-senior-engineer/</guid>
+    </item>
     <item>
       <title>AI scaffolding for non-traditional devs</title>
       <link>https://kubaik.github.io/ai-scaffolding-for-non-traditional-devs/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech jobs not for salary but for systems that break under real load — here’s how three hidden patterns cause burnout and how to fix them in 2026</description>
       <pubDate>Wed, 27 May 2026 17:52:12 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-burnout-what-actually-drives-exits/</guid>
-    </item>
-    <item>
-      <title>Cut AWS carbon 25% without CPU hikes</title>
-      <link>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</link>
-      <description>Cut Scope 2 emissions 35% without adding latency — how we moved API calls to the greenest hours in us-east-1 using Node 20, Spot instances, and WattTime’s carbon API</description>
-      <pubDate>Wed, 27 May 2026 16:54:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-carbon-25-without-cpu-hikes/</guid>
     </item>
   </channel>
 </rss>
