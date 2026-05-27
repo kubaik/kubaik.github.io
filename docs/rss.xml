@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 23:39:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 23:43:47 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio that hires: Africa&apos;s remote edge</title>
+      <link>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</link>
+      <description>Cut interview ghosting 50%: focus on one system with metrics, not GitHub stars — real AWS examples, p99 latency numbers, and the failure story that gets remote roles.</description>
+      <pubDate>Wed, 27 May 2026 23:43:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</guid>
+    </item>
     <item>
       <title>Debug LLM pipelines with observability</title>
       <link>https://kubaik.github.io/debug-llm-pipelines-with-observability/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote pay 3x higher — cost-of-living adjustments, stale salary bands, and the productivity argument that actually works in 2026</description>
       <pubDate>Wed, 27 May 2026 16:51:46 +0000</pubDate>
       <guid>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</guid>
-    </item>
-    <item>
-      <title>Set max pool size too low? Your app is slower</title>
-      <link>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</link>
-      <description>Reduce API latency 60% by sizing connection pools correctly — new research on 3 production systems shows how most teams misconfigure pg-pool, HikariCP, and pool_size in 2026.</description>
-      <pubDate>Wed, 27 May 2026 16:36:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</guid>
     </item>
   </channel>
 </rss>
