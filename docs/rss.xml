@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 23:01:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 23:16:01 +0000</lastBuildDate>
+    <item>
+      <title>Debug LLM pipelines with observability</title>
+      <link>https://kubaik.github.io/debug-llm-pipelines-with-observability/</link>
+      <description>Instrument LLM pipelines and cut latency 30% — metrics, logging, and error handling for AI applications</description>
+      <pubDate>Wed, 27 May 2026 23:15:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-llm-pipelines-with-observability/</guid>
+    </item>
     <item>
       <title>Over-engineering costs more than you think</title>
       <link>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</link>
@@ -138,13 +145,6 @@
       <description>Reduce API latency 60% by sizing connection pools correctly — new research on 3 production systems shows how most teams misconfigure pg-pool, HikariCP, and pool_size in 2026.</description>
       <pubDate>Wed, 27 May 2026 16:36:42 +0000</pubDate>
       <guid>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</guid>
-    </item>
-    <item>
-      <title>Vector DB vs brute force: the 50ms rule</title>
-      <link>https://kubaik.github.io/vector-db-vs-brute-force-the-50ms-rule/</link>
-      <description>Cut similarity search 75% with brute-force Postgres vs 50ms vector DBs — latency benchmarks, costs, and the 50ms rule you can test in 30 minutes.</description>
-      <pubDate>Wed, 27 May 2026 14:48:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-db-vs-brute-force-the-50ms-rule/</guid>
     </item>
   </channel>
 </rss>
