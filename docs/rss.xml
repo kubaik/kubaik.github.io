@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 16:36:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 16:52:02 +0000</lastBuildDate>
+    <item>
+      <title>Leverage local pay in global remote roles</title>
+      <link>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</link>
+      <description>Negotiate remote pay 3x higher — cost-of-living adjustments, stale salary bands, and the productivity argument that actually works in 2026</description>
+      <pubDate>Wed, 27 May 2026 16:51:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/leverage-local-pay-in-global-remote-roles/</guid>
+    </item>
     <item>
       <title>Set max pool size too low? Your app is slower</title>
       <link>https://kubaik.github.io/set-max-pool-size-too-low-your-app-is-slower/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search costs 60% by measuring p99 first — FAISS 1.8 vs Pinecone Serverless 2026.09 benchmark, recall trade-offs, and the one metric every team skips until it’s too late.</description>
       <pubDate>Wed, 27 May 2026 06:49:58 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-vector-db/</guid>
-    </item>
-    <item>
-      <title>5G’s 8-second socket trap</title>
-      <link>https://kubaik.github.io/5gs-8-second-socket-trap/</link>
-      <description>Cut mobile write failures 89% by tuning Redis connection pools for 5G latency spikes — socket timeouts, deduplication, and Prometheus metrics you can deploy today.</description>
-      <pubDate>Wed, 27 May 2026 06:05:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/5gs-8-second-socket-trap/</guid>
     </item>
   </channel>
 </rss>
