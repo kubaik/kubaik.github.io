@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 18:16:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 18:19:30 +0000</lastBuildDate>
+    <item>
+      <title>2026 salary split: prompt vs fine-tune</title>
+      <link>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</link>
+      <description>Cut AI salary negotiations 20–30% with this data-backed breakdown of prompt engineering vs fine-tuning in 2026. Includes real salary bands, benchmark results, and the exact tool versions teams use today.</description>
+      <pubDate>Wed, 27 May 2026 18:19:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs Polling: Pick Fast</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 45% without sacrificing speed — real AWS cost and latency numbers from a health-tech rebuild. Includes code, benchmarks, and the one misconfiguration that wasted 12% energy.</description>
       <pubDate>Wed, 27 May 2026 08:54:19 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-carbon-45-without-sacrificing-speed/</guid>
-    </item>
-    <item>
-      <title>Negotiate pay: FX vs local costs</title>
-      <link>https://kubaik.github.io/negotiate-pay-fx-vs-local-costs/</link>
-      <description>Negotiate remote pay in 2026 with a free Python CLI that adjusts for FX and local cost of living — saves 3–4 hours per negotiation and increases final offers by 14–99%</description>
-      <pubDate>Wed, 27 May 2026 08:04:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-pay-fx-vs-local-costs/</guid>
     </item>
   </channel>
 </rss>
