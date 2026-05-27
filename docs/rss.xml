@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 20:43:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 21:49:12 +0000</lastBuildDate>
+    <item>
+      <title>Cut 30% cloud carbon, keep 95th latency</title>
+      <link>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</link>
+      <description>Cut cloud carbon 30% without hurting user speed — how we shrank embodied carbon in CI, selective caching, and right-sized containers while keeping p95 latency at 285 ms.</description>
+      <pubDate>Wed, 27 May 2026 21:48:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</guid>
+    </item>
     <item>
       <title>RAG in prod: 3 traps no tutorial warns you about</title>
       <link>https://kubaik.github.io/rag-in-prod-3-traps-no-tutorial-warns-you-about/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI pipeline outages 78% by instrumenting raw model calls, tokenization, and rate limits. OpenTelemetry 1.27 patterns that catch prompt drift, GPU memory pressure, and provider throttling.</description>
       <pubDate>Wed, 27 May 2026 12:36:42 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-llm-pipelines-what-breaks-in-prod/</guid>
-    </item>
-    <item>
-      <title>Over-engineering’s $12k/year tax</title>
-      <link>https://kubaik.github.io/over-engineerings-12kyear-tax/</link>
-      <description>Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.</description>
-      <pubDate>Wed, 27 May 2026 12:23:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineerings-12kyear-tax/</guid>
     </item>
   </channel>
 </rss>
