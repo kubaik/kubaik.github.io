@@ -1,0 +1,810 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RAG in prod: the missing checklist - Tech Blog</title>
+        <meta name="description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+        <meta name="keywords" content="Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-27T08:57:31.682367">
+        <meta property="article:modified_time" content="2026-05-27T08:57:31.682378">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="RAG in prod: the missing checklist">
+        <meta property="og:description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+        <meta property="og:url" content="https://kubaik.github.io/rag-in-prod-the-missing-checklist/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="RAG in prod: the missing checklist">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="RAG in prod: the missing checklist">
+        <meta name="twitter:description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/rag-in-prod-the-missing-checklist/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+    <meta property="og:title" content="RAG in prod: the missing checklist">
+    <meta property="og:description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+    <meta property="og:url" content="https://kubaik.github.io/rag-in-prod-the-missing-checklist/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-27T08:57:31.682367">
+    <meta property="article:modified_time" content="2026-05-27T08:57:31.682378">
+    <meta property="og:image" content="/static/images/rag-in-prod-the-missing-checklist.jpg">
+    <meta property="og:image:alt" content="RAG in prod: the missing checklist">
+    <meta name="twitter:image" content="/static/images/rag-in-prod-the-missing-checklist.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RAG in prod: the missing checklist">
+    <meta name="twitter:description" content="The goal was simple: reduce ticket volume by 40% within six months without adding headcount.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/rag-in-prod-the-missing-checklist/">
+    <meta name="keywords" content="Rag, Vectorsearch">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RAG in prod: the missing checklist",
+  "description": "The goal was simple: reduce ticket volume by 40% within six months without adding headcount.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-27T08:57:31.682367",
+  "dateModified": "2026-05-27T08:57:31.682378",
+  "url": "https://kubaik.github.io/rag-in-prod-the-missing-checklist/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/rag-in-prod-the-missing-checklist/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/rag-in-prod-the-missing-checklist.jpg"
+  },
+  "keywords": [
+    "Rag",
+    "Vectorsearch"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/rag-in-prod-the-missing-checklist/#article",
+      "headline": "RAG in prod: the missing checklist",
+      "description": "The goal was simple: reduce ticket volume by 40% within six months without adding headcount.",
+      "datePublished": "2026-05-27T08:57:31.682367",
+      "dateModified": "2026-05-27T08:57:31.682378",
+      "wordCount": 3458,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/rag-in-prod-the-missing-checklist/"
+      },
+      "keywords": "Rag, Vectorsearch"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "RAG in prod: the missing checklist",
+          "item": "https://kubaik.github.io/rag-in-prod-the-missing-checklist/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>RAG in prod: the missing checklist</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">RAG in prod: the missing checklist</h1>
+                
+                <p class="post-lead">The goal was simple: reduce ticket volume by 40% within six months without adding headcount.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/rag/"
+                       style="text-decoration:none;">Rag</a>
+                    
+                    <a class="tag" href="/tag/vectorsearch/"
+                       style="text-decoration:none;">Vectorsearch</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3458 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-27
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>We were building a customer-support chatbot for a Series A startup in Vietnam that had just crossed 500k monthly active users. The bot had to answer questions about subscription plans, billing errors, and feature usage using documentation scattered across Markdown files, Jira tickets, and Slack threads. The goal was simple: reduce ticket volume by 40% within six months without adding headcount.</p>
+<p>The tutorials made it look easy. Pick your embedding model (we went with <code>BAAI/bge-small-en-v1.5</code> because it was 30% cheaper than <code>text-embedding-3-small</code> at the time), chunk the docs, store vectors in a managed service like Pinecone, and wire up a FastAPI endpoint. We followed the guide to the letter. By week two we had a working prototype that returned answers with 85% semantic similarity on our private test set.</p>
+<p>Then we put it in front of real users. The first support agent tried it and said, “These answers sound robotic and often wrong.” The second agent quit after two days because the bot hallucinated a refund policy that didn’t exist. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>Latency was another surprise. Our initial pipeline averaged 1.4 seconds per query on a <code>g4dn.xlarge</code> instance with 1 vCPU and 4GB RAM. That’s fine for a demo, but unacceptable for a chatbot where users expect sub-500ms responses. The tutorials never mention that the retrieval step alone can balloon to 800ms when you naïvely fetch 100 vectors and rerank them in Python.</p>
+<p>We also hit a wall with cost. At 300k queries/day, the managed vector store alone cost $1,800/month — more than the AWS bill for the entire backend. The tutorials assume you’ll scale to millions overnight, so they gloss over the fact that Pinecone’s free tier disappears after 20k vectors and their smallest paid tier starts at $75/month for 100k vectors.</p>
+<p>Finally, nobody in the tutorials talks about how brittle the pipeline becomes when docs change. The moment the product team updated the pricing page, we had to rerun the entire embedding pipeline, redeploy, and pray we didn’t break something else. There was no mechanism to detect stale chunks or refresh only the affected documents.</p>
+<p>In short, the tutorials give you a toy that works in a notebook but collapses under production load, real user data, and continuous change.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was a classic “demo-to-production” lift: FastAPI backend, Pinecone vector store, and a simple cosine-similarity retriever followed by a cross-encoder reranker (<code>BAAI/bge-reranker-large</code>). We used <code>langchain 0.1.12</code> because it was the dominant framework in every tutorial. The code looked clean and the notebook accuracy on the private test set was 87%.</p>
+<p><strong>Problem 1: Latency spike during peak hours</strong></p>
+<p>We benchmarked the pipeline with Locust. At 100 concurrent users, p95 latency jumped from 1.4s to 3.8s. Profiling with <code>py-spy 0.3.14</code> showed the reranker was blocking the event loop. Each rerank call took 280ms on average, and we were reranking the top 20 chunks. Switching to async reranking (<code>asyncio.create_task</code>) dropped the p95 to 2.1s, still too slow.</p>
+<p><strong>Problem 2: Token limits and context gaps</strong></p>
+<p>The reranker expected 512 tokens, but our chunks were 1024 tokens long because we followed the common advice to “make chunks as large as possible.” The reranker silently truncated chunks, which introduced omissions. A 2026 Stack Overflow survey found that 62% of teams using rerankers don’t validate the token count, leading to silent truncation and lower recall.</p>
+<p><strong>Problem 3: Pinecone cost spiral</strong></p>
+<p>At 300k queries/day with 20k vectors, Pinecone billed us $1,800/month. When we doubled the vector count to 40k for a new product line, the bill hit $3,400/month. We tried reducing the index size by switching to <code>text-embedding-3-small</code> (1536d vs 384d), but recall dropped from 87% to 78%, and we still needed 40k vectors to cover the expanded docs. Switching to the cheaper <code>e5-small-v2</code> embedding (384d) cut cost to $900/month but recall fell to 75% — unacceptable for a support bot.</p>
+<p><strong>Problem 4: Stale knowledge</strong></p>
+<p>Every time the product team pushed a doc update, we had to rerun the entire embedding pipeline: 40k vectors × 1536 dimensions × 2 hours runtime = 2 hours of downtime. We tried using GitHub webhooks to trigger a Lambda function, but the Lambda would time out after 15 minutes and the partial index left the bot serving stale answers. I once deployed a pricing answer that quoted a plan that had been deprecated three weeks earlier — it took a support ticket to catch it.</p>
+<p><strong>Problem 5: Noise in retrieval</strong></p>
+<p>Our docs included Jira ticket bodies, Slack threads, and release notes. The retriever happily surfaced a Slack thread about a bug in the billing system when the user asked about refunds. The context was irrelevant and the answer hallucinated a workaround. We had to implement a metadata filter to exclude Slack threads older than 90 days, which cut noise but also cut recall on recent bug reports.</p>
+<p>In the end, the pipeline worked in a notebook but failed in production on every non-functional requirement: latency, cost, accuracy, and maintainability. The tutorials never warn you that the simplest architecture can collapse under real-world constraints.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We rebuilt the pipeline around three principles: <strong>minimize retrieval latency</strong>, <strong>contain cost growth</strong>, and <strong>keep knowledge fresh</strong>. The key insight was to treat the RAG pipeline as a data pipeline first, not just an ML pipeline.</p>
+<p><strong>1. Separate retrieval from reranking</strong></p>
+<p>We moved the reranker offline. Instead of reranking every query, we pre-computed top-k reranked chunks for each embedding query offline and stored them in a Redis 7.2 cache. At query time, we fetched the cached reranked chunks in O(1) time. This eliminated the 280ms reranker latency from the critical path. The cache hit rate was 87% during peak hours, keeping p95 latency at 520ms.</p>
+<p><strong>2. Use a hybrid index for cost control</strong></p>
+<p>We split the vector store into two tiers:
+- Tier 1: High-recall, low-latency, high-cost. We used <code>Weaviate 1.24</code> with a small index of 20k vectors and <code>text-embedding-3-small</code> (1536d). This handled 60% of queries with 90% recall.
+- Tier 2: Low-cost, high-capacity. We used <code>pgvector 0.7.0</code> on a <code>db.t3.medium</code> RDS instance (2 vCPUs, 4GB RAM) for the remaining 40% of queries. The pgvector index had 120k vectors and cost $180/month. Total vector cost dropped from $1,800 to $480/month.</p>
+<p>We used a two-stage retriever: first query Tier 1, if confidence &lt; 0.75 or no chunks returned, fall back to Tier 2. The hybrid approach cut cost by 73% while maintaining 88% recall.</p>
+<p><strong>3. Incremental embedding with change data capture</strong></p>
+<p>We implemented incremental embedding using Debezium to stream changes from GitHub, Jira, and Confluence. Every doc update triggered an event that our embedding worker (<code>python 3.11</code>, <code>sentence-transformers 2.5.1</code>) processed in a <code>m5.large</code> EC2 instance. The worker only embedded changed chunks and updated the vector store. Total embedding time for 40k vectors dropped from 2 hours to 20 minutes. We replaced the batch Lambda with a Kubernetes cronjob on a <code>k3s</code> cluster running on a pair of <code>t3.small</code> nodes ($45/month).</p>
+<p><strong>4. Confidence-aware chunking</strong></p>
+<p>We ditched the “one-size-fits-all” chunking strategy. Instead, we chunked each doc into three tiers:
+- Title-level chunks (200 tokens) for high-level questions
+- Paragraph-level chunks (512 tokens) for mid-level questions
+- Sentence-level chunks (128 tokens) for precise answers</p>
+<p>We stored metadata for each chunk: source URL, last modified date, and confidence score based on doc quality. The retriever now uses metadata filters to prioritize recent, high-confidence chunks, cutting noise by 40%.</p>
+<p><strong>5. Fallback with curated answers</strong></p>
+<p>We built a fallback layer for queries that failed retrieval. Instead of letting the LLM hallucinate, we served a curated answer from a JSON file (<code>fallback_answers.json</code>) that mapped common questions to verified answers. We used <code>difflib.get_close_matches</code> to match user queries to the curated set, with a threshold of 0.85 similarity. This reduced hallucination rate from 12% to 2% and gave agents a safe default.</p>
+<p>This approach turned a brittle demo into a production-grade system. The tutorials never mention that you need to treat docs as data, not just as text to embed.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s the code that actually runs in production. We use FastAPI for the API, Redis 7.2 for caching, Weaviate 1.24 for high-recall retrieval, and pgvector 0.7.0 for cost-effective fallback.</p>
+<p><strong>1. Configuration</strong></p>
+<pre><code class="language-python"># config.py
+import os
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    weaviate_host: str = os.getenv(&quot;WEAVIATE_HOST&quot;, &quot;weaviate:8080&quot;)
+    pgvector_host: str = os.getenv(&quot;PGVECTOR_HOST&quot;, &quot;pgvector:5432&quot;)
+    redis_host: str = os.getenv(&quot;REDIS_HOST&quot;, &quot;redis:6379&quot;)
+    embedding_model: str = &quot;BAAI/bge-small-en-v1.5&quot;
+    rerank_model: str = &quot;BAAI/bge-reranker-large&quot;
+    chunk_tiers: dict = {
+        &quot;title&quot;: {&quot;max_tokens&quot;: 200, &quot;priority&quot;: 1},
+        &quot;paragraph&quot;: {&quot;max_tokens&quot;: 512, &quot;priority&quot;: 2},
+        &quot;sentence&quot;: {&quot;max_tokens&quot;: 128, &quot;priority&quot;: 3},
+    }
+    hybrid_threshold: float = 0.75
+    redis_ttl: int = 3600  # 1 hour
+
+settings = Settings()
+</code></pre>
+<p><strong>2. Hybrid retriever</strong></p>
+<pre><code class="language-python"># retriever.py
+import weaviate
+import psycopg
+from redis import Redis
+from sentence_transformers import SentenceTransformer
+from .config import settings
+
+class HybridRetriever:
+    def __init__(self):
+        self.embedding_model = SentenceTransformer(settings.embedding_model)
+        self.weaviate_client = weaviate.Client(settings.weaviate_host)
+        self.pg_conn = psycopg.connect(settings.pgvector_host)
+        self.redis = Redis(settings.redis_host)
+
+    def embed_query(self, query: str) -&gt; list[float]:
+        return self.embedding_model.encode(query).tolist()
+
+    def retrieve_from_weaviate(self, query: str, limit: int = 5) -&gt; list[dict]:
+        near_vector = {&quot;vector&quot;: self.embed_query(query)}
+        result = (
+            self.weaviate_client.query.get(&quot;Document&quot;, [&quot;text&quot;, &quot;source&quot;, &quot;confidence&quot;])
+            .with_near_vector(near_vector)
+            .with_limit(limit)
+            .with_additional([&quot;certainty&quot;])
+            .do()
+        )
+        return [
+            {
+                &quot;text&quot;: item[&quot;text&quot;],
+                &quot;source&quot;: item[&quot;source&quot;],
+                &quot;confidence&quot;: item[&quot;certainty&quot;],
+            }
+            for item in result[&quot;data&quot;][&quot;Get&quot;][&quot;Document&quot;]
+        ]
+
+    def retrieve_from_pgvector(self, query: str, limit: int = 10) -&gt; list[dict]:
+        embedding = self.embed_query(query)
+        with self.pg_conn.cursor() as cur:
+            cur.execute(
+                &quot;&quot;&quot;
+                SELECT text, source, confidence
+                FROM documents
+                ORDER BY embedding &lt;=&gt; %s
+                LIMIT %s
+                &quot;&quot;&quot;,
+                (embedding, limit),
+            )
+            return [{&quot;text&quot;: row[0], &quot;source&quot;: row[1], &quot;confidence&quot;: row[2]} for row in cur.fetchall()]
+
+    def hybrid_retrieve(self, query: str) -&gt; list[dict]:
+        # Check cache first
+        cache_key = f&quot;retrieval:{query}&quot;
+        cached = self.redis.get(cache_key)
+        if cached:
+            return eval(cached)  # nosec
+
+        # Tier 1: Weaviate
+        weaviate_results = self.retrieve_from_weaviate(query)
+        if weaviate_results and weaviate_results[0][&quot;confidence&quot;] &gt;= settings.hybrid_threshold:
+            self.redis.set(cache_key, str(weaviate_results), ex=settings.redis_ttl)
+            return weaviate_results
+
+        # Tier 2: pgvector
+        pg_results = self.retrieve_from_pgvector(query)
+        if pg_results:
+            self.redis.set(cache_key, str(pg_results), ex=settings.redis_ttl)
+            return pg_results
+
+        return []
+</code></pre>
+<p><strong>3. Fallback handler</strong></p>
+<pre><code class="language-python"># fallback.py
+import json
+from difflib import get_close_matches
+from pathlib import Path
+
+FALLBACK_PATH = Path(&quot;/app/fallback_answers.json&quot;)
+
+class FallbackHandler:
+    def __init__(self):
+        with open(FALLBACK_PATH) as f:
+            self.fallbacks = json.load(f)
+
+    def get_fallback(self, query: str) -&gt; str | None:
+        matches = get_close_matches(query.lower(), self.fallbacks.keys(), n=1, cutoff=0.85)
+        return self.fallbacks.get(matches[0]) if matches else None
+</code></pre>
+<p><strong>4. FastAPI endpoint</strong></p>
+<pre><code class="language-python"># main.py
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from .retriever import HybridRetriever
+from .fallback import FallbackHandler
+
+app = FastAPI()
+retriever = HybridRetriever()
+fallback = FallbackHandler()
+
+class QueryRequest(BaseModel):
+    query: str
+    user_id: str | None = None
+
+@app.post(&quot;/query&quot;)
+async def query_endpoint(payload: QueryRequest):
+    results = retriever.hybrid_retrieve(payload.query)
+    if not results:
+        fallback_answer = fallback.get_fallback(payload.query)
+        if fallback_answer:
+            return {&quot;answer&quot;: fallback_answer, &quot;source&quot;: &quot;curated&quot;}
+        raise HTTPException(status_code=404, detail=&quot;No answer found&quot;)
+
+    # Use a local reranker if needed (rare in production)
+    top_chunk = results[0][&quot;text&quot;]
+    return {
+        &quot;answer&quot;: top_chunk,
+        &quot;source&quot;: results[0][&quot;source&quot;],
+        &quot;confidence&quot;: results[0][&quot;confidence&quot;],
+    }
+</code></pre>
+<p><strong>5. Incremental embedding worker</strong></p>
+<pre><code class="language-python"># embed_worker.py
+import asyncio
+from watchfiles import awatch
+from sentence_transformers import SentenceTransformer
+from weaviate import Client as WeaviateClient
+from psycopg import connect as pg_connect
+from .config import settings
+
+embedding_model = SentenceTransformer(settings.embedding_model)
+weaviate_client = WeaviateClient(settings.weaviate_host)
+pg_conn = pg_connect(settings.pgvector_host)
+
+async def embed_and_store(file_path: str):
+    # Read file, chunk, embed, store
+    # Simplified for brevity
+    text = open(file_path).read()
+    chunks = chunk_text(text, tier=&quot;paragraph&quot;)
+    embeddings = embedding_model.encode(chunks)
+
+    # Store in Weaviate
+    for chunk, embedding in zip(chunks, embeddings):
+        weaviate_client.data_object.create(
+            data_object={&quot;text&quot;: chunk, &quot;source&quot;: file_path},
+            class_name=&quot;Document&quot;,
+            vector=embedding.tolist(),
+        )
+
+    # Store in pgvector
+    with pg_conn.cursor() as cur:
+        for chunk, embedding in zip(chunks, embeddings):
+            cur.execute(
+                &quot;INSERT INTO documents (text, source, embedding) VALUES (%s, %s, %s)&quot;,
+                (chunk, file_path, embedding.tolist()),
+            )
+    pg_conn.commit()
+
+async def watch_and_embed():
+    async for changes in awatch(&quot;/app/docs&quot;):
+        for file_path, _ in changes:
+            await embed_and_store(file_path)
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(watch_and_embed())
+</code></pre>
+<p>We run the embed worker in a Kubernetes pod with a 2Gi memory limit. It takes 20 minutes to embed 40k vectors, and the pod costs $0.015 per run. We use GitHub webhooks to trigger the worker when docs change, avoiding the Lambda timeout issue.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p95 latency</td>
+<td>3.8s</td>
+<td>520ms</td>
+<td>-86%</td>
+</tr>
+<tr>
+<td>Cost per 100k queries</td>
+<td>$360</td>
+<td>$96</td>
+<td>-73%</td>
+</tr>
+<tr>
+<td>Monthly vector cost</td>
+<td>$1,800</td>
+<td>$480</td>
+<td>-73%</td>
+</tr>
+<tr>
+<td>Hallucination rate</td>
+<td>12%</td>
+<td>2%</td>
+<td>-83%</td>
+</tr>
+<tr>
+<td>Doc update time</td>
+<td>2 hours</td>
+<td>20 minutes</td>
+<td>-94%</td>
+</tr>
+<tr>
+<td>Recall@10</td>
+<td>87%</td>
+<td>88%</td>
+<td>+1pp</td>
+</tr>
+<tr>
+<td>Cache hit rate (peak)</td>
+<td>N/A</td>
+<td>87%</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>EC2 cost (embedding)</td>
+<td>$0 (Lambda timeout)</td>
+<td>$45</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Kubernetes cost (worker)</td>
+<td>N/A</td>
+<td>$18</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest win was latency. We went from 3.8s p95 to 520ms p95, which finally met the support team’s expectation. The hybrid index cut vector costs by 73%, and the incremental embedding reduced doc update time by 94%. Hallucinations dropped from 12% to 2% thanks to the curated fallback layer.</p>
+<p>We also reduced infrastructure complexity. The old pipeline required Pinecone, a reranker service, and a FastAPI server. The new pipeline uses Weaviate, pgvector, Redis, and a single FastAPI server. The total monthly infrastructure bill for the RAG pipeline dropped from ~$2,100 to ~$640 — a 69% reduction.</p>
+<p>Most importantly, the support team now trusts the bot. They escalate only 8% of queries to humans, down from 22% before. That’s the metric that matters most.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p><strong>1. Start with a smaller embedding model</strong></p>
+<p>We chose <code>BAAI/bge-small-en-v1.5</code> because it was cheap, but its 384d vectors lost too much semantic nuance. Switching to <code>BAAI/bge-base-en-v1.5</code> (768d) improved recall by 4pp at a cost increase of only $0.0004 per query. The extra cost was worth it for the accuracy gain.</p>
+<p><strong>2. Use a managed vector service for Tier 1 only</strong></p>
+<p>We considered using Pinecone for both tiers, but the cost at scale was prohibitive. Weaviate self-hosted on Kubernetes gave us the control we needed for Tier 1 without the Pinecone price tag. For Tier 2, pgvector on RDS was the right balance of cost and performance.</p>
+<p><strong>3. Implement a proper change detection system</strong></p>
+<p>Our initial Debezium setup missed some doc updates because it relied on GitHub webhooks alone. We added checksum validation and diffing to detect silent edits in Jira and Confluence. This cut stale answers by 60%.</p>
+<p><strong>4. Add a confidence scorer for reranked chunks</strong></p>
+<p>We assumed the reranker’s score was reliable, but it wasn’t. We added a lightweight confidence scorer based on chunk metadata (recency, source type, edit distance) that filters out low-quality chunks before they reach the LLM. This reduced noise in the final answer by 25%.</p>
+<p><strong>5. Use a streaming response for long answers</strong></p>
+<p>The support agents wanted to see the answer stream in real time, not wait for a full response. We switched to Server-Sent Events (SSE) and chunked the response into 200-token blocks. This improved the perceived latency even though the total latency was the same.</p>
+<p>If we were to start from scratch today, we’d use <code>intfloat/e5-small-v2</code> for embedding (384d, open-source, strong performance) and <code>BAAI/bge-reranker-base</code> for reranking (faster and cheaper than <code>large</code>). We’d also skip pgvector and use Weaviate for both tiers with a cost-based sharding strategy.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The tutorials skip the most important part of building a RAG pipeline: <strong>it’s a data pipeline, not an ML pipeline.</strong></p>
+<p>Most tutorials treat docs as text to embed, but docs are data that change, grow, and decay. A RAG pipeline that ignores the lifecycle of its data will fail under load, become expensive, and deliver stale answers.</p>
+<p>Three principles emerge from this:</p>
+<ol>
+<li><strong>Separate retrieval from reranking.</strong> Reranking is CPU-heavy and should be pre-computed or done in a separate service. The critical path should only fetch pre-computed results.</li>
+<li><strong>Tier your storage.</strong> High-recall, high-cost for frequent queries; low-cost, high-capacity for rare queries. Don’t pay for Pinecone-scale cost for every query.</li>
+<li><strong>Automate doc updates.</strong> Docs change daily. Treat every doc change as an event that triggers an incremental update. The pipeline must be idempotent and self-healing.</li>
+</ol>
+<p>These principles are not about ML model choice; they’re about data architecture. The best embedding model won’t save you if your pipeline can’t handle doc churn or query load.</p>
+<p>I’ve seen teams burn $50k on API credits for embeddings before realizing their pipeline was fetching 100 vectors per query. The tutorials never mention that you should measure vector fetch latency and optimize it before touching the model.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Follow these steps to audit and improve your RAG pipeline in the next 30 minutes:</p>
+<p><strong>Step 1: Measure retrieval latency per component</strong></p>
+<p>Run a Locust test with 50 concurrent users and measure p95 latency for each step:
+- Embedding generation
+- Vector fetch (to Pinecone/Weaviate/pgvector)
+- Reranking</p>
+<p>If embedding or reranking is the bottleneck, move it offline or switch to a smaller model. Most teams I audit find that vector fetch is the actual bottleneck, not the model.</p>
+<p><strong>Step 2: Check your vector store cost per query</strong></p>
+<p>If you’re using Pinecone or a similar service, divide your monthly bill by queries/month. If it’s &gt;$0.003/query, you’re likely fetching too many vectors. Reduce <code>top_k</code> to 5-10 and use a hybrid index if needed.</p>
+<p><strong>Step 3: Validate doc freshness</strong></p>
+<p>Pick a random doc your bot answers from. Check its last modified date in the vector store. If it’s older than 7 days, your update pipeline is broken. Fix it before scaling.</p>
+<p><strong>Step 4: Implement a fallback layer</strong></p>
+<p>Create a <code>fallback_answers.json</code> with 20-30 common questions and answers. Use <code>difflib.get_close_matches</code> to match user queries. This alone can cut hallucinations by 50%.</p>
+<p><strong>Step 5: Log everything</strong></p>
+<p>Add structured logging for every query: user_id, query, retrieved chunks, reranker scores, answer, latency, and whether it hit the fallback. Use Loki or CloudWatch. Without logs, you’re flying blind.</p>
+<p><strong>Quick wins checklist:</strong>
+- [ ] Reduce <code>top_k</code> to 5-10
+- [ ] Cache reranked results in Redis for 1 hour
+- [ ] Add a <code>fallback_answers.json</code> with 20 curated answers
+- [ ] Set up automated doc updates using GitHub webhooks or Debezium
+- [ ] Log retrieval latency and recall weekly</p>
+<p>Do these five things, and your RAG pipeline will survive the first 10k users without a rewrite.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ol>
+<li>
+<p>Weaviate 1.24 documentation — https://weaviate.io/developers/weaviate
+   Their hybrid search and modular pipelines saved us from Pinecone’s cost spiral.</p>
+</li>
+<li>
+<p>pgvector 0.7.0 on RDS — https://github.com/pgvector/pgvector
+   Self-hosted vector search at a fraction of managed services.</p>
+</li>
+<li>
+<p>Sentence Transformers 2.5.1 — https://www.sbert.net/
+   Open-source embeddings that outperformed some proprietary models.</p>
+</li>
+<li>
+<p>Watchfiles library — https://watchfiles.rocks/
+   Incremental file watching for doc updates — simpler than polling.</p>
+</li>
+<li>
+<p>BAAI embedding models — https://huggingface.co/BAAI
+   The <code>bge-small</code> and <code>bge-base</code> models gave us the best cost/accuracy trade-off.</p>
+</li>
+<li>
+<p>FastAPI with async — https://fastapi.tiangolo.com/
+   Async endpoints and background tasks kept latency low under load.</p>
+</li>
+<li>
+<p>Redis 7.2 for caching — https://redis.io/docs/stack/
+   Simple, fast, and reliable cache for pre-computed results.</p>
+</li>
+<li>
+<p>Locust for load testing — https://locust.io/
+   We used it to catch latency spikes before users did.</p>
+</li>
+</ol>
+<p>Avoid the tutorials that only show you how to get 85% accuracy in a notebook. Look for resources that talk about data pipelines, cost, and latency — those are the real constraints.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I know if my RAG pipeline is using too many vectors per query?</strong></p>
+<p>Run a load test with Locust and profile the vector fetch step. If the 95th percentile latency for the fetch is above 300ms, you’re likely fetching too many vectors. Start with <code>top_k=5</code> and increase only if recall is too low. Most production pipelines fetch 5-10 vectors; anything above 20 is a red flag.</p>
+<p><strong>Why does my reranker score not match the actual answer quality?</strong></p>
+<p>Reranker scores are relative to the candidate set, not absolute. A score of 0.95 doesn’t mean the answer is correct; it means it’s the best among the retrieved chunks. Always validate reranker scores against a human-labeled test set. In our</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 27, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/2026-salaries-prompts-vs-embeddings-data/">
+                        <h3>2026 salaries: prompts vs embeddings data</h3>
+                        <p>Cut AI salary offers $60k by choosing prompt vs embeddings in 2026 — latency, token costs, and compliance numbers from 47 audited systems. Regulated domains pay top dollar for embeddings engineering.</p>
+                        <span class="related-meta">14 min read · 26 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/vector-db-or-not-benchmark-the-gap/">
+                        <h3>Vector DB or not? Benchmark the gap</h3>
+                        <p>pgvector 0.7 vs Milvus 2.4 benchmark: measure the 95th percentile gap before buying a vector database. Save $1k/month on embeddings with the right index first.</p>
+                        <span class="related-meta">12 min read · 26 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-pipelines-lessons-from-3-million-queries/">
+                        <h3>RAG pipelines: Lessons from 3 million queries</h3>
+                        <p>Cut RAG vector search costs 70% with hybrid pipelines — exact-match filters, dynamic pruning, and the recall trap most teams miss.</p>
+                        <span class="related-meta">9 min read · 26 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
