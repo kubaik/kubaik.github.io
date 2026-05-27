@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 22:30:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 23:01:37 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering costs more than you think</title>
+      <link>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</link>
+      <description>Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.</description>
+      <pubDate>Wed, 27 May 2026 23:01:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</guid>
+    </item>
     <item>
       <title>Raise remote pay: Colombia to US rates</title>
       <link>https://kubaik.github.io/raise-remote-pay-colombia-to-us-rates/</link>
@@ -138,13 +145,6 @@
       <description>Cut similarity search 75% with brute-force Postgres vs 50ms vector DBs — latency benchmarks, costs, and the 50ms rule you can test in 30 minutes.</description>
       <pubDate>Wed, 27 May 2026 14:48:07 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-db-vs-brute-force-the-50ms-rule/</guid>
-    </item>
-    <item>
-      <title>Understand what AI misses in your code</title>
-      <link>https://kubaik.github.io/understand-what-ai-misses-in-your-code/</link>
-      <description>Cut AI PR review time 50% by measuring context gaps first — dependency heatmaps, OpenTelemetry traces, and tribal conventions you’re not capturing. Tools like depcruise, OpenTelemetry v1.30, and semgrep v1.60 show what AI misses.</description>
-      <pubDate>Wed, 27 May 2026 14:44:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/understand-what-ai-misses-in-your-code/</guid>
     </item>
   </channel>
 </rss>

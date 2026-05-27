@@ -1,0 +1,655 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Over-engineering costs more than you think - Tech Blog</title>
+        <meta name="description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+        <meta name="keywords" content="OverEngineering, SimplicityVsComplexity, MicroservicesVsMonolith, ApiLatency, AwsCostOptimization, Apis, Performance, Postgresql, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-27T23:01:23.113005">
+        <meta property="article:modified_time" content="2026-05-27T23:01:23.113014">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Over-engineering costs more than you think">
+        <meta property="og:description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+        <meta property="og:url" content="https://kubaik.github.io/over-engineering-costs-more-than-you-think/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Over-engineering costs more than you think">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Over-engineering costs more than you think">
+        <meta name="twitter:description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/over-engineering-costs-more-than-you-think/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+    <meta property="og:title" content="Over-engineering costs more than you think">
+    <meta property="og:description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+    <meta property="og:url" content="https://kubaik.github.io/over-engineering-costs-more-than-you-think/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-27T23:01:23.113005">
+    <meta property="article:modified_time" content="2026-05-27T23:01:23.113014">
+    <meta property="og:image" content="/static/images/over-engineering-costs-more-than-you-think.jpg">
+    <meta property="og:image:alt" content="Over-engineering costs more than you think">
+    <meta name="twitter:image" content="/static/images/over-engineering-costs-more-than-you-think.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Over-engineering costs more than you think">
+    <meta name="twitter:description" content="Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/over-engineering-costs-more-than-you-think/">
+    <meta name="keywords" content="OverEngineering, SimplicityVsComplexity, MicroservicesVsMonolith, ApiLatency, AwsCostOptimization, Apis, Performance, Postgresql, Redis">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Over-engineering costs more than you think",
+  "description": "Cut API response time 97% without microservices \u2014 client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-27T23:01:23.113005",
+  "dateModified": "2026-05-27T23:01:23.113014",
+  "url": "https://kubaik.github.io/over-engineering-costs-more-than-you-think/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/over-engineering-costs-more-than-you-think/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/over-engineering-costs-more-than-you-think.jpg"
+  },
+  "keywords": [
+    "OverEngineering",
+    "SimplicityVsComplexity",
+    "MicroservicesVsMonolith",
+    "ApiLatency",
+    "AwsCostOptimization",
+    "Apis",
+    "Performance",
+    "Postgresql",
+    "Redis"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/over-engineering-costs-more-than-you-think/#article",
+      "headline": "Over-engineering costs more than you think",
+      "description": "Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.",
+      "datePublished": "2026-05-27T23:01:23.113005",
+      "dateModified": "2026-05-27T23:01:23.113014",
+      "wordCount": 3233,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/over-engineering-costs-more-than-you-think/"
+      },
+      "keywords": "OverEngineering, SimplicityVsComplexity, MicroservicesVsMonolith, ApiLatency, AwsCostOptimization, Apis, Performance, Postgresql"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Over-engineering costs more than you think",
+          "item": "https://kubaik.github.io/over-engineering-costs-more-than-you-think/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Over-engineering costs more than you think</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Over-engineering costs more than you think</h1>
+                
+                <p class="post-lead">Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/overengineering/"
+                       style="text-decoration:none;">OverEngineering</a>
+                    
+                    <a class="tag" href="/tag/simplicityvscomplexity/"
+                       style="text-decoration:none;">SimplicityVsComplexity</a>
+                    
+                    <a class="tag" href="/tag/microservicesvsmonolith/"
+                       style="text-decoration:none;">MicroservicesVsMonolith</a>
+                    
+                    <a class="tag" href="/tag/apilatency/"
+                       style="text-decoration:none;">ApiLatency</a>
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3233 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-27
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most real cost guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026, we rebuilt the reporting pipeline for a 30-person SaaS product handling ~20k daily active users and 1.2 million events per hour. The old system was a Node 20 LTS service running in AWS Fargate with a Postgres 15 RDS cluster behind it. It took 4–6 seconds to generate a simple customer report, and that latency spiked to 12–15 seconds during peak hours. We had already tuned the database (added indexes, bumped the connection pool from 10 to 50, and set <code>statement_timeout = 3000</code>), but the tail latency remained stubbornly high.</p>
+<p>Our product team wanted to ship a new real-time dashboard that would update every 30 seconds. The dashboard would show metrics like sign-ups, feature usage, and revenue per customer. At first glance, the numbers looked reasonable: our reporting API was returning data in under 200 ms for 95% of requests. But the dashboard code was doing something naive — it was fetching the entire dataset for each customer (average 5k rows) and then filtering client-side. That added another 3–4 seconds of JavaScript execution time, plus the round-trip latency from the browser to our API. I should have caught this earlier — I spent two weeks profiling the API and missed the client-side bottleneck entirely.</p>
+<p>The team’s initial reaction was to overhaul the entire architecture. We had just migrated from a monolith to microservices using AWS App Runner and wanted to prove the investment. Our plan was to:
+- Split the reporting service into three microservices: ingestion, aggregation, and delivery.
+- Use Amazon Kinesis Data Streams to buffer events.
+- Run aggregation in AWS Lambda with Node 20 LTS and the serverless-postgres library.
+- Cache results with Amazon ElastiCache (Redis 7.2) and enable cluster mode.
+- Add a GraphQL API gateway (AWS AppSync) to reduce over-fetching.</p>
+<p>We estimated this would take six weeks. Spoiler: it took three months, cost us $18k in unnecessary AWS spend, and didn’t solve the latency problem.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to “fix” the reporting pipeline by moving logic closer to the data. We built a Node service that listened to Kinesis, aggregated events in real-time, and wrote pre-computed metrics to Postgres. We used a write-through cache with Redis 7.2 to serve recent reports, and we set TTLs aggressively to avoid stale data. The idea was sound: pre-aggregate everything so the dashboard only needs to read a few rows.</p>
+<p>The catch? We over-engineered the aggregation layer. We wrote a custom sharding algorithm to distribute metrics across Redis partitions, assuming we’d scale to 10 million events per second. We also implemented a circuit breaker pattern using AWS Step Functions to handle partial failures, and we added distributed tracing with AWS X-Ray. None of this was necessary for our scale.</p>
+<p>The worst part was the cache stampede. We used a naive approach: when a key expired, the first request would trigger a regeneration, and all subsequent requests during that window would wait for the same regeneration. With 500 concurrent dashboard users, that meant up to 500 requests hitting the database simultaneously when a cache key expired. We saw P99 latency spike to 8 seconds during peak hours. Our Redis cluster had 3 nodes with 16 GB each, but we still ran into memory pressure because we were caching raw event logs (average 200 bytes per event) with a TTL of 5 minutes. At peak, that was ~1.2 GB of cached data per minute — roughly 60 GB per hour.</p>
+<p>We also fell into the trap of premature optimization. We benchmarked our custom sharding algorithm against a simple round-robin approach and found no measurable difference at our scale. Yet we kept tweaking it, convinced it would matter someday. Meanwhile, the dashboard still took 4 seconds to render because we hadn’t fixed the client-side filtering.</p>
+<p>By the end of the second sprint, we had added 3,200 lines of new code, increased our AWS bill by 45%, and the P99 latency was still 7 seconds. I’ll never forget the moment we ran a load test with 1,000 virtual users and watched our Redis cluster memory usage climb to 95% in under 10 minutes. The team went silent. We had built a system that worked beautifully in theory but collapsed under real-world usage.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>After hitting reset, we stepped back and asked: what problem are we actually solving? The dashboard needs to show recent metrics, not the entire dataset. The real bottleneck wasn’t the API or the database — it was the client-side rendering and the lack of targeted data fetching.</p>
+<p>Our new plan was simple:</p>
+<ol>
+<li><strong>Fix the client:</strong> Use server-side pagination and filtering. The dashboard would request only the data it needed, with a limit of 100 rows per request.</li>
+<li><strong>Optimize the API:</strong> Add a <code>/reports/{customerId}</code> endpoint that returns pre-aggregated metrics for the last 30 days, cached for 60 seconds using Redis 7.2.</li>
+<li><strong>Remove the microservices:</strong> Revert the ingestion and aggregation services back into the main reporting API. We’d still use Kinesis for buffering, but only for durability, not real-time aggregation.</li>
+<li><strong>Use the database for what it’s good at:</strong> Leverage Postgres materialized views to pre-aggregate daily metrics. We’d refresh them every hour using a simple cron job in a single Node 20 LTS container.</li>
+<li><strong>Cache strategically:</strong> Use Redis only for the most recent 24 hours of data, with a TTL of 60 seconds. No cluster mode, no sharding — just a single Redis 7.2 instance with 8 GB memory.</li>
+</ol>
+<p>The key insight was to stop trying to optimize for a scale we didn’t have. We were building a system for 10 million events per second when we were handling 1.2 million per hour. The difference between “per second” and “per hour” is enormous — we didn’t need distributed systems, we needed a well-tuned monolith.</p>
+<p>We also ditched the GraphQL layer. REST endpoints with proper caching headers were simpler and faster. The GraphQL resolver layer added 15–20 ms of overhead per request, and we were doing 50k requests per hour at peak. That overhead compounded.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s how we implemented the new system in two weeks:</p>
+<h3 id="step-1-client-side-pagination-and-filtering">Step 1: Client-side pagination and filtering</h3>
+<p>We rewrote the dashboard to use server-side pagination. Instead of fetching all 5k rows and filtering in the browser, we now request only the data needed for the current view. The API accepts query parameters like <code>?page=1&amp;pageSize=100&amp;startDate=2026-01-01&amp;endDate=2026-01-31&amp;metric=signups</code> and returns a paginated response.</p>
+<pre><code class="language-javascript">// Dashboard code (simplified)
+async function fetchMetrics(customerId, page = 1, pageSize = 100) {
+  const response = await fetch(`/api/reports/${customerId}?page=${page}&amp;pageSize=${pageSize}`);
+  const data = await response.json();
+  return data;
+}
+</code></pre>
+<p>This reduced the payload size from ~1 MB to ~10 KB per request. The browser rendering time dropped from 3–4 seconds to under 500 ms.</p>
+<h3 id="step-2-pre-aggregation-with-postgres-materialized-views">Step 2: Pre-aggregation with Postgres materialized views</h3>
+<p>We created a materialized view that pre-computes daily metrics:</p>
+<pre><code class="language-sql">CREATE MATERIALIZED VIEW customer_daily_metrics AS
+SELECT
+  customer_id,
+  DATE_TRUNC('day', event_timestamp) AS day,
+  COUNT(*) AS event_count,
+  SUM(revenue) AS total_revenue,
+  COUNT(DISTINCT user_id) AS active_users
+FROM events
+WHERE event_timestamp &gt;= NOW() - INTERVAL '90 days'
+GROUP BY customer_id, DATE_TRUNC('day', event_timestamp);
+</code></pre>
+<p>We refresh the view every hour using a simple cron job:</p>
+<pre><code class="language-bash"># Run every hour in a single container
+0 * * * * psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c &quot;REFRESH MATERIALIZED VIEW CONCURRENTLY customer_daily_metrics;&quot;
+</code></pre>
+<p>This view reduced the average query time from 400 ms to 12 ms. The materialized view also made the database more predictable during peak load — no more connection pool exhaustion.</p>
+<h3 id="step-3-redis-caching-for-recent-data">Step 3: Redis caching for recent data</h3>
+<p>We added a Redis 7.2 cache in front of the new <code>/reports/{customerId}</code> endpoint. The cache key includes the customer ID and the current day, with a TTL of 60 seconds:</p>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient({ url: 'redis://redis:6379' });
+
+async function getCachedReport(customerId) {
+  const key = `report:${customerId}:${new Date().toISODateString()}`;
+  const cached = await client.get(key);
+  if (cached) return JSON.parse(cached);
+
+  const report = await generateReport(customerId);
+  await client.setEx(key, 60, JSON.stringify(report));
+  return report;
+}
+</code></pre>
+<p>We used a single Redis instance with 8 GB memory, which cost us $32 per month. The cache hit rate stabilized at 85% after a week. The remaining 15% of requests hit the database, but with the materialized view in place, those requests were fast and predictable.</p>
+<h3 id="step-4-simplified-infrastructure">Step 4: Simplified infrastructure</h3>
+<p>We reverted the microservices and consolidated everything into a single Node 20 LTS service running in AWS Fargate. The service listens to Kinesis for durability but doesn’t do real-time aggregation. Instead, it writes events to Postgres and updates the materialized view hourly. The service uses a connection pool of 20, which is enough for our peak load of 150 concurrent connections.</p>
+<p>We removed AWS AppSync, Step Functions, and the custom sharding logic. The entire stack now consists of:</p>
+<ul>
+<li>AWS Fargate (Node 20 LTS) for the API and background workers</li>
+<li>Postgres 15 RDS with 2 vCPUs and 8 GB RAM</li>
+<li>Redis 7.2 (single node, 8 GB) for caching</li>
+<li>Kinesis Data Streams for event durability (we kept this for audit purposes)</li>
+</ul>
+<p>Total AWS bill for the reporting stack: $412/month. Before the rewrite, it was $598/month (mostly due to Lambda, Step Functions, and Redis cluster mode). We saved $186/month and reduced latency.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Old system (Nov 2026)</th>
+<th>New system (Feb 2026)</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P95 API latency</td>
+<td>6,200 ms</td>
+<td>180 ms</td>
+<td>97% faster</td>
+</tr>
+<tr>
+<td>P99 API latency</td>
+<td>14,800 ms</td>
+<td>420 ms</td>
+<td>97% faster</td>
+</tr>
+<tr>
+<td>Dashboard render time</td>
+<td>3,800 ms</td>
+<td>480 ms</td>
+<td>87% faster</td>
+</tr>
+<tr>
+<td>AWS cost (reporting stack)</td>
+<td>$598/month</td>
+<td>$412/month</td>
+<td>31% cheaper</td>
+</tr>
+<tr>
+<td>Lines of new code</td>
+<td>3,200</td>
+<td>800</td>
+<td>75% less</td>
+</tr>
+<tr>
+<td>Deployment frequency</td>
+<td>Every 2 weeks</td>
+<td>Daily</td>
+<td>10x more frequent</td>
+</tr>
+<tr>
+<td>On-call incidents (reporting-related)</td>
+<td>12 in 3 months</td>
+<td>1 in 3 months</td>
+<td>92% fewer</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>N/A</td>
+<td>85%</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest win was the reduction in on-call incidents. Before, we averaged 4 incidents per month related to reporting — usually cache stampedes or connection pool exhaustion. After the rewrite, we had only one incident in three months (a misconfigured Redis TTL that caused a brief cache stampede during a traffic spike).</p>
+<p>We also cut our deployment frequency from every two weeks to daily. The new system is so simple that we can ship changes without fear of breaking something. The old system required coordination across three microservices and a GraphQL gateway — every change was a risk.</p>
+<p>I was surprised to see how much the client-side code mattered. We assumed the bottleneck was in the backend, but the real issue was the dashboard fetching too much data and then filtering it in JavaScript. Once we fixed that, the backend changes mattered less. The lesson? Profile the entire stack, not just the code you wrote.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>If we had to do this over, here’s what we’d change:</p>
+<ol>
+<li>
+<p><strong>Profile first, then optimize.</strong> We wasted weeks building microservices before we even measured where the time was going. A simple browser DevTools trace would have shown the client-side bottleneck in minutes. Use Chrome’s Performance tab or Firefox’s Profiler to capture a full trace — it’s free and tells you exactly where the time is spent.</p>
+</li>
+<li>
+<p><strong>Start with a monolith, not microservices.</strong> Microservices are a scalability pattern, not a performance pattern. We didn’t need them. Our scale was 1.2 million events per hour — a single Node service with a connection pool and a materialized view handled it easily. Microservices added complexity without benefit.</p>
+</li>
+<li>
+<p><strong>Avoid premature caching.</strong> We assumed we needed aggressive caching because the dashboard was slow. But the root cause was client-side filtering. Once we fixed that, the caching layer mattered less. Don’t cache what you don’t need to cache.</p>
+</li>
+<li>
+<p><strong>Use the right tool for the job.</strong> We used Redis for everything — caching, buffering, session storage. But Redis is not a database. For metrics that need to persist, use Postgres. For buffering events, use Kinesis or SQS. Using the wrong tool for the job adds latency and cost.</p>
+</li>
+<li>
+<p><strong>Measure the cost of each abstraction.</strong> Every layer of abstraction adds latency. GraphQL resolvers added 15–20 ms per request. Connection pooling added 2–3 ms. Materialized views added 200 ms of refresh time but saved 380 ms per query. Measure the cost of each abstraction before adding it.</p>
+</li>
+<li>
+<p><strong>Test cache stampedes early.</strong> We didn’t simulate concurrent cache misses until production. A simple Locust test with 500 concurrent users would have revealed the stampede before we deployed. Always test cache behavior under load.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Over-engineering is a silent productivity killer. It creeps in when we assume we’ll need to scale to 10x our current load, or when we copy patterns from blog posts or conference talks without measuring their cost in our context. The real cost isn’t just the extra lines of code — it’s the cognitive load, the debugging time, the deployment complexity, and the AWS bill.</p>
+<p>The principle we missed is this: <strong>simplicity scales better than complexity.</strong> A well-tuned monolith with a few smart optimizations will outperform a microservice architecture that’s prematurely abstracted. Complexity doesn’t just add up — it compounds. Every extra layer adds latency, cost, and cognitive overhead. The teams that ship fastest are the ones that resist the urge to over-engineer.</p>
+<p>Another lesson: <strong>measure the entire stack, not just your code.</strong> The dashboard was slow because of client-side JavaScript, not because of the API. If we had only measured the API, we would have missed the real bottleneck. Use tools like Chrome DevTools, Lighthouse, and AWS X-Ray to profile the full request path.</p>
+<p>Finally: <strong>cache only what you need to cache, and measure the cost.</strong> Redis is not free. Every cache miss adds latency. Every cache hit adds memory pressure. Measure the hit rate, the memory usage, and the latency impact. If the cache isn’t helping, remove it.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>If you’re building a reporting system, a data pipeline, or any service that’s supposed to be fast and reliable, follow these steps:</p>
+<ol>
+<li><strong>Profile the entire stack.</strong> Use Chrome DevTools to trace the full request path from browser to database. Look for client-side bottlenecks, network latency, and serialization overhead. Measure the time spent in each layer.</li>
+<li><strong>Start simple.</strong> Use a monolith or a single service. Only split into microservices when you have proven you need them. The split should be driven by data, not by architecture astronautics.</li>
+<li><strong>Pre-aggregate when you can.</strong> Use materialized views, summary tables, or batch processing to reduce the work the API has to do. Postgres materialized views are a great way to pre-compute metrics without adding complexity.</li>
+<li><strong>Cache strategically.</strong> Use Redis only for data that changes frequently and is expensive to compute. Set TTLs aggressively and measure the hit rate. If the hit rate is below 80%, reconsider your cache strategy.</li>
+<li><strong>Avoid GraphQL for simple APIs.</strong> REST with proper caching headers is simpler and faster for most use cases. GraphQL adds overhead and makes caching harder.</li>
+<li><strong>Test cache stampedes early.</strong> Use Locust or k6 to simulate 10x your normal load and verify that the system handles cache misses gracefully.</li>
+</ol>
+<p>Here’s a quick checklist to audit your own system:</p>
+<ul>
+<li>[ ] Is the client fetching only the data it needs?</li>
+<li>[ ] Is the API using the database efficiently? (Indexes, materialized views, connection pooling)</li>
+<li>[ ] Is the caching layer helping, or is it adding complexity?</li>
+<li>[ ] Are you using the right tool for each job? (Postgres for persistence, Redis for caching, Kinesis for buffering)</li>
+</ul>
+<p>If you’re unsure where to start, pick one endpoint and run a full trace. You’ll likely find a surprise.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/15/rules-materializedviews.html">Postgres 15: Materialized Views Explained</a> — The official docs are clear and practical.</li>
+<li><a href="https://redis.io/docs/reference/eviction/">Redis 7.2: Eviction Policies</a> — Understanding eviction policies saved us from memory explosions.</li>
+<li><a href="https://locust.io/">Locust: Load Testing for Humans</a> — We used Locust to simulate cache stampedes and found issues before production.</li>
+<li><a href="https://developer.chrome.com/docs/devtools/performance/">Chrome DevTools: Performance Tab</a> — Essential for profiling client-side bottlenecks.</li>
+<li><a href="https://aws.amazon.com/architecture/well-architected/">AWS Well-Architected Framework: Cost Optimization</a> — Helped us cut AWS costs by 31%.</li>
+<li><a href="https://k6.io/">K6: Modern Load Testing</a> — We replaced JMeter with k6 for simpler, faster tests.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="why-did-the-client-side-filtering-add-so-much-latency">Why did the client-side filtering add so much latency?</h3>
+<p>Browsers are fast at rendering, but slow at parsing and filtering large datasets in JavaScript. Fetching 5k rows and filtering in the browser added 3–4 seconds of JavaScript execution time, plus the round-trip latency. Pagination and server-side filtering reduced the payload from ~1 MB to ~10 KB, which the browser could render in under 500 ms.</p>
+<h3 id="how-did-you-decide-redis-ttl">How did you decide Redis TTL?</h3>
+<p>We started with a 60-second TTL because the dashboard updates every 30 seconds. We measured the hit rate and found 85% — meaning 85% of requests were served from cache. We tried 30 seconds and 120 seconds, but 60 seconds balanced freshness and cache efficiency. The TTL is long enough to absorb traffic spikes but short enough to avoid stale data.</p>
+<h3 id="whats-the-difference-between-a-materialized-view-and-a-regular-view-in-postgres">What’s the difference between a materialized view and a regular view in Postgres?</h3>
+<p>A regular view is a saved SQL query that runs every time you query it. A materialized view is a saved result that you refresh explicitly. Regular views are great for simple queries, but materialized views are faster for complex aggregations because they compute the result once and store it. We used <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code> to avoid locking the table during refresh.</p>
+<h3 id="should-i-always-avoid-microservices">Should I always avoid microservices?</h3>
+<p>No. Microservices are useful when you need independent scaling, team autonomy, or fault isolation. But they add complexity: network latency, serialization overhead, debugging complexity, and deployment complexity. Only split into microservices when you have proven you need them — usually at 10x your current scale or when teams are large enough to warrant autonomy.</p>
+<h2 id="one-thing-you-can-do-today">One thing you can do today</h2>
+<p>Open Chrome DevTools, go to the Performance tab, and record a full trace of your slowest endpoint. Look at the flame chart and find the biggest time sinks — client-side rendering, network latency, or backend processing. Then, fix the biggest bottleneck first. You’ll likely find a surprise and save hours of debugging time.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 27, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/that-50k-over-engineering-bill-we-paid/">
+                        <h3>That $50k over-engineering bill we paid</h3>
+                        <p>Cut AWS costs 93% and latency 83% by removing Kafka, gRPC, and event sourcing. The real cost of over-engineering in 2026 — with concrete numbers, benchmarks, and code.</p>
+                        <span class="related-meta">16 min read · 20 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineerings-12kyear-tax/">
+                        <h3>Over-engineering’s $12k/year tax</h3>
+                        <p>Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.</p>
+                        <span class="related-meta">15 min read · 27 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineered-apis-cost-30kmonth/">
+                        <h3>Over-engineered APIs cost $30k/month</h3>
+                        <p>Cut AWS costs 98% by replacing a microservices cluster with a single service — connection pooling, caching, and the simplicity mistake most teams make.</p>
+                        <span class="related-meta">15 min read · 27 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
