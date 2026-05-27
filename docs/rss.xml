@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 10:54:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 07:57:54 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tuning pays 25% more in 2026</title>
+      <link>https://kubaik.github.io/fine-tuning-pays-25-more-in-2026/</link>
+      <description>Fine-tuning pays 25–40% more than prompt engineering in 2026 — the real ROI breakdown on salaries, costs, and benchmarks. Use this data to pick the skill that actually moves the needle.</description>
+      <pubDate>Wed, 27 May 2026 07:57:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tuning-pays-25-more-in-2026/</guid>
+    </item>
     <item>
       <title>Instrument LLMs, don&apos;t just call them</title>
       <link>https://kubaik.github.io/instrument-llms-dont-just-call-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG vector search costs 70% with hybrid pipelines — exact-match filters, dynamic pruning, and the recall trap most teams miss.</description>
       <pubDate>Tue, 26 May 2026 21:44:46 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-lessons-from-3-million-queries/</guid>
-    </item>
-    <item>
-      <title>Reduce cloud carbon 30% sustainably</title>
-      <link>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</link>
-      <description>Cut cloud carbon 30% without slowing code — Lambda arm64, Aurora Serverless v2, and Redis two-tier caching in a real Latin American health-tech API.</description>
-      <pubDate>Tue, 26 May 2026 21:27:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</guid>
     </item>
   </channel>
 </rss>
