@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 11:10:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 12:23:51 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering’s $12k/year tax</title>
+      <link>https://kubaik.github.io/over-engineerings-12kyear-tax/</link>
+      <description>Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.</description>
+      <pubDate>Wed, 27 May 2026 12:23:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineerings-12kyear-tax/</guid>
+    </item>
     <item>
       <title>Profile 5G backend calls in 2026</title>
       <link>https://kubaik.github.io/profile-5g-backend-calls-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP latency 94% and save 77% on costs — the tooling choices, pooling sizes, and ping loop tweaks most teams miss when wiring AI agents to databases, files, and legacy systems in 2026.</description>
       <pubDate>Tue, 26 May 2026 23:40:29 +0000</pubDate>
       <guid>https://kubaik.github.io/decode-mcp-servers-hidden-traps-in-ai-tooling/</guid>
-    </item>
-    <item>
-      <title>Big Tech exodus: the non-money reasons in 2026</title>
-      <link>https://kubaik.github.io/big-tech-exodus-the-non-money-reasons-in-2026/</link>
-      <description>Cut on-call pages 62% and promotion cycles 50% — the non-money reasons senior engineers left big tech in 2026 and what to check first</description>
-      <pubDate>Tue, 26 May 2026 23:26:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exodus-the-non-money-reasons-in-2026/</guid>
     </item>
   </channel>
 </rss>

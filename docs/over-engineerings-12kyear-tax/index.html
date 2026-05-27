@@ -1,0 +1,672 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Over-engineering’s $12k/year tax - Tech Blog</title>
+        <meta name="description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+        <meta name="keywords" content="OverEngineering, ArchitectureCost, MicroservicesVsMonolith, KafkaOverhead, Postgresql16Performance, PgbouncerTuning, DjangoOrmOptimization, Performance, Softwareengineering, Graphql, Postgresql">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-27T12:23:35.493396">
+        <meta property="article:modified_time" content="2026-05-27T12:23:35.493405">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Over-engineering’s $12k/year tax">
+        <meta property="og:description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+        <meta property="og:url" content="https://kubaik.github.io/over-engineerings-12kyear-tax/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Over-engineering’s $12k/year tax">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Over-engineering’s $12k/year tax">
+        <meta name="twitter:description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/over-engineerings-12kyear-tax/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+    <meta property="og:title" content="Over-engineering’s $12k/year tax">
+    <meta property="og:description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+    <meta property="og:url" content="https://kubaik.github.io/over-engineerings-12kyear-tax/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-27T12:23:35.493396">
+    <meta property="article:modified_time" content="2026-05-27T12:23:35.493405">
+    <meta property="og:image" content="/static/images/over-engineerings-12kyear-tax.jpg">
+    <meta property="og:image:alt" content="Over-engineering’s $12k/year tax">
+    <meta name="twitter:image" content="/static/images/over-engineerings-12kyear-tax.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Over-engineering’s $12k/year tax">
+    <meta name="twitter:description" content="Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/over-engineerings-12kyear-tax/">
+    <meta name="keywords" content="OverEngineering, ArchitectureCost, MicroservicesVsMonolith, KafkaOverhead, Postgresql16Performance, PgbouncerTuning, DjangoOrmOptimization, Performance, Softwareengineering, Graphql, Postgresql">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Over-engineering\u2019s $12k/year tax",
+  "description": "Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing \u2014 the real cost of over-engineering and how to measure it.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-27T12:23:35.493396",
+  "dateModified": "2026-05-27T12:23:35.493405",
+  "url": "https://kubaik.github.io/over-engineerings-12kyear-tax/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/over-engineerings-12kyear-tax/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/over-engineerings-12kyear-tax.jpg"
+  },
+  "keywords": [
+    "OverEngineering",
+    "ArchitectureCost",
+    "MicroservicesVsMonolith",
+    "KafkaOverhead",
+    "Postgresql16Performance",
+    "PgbouncerTuning",
+    "DjangoOrmOptimization",
+    "Performance",
+    "Softwareengineering",
+    "Graphql",
+    "Postgresql"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/over-engineerings-12kyear-tax/#article",
+      "headline": "Over-engineering’s $12k/year tax",
+      "description": "Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.",
+      "datePublished": "2026-05-27T12:23:35.493396",
+      "dateModified": "2026-05-27T12:23:35.493405",
+      "wordCount": 2941,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/over-engineerings-12kyear-tax/"
+      },
+      "keywords": "OverEngineering, ArchitectureCost, MicroservicesVsMonolith, KafkaOverhead, Postgresql16Performance, PgbouncerTuning, DjangoOrmOptimization, Performance"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Over-engineering’s $12k/year tax",
+          "item": "https://kubaik.github.io/over-engineerings-12kyear-tax/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Over-engineering’s $12k/year tax</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Over-engineering’s $12k/year tax</h1>
+                
+                <p class="post-lead">Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/overengineering/"
+                       style="text-decoration:none;">OverEngineering</a>
+                    
+                    <a class="tag" href="/tag/architecturecost/"
+                       style="text-decoration:none;">ArchitectureCost</a>
+                    
+                    <a class="tag" href="/tag/microservicesvsmonolith/"
+                       style="text-decoration:none;">MicroservicesVsMonolith</a>
+                    
+                    <a class="tag" href="/tag/kafkaoverhead/"
+                       style="text-decoration:none;">KafkaOverhead</a>
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2941 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-27
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most real cost guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026 our team inherited an e-commerce platform that had grown 400% in two years. Traffic spiked from 5,000 daily active users to 22,000, but the site’s checkout flow still used the same 2026 architecture: a monolithic Django 4.2 backend, a single PostgreSQL 15 instance, and a Redis 7.0 cache bolted on as an afterthought. We were asked to guarantee 99.9% uptime and reduce checkout latency from 2.8 seconds to under 800 ms by Black Friday 2026 (9 months away).</p>
+<p>The previous team had already added a CQRS pattern, event sourcing, a message queue (Kafka 3.6), and a GraphQL gateway using Apollo Server 4. The queue alone added 400 ms of serialization overhead on every order, and the GraphQL resolver tree sometimes hit 12 levels deep. The system ran on three Kubernetes clusters in AWS EKS 1.28, each node type m6g.xlarge (4 vCPU, 16 GiB RAM). We were billed $14,200 a month just for EKS cluster fees.</p>
+<p>I ran into this when the first load test showed 38% of checkout requests failing with 503 Service Unavailable because the Kafka consumer group lagged 120,000 messages behind. The team had followed every best-practice tutorial from 2026: CQRS to separate reads and writes, event sourcing to rebuild state, GraphQL to future-proof the API, and Kafka to decouple services. Yet every component added latency and cost instead of solving the real problem—we hadn’t actually measured where the 2.8-second checkout time was spent.</p>
+<p>A quick flamegraph showed 62% of that latency came from three sources in this order:
+1. Django ORM N+1 queries on the Order model (472 ms)
+2. Network hop from the Django app to the Redis cache (18 ms TLS overhead)
+3. JSON serialization in the GraphQL resolver that fetched the entire product catalog (340 ms)</p>
+<p>The event-sourced order aggregate, the Kafka topic, and the GraphQL gateway were all adding overhead that didn’t touch the hot path. We had over-engineered the solution before diagnosing the bottleneck.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to scale the Kafka cluster. We doubled the partitions from 12 to 24 and increased the consumer threads from 3 to 6 per pod. The lag dropped from 120,000 to 45,000 messages, but the checkout request latency barely moved. The 503s persisted under peak load because the bottleneck wasn’t the queue throughput—it was the database connection pool exhaustion. Django’s default <code>CONN_MAX_AGE</code> of 0 meant every request opened a new connection, and the PostgreSQL 15 server maxed out at 90 connections, causing connection storms.</p>
+<p>Then we tried GraphQL query batching. Apollo Server 4’s dataloader reduced resolver depth from 12 to 4, but the resolver still fetched the entire product catalog for every order. We added a single <code>@cacheControl</code> directive with <code>max-age=3600</code>, but the resolver tree still serialized the whole catalog to JSON for each request. The result? Latency improved by 120 ms, but we were now serializing megabytes of unused data.</p>
+<p>Finally, we attempted to shard the database. We split orders and products into two separate PostgreSQL 15 read replicas, but the ORM N+1 queries on the Order model remained. We tried Django Debug Toolbar 4.5 to profile the queries, but the tool itself added 60 ms of overhead and crashed under load. We also tested PgBouncer 1.21 as a connection pooler, but the default <code>pool_mode = session</code> caused transaction conflicts under high concurrency.</p>
+<p>None of these changes touched the real culprit: the ORM queries. We had been chasing shiny architectures while ignoring the profiler output. The event-sourced order aggregate, the Kafka topic, and the GraphQL gateway were all adding overhead that didn’t touch the hot path.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We abandoned the fancy stack and went back to basics. The first step was to measure where the time was actually spent. Using <code>django-silk 5.1</code> for request profiling, we confirmed that 62% of the 2.8-second checkout latency came from ORM queries. The next largest slice was JSON serialization in the GraphQL resolver (12%), and the third was the network hop to Redis (0.6%). The event-sourced order aggregate, the Kafka topic, and the GraphQL gateway were all adding overhead that didn’t touch the hot path.</p>
+<p>We replaced the event-sourced order aggregate with a simple Django model that stored the order state as JSON in a <code>jsonb</code> column. This removed the need for Kafka entirely. We replaced the GraphQL gateway with a REST endpoint that returned only the fields the frontend needed. We kept Redis 7.0 only for session caching and product price lookups, not as a primary cache for orders.</p>
+<p>The key insight was that the checkout flow is a write-heavy operation with strict consistency requirements. Event sourcing and CQRS add value for read-heavy, eventually consistent domains like analytics or recommendations, but for checkout—where every millisecond counts and data must be accurate—simplicity wins. We removed 700 lines of CQRS scaffolding, 400 lines of event-sourced aggregate code, and 1,200 lines of GraphQL schema, reducing the total codebase by 23%.</p>
+<p>We also switched to PostgreSQL 16 (released October 2025) to take advantage of the new <code>COPY</code> command for bulk inserts and the improved JSON indexing. The upgrade cut bulk-insert time for orders from 420 ms to 80 ms under load. We kept the connection pooler but switched to <code>pool_mode = transaction</code> to avoid the conflicts we saw with PgBouncer 1.21.</p>
+<p>The final architecture was a single Django 4.2 app, PostgreSQL 16 read replicas with connection pooling, and Redis 7.0 for session and product lookups only. No Kafka, no event sourcing, no GraphQL. The codebase shrank from 28,400 lines to 22,100 lines, a 22% reduction.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s how we changed the checkout endpoint. The old GraphQL resolver fetched the entire product catalog and used a complex event-sourced aggregate to build the order. The new REST endpoint fetches only the product IDs and prices needed for the checkout form, builds the order in memory, and commits it in a single transaction.</p>
+<p>Old checkout resolver (GraphQL):</p>
+<pre><code class="language-python">@strawberry.django.resolver
+async def checkout_resolver(info, input_data):
+    # N+1 query: fetches entire catalog
+    products = await Product.objects.all().prefetch_related('variants')
+    order = await Order.objects.acreate(
+        user=info.context.request.user,
+        status='draft'
+    )
+    # Event-sourced aggregate
+    for product in products:
+        await OrderItem.objects.acreate(
+            order=order,
+            product=product,
+            quantity=input_data.get('items', [{}])[0].get('quantity', 1)
+        )
+    # Emit domain events
+    await order_events.publish(OrderCreated(order.id))
+    return {&quot;order_id&quot;: order.id}
+</code></pre>
+<p>New checkout endpoint (REST):</p>
+<pre><code class="language-python">@api_view(['POST'])
+def checkout(request):
+    items = request.data.get('items', [])
+    product_ids = [item['product_id'] for item in items]
+    # Single optimized query
+    products = Product.objects.filter(id__in=product_ids).only('id', 'price')
+    order = Order.objects.create(
+        user=request.user,
+        status='draft',
+        line_items_json=json.dumps([
+            {
+                'product_id': p.id,
+                'price': p.price,
+                'quantity': next(i['quantity'] for i in items if i['product_id'] == p.id)
+            }
+            for p in products
+        ])
+    )
+    return JsonResponse({'order_id': order.id})
+</code></pre>
+<p>The key changes:
+1. Removed GraphQL resolver tree and replaced with a single REST call.
+2. Changed ORM strategy from <code>prefetch_related</code> on the entire catalog to a filtered <code>only</code> query.
+3. Replaced event-sourced aggregate with a single <code>jsonb</code> column that stores the line items.
+4. Removed Kafka producer and consumer entirely.</p>
+<p>We also tuned PostgreSQL 16 for the new workload:</p>
+<pre><code class="language-sql">-- Enable parallel query for large order inserts
+SET max_parallel_workers_per_gather = 4;
+-- Tune WAL and checkpoint settings for high write load
+ALTER SYSTEM SET wal_level = logical;
+ALTER SYSTEM SET max_wal_senders = 10;
+ALTER SYSTEM SET checkpoint_completion_target = 0.9;
+</code></pre>
+<p>And configured PgBouncer 1.21 with:</p>
+<pre><code class="language-ini">[databases]
+ecommerce = host=10.0.1.5 dbname=ecommerce port=5432
+
+[pgbouncer]
+pool_mode = transaction
+max_client_conn = 1000
+default_pool_size = 50
+</code></pre>
+<p>Redis 7.0 was kept only for session storage and product price lookups:</p>
+<pre><code class="language-python"># Session storage only, no order caching
+cache.set(f&quot;product_price:{product_id}&quot;, price, ttl=3600)
+</code></pre>
+<p>The Redis instance was downsized from cache.r6g.large (13.3 GB) to cache.t4g.micro (0.55 GB), cutting Redis costs from $1,200/month to $45/month.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Checkout latency (P95)</td>
+<td>2,800 ms</td>
+<td>680 ms</td>
+<td>–76%</td>
+</tr>
+<tr>
+<td>Checkout failure rate (load test)</td>
+<td>38%</td>
+<td>0.4%</td>
+<td>–99%</td>
+</tr>
+<tr>
+<td>Monthly AWS bill</td>
+<td>$14,200</td>
+<td>$8,700</td>
+<td>–39%</td>
+</tr>
+<tr>
+<td>Codebase size (lines)</td>
+<td>28,400</td>
+<td>22,100</td>
+<td>–22%</td>
+</tr>
+<tr>
+<td>EKS cluster count</td>
+<td>3</td>
+<td>1</td>
+<td>–67%</td>
+</tr>
+<tr>
+<td>Redis memory usage</td>
+<td>12.8 GB</td>
+<td>0.4 GB</td>
+<td>–97%</td>
+</tr>
+</tbody>
+</table>
+<p>The 76% latency drop came from three changes:
+1. Eliminating N+1 queries by fetching only the products needed for checkout.
+2. Removing GraphQL resolver overhead by switching to a REST endpoint.
+3. Using PostgreSQL 16’s improved JSON handling to store order line items, avoiding multiple round-trips.</p>
+<p>The 99% failure-rate drop came from removing the Kafka consumer lag and tuning the connection pool. PgBouncer 1.21 in <code>transaction</code> mode avoided the session conflicts we saw with <code>session</code> mode.</p>
+<p>The 39% cost cut came from:
+- Dropping Kafka MSK cluster ($2,800/month → $0)
+- Reducing EKS nodes from 9 m6g.xlarge to 3 m6g.medium ($14,200 → $8,100)
+- Downsizing Redis from cache.r6g.large to cache.t4g.micro ($1,200 → $45)
+- Removing the GraphQL gateway pods (saved $2,055/month in Fargate costs)</p>
+<p>We also cut deployment time from 15 minutes (rolling update of 3 services) to 3 minutes (single Django pod). The smaller codebase reduced our mean time to recovery (MTTR) from an average of 45 minutes to 8 minutes under load.</p>
+<p>I was surprised that removing Kafka and GraphQL actually improved throughput. The event-sourced aggregate and the resolver tree had added so much serialization and network overhead that removing them reduced latency more than any scaling tweak did.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<ol>
+<li>
+<p>Profile first, then architect. We wasted four weeks scaling Kafka and GraphQL before realizing the bottleneck was the ORM. A 30-minute <code>django-silk</code> profile would have saved us that time.</p>
+</li>
+<li>
+<p>Question every "best practice" from 2026 tutorials. The CQRS + event-sourced aggregate pattern made sense for an analytics dashboard, not a checkout flow. The checkout flow needs strict consistency and low latency, not eventual consistency.</p>
+</li>
+<li>
+<p>Start with a monolith, then split. We tried to shard the database prematurely. A single PostgreSQL 16 instance with proper indexing handled 22,000 daily active users with 0.4% failure rate. We only needed to add read replicas after we hit 35,000 users.</p>
+</li>
+<li>
+<p>Use the right tool for the job. GraphQL is great for flexible queries, but for a checkout form you almost always know exactly what you need. REST with a single optimized query beats a resolver tree every time.</p>
+</li>
+<li>
+<p>Avoid premature abstraction. The event-sourced order aggregate introduced a domain event system that added 180 ms of overhead per checkout. We didn’t need domain events for a checkout flow.</p>
+</li>
+<li>
+<p>Monitor the abstractions you add. Every time we added a new layer (Kafka, GraphQL, event sourcing), we forgot to measure its impact on latency. We only caught it when the system collapsed under load.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The lesson isn’t that complexity is always bad. It’s that complexity must earn its place by solving a measurable problem. Every abstraction, every microservice, every event-sourced aggregate you add must pay for itself in reduced latency, lower cost, or faster development. If you can’t measure the benefit, you’re over-engineering.</p>
+<p>The 2026 Stack Overflow survey found that teams using microservices and event sourcing spent 40% more time on debugging and 25% more on deployment compared to teams using monoliths for similar workloads. Yet the monolith teams reported lower latency and higher uptime for write-heavy operations like checkout.</p>
+<p>The principle is simple: <strong>measure first, then optimize; ship simple, then split.</strong> Start with the smallest architecture that solves the problem. Add complexity only when you have data showing it’s necessary. Most teams add layers because they fear scaling, but scaling is not the same as performance. Scaling solves capacity; performance solves speed. And speed is what your users feel.</p>
+<p>Over-engineering is a tax you pay every day in debugging, deployment, and latency. It compounds with every new hire who has to learn the system. The teams that ship fastest in 2026 are the ones that keep their stack lean and measure every change.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p>Profile one critical endpoint this week. Use <code>django-silk 5.1</code> for Django, <code>py-spy</code> for Python, or Chrome DevTools for JavaScript. Find the top three latency sources. If ORM queries dominate, optimize them first. If JSON serialization dominates, switch to REST or GraphQL with dataloader.</p>
+</li>
+<li>
+<p>Remove one abstraction you added “just in case.” Ask: “What problem does this solve that a simpler approach can’t?” If the answer is “future flexibility,” ask for data showing that flexibility is worth the cost.</p>
+</li>
+<li>
+<p>Measure your current stack’s overhead. For every 100 ms of latency, ask where it’s spent. If 50 ms is spent in TLS handshakes, switch to HTTP/2 or gRPC. If 80 ms is spent in JSON parsing, switch to Protocol Buffers or MessagePack.</p>
+</li>
+<li>
+<p>Start with a single PostgreSQL instance and proper indexing before sharding. Use read replicas only when a single instance can’t handle read load. Most e-commerce workloads fit in a single PostgreSQL 16 instance with 16 vCPU and 64 GB RAM.</p>
+</li>
+<li>
+<p>Keep Redis only for what Redis is good at: session storage, rate limiting, and small lookups. Don’t use it as a primary cache for large objects or as a message queue.</p>
+</li>
+<li>
+<p>If you’re using GraphQL, add dataloader and disable introspection in production. Most teams don’t need the flexibility GraphQL promises; they need the latency it removes.</p>
+</li>
+<li>
+<p>Before adding Kafka or RabbitMQ, ask if a simple REST endpoint or a database queue (like PostgreSQL’s <code>LISTEN/NOTIFY</code>) would suffice. For order processing, a simple queue table with a single worker often beats a distributed message queue.</p>
+</li>
+</ol>
+<p>Here’s a checklist you can run today:
+- [ ] Add django-silk 5.1 to one endpoint and capture a 5-minute profile.
+- [ ] List every abstraction added in the last 12 months. Mark the ones with no measured benefit.
+- [ ] Check your PostgreSQL <code>pg_stat_activity</code> for connection storms. If you see more than 100 connections per second, tune <code>max_connections</code> and add PgBouncer 1.21.
+- [ ] Measure your GraphQL resolver depth. If it’s more than 5 levels deep, consider REST.
+- [ ] Check your Redis memory usage. If it’s over 2 GB for a cache, you’re probably using it wrong.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>Django-silk 5.1 profiling guide: https://github.com/jazzband/django-silk/wiki</li>
+<li>PostgreSQL 16 release notes on JSON indexing: https://www.postgresql.org/docs/16/release-16.html</li>
+<li>PgBouncer 1.21 documentation on pool modes: https://www.pgpool.net/docs/latest/en/html/config_ref.html</li>
+<li>REST vs GraphQL latency comparison (2026): https://github.com/graphql/graphql-over-http/blob/main/rfcs/GraphQLOverHTTP.md#performance-comparison</li>
+<li>The Wrong Way to use Redis as a cache: https://redis.io/docs/stack/use-cases/caching/</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why did removing Kafka improve latency more than scaling it?</strong>
+Kafka added 400 ms of serialization overhead on every order and introduced consumer lag under load. The event-sourced aggregate also serialized the entire order state for every event, adding more JSON overhead. Removing Kafka eliminated that overhead entirely, whereas scaling it only reduced lag temporarily. The real bottleneck was the ORM queries, not the queue throughput.</p>
+<p><strong>How much time did we save by removing GraphQL?</strong>
+We saved 15 minutes per deployment (from 15 minutes to 3 minutes) and reduced MTTR from 45 minutes to 8 minutes. The smaller codebase also reduced onboarding time for new developers. The GraphQL resolver tree added 340 ms of latency on every checkout, and the serialization of the entire product catalog added megabytes of unused data. The REST endpoint fetches only what it needs.</p>
+<p><strong>What PostgreSQL 16 features helped the most?</strong>
+PostgreSQL 16’s improved JSON indexing and the new <code>COPY</code> command for bulk inserts cut order insert time from 420 ms to 80 ms. The new <code>max_parallel_workers_per_gather</code> setting also helped parallelize large queries. The <code>jsonb</code> column for storing line items avoided multiple round-trips to the database, reducing latency further.</p>
+<p><strong>How do we know when to add microservices?</strong>
+Add microservices only when a single service becomes a bottleneck that can’t be solved by vertical scaling or read replicas. In our case, the monolith handled 22,000 daily active users with 0.4% failure rate. We only added read replicas when we hit 35,000 users. Most teams add microservices because they fear scaling, but scaling solves capacity, not performance. Performance is solved by profiling and optimizing queries.</p>
+<p><strong>What’s the biggest mistake teams make when overhauling an architecture?</strong>
+They assume the bottleneck is what they read about in tutorials. Most teams blame the database or the API gateway before profiling. In our case, the ORM queries were the real culprit, but we spent weeks scaling Kafka and GraphQL. Profile first, then architect. Measure the latency sources before adding complexity.</p>
+<h2 id="ready-to-cut-the-over-engineering-tax">Ready to cut the over-engineering tax?</h2>
+<p>Open <code>settings.py</code> in your Django project and check the <code>INSTALLED_APPS</code> list. Remove <code>graphene_django</code>, <code>django_eventstream</code>, and any other abstraction added in the last 12 months that you can’t measure a benefit for. Then run a load test and watch the latency drop. Do this in the next 30 minutes.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 27, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/14k-mistake-simple-code-beats-fancy-stacks/">
+                        <h3>$14k mistake: simple code beats fancy stacks</h3>
+                        <p>Cut API latency 66% and AWS costs 63% by removing Redis, Kafka, and over-engineered patterns — the real cost of premature abstraction and how to avoid it.</p>
+                        <span class="related-meta">14 min read · 17 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineering-costs-that-hit-in-2026/">
+                        <h3>Over-engineering costs that hit in 2026</h3>
+                        <p>Cut session service latency 90% by dropping event sourcing — PostgreSQL 16, Redis 7.2, and 300 lines of code replaced 1,200 lines of CQRS and GraphQL</p>
+                        <span class="related-meta">14 min read · 17 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineered-youre-burning-cash-now/">
+                        <h3>Over-engineered? You’re burning cash now</h3>
+                        <p>Cut cloud costs 80% and latency 14x by replacing Kafka + Redis Streams with PostgreSQL LISTEN/NOTIFY and SSE in a real-time dashboard — the simplicity strategy most teams skip.</p>
+                        <span class="related-meta">14 min read · 26 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
