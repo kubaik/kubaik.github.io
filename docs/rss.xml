@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 19:57:34 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 20:03:53 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech leaves for $60k roles: the real reasons</title>
+      <link>https://kubaik.github.io/big-tech-leaves-for-60k-roles-the-real-reasons/</link>
+      <description>Cut invisible meeting tax 11 hours per sprint with this 30-minute audit. Learn the real reasons big tech engineers leave despite six-figure salaries.</description>
+      <pubDate>Wed, 27 May 2026 20:03:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-leaves-for-60k-roles-the-real-reasons/</guid>
+    </item>
     <item>
       <title>Choose the right real-time transport</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-transport/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile backend errors 80% by profiling 5G latency — DNS, TCP, TLS breakdowns, DoH failover, undici pool tuning in Node 20 LTS.</description>
       <pubDate>Wed, 27 May 2026 11:10:05 +0000</pubDate>
       <guid>https://kubaik.github.io/profile-5g-backend-calls-in-2026/</guid>
-    </item>
-    <item>
-      <title>No CS degree? No problem</title>
-      <link>https://kubaik.github.io/no-cs-degree-no-problem/</link>
-      <description>Senior engineer without a CS degree? Learn the real skills that matter—connection pooling, caching, and observing production systems. Real case studies, benchmarks, and actionable steps.</description>
-      <pubDate>Wed, 27 May 2026 10:55:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-cs-degree-no-problem/</guid>
     </item>
   </channel>
 </rss>
