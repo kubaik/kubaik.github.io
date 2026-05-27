@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 06:54:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 06:58:50 +0000</lastBuildDate>
+    <item>
+      <title>Instrument LLMs, don&apos;t just call them</title>
+      <link>https://kubaik.github.io/instrument-llms-dont-just-call-them/</link>
+      <description>Cut LLM pipeline debugging time 96% with OpenTelemetry 1.33: add per-stage latency, GPU memory, token counters, and sampling rules that cost $18/day on Grafana Cloud.</description>
+      <pubDate>Wed, 27 May 2026 06:58:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-llms-dont-just-call-them/</guid>
+    </item>
     <item>
       <title>Over-engineered APIs cost $30k/month</title>
       <link>https://kubaik.github.io/over-engineered-apis-cost-30kmonth/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 30% without slowing code — Lambda arm64, Aurora Serverless v2, and Redis two-tier caching in a real Latin American health-tech API.</description>
       <pubDate>Tue, 26 May 2026 21:27:38 +0000</pubDate>
       <guid>https://kubaik.github.io/reduce-cloud-carbon-30-sustainably/</guid>
-    </item>
-    <item>
-      <title>AI tools that turned non-devs into solo founders</title>
-      <link>https://kubaik.github.io/ai-tools-that-turned-non-devs-into-solo-founders/</link>
-      <description>Cut dev time 10x with 3 stacks that actually scale — concrete costs, benchmarks, and the free-tier gotchas most tutorials skip. Proven in 2026 production.</description>
-      <pubDate>Tue, 26 May 2026 21:21:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-that-turned-non-devs-into-solo-founders/</guid>
     </item>
   </channel>
 </rss>
