@@ -1883,19 +1883,19 @@ def _build_templates() -> dict:
                         have personally built, debugged, or deployed.
                     </p>
                     <div class="author-links">
-                        <a href="[https://www.linkedin.com/in/kevin-kubai-22b61b37/](https://www.linkedin.com/in/kevin-kubai-22b61b37/)"
+                        <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/"
                            class="author-link author-link-linkedin"
                            target="_blank" rel="noopener noreferrer"
                            itemprop="sameAs">
                             LinkedIn profile
                         </a>
-                        <a href="[https://twitter.com/KubaiKevin](https://twitter.com/KubaiKevin)"
+                        <a href="https://twitter.com/KubaiKevin"
                            class="author-link author-link-twitter"
                            target="_blank" rel="noopener noreferrer"
                            itemprop="sameAs">
                             @KubaiKevin
                         </a>
-                        <a href="[https://github.com/kubaik](https://github.com/kubaik)"
+                        <a href="https://github.com/kubaik"
                            class="author-link author-link-github"
                            target="_blank" rel="noopener noreferrer"
                            itemprop="sameAs">
