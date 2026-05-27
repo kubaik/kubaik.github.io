@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 May 2026 14:23:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 14:27:24 +0000</lastBuildDate>
+    <item>
+      <title>Degree? No. Senior engineer? Yes.</title>
+      <link>https://kubaik.github.io/degree-no-senior-engineer-yes/</link>
+      <description>Senior engineer without CS degree: the 41% callback rate for self-taught devs proves the myth wrong. Learn connection pooling, Redis 7.2 tuning, and PostgreSQL 14 knobs to hit senior level.</description>
+      <pubDate>Wed, 27 May 2026 14:27:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/degree-no-senior-engineer-yes/</guid>
+    </item>
     <item>
       <title>AI’s impact on non-traditional dev teams</title>
       <link>https://kubaik.github.io/ais-impact-on-non-traditional-dev-teams/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI suggestion failures 60% by giving models real query plans and latency data — pgMustard, OpenTelemetry, and Cody Pro in 2026.</description>
       <pubDate>Wed, 27 May 2026 04:52:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-misses-your-codebases-blind-spots/</guid>
-    </item>
-    <item>
-      <title>Laptop LLM setup that really works</title>
-      <link>https://kubaik.github.io/laptop-llm-setup-that-really-works/</link>
-      <description>Cut LLM costs to zero with a laptop setup that actually works — real benchmarks, version-pinned tools, and the mistakes I made running Mistral 7B on M2 Macs in 2026.</description>
-      <pubDate>Wed, 27 May 2026 02:38:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/laptop-llm-setup-that-really-works/</guid>
     </item>
   </channel>
 </rss>
