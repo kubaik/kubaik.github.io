@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 14:27:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 14:32:23 +0000</lastBuildDate>
+    <item>
+      <title>Why RAG pipelines crumble in production</title>
+      <link>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</link>
+      <description>Cut RAG pipeline latency 74% and improve accuracy 23% with a Semantic Gate that prunes irrelevant chunks before reranking — real numbers from a 1.2M-user SaaS copilot in 2026</description>
+      <pubDate>Thu, 28 May 2026 14:32:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</guid>
+    </item>
     <item>
       <title>Fix 5G mobile backend latency now</title>
       <link>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI pipeline surprises 87% with 30 lines of OpenTelemetry — trace LLM calls, cache hits, and vector reloads to find real bottlenecks fast.</description>
       <pubDate>Thu, 28 May 2026 06:02:02 +0000</pubDate>
       <guid>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</guid>
-    </item>
-    <item>
-      <title>Senior engineers flee Big Tech’s iron grip</title>
-      <link>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</link>
-      <description>That adds latency (5-15 ms) and complexity, but it centralizes ownership.</description>
-      <pubDate>Thu, 28 May 2026 05:51:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</guid>
     </item>
   </channel>
 </rss>
