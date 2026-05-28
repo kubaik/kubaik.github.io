@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 08:58:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 09:02:26 +0000</lastBuildDate>
+    <item>
+      <title>Ship 3 projects right, not 10 wrong</title>
+      <link>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</link>
+      <description>Ship 3 small projects in a weekend, not 10 wrong ones over months. Real examples, concrete numbers, and the hiring signals that actually move the needle in 2026 remote roles from Africa.</description>
+      <pubDate>Thu, 28 May 2026 09:02:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</guid>
+    </item>
     <item>
       <title>When Postgres beats vector DBs</title>
       <link>https://kubaik.github.io/when-postgres-beats-vector-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Raise remote pay 37% with USD-anchored quotes — bill-of-materials generator, negotiation tracker, and real 2026 numbers you can replicate today.</description>
       <pubDate>Wed, 27 May 2026 22:29:44 +0000</pubDate>
       <guid>https://kubaik.github.io/raise-remote-pay-colombia-to-us-rates/</guid>
-    </item>
-    <item>
-      <title>Debugged AI salary boosters in 2026</title>
-      <link>https://kubaik.github.io/debugged-ai-salary-boosters-in-2026/</link>
-      <description>Cut to the chase: engineers with production AI models earn 30% more in 2026. See the exact skills that moved the needle — tabular ML vs modern GenAI — with benchmarks, costs, and code that actually works.</description>
-      <pubDate>Wed, 27 May 2026 22:26:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/debugged-ai-salary-boosters-in-2026/</guid>
     </item>
   </channel>
 </rss>
