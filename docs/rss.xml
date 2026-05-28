@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 10:44:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 10:48:06 +0000</lastBuildDate>
+    <item>
+      <title>Pick WebSocket, SSE, or long-polling: the right tool for real-time</title>
+      <link>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</link>
+      <description>Cut realtime overhead 60%: choose WebSockets vs SSE vs long-polling for your stack — latency, memory, and cost data from Node 20 and Redis 7.2 in production</description>
+      <pubDate>Thu, 28 May 2026 10:47:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</guid>
+    </item>
     <item>
       <title>Stop tuning pool size 50</title>
       <link>https://kubaik.github.io/stop-tuning-pool-size-50/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 40% by fixing one connection pool setting — measure your TLS handshake cost and size your pool for burst tolerance, not CPU cores.</description>
       <pubDate>Thu, 28 May 2026 01:27:22 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</guid>
-    </item>
-    <item>
-      <title>Choose PostgreSQL: why I pick it 9/10 times</title>
-      <link>https://kubaik.github.io/choose-postgresql-why-i-pick-it-910-times/</link>
-      <description>PostgreSQL beats MySQL 7/10 times in 2026 latency tests — see the exact benchmarks, setup steps, and cost data you need to decide today.</description>
-      <pubDate>Wed, 27 May 2026 23:58:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-postgresql-why-i-pick-it-910-times/</guid>
     </item>
   </channel>
 </rss>
