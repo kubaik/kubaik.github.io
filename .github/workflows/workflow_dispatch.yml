@@ -311,6 +311,58 @@ jobs:
             echo "Pushed cleaned docs/ to main."
           fi
 
+      # ── AUDIT & PURGE ────────────────────────────────────────────────────────
+      # Runs blog_system.py audit to detect fallback/short posts, then purges
+      # them, rebuilds the site, and commits if any were removed.
+
+      - name: Run blog audit
+        id: audit
+        run: |
+          echo "Running blog audit..."
+          OUTPUT=$(python blog_system.py audit 2>&1)
+          echo "$OUTPUT"
+
+          # Detect if audit flagged any problematic posts
+          if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
+            echo "has_audit_issues=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Audit found issues — will purge in next step."
+          else
+            echo "has_audit_issues=false" >> $GITHUB_OUTPUT
+            echo "✅ Audit found no issues."
+          fi
+
+      - name: Run blog purge
+        id: purge
+        if: steps.audit.outputs.has_audit_issues == 'true'
+        run: |
+          echo "Purging flagged posts..."
+          python blog_system.py purge
+          echo "Purge complete."
+
+      - name: Rebuild site after purge
+        if: steps.audit.outputs.has_audit_issues == 'true'
+        run: |
+          echo "Rebuilding site after purge..."
+          python blog_system.py build
+          echo "Site rebuild complete."
+
+      - name: Commit and push purged posts + rebuilt site
+        if: steps.audit.outputs.has_audit_issues == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (docs/ unchanged after purge + rebuild)."
+          else
+            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+            git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
+            git push
+            echo "Pushed purged docs/ to main."
+          fi
+
       # ── MISSING-SLOT RECOVERY ─────────────────────────────────────────────────
 
       - name: Safety pause before triggering
@@ -413,6 +465,7 @@ jobs:
             echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
             echo ""
             if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
               echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
@@ -439,5 +492,12 @@ jobs:
             else
               echo ""
               echo "✅ **No duplicate posts found.**"
+            fi
+            if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
+              echo ""
+              echo "⚠️ **Audit flagged posts were purged. Site rebuilt and docs/ pushed.**"
+            else
+              echo ""
+              echo "✅ **Audit found no issues.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
