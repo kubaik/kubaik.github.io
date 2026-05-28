@@ -7,5 +7,6 @@
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "Sustainable software engineering: cutting cloud carbon without cutting performance",
   "Non-traditional developers shipping real products: what the AI coding wave made possible",
-  "Why senior developers leave big tech (it's not always the money)"
+  "Why senior developers leave big tech (it's not always the money)",
+  "Observability for AI pipelines: what to instrument when your system includes an LLM"
 ]

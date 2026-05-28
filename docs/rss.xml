@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 05:51:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 06:02:17 +0000</lastBuildDate>
+    <item>
+      <title>Instrument AI pipelines: what to watch</title>
+      <link>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</link>
+      <description>Cut AI pipeline surprises 87% with 30 lines of OpenTelemetry — trace LLM calls, cache hits, and vector reloads to find real bottlenecks fast.</description>
+      <pubDate>Thu, 28 May 2026 06:02:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</guid>
+    </item>
     <item>
       <title>Senior engineers flee Big Tech’s iron grip</title>
       <link>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 30% without hurting user speed — how we shrank embodied carbon in CI, selective caching, and right-sized containers while keeping p95 latency at 285 ms.</description>
       <pubDate>Wed, 27 May 2026 21:48:57 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: 3 traps no tutorial warns you about</title>
-      <link>https://kubaik.github.io/rag-in-prod-3-traps-no-tutorial-warns-you-about/</link>
-      <description>Cut RAG latency 77% by respecting the LLM’s token budget — cache normalization, retriever guardrails, and Aurora rebuild costs most tutorials ignore. 3 concrete numbers, pgvector 0.7.0, Redis 7.2.</description>
-      <pubDate>Wed, 27 May 2026 20:43:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-3-traps-no-tutorial-warns-you-about/</guid>
     </item>
   </channel>
 </rss>
