@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 20:04:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 20:08:48 +0000</lastBuildDate>
+    <item>
+      <title>Beat remote pay offers: 4 levers not on the table</title>
+      <link>https://kubaik.github.io/beat-remote-pay-offers-4-levers-not-on-the-table/</link>
+      <description>Increase remote salary 50–100% with 4 levers most developers miss — benchmarks, value ties, currency hedges, and contract clauses. 2026 data from Levels.fyi, Wise, and LatAm job boards.</description>
+      <pubDate>Thu, 28 May 2026 20:08:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/beat-remote-pay-offers-4-levers-not-on-the-table/</guid>
+    </item>
     <item>
       <title>Costly simplicity: why less tech wins</title>
       <link>https://kubaik.github.io/costly-simplicity-why-less-tech-wins/</link>
@@ -138,13 +145,6 @@
       <description>Cut hiring loop drop-off 70% with a 200-line portfolio artifact — Flask API, Next.js dashboard, GitHub Actions, Redis 7.2, Railway $5/month, and a failure story that hiring managers actually read.</description>
       <pubDate>Thu, 28 May 2026 11:22:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</guid>
-    </item>
-    <item>
-      <title>Pick WebSocket, SSE, or long-polling: the right tool for real-time</title>
-      <link>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</link>
-      <description>Cut realtime overhead 60%: choose WebSockets vs SSE vs long-polling for your stack — latency, memory, and cost data from Node 20 and Redis 7.2 in production</description>
-      <pubDate>Thu, 28 May 2026 10:47:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</guid>
     </item>
   </channel>
 </rss>
