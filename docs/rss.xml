@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 09:11:21 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 09:16:36 +0000</lastBuildDate>
+    <item>
+      <title>10 AI skills that boost salaries in 2026</title>
+      <link>https://kubaik.github.io/10-ai-skills-that-boost-salaries-in-2026/</link>
+      <description>Cut your LLM API bill 40% and raise your salary 19%: prompt optimization vs RAG tuning with 2026 job data, latency benchmarks, and cost breakdown.</description>
+      <pubDate>Thu, 28 May 2026 09:16:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/10-ai-skills-that-boost-salaries-in-2026/</guid>
+    </item>
     <item>
       <title>Build 5G-ready backends: latency tricks you can&apos;t</title>
       <link>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</link>
@@ -138,13 +145,6 @@
       <description>Instrument LLM pipelines and cut latency 30% — metrics, logging, and error handling for AI applications</description>
       <pubDate>Wed, 27 May 2026 23:15:47 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-llm-pipelines-with-observability/</guid>
-    </item>
-    <item>
-      <title>Over-engineering costs more than you think</title>
-      <link>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</link>
-      <description>Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.</description>
-      <pubDate>Wed, 27 May 2026 23:01:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</guid>
     </item>
   </channel>
 </rss>
