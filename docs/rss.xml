@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 21:02:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 21:07:05 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI skills that pay (and 3 that don’t)</title>
+      <link>https://kubaik.github.io/2026-ai-skills-that-pay-and-3-that-dont/</link>
+      <description>In 2026, vector search skills pay 25–45% more than prompt engineering. See benchmarks from Milvus 2.4 and LangChain 0.2, plus salary data from 87,000 job postings.</description>
+      <pubDate>Thu, 28 May 2026 21:06:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-skills-that-pay-and-3-that-dont/</guid>
+    </item>
     <item>
       <title>Mobile-first backends break these 5 things first</title>
       <link>https://kubaik.github.io/mobile-first-backends-break-these-5-things-first/</link>
@@ -138,13 +145,6 @@
       <description>AI skills 2026: salaries that move the needle — $155k vs $110k gap explained with pgvector 0.7.0, VoyageAI and Evidently 0.4 benchmarks so you know what actually pays off.</description>
       <pubDate>Thu, 28 May 2026 12:31:16 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</guid>
-    </item>
-    <item>
-      <title>Benchmark WebSocket vs SSE vs long polling in practice</title>
-      <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling-in-practice/</link>
-      <description>Pick the realtime protocol that saves $45k/year — WebSocket vs SSE vs long polling latency, cost, and scaling trade-offs for 2026 stacks.</description>
-      <pubDate>Thu, 28 May 2026 12:16:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling-in-practice/</guid>
     </item>
   </channel>
 </rss>
