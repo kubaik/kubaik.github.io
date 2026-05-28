@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 19:57:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 20:01:30 +0000</lastBuildDate>
+    <item>
+      <title>Costly simplicity: why less tech wins</title>
+      <link>https://kubaik.github.io/costly-simplicity-why-less-tech-wins/</link>
+      <description>Cut AWS costs 75% and latency 82% by removing Redis, microservices, and event buses — real numbers from a 2026 case study on over-engineering.</description>
+      <pubDate>Thu, 28 May 2026 20:01:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/costly-simplicity-why-less-tech-wins/</guid>
+    </item>
     <item>
       <title>African devs: your portfolio sucks (and how to fix it)</title>
       <link>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut realtime overhead 60%: choose WebSockets vs SSE vs long-polling for your stack — latency, memory, and cost data from Node 20 and Redis 7.2 in production</description>
       <pubDate>Thu, 28 May 2026 10:47:50 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</guid>
-    </item>
-    <item>
-      <title>Stop tuning pool size 50</title>
-      <link>https://kubaik.github.io/stop-tuning-pool-size-50/</link>
-      <description>Cut response time 78% and save $9/month by ditching the &apos;pool size 50&apos; default — real formulas, benchmarks, and code for PostgreSQL 16 and Node 20 LTS in 2026.</description>
-      <pubDate>Thu, 28 May 2026 10:44:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-tuning-pool-size-50/</guid>
     </item>
   </channel>
 </rss>
