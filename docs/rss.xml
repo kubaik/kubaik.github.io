@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 20:08:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 20:19:42 +0000</lastBuildDate>
+    <item>
+      <title>Chroma breaks in prod: 3 gotchas</title>
+      <link>https://kubaik.github.io/chroma-breaks-in-prod-3-gotchas/</link>
+      <description>Cut RAG pipeline latency 35× with Milvus 2.3.6-lite — the real scalability limits of Chroma, FAISS, and prompt bloat exposed with real numbers and Terraform snippets.</description>
+      <pubDate>Thu, 28 May 2026 20:19:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/chroma-breaks-in-prod-3-gotchas/</guid>
+    </item>
     <item>
       <title>Beat remote pay offers: 4 levers not on the table</title>
       <link>https://kubaik.github.io/beat-remote-pay-offers-4-levers-not-on-the-table/</link>
@@ -138,13 +145,6 @@
       <description>The gap wasn’t theoretical; it showed up in the p99 latency graph as a 340% increase.</description>
       <pubDate>Thu, 28 May 2026 12:08:21 +0000</pubDate>
       <guid>https://kubaik.github.io/why-vibe-coding-fails-in-production/</guid>
-    </item>
-    <item>
-      <title>Ship a remote-ready African dev portfolio</title>
-      <link>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</link>
-      <description>Cut hiring loop drop-off 70% with a 200-line portfolio artifact — Flask API, Next.js dashboard, GitHub Actions, Redis 7.2, Railway $5/month, and a failure story that hiring managers actually read.</description>
-      <pubDate>Thu, 28 May 2026 11:22:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</guid>
     </item>
   </channel>
 </rss>
