@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 12:08:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 12:16:56 +0000</lastBuildDate>
+    <item>
+      <title>Benchmark WebSocket vs SSE vs long polling in practice</title>
+      <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling-in-practice/</link>
+      <description>Pick the realtime protocol that saves $45k/year — WebSocket vs SSE vs long polling latency, cost, and scaling trade-offs for 2026 stacks.</description>
+      <pubDate>Thu, 28 May 2026 12:16:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling-in-practice/</guid>
+    </item>
     <item>
       <title>Why Vibe Coding Fails in Production</title>
       <link>https://kubaik.github.io/why-vibe-coding-fails-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 89% and AWS bill 73% by tuning pgvector indexes, BRIN filters, and pgBouncer pools — the exact steps most tutorials skip.</description>
       <pubDate>Thu, 28 May 2026 02:14:24 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</guid>
-    </item>
-    <item>
-      <title>Ask for 80% of US salary as a remote dev in 2026</title>
-      <link>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</link>
-      <description>Ask for 80% of US salary as a remote dev in 2026 — COL-adjusted benchmarks, email template, and the Hetzner cron job that keeps the data fresh.</description>
-      <pubDate>Thu, 28 May 2026 01:55:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</guid>
     </item>
   </channel>
 </rss>
