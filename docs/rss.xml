@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 09:49:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 09:57:03 +0000</lastBuildDate>
+    <item>
+      <title>Ship real SaaS without senior devs</title>
+      <link>https://kubaik.github.io/ship-real-saas-without-senior-devs/</link>
+      <description>Ship a real product in 30 minutes with AI tools in 2026 — GitHub Copilot Workspace, Railway.app, and Neon.tech cut dev time 67% and costs $12/month for 10k users.</description>
+      <pubDate>Thu, 28 May 2026 09:56:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-real-saas-without-senior-devs/</guid>
+    </item>
     <item>
       <title>Pick no-code—or pay later?</title>
       <link>https://kubaik.github.io/pick-no-codeor-pay-later/</link>
@@ -138,13 +145,6 @@
       <description>Go from Python script to live API in 5 minutes with Deta Space and Railway in 2026. Free tiers, global edge networks, and rollback features compared for non-traditional developers.</description>
       <pubDate>Wed, 27 May 2026 23:52:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-scaffolding-for-non-traditional-devs/</guid>
-    </item>
-    <item>
-      <title>Portfolio that hires: Africa&apos;s remote edge</title>
-      <link>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</link>
-      <description>Cut interview ghosting 50%: focus on one system with metrics, not GitHub stars — real AWS examples, p99 latency numbers, and the failure story that gets remote roles.</description>
-      <pubDate>Wed, 27 May 2026 23:43:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</guid>
     </item>
   </channel>
 </rss>
