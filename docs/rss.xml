@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 22:54:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 22:58:54 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that move the salary needle in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-that-move-the-salary-needle-in-2026/</link>
+      <description>AI skills that move the needle in 2026: 22–35% salary premium for vector search + RAG vs 18–28% for observability and cost control — concrete benchmarks, cost breakdowns, and the concrete next step to start today.</description>
+      <pubDate>Thu, 28 May 2026 22:58:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-move-the-salary-needle-in-2026/</guid>
+    </item>
     <item>
       <title>Python packaging in 2026: the right stack</title>
       <link>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut 5G backend latency 85% with socket timeouts and DNS tunneling fixes — real p95 drops from 2.1s to 280ms on Aurora Serverless v2.</description>
       <pubDate>Thu, 28 May 2026 14:01:38 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</guid>
-    </item>
-    <item>
-      <title>Pool size ≠ CPU cores</title>
-      <link>https://kubaik.github.io/pool-size-cpu-cores/</link>
-      <description>Cut API latency 65% by fixing database connection pooling — why CPU cores don’t matter, how to size pools in 2026, and the overflow mistake that crashes databases.</description>
-      <pubDate>Thu, 28 May 2026 12:56:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-cpu-cores/</guid>
     </item>
   </channel>
 </rss>
