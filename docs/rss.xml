@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 09:23:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 09:27:42 +0000</lastBuildDate>
+    <item>
+      <title>Pick no-code—or pay later?</title>
+      <link>https://kubaik.github.io/pick-no-codeor-pay-later/</link>
+      <description>Choose wisely: 40% faster demos with no-code vs 60% lower long-term costs writing custom code — data from 2026 projects shows where each path wins</description>
+      <pubDate>Thu, 28 May 2026 09:27:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-no-codeor-pay-later/</guid>
+    </item>
     <item>
       <title>10 AI skills that boost salaries in 2026</title>
       <link>https://kubaik.github.io/10-ai-skills-that-boost-salaries-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview ghosting 50%: focus on one system with metrics, not GitHub stars — real AWS examples, p99 latency numbers, and the failure story that gets remote roles.</description>
       <pubDate>Wed, 27 May 2026 23:43:32 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-that-hires-africas-remote-edge/</guid>
-    </item>
-    <item>
-      <title>Debug LLM pipelines with observability</title>
-      <link>https://kubaik.github.io/debug-llm-pipelines-with-observability/</link>
-      <description>Instrument LLM pipelines and cut latency 30% — metrics, logging, and error handling for AI applications</description>
-      <pubDate>Wed, 27 May 2026 23:15:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-llm-pipelines-with-observability/</guid>
     </item>
   </channel>
 </rss>
