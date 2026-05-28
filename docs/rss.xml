@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 17:47:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 17:52:09 +0000</lastBuildDate>
+    <item>
+      <title>Shrink cloud carbon 25% — fast</title>
+      <link>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</link>
+      <description>Cut cloud carbon 28% without hurting speed — ARM migration, Redis 7.2 caching, and PostgreSQL 15 tuning for real-time apps serving 250k users in Latin America.</description>
+      <pubDate>Thu, 28 May 2026 17:51:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</guid>
+    </item>
     <item>
       <title>Why senior devs flee big tech</title>
       <link>https://kubaik.github.io/why-senior-devs-flee-big-tech/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 50% on 5G: the exact TCP, Redis, and cache TTL tweaks most teams miss. 2026 cellular backend guide with Prometheus queries and Docker setup.</description>
       <pubDate>Thu, 28 May 2026 09:11:05 +0000</pubDate>
       <guid>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</guid>
-    </item>
-    <item>
-      <title>Ship 3 projects right, not 10 wrong</title>
-      <link>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</link>
-      <description>Ship 3 small projects in a weekend, not 10 wrong ones over months. Real examples, concrete numbers, and the hiring signals that actually move the needle in 2026 remote roles from Africa.</description>
-      <pubDate>Thu, 28 May 2026 09:02:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</guid>
     </item>
   </channel>
 </rss>
