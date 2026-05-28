@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 17:59:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 18:02:37 +0000</lastBuildDate>
+    <item>
+      <title>Non-coders launch products with AI stacks</title>
+      <link>https://kubaik.github.io/non-coders-launch-products-with-ai-stacks/</link>
+      <description>Cost under load: I benchmarked each stack at 1,000 concurrent users using k6.</description>
+      <pubDate>Thu, 28 May 2026 18:02:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/non-coders-launch-products-with-ai-stacks/</guid>
+    </item>
     <item>
       <title>Multi-agent systems: the prod reality</title>
       <link>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</link>
@@ -138,13 +145,6 @@
       <description>Ship a real product in 30 minutes with AI tools in 2026 — GitHub Copilot Workspace, Railway.app, and Neon.tech cut dev time 67% and costs $12/month for 10k users.</description>
       <pubDate>Thu, 28 May 2026 09:56:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-real-saas-without-senior-devs/</guid>
-    </item>
-    <item>
-      <title>Pick no-code—or pay later?</title>
-      <link>https://kubaik.github.io/pick-no-codeor-pay-later/</link>
-      <description>Choose wisely: 40% faster demos with no-code vs 60% lower long-term costs writing custom code — data from 2026 projects shows where each path wins</description>
-      <pubDate>Thu, 28 May 2026 09:27:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-no-codeor-pay-later/</guid>
     </item>
   </channel>
 </rss>
