@@ -6,5 +6,6 @@
   "Non-traditional developers shipping real products: what the AI coding wave made possible",
   "Database connection pooling: the setting everyone gets wrong",
   "5G and mobile-first backends: what changes when your users are always on cellular",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "How vector databases work (and when you don't need one)"
 ]

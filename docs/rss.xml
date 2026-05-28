@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 14:32:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 14:36:42 +0000</lastBuildDate>
+    <item>
+      <title>Vector search: pgvector vs FAISS by the numbers</title>
+      <link>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</link>
+      <description>Cut vector-search costs 85% with pgvector — when 2M embeddings fit in RAM, PostgreSQL wins. Build time, recall, and infra cost tested.</description>
+      <pubDate>Thu, 28 May 2026 14:36:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</guid>
+    </item>
     <item>
       <title>Why RAG pipelines crumble in production</title>
       <link>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</link>
@@ -138,13 +145,6 @@
       <description>They’d insist on 100% test coverage while the production database had 17 tables with no foreign key constraints.</description>
       <pubDate>Thu, 28 May 2026 06:05:10 +0000</pubDate>
       <guid>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</guid>
-    </item>
-    <item>
-      <title>Instrument AI pipelines: what to watch</title>
-      <link>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</link>
-      <description>Cut AI pipeline surprises 87% with 30 lines of OpenTelemetry — trace LLM calls, cache hits, and vector reloads to find real bottlenecks fast.</description>
-      <pubDate>Thu, 28 May 2026 06:02:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</guid>
     </item>
   </channel>
 </rss>
