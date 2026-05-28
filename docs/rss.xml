@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 08:54:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 08:58:37 +0000</lastBuildDate>
+    <item>
+      <title>When Postgres beats vector DBs</title>
+      <link>https://kubaik.github.io/when-postgres-beats-vector-dbs/</link>
+      <description>Cut vector search latency 90% with pgvector 0.7 on Postgres 16.2 — 5ms vs 50ms benchmarks, $1,200 monthly savings, and the SQL trick that beats dedicated vector DBs</description>
+      <pubDate>Thu, 28 May 2026 08:58:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-postgres-beats-vector-dbs/</guid>
+    </item>
     <item>
       <title>Choose SSE, WebSockets, or Long Polling</title>
       <link>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>Cut to the chase: engineers with production AI models earn 30% more in 2026. See the exact skills that moved the needle — tabular ML vs modern GenAI — with benchmarks, costs, and code that actually works.</description>
       <pubDate>Wed, 27 May 2026 22:26:50 +0000</pubDate>
       <guid>https://kubaik.github.io/debugged-ai-salary-boosters-in-2026/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: 80ms vs 3ms for your use case</title>
-      <link>https://kubaik.github.io/vector-dbs-80ms-vs-3ms-for-your-use-case/</link>
-      <description>Cut semantic search latency 75% with these two stacks — 28 ms vs 22 ms median, $4k vs $8k first-year cost, and the exact knobs to tune pgvector 0.7.0 or Weaviate 1.24 in 2026.</description>
-      <pubDate>Wed, 27 May 2026 22:19:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-80ms-vs-3ms-for-your-use-case/</guid>
     </item>
   </channel>
 </rss>
