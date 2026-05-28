@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 10:48:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 11:23:11 +0000</lastBuildDate>
+    <item>
+      <title>Ship a remote-ready African dev portfolio</title>
+      <link>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</link>
+      <description>Cut hiring loop drop-off 70% with a 200-line portfolio artifact — Flask API, Next.js dashboard, GitHub Actions, Redis 7.2, Railway $5/month, and a failure story that hiring managers actually read.</description>
+      <pubDate>Thu, 28 May 2026 11:22:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</guid>
+    </item>
     <item>
       <title>Pick WebSocket, SSE, or long-polling: the right tool for real-time</title>
       <link>https://kubaik.github.io/pick-websocket-sse-or-long-polling-the-right-tool-for-real-t/</link>
@@ -138,13 +145,6 @@
       <description>Cut repository query time 90% with repository intelligence — measure index build time, query latency, and staleness before you choose tooling. Learn what a good index looks like and where grep breaks first.</description>
       <pubDate>Thu, 28 May 2026 01:33:44 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</guid>
-    </item>
-    <item>
-      <title>Pool size is the wrong knob to turn</title>
-      <link>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</link>
-      <description>Cut API response time 40% by fixing one connection pool setting — measure your TLS handshake cost and size your pool for burst tolerance, not CPU cores.</description>
-      <pubDate>Thu, 28 May 2026 01:27:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</guid>
     </item>
   </channel>
 </rss>
