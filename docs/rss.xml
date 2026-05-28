@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 22:21:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 22:25:15 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSockets vs SSE vs Polling in 2024</title>
+      <link>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</link>
+      <description>Compare WebSocket vs Server-Sent Events vs long-polling with Node 20 LTS and Redis 7.2 — latency benchmarks, cost data, and the exact mistake that cost $480/month.</description>
+      <pubDate>Thu, 28 May 2026 22:25:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</guid>
+    </item>
     <item>
       <title>Vector DBs vs full-text: when AI search needs neither</title>
       <link>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud bills 15% and PR time 80% with AI coding tools that actually ship — real numbers from 2026 on what works for non-traditional devs shipping real products.</description>
       <pubDate>Thu, 28 May 2026 12:53:20 +0000</pubDate>
       <guid>https://kubaik.github.io/2026s-solo-dev-stack-reality/</guid>
-    </item>
-    <item>
-      <title>Portfolios that hire Africans remotely</title>
-      <link>https://kubaik.github.io/portfolios-that-hire-africans-remotely/</link>
-      <description>Portfolio beats certs: ship real code that proves you can operate production systems and land remote jobs from Africa. 2026 hiring secrets from a Nairobi engineer.</description>
-      <pubDate>Thu, 28 May 2026 12:44:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolios-that-hire-africans-remotely/</guid>
     </item>
   </channel>
 </rss>
