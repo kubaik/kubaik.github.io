@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 17:11:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 17:16:07 +0000</lastBuildDate>
+    <item>
+      <title>Why senior devs flee big tech</title>
+      <link>https://kubaik.github.io/why-senior-devs-flee-big-tech/</link>
+      <description>Senior engineers quit big tech not for money — for ownership. Measure cycle time, automate compliance, deploy to prod first. 2026 data and tools inside.</description>
+      <pubDate>Thu, 28 May 2026 17:15:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-senior-devs-flee-big-tech/</guid>
+    </item>
     <item>
       <title>Over-engineered until it broke</title>
       <link>https://kubaik.github.io/over-engineered-until-it-broke/</link>
@@ -138,13 +145,6 @@
       <description>Ship 3 small projects in a weekend, not 10 wrong ones over months. Real examples, concrete numbers, and the hiring signals that actually move the needle in 2026 remote roles from Africa.</description>
       <pubDate>Thu, 28 May 2026 09:02:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</guid>
-    </item>
-    <item>
-      <title>When Postgres beats vector DBs</title>
-      <link>https://kubaik.github.io/when-postgres-beats-vector-dbs/</link>
-      <description>Cut vector search latency 90% with pgvector 0.7 on Postgres 16.2 — 5ms vs 50ms benchmarks, $1,200 monthly savings, and the SQL trick that beats dedicated vector DBs</description>
-      <pubDate>Thu, 28 May 2026 08:58:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-postgres-beats-vector-dbs/</guid>
     </item>
   </channel>
 </rss>
