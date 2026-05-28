@@ -3,5 +3,6 @@
   "Database connection pooling: the setting everyone gets wrong",
   "Repository intelligence: how AI is learning your entire codebase context",
   "Negotiating a remote salary when you're in a lower-cost country",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "The real cost of over-engineering: when simplicity beats the fancy architecture"
 ]

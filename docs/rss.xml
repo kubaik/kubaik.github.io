@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 02:14:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 04:43:46 +0000</lastBuildDate>
+    <item>
+      <title>Fancy stack loses: hard numbers on simplicity</title>
+      <link>https://kubaik.github.io/fancy-stack-loses-hard-numbers-on-simplicity/</link>
+      <description>Cut dashboard response time 60% with PostgreSQL 16 queries and minimal JavaScript — the exact stack that replaced a Node.js 20 microservice plan.</description>
+      <pubDate>Thu, 28 May 2026 04:43:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/fancy-stack-loses-hard-numbers-on-simplicity/</guid>
+    </item>
     <item>
       <title>RAG in prod: why tutorials flop</title>
       <link>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</link>
@@ -138,13 +145,6 @@
       <description>Save $1,800/month on RDS costs by fixing one connection pool mistake most teams still copy from 2018 docs. Includes PostgreSQL 15 and Node.js 20 LTS examples and benchmarks.</description>
       <pubDate>Wed, 27 May 2026 19:40:51 +0000</pubDate>
       <guid>https://kubaik.github.io/overpaying-for-idle-db-connections/</guid>
-    </item>
-    <item>
-      <title>AI knows your codebase: what it can&apos;t fix</title>
-      <link>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</link>
-      <description>Cut PR review time 40% with AI that maps every change to runtime impact — 3 concrete steps to measure blast radius before you merge.</description>
-      <pubDate>Wed, 27 May 2026 19:38:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</guid>
     </item>
   </channel>
 </rss>
