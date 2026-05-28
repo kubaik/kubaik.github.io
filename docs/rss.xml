@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 13:57:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 14:01:52 +0000</lastBuildDate>
+    <item>
+      <title>Fix 5G mobile backend latency now</title>
+      <link>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</link>
+      <description>Cut 5G backend latency 85% with socket timeouts and DNS tunneling fixes — real p95 drops from 2.1s to 280ms on Aurora Serverless v2.</description>
+      <pubDate>Thu, 28 May 2026 14:01:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</guid>
+    </item>
     <item>
       <title>Pool size ≠ CPU cores</title>
       <link>https://kubaik.github.io/pool-size-cpu-cores/</link>
@@ -138,13 +145,6 @@
       <description>That adds latency (5-15 ms) and complexity, but it centralizes ownership.</description>
       <pubDate>Thu, 28 May 2026 05:51:29 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</guid>
-    </item>
-    <item>
-      <title>AI coding tools that survive real traffic</title>
-      <link>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</link>
-      <description>This list is the distillation of hundreds of hours testing AI tools in real environments, from solo projects to 5-person startups, with traffic ranging…</description>
-      <pubDate>Thu, 28 May 2026 04:59:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</guid>
     </item>
   </channel>
 </rss>
