@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 01:27:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 01:33:59 +0000</lastBuildDate>
+    <item>
+      <title>AI indexes your repo: context you never knew you needed</title>
+      <link>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</link>
+      <description>Cut repository query time 90% with repository intelligence — measure index build time, query latency, and staleness before you choose tooling. Learn what a good index looks like and where grep breaks first.</description>
+      <pubDate>Thu, 28 May 2026 01:33:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</guid>
+    </item>
     <item>
       <title>Pool size is the wrong knob to turn</title>
       <link>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary negotiations 20–30% with this data-backed breakdown of prompt engineering vs fine-tuning in 2026. Includes real salary bands, benchmark results, and the exact tool versions teams use today.</description>
       <pubDate>Wed, 27 May 2026 18:19:15 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs Polling: Pick Fast</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
-      <description>Cut real-time transport choice from days to 90 seconds — latency, cost, and code differences for WebSocket, SSE, and long polling in 2026</description>
-      <pubDate>Wed, 27 May 2026 18:16:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
     </item>
   </channel>
 </rss>
