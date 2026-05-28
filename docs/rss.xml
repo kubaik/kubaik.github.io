@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 23:48:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 23:51:28 +0000</lastBuildDate>
+    <item>
+      <title>Stop burning money on mobile backends</title>
+      <link>https://kubaik.github.io/stop-burning-money-on-mobile-backends/</link>
+      <description>Cut mobile backend latency 85% with Redis 7.2 caching, pgbouncer 1.23 pooling, and Node 20 keep-alive tuning — the 3 metrics to watch when cellular radio drops</description>
+      <pubDate>Thu, 28 May 2026 23:51:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-burning-money-on-mobile-backends/</guid>
+    </item>
     <item>
       <title>Leverage local costs for global remote pay</title>
       <link>https://kubaik.github.io/leverage-local-costs-for-global-remote-pay/</link>
@@ -138,13 +145,6 @@
       <description>Why I wrote this (the problem I kept hitting) I spent two weeks arguing with a US-based startup about a salary that looked generous on paper but left me…</description>
       <pubDate>Thu, 28 May 2026 14:55:35 +0000</pubDate>
       <guid>https://kubaik.github.io/convert-global-salary-to-local-take-home/</guid>
-    </item>
-    <item>
-      <title>Vector search: pgvector vs FAISS by the numbers</title>
-      <link>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</link>
-      <description>Cut vector-search costs 85% with pgvector — when 2M embeddings fit in RAM, PostgreSQL wins. Build time, recall, and infra cost tested.</description>
-      <pubDate>Thu, 28 May 2026 14:36:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</guid>
     </item>
   </channel>
 </rss>
