@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 19:46:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 19:50:28 +0000</lastBuildDate>
+    <item>
+      <title>African devs: your portfolio sucks (and how to fix it)</title>
+      <link>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</link>
+      <description>African devs waste months building GitHub profiles that get ignored. A 500-word post-mortem, a Locust 2.20 report, or a runbook beats 10k stars in 2026 — real production artifacts get you hired remotely.</description>
+      <pubDate>Thu, 28 May 2026 19:50:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</guid>
+    </item>
     <item>
       <title>Stop guessing pool size—here&apos;s the math</title>
       <link>https://kubaik.github.io/stop-guessing-pool-sizeheres-the-math/</link>
@@ -138,13 +145,6 @@
       <description>Cut response time 78% and save $9/month by ditching the &apos;pool size 50&apos; default — real formulas, benchmarks, and code for PostgreSQL 16 and Node 20 LTS in 2026.</description>
       <pubDate>Thu, 28 May 2026 10:44:02 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-tuning-pool-size-50/</guid>
-    </item>
-    <item>
-      <title>Decode your codebase with AI repository intelligence</title>
-      <link>https://kubaik.github.io/decode-your-codebase-with-ai-repository-intelligence/</link>
-      <description>Cut AI hallucinations 85% by indexing your codebase as a searchable knowledge graph — not a flat text dump. Concrete tools, benchmarks, and the hidden context gap most teams miss.</description>
-      <pubDate>Thu, 28 May 2026 10:09:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/decode-your-codebase-with-ai-repository-intelligence/</guid>
     </item>
   </channel>
 </rss>
