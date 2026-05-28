@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 23:06:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 23:10:29 +0000</lastBuildDate>
+    <item>
+      <title>Remote portfolio hacks for African devs</title>
+      <link>https://kubaik.github.io/remote-portfolio-hacks-for-african-devs/</link>
+      <description>Cut job search time 50% with one portfolio shift — swap demos for deliverables that reduce cost, latency, or on-call load. Build a Terraform module, CLI, or GitHub Action that shows measurable impact and wins remote interviews in Africa.</description>
+      <pubDate>Thu, 28 May 2026 23:10:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-portfolio-hacks-for-african-devs/</guid>
+    </item>
     <item>
       <title>AI skills that move the salary needle in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-move-the-salary-needle-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 74% and improve accuracy 23% with a Semantic Gate that prunes irrelevant chunks before reranking — real numbers from a 1.2M-user SaaS copilot in 2026</description>
       <pubDate>Thu, 28 May 2026 14:32:07 +0000</pubDate>
       <guid>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</guid>
-    </item>
-    <item>
-      <title>Fix 5G mobile backend latency now</title>
-      <link>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</link>
-      <description>Cut 5G backend latency 85% with socket timeouts and DNS tunneling fixes — real p95 drops from 2.1s to 280ms on Aurora Serverless v2.</description>
-      <pubDate>Thu, 28 May 2026 14:01:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-5g-mobile-backend-latency-now/</guid>
     </item>
   </channel>
 </rss>
