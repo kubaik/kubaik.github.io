@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 01:23:47 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 01:27:34 +0000</lastBuildDate>
+    <item>
+      <title>Pool size is the wrong knob to turn</title>
+      <link>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</link>
+      <description>Cut API response time 40% by fixing one connection pool setting — measure your TLS handshake cost and size your pool for burst tolerance, not CPU cores.</description>
+      <pubDate>Thu, 28 May 2026 01:27:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-is-the-wrong-knob-to-turn/</guid>
+    </item>
     <item>
       <title>Choose PostgreSQL: why I pick it 9/10 times</title>
       <link>https://kubaik.github.io/choose-postgresql-why-i-pick-it-910-times/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time transport choice from days to 90 seconds — latency, cost, and code differences for WebSocket, SSE, and long polling in 2026</description>
       <pubDate>Wed, 27 May 2026 18:16:16 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: what tutorials omit</title>
-      <link>https://kubaik.github.io/rag-in-prod-what-tutorials-omit/</link>
-      <description>Cut RAG pipeline costs 80% with Redis caching, circuit breakers, and gunicorn gevent workers — the real levers most tutorials skip.</description>
-      <pubDate>Wed, 27 May 2026 17:54:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-omit/</guid>
     </item>
   </channel>
 </rss>
