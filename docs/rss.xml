@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 06:05:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 06:47:16 +0000</lastBuildDate>
+    <item>
+      <title>Choose SSE, WebSockets, or Long Polling</title>
+      <link>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</link>
+      <description>Cut AWS bill 59% by choosing SSE over WebSockets — benchmarked latency, memory, and cost for 1 k concurrent users on t3.medium in 2026.</description>
+      <pubDate>Thu, 28 May 2026 06:47:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</guid>
+    </item>
     <item>
       <title>Junior to senior without the CS degree</title>
       <link>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</link>
@@ -138,13 +145,6 @@
       <description>Cut semantic search latency 75% with these two stacks — 28 ms vs 22 ms median, $4k vs $8k first-year cost, and the exact knobs to tune pgvector 0.7.0 or Weaviate 1.24 in 2026.</description>
       <pubDate>Wed, 27 May 2026 22:19:56 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-80ms-vs-3ms-for-your-use-case/</guid>
-    </item>
-    <item>
-      <title>Cellular backend tuning: the 5 rules you can’t ignore</title>
-      <link>https://kubaik.github.io/cellular-backend-tuning-the-5-rules-you-cant-ignore/</link>
-      <description>Cut P99 latency 82% on mobile traffic — PostgreSQL pool tuning, Redis TTL, and the RRC state mistake most teams miss.</description>
-      <pubDate>Wed, 27 May 2026 22:12:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/cellular-backend-tuning-the-5-rules-you-cant-ignore/</guid>
     </item>
   </channel>
 </rss>
