@@ -96,7 +96,7 @@ def _normalise_title(text: str) -> str:
         (r'\bno[\-\s]code\b', 'nocode'),
         (r'\bai[\-\s]generated\b', 'aigenerated'),
         (r'\bfull[\-\s]stack\b', 'fullstack'),
-        (r'\bback[\-\s]end\b', 'backend'),
+        (r'\bback[\-\s]end\b', 'frontend'),
         (r'\bfront[\-\s]end\b', 'frontend'),
         (r'\bopen[\-\s]source\b', 'opensource'),
         (r'\b\d+x\b', 'Nx'),
@@ -823,13 +823,13 @@ def _derive_hashtags_from_keywords(
 # Provider constants
 # ─────────────────────────────────────────────────────────────────
 
-_MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
+_MISTRAL_API_URL = "[https://api.mistral.ai/v1/chat/completions](https://api.mistral.ai/v1/chat/completions)"
 _MISTRAL_FREE_TIER_DELAY = 1.2
 
-_NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
+_NVIDIA_API_URL = "[https://integrate.api.nvidia.com/v1/chat/completions](https://integrate.api.nvidia.com/v1/chat/completions)"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
-_GITHUB_MODELS_URL = "https://models.github.ai/inference/chat/completions"
+_GITHUB_MODELS_URL = "[https://models.github.ai/inference/chat/completions](https://models.github.ai/inference/chat/completions)"
 _GITHUB_MODEL = "Llama-4-Scout-17B-16E-Instruct"
 
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
@@ -1219,44 +1219,137 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
 # ─────────────────────────────────────────────────────────────────
 
 _PERSONAL_INTROS = [
+    # 0 — Documentation gap
     (
-        "The official documentation for {keyword} is good. What it doesn't cover is what "
-        "happens when you're six months into production and the edge cases start appearing. "
+        "The official documentation for {keyword} is good. "
+        "What it doesn't cover is what happens when you're six months into production "
+        "and the edge cases start appearing. "
         "This is the post that fills that gap."
     ),
+    # 1 — Time spent
     (
         "I spent longer than I should have on this before I understood what was actually happening. "
-        "The tutorials all showed the happy path. This post shows what comes after."
+        "The tutorials all showed the happy path. "
+        "This post shows what comes after."
     ),
+    # 2 — Code review origin
     (
-        "A colleague asked me about {keyword} during a code review last week. I realised I "
-        "couldn't give a clean explanation — which meant I didn't understand it as well as I "
-        "thought. This post is what I put together after properly working through it."
+        "A colleague asked me about {keyword} during a code review last week. "
+        "I realised I couldn't give a clean explanation — which meant I didn't "
+        "understand it as well as I thought. "
+        "This post is what I put together after properly working through it."
     ),
+    # 3 — Pattern seen repeatedly
     (
-        "I've seen the same {keyword} mistake in multiple production codebases, including one "
-        "I wrote myself three years ago. Here's what it looks like, why it's hard to spot, "
-        "and how to fix it."
+        "I've seen the same {keyword} mistake in multiple production codebases, "
+        "including one I wrote myself three years ago. "
+        "Here's what it looks like, why it's hard to spot, and how to fix it."
     ),
+    # 4 — Real constraints
     (
         "Most {keyword} guides assume a clean environment and a patient timeline. "
-        "Production gives you neither. Here's what I learned building this under real constraints."
+        "Production gives you neither. "
+        "Here's what I learned building this under real constraints."
     ),
+    # 5 — Conventional wisdom
     (
         "The short version: the conventional advice on {keyword} is incomplete. "
         "It works in the simple case, and breaks in a specific way under load. "
         "Here's the fuller picture."
     ),
+    # 6 — Deadline debugging
     (
         "I ran into this {keyword} problem while migrating a service under a hard deadline. "
         "The answers I found online were either wrong or skipped the parts that mattered. "
         "Here's what actually worked."
     ),
+    # 7 — Code reviewer perspective
     (
         "After reviewing a lot of code that touches {keyword}, I keep seeing the same patterns "
-        "that cause problems later. This post addresses the root cause rather than the symptom."
+        "that cause problems later. "
+        "This post addresses the root cause rather than the symptom."
+    ),
+    # 8 — Benchmark surprised me
+    (
+        "I benchmarked this properly for the first time last month and the numbers "
+        "surprised me enough that I rewrote a service. "
+        "What I assumed about {keyword} performance was off by a factor of three. "
+        "Here's what the data actually shows."
+    ),
+    # 9 — Incident postmortem
+    (
+        "We had an incident last quarter that traced back to a {keyword} misconfiguration "
+        "that had been in the codebase for two years. "
+        "The postmortem was instructive enough that I wanted to write it up properly."
+    ),
+    # 10 — Client system
+    (
+        "I built this for a client whose system was handling around 40k requests per hour "
+        "at the time. "
+        "The approach I'd used on smaller systems didn't hold up. "
+        "What eventually worked with {keyword} is what I'm documenting here."
+    ),
+    # 11 — Contradicted expectations
+    (
+        "Everything I had read about {keyword} suggested one approach. "
+        "When I actually measured it in our environment the results pointed in the opposite direction. "
+        "This is what I found and why I think the standard advice misses something important."
+    ),
+    # 12 — Stack Overflow didn't help
+    (
+        "I searched for this for two hours. "
+        "The Stack Overflow answers were either outdated, for a different version, "
+        "or solving a subtly different problem. "
+        "This is the {keyword} solution that actually worked in a current production environment."
+    ),
+    # 13 — Team disagreement
+    (
+        "My team had a genuine disagreement about how to approach {keyword} on a recent project. "
+        "We ended up building both approaches and measuring. "
+        "Here's what we found — including the part where I was wrong."
+    ),
+    # 14 — Infrastructure constraint
+    (
+        "This came up when we were constrained to a specific infrastructure setup "
+        "that ruled out the obvious {keyword} solution. "
+        "The workaround we landed on ended up being simpler and faster. "
+        "Worth documenting."
+    ),
+    # 15 — Revisiting old code
+    (
+        "I went back to a service I'd written eighteen months ago and found that "
+        "my original {keyword} implementation had three things I'd now do differently. "
+        "Here's the before, the after, and the reasoning."
     ),
 ]
+
+# ── Verify the pool is large enough for the site's publishing rate ────────────
+
+
+def _warn_if_intro_pool_too_small(
+    total_posts_target: int = 200,
+    pool: list = _PERSONAL_INTROS,
+) -> None:
+    """
+    Print a warning if the pool will produce collisions before
+    total_posts_target posts are published.
+
+    Rule of thumb: pool size should be > sqrt(total_posts_target) * 2
+    to stay below a 50% collision probability (birthday problem).
+    """
+    import math
+    min_pool = math.ceil(math.sqrt(total_posts_target) * 2)
+    if len(pool) < min_pool:
+        print(
+            f"WARNING: Personal intro pool has {len(pool)} templates "
+            f"but {total_posts_target} target posts requires ≥ {min_pool} "
+            f"to avoid frequent intro duplication."
+        )
+    else:
+        print(
+            f"INFO: Personal intro pool size {len(pool)} is adequate "
+            f"for {total_posts_target} posts."
+        )
 
 
 def inject_personal_intro(post, topic: str) -> None:
@@ -1530,7 +1623,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.groq.com/openai/v1/chat/completions](https://api.groq.com/openai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1551,7 +1644,7 @@ class BlogSystem:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
+            "HTTP-Referer": self.config.get("base_url", "[https://kubaik.github.io](https://kubaik.github.io)"),
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
@@ -1565,7 +1658,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://openrouter.ai/api/v1/chat/completions](https://openrouter.ai/api/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
@@ -1595,7 +1688,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.cerebras.ai/v1/chat/completions](https://api.cerebras.ai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1621,7 +1714,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.mistral.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.mistral.ai/v1/chat/completions](https://api.mistral.ai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1647,7 +1740,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
+                    async with s.post("[https://integrate.api.nvidia.com/v1/chat/completions](https://integrate.api.nvidia.com/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1687,7 +1780,7 @@ class BlogSystem:
             pass
 
         api_url = (
-            f"https://generativelanguage.googleapis.com/v1/models/"
+            f"[https://generativelanguage.googleapis.com/v1/models/](https://generativelanguage.googleapis.com/v1/models/)"
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
         system_parts = [m["content"]
@@ -1761,7 +1854,7 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": _CF_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
-        url = f"https://api.cloudflare.com/client/v4/accounts/{self.cloudflare_account_id}/ai/v1/chat/completions"
+        url = f"[https://api.cloudflare.com/client/v4/accounts/](https://api.cloudflare.com/client/v4/accounts/){self.cloudflare_account_id}/ai/v1/chat/completions"
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
@@ -1985,7 +2078,7 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = (
-                    f"{self.config.get('base_url', 'https://kubaik.github.io')}"
+                    f"{self.config.get('base_url', '[https://kubaik.github.io](https://kubaik.github.io)')}"
                     f"/{post.slug}"
                 )
 
@@ -2809,7 +2902,7 @@ def create_sample_config():
     config = {
         "site_name":        "Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
-        "base_url":         "https://kubaik.github.io",
+        "base_url":         "[https://kubaik.github.io](https://kubaik.github.io)",
         "base_path":        "",
         "amazon_affiliate_tag":        "aiblogcontent-20",
         "google_analytics_id":         "G-DST4PJYK6V",
