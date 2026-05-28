@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 09:02:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 09:11:21 +0000</lastBuildDate>
+    <item>
+      <title>Build 5G-ready backends: latency tricks you can&apos;t</title>
+      <link>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</link>
+      <description>Cut API response time 50% on 5G: the exact TCP, Redis, and cache TTL tweaks most teams miss. 2026 cellular backend guide with Prometheus queries and Docker setup.</description>
+      <pubDate>Thu, 28 May 2026 09:11:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</guid>
+    </item>
     <item>
       <title>Ship 3 projects right, not 10 wrong</title>
       <link>https://kubaik.github.io/ship-3-projects-right-not-10-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.</description>
       <pubDate>Wed, 27 May 2026 23:01:23 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-costs-more-than-you-think/</guid>
-    </item>
-    <item>
-      <title>Raise remote pay: Colombia to US rates</title>
-      <link>https://kubaik.github.io/raise-remote-pay-colombia-to-us-rates/</link>
-      <description>Raise remote pay 37% with USD-anchored quotes — bill-of-materials generator, negotiation tracker, and real 2026 numbers you can replicate today.</description>
-      <pubDate>Wed, 27 May 2026 22:29:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/raise-remote-pay-colombia-to-us-rates/</guid>
     </item>
   </channel>
 </rss>
