@@ -17,6 +17,7 @@ from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
 from hashtag_manager import HashtagManager, add_hashtags_to_post
+from typing import List, Tuple
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -325,28 +326,43 @@ def audit_posts(docs_dir: Path) -> Dict:
 # FIX 3: Content quality validation (tightened checks)
 # ─────────────────────────────────────────────────────────────────
 
-def _validate_content_quality(content: str, title: str):
+def _validate_content_quality(content: str, title: str) -> Tuple[List[str], List[str]]:
     """
     Run AdSense-style quality checks on generated content.
 
     Returns
     -------
     warnings      : List[str]  — issues to log but that don't block publishing
-    hard_failures : List[str]  — issues that MUST block publishing (save must be skipped)
+    hard_failures : List[str]  — MUST block publishing; save must be skipped
     """
-    warnings = []
-    hard_failures = []
+    warnings: List[str] = []
+    hard_failures: List[str] = []
     word_count = len(content.split())
 
-    # ── Hard failures (never save) ────────────────────────────────────────────
+    # ── Classify topic as technical or non-technical ─────────────────────────
+    _TECHNICAL_SIGNALS = re.compile(
+        r'\b(python|node\.?js|typescript|javascript|golang|rust|java\b|kotlin|'
+        r'sql|postgres|redis|kafka|docker|kubernetes|aws|lambda|fastapi|django|'
+        r'react|next\.?js|api|backend|frontend|database|devops|terraform|'
+        r'machine learning|llm|rag|vector|microservice|serverless|ci/cd|'
+        r'algorithm|code|programming|software|engineer|deploy|server|'
+        r'function|class|module|library|framework|debug|test|build)\b',
+        re.IGNORECASE,
+    )
+    is_technical = bool(_TECHNICAL_SIGNALS.search(title))
 
+    # ════════════════════════════════════════════════════════════════════════
+    # HARD FAILURES — never publish a post that triggers any of these
+    # ════════════════════════════════════════════════════════════════════════
+
+    # 1. Absolute minimum word count ─────────────────────────────────────────
     if word_count < 1500:
         hard_failures.append(
             f"Word count {word_count} is below the absolute minimum of 1500. "
             "Google AdSense reviewers reject thin content immediately."
         )
 
-    # Boilerplate / template markers — definitive sign of non-human content
+    # 2. Template boilerplate — definitive sign of unfilled AI template ───────
     boilerplate_markers = [
         "class {topic_slug}Client",
         "class Client:",
@@ -362,11 +378,9 @@ def _validate_content_quality(content: str, title: str):
                 "This post will be rejected as low-value/AI-generated content."
             )
 
-    # NEW: Check content doesn't just repeat the title with no added information
+    # 3. Title-only restatement in opening ───────────────────────────────────
     title_words = set(re.sub(r'[^\w\s]', '', title.lower()).split())
-    title_words.discard('the')
-    title_words.discard('a')
-    title_words.discard('an')
+    title_words -= {'the', 'a', 'an', 'is', 'are', 'in', 'of', 'for', 'to'}
     if title_words:
         first_para = content[:500]
         first_para_words = set(
@@ -374,132 +388,147 @@ def _validate_content_quality(content: str, title: str):
         title_overlap = len(title_words & first_para_words) / len(title_words)
         if title_overlap > 0.85 and word_count < 2000:
             hard_failures.append(
-                f"Opening section appears to be a generic restatement of the title "
+                f"Opening section is a generic restatement of the title "
                 f"({title_overlap:.0%} title word overlap in first 500 chars). "
-                "This pattern is flagged as low-value content."
+                "This pattern is flagged as low-value content by AdSense classifiers."
             )
 
-    # ── Warnings (log but don't block) ───────────────────────────────────────
+    # 4. No code examples in technical posts (PROMOTED FROM WARNING) ─────────
+    if is_technical and "```" not in content:
+        hard_failures.append(
+            "No code examples found in a technical post. "
+            "A backend/AI/devops article without a single code block is a primary "
+            "low-value-content signal. The LLM prompt requires at least 2 code blocks — "
+            "this post did not comply. Abort and regenerate."
+        )
 
-    if word_count < 2000:
-        warnings.append(f"Word count low: {word_count} (target ≥ 2000)")
+    # 5. No comparison table (PROMOTED FROM WARNING) ─────────────────────────
+    if "|" not in content:
+        hard_failures.append(
+            "No markdown table found. A comparison or data table is required — "
+            "it is an explicit prompt requirement AND a strong substantive-content signal. "
+            "Abort and regenerate."
+        )
 
-    # E-E-A-T Experience signal
-    first_person_re = re.compile(
-        r"\b(I |I've |I'm |I found|I ran|I spent|I learned|I noticed|I tested|"
-        r"I built|I worked|I saw |I was |I have |I had |I used )\b"
+    # 6. No FAQ section (PROMOTED FROM WARNING) ──────────────────────────────
+    has_faq = (
+        "frequently asked questions" in content.lower()
+        or "## faq" in content.lower()
+        or "## frequently" in content.lower()
     )
-    if not first_person_re.search(content):
-        warnings.append(
-            "No first-person sentences found. E-E-A-T 'Experience' signal missing."
+    if not has_faq:
+        hard_failures.append(
+            "No FAQ section found. An FAQ section is an explicit prompt requirement "
+            "and enables FAQ structured data, which is a positive AdSense eligibility "
+            "signal. Abort and regenerate."
         )
 
-    if "```" not in content:
-        warnings.append(
-            "No code examples. Reduces substantive value for technical topics."
-        )
-
+    # 7. No concrete numbers (PROMOTED FROM WARNING) ─────────────────────────
     number_re = re.compile(
-        r"\b(\d+%|\d+ms|\d+x\b|\$\d|\d+ req|\d+ min|p\d{2}|\d+,\d{3})"
+        r"\b(\d+\s*%|\d+\s*ms|\d+x\b|\$\d|\d+\s*req|\d+\s*min|p\d{2}|\d+,\d{3})"
     )
     if not number_re.search(content):
-        warnings.append("No concrete numbers/metrics found.")
+        hard_failures.append(
+            "No concrete numbers or metrics found (%, ms, x speedup, $cost, etc.). "
+            "Generic prose without measurable claims is the textbook definition of "
+            "low-value content. Abort and regenerate."
+        )
 
-    # NEW: Check for version-pinned tool (strong specificity signal)
+    # 8. No first-person experience signal (PROMOTED FROM WARNING) ────────────
+    first_person_re = re.compile(
+        r"\b(I |I've |I'm |I found|I ran|I spent|I learned|I noticed|"
+        r"I tested|I built|I worked|I saw |I was |I have |I had |I used )\b"
+    )
+    if not first_person_re.search(content):
+        hard_failures.append(
+            "No first-person sentences found. E-E-A-T 'Experience' signal is missing. "
+            "The system prompt explicitly requires at least one 'I ...' sentence describing "
+            "a real mistake or surprise. This is the single strongest differentiator between "
+            "human-authored and AI-generated content in Google's eyes. Abort and regenerate."
+        )
+
+    # 9. Generic AI opener in first 200 chars (PROMOTED FROM WARNING) ─────────
+    first_200 = content[:200].lower()
+    generic_openers = [
+        "in this article", "in this guide", "in this post", "in this tutorial",
+        "today we", "welcome to", "this guide covers", "this post will",
+        "if you're looking", "are you looking", "have you ever",
+        "whether you're a beginner", "in today's",
+    ]
+    for opener in generic_openers:
+        if first_200.lstrip().startswith(opener):
+            hard_failures.append(
+                f"Generic AI opener detected at the start of content: '{opener}'. "
+                "This is an immediate low-quality signal. The personal intro injector "
+                "should have replaced this. Check inject_personal_intro() ran before "
+                "validation. Abort and regenerate."
+            )
+            break
+
+    # 10. E-E-A-T author footer missing (PROMOTED FROM WARNING) ──────────────
+    if "### About this article" not in content:
+        hard_failures.append(
+            "E-E-A-T author footer missing. inject_eeat_signals() must run before "
+            "save_post(). Check the auto-mode pipeline calls both inject functions "
+            "before validation."
+        )
+
+    # ════════════════════════════════════════════════════════════════════════
+    # WARNINGS — log but don't block
+    # ════════════════════════════════════════════════════════════════════════
+
+    # Sub-target word count (above minimum but below ideal) ───────────────────
+    if 1500 <= word_count < 2000:
+        warnings.append(
+            f"Word count {word_count} is above the 1500 minimum but below the "
+            f"2000 target. Consider running _expand_content()."
+        )
+
+    # No version-pinned tool ─────────────────────────────────────────────────
     version_re = re.compile(
         r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|Django|FastAPI|React|'
         r'Next\.js|Docker|Kubernetes|Kafka|MySQL)\s+\d+[\.\d]*\b',
-        re.IGNORECASE
+        re.IGNORECASE,
     )
-    if not version_re.search(content):
+    if is_technical and not version_re.search(content):
         warnings.append(
-            "No version-pinned tool reference found (e.g. 'Python 3.11', 'Redis 7.2'). "
-            "Version pins are a specificity signal that distinguishes original from generic content."
+            "No version-pinned tool reference found (e.g. 'Python 3.12', 'Redis 7.2'). "
+            "Version pins are a specificity signal. Add at least one."
         )
 
-    # NEW: Check for FAQ section (structured data opportunity)
-    if "frequently asked questions" not in content.lower() and "## faq" not in content.lower():
-        warnings.append(
-            "No FAQ section found. A 'Frequently Asked Questions' section enables "
-            "FAQ structured data, which improves AdSense eligibility signals."
-        )
-
-    # NEW: Check for comparison table
-    if "|" not in content:
-        warnings.append(
-            "No markdown table found. A comparison table signals substantive, "
-            "structured content — reviewers notice its absence in technical posts."
-        )
-
-    if "### About this article" not in content:
-        warnings.append(
-            "E-E-A-T author footer missing. Run inject_eeat_signals() before saving."
-        )
-
-    # Expanded AI-pattern filler list
+    # AI filler phrases ───────────────────────────────────────────────────────
     filler_phrases = [
-        "in today's fast-paced",
-        "in the ever-evolving",
-        "dive into",
-        "delve into",
-        "game-changer",
-        "it's important to note",
-        "needless to say",
-        "comprehensive guide",
-        "this article will",
-        "we will explore",
-        "in conclusion",
-        "revolutionize",
-        "transformative",
-        "cutting-edge",
-        "state-of-the-art",
-        "paradigm shift",
-        "harness the power",
-        "unlock the potential",
-        "as an ai language model",
-        "as a large language model",
-        "i cannot provide",
-        "i don't have access",
-        "let's explore",
-        "let's dive",
-        "look no further",
-        "in this blog post",
-        "stay tuned",
+        "in today's fast-paced", "in the ever-evolving", "dive into", "delve into",
+        "game-changer", "it's important to note", "needless to say",
+        "comprehensive guide", "this article will", "we will explore",
+        "in conclusion", "revolutionize", "transformative", "cutting-edge",
+        "state-of-the-art", "paradigm shift", "harness the power",
+        "unlock the potential", "as an ai language model",
+        "as a large language model", "let's explore", "let's dive",
+        "look no further", "in this blog post", "stay tuned",
+        "leverage", "seamlessly", "unleash",
     ]
     detected = [p for p in filler_phrases if p.lower() in content.lower()]
     if detected:
         warnings.append(
-            f"AI-pattern filler phrases detected: {', '.join(repr(p) for p in detected[:4])}"
+            f"AI-pattern filler phrases detected: "
+            f"{', '.join(repr(p) for p in detected[:5])}. "
+            "These phrases increase AI-detection probability."
         )
 
-    # Title quality
+    # Title quality ───────────────────────────────────────────────────────────
     title_filler_re = re.compile(
         r"^(a |an |the |complete |ultimate |comprehensive |introduction to |"
         r"guide to |overview of |everything you need)",
         re.IGNORECASE,
     )
     if title_filler_re.match(title.strip()):
-        warnings.append(f"Title starts with filler word: '{title[:40]}'")
+        warnings.append(f"Title starts with filler word: '{title[:50]}'")
 
     if len(title) > 60:
         warnings.append(
             f"Title too long ({len(title)} chars). Target ≤ 60 for SERP display."
         )
-
-    # NEW: Opening paragraph generic opener check
-    first_200 = content[:200].lower()
-    generic_openers = [
-        "in this", "today we", "welcome to", "this guide covers",
-        "if you're looking", "are you looking", "have you ever",
-        "whether you're a beginner", "this post will",
-    ]
-    for opener in generic_openers:
-        if first_200.startswith(opener) or f"\n{opener}" in first_200:
-            warnings.append(
-                f"Generic opener detected in first 200 chars: '{opener}'. "
-                "Start with a specific claim, number, or observation instead."
-            )
-            break
 
     return warnings, hard_failures
 
