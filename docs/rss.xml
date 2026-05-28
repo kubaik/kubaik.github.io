@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 04:59:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 05:51:44 +0000</lastBuildDate>
+    <item>
+      <title>Senior engineers flee Big Tech’s iron grip</title>
+      <link>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</link>
+      <description>That adds latency (5-15 ms) and complexity, but it centralizes ownership.</description>
+      <pubDate>Thu, 28 May 2026 05:51:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-engineers-flee-big-techs-iron-grip/</guid>
+    </item>
     <item>
       <title>AI coding tools that survive real traffic</title>
       <link>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 77% by respecting the LLM’s token budget — cache normalization, retriever guardrails, and Aurora rebuild costs most tutorials ignore. 3 concrete numbers, pgvector 0.7.0, Redis 7.2.</description>
       <pubDate>Wed, 27 May 2026 20:43:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-3-traps-no-tutorial-warns-you-about/</guid>
-    </item>
-    <item>
-      <title>Big Tech leaves for $60k roles: the real reasons</title>
-      <link>https://kubaik.github.io/big-tech-leaves-for-60k-roles-the-real-reasons/</link>
-      <description>Cut invisible meeting tax 11 hours per sprint with this 30-minute audit. Learn the real reasons big tech engineers leave despite six-figure salaries.</description>
-      <pubDate>Wed, 27 May 2026 20:03:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-leaves-for-60k-roles-the-real-reasons/</guid>
     </item>
   </channel>
 </rss>
