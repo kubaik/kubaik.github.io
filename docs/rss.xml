@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 01:33:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 01:55:51 +0000</lastBuildDate>
+    <item>
+      <title>Ask for 80% of US salary as a remote dev in 2026</title>
+      <link>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</link>
+      <description>Ask for 80% of US salary as a remote dev in 2026 — COL-adjusted benchmarks, email template, and the Hetzner cron job that keeps the data fresh.</description>
+      <pubDate>Thu, 28 May 2026 01:55:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</guid>
+    </item>
     <item>
       <title>AI indexes your repo: context you never knew you needed</title>
       <link>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev costs 35% by hiring Nairobi engineers — 5-hour overlap, async hand-offs, and the CI/CD fix that dropped latency from 180 ms to 30 ms.</description>
       <pubDate>Wed, 27 May 2026 19:17:50 +0000</pubDate>
       <guid>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</guid>
-    </item>
-    <item>
-      <title>2026 salary split: prompt vs fine-tune</title>
-      <link>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</link>
-      <description>Cut AI salary negotiations 20–30% with this data-backed breakdown of prompt engineering vs fine-tuning in 2026. Includes real salary bands, benchmark results, and the exact tool versions teams use today.</description>
-      <pubDate>Wed, 27 May 2026 18:19:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-salary-split-prompt-vs-fine-tune/</guid>
     </item>
   </channel>
 </rss>
