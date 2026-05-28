@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 06:02:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 06:05:25 +0000</lastBuildDate>
+    <item>
+      <title>Junior to senior without the CS degree</title>
+      <link>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</link>
+      <description>They’d insist on 100% test coverage while the production database had 17 tables with no foreign key constraints.</description>
+      <pubDate>Thu, 28 May 2026 06:05:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</guid>
+    </item>
     <item>
       <title>Instrument AI pipelines: what to watch</title>
       <link>https://kubaik.github.io/instrument-ai-pipelines-what-to-watch/</link>
@@ -138,13 +145,6 @@
       <description>Cut P99 latency 82% on mobile traffic — PostgreSQL pool tuning, Redis TTL, and the RRC state mistake most teams miss.</description>
       <pubDate>Wed, 27 May 2026 22:12:07 +0000</pubDate>
       <guid>https://kubaik.github.io/cellular-backend-tuning-the-5-rules-you-cant-ignore/</guid>
-    </item>
-    <item>
-      <title>Cut 30% cloud carbon, keep 95th latency</title>
-      <link>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</link>
-      <description>Cut cloud carbon 30% without hurting user speed — how we shrank embodied carbon in CI, selective caching, and right-sized containers while keeping p95 latency at 285 ms.</description>
-      <pubDate>Wed, 27 May 2026 21:48:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-30-cloud-carbon-keep-95th-latency/</guid>
     </item>
   </channel>
 </rss>
