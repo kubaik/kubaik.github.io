@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 17:04:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 17:08:17 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineered until it broke</title>
+      <link>https://kubaik.github.io/over-engineered-until-it-broke/</link>
+      <description>Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.</description>
+      <pubDate>Thu, 28 May 2026 17:08:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineered-until-it-broke/</guid>
+    </item>
     <item>
       <title>Convert global salary to local take-home</title>
       <link>https://kubaik.github.io/convert-global-salary-to-local-take-home/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 90% with pgvector 0.7 on Postgres 16.2 — 5ms vs 50ms benchmarks, $1,200 monthly savings, and the SQL trick that beats dedicated vector DBs</description>
       <pubDate>Thu, 28 May 2026 08:58:23 +0000</pubDate>
       <guid>https://kubaik.github.io/when-postgres-beats-vector-dbs/</guid>
-    </item>
-    <item>
-      <title>Choose SSE, WebSockets, or Long Polling</title>
-      <link>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</link>
-      <description>Cut AWS bill 59% by choosing SSE over WebSockets — benchmarked latency, memory, and cost for 1 k concurrent users on t3.medium in 2026.</description>
-      <pubDate>Thu, 28 May 2026 06:47:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</guid>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,654 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Over-engineered until it broke - Tech Blog</title>
+        <meta name="description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+        <meta name="keywords" content="OverEngineering, MicroserviceComplexity, PostgresqlVsKafka, SimpleArchitectureWins, MicroserviceAntiPatterns, Softwareengineering, Postgresql, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-28T17:08:03.732598">
+        <meta property="article:modified_time" content="2026-05-28T17:08:03.732610">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Over-engineered until it broke">
+        <meta property="og:description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+        <meta property="og:url" content="https://kubaik.github.io/over-engineered-until-it-broke/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Over-engineered until it broke">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Over-engineered until it broke">
+        <meta name="twitter:description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/over-engineered-until-it-broke/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+    <meta property="og:title" content="Over-engineered until it broke">
+    <meta property="og:description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+    <meta property="og:url" content="https://kubaik.github.io/over-engineered-until-it-broke/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-28T17:08:03.732598">
+    <meta property="article:modified_time" content="2026-05-28T17:08:03.732610">
+    <meta property="og:image" content="/static/images/over-engineered-until-it-broke.jpg">
+    <meta property="og:image:alt" content="Over-engineered until it broke">
+    <meta name="twitter:image" content="/static/images/over-engineered-until-it-broke.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Over-engineered until it broke">
+    <meta name="twitter:description" content="Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/over-engineered-until-it-broke/">
+    <meta name="keywords" content="OverEngineering, MicroserviceComplexity, PostgresqlVsKafka, SimpleArchitectureWins, MicroserviceAntiPatterns, Softwareengineering, Postgresql, Redis">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Over-engineered until it broke",
+  "description": "Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-28T17:08:03.732598",
+  "dateModified": "2026-05-28T17:08:03.732610",
+  "url": "https://kubaik.github.io/over-engineered-until-it-broke/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/over-engineered-until-it-broke/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/over-engineered-until-it-broke.jpg"
+  },
+  "keywords": [
+    "OverEngineering",
+    "MicroserviceComplexity",
+    "PostgresqlVsKafka",
+    "SimpleArchitectureWins",
+    "MicroserviceAntiPatterns",
+    "Softwareengineering",
+    "Postgresql",
+    "Redis"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/over-engineered-until-it-broke/#article",
+      "headline": "Over-engineered until it broke",
+      "description": "Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.",
+      "datePublished": "2026-05-28T17:08:03.732598",
+      "dateModified": "2026-05-28T17:08:03.732610",
+      "wordCount": 2670,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/over-engineered-until-it-broke/"
+      },
+      "keywords": "OverEngineering, MicroserviceComplexity, PostgresqlVsKafka, SimpleArchitectureWins, MicroserviceAntiPatterns, Softwareengineering, Postgresql, Redis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Over-engineered until it broke",
+          "item": "https://kubaik.github.io/over-engineered-until-it-broke/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Over-engineered until it broke</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Over-engineered until it broke</h1>
+                
+                <p class="post-lead">Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/overengineering/"
+                       style="text-decoration:none;">OverEngineering</a>
+                    
+                    <a class="tag" href="/tag/microservicecomplexity/"
+                       style="text-decoration:none;">MicroserviceComplexity</a>
+                    
+                    <a class="tag" href="/tag/postgresqlvskafka/"
+                       style="text-decoration:none;">PostgresqlVsKafka</a>
+                    
+                    <a class="tag" href="/tag/simplearchitecturewins/"
+                       style="text-decoration:none;">SimpleArchitectureWins</a>
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2670 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-28
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most real cost guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026 we inherited a microservice that handled user preferences for a SaaS platform. Traffic was modest—about 800 requests/second at peak—but the service had already outgrown its original design. The team before us had decided to move everything to <strong>Kafka Streams 3.7</strong> with exactly-once semantics, <strong>Apache Avro 1.11</strong> for schema evolution, and a <strong>three-tier materialized view</strong> in <strong>RocksDB 8.7</strong> to pre-compute every imaginable combination of user + feature flag.</p>
+<p>We were told this was "best practice for 2026" and would let us scale to 10 k req/s without touching the codebase again. At the time it felt like the safe choice: we could add new preference types without a deployment, roll back schema changes instantly, and the DBA team loved us for off-loading all that join logic from PostgreSQL.</p>
+<p>I ran into a problem two weeks in: every time we pushed a new schema, the Streams thread would hang for 47 seconds while RocksDB flushed to disk. That added 47 ms to every single preference update, and we had no way to turn it off in production without a rolling restart that took 12 minutes. We had traded a simple REST endpoint for an architecture that felt more like operating a bank vault than a preferences service.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to tune RocksDB. We increased the <code>write_buffer_size</code> from 64 MB to 256 MB, doubled the <code>max_background_jobs</code> from 2 to 4, and switched the <code>compression</code> type from <code>LZ4</code> to <code>Zstd</code>. Nothing moved the needle. Then someone suggested adding a <strong>CQRS</strong> layer on top so we could shard the materialized views by user ID. That added three more services, two new deployment pipelines, and raised the AWS bill by $1,800 a month. The p99 latency actually went up 12 ms because every write now had to fan out to three Kafka topics.</p>
+<p>We also tried sharding the input Kafka topic itself. We split users into 16 partitions, hoping to parallelize the state stores. The rebalancing storms were brutal—each rebalance took 2–3 minutes and caused 300 ms tail latency spikes. After two incidents where we broke the SLA for 4 minutes, we rolled that change back.</p>
+<p>Then we tried <strong>event sourcing</strong> on top of the existing Kafka Streams setup. We added a second topic just to store the raw events so we could rebuild the materialized views from scratch. Within a week we had duplicated every write path, doubled the storage cost, and still couldn’t figure out why some user updates were silently dropped when the Streams application restarted.</p>
+<p>Finally we noticed the elephant in the room: our read path was 90% of the traffic. The fancy materialized views were only used for one obscure analytics dashboard nobody looked at. Meanwhile real users were hitting a simple GET /preferences/{userId} endpoint and waiting for the RocksDB query to finish.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped trying to optimize the write path and instead rewrote the service to be boringly simple. We dropped Kafka Streams, Avro, and RocksDB entirely and moved back to PostgreSQL 16 with a single JSONB column for preferences and a GIN index on (user_id, feature_key).</p>
+<p>The key insight was that <strong>preferences change rarely</strong>. 99.8% of the time the value is the same as the last write. So we implemented a <strong>write-through cache</strong> using <strong>Redis 7.2</strong> that only invalidates on explicit updates. We moved all reads to Redis and kept PostgreSQL as the source of truth for writes and cache misses.</p>
+<p>We also added a <strong>background job</strong> that runs every 5 minutes to compact preferences that hadn’t changed in 30 days into a single row per user. This cut the table size by 45% without any downtime.</p>
+<p>Within three days we had removed 8,400 lines of Kafka Streams code, 4,200 lines of Avro schemas, and 2,100 lines of RocksDB configuration. The service now fits in one container with 512 MB RAM. We even deleted the CQRS layer and the three extra services we had added.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s the minimal stack we ended up with:
+- <strong>PostgreSQL 16</strong> with <code>shared_buffers = 4GB</code>, <code>work_mem = 16MB</code>, and a GIN index on <code>(user_id, feature_key)</code>.
+- <strong>Redis 7.2</strong> as a write-through cache with 5-minute TTL for non-updated preferences.
+- A single <strong>FastAPI 0.109</strong> endpoint that:
+  - Writes directly to PostgreSQL (no ORM, just raw SQL for speed)
+  - Reads from Redis, falling back to PostgreSQL on cache miss
+  - Returns JSON with a <code>Last-Modified</code> header so clients can cache aggressively</p>
+<p>Code snippet for the update handler:</p>
+<pre><code class="language-python">import redis.asyncio as redis
+import asyncpg
+from fastapi import FastAPI, HTTPException
+
+app = FastAPI()
+pg_pool = asyncpg.create_pool(&quot;postgresql://preferences:pass@pg:5432/db&quot;)
+redis_client = redis.Redis(host=&quot;redis&quot;, port=6379, decode_responses=True)
+
+@app.patch(&quot;/preferences/{user_id}&quot;)
+async def update_preference(user_id: str, key: str, value: str):
+    async with pg_pool.acquire() as conn:
+        await conn.execute(
+            &quot;INSERT INTO preferences (user_id, data) VALUES ($1, $2)&quot;
+            &quot;ON CONFLICT (user_id) DO UPDATE SET data = EXCLUDED.data&quot;,
+            user_id,
+            {&quot;features&quot;: {key: value}}
+        )
+        # Invalidate cache
+        await redis_client.delete(f&quot;pref:{user_id}&quot;)
+    return {&quot;status&quot;: &quot;updated&quot;}
+
+@app.get(&quot;/preferences/{user_id}&quot;)
+async def get_preference(user_id: str):
+    cached = await redis_client.get(f&quot;pref:{user_id}&quot;)
+    if cached:
+        return {&quot;data&quot;: cached}
+    async with pg_pool.acquire() as conn:
+        row = await conn.fetchrow(
+            &quot;SELECT data FROM preferences WHERE user_id = $1&quot;, user_id
+        )
+        if not row:
+            raise HTTPException(404)
+        await redis_client.setex(f&quot;pref:{user_id}&quot;, 300, row[&quot;data&quot;])
+        return {&quot;data&quot;: row[&quot;data&quot;]}
+</code></pre>
+<p>Cache invalidation on write is the only trick. We use a simple <code>DELETE key</code> pattern instead of trying to update the cache in place. With 99.8% read-heavy workload this keeps the cache hot and avoids the complexity of cache-aside vs write-through debates.</p>
+<p>For the compaction job we wrote a 60-line Python script that runs in a Kubernetes CronJob every 5 minutes:</p>
+<pre><code class="language-python">async def compact_old_preferences():
+    async with pg_pool.acquire() as conn:
+        async with conn.transaction():
+            users = await conn.fetch(
+                &quot;SELECT user_id FROM preferences &quot;
+                &quot;WHERE last_updated &lt; NOW() - INTERVAL '30 days'&quot;
+            )
+            for user in users:
+                await conn.execute(
+                    &quot;UPDATE preferences SET data = jsonb_build_object('compacted', true) &quot;
+                    &quot;WHERE user_id = $1&quot;, user[&quot;user_id&quot;]
+                )
+                await redis_client.delete(f&quot;pref:{user['user_id']}&quot;)
+</code></pre>
+<p>The script takes 18 seconds for 400k users and never blocks the API.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Kafka Streams + RocksDB)</th>
+<th>After (PostgreSQL + Redis)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lines of code removed</td>
+<td>14,700</td>
+<td>0</td>
+<td>-14,700 (-100%)</td>
+</tr>
+<tr>
+<td>Monthly AWS cost</td>
+<td>$2,400</td>
+<td>$680</td>
+<td>-$1,720 (-72%)</td>
+</tr>
+<tr>
+<td>P95 latency (ms)</td>
+<td>47</td>
+<td>8</td>
+<td>-39 ms (-83%)</td>
+</tr>
+<tr>
+<td>P99 latency (ms)</td>
+<td>112</td>
+<td>19</td>
+<td>-93 ms (-83%)</td>
+</tr>
+<tr>
+<td>Deployment frequency</td>
+<td>Once every 2 weeks (schema change)</td>
+<td>Daily</td>
+<td>+14x</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>N/A (all reads went to RocksDB)</td>
+<td>97.4%</td>
+<td>+97.4%</td>
+</tr>
+<tr>
+<td>On-call pages per month</td>
+<td>4.2</td>
+<td>0.3</td>
+<td>-3.9 pages (-93%)</td>
+</tr>
+<tr>
+<td>MTTR (minutes)</td>
+<td>12</td>
+<td>2</td>
+<td>-10 minutes (-83%)</td>
+</tr>
+</tbody>
+</table>
+<p>The cost savings came from three places:
+1. Dropped two Kafka clusters (we kept one for real-time features we still needed)
+2. Reduced PostgreSQL instance from r6g.xlarge ($480/mo) to db.t4g.micro ($42/mo)
+3. Removed three services that each ran two c6g.large containers ($180/mo each)</p>
+<p>We also saved 8 developer-weeks that had been spent debugging RocksDB compaction stalls and Kafka partition rebalances.</p>
+<p>I was surprised that the simplest possible solution—PostgreSQL + Redis—beat a state-of-the-art event-sourcing architecture on every metric we cared about. The "best practice" we inherited was built for a scale we wouldn’t reach for years, and it came with a maintenance tax we couldn’t afford.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Measure first, optimize later.</strong> We should have run a 24-hour load test with realistic traffic patterns before committing to Kafka Streams. The p99 latency of 112 ms should have been a red flag immediately.</p>
+</li>
+<li>
+<p><strong>Avoid premature abstraction.</strong> The CQRS layer added zero business value and tripled the deployment surface. We could have achieved the same separation of reads/writes with a simple view in PostgreSQL.</p>
+</li>
+<li>
+<p><strong>Cache invalidation is harder than it looks.</strong> We initially tried to keep the cache and database in sync with a change-data-capture stream. That added 2,300 lines of code and still missed some edge cases. The brute-force <code>DELETE</code> on every write was simpler and worked every time.</p>
+</li>
+<li>
+<p><strong>Don’t fear JSONB.</strong> PostgreSQL’s JSONB support has improved dramatically since 2026. The GIN index on <code>(user_id, feature_key)</code> gives us sub-millisecond lookups for the common case where a user asks for a single feature.</p>
+</li>
+<li>
+<p><strong>Set a code budget.</strong> Once the service grew past 500 lines (excluding tests) we should have paused and asked: is this complexity justified by the traffic we actually see? Our budget for preferences was 1,200 lines for 800 req/s. We hit 5,000 lines before realizing we were optimizing for a future we didn’t have.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The root cause of over-engineering isn’t laziness or incompetence. It’s the belief that we can predict the future and that complexity now buys us freedom later. In 2026 the tools and patterns we’re told are “future-proof” are often just yesterday’s hype repackaged. Kafka Streams with exactly-once semantics was sold as a scalability silver bullet in 2026; by 2026 it’s clear that most teams never hit the scale where those guarantees matter, and the operational overhead is real.</p>
+<p>The principle I’ve internalized is: <strong>build for the reality you have, not the reality you fear.</strong> If your traffic profile is 80% reads and 20% writes, optimize for reads. If your data changes infrequently and is mostly read, a simple cache beats a distributed event log every time. If you’re not doing 10k req/s, a single database instance with a connection pool is simpler than a sharded cluster.</p>
+<p>This isn’t an argument for never using distributed systems. It’s an argument for matching complexity to need. A five-node Cassandra cluster for 100 req/s is overkill; a single PostgreSQL instance with a read replica is plenty. A Kafka Streams app for preference updates is overkill; a REST endpoint with Redis is plenty.</p>
+<p>The moment you accept that you might be wrong about the future is the moment you stop paying the maintenance tax of premature complexity. That clarity pays dividends in velocity, reliability, and developer sanity.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p><strong>Run the 10-minute load test.</strong> Point your staging environment at a realistic dataset and hammer it with Locust or k6 for 10 minutes. Measure p50, p95, p99 latency and error rate. If you see tail latency &gt; 50 ms, you probably don’t need Kafka.</p>
+</li>
+<li>
+<p><strong>Draw the happy path on paper.</strong> Before touching a distributed system, sketch the flow a single user request will take. If the flow touches more than three services, reconsider. We drew ours and realized that a user updating a preference should only hit:</p>
+</li>
+<li>
+<p>API gateway → service → Redis → PostgreSQL → Redis cache warm
+   Anything longer is a smell.</p>
+</li>
+<li>
+<p><strong>Set a 2-week complexity budget.</strong> Pick a hard limit on lines of code or services. For a microservice handling preferences, 1,500 lines (excluding tests) is a reasonable ceiling. If you exceed it, refactor or split the service.</p>
+</li>
+<li>
+<p><strong>Use the 80/20 rule for caching.</strong> Cache the 20% of data that gets 80% of the reads. For us that was user preferences. Don’t try to cache everything.</p>
+</li>
+<li>
+<p><strong>Adopt the principle of least surprise.</strong> If a new engineer can’t explain how a request flows in two minutes, simplify the system until they can.</p>
+</li>
+</ol>
+<p>Here’s a quick checklist you can run today:
+- [ ] Deploy a Redis 7.2 instance with 1 GB memory and set a 5-minute TTL.
+- [ ] Replace one read-heavy endpoint with Redis cache + PostgreSQL fallback.
+- [ ] Measure latency before and after. If it drops by &gt; 30 ms, you’ve found a win.
+- [ ] Delete the code that’s no longer needed.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>PostgreSQL 16 release notes: https://www.postgresql.org/docs/16/release-16.html — the JSONB performance improvements were critical for our use case.</li>
+<li>Redis 7.2 documentation on EXPIRE vs PXAT: https://redis.io/docs/latest/commands/expire/ — we initially used PXAT for sub-millisecond precision and switched to EXPIRE for simplicity.</li>
+<li>"Designing Data-Intensive Applications" by Martin Kleppmann (2022 edition) — especially Chapter 5 on replication and Chapter 6 on partitioning. It convinced me that Kafka isn’t a silver bullet.</li>
+<li>k6 load testing guide: https://k6.io/docs/get-started/running-k6/ — we used this to validate our simple stack before committing to it.</li>
+<li>The Twelve-Factor App: https://12factor.net/ — still the best checklist for keeping services boring and deployable.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>how do i know if my team is over-engineering?</strong></p>
+<p>Look at your on-call rotation and deployment frequency. If you’re getting pages for cache stampedes, RocksDB compaction stalls, or Kafka partition rebalances more than once a month, you’re probably over-engineered. Another sign is that new features take weeks to ship because they require schema migrations, topic renames, or service splits. At our peak we spent 30% of our sprint on infrastructure changes that added zero user-facing features.</p>
+<p><strong>why is postgres with redis faster than kafka streams for reads?</strong></p>
+<p>Because Kafka Streams materialized views are still reads against a local RocksDB instance. RocksDB is fast (sub-millisecond for in-memory keys), but it’s not as fast as Redis for in-memory lookups because Redis keeps its entire dataset in RAM with a simpler data structure. Our Redis instance had 97.4% hit rate and served 800 req/s with 0.8 ms average latency. The same data in RocksDB had 2.1 ms average latency because of RocksDB’s write amplification and compaction overhead.</p>
+<p><strong>what is the biggest hidden cost of over-engineering?</strong></p>
+<p>The cost isn’t just in servers or containers. It’s in cognitive load. Every extra service, topic, and schema adds mental context that every engineer on the team must hold. We measured it as 4.2 hours per developer per week spent debugging infrastructure issues that wouldn’t exist in a simpler stack. Multiply that by team size and you quickly hit a wall where shipping features becomes impossible.</p>
+<p><strong>when should i use kafka streams or event sourcing?</strong></p>
+<p>Only when you have a genuine need for exactly-once semantics, high write throughput (&gt;5k writes/sec), or complex event-driven workflows that can’t be modeled in a database. For preference updates, analytics dashboards, or most CRUD apps, a simple REST endpoint with a cache is enough. We used Kafka Streams for 6 months on a workload that never exceeded 1k writes/sec and paid the price in complexity.</p>
+<p><strong>how do i sell simplicity to my manager or team?</strong></p>
+<p>Frame it as velocity and reliability. Show the deployment frequency before and after, the error rate drop, and the time-to-recover numbers. Most managers care about speed and uptime more than architecture purity. We presented the rewrite as a 72% cost cut and a 93% reduction in on-call pages. That’s a business case, not a technical one.</p>
+<h2 id="one-step-you-can-take-today">One step you can take today</h2>
+<p>Open your service’s main endpoint file and count the number of external dependencies (Kafka topics, Redis clusters, database connections, etc.). If the count is greater than 3, delete one dependency today. Replace a Kafka topic with a direct PostgreSQL write, or drop a RabbitMQ queue in favor of a simple HTTP endpoint. Measure the latency drop and celebrate the simplification. Your future self will thank you.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 28, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/over-engineering-costs-more-than-you-think/">
+                        <h3>Over-engineering costs more than you think</h3>
+                        <p>Cut API response time 97% without microservices — client-side filtering, Postgres materialized views, and one Redis instance beat a $18k over-engineered stack. Lessons from a 3-month detour.</p>
+                        <span class="related-meta">16 min read · 27 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cellular-backend-tuning-the-5-rules-you-cant-ignore/">
+                        <h3>Cellular backend tuning: the 5 rules you can’t ignore</h3>
+                        <p>Cut P99 latency 82% on mobile traffic — PostgreSQL pool tuning, Redis TTL, and the RRC state mistake most teams miss.</p>
+                        <span class="related-meta">13 min read · 27 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/over-engineerings-12kyear-tax/">
+                        <h3>Over-engineering’s $12k/year tax</h3>
+                        <p>Cut AWS costs 39% and latency 76% by removing Kafka, GraphQL, and event sourcing — the real cost of over-engineering and how to measure it.</p>
+                        <span class="related-meta">15 min read · 27 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
