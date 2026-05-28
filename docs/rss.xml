@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 04:50:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 04:59:37 +0000</lastBuildDate>
+    <item>
+      <title>AI coding tools that survive real traffic</title>
+      <link>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</link>
+      <description>This list is the distillation of hundreds of hours testing AI tools in real environments, from solo projects to 5-person startups, with traffic ranging…</description>
+      <pubDate>Thu, 28 May 2026 04:59:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</guid>
+    </item>
     <item>
       <title>Cut Lambda CO₂ 37% without latency spike</title>
       <link>https://kubaik.github.io/cut-lambda-co₂-37-without-latency-spike/</link>
@@ -138,13 +145,6 @@
       <description>Cut invisible meeting tax 11 hours per sprint with this 30-minute audit. Learn the real reasons big tech engineers leave despite six-figure salaries.</description>
       <pubDate>Wed, 27 May 2026 20:03:42 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-leaves-for-60k-roles-the-real-reasons/</guid>
-    </item>
-    <item>
-      <title>Choose the right real-time transport</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-transport/</link>
-      <description>Cut real-time transport latency 80% by choosing SSE for one-way or WebSockets for two-way traffic — RAM, cost, and browser limits for 2026</description>
-      <pubDate>Wed, 27 May 2026 19:57:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-transport/</guid>
     </item>
   </channel>
 </rss>
