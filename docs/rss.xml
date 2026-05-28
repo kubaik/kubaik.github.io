@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 01:55:51 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 02:14:39 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: why tutorials flop</title>
+      <link>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</link>
+      <description>Cut RAG latency 89% and AWS bill 73% by tuning pgvector indexes, BRIN filters, and pgBouncer pools — the exact steps most tutorials skip.</description>
+      <pubDate>Thu, 28 May 2026 02:14:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</guid>
+    </item>
     <item>
       <title>Ask for 80% of US salary as a remote dev in 2026</title>
       <link>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 40% with AI that maps every change to runtime impact — 3 concrete steps to measure blast radius before you merge.</description>
       <pubDate>Wed, 27 May 2026 19:38:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-knows-your-codebase-what-it-cant-fix/</guid>
-    </item>
-    <item>
-      <title>Hire Nairobi devs: timezone hack for EU startups</title>
-      <link>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</link>
-      <description>Cut dev costs 35% by hiring Nairobi engineers — 5-hour overlap, async hand-offs, and the CI/CD fix that dropped latency from 180 ms to 30 ms.</description>
-      <pubDate>Wed, 27 May 2026 19:17:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/hire-nairobi-devs-timezone-hack-for-eu-startups/</guid>
     </item>
   </channel>
 </rss>
