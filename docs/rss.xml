@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 22:25:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 22:29:56 +0000</lastBuildDate>
+    <item>
+      <title>Python packaging in 2026: the right stack</title>
+      <link>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</link>
+      <description>Cut CI time 90% by dropping setup.py in 2026 — Hatch 1.25.0, PEP 665 locks, and the editable install trap most teams miss</description>
+      <pubDate>Thu, 28 May 2026 22:29:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</guid>
+    </item>
     <item>
       <title>Choose WebSockets vs SSE vs Polling in 2024</title>
       <link>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 65% by fixing database connection pooling — why CPU cores don’t matter, how to size pools in 2026, and the overflow mistake that crashes databases.</description>
       <pubDate>Thu, 28 May 2026 12:56:17 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-cpu-cores/</guid>
-    </item>
-    <item>
-      <title>2026&apos;s solo dev stack reality</title>
-      <link>https://kubaik.github.io/2026s-solo-dev-stack-reality/</link>
-      <description>Cut cloud bills 15% and PR time 80% with AI coding tools that actually ship — real numbers from 2026 on what works for non-traditional devs shipping real products.</description>
-      <pubDate>Thu, 28 May 2026 12:53:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-solo-dev-stack-reality/</guid>
     </item>
   </channel>
 </rss>
