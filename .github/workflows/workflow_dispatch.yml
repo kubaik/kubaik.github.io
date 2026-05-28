@@ -307,6 +307,7 @@ jobs:
               SUMMARY="${SUMMARY}duplicate-posts "
             fi
             git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
+            git pull --rebase origin main
             git push
             echo "Pushed cleaned docs/ to main."
           fi
@@ -359,6 +360,7 @@ jobs:
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
             git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
+            git pull --rebase origin main
             git push
             echo "Pushed purged docs/ to main."
           fi
