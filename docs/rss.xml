@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 14:51:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 14:55:50 +0000</lastBuildDate>
+    <item>
+      <title>Convert global salary to local take-home</title>
+      <link>https://kubaik.github.io/convert-global-salary-to-local-take-home/</link>
+      <description>Why I wrote this (the problem I kept hitting) I spent two weeks arguing with a US-based startup about a salary that looked generous on paper but left me…</description>
+      <pubDate>Thu, 28 May 2026 14:55:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/convert-global-salary-to-local-take-home/</guid>
+    </item>
     <item>
       <title>Vector search: pgvector vs FAISS by the numbers</title>
       <link>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS bill 59% by choosing SSE over WebSockets — benchmarked latency, memory, and cost for 1 k concurrent users on t3.medium in 2026.</description>
       <pubDate>Thu, 28 May 2026 06:47:01 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-sse-websockets-or-long-polling/</guid>
-    </item>
-    <item>
-      <title>Junior to senior without the CS degree</title>
-      <link>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</link>
-      <description>They’d insist on 100% test coverage while the production database had 17 tables with no foreign key constraints.</description>
-      <pubDate>Thu, 28 May 2026 06:05:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/junior-to-senior-without-the-cs-degree/</guid>
     </item>
   </channel>
 </rss>
