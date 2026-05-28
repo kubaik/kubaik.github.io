@@ -307,9 +307,41 @@ jobs:
               SUMMARY="${SUMMARY}duplicate-posts "
             fi
             git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
-            git pull --rebase origin main
+            git pull --rebase -X theirs origin main
+            if [ $? -ne 0 ]; then
+              git rebase --abort
+              git pull origin main
+              python blog_system.py build
+              git add docs/
+              git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
+            fi
             git push
             echo "Pushed cleaned docs/ to main."
+          fi
+
+      - name: Commit and push purged posts + rebuilt site
+        if: steps.audit.outputs.has_audit_issues == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (docs/ unchanged after purge + rebuild)."
+          else
+            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+            git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
+            git pull --rebase -X theirs origin main
+            if [ $? -ne 0 ]; then
+              git rebase --abort
+              git pull origin main
+              python blog_system.py build
+              git add docs/
+              git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
+            fi
+            git push
+            echo "Pushed purged docs/ to main."
           fi
 
       # ── AUDIT & PURGE ────────────────────────────────────────────────────────
