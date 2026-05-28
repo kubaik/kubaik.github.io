@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 17:57:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 17:59:34 +0000</lastBuildDate>
+    <item>
+      <title>Multi-agent systems: the prod reality</title>
+      <link>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</link>
+      <description>Cut agent framework costs 42% with Redis caching and back-pressure — tools, failure modes, and the exact latency and cost numbers from a live 2026 system.</description>
+      <pubDate>Thu, 28 May 2026 17:59:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</guid>
+    </item>
     <item>
       <title>Shrink cloud carbon 25% — fast</title>
       <link>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</link>
@@ -138,13 +145,6 @@
       <description>Choose wisely: 40% faster demos with no-code vs 60% lower long-term costs writing custom code — data from 2026 projects shows where each path wins</description>
       <pubDate>Thu, 28 May 2026 09:27:29 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-no-codeor-pay-later/</guid>
-    </item>
-    <item>
-      <title>Build 5G-ready backends: latency tricks you can&apos;t</title>
-      <link>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</link>
-      <description>Cut API response time 50% on 5G: the exact TCP, Redis, and cache TTL tweaks most teams miss. 2026 cellular backend guide with Prometheus queries and Docker setup.</description>
-      <pubDate>Thu, 28 May 2026 09:11:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-5g-ready-backends-latency-tricks-you-cant/</guid>
     </item>
   </channel>
 </rss>
