@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 22:08:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 22:14:04 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs vs full-text: when AI search needs neither</title>
+      <link>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</link>
+      <description>Cut search latency 60% and infra cost 40% by skipping vector databases. Benchmarks for Qdrant 1.10 vs Redis 7.2 vs PostgreSQL 16 pg_embedding show when hybrid indexes beat vectors.</description>
+      <pubDate>Thu, 28 May 2026 22:13:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</guid>
+    </item>
     <item>
       <title>2026 AI skills that pay (and 3 that don’t)</title>
       <link>https://kubaik.github.io/2026-ai-skills-that-pay-and-3-that-dont/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio beats certs: ship real code that proves you can operate production systems and land remote jobs from Africa. 2026 hiring secrets from a Nairobi engineer.</description>
       <pubDate>Thu, 28 May 2026 12:44:13 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolios-that-hire-africans-remotely/</guid>
-    </item>
-    <item>
-      <title>AI skills 2026: salaries that move the needle</title>
-      <link>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</link>
-      <description>AI skills 2026: salaries that move the needle — $155k vs $110k gap explained with pgvector 0.7.0, VoyageAI and Evidently 0.4 benchmarks so you know what actually pays off.</description>
-      <pubDate>Thu, 28 May 2026 12:31:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</guid>
     </item>
   </channel>
 </rss>
