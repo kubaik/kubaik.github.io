@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 12:31:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 12:39:11 +0000</lastBuildDate>
     <item>
       <title>AI skills 2026: salaries that move the needle</title>
       <link>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</link>
@@ -68,13 +68,6 @@
       <description>Choose wisely: 40% faster demos with no-code vs 60% lower long-term costs writing custom code — data from 2026 projects shows where each path wins</description>
       <pubDate>Thu, 28 May 2026 09:27:29 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-no-codeor-pay-later/</guid>
-    </item>
-    <item>
-      <title>10 AI skills that boost salaries in 2026</title>
-      <link>https://kubaik.github.io/10-ai-skills-that-boost-salaries-in-2026/</link>
-      <description>Cut your LLM API bill 40% and raise your salary 19%: prompt optimization vs RAG tuning with 2026 job data, latency benchmarks, and cost breakdown.</description>
-      <pubDate>Thu, 28 May 2026 09:16:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/10-ai-skills-that-boost-salaries-in-2026/</guid>
     </item>
     <item>
       <title>Build 5G-ready backends: latency tricks you can&apos;t</title>
@@ -145,6 +138,13 @@
       <description>Cut dashboard response time 60% with PostgreSQL 16 queries and minimal JavaScript — the exact stack that replaced a Node.js 20 microservice plan.</description>
       <pubDate>Thu, 28 May 2026 04:43:30 +0000</pubDate>
       <guid>https://kubaik.github.io/fancy-stack-loses-hard-numbers-on-simplicity/</guid>
+    </item>
+    <item>
+      <title>RAG in prod: why tutorials flop</title>
+      <link>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</link>
+      <description>Cut RAG latency 89% and AWS bill 73% by tuning pgvector indexes, BRIN filters, and pgBouncer pools — the exact steps most tutorials skip.</description>
+      <pubDate>Thu, 28 May 2026 02:14:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</guid>
     </item>
   </channel>
 </rss>
