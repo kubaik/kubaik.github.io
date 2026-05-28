@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 23:47:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 23:48:42 +0000</lastBuildDate>
+    <item>
+      <title>Leverage local costs for global remote pay</title>
+      <link>https://kubaik.github.io/leverage-local-costs-for-global-remote-pay/</link>
+      <description>Negotiate remote pay like a pro with Notion template — living-cost model, salary bands, margin calculator, and negotiation scripts for 2026. Save $25k+ per year.</description>
+      <pubDate>Thu, 28 May 2026 23:48:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/leverage-local-costs-for-global-remote-pay/</guid>
+    </item>
     <item>
       <title>Remote portfolio hacks for African devs</title>
       <link>https://kubaik.github.io/remote-portfolio-hacks-for-african-devs/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector-search costs 85% with pgvector — when 2M embeddings fit in RAM, PostgreSQL wins. Build time, recall, and infra cost tested.</description>
       <pubDate>Thu, 28 May 2026 14:36:27 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-search-pgvector-vs-faiss-by-the-numbers/</guid>
-    </item>
-    <item>
-      <title>Why RAG pipelines crumble in production</title>
-      <link>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</link>
-      <description>Cut RAG pipeline latency 74% and improve accuracy 23% with a Semantic Gate that prunes irrelevant chunks before reranking — real numbers from a 1.2M-user SaaS copilot in 2026</description>
-      <pubDate>Thu, 28 May 2026 14:32:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rag-pipelines-crumble-in-production/</guid>
     </item>
   </channel>
 </rss>
