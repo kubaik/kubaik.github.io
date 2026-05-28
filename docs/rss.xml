@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 12:16:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 12:31:31 +0000</lastBuildDate>
+    <item>
+      <title>AI skills 2026: salaries that move the needle</title>
+      <link>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</link>
+      <description>AI skills 2026: salaries that move the needle — $155k vs $110k gap explained with pgvector 0.7.0, VoyageAI and Evidently 0.4 benchmarks so you know what actually pays off.</description>
+      <pubDate>Thu, 28 May 2026 12:31:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-2026-salaries-that-move-the-needle/</guid>
+    </item>
     <item>
       <title>Benchmark WebSocket vs SSE vs long polling in practice</title>
       <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling-in-practice/</link>
@@ -138,13 +145,6 @@
       <description>Cut dashboard response time 60% with PostgreSQL 16 queries and minimal JavaScript — the exact stack that replaced a Node.js 20 microservice plan.</description>
       <pubDate>Thu, 28 May 2026 04:43:30 +0000</pubDate>
       <guid>https://kubaik.github.io/fancy-stack-loses-hard-numbers-on-simplicity/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: why tutorials flop</title>
-      <link>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</link>
-      <description>Cut RAG latency 89% and AWS bill 73% by tuning pgvector indexes, BRIN filters, and pgBouncer pools — the exact steps most tutorials skip.</description>
-      <pubDate>Thu, 28 May 2026 02:14:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-flop/</guid>
     </item>
   </channel>
 </rss>
