@@ -208,13 +208,16 @@ Sitemap: {base_url}/rss.xml
             post_dict['meta_description'] = _safe_excerpt(
                 p.meta_description, p.content, p.title)
             posts_data.append(post_dict)
+
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
             'site_description': config.get('site_description', 'An AI-powered blog'),
             'base_path': config.get('base_path', ''),
             'base_url': config.get('base_url', ''),
             'posts': posts_data,
-            'posts_per_page': 10,
+            # Render ALL posts server-side so Mediapartners-Google sees them.
+            # JS lazy-load becomes a no-op (all posts already in DOM) — no breakage.
+            'posts_per_page': len(posts_data),
             'current_year': datetime.now().year,
             'social_links': config.get('social_accounts', {}),
             'global_meta_tags': self.seo.generate_global_meta_tags(),
@@ -226,7 +229,8 @@ Sitemap: {base_url}/rss.xml
         output_file = Path("./docs/index.html")
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
-        print(f"Generated homepage with {len(posts)} posts")
+        print(
+            f"Generated homepage with {len(posts)} posts (all server-side rendered)")
 
     def _format_display_date(self, iso_date: str) -> str:
         try:
@@ -1315,7 +1319,7 @@ def _build_templates() -> dict:
             <h2>Latest Posts</h2>
             {% if posts %}
             <div id="posts-container" class="post-grid">
-                {% for post in posts[:posts_per_page] %}
+                {% for post in posts  %}
                 {#
                   CRITICAL: The card is an <a> element. Tag pills MUST be <span>
                   elements here — NOT <a> — because nested <a> inside <a> is
