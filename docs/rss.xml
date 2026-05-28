@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 12:53:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 12:56:32 +0000</lastBuildDate>
+    <item>
+      <title>Pool size ≠ CPU cores</title>
+      <link>https://kubaik.github.io/pool-size-cpu-cores/</link>
+      <description>Cut API latency 65% by fixing database connection pooling — why CPU cores don’t matter, how to size pools in 2026, and the overflow mistake that crashes databases.</description>
+      <pubDate>Thu, 28 May 2026 12:56:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-cpu-cores/</guid>
+    </item>
     <item>
       <title>2026&apos;s solo dev stack reality</title>
       <link>https://kubaik.github.io/2026s-solo-dev-stack-reality/</link>
@@ -138,13 +145,6 @@
       <description>This list is the distillation of hundreds of hours testing AI tools in real environments, from solo projects to 5-person startups, with traffic ranging…</description>
       <pubDate>Thu, 28 May 2026 04:59:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-tools-that-survive-real-traffic/</guid>
-    </item>
-    <item>
-      <title>Cut Lambda CO₂ 37% without latency spike</title>
-      <link>https://kubaik.github.io/cut-lambda-co₂-37-without-latency-spike/</link>
-      <description>Cut cloud carbon 37% without slowing apps — Lambda memory tuning, dynamic cache TTL, and cache warming that actually worked</description>
-      <pubDate>Thu, 28 May 2026 04:49:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-lambda-co₂-37-without-latency-spike/</guid>
     </item>
   </channel>
 </rss>
