@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 May 2026 12:01:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 12:08:37 +0000</lastBuildDate>
+    <item>
+      <title>Why Vibe Coding Fails in Production</title>
+      <link>https://kubaik.github.io/why-vibe-coding-fails-in-production/</link>
+      <description>The gap wasn’t theoretical; it showed up in the p99 latency graph as a 340% increase.</description>
+      <pubDate>Thu, 28 May 2026 12:08:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-vibe-coding-fails-in-production/</guid>
+    </item>
     <item>
       <title>Ship a remote-ready African dev portfolio</title>
       <link>https://kubaik.github.io/ship-a-remote-ready-african-dev-portfolio/</link>
@@ -138,13 +145,6 @@
       <description>Ask for 80% of US salary as a remote dev in 2026 — COL-adjusted benchmarks, email template, and the Hetzner cron job that keeps the data fresh.</description>
       <pubDate>Thu, 28 May 2026 01:55:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ask-for-80-of-us-salary-as-a-remote-dev-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI indexes your repo: context you never knew you needed</title>
-      <link>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</link>
-      <description>Cut repository query time 90% with repository intelligence — measure index build time, query latency, and staleness before you choose tooling. Learn what a good index looks like and where grep breaks first.</description>
-      <pubDate>Thu, 28 May 2026 01:33:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-indexes-your-repo-context-you-never-knew-you-needed/</guid>
     </item>
   </channel>
 </rss>

@@ -1,19 +1,3 @@
 [
-  "When to build with no-code vs write the code yourself: a decision framework",
-  "How vector databases work (and when you don't need one)",
-  "Non-traditional developers shipping real products: what the AI coding wave made possible",
-  "Repository intelligence: how AI is learning your entire codebase context",
-  "Database connection pooling: the setting everyone gets wrong",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Building a portfolio that gets you hired remotely from Africa",
-  "Why senior developers leave big tech (it's not always the money)",
-  "RAG pipelines in production: what the tutorials skip",
-  "Negotiating a remote salary when you're in a lower-cost country",
-  "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "5G and mobile-first backends: what changes when your users are always on cellular",
-  "Sustainable software engineering: cutting cloud carbon without cutting performance",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "Copilot vs Cursor: which actually speeds up Python backend work",
-  "How I went from junior to senior without a CS degree",
-  "Freelance developer rates: a realistic breakdown"
+  "Vibe coding is fun for prototypes \u2014 here's why I stopped using it in production"
 ]
