@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 08:53:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 08:57:39 +0000</lastBuildDate>
+    <item>
+      <title>Cellular backends: what changes with 5G users</title>
+      <link>https://kubaik.github.io/cellular-backends-what-changes-with-5g-users/</link>
+      <description>Cut mobile API latency 60% — connection pool tuning, HTTP/3, Redis TTLs, and the cache stampede mistake most teams miss.</description>
+      <pubDate>Fri, 29 May 2026 08:57:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/cellular-backends-what-changes-with-5g-users/</guid>
+    </item>
     <item>
       <title>Vector DBs: when you actually need them</title>
       <link>https://kubaik.github.io/vector-dbs-when-you-actually-need-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 35× with Milvus 2.3.6-lite — the real scalability limits of Chroma, FAISS, and prompt bloat exposed with real numbers and Terraform snippets.</description>
       <pubDate>Thu, 28 May 2026 20:19:27 +0000</pubDate>
       <guid>https://kubaik.github.io/chroma-breaks-in-prod-3-gotchas/</guid>
-    </item>
-    <item>
-      <title>Beat remote pay offers: 4 levers not on the table</title>
-      <link>https://kubaik.github.io/beat-remote-pay-offers-4-levers-not-on-the-table/</link>
-      <description>Increase remote salary 50–100% with 4 levers most developers miss — benchmarks, value ties, currency hedges, and contract clauses. 2026 data from Levels.fyi, Wise, and LatAm job boards.</description>
-      <pubDate>Thu, 28 May 2026 20:08:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/beat-remote-pay-offers-4-levers-not-on-the-table/</guid>
     </item>
   </channel>
 </rss>
