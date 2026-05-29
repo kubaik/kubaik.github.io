@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 04:58:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 05:02:41 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod? Skip the hello world</title>
+      <link>https://kubaik.github.io/rag-in-prod-skip-the-hello-world/</link>
+      <description>Cut RAG pipeline costs 85% by moving reranking offline and caching everything. Real latency, cost, and memory numbers from a 2k QPS prod system.</description>
+      <pubDate>Fri, 29 May 2026 05:02:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-skip-the-hello-world/</guid>
+    </item>
     <item>
       <title>AI side-projects survived prod</title>
       <link>https://kubaik.github.io/ai-side-projects-survived-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cost under load: I benchmarked each stack at 1,000 concurrent users using k6.</description>
       <pubDate>Thu, 28 May 2026 18:02:20 +0000</pubDate>
       <guid>https://kubaik.github.io/non-coders-launch-products-with-ai-stacks/</guid>
-    </item>
-    <item>
-      <title>Multi-agent systems: the prod reality</title>
-      <link>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</link>
-      <description>Cut agent framework costs 42% with Redis caching and back-pressure — tools, failure modes, and the exact latency and cost numbers from a live 2026 system.</description>
-      <pubDate>Thu, 28 May 2026 17:59:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</guid>
     </item>
   </channel>
 </rss>

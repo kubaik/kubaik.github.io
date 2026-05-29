@@ -7,5 +7,6 @@
   "How vector databases work (and when you don't need one)",
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Non-traditional developers shipping real products: what the AI coding wave made possible"
+  "Non-traditional developers shipping real products: what the AI coding wave made possible",
+  "RAG pipelines in production: what the tutorials skip"
 ]
