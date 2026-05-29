@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 22:05:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 22:09:55 +0000</lastBuildDate>
+    <item>
+      <title>Simplicity won the race: how we killed a microservice</title>
+      <link>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</link>
+      <description>Cut API response time 62% by merging three services into one sidecar design — latency, cost, and error-rate numbers from a 2026 production rollout</description>
+      <pubDate>Fri, 29 May 2026 22:09:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</guid>
+    </item>
     <item>
       <title>Why RAG tutorials crash in production</title>
       <link>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection timeouts 80% with the right pool size formula — why CPU cores × 2 + 1 fails and what to use instead with PostgreSQL 16 and Node.js 20 LTS examples.</description>
       <pubDate>Fri, 29 May 2026 12:45:02 +0000</pubDate>
       <guid>https://kubaik.github.io/misconfigured-pool-size-kills-prod/</guid>
-    </item>
-    <item>
-      <title>AI skills that move the $185k paycheck</title>
-      <link>https://kubaik.github.io/ai-skills-that-move-the-185k-paycheck/</link>
-      <description>Cut AI salary research time by 70% with 2026 data — prompt engineering vs vector search: concrete benchmarks, cost breakdowns, and hiring signals that actually move the needle.</description>
-      <pubDate>Fri, 29 May 2026 12:36:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-that-move-the-185k-paycheck/</guid>
     </item>
   </channel>
 </rss>
