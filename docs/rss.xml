@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 06:02:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 06:06:42 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering: the $18k we wasted on Kafka</title>
+      <link>https://kubaik.github.io/over-engineering-the-18k-we-wasted-on-kafka/</link>
+      <description>Cut infrastructure cost 84% by removing Kafka and fixing the real bottleneck — 3 slow queries and a misconfigured connection pool. Learn how to profile, measure, and simplify before reaching for complex architectures.</description>
+      <pubDate>Fri, 29 May 2026 06:06:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-the-18k-we-wasted-on-kafka/</guid>
+    </item>
     <item>
       <title>Charge $150/hr without burning out</title>
       <link>https://kubaik.github.io/charge-150hr-without-burning-out/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 75% and latency 82% by removing Redis, microservices, and event buses — real numbers from a 2026 case study on over-engineering.</description>
       <pubDate>Thu, 28 May 2026 20:01:16 +0000</pubDate>
       <guid>https://kubaik.github.io/costly-simplicity-why-less-tech-wins/</guid>
-    </item>
-    <item>
-      <title>African devs: your portfolio sucks (and how to fix it)</title>
-      <link>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</link>
-      <description>African devs waste months building GitHub profiles that get ignored. A 500-word post-mortem, a Locust 2.20 report, or a runbook beats 10k stars in 2026 — real production artifacts get you hired remotely.</description>
-      <pubDate>Thu, 28 May 2026 19:50:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</guid>
     </item>
   </channel>
 </rss>
