@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 19:16:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 19:21:05 +0000</lastBuildDate>
+    <item>
+      <title>Salary boosters: Python vs SQL vs AI in 2026</title>
+      <link>https://kubaik.github.io/salary-boosters-python-vs-sql-vs-ai-in-2026/</link>
+      <description>Cut AI cloud costs 92% by moving vector search from Python to DuckDB — latency, salary data, and the exact benchmark I ran in 2026.</description>
+      <pubDate>Fri, 29 May 2026 19:20:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/salary-boosters-python-vs-sql-vs-ai-in-2026/</guid>
+    </item>
     <item>
       <title>AI tools that made non-CS side projects prod-ready</title>
       <link>https://kubaik.github.io/ai-tools-that-made-non-cs-side-projects-prod-ready/</link>
@@ -138,13 +145,6 @@
       <description>Cut infrastructure cost 84% by removing Kafka and fixing the real bottleneck — 3 slow queries and a misconfigured connection pool. Learn how to profile, measure, and simplify before reaching for complex architectures.</description>
       <pubDate>Fri, 29 May 2026 06:06:27 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-the-18k-we-wasted-on-kafka/</guid>
-    </item>
-    <item>
-      <title>Charge $150/hr without burning out</title>
-      <link>https://kubaik.github.io/charge-150hr-without-burning-out/</link>
-      <description>Learn the real numbers behind freelance developer rates in 2026 — taxes, tools, and scope creep eat 40% of quoted rates. Build a dashboard that tracks your actual earnings per hour.</description>
-      <pubDate>Fri, 29 May 2026 05:12:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/charge-150hr-without-burning-out/</guid>
     </item>
   </channel>
 </rss>
