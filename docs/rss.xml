@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 19:46:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 19:49:44 +0000</lastBuildDate>
+    <item>
+      <title>2 devs, 1M req/day, no K8s</title>
+      <link>https://kubaik.github.io/2-devs-1m-reqday-no-k8s/</link>
+      <description>Then we discovered tools that let a team of two ship a service handling 1,200 requests per second within 30 days without touching Kubernetes manifests.</description>
+      <pubDate>Fri, 29 May 2026 19:49:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/2-devs-1m-reqday-no-k8s/</guid>
+    </item>
     <item>
       <title>Connection pools: set max too high and waste 8k</title>
       <link>https://kubaik.github.io/connection-pools-set-max-too-high-and-waste-8k/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 12× and costs 6× with pre-computed embeddings in RedisSearch 2.8. Benchmarks, code, and the mistakes most tutorials miss.</description>
       <pubDate>Fri, 29 May 2026 09:40:36 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-kills-rag-pipelines-fast/</guid>
-    </item>
-    <item>
-      <title>Ship African portfolios that clear remote screens</title>
-      <link>https://kubaik.github.io/ship-african-portfolios-that-clear-remote-screens/</link>
-      <description>Build a remote portfolio that passes recruiter bots in under 90 seconds — Docker size ≤ 200 MB, cost bound, and one verifiable SLO. 2026 hiring numbers and real repo examples included.</description>
-      <pubDate>Fri, 29 May 2026 09:37:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-african-portfolios-that-clear-remote-screens/</guid>
     </item>
   </channel>
 </rss>
