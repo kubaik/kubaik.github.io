@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 12:33:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 12:36:30 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that move the $185k paycheck</title>
+      <link>https://kubaik.github.io/ai-skills-that-move-the-185k-paycheck/</link>
+      <description>Cut AI salary research time by 70% with 2026 data — prompt engineering vs vector search: concrete benchmarks, cost breakdowns, and hiring signals that actually move the needle.</description>
+      <pubDate>Fri, 29 May 2026 12:36:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-move-the-185k-paycheck/</guid>
+    </item>
     <item>
       <title>AI coding wave: non-trads ship real products</title>
       <link>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</link>
@@ -138,13 +145,6 @@
       <description>AI skills that move the needle in 2026: 22–35% salary premium for vector search + RAG vs 18–28% for observability and cost control — concrete benchmarks, cost breakdowns, and the concrete next step to start today.</description>
       <pubDate>Thu, 28 May 2026 22:58:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-move-the-salary-needle-in-2026/</guid>
-    </item>
-    <item>
-      <title>Python packaging in 2026: the right stack</title>
-      <link>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</link>
-      <description>Cut CI time 90% by dropping setup.py in 2026 — Hatch 1.25.0, PEP 665 locks, and the editable install trap most teams miss</description>
-      <pubDate>Thu, 28 May 2026 22:29:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</guid>
     </item>
   </channel>
 </rss>
