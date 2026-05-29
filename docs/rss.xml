@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 17:59:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 18:04:24 +0000</lastBuildDate>
+    <item>
+      <title>AI tools that made non-CS side projects prod-ready</title>
+      <link>https://kubaik.github.io/ai-tools-that-made-non-cs-side-projects-prod-ready/</link>
+      <description>Ship a real product in hours — the 3 AI-powered tools non-traditional developers use to go from &apos;it works on my machine&apos; to production in 2026</description>
+      <pubDate>Fri, 29 May 2026 18:04:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-that-made-non-cs-side-projects-prod-ready/</guid>
+    </item>
     <item>
       <title>Ship production, not stars</title>
       <link>https://kubaik.github.io/ship-production-not-stars/</link>
@@ -138,13 +145,6 @@
       <description>Learn the real numbers behind freelance developer rates in 2026 — taxes, tools, and scope creep eat 40% of quoted rates. Build a dashboard that tracks your actual earnings per hour.</description>
       <pubDate>Fri, 29 May 2026 05:12:00 +0000</pubDate>
       <guid>https://kubaik.github.io/charge-150hr-without-burning-out/</guid>
-    </item>
-    <item>
-      <title>Connection pools are too small now</title>
-      <link>https://kubaik.github.io/connection-pools-are-too-small-now/</link>
-      <description>Cut database latency 40% by setting connection pool size to 80% of max_connections — not the old (core_count * 2) rule. Evidence from PostgreSQL, MySQL, and Redis in 2026.</description>
-      <pubDate>Fri, 29 May 2026 05:08:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/connection-pools-are-too-small-now/</guid>
     </item>
   </channel>
 </rss>
