@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 04:42:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 04:46:50 +0000</lastBuildDate>
+    <item>
+      <title>AI side-projects survived prod</title>
+      <link>https://kubaik.github.io/ai-side-projects-survived-prod/</link>
+      <description>Cut onboarding time 35% with AI tools — Copilot Enterprise, Replit Agents, Continue.dev, Amazon Q CLI, and Codeium Enterprise. Real benchmarks, costs, and integration tips for 2026.</description>
+      <pubDate>Fri, 29 May 2026 04:46:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-side-projects-survived-prod/</guid>
+    </item>
     <item>
       <title>Choose the right real-time protocol fast</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent framework costs 42% with Redis caching and back-pressure — tools, failure modes, and the exact latency and cost numbers from a live 2026 system.</description>
       <pubDate>Thu, 28 May 2026 17:59:23 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-the-prod-reality/</guid>
-    </item>
-    <item>
-      <title>Shrink cloud carbon 25% — fast</title>
-      <link>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</link>
-      <description>Cut cloud carbon 28% without hurting speed — ARM migration, Redis 7.2 caching, and PostgreSQL 15 tuning for real-time apps serving 250k users in Latin America.</description>
-      <pubDate>Thu, 28 May 2026 17:51:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</guid>
     </item>
   </channel>
 </rss>
