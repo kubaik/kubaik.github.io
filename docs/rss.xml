@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 23:47:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 23:50:32 +0000</lastBuildDate>
+    <item>
+      <title>Stop wasting database connections</title>
+      <link>https://kubaik.github.io/stop-wasting-database-connections/</link>
+      <description>Cut API response time 60% by reducing pool size — connection pooling mistakes cost teams $8k+ monthly in wasted RDS instances and outages</description>
+      <pubDate>Fri, 29 May 2026 23:50:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-wasting-database-connections/</guid>
+    </item>
     <item>
       <title>Negotiate remote salary without the bank tax</title>
       <link>https://kubaik.github.io/negotiate-remote-salary-without-the-bank-tax/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 60% with PostgreSQL pgvector 0.7 — benchmark numbers, infra cost, and the one query you must run before switching to a dedicated vector store</description>
       <pubDate>Fri, 29 May 2026 16:38:47 +0000</pubDate>
       <guid>https://kubaik.github.io/do-you-need-a-vector-db/</guid>
-    </item>
-    <item>
-      <title>Choose the Right Realtime Protocol Fast</title>
-      <link>https://kubaik.github.io/choose-the-right-realtime-protocol-fast/</link>
-      <description>Pick realtime tool in minutes: SSE, WebSockets, or polling — concrete latency, cost, and CPU numbers for 2026 workloads</description>
-      <pubDate>Fri, 29 May 2026 16:33:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-realtime-protocol-fast/</guid>
     </item>
   </channel>
 </rss>
