@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 21:31:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 21:48:10 +0000</lastBuildDate>
+    <item>
+      <title>Why RAG tutorials crash in production</title>
+      <link>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</link>
+      <description>Cut RAG pipeline costs 75% and latency 68% — the real levers most tutorials skip: chunk granularity, retrieval budget, and conditional reranking</description>
+      <pubDate>Fri, 29 May 2026 21:47:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs long-polling: which fits?</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary research time by 70% with 2026 data — prompt engineering vs vector search: concrete benchmarks, cost breakdowns, and hiring signals that actually move the needle.</description>
       <pubDate>Fri, 29 May 2026 12:36:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-move-the-185k-paycheck/</guid>
-    </item>
-    <item>
-      <title>AI coding wave: non-trads ship real products</title>
-      <link>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</link>
-      <description>Ship a production product in 2026 with AI tools that actually work. 45% latency drop, $120/month bill, and 8-hour setup time — the exact tools non-traditional devs use to go from prototype to profit.</description>
-      <pubDate>Fri, 29 May 2026 12:33:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</guid>
     </item>
   </channel>
 </rss>
