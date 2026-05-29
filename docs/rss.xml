@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 19:29:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 19:30:22 +0000</lastBuildDate>
+    <item>
+      <title>Push live updates cheaper without WebSockets</title>
+      <link>https://kubaik.github.io/push-live-updates-cheaper-without-websockets/</link>
+      <description>Cut real-time update latency 60% without WebSockets — SNS+Lambda+WebSocket vs SSE vs polling benchmarks (2026).</description>
+      <pubDate>Fri, 29 May 2026 19:30:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-live-updates-cheaper-without-websockets/</guid>
+    </item>
     <item>
       <title>Salary boosters: Python vs SQL vs AI in 2026</title>
       <link>https://kubaik.github.io/salary-boosters-python-vs-sql-vs-ai-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search costs 26% with Postgres pgvector 0.7.0 — hardware sizing, payload filtering traps, and the 50 GB RAM rule every team should enforce in 2026.</description>
       <pubDate>Fri, 29 May 2026 06:42:28 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-when-you-actually-need-them/</guid>
-    </item>
-    <item>
-      <title>Over-engineering: the $18k we wasted on Kafka</title>
-      <link>https://kubaik.github.io/over-engineering-the-18k-we-wasted-on-kafka/</link>
-      <description>Cut infrastructure cost 84% by removing Kafka and fixing the real bottleneck — 3 slow queries and a misconfigured connection pool. Learn how to profile, measure, and simplify before reaching for complex architectures.</description>
-      <pubDate>Fri, 29 May 2026 06:06:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-the-18k-we-wasted-on-kafka/</guid>
     </item>
   </channel>
 </rss>
