@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 21:05:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 21:10:27 +0000</lastBuildDate>
+    <item>
+      <title>Script your remote raise: $120k counter</title>
+      <link>https://kubaik.github.io/script-your-remote-raise-120k-counter/</link>
+      <description>Land $120k remote offers from US companies with a 160-line Python script that normalizes cost-of-living, tax, and equity. Benchmarked on 37 real 2026 offers.</description>
+      <pubDate>Fri, 29 May 2026 21:10:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/script-your-remote-raise-120k-counter/</guid>
+    </item>
     <item>
       <title>Build this portfolio, not that one</title>
       <link>https://kubaik.github.io/build-this-portfolio-not-that-one/</link>
@@ -138,13 +145,6 @@
       <description>Get $120k remote salary from US firms — salary data, scripts, and negotiation templates to close the gap from lower-cost countries in 2026.</description>
       <pubDate>Fri, 29 May 2026 11:02:54 +0000</pubDate>
       <guid>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</guid>
-    </item>
-    <item>
-      <title>Choose push tech that won’t break prod</title>
-      <link>https://kubaik.github.io/choose-push-tech-that-wont-break-prod/</link>
-      <description>Cut API response time 60% with WebSocket push — RAM, CPU and cost numbers for WebSockets vs SSE vs polling in 2026</description>
-      <pubDate>Fri, 29 May 2026 10:42:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-push-tech-that-wont-break-prod/</guid>
     </item>
   </channel>
 </rss>
