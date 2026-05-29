@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 16:57:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 17:00:18 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: what tutorials never mention</title>
+      <link>https://kubaik.github.io/rag-in-prod-what-tutorials-never-mention/</link>
+      <description>Cut RAG pipeline latency 79% and GPU costs 67% with Redis caching, vector index tuning, and embedding model swap — the mistakes most tutorials don’t mention.</description>
+      <pubDate>Fri, 29 May 2026 17:00:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-never-mention/</guid>
+    </item>
     <item>
       <title>Do you need a vector DB?</title>
       <link>https://kubaik.github.io/do-you-need-a-vector-db/</link>
@@ -138,13 +145,6 @@
       <description>Cut onboarding time 35% with AI tools — Copilot Enterprise, Replit Agents, Continue.dev, Amazon Q CLI, and Codeium Enterprise. Real benchmarks, costs, and integration tips for 2026.</description>
       <pubDate>Fri, 29 May 2026 04:46:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-side-projects-survived-prod/</guid>
-    </item>
-    <item>
-      <title>Over-engineering: $24k/year mistake</title>
-      <link>https://kubaik.github.io/over-engineering-24kyear-mistake/</link>
-      <description>Cut AWS costs $8k/month by replacing Kafka, Flink, and Redis clusters with Node.js 20 LTS, BullMQ 4.14, and Redis 7.2 — the real cost of over-engineering and how to avoid it</description>
-      <pubDate>Fri, 29 May 2026 00:06:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-24kyear-mistake/</guid>
     </item>
   </channel>
 </rss>
