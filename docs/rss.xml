@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 16:39:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 16:55:08 +0000</lastBuildDate>
     <item>
       <title>Do you need a vector DB?</title>
       <link>https://kubaik.github.io/do-you-need-a-vector-db/</link>
@@ -140,11 +140,11 @@
       <guid>https://kubaik.github.io/ai-side-projects-survived-prod/</guid>
     </item>
     <item>
-      <title>Choose the right real-time protocol fast</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</link>
-      <description>Pick the right real-time protocol in 30 seconds: WebSocket vs SSE vs long polling benchmarks, latency, memory, and cost per 100k messages in 2026</description>
-      <pubDate>Fri, 29 May 2026 01:37:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</guid>
+      <title>Over-engineering: $24k/year mistake</title>
+      <link>https://kubaik.github.io/over-engineering-24kyear-mistake/</link>
+      <description>Cut AWS costs $8k/month by replacing Kafka, Flink, and Redis clusters with Node.js 20 LTS, BullMQ 4.14, and Redis 7.2 — the real cost of over-engineering and how to avoid it</description>
+      <pubDate>Fri, 29 May 2026 00:06:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-24kyear-mistake/</guid>
     </item>
   </channel>
 </rss>
