@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 00:02:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 00:06:22 +0000</lastBuildDate>
+    <item>
+      <title>Over-engineering: $24k/year mistake</title>
+      <link>https://kubaik.github.io/over-engineering-24kyear-mistake/</link>
+      <description>Cut AWS costs $8k/month by replacing Kafka, Flink, and Redis clusters with Node.js 20 LTS, BullMQ 4.14, and Redis 7.2 — the real cost of over-engineering and how to avoid it</description>
+      <pubDate>Fri, 29 May 2026 00:06:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-engineering-24kyear-mistake/</guid>
+    </item>
     <item>
       <title>Skip the vector DB unless you measure first</title>
       <link>https://kubaik.github.io/skip-the-vector-db-unless-you-measure-first/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech not for money — for ownership. Measure cycle time, automate compliance, deploy to prod first. 2026 data and tools inside.</description>
       <pubDate>Thu, 28 May 2026 17:15:52 +0000</pubDate>
       <guid>https://kubaik.github.io/why-senior-devs-flee-big-tech/</guid>
-    </item>
-    <item>
-      <title>Over-engineered until it broke</title>
-      <link>https://kubaik.github.io/over-engineered-until-it-broke/</link>
-      <description>Cut p99 latency 83% and AWS bill 72% by replacing Kafka Streams + RocksDB with PostgreSQL + Redis. The real cost of over-engineering in 2026.</description>
-      <pubDate>Thu, 28 May 2026 17:08:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineered-until-it-broke/</guid>
     </item>
   </channel>
 </rss>
