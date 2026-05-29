@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 12:31:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 12:33:25 +0000</lastBuildDate>
+    <item>
+      <title>AI coding wave: non-trads ship real products</title>
+      <link>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</link>
+      <description>Ship a production product in 2026 with AI tools that actually work. 45% latency drop, $120/month bill, and 8-hour setup time — the exact tools non-traditional devs use to go from prototype to profit.</description>
+      <pubDate>Fri, 29 May 2026 12:33:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</guid>
+    </item>
     <item>
       <title>Get $120k remote salary from US firms</title>
       <link>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</link>
@@ -138,13 +145,6 @@
       <description>Cut CI time 90% by dropping setup.py in 2026 — Hatch 1.25.0, PEP 665 locks, and the editable install trap most teams miss</description>
       <pubDate>Thu, 28 May 2026 22:29:40 +0000</pubDate>
       <guid>https://kubaik.github.io/python-packaging-in-2026-the-right-stack/</guid>
-    </item>
-    <item>
-      <title>Choose WebSockets vs SSE vs Polling in 2024</title>
-      <link>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</link>
-      <description>Compare WebSocket vs Server-Sent Events vs long-polling with Node 20 LTS and Redis 7.2 — latency benchmarks, cost data, and the exact mistake that cost $480/month.</description>
-      <pubDate>Thu, 28 May 2026 22:25:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</guid>
     </item>
   </channel>
 </rss>
