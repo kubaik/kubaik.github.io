@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 12:45:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 12:48:14 +0000</lastBuildDate>
+    <item>
+      <title>Pick Arc over Toptal in 2026</title>
+      <link>https://kubaik.github.io/pick-arc-over-toptal-in-2026/</link>
+      <description>Arc beats Andela and Toptal in 2026 payout speed and net earnings—median 5-day approval vs 14 and 23 days, 10 % fee vs 15–27 %, and $47 vs $35 effective hourly rate after cuts.</description>
+      <pubDate>Fri, 29 May 2026 12:47:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-arc-over-toptal-in-2026/</guid>
+    </item>
     <item>
       <title>Misconfigured pool size kills prod</title>
       <link>https://kubaik.github.io/misconfigured-pool-size-kills-prod/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote pay like a pro with Notion template — living-cost model, salary bands, margin calculator, and negotiation scripts for 2026. Save $25k+ per year.</description>
       <pubDate>Thu, 28 May 2026 23:48:26 +0000</pubDate>
       <guid>https://kubaik.github.io/leverage-local-costs-for-global-remote-pay/</guid>
-    </item>
-    <item>
-      <title>Remote portfolio hacks for African devs</title>
-      <link>https://kubaik.github.io/remote-portfolio-hacks-for-african-devs/</link>
-      <description>Cut job search time 50% with one portfolio shift — swap demos for deliverables that reduce cost, latency, or on-call load. Build a Terraform module, CLI, or GitHub Action that shows measurable impact and wins remote interviews in Africa.</description>
-      <pubDate>Thu, 28 May 2026 23:10:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-portfolio-hacks-for-african-devs/</guid>
     </item>
   </channel>
 </rss>
