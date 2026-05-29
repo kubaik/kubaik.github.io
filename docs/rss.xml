@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 10:58:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 11:03:09 +0000</lastBuildDate>
+    <item>
+      <title>Get $120k remote salary from US firms</title>
+      <link>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</link>
+      <description>Get $120k remote salary from US firms — salary data, scripts, and negotiation templates to close the gap from lower-cost countries in 2026.</description>
+      <pubDate>Fri, 29 May 2026 11:02:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</guid>
+    </item>
     <item>
       <title>Choose push tech that won’t break prod</title>
       <link>https://kubaik.github.io/choose-push-tech-that-wont-break-prod/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSocket vs Server-Sent Events vs long-polling with Node 20 LTS and Redis 7.2 — latency benchmarks, cost data, and the exact mistake that cost $480/month.</description>
       <pubDate>Thu, 28 May 2026 22:25:00 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websockets-vs-sse-vs-polling-in-2024/</guid>
-    </item>
-    <item>
-      <title>Vector DBs vs full-text: when AI search needs neither</title>
-      <link>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</link>
-      <description>Cut search latency 60% and infra cost 40% by skipping vector databases. Benchmarks for Qdrant 1.10 vs Redis 7.2 vs PostgreSQL 16 pg_embedding show when hybrid indexes beat vectors.</description>
-      <pubDate>Thu, 28 May 2026 22:13:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</guid>
     </item>
   </channel>
 </rss>
