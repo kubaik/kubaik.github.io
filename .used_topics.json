@@ -3,5 +3,6 @@
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
   "How vector databases work (and when you don't need one)",
   "5G and mobile-first backends: what changes when your users are always on cellular",
-  "Building a portfolio that gets you hired remotely from Africa"
+  "Building a portfolio that gets you hired remotely from Africa",
+  "RAG pipelines in production: what the tutorials skip"
 ]
