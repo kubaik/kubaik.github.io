@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 01:33:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 01:37:46 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time protocol fast</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</link>
+      <description>Pick the right real-time protocol in 30 seconds: WebSocket vs SSE vs long polling benchmarks, latency, memory, and cost per 100k messages in 2026</description>
+      <pubDate>Fri, 29 May 2026 01:37:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</guid>
+    </item>
     <item>
       <title>Over-engineering: $24k/year mistake</title>
       <link>https://kubaik.github.io/over-engineering-24kyear-mistake/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud carbon 28% without hurting speed — ARM migration, Redis 7.2 caching, and PostgreSQL 15 tuning for real-time apps serving 250k users in Latin America.</description>
       <pubDate>Thu, 28 May 2026 17:51:53 +0000</pubDate>
       <guid>https://kubaik.github.io/shrink-cloud-carbon-25-fast/</guid>
-    </item>
-    <item>
-      <title>Why senior devs flee big tech</title>
-      <link>https://kubaik.github.io/why-senior-devs-flee-big-tech/</link>
-      <description>Senior engineers quit big tech not for money — for ownership. Measure cycle time, automate compliance, deploy to prod first. 2026 data and tools inside.</description>
-      <pubDate>Thu, 28 May 2026 17:15:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-senior-devs-flee-big-tech/</guid>
     </item>
   </channel>
 </rss>

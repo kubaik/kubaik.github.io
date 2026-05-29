@@ -5,5 +5,6 @@
   "Negotiating a remote salary when you're in a lower-cost country",
   "5G and mobile-first backends: what changes when your users are always on cellular",
   "How vector databases work (and when you don't need one)",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture"
+  "The real cost of over-engineering: when simplicity beats the fancy architecture",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
