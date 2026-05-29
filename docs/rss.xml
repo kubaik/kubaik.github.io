@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 21:27:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 21:31:25 +0000</lastBuildDate>
+    <item>
+      <title>WebSockets vs SSE vs long-polling: which fits?</title>
+      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</link>
+      <description>Benchmark WebSocket vs SSE vs long-polling in 2026 — median latency, cost, and the exact t3.small numbers you can copy into your RFC.</description>
+      <pubDate>Fri, 29 May 2026 21:31:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</guid>
+    </item>
     <item>
       <title>Script your remote raise: $120k counter</title>
       <link>https://kubaik.github.io/script-your-remote-raise-120k-counter/</link>
@@ -138,13 +145,6 @@
       <description>Ship a production product in 2026 with AI tools that actually work. 45% latency drop, $120/month bill, and 8-hour setup time — the exact tools non-traditional devs use to go from prototype to profit.</description>
       <pubDate>Fri, 29 May 2026 12:33:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-wave-non-trads-ship-real-products/</guid>
-    </item>
-    <item>
-      <title>Get $120k remote salary from US firms</title>
-      <link>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</link>
-      <description>Get $120k remote salary from US firms — salary data, scripts, and negotiation templates to close the gap from lower-cost countries in 2026.</description>
-      <pubDate>Fri, 29 May 2026 11:02:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/get-120k-remote-salary-from-us-firms/</guid>
     </item>
   </channel>
 </rss>
