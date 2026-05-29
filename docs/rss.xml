@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 05:09:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 05:12:16 +0000</lastBuildDate>
+    <item>
+      <title>Charge $150/hr without burning out</title>
+      <link>https://kubaik.github.io/charge-150hr-without-burning-out/</link>
+      <description>Learn the real numbers behind freelance developer rates in 2026 — taxes, tools, and scope creep eat 40% of quoted rates. Build a dashboard that tracks your actual earnings per hour.</description>
+      <pubDate>Fri, 29 May 2026 05:12:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/charge-150hr-without-burning-out/</guid>
+    </item>
     <item>
       <title>Connection pools are too small now</title>
       <link>https://kubaik.github.io/connection-pools-are-too-small-now/</link>
@@ -138,13 +145,6 @@
       <description>African devs waste months building GitHub profiles that get ignored. A 500-word post-mortem, a Locust 2.20 report, or a runbook beats 10k stars in 2026 — real production artifacts get you hired remotely.</description>
       <pubDate>Thu, 28 May 2026 19:50:12 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-your-portfolio-sucks-and-how-to-fix-it/</guid>
-    </item>
-    <item>
-      <title>Stop guessing pool size—here&apos;s the math</title>
-      <link>https://kubaik.github.io/stop-guessing-pool-sizeheres-the-math/</link>
-      <description>Cut API response time 60% with PostgreSQL connection pooling — why the max pool size of 10 fails in 2026, how to calculate the right size, and the pgBouncer trick most teams miss.</description>
-      <pubDate>Thu, 28 May 2026 18:29:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-guessing-pool-sizeheres-the-math/</guid>
     </item>
   </channel>
 </rss>
