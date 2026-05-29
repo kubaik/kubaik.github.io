@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 23:07:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 23:10:29 +0000</lastBuildDate>
+    <item>
+      <title>Simplicity wins: when over-engineering backfires</title>
+      <link>https://kubaik.github.io/simplicity-wins-when-over-engineering-backfires/</link>
+      <description>Cut monthly infra costs 96% by replacing Kafka + Redis with a simple HTTP service — latency dropped from 450 ms to 42 ms and on-call pages from 12 to 2. The real cost of over-engineering exposed.</description>
+      <pubDate>Fri, 29 May 2026 23:10:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/simplicity-wins-when-over-engineering-backfires/</guid>
+    </item>
     <item>
       <title>Multi-agent systems in prod: the ugly bits</title>
       <link>https://kubaik.github.io/multi-agent-systems-in-prod-the-ugly-bits/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 97% and infra costs 94% by removing over-engineering. Learn the exact steps teams waste months on in 2026.</description>
       <pubDate>Fri, 29 May 2026 14:24:23 +0000</pubDate>
       <guid>https://kubaik.github.io/simple-code-beats-complex-architecture/</guid>
-    </item>
-    <item>
-      <title>Pay your rent: remote salary calculator 2026</title>
-      <link>https://kubaik.github.io/pay-your-rent-remote-salary-calculator-2026/</link>
-      <description>Turn a &apos;market rate&apos; into a livable salary when you&apos;re in a lower-cost country — with a free calculator, negotiation emails, and real 2026 fee data for Wise, Payoneer, and Deel.</description>
-      <pubDate>Fri, 29 May 2026 13:57:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-your-rent-remote-salary-calculator-2026/</guid>
     </item>
   </channel>
 </rss>
