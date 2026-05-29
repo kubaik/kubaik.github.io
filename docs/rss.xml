@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 19:30:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 19:33:58 +0000</lastBuildDate>
+    <item>
+      <title>AI skills salary hack: prompt engineers vs ML infra</title>
+      <link>https://kubaik.github.io/ai-skills-salary-hack-prompt-engineers-vs-ml-infra/</link>
+      <description>Prompt engineers make USD 150k while ML infra engineers make USD 195k in 2026. See the exact skills, benchmarks, and infra tasks that move the needle — plus the mistake that cost one team USD 8.4k.</description>
+      <pubDate>Fri, 29 May 2026 19:33:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-salary-hack-prompt-engineers-vs-ml-infra/</guid>
+    </item>
     <item>
       <title>Push live updates cheaper without WebSockets</title>
       <link>https://kubaik.github.io/push-live-updates-cheaper-without-websockets/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile API latency 60% — connection pool tuning, HTTP/3, Redis TTLs, and the cache stampede mistake most teams miss.</description>
       <pubDate>Fri, 29 May 2026 08:57:23 +0000</pubDate>
       <guid>https://kubaik.github.io/cellular-backends-what-changes-with-5g-users/</guid>
-    </item>
-    <item>
-      <title>Vector DBs: when you actually need them</title>
-      <link>https://kubaik.github.io/vector-dbs-when-you-actually-need-them/</link>
-      <description>Cut vector search costs 26% with Postgres pgvector 0.7.0 — hardware sizing, payload filtering traps, and the 50 GB RAM rule every team should enforce in 2026.</description>
-      <pubDate>Fri, 29 May 2026 06:42:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs-when-you-actually-need-them/</guid>
     </item>
   </channel>
 </rss>
