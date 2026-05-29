@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 22:51:18 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 22:55:49 +0000</lastBuildDate>
+    <item>
+      <title>2026: Best dev platforms for African devs</title>
+      <link>https://kubaik.github.io/2026-best-dev-platforms-for-african-devs/</link>
+      <description>Toptal’s US-based support was faster, but their developers in Accra were using shared VPS instances with 200ms latency to our API.</description>
+      <pubDate>Fri, 29 May 2026 22:55:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-best-dev-platforms-for-african-devs/</guid>
+    </item>
     <item>
       <title>Simplicity won the race: how we killed a microservice</title>
       <link>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</link>
@@ -138,13 +145,6 @@
       <description>Arc beats Andela and Toptal in 2026 payout speed and net earnings—median 5-day approval vs 14 and 23 days, 10 % fee vs 15–27 %, and $47 vs $35 effective hourly rate after cuts.</description>
       <pubDate>Fri, 29 May 2026 12:47:58 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-arc-over-toptal-in-2026/</guid>
-    </item>
-    <item>
-      <title>Misconfigured pool size kills prod</title>
-      <link>https://kubaik.github.io/misconfigured-pool-size-kills-prod/</link>
-      <description>Cut database connection timeouts 80% with the right pool size formula — why CPU cores × 2 + 1 fails and what to use instead with PostgreSQL 16 and Node.js 20 LTS examples.</description>
-      <pubDate>Fri, 29 May 2026 12:45:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/misconfigured-pool-size-kills-prod/</guid>
     </item>
   </channel>
 </rss>
