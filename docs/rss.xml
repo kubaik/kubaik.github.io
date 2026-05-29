@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 05:05:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 05:09:11 +0000</lastBuildDate>
+    <item>
+      <title>Connection pools are too small now</title>
+      <link>https://kubaik.github.io/connection-pools-are-too-small-now/</link>
+      <description>Cut database latency 40% by setting connection pool size to 80% of max_connections — not the old (core_count * 2) rule. Evidence from PostgreSQL, MySQL, and Redis in 2026.</description>
+      <pubDate>Fri, 29 May 2026 05:08:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/connection-pools-are-too-small-now/</guid>
+    </item>
     <item>
       <title>RAG in prod? Skip the hello world</title>
       <link>https://kubaik.github.io/rag-in-prod-skip-the-hello-world/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with PostgreSQL connection pooling — why the max pool size of 10 fails in 2026, how to calculate the right size, and the pgBouncer trick most teams miss.</description>
       <pubDate>Thu, 28 May 2026 18:29:55 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-guessing-pool-sizeheres-the-math/</guid>
-    </item>
-    <item>
-      <title>Non-coders launch products with AI stacks</title>
-      <link>https://kubaik.github.io/non-coders-launch-products-with-ai-stacks/</link>
-      <description>Cost under load: I benchmarked each stack at 1,000 concurrent users using k6.</description>
-      <pubDate>Thu, 28 May 2026 18:02:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/non-coders-launch-products-with-ai-stacks/</guid>
     </item>
   </channel>
 </rss>
