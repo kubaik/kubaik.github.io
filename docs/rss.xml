@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 23:45:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 23:47:32 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote salary without the bank tax</title>
+      <link>https://kubaik.github.io/negotiate-remote-salary-without-the-bank-tax/</link>
+      <description>Land remote jobs at US rates from anywhere — concrete numbers, fee calculators, and negotiation scripts that cut through the noise.</description>
+      <pubDate>Fri, 29 May 2026 23:47:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-salary-without-the-bank-tax/</guid>
+    </item>
     <item>
       <title>Simplicity wins: when over-engineering backfires</title>
       <link>https://kubaik.github.io/simplicity-wins-when-over-engineering-backfires/</link>
@@ -138,13 +145,6 @@
       <description>Pick realtime tool in minutes: SSE, WebSockets, or polling — concrete latency, cost, and CPU numbers for 2026 workloads</description>
       <pubDate>Fri, 29 May 2026 16:33:06 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-realtime-protocol-fast/</guid>
-    </item>
-    <item>
-      <title>Simple code beats complex architecture</title>
-      <link>https://kubaik.github.io/simple-code-beats-complex-architecture/</link>
-      <description>Cut API response time 97% and infra costs 94% by removing over-engineering. Learn the exact steps teams waste months on in 2026.</description>
-      <pubDate>Fri, 29 May 2026 14:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/simple-code-beats-complex-architecture/</guid>
     </item>
   </channel>
 </rss>
