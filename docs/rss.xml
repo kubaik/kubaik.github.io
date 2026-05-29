@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 10:38:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 10:43:07 +0000</lastBuildDate>
+    <item>
+      <title>Choose push tech that won’t break prod</title>
+      <link>https://kubaik.github.io/choose-push-tech-that-wont-break-prod/</link>
+      <description>Cut API response time 60% with WebSocket push — RAM, CPU and cost numbers for WebSockets vs SSE vs polling in 2026</description>
+      <pubDate>Fri, 29 May 2026 10:42:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-push-tech-that-wont-break-prod/</guid>
+    </item>
     <item>
       <title>Scale kills RAG pipelines fast</title>
       <link>https://kubaik.github.io/scale-kills-rag-pipelines-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut search latency 60% and infra cost 40% by skipping vector databases. Benchmarks for Qdrant 1.10 vs Redis 7.2 vs PostgreSQL 16 pg_embedding show when hybrid indexes beat vectors.</description>
       <pubDate>Thu, 28 May 2026 22:13:48 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-vs-full-text-when-ai-search-needs-neither/</guid>
-    </item>
-    <item>
-      <title>2026 AI skills that pay (and 3 that don’t)</title>
-      <link>https://kubaik.github.io/2026-ai-skills-that-pay-and-3-that-dont/</link>
-      <description>In 2026, vector search skills pay 25–45% more than prompt engineering. See benchmarks from Milvus 2.4 and LangChain 0.2, plus salary data from 87,000 job postings.</description>
-      <pubDate>Thu, 28 May 2026 21:06:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-skills-that-pay-and-3-that-dont/</guid>
     </item>
   </channel>
 </rss>
