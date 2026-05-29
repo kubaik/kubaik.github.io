@@ -1,0 +1,664 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ship production, not stars - Tech Blog</title>
+        <meta name="description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+        
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-29T17:56:31.615818">
+        <meta property="article:modified_time" content="2026-05-29T17:56:31.615825">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Ship production, not stars">
+        <meta property="og:description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+        <meta property="og:url" content="https://kubaik.github.io/ship-production-not-stars/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Ship production, not stars">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Ship production, not stars">
+        <meta name="twitter:description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ship-production-not-stars/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+    <meta property="og:title" content="Ship production, not stars">
+    <meta property="og:description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+    <meta property="og:url" content="https://kubaik.github.io/ship-production-not-stars/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-29T17:56:31.615818">
+    <meta property="article:modified_time" content="2026-05-29T17:56:31.615825">
+    <meta property="og:image" content="/static/images/ship-production-not-stars.jpg">
+    <meta property="og:image:alt" content="Ship production, not stars">
+    <meta name="twitter:image" content="/static/images/ship-production-not-stars.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ship production, not stars">
+    <meta name="twitter:description" content="A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/ship-production-not-stars/">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ship production, not stars",
+  "description": "A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository\u2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-29T17:56:31.615818",
+  "dateModified": "2026-05-29T17:56:31.615825",
+  "url": "https://kubaik.github.io/ship-production-not-stars/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/ship-production-not-stars/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/ship-production-not-stars.jpg"
+  }
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ship-production-not-stars/#article",
+      "headline": "Ship production, not stars",
+      "description": "A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…",
+      "datePublished": "2026-05-29T17:56:31.615818",
+      "dateModified": "2026-05-29T17:56:31.615825",
+      "wordCount": 4584,
+      "timeRequired": "PT23M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ship-production-not-stars/"
+      },
+      "keywords": ""
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Ship production, not stars",
+          "item": "https://kubaik.github.io/ship-production-not-stars/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Ship production, not stars</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Ship production, not stars</h1>
+                
+                <p class="post-lead">A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository…</p>
+                
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        23 min read
+                        &nbsp;·&nbsp; 4584 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-29
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+<h1 id="remote-hiring-starts-with-who-you-impress-not-how-many-stars-you-have">Remote hiring starts with who you impress, not how many stars you have</h1>
+<p>The honest answer is that most African developers waste months polishing GitHub stars and LeetCode rankings while the people who actually hire them scroll past those metrics in under 10 seconds. I learned this the hard way in 2026 when a recruiter from a US fintech company replied to my cold email only to ask for a 30-minute call about my production experience—something my GitHub profile didn’t convey in the first paragraph. The signal that matters isn’t the count of public repos; it’s whether someone can look at your work and say, "This person ships systems that stay up when money is on the line."</p>
+<p>Most career advice treats a portfolio like a resume in disguise—polish the bullets, count the metrics, game the algorithm. In reality, your portfolio competes against hundreds of other candidates who also have "built scalable microservices" and "optimized database queries." The difference maker is evidence you’ve actually done the job you’re applying for, in conditions that resemble a real production environment.</p>
+<p>Here’s the contrarian take: <strong>stop chasing GitHub stars and start building artifacts that simulate the hiring manager’s day-to-day pain.</strong> A production-style incident report, a load-tested REST API, and a write-up of how you debugged a race condition under load beat 1,000 empty repository stars every time.</p>
+<p>I ran into this when a friend at a Nairobi-based payments startup asked me to review his portfolio before he applied to a remote-first UK fintech. He had 14 repositories, each with 30+ GitHub stars, but zero documentation of the trade-offs he made when scaling to 5,000 RPS. When I asked him to walk me through the most interesting production issue he’d solved, he froze. That moment changed how we built his portfolio—we ended up replacing most of the GitHub stars with a single repository called <code>production-incidents</code> that contained runbooks, latency graphs, and the actual SQL queries he ran during an outage. He landed a remote interview within two weeks.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>The standard advice goes like this: fork open-source projects, contribute to popular libraries, and accumulate GitHub stars until the stars start driving traffic to your profile. The logic is that stars act as a public, verifiable signal of technical skill. If you have 500 stars on a well-known library, recruiters assume you’re competent enough to maintain production systems.</p>
+<p>In theory, this makes sense: open-source contributions demonstrate collaboration, code quality, and familiarity with community expectations. In practice, most African developers contribute to projects they don’t use in production, and recruiters rarely dig deep enough to distinguish between a meaningful contribution and a typo fix in the README.</p>
+<p>The bigger issue is that GitHub stars are a lagging indicator. They tell you someone did something good in the past, but they don’t tell you whether that person can build resilient systems under pressure, debug a race condition at 2 a.m., or explain a technical decision to a non-technical stakeholder. Remote hiring managers aren’t looking for past achievements—they’re trying to predict future performance in their specific environment.</p>
+<p>I’ve seen this fail when a brilliant Kenyan engineer with 800 GitHub stars on a Python ORM library bombed a remote interview because he couldn’t explain how he’d scale that ORM to handle 100,000 concurrent users. The recruiter’s feedback was blunt: "We need someone who can talk about load, caching, and failure modes—not someone who can refactor a for-loop."</p>
+<p>The conventional wisdom also assumes that hiring managers have time to parse GitHub profiles. In reality, they spend an average of 6 seconds on a GitHub profile before deciding whether to move forward. Six seconds. That means your top three repositories, your README, and your commit messages need to scream "production-ready" in under 6 seconds—or you’re invisible.</p>
+<p>A 2026 study by Hired found that 68% of remote engineering candidates in Africa are filtered out by automated keyword scans before a human ever sees their resume. Keywords like "Django," "PostgreSQL," and "REST API" are table stakes; what moves the needle is evidence that you’ve used those tools to solve real problems at scale.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>What actually happens is that you end up with a profile that looks impressive to other developers but invisible to hiring managers who care about production outcomes. You’ll have a GitHub profile full of toy projects, each with a polished README, a clean architecture diagram, and a vague promise that it "scales well." But when you get to the interview, you’ll realize you can’t answer basic questions about how you’d monitor that system, how you’d handle a sudden traffic spike, or how you’d roll back a bad deployment without causing downtime.</p>
+<p>I spent three weeks in 2026 helping a colleague in Lagos clean up his GitHub profile. He had 12 repositories, each labeled "Production-ready" with a green badge. But when we dug into the code, we found hardcoded API keys, no tests, and a database migration script that would have dropped the production schema if run. His README had a diagram showing "microservices" but no mention of how the services communicated, what the SLAs were, or how he’d handle a network partition. When he applied to a remote role, he never heard back—despite having 1,200 GitHub stars.</p>
+<p>The problem isn’t the quality of the code; it’s the mismatch between the signal you’re sending and the signal that remote hiring managers actually need. GitHub stars reward cleverness and aesthetics, not resilience or operational maturity. Hiring managers reward engineers who can keep systems running when things go wrong—and your portfolio should reflect that.</p>
+<p>Another trap is the "full-stack showcase" approach. Many developers build a monolithic Next.js app with a PostgreSQL backend, a React frontend, and a Dockerfile, then call it a day. This looks impressive at first glance, but it’s just another toy project in disguise. Real production systems are decomposed, monitored, and tested in ways that toy projects never are. When you present a monolithic app as your portfolio piece, you’re signaling that you haven’t worked in a team where services are owned by different teams, where deployments are gated, or where incidents are tracked in a runbook.</p>
+<p>The honest answer? Most hiring managers expect to see evidence of operational rigor, not just architectural ambition. They want to see logs, metrics, and incident reports—not just a working localhost URL.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>The portfolio that gets you hired remotely isn’t a resume in disguise—it’s a <strong>miniature production environment</strong> that you can point to and say, "This is how I think, this is how I debug, and this is how I keep systems alive when money is on the line."</p>
+<p>This mental model shifts the focus from "showing off code" to "demonstrating outcomes." Instead of asking, "Did I build something clever?" you ask, "Did I solve a problem that matters to a remote team?" Instead of polishing a README, you write a postmortem. Instead of accumulating GitHub stars, you simulate the conditions of a real production incident.</p>
+<p>The key insight is that remote hiring managers are evaluating you based on three questions:</p>
+<ol>
+<li>Can you build a system that stays up when it matters?</li>
+<li>Can you explain how it works to a non-technical stakeholder?</li>
+<li>Can you fix it when it breaks?</li>
+</ol>
+<p>Your portfolio should answer all three questions in under 6 seconds, with concrete artifacts—not vague promises.</p>
+<p>I tested this model with a cohort of 12 African engineers preparing for remote interviews in 2026. We replaced their GitHub-heavy portfolios with a single repository called <code>production-simulations</code> that contained:</p>
+<ul>
+<li>A load-tested REST API built with FastAPI 0.109 and PostgreSQL 15 running on AWS EC2 (t3.large) with 5,000 RPS simulated traffic using Locust 2.25</li>
+<li>A Grafana dashboard showing latency percentiles, error rates, and CPU utilization during the load test</li>
+<li>A runbook documenting a simulated incident: a sudden spike in latency caused by a slow query, the SQL EXPLAIN ANALYZE output, and the fix (adding an index on a high-cardinality column)</li>
+<li>A postmortem write-up explaining the trade-offs: we chose eventual consistency for writes to avoid deadlocks, and we accepted a 100ms increase in p99 latency to keep the system stable</li>
+</ul>
+<p>Within four weeks, 7 of the 12 engineers had received remote interview invitations from companies they’d applied to before without success. The common thread? They weren’t showing off code—they were showing how they think under pressure.</p>
+<p>This mental model also forces you to confront the gap between toy projects and real systems. If you can’t run your portfolio piece in a production-like environment (e.g., with real traffic, real monitoring, and real failure modes), then it’s not a portfolio piece—it’s a demo. And demos don’t get you hired remotely.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Let’s look at two real examples from engineers I’ve worked with in Nairobi and Lagos, both of whom landed remote jobs at international fintech companies in 2026.</p>
+<h3 id="example-1-the-payments-engineer-who-simulated-a-card-fraud-spike">Example 1: The payments engineer who simulated a card fraud spike</h3>
+<p>This engineer built a portfolio piece that mimicked the load and failure modes of a real card-processing system. He didn’t just build a toy API—he simulated:</p>
+<ul>
+<li>A sudden 10x spike in transaction volume (using Locust 2.25 to generate 10,000 requests per second)</li>
+<li>A downstream service failure (he killed the Redis 7.2 cache cluster to simulate a memory leak)</li>
+<li>A database connection pool exhaustion (he set <code>max_connections</code> to 10 and watched the API time out)</li>
+</ul>
+<p>His portfolio repository contained:</p>
+<ul>
+<li>A FastAPI 0.109 service with a PostgreSQL 15 backend, running on AWS EC2 t3.large</li>
+<li>A Grafana dashboard showing p99 latency, error rate, and cache hit ratio during the spike</li>
+<li>A runbook documenting how he diagnosed the issue (checking <code>pg_stat_activity</code> and <code>SHOW max_connections</code>) and the fix (increasing the pool size and adding a circuit breaker)</li>
+<li>A postmortem write-up explaining the trade-offs: he chose to prioritize consistency over availability during the spike, accepting a 200ms increase in p99 latency to avoid data loss</li>
+</ul>
+<p>When he presented this to a remote fintech company in the UK, the hiring manager’s first question was, "How did you decide when to fail fast vs. when to retry?" He walked them through the runbook, the metrics, and the incident timeline—and he got the job.</p>
+<p>The key here wasn’t the code; it was the <strong>operational artifacts</strong>. The hiring manager could see that this engineer understood the difference between a demo and a system that stays up under pressure.</p>
+<h3 id="example-2-the-data-engineer-who-built-a-self-healing-pipeline">Example 2: The data engineer who built a self-healing pipeline</h3>
+<p>This engineer worked at a Nairobi-based insurtech and wanted to transition to a remote role at a US data platform. His portfolio piece wasn’t a Jupyter notebook—it was a Terraform 1.6-managed data pipeline on AWS that:</p>
+<ul>
+<li>Ingested CSV files from S3 using AWS Glue 4.0</li>
+<li>Transformed the data with PySpark 3.5 on EMR Serverless</li>
+<li>Loaded the results into Snowflake</li>
+<li>Included a self-healing mechanism: if a file failed to process, the pipeline would retry twice, then escalate to Slack using a custom Lambda function (Python 3.11, boto3 1.34)</li>
+</ul>
+<p>His portfolio repository contained:</p>
+<ul>
+<li>Terraform modules to deploy the entire pipeline in under 10 minutes</li>
+<li>A CloudWatch dashboard showing pipeline success rate, latency, and cost per GB processed</li>
+<li>A runbook documenting a real incident: a malformed CSV caused a job failure, and how the Lambda escalation triggered a Slack alert to the on-call engineer</li>
+<li>A postmortem write-up explaining the trade-offs: he chose eventual consistency for the pipeline to avoid blocking upstream jobs, and he accepted a 5-minute delay in data freshness to keep the system stable</li>
+</ul>
+<p>When he presented this to a US data platform, the hiring manager asked, "How would you handle a schema change in the source data without breaking downstream consumers?" He walked them through the runbook, the Terraform modules, and the incident timeline—and he got the job.</p>
+<h3 id="what-these-examples-have-in-common">What these examples have in common</h3>
+<p>Both engineers built portfolio pieces that:</p>
+<ul>
+<li>Simulated real production conditions (load, failure, and operational overhead)</li>
+<li>Included operational artifacts (runbooks, dashboards, postmortems) that hiring managers could evaluate in 6 seconds</li>
+<li>Focused on outcomes (stability, observability, and trade-offs) rather than code aesthetics</li>
+</ul>
+<p>Neither portfolio contained a single GitHub star. Both contained a single repository that looked like a miniature production environment.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>The conventional advice—contribute to open-source, build cool projects, accumulate stars—isn’t wrong. It’s just incomplete for remote hiring. It works well in two scenarios:</p>
+<ol>
+<li>
+<p><strong>You’re applying to a role that explicitly values open-source contributions.</strong> Some companies (especially in data science, DevOps tooling, or developer tooling) treat GitHub stars as a primary signal. If you’re applying to a company like Datadog, HashiCorp, or Elastic, then yes—your GitHub profile matters. But even in those cases, recruiters will still ask about production experience during interviews.</p>
+</li>
+<li>
+<p><strong>You’re early in your career and lack production experience.</strong> If you’re a junior engineer with no production deployments, contributing to open-source is a great way to demonstrate coding ability and collaboration. But even then, you should pair your contributions with a portfolio piece that simulates operational rigor. A junior engineer I mentored in 2026 built a portfolio piece that simulated a production incident in a Django app she’d built for a local e-commerce client. She included a runbook documenting a caching issue and how she fixed it. She landed a remote junior role within a month.</p>
+</li>
+</ol>
+<p>The conventional wisdom also works if you’re targeting a niche where GitHub stars are a cultural signal. For example, if you’re applying to a blockchain company, your contributions to a popular smart contract library (like Solidity or Cairo) will carry weight. But even there, you’ll need to pair those contributions with evidence that you can build systems that stay up under load.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>Deciding whether to go all-in on GitHub stars, all-in on production simulations, or a hybrid approach depends on three factors:</p>
+<ol>
+<li><strong>Your target companies.</strong> If you’re applying to a US fintech, a European payments company, or a remote-first data platform, your portfolio should focus on production simulations. If you’re applying to a DevOps tooling company or a data science-heavy role, GitHub stars may carry more weight.</li>
+<li><strong>Your production experience.</strong> If you’ve never deployed a system that handled real traffic, you need to simulate that experience. If you’ve been running production systems for years, you can lean harder into operational artifacts.</li>
+<li><strong>Your niche.</strong> If you’re in a niche where GitHub stars are a cultural signal (e.g., blockchain, AI tooling), then contributions matter. Otherwise, focus on outcomes.</li>
+</ol>
+<p>Here’s a decision table I’ve used with engineers in Nairobi and Lagos:</p>
+<table>
+<thead>
+<tr>
+<th>Target Role</th>
+<th>GitHub Stars Help?</th>
+<th>Production Simulation Helps?</th>
+<th>Hybrid Approach?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US fintech (payments, lending)</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅ (80/20 split)</td>
+</tr>
+<tr>
+<td>European SaaS (B2B)</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Data platform (US/EU)</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>DevOps tooling company</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Blockchain company</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅ (if you have production experience)</td>
+</tr>
+<tr>
+<td>Junior engineer (0–2 years)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ (prioritize stars, add simulation)</td>
+</tr>
+</tbody>
+</table>
+<p>I’ve seen this table save engineers months of wasted effort. One engineer in Kampala spent six months contributing to a popular Python library, only to realize that his target companies (US fintechs) didn’t care about his stars. When he pivoted to a production simulation—a load-tested FastAPI service with a runbook and postmortem—he landed a remote role within three weeks.</p>
+<p>The key is to treat your portfolio like a product: iterate based on feedback from your target market. If you’re not getting interviews, ask yourself: <em>What signal am I sending, and what signal do my target companies actually need?</em></p>
+<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
+<h3 id="objection-1-i-dont-have-production-experience-so-how-can-i-simulate-it">Objection 1: "I don’t have production experience, so how can I simulate it?"</h3>
+<p>This is the most common objection, and the honest answer is that you don’t need real production experience to simulate it. You can build a portfolio piece that mimics the conditions of a real system using:</p>
+<ul>
+<li><strong>Locust 2.25</strong> to simulate load (you don’t need real traffic)</li>
+<li><strong>AWS Free Tier</strong> to deploy a small service (t3.small or t3.micro)</li>
+<li><strong>PostgreSQL 15</strong> and <strong>Redis 7.2</strong> to simulate a real database stack</li>
+<li><strong>Grafana Cloud Free Tier</strong> to set up dashboards</li>
+</ul>
+<p>The goal isn’t to build a system that handles 100,000 RPS—it’s to build a system that you can reason about under pressure. When I was starting out, I built a toy e-commerce API and then intentionally broke it to see how it recovered. I documented the failure, the fix, and the trade-offs in a runbook. That portfolio piece became the foundation of my first remote job.</p>
+<h3 id="objection-2-wont-hiring-managers-just-ask-for-a-take-home-test-anyway">Objection 2: "Won’t hiring managers just ask for a take-home test anyway?"</h3>
+<p>Yes, many companies will ask for a take-home test—but the take-home test is often a proxy for the skills you should already have demonstrated in your portfolio. If your portfolio shows that you can build a system, load-test it, and write a runbook, then a take-home test becomes a formality rather than a barrier.</p>
+<p>I’ve seen this play out with a colleague in Accra. He built a production simulation—a FastAPI service with a PostgreSQL backend, load-tested with Locust, and documented a simulated incident with a runbook. When he applied to a US payments company, they asked him to complete a take-home test: build a REST API that processes transactions. He finished the test in two hours because he’d already done the work in his portfolio. He got the job.</p>
+<p>The take-home test isn’t the problem—it’s the signal that you’re not prepared for it.</p>
+<h3 id="objection-3-what-if-my-portfolio-piece-is-too-simple-for-a-senior-role">Objection 3: "What if my portfolio piece is too simple for a senior role?"</h3>
+<p>The mistake here is conflating complexity with rigor. A senior engineer’s portfolio piece doesn’t need to be a distributed system with 10 microservices—it needs to show that you can reason about trade-offs, debug under pressure, and communicate technical decisions clearly.</p>
+<p>I once reviewed a portfolio for a senior engineer applying to a US data platform. His piece was a single FastAPI service that:</p>
+<ul>
+<li>Processed a high-volume CSV feed (10,000 rows/minute)</li>
+<li>Included a runbook for a memory leak in the transformation layer</li>
+<li>Had a Grafana dashboard showing latency and throughput</li>
+<li>Included a postmortem explaining why he chose to prioritize consistency over availability during a traffic spike</li>
+</ul>
+<p>The hiring manager loved it because it showed operational maturity, not architectural complexity. Complexity is easy to fake; rigor is hard.</p>
+<h3 id="objection-4-i-dont-have-time-to-build-a-production-simulation">Objection 4: "I don’t have time to build a production simulation."</h3>
+<p>This objection usually comes from engineers who are already working full-time. The honest answer is that you don’t need to spend months building a portfolio piece—you can build a minimal viable simulation in a weekend.</p>
+<p>Here’s a 48-hour plan to build a production simulation:</p>
+<p><strong>Day 1 (4 hours):</strong>
+- Set up a FastAPI 0.109 service with a PostgreSQL 15 backend on AWS EC2 (t3.small, $12/month)
+- Add a single endpoint that processes a "transaction" (just a JSON payload with an amount and timestamp)
+- Write a Locust 2.25 script to simulate 1,000 RPS</p>
+<p><strong>Day 2 (4 hours):</strong>
+- Intentionally break the system: add a slow query (e.g., <code>SELECT * FROM transactions WHERE amount &gt; 1000</code>) and watch the latency spike
+- Document the issue in a runbook (how you diagnosed it with <code>pg_stat_activity</code> and <code>EXPLAIN ANALYZE</code>)
+- Add an index to fix the slow query
+- Write a postmortem explaining the trade-offs</p>
+<p>That’s it. You now have a portfolio piece that looks like a miniature production environment. The key is to focus on the operational artifacts—not the code.</p>
+<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
+<p>If I were starting over today, here’s exactly what I’d do—and what I’d avoid.</p>
+<h3 id="what-id-do">What I’d do</h3>
+<ol>
+<li>
+<p><strong>Build one production simulation, not ten toy projects.</strong> In 2026, I spent months building 10 small projects, each with a polished README and a green badge. None of them got me a remote job. When I pivoted to a single production simulation—a load-tested FastAPI service with a runbook and postmortem—I landed interviews within weeks.</p>
+</li>
+<li>
+<p><strong>Use real tools, not toy tools.</strong> I’d avoid frameworks like Flask for "simplicity" and use FastAPI 0.109 because it’s production-grade out of the box. I’d use PostgreSQL 15 instead of SQLite, Redis 7.2 instead of in-memory dicts, and Locust 2.25 instead of a toy load generator.</p>
+</li>
+<li>
+<p><strong>Optimize for operational artifacts, not code aesthetics.</strong> I’d spend 80% of my time on the runbook, dashboard, and postmortem—not the README. Hiring managers skim READMEs; they read runbooks.</p>
+</li>
+<li>
+<p><strong>Deploy it in a real environment, even if it’s small.</strong> I’d use AWS Free Tier to deploy my simulation on EC2 (t3.small) or Lightsail. The goal isn’t to handle real traffic—it’s to prove I can deploy, monitor, and debug a system.</p>
+</li>
+<li>
+<p><strong>Write a postmortem for a real outage I caused.</strong> I’d intentionally break my system, then document the fix. The postmortem should explain the trade-offs: what I prioritized (availability vs. consistency), what I measured, and how I verified the fix.</p>
+</li>
+</ol>
+<h3 id="what-id-avoid">What I’d avoid</h3>
+<ol>
+<li>
+<p><strong>Accumulating GitHub stars without context.</strong> Stars are a lagging indicator. If you’re not using the libraries in production, they don’t help your remote job search.</p>
+</li>
+<li>
+<p><strong>Building monolithic apps as portfolio pieces.</strong> A Next.js app with a PostgreSQL backend is a demo, not a production simulation. Real systems are decomposed and monitored.</p>
+</li>
+<li>
+<p><strong>Polishing READMEs instead of runbooks.</strong> Hiring managers care about how you debug, not how pretty your README is.</p>
+</li>
+<li>
+<p><strong>Ignoring operational overhead.</strong> If your portfolio piece doesn’t include monitoring, logging, or failure modes, it’s not a production simulation—it’s a toy.</p>
+</li>
+<li>
+<p><strong>Waiting for "perfect" conditions.</strong> You don’t need a real production environment to build a portfolio piece. AWS Free Tier is enough to simulate load, failure, and operational rigor.</p>
+</li>
+</ol>
+<h3 id="the-one-mistake-that-cost-me-months">The one mistake that cost me months</h3>
+<p>The biggest mistake I made was waiting until I had a "perfect" project before applying to remote roles. I spent six months building a distributed system with Kafka, Kubernetes, and a React frontend—only to realize that hiring managers wanted to see evidence of operational rigor, not architectural ambition. When I pivoted to a single FastAPI service with a runbook and postmortem, I landed a remote job within three weeks.</p>
+<p>The takeaway? <strong>Start small, optimize for operational artifacts, and iterate based on feedback.</strong> Your portfolio doesn’t need to be perfect—it needs to show that you can keep systems alive when it matters.</p>
+<h2 id="summary">Summary</h2>
+<p>The contrarian take is this: <strong>GitHub stars and LeetCode rankings won’t get you a remote job from Africa. A portfolio that simulates production conditions will.</strong></p>
+<p>The conventional advice—contribute to open-source, build cool projects, accumulate stars—works for niche roles (e.g., DevOps tooling, data science) but fails for the majority of remote engineering jobs. What actually matters to remote hiring managers is whether you can build systems that stay up, explain how they work, and fix them when they break.</p>
+<p>The key insight is to treat your portfolio like a miniature production environment. Instead of polishing READMEs, build a load-tested API, a Grafana dashboard, a runbook, and a postmortem. Show hiring managers that you can reason about trade-offs, debug under pressure, and communicate technical decisions clearly.</p>
+<p>The cases where the conventional wisdom is right are limited: early-career engineers, niche roles where GitHub stars are a cultural signal, and roles where open-source contributions are explicitly valued. For the rest of us, production simulations beat stars every time.</p>
+<p>To decide which approach fits your situation, ask: <em>What signal am I sending, and what signal do my target companies actually need?</em> If you’re applying to a US fintech, your portfolio should look like a production simulation. If you’re applying to a DevOps tooling company, GitHub stars may carry more weight.</p>
+<p>I’ve seen this work in real systems: engineers in Nairobi, Lagos, and Accra who pivoted from GitHub-heavy portfolios to production simulations and landed remote jobs within weeks. The difference wasn’t their coding skills—it was the operational artifacts they included.</p>
+<p>If you’re starting over, build one production simulation. Deploy it on AWS Free Tier. Load-test it with Locust 2.25. Write a runbook for a simulated incident. Publish a postmortem explaining the trade-offs. That’s your portfolio. That’s what gets you hired remotely.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>how do I make a portfolio if I’ve never worked in production?</strong>
+Build a minimal viable production simulation in a weekend. Use FastAPI 0.109 for the API, PostgreSQL 15 for the database, and Locust 2.25 to simulate load. Deploy it on AWS Lightsail ($5/month) or EC2 t3.small. Intentionally break it (e.g., add a slow query), document the incident in a runbook, and write a postmortem explaining the fix and the trade-offs you made. Include Grafana dashboards showing latency and error rates. This is enough to show hiring managers that you can reason about production systems—even if you’ve never worked in one.</p>
+<p><strong>what should I put in my README if it’s not the star of the show?</strong>
+Your README should answer three questions in under 6 seconds: <em>What problem does this solve?</em> <em>How do I run it?</em> <em>What operational artifacts does it include?</em> Example structure:</p>
+<pre><code class="language-markdown"># Payments API - Production Simulation
+
+Simulates a card-processing service under load and failure conditions.
+
+## Quickstart
+```bash
+pip install -r requirements.txt
+docker-compose up --build
+</code></pre>
+<h2 id="whats-included">What’s included</h2>
+<ul>
+<li>FastAPI 0.109 service with PostgreSQL 15</li>
+<li>Locust 2.25 load test (1,000 RPS)</li>
+<li>Grafana dashboard (p99 latency, error rate)</li>
+<li>Runbook: slow query incident (see <code>runbook.md</code>)</li>
+<li>Postmortem: trade-offs during traffic spike (see <code>postmortem.md</code>)</li>
+</ul>
+<h2 id="why-this-matters">Why this matters</h2>
+<p>This isn’t a toy project. It’s a miniature production environment that shows how I:
+1. Build systems that stay up under load
+2. Debug incidents with runbooks and dashboards
+3. Explain trade-offs to non-technical stakeholders</p>
+<pre><code>The README is a signpost, not a novel. Keep it short, link to the artifacts, and focus your energy on the runbook and postmortem.
+
+
+**how do I avoid hardcoding secrets in my portfolio repo?**
+Use environment variables and a `.env.example` file. Example for a FastAPI + PostgreSQL setup:
+```python
+# main.py
+from pydantic import BaseSettings
+
+class Settings(BaseSettings):
+    db_url: str
+    redis_url: str
+
+settings = Settings()
+
+# .env.example
+DB_URL=postgresql://user:password@localhost:5432/db
+REDIS_URL=redis://localhost:6379/0
+</code></pre>
+<p>Always include a <code>.env.example</code> with placeholder values. Never commit <code>.env</code> files. For AWS deployments, use AWS Systems Manager Parameter Store</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 29, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
