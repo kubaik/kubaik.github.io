@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 May 2026 19:45:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 19:46:26 +0000</lastBuildDate>
+    <item>
+      <title>Connection pools: set max too high and waste 8k</title>
+      <link>https://kubaik.github.io/connection-pools-set-max-too-high-and-waste-8k/</link>
+      <description>Cut RDS costs 30% by tuning connection pools — idle timeout 10s beats max size tricks. PostgreSQL 16, Node 20, Python 3.11 benchmarks inside.</description>
+      <pubDate>Fri, 29 May 2026 19:46:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/connection-pools-set-max-too-high-and-waste-8k/</guid>
+    </item>
     <item>
       <title>AI skills salary hack: prompt engineers vs ML infra</title>
       <link>https://kubaik.github.io/ai-skills-salary-hack-prompt-engineers-vs-ml-infra/</link>
@@ -138,13 +145,6 @@
       <description>Build a remote portfolio that passes recruiter bots in under 90 seconds — Docker size ≤ 200 MB, cost bound, and one verifiable SLO. 2026 hiring numbers and real repo examples included.</description>
       <pubDate>Fri, 29 May 2026 09:37:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-african-portfolios-that-clear-remote-screens/</guid>
-    </item>
-    <item>
-      <title>Cellular backends: what changes with 5G users</title>
-      <link>https://kubaik.github.io/cellular-backends-what-changes-with-5g-users/</link>
-      <description>Cut mobile API latency 60% — connection pool tuning, HTTP/3, Redis TTLs, and the cache stampede mistake most teams miss.</description>
-      <pubDate>Fri, 29 May 2026 08:57:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/cellular-backends-what-changes-with-5g-users/</guid>
     </item>
   </channel>
 </rss>
