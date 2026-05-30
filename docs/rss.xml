@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 14:59:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 15:01:57 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio mistake blocking remote jobs</title>
+      <link>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</link>
+      <description>Portfolio mistake blocking remote jobs — switch to boring APIs, live links, and recruiter-ready signals. 3 real examples and the exact stack to deploy in 7 days.</description>
+      <pubDate>Sat, 30 May 2026 15:01:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</guid>
+    </item>
     <item>
       <title>Ship real apps without being a DevOps hero</title>
       <link>https://kubaik.github.io/ship-real-apps-without-being-a-devops-hero/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSockets vs Server-Sent Events vs long polling with 2026 latency, CPU, and cost numbers — pick the right tool in minutes.</description>
       <pubDate>Sat, 30 May 2026 08:05:59 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-realtime-tech-in-2-minutes/</guid>
-    </item>
-    <item>
-      <title>Production RAG pipelines’ invisible bottlenecks</title>
-      <link>https://kubaik.github.io/production-rag-pipelines-invisible-bottlenecks/</link>
-      <description>We expected 500 daily queries; the first traffic spike hit 12,000 in two hours after a marketing blitz.</description>
-      <pubDate>Sat, 30 May 2026 07:56:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-rag-pipelines-invisible-bottlenecks/</guid>
     </item>
   </channel>
 </rss>
