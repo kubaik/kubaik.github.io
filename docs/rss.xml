@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 21:34:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 21:39:14 +0000</lastBuildDate>
+    <item>
+      <title>Remote salary playbook: $120k script</title>
+      <link>https://kubaik.github.io/remote-salary-playbook-120k-script/</link>
+      <description>Land $120k remote offers: PPP-adjusted spreadsheet counter template that raised my Colombia salary 24% in 5 days</description>
+      <pubDate>Sat, 30 May 2026 21:38:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-salary-playbook-120k-script/</guid>
+    </item>
     <item>
       <title>Rank vector skills for 2026 salaries</title>
       <link>https://kubaik.github.io/rank-vector-skills-for-2026-salaries/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSockets vs SSE vs long polling with 2026 benchmarks — latency, cost, and memory for 20k users. Choose the right push tech for your real-time app.</description>
       <pubDate>Sat, 30 May 2026 15:04:26 +0000</pubDate>
       <guid>https://kubaik.github.io/websocket-sse-or-polling-hard-numbers-decide/</guid>
-    </item>
-    <item>
-      <title>Portfolio mistake blocking remote jobs</title>
-      <link>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</link>
-      <description>Portfolio mistake blocking remote jobs — switch to boring APIs, live links, and recruiter-ready signals. 3 real examples and the exact stack to deploy in 7 days.</description>
-      <pubDate>Sat, 30 May 2026 15:01:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
