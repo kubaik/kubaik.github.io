@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 16:03:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 16:08:17 +0000</lastBuildDate>
+    <item>
+      <title>Forget the resume build the system</title>
+      <link>https://kubaik.github.io/forget-the-resume-build-the-system/</link>
+      <description>Build a remote portfolio that actually gets hired: 90-day sprints, cost discipline, and production-grade artifacts that close offers in 7 days.</description>
+      <pubDate>Sat, 30 May 2026 16:08:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/forget-the-resume-build-the-system/</guid>
+    </item>
     <item>
       <title>Compare WebSockets, SSE, long polling costs</title>
       <link>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 46% and AWS bill 54% with pg-pool, dns-cache, and pino—version-pinned tools for solo devs shipping production code in 2026.</description>
       <pubDate>Sat, 30 May 2026 09:12:14 +0000</pubDate>
       <guid>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</guid>
-    </item>
-    <item>
-      <title>Pool size setting that kills performance</title>
-      <link>https://kubaik.github.io/pool-size-setting-that-kills-performance/</link>
-      <description>Cut database latency 5× by ditching the threads×cores pool myth — with Node 20, PostgreSQL 16, and Prisma 5.3.1 benchmarks and fixes.</description>
-      <pubDate>Sat, 30 May 2026 08:19:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-setting-that-kills-performance/</guid>
     </item>
   </channel>
 </rss>
