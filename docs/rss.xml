@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 22:51:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 22:55:08 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 3 hidden production traps</title>
+      <link>https://kubaik.github.io/rag-pipelines-3-hidden-production-traps/</link>
+      <description>Cut RAG pipeline latency 91% and cost 80% with RedisSearch, reranking, and smart routing — the mistakes most tutorials ignore, with real numbers and code.</description>
+      <pubDate>Sat, 30 May 2026 22:54:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-3-hidden-production-traps/</guid>
+    </item>
     <item>
       <title>Ship a demo, not a resume</title>
       <link>https://kubaik.github.io/ship-a-demo-not-a-resume/</link>
@@ -138,13 +145,6 @@
       <description>Get paid 2.3x more: Python script that pulls real-time Levels.fyi data, normalizes for cost-of-living, and outputs a defensible remote salary range in 500 ms. Includes FX caching, health checks, and a counter-offer template.</description>
       <pubDate>Sat, 30 May 2026 17:41:11 +0000</pubDate>
       <guid>https://kubaik.github.io/get-paid-23x-more-remote-salary-script/</guid>
-    </item>
-    <item>
-      <title>AI tools that turned amateurs into pros</title>
-      <link>https://kubaik.github.io/ai-tools-that-turned-amateurs-into-pros/</link>
-      <description>4 AI dev tools shipping real apps in 2026 — latency deltas, review times, and the one prompt that saved 65% boilerplate.</description>
-      <pubDate>Sat, 30 May 2026 17:38:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-that-turned-amateurs-into-pros/</guid>
     </item>
   </channel>
 </rss>
