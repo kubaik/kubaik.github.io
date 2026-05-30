@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 18:00:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 18:03:33 +0000</lastBuildDate>
+    <item>
+      <title>Build a portfolio that converts remotely</title>
+      <link>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</link>
+      <description>Build a remote portfolio that converts: use production-grade systems, not demos. Real metrics, cost control, and incident response matter more than GitHub stars. Includes FastAPI, Redis, Locust examples and 2026 hiring insights.</description>
+      <pubDate>Sat, 30 May 2026 18:03:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</guid>
+    </item>
     <item>
       <title>Production FastAPI vs Django REST in real numbers</title>
       <link>https://kubaik.github.io/production-fastapi-vs-django-rest-in-real-numbers/</link>
@@ -138,13 +145,6 @@
       <description>Cut database costs 40% by tuning pool size — PostgreSQL 16 and MySQL 8.0 benchmarks show why max pool size 2x too high burns CPU and latency</description>
       <pubDate>Sat, 30 May 2026 11:57:59 +0000</pubDate>
       <guid>https://kubaik.github.io/misjudged-db-pool-size-check-these/</guid>
-    </item>
-    <item>
-      <title>Portfolio that hires you: ship first, polish last</title>
-      <link>https://kubaik.github.io/portfolio-that-hires-you-ship-first-polish-last/</link>
-      <description>Ship a production-like project in 3 months and land remote jobs from Africa — real examples, cost breakdowns, and incident post-mortems that hiring teams actually read.</description>
-      <pubDate>Sat, 30 May 2026 11:54:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-hires-you-ship-first-polish-last/</guid>
     </item>
   </channel>
 </rss>
