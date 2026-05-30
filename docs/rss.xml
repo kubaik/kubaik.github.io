@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 14:21:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 14:23:32 +0000</lastBuildDate>
+    <item>
+      <title>Bust the pool size myth</title>
+      <link>https://kubaik.github.io/bust-the-pool-size-myth/</link>
+      <description>Cut database timeout rates 75% with the right pool size — real benchmarks and cost curves from 18 systems in 2026</description>
+      <pubDate>Sat, 30 May 2026 14:23:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/bust-the-pool-size-myth/</guid>
+    </item>
     <item>
       <title>Ask for 30% more in 2026 remote salary</title>
       <link>https://kubaik.github.io/ask-for-30-more-in-2026-remote-salary/</link>
@@ -138,13 +145,6 @@
       <description>Cut monthly AWS bill 98% with a single-process architecture — latency dropped 86%, support tickets vanished. Real numbers from a 2025 production rebuild.</description>
       <pubDate>Sat, 30 May 2026 05:45:11 +0000</pubDate>
       <guid>https://kubaik.github.io/over-engineering-costs-12kyear-heres-the-fix/</guid>
-    </item>
-    <item>
-      <title>Pay raise script for remote devs in 2026</title>
-      <link>https://kubaik.github.io/pay-raise-script-for-remote-devs-in-2026/</link>
-      <description>24% average uplift for remote devs in 2026 — how to counter offers using Levels.fyi, a Python calculator, and a three-paragraph email template that closes in 11 days on average.</description>
-      <pubDate>Sat, 30 May 2026 05:38:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-raise-script-for-remote-devs-in-2026/</guid>
     </item>
   </channel>
 </rss>

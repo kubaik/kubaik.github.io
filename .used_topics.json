@@ -1,5 +1,6 @@
 [
   "How to design a multi-tenant SaaS database without painting yourself into a corner",
   "RAG pipelines in production: what the tutorials skip",
-  "Negotiating a remote salary when you're in a lower-cost country"
+  "Negotiating a remote salary when you're in a lower-cost country",
+  "Database connection pooling: the setting everyone gets wrong"
 ]
