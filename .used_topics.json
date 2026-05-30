@@ -1,11 +1,3 @@
 [
-  "The tools that save me the most time as a solo developer",
-  "Non-traditional developers shipping real products: what the AI coding wave made possible",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Negotiating a remote salary when you're in a lower-cost country",
-  "RAG pipelines in production: what the tutorials skip",
-  "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "Building a portfolio that gets you hired remotely from Africa",
-  "Database connection pooling: the setting everyone gets wrong",
-  "The real cost of over-engineering: when simplicity beats the fancy architecture"
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]
