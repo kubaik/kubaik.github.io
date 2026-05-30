@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 10:49:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 11:15:44 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI salary leap: prompt vs production</title>
+      <link>https://kubaik.github.io/2026-ai-salary-leap-prompt-vs-production/</link>
+      <description>Cut AI salary lag in 2026: prompt-only vs production stacks — real benchmarks, cost math, and the exact skill that raises pay 28–42 %.</description>
+      <pubDate>Sat, 30 May 2026 11:15:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-salary-leap-prompt-vs-production/</guid>
+    </item>
     <item>
       <title>Why your RAG pipeline fails in prod</title>
       <link>https://kubaik.github.io/why-your-rag-pipeline-fails-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI spend 77% and double accuracy with prompt engineering vs vector search — the 2026 salary data, benchmarks, and code you need to decide where to invest</description>
       <pubDate>Sat, 30 May 2026 01:33:32 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salary-ai-skills-test-vs-vector-search/</guid>
-    </item>
-    <item>
-      <title>Stop wasting database connections</title>
-      <link>https://kubaik.github.io/stop-wasting-database-connections/</link>
-      <description>Cut API response time 60% by reducing pool size — connection pooling mistakes cost teams $8k+ monthly in wasted RDS instances and outages</description>
-      <pubDate>Fri, 29 May 2026 23:50:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-wasting-database-connections/</guid>
     </item>
   </channel>
 </rss>
