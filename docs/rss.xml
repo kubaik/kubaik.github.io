@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 18:59:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 19:03:57 +0000</lastBuildDate>
+    <item>
+      <title>Land remote jobs: salary cheat sheet for 2026</title>
+      <link>https://kubaik.github.io/land-remote-jobs-salary-cheat-sheet-for-2026/</link>
+      <description>Land remote jobs: salary cheat sheet for 2026 — compute a defensible ask in 5 minutes using US market data and your city’s cost-of-living index.</description>
+      <pubDate>Sat, 30 May 2026 19:03:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-remote-jobs-salary-cheat-sheet-for-2026/</guid>
+    </item>
     <item>
       <title>Stop wasting database connections on CPU cores</title>
       <link>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</link>
@@ -138,13 +145,6 @@
       <description>Save 40% on SaaS database costs by isolating top 10 tenants first — real RDS bills, PostgreSQL 15, and Aurora Serverless v2 numbers from Jakarta and Manila systems in 2026.</description>
       <pubDate>Sat, 30 May 2026 12:20:51 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-sharing-a-database-for-multi-tenant-saas/</guid>
-    </item>
-    <item>
-      <title>When simplicity beats the fancy stack</title>
-      <link>https://kubaik.github.io/when-simplicity-beats-the-fancy-stack/</link>
-      <description>Cut API latency 88% and AWS bill 82% by rolling back microservices, GraphQL, and Kafka — the real cost of over-engineering with 2026 data and code.</description>
-      <pubDate>Sat, 30 May 2026 12:05:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-simplicity-beats-the-fancy-stack/</guid>
     </item>
   </channel>
 </rss>
