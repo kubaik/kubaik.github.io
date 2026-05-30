@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 18:17:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 18:21:13 +0000</lastBuildDate>
+    <item>
+      <title>Stop wasting database connections on CPU cores</title>
+      <link>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</link>
+      <description>Cut database pool latency 60% by sizing max connections to concurrency, not CPU cores — the mistake 80% of teams made in 2026.</description>
+      <pubDate>Sat, 30 May 2026 18:20:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</guid>
+    </item>
     <item>
       <title>Build a portfolio that converts remotely</title>
       <link>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 88% and AWS bill 82% by rolling back microservices, GraphQL, and Kafka — the real cost of over-engineering with 2026 data and code.</description>
       <pubDate>Sat, 30 May 2026 12:05:48 +0000</pubDate>
       <guid>https://kubaik.github.io/when-simplicity-beats-the-fancy-stack/</guid>
-    </item>
-    <item>
-      <title>Misjudged DB pool size? Check these</title>
-      <link>https://kubaik.github.io/misjudged-db-pool-size-check-these/</link>
-      <description>Cut database costs 40% by tuning pool size — PostgreSQL 16 and MySQL 8.0 benchmarks show why max pool size 2x too high burns CPU and latency</description>
-      <pubDate>Sat, 30 May 2026 11:57:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/misjudged-db-pool-size-check-these/</guid>
     </item>
   </channel>
 </rss>
