@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 16:08:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 16:11:33 +0000</lastBuildDate>
+    <item>
+      <title>2026 salaries hinge on 3 AI skills</title>
+      <link>https://kubaik.github.io/2026-salaries-hinge-on-3-ai-skills/</link>
+      <description>Cut AI tool costs 76% with vector search vs prompt engineering — latency, recall, and salary data from 2026 benchmarks show which AI skills actually move the needle on compensation.</description>
+      <pubDate>Sat, 30 May 2026 16:11:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salaries-hinge-on-3-ai-skills/</guid>
+    </item>
     <item>
       <title>Forget the resume build the system</title>
       <link>https://kubaik.github.io/forget-the-resume-build-the-system/</link>
@@ -138,13 +145,6 @@
       <description>Cut production latency 60% with Neon Postgres and Bun — the 6 tools that turned AI side-projects into real products in 2026</description>
       <pubDate>Sat, 30 May 2026 10:21:59 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coders-ship-real-products-now/</guid>
-    </item>
-    <item>
-      <title>Battle-tested solo dev tools that survive prod</title>
-      <link>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</link>
-      <description>Cut API latency 46% and AWS bill 54% with pg-pool, dns-cache, and pino—version-pinned tools for solo devs shipping production code in 2026.</description>
-      <pubDate>Sat, 30 May 2026 09:12:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</guid>
     </item>
   </channel>
 </rss>
