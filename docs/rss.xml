@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 08:20:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 09:12:30 +0000</lastBuildDate>
+    <item>
+      <title>Battle-tested solo dev tools that survive prod</title>
+      <link>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</link>
+      <description>Cut API latency 46% and AWS bill 54% with pg-pool, dns-cache, and pino—version-pinned tools for solo devs shipping production code in 2026.</description>
+      <pubDate>Sat, 30 May 2026 09:12:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</guid>
+    </item>
     <item>
       <title>Pool size setting that kills performance</title>
       <link>https://kubaik.github.io/pool-size-setting-that-kills-performance/</link>
@@ -138,13 +145,6 @@
       <description>Toptal’s US-based support was faster, but their developers in Accra were using shared VPS instances with 200ms latency to our API.</description>
       <pubDate>Fri, 29 May 2026 22:55:32 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-best-dev-platforms-for-african-devs/</guid>
-    </item>
-    <item>
-      <title>Simplicity won the race: how we killed a microservice</title>
-      <link>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</link>
-      <description>Cut API response time 62% by merging three services into one sidecar design — latency, cost, and error-rate numbers from a 2026 production rollout</description>
-      <pubDate>Fri, 29 May 2026 22:09:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</guid>
     </item>
   </channel>
 </rss>
