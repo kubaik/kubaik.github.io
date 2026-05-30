@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 23:40:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 23:44:49 +0000</lastBuildDate>
+    <item>
+      <title>Choose Wisely: WebSocket, SSE, or Polling?</title>
+      <link>https://kubaik.github.io/choose-wisely-websocket-sse-or-polling/</link>
+      <description>Choose SSE for read-only feeds, WebSocket for high-frequency chat, long polling for request/response — real 2026 latency and cost numbers from a 100-user load test on t4g.medium ARM</description>
+      <pubDate>Sat, 30 May 2026 23:44:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-wisely-websocket-sse-or-polling/</guid>
+    </item>
     <item>
       <title>Drop the pool size myth</title>
       <link>https://kubaik.github.io/drop-the-pool-size-myth/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 40 % with FastAPI vs Django REST — real cost, latency, and hiring data for 2026 teams</description>
       <pubDate>Sat, 30 May 2026 18:00:11 +0000</pubDate>
       <guid>https://kubaik.github.io/production-fastapi-vs-django-rest-in-real-numbers/</guid>
-    </item>
-    <item>
-      <title>Set pool size right or pay the cost</title>
-      <link>https://kubaik.github.io/set-pool-size-right-or-pay-the-cost/</link>
-      <description>Cut database connection pool waste 40% with exact settings that work in 2026 — connection validation overhead, pod memory impact, and the async vs sync split most teams miss.</description>
-      <pubDate>Sat, 30 May 2026 17:54:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/set-pool-size-right-or-pay-the-cost/</guid>
     </item>
   </channel>
 </rss>
