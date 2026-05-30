@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 01:55:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 02:00:14 +0000</lastBuildDate>
+    <item>
+      <title>AI coding wave: 12 stacks, 5 countries, 0 backend devs</title>
+      <link>https://kubaik.github.io/ai-coding-wave-12-stacks-5-countries-0-backend-devs/</link>
+      <description>Ship 3 real apps in 72 hours using AI agents — the 2026 stacks that actually work in production, with real costs, latency benchmarks, and the mistakes that burned $142 in tokens.</description>
+      <pubDate>Sat, 30 May 2026 01:59:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-wave-12-stacks-5-countries-0-backend-devs/</guid>
+    </item>
     <item>
       <title>2026 salary AI skills: test vs vector search</title>
       <link>https://kubaik.github.io/2026-salary-ai-skills-test-vs-vector-search/</link>
@@ -138,13 +145,6 @@
       <description>In practice, I&apos;ve seen teams set their pool size to 20 connections for a 100-connection database, only to watch their API response times climb from 45ms…</description>
       <pubDate>Fri, 29 May 2026 17:03:11 +0000</pubDate>
       <guid>https://kubaik.github.io/max-pool-size-isnt-about-cpu/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: what tutorials never mention</title>
-      <link>https://kubaik.github.io/rag-in-prod-what-tutorials-never-mention/</link>
-      <description>Cut RAG pipeline latency 79% and GPU costs 67% with Redis caching, vector index tuning, and embedding model swap — the mistakes most tutorials don’t mention.</description>
-      <pubDate>Fri, 29 May 2026 17:00:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-never-mention/</guid>
     </item>
   </channel>
 </rss>
