@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 20:46:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 20:49:37 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSockets, SSE, or polling wisely</title>
+      <link>https://kubaik.github.io/choose-websockets-sse-or-polling-wisely/</link>
+      <description>Cut realtime tech costs 30%: WebSocket vs SSE vs long polling with 2026 benchmarks, memory, and latency numbers you can reproduce today.</description>
+      <pubDate>Sat, 30 May 2026 20:49:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websockets-sse-or-polling-wisely/</guid>
+    </item>
     <item>
       <title>RAG pipelines: the load tests fail</title>
       <link>https://kubaik.github.io/rag-pipelines-the-load-tests-fail/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio mistake blocking remote jobs — switch to boring APIs, live links, and recruiter-ready signals. 3 real examples and the exact stack to deploy in 7 days.</description>
       <pubDate>Sat, 30 May 2026 15:01:42 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>Ship real apps without being a DevOps hero</title>
-      <link>https://kubaik.github.io/ship-real-apps-without-being-a-devops-hero/</link>
-      <description>Ship 6 products in 2026 with AI tools — time to first deployment, costs, and the exact tools that worked for non-traditional teams. Real benchmarks, no fluff.</description>
-      <pubDate>Sat, 30 May 2026 14:53:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-real-apps-without-being-a-devops-hero/</guid>
     </item>
   </channel>
 </rss>
