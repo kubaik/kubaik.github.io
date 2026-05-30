@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 21:23:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 21:34:19 +0000</lastBuildDate>
     <item>
       <title>Rank vector skills for 2026 salaries</title>
       <link>https://kubaik.github.io/rank-vector-skills-for-2026-salaries/</link>
@@ -112,13 +112,6 @@
       <guid>https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/</guid>
     </item>
     <item>
-      <title>2026 salaries hinge on 3 AI skills</title>
-      <link>https://kubaik.github.io/2026-salaries-hinge-on-3-ai-skills/</link>
-      <description>Cut AI tool costs 76% with vector search vs prompt engineering — latency, recall, and salary data from 2026 benchmarks show which AI skills actually move the needle on compensation.</description>
-      <pubDate>Sat, 30 May 2026 16:11:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-salaries-hinge-on-3-ai-skills/</guid>
-    </item>
-    <item>
       <title>Forget the resume build the system</title>
       <link>https://kubaik.github.io/forget-the-resume-build-the-system/</link>
       <description>Build a remote portfolio that actually gets hired: 90-day sprints, cost discipline, and production-grade artifacts that close offers in 7 days.</description>
@@ -145,6 +138,13 @@
       <description>Compare WebSockets vs SSE vs long polling with 2026 benchmarks — latency, cost, and memory for 20k users. Choose the right push tech for your real-time app.</description>
       <pubDate>Sat, 30 May 2026 15:04:26 +0000</pubDate>
       <guid>https://kubaik.github.io/websocket-sse-or-polling-hard-numbers-decide/</guid>
+    </item>
+    <item>
+      <title>Portfolio mistake blocking remote jobs</title>
+      <link>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</link>
+      <description>Portfolio mistake blocking remote jobs — switch to boring APIs, live links, and recruiter-ready signals. 3 real examples and the exact stack to deploy in 7 days.</description>
+      <pubDate>Sat, 30 May 2026 15:01:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-mistake-blocking-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
