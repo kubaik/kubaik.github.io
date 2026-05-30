@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 08:17:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 08:20:10 +0000</lastBuildDate>
+    <item>
+      <title>Pool size setting that kills performance</title>
+      <link>https://kubaik.github.io/pool-size-setting-that-kills-performance/</link>
+      <description>Cut database latency 5× by ditching the threads×cores pool myth — with Node 20, PostgreSQL 16, and Prisma 5.3.1 benchmarks and fixes.</description>
+      <pubDate>Sat, 30 May 2026 08:19:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-setting-that-kills-performance/</guid>
+    </item>
     <item>
       <title>Ship proof, not code</title>
       <link>https://kubaik.github.io/ship-proof-not-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 62% by merging three services into one sidecar design — latency, cost, and error-rate numbers from a 2026 production rollout</description>
       <pubDate>Fri, 29 May 2026 22:09:39 +0000</pubDate>
       <guid>https://kubaik.github.io/simplicity-won-the-race-how-we-killed-a-microservice/</guid>
-    </item>
-    <item>
-      <title>Why RAG tutorials crash in production</title>
-      <link>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</link>
-      <description>Cut RAG pipeline costs 75% and latency 68% — the real levers most tutorials skip: chunk granularity, retrieval budget, and conditional reranking</description>
-      <pubDate>Fri, 29 May 2026 21:47:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</guid>
     </item>
   </channel>
 </rss>
