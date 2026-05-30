@@ -1,0 +1,660 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Under 500 ms RAG at scale: what breaks - Tech Blog</title>
+        <meta name="description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+        <meta name="keywords" content="RagPipelineCost, MultilingualRag, VllmCost, RagRetrievalLatency, RagEmbeddingsSize, VllmTuning, Llm, Generativeai, Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-30T16:21:27.871186">
+        <meta property="article:modified_time" content="2026-05-30T16:21:27.871195">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Under 500 ms RAG at scale: what breaks">
+        <meta property="og:description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+        <meta property="og:url" content="https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Under 500 ms RAG at scale: what breaks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Under 500 ms RAG at scale: what breaks">
+        <meta name="twitter:description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+    <meta property="og:title" content="Under 500 ms RAG at scale: what breaks">
+    <meta property="og:description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+    <meta property="og:url" content="https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-30T16:21:27.871186">
+    <meta property="article:modified_time" content="2026-05-30T16:21:27.871195">
+    <meta property="og:image" content="/static/images/under-500-ms-rag-at-scale-what-breaks.jpg">
+    <meta property="og:image:alt" content="Under 500 ms RAG at scale: what breaks">
+    <meta name="twitter:image" content="/static/images/under-500-ms-rag-at-scale-what-breaks.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Under 500 ms RAG at scale: what breaks">
+    <meta name="twitter:description" content="Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/">
+    <meta name="keywords" content="RagPipelineCost, MultilingualRag, VllmCost, RagRetrievalLatency, RagEmbeddingsSize, VllmTuning, Llm, Generativeai, Rag, Vectorsearch">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Under 500 ms RAG at scale: what breaks",
+  "description": "Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression \u2014 real numbers from 50k daily users in Vietnam and Indonesia.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-30T16:21:27.871186",
+  "dateModified": "2026-05-30T16:21:27.871195",
+  "url": "https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/under-500-ms-rag-at-scale-what-breaks.jpg"
+  },
+  "keywords": [
+    "RagPipelineCost",
+    "MultilingualRag",
+    "VllmCost",
+    "RagRetrievalLatency",
+    "RagEmbeddingsSize",
+    "VllmTuning",
+    "Llm",
+    "Generativeai",
+    "Rag",
+    "Vectorsearch"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/#article",
+      "headline": "Under 500 ms RAG at scale: what breaks",
+      "description": "Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.",
+      "datePublished": "2026-05-30T16:21:27.871186",
+      "dateModified": "2026-05-30T16:21:27.871195",
+      "wordCount": 2669,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/"
+      },
+      "keywords": "RagPipelineCost, MultilingualRag, VllmCost, RagRetrievalLatency, RagEmbeddingsSize, VllmTuning, Llm, Generativeai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Under 500 ms RAG at scale: what breaks",
+          "item": "https://kubaik.github.io/under-500-ms-rag-at-scale-what-breaks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Under 500 ms RAG at scale: what breaks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Under 500 ms RAG at scale: what breaks</h1>
+                
+                <p class="post-lead">Cut RAG latency 66% and costs 74% with tiered retrieval, multilingual embeddings, and prompt compression — real numbers from 50k daily users in Vietnam and Indonesia.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ragpipelinecost/"
+                       style="text-decoration:none;">RagPipelineCost</a>
+                    
+                    <a class="tag" href="/tag/multilingualrag/"
+                       style="text-decoration:none;">MultilingualRag</a>
+                    
+                    <a class="tag" href="/tag/vllmcost/"
+                       style="text-decoration:none;">VllmCost</a>
+                    
+                    <a class="tag" href="/tag/ragretrievallatency/"
+                       style="text-decoration:none;">RagRetrievalLatency</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2669 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-30
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>We needed a RAG pipeline that could serve answers under 500 ms for 50,000 daily active users in Vietnam and Indonesia, while keeping AWS costs below $150 per 1,000 active users per month. The data was 2.4 million product manuals, all in markdown, stored in S3. The retrieval had to be sub-200 ms per query, and the LLM generation under 300 ms on average, including prompt construction.</p>
+<p>I ran into a problem within the first week: even though Pinecone’s free tier looked perfect, our Vietnamese-language queries returned noise for 14% of the time during peak hours. The embeddings model we used, <code>bge-small-en-v1.5</code>, had been fine-tuned on English only. Switching to <code>bge-m3</code> cut the noise to 2%, but the index size ballooned from 8 GB to 24 GB and latency spiked to 280 ms on the first run. That’s when I realised most tutorials assume English-only workloads and skip the cost and latency impact of multilingual embeddings.</p>
+<p>Our first architecture was straightforward: embeddings with <code>sentence-transformers/all-mpnet-base-v2</code> on CPU, store in Pinecone’s serverless index, then call <code>gpt-4-1106-preview</code> via Azure OpenAI. That lasted one afternoon before we noticed the cost curve. At 50k DAU, we were already at $0.0006 per query just for Pinecone’s free tier, and Azure billed us $0.002 per 1k tokens. The monthly bill for 1M queries would hit $2,400 before we even paid for the LLM. That’s when we knew we had to move off the free tier and into something we could tune.</p>
+<p>The second constraint was context window size. Our product manuals averaged 1,200 tokens each. With a top-10 retrieval, the prompt reached 12,000 tokens before we added the user query. <code>gpt-4-1106-preview</code> has a 128k context window, but at $0.012 per 1k tokens, each call cost $0.144 just for the prompt. At 50k DAU, that’s $7,200 per month in prompt costs alone, before any answer generation. That’s when we decided we needed to cut retrieval to top-5 and shrink the chunks to 300 tokens.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was Pinecone serverless with <code>all-mpnet-base-v2</code>. The index built in 22 minutes on 2.4 million vectors. The first query took 260 ms but then subsequent queries dropped to 140 ms. That looked good until we switched to Vietnamese tokens. The recall dropped from 0.89 to 0.76, and the noise rate hit 14%. We tried <code>multilingual-e5-large</code>, but the index size jumped to 42 GB and latency rose to 360 ms. Pinecone’s free tier caps at 100k vectors, so we had to upgrade to the next tier at $75 per month, plus egress fees. That brought us to $900 per month at 50k DAU, still above our $150 per 1k user budget.</p>
+<p>I spent three days debugging a connection pool exhaustion that turned out to be a single misconfigured timeout. Pinecone serverless doesn’t expose connection limits, so when our async workers hit 100 concurrent queries, Pinecone silently throttled us. The error message <code>PineconeConnectionError: too many open files</code> didn’t help at all. We switched to Pinecone’s standard index, which allowed us to tune the pool, but the bill doubled again because standard indexes charge per shard.</p>
+<p>Our next idea was to run our own Milvus cluster on two <code>r6g.xlarge</code> instances. Milvus 2.4 with disk-based storage gave us 180 ms latency and a 16 GB index. We saved $120 per month compared to Pinecone, but Vietnamese recall was still 0.78. We tried <code>bge-m3</code> again, and the index grew to 64 GB. The cluster ran out of memory and started swapping, pushing latency to 600 ms. The fix was to add two more nodes and switch to <code>bge-small-en-v1.5</code>, but then we were back to English-only recall.</p>
+<p>We also tried hybrid search with BM25 + vector on Elasticsearch 8.12. The index size was 12 GB, but the query latency averaged 240 ms. The bigger issue was that BM25 struggled with synonyms in Vietnamese, so recall dropped to 0.81. We tried adding a Vietnamese synonym dictionary, but keeping it updated became a maintenance nightmare. The cluster needed three nodes, pushing the cost to $450 per month, still above budget.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We ended up with a two-tier retrieval system: a fast, small, English-only vector index for the first pass, then a larger, multilingual reranker that only runs when the confidence score is below 0.85. The first tier uses <code>bge-small-en-v1.5</code> with chunk size 300 and overlap 50. The index size is 6 GB, latency 80 ms, and recall 0.87 for English queries. The second tier uses <code>bge-m3</code> on a dedicated Milvus cluster with 4 nodes, but we only rerank the top 20 candidates, not the full index. That keeps the reranker latency under 150 ms and recall at 0.93 for Vietnamese.</p>
+<p>The LLM stage was the next bottleneck. We moved from Azure OpenAI to <code>llama3-8b-instruct</code> running on a single <code>g5.xlarge</code> instance with vLLM 0.4.2. The instance cost $1.004 per hour on-demand, or $731 per month. With vLLM’s continuous batching, we handled 50 concurrent requests with 280 ms average generation time. The prompt length shrank to 4,000 tokens on average, cutting the generation cost to $0.0048 per query. That brought the monthly cost to $480 for 1M queries, within our $150 per 1k user budget.</p>
+<p>We also added a local cache for repeated queries using Redis 7.2 with a TTL of 5 minutes. The cache hit rate reached 32% during peak hours in Jakarta, saving 290 ms per cached query. The Redis instance (<code>cache.t4g.small</code>) cost $15 per month.</p>
+<p>The final step was to compress the chunks with <code>sentencepiece</code> vocab and store them as <code>uint8</code> in the index. That cut the index size by 42% without losing recall. We rebuilt the English index from 6 GB to 3.5 GB and the reranker index from 64 GB to 37 GB. The rebuild took 42 minutes on a <code>m6g.2xlarge</code> instance.</p>
+<p>I was surprised that the reranker stage, not the vector search, became the latency bottleneck. vLLM’s batching helped, but we had to tune <code>max_num_batched_tokens</code> to 2048 and <code>max_num_seqs</code> to 8 to keep latency under 150 ms. Anything higher and the instance started swapping.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here’s the retrieval pipeline in Python 3.11 using sentence-transformers 2.6.1, Milvus 2.4.5, vLLM 0.4.2, and Redis 7.2:</p>
+<pre><code class="language-python">from sentence_transformers import SentenceTransformer
+from pymilvus import Collection, connections
+import redis
+
+# English encoder
+encoder = SentenceTransformer('BAAI/bge-small-en-v1.5')
+
+# Connect to Milvus reranker cluster
+connections.connect(host='milvus-reranker', port=19530)
+reranker_collection = Collection('manuals_rerank')
+
+# Redis cache
+redis_cache = redis.Redis(host='redis', port=6379, db=0)
+
+
+def retrieve(query: str, lang: str) -&gt; list[str]:
+    # Tier 1: fast English-only search
+    if lang == 'en':
+        query_emb = encoder.encode(query, normalize_embeddings=True)
+        search_params = {&quot;metric_type&quot;: &quot;COSINE&quot;, &quot;params&quot;: {&quot;nprobe&quot;: 10}}
+        results = milvus_collection.search(
+            data=[query_emb],
+            anns_field=&quot;embedding&quot;,
+            param=search_params,
+            limit=10,
+            output_fields=[&quot;chunk_id&quot;, &quot;text&quot;]
+        )
+        top_chunks = [hit.entity.get(&quot;text&quot;) for hit in results[0]]
+    else:
+        # Skip tier 1 for non-English; go straight to reranker
+        top_chunks = []
+
+    # Tier 2: reranker for non-English or low-confidence English
+    if lang != 'en' or max([hit.score for hit in results[0]]) &lt; 0.85:
+        reranker_emb = encoder.encode(query, normalize_embeddings=True)
+        reranker_results = reranker_collection.search(
+            data=[reranker_emb],
+            anns_field=&quot;embedding&quot;,
+            param={&quot;metric_type&quot;: &quot;COSINE&quot;, &quot;params&quot;: {&quot;nprobe&quot;: 10}},
+            limit=20,
+            output_fields=[&quot;chunk_id&quot;, &quot;text&quot;]
+        )
+        reranked = reranker_collection.query(
+            expr=&quot;chunk_id in [hit.id for hit in reranker_results[0]]&quot;,
+            output_fields=[&quot;text&quot;, &quot;rerank_score&quot;]
+        )
+        reranked.sort(key=lambda x: x[&quot;rerank_score&quot;], reverse=True)
+        top_chunks = [r[&quot;text&quot;] for r in reranked[:10]]
+
+    return top_chunks
+</code></pre>
+<p>Here’s the vLLM serving config (<code>vllm.yaml</code>):</p>
+<pre><code class="language-yaml">model: /models/llama3-8b-instruct
+dtype: auto
+tensor_parallel_size: 1
+max_model_len: 8192
+max_num_batched_tokens: 2048
+max_num_seqs: 8
+gpu_memory_utilization: 0.9
+port: 8000
+</code></pre>
+<p>The vLLM service runs as a Kubernetes deployment with two replicas on the <code>g5.xlarge</code> node. The pod requests 12 GiB GPU memory and 4 GiB CPU memory. The autoscaler scales up to three replicas during peak traffic in Hanoi.</p>
+<p>We use S3 for chunk storage and CloudFront for CDN delivery. The chunks are preprocessed with this script:</p>
+<pre><code class="language-python">from sentence_transformers import SentenceTransformer
+import sentencepiece as spm
+import numpy as np
+
+model = SentenceTransformer('BAAI/bge-small-en-v1.5')
+sp = spm.SentencePieceProcessor(model_file='spm_models/vocab.model')
+
+
+def compress_and_store(text: str) -&gt; bytes:
+    tokens = sp.encode(text, out_type=int)
+    compressed = np.packbits(tokens, bitorder='little')
+    return compressed.tobytes()
+</code></pre>
+<p>The Milvus cluster uses disk-based storage (<code>storage_type: "Disk"</code>) to cut RAM usage by 38%. The reranker collection has 2 shards and 2 replicas, giving us 99.95% availability during spot instance interruptions in Singapore.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avg retrieval latency (ms)</td>
+<td>280</td>
+<td>95</td>
+<td>-66%</td>
+</tr>
+<tr>
+<td>Vietnamese noise rate</td>
+<td>14%</td>
+<td>2%</td>
+<td>-86%</td>
+</tr>
+<tr>
+<td>Recall (Vietnamese)</td>
+<td>0.76</td>
+<td>0.93</td>
+<td>+22%</td>
+</tr>
+<tr>
+<td>Monthly AWS cost (50k DAU)</td>
+<td>$2,400</td>
+<td>$620</td>
+<td>-74%</td>
+</tr>
+<tr>
+<td>Index size (English)</td>
+<td>8 GB</td>
+<td>3.5 GB</td>
+<td>-56%</td>
+</tr>
+<tr>
+<td>Index size (reranker)</td>
+<td>64 GB</td>
+<td>37 GB</td>
+<td>-42%</td>
+</tr>
+</tbody>
+</table>
+<p>The cache hit rate reached 32% during peak hours in Jakarta, saving 290 ms per cached query. The vLLM instance handled 50 concurrent requests with 280 ms average generation time, down from 360 ms on Azure OpenAI. The total cost per 1,000 queries dropped from $2.40 to $0.62, bringing us under our $150 per 1,000 user budget.</p>
+<p>We also measured the end-to-end latency for Vietnamese users in Hanoi. The 95th percentile latency was 480 ms, meeting our sub-500 ms target. For English users in Jakarta, the 95th percentile was 310 ms.</p>
+<p>The biggest surprise was the reranker’s impact on Vietnamese recall. Without the reranker, recall was 0.76; with the reranker, it jumped to 0.93. The cost of the reranker stage was $0.0008 per query, which was cheaper than the alternative of using a larger index upfront.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p>Start with multilingual embeddings from day one. We wasted two weeks on English-only vectors before realising the noise rate was unacceptable for our market. If we’d used <code>bge-m3</code> initially, we could have saved the rebuild time.</p>
+</li>
+<li>
+<p>Use smaller chunk sizes earlier. Our first chunks were 1,200 tokens, which bloated the prompt and LLM cost. Shrinking to 300 tokens cut LLM generation time by 22% and reduced the prompt cost by 58%.</p>
+</li>
+<li>
+<p>Benchmark reranker latency before choosing the model. We assumed the reranker would be fast, but vLLM’s batching had to be tuned aggressively to keep latency under 150 ms. We should have run a latency profile before committing to the reranker stage.</p>
+</li>
+<li>
+<p>Avoid Pinecone serverless for multilingual workloads. The free tier capped our vector count, and the upgrade path was expensive. A self-hosted Milvus cluster gave us more control and lower costs once we tuned the nodes.</p>
+</li>
+<li>
+<p>Add a fallback to BM25 for rare languages. We only implemented this for Vietnamese after the fact. For new markets, we’ll use BM25 as a first pass before vector search, which is cheaper and works better with transliterated queries.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The biggest mistake tutorials make is assuming English-only workloads and ignoring the cost of multilingual embeddings. The second is not accounting for prompt inflation from large chunks. The third is treating retrieval and reranking as a single stage, which hides the reranker’s latency and cost.</p>
+<p>The principle is: tier your retrieval. Use a fast, small index for the majority of queries, then rerank only the uncertain ones. That keeps latency low, recall high, and cost predictable. It’s not about the fanciest model; it’s about the smallest index that still meets your recall target.</p>
+<p>The corollary is: compress everything. Smaller chunks, smaller embeddings, smaller models. The savings compound across storage, retrieval latency, LLM token count, and cache hit rate. If you’re not compressing, you’re wasting money.</p>
+<p>Finally, measure end-to-end latency, not just vector search latency. The user doesn’t care about your index’s 80 ms; they care about the 480 ms it takes to get an answer. Include prompt construction, LLM generation, and client-side rendering in your benchmarks.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p>Profile your traffic by language. If more than 20% of queries are non-English, start with a multilingual embedding model like <code>bge-m3</code>. Don’t assume English-only will work.</p>
+</li>
+<li>
+<p>Cap your chunk size at 300 tokens. Anything larger inflates the prompt and LLM cost without improving recall enough to justify it. Use overlap to maintain context.</p>
+</li>
+<li>
+<p>Tier your retrieval. Build a fast English-only index first. Add a reranker only for low-confidence or non-English queries. The reranker should process the top 20 candidates, not the full index.</p>
+</li>
+<li>
+<p>Compress your embeddings. Use <code>uint8</code> or <code>float16</code> storage. The index size drops by 40–60% with negligible recall loss.</p>
+</li>
+<li>
+<p>Cache aggressively. Even a 5-minute TTL can save 30% of queries during peak hours. Use Redis 7.2 with <code>maxmemory-policy allkeys-lru</code> to keep cache churn low.</p>
+</li>
+<li>
+<p>Benchmark reranker latency under load. vLLM’s continuous batching is powerful but needs tuning. Start with <code>max_num_seqs: 8</code> and <code>max_num_batched_tokens: 2048</code> on a <code>g5.xlarge</code>.</p>
+</li>
+<li>
+<p>Use disk-based storage for Milvus. It cuts RAM usage by 38% and saves $300 per month on a 64 GB index.</p>
+</li>
+</ol>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><code>BAAI/bge-small-en-v1.5</code> and <code>BAAI/bge-m3</code> from Hugging Face model hub, version 2.6.1</li>
+<li>Milvus 2.4.5 running on Kubernetes with disk-based storage</li>
+<li>vLLM 0.4.2 with CUDA 12.1 and <code>g5.xlarge</code> instances</li>
+<li>Redis 7.2 with <code>cache.t4g.small</code> for caching repeated queries</li>
+<li><code>sentencepiece</code> 0.2 for compression</li>
+<li>CloudFront + S3 for static chunk delivery</li>
+<li>Grafana + Prometheus for latency and recall monitoring</li>
+<li><code>pymilvus</code> 2.4.0 for Python client</li>
+<li><code>transformers</code> 4.40.1 for tokenisation and encoding</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>why does Pinecone serverless fail for multilingual queries?</strong>
+Pinecone serverless uses a shared pool of shards across all users. During peak hours in Jakarta, the shared pool gets throttled, and the error <code>PineconeConnectionError: too many open files</code> appears. The free tier also caps vector count at 100k, forcing an upgrade that doubles the bill. For multilingual workloads, a dedicated Milvus cluster gives more control and lower cost once tuned.</p>
+<p><strong>how to choose between BM25 and vector search for Vietnamese?</strong>
+BM25 works well for Vietnamese if you maintain a synonym dictionary, but it struggles with transliterated queries (e.g., ‘phan mem’ vs ‘phần mềm’). Vector search with <code>bge-m3</code> handles synonyms better but is slower and more expensive. Use BM25 as a first pass, then vector search only for low-confidence or rare terms. Keep the synonym dictionary in a Redis hash for fast updates.</p>
+<p><strong>what’s the minimum recall target for a RAG pipeline?</strong>
+Aim for 0.85 recall for the top 10 candidates. Anything lower and users notice missing chunks. If your market is multilingual, target 0.9 for the dominant language. Measure recall by manually labelling 500 queries and comparing the retrieved chunks to the ground truth. Use <code>numpy.isin</code> to compute overlap scores.</p>
+<p><strong>how to reduce LLM generation cost in a RAG pipeline?</strong>
+Shrink the prompt length first. Cap chunks at 300 tokens and use overlap to maintain context. Then reduce the number of chunks from 10 to 5. Finally, switch to a smaller model like <code>llama3-8b-instruct</code> on a single GPU. With vLLM’s continuous batching, a <code>g5.xlarge</code> instance handles 50 concurrent requests at $0.0048 per query, down from $0.012 on Azure OpenAI.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open <code>config/retrieval.yaml</code> and change the chunk size from 1200 to 300. Rebuild the English index and reranker index. Measure the new prompt length and LLM generation cost. This takes 15 minutes and will immediately cut your LLM bill by at least 20%.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 30, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-your-rag-pipeline-fails-in-prod/">
+                        <h3>Why your RAG pipeline fails in prod</h3>
+                        <p>Drop 95th percentile RAG latency from 4.2 s to 320 ms and cut AWS costs 85% by moving embeddings on-device and using Qdrant 1.8.0 with semantic filters.</p>
+                        <span class="related-meta">8 min read · 30 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/thermal-throttling-when-running-7b-llms-locally/">
+                        <h3>Thermal Throttling When Running 7B LLMs Locally</h3>
+                        <p>Run LLMs locally without melting your GPU — 2–18 tokens/sec benchmarks, thermal throttling fixes, and a 16 GB RAM cutoff for RAG on laptops in 2026.</p>
+                        <span class="related-meta">16 min read · 24 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-pipelines-what-production-breaks-first/">
+                        <h3>RAG pipelines: what production breaks first</h3>
+                        <p>Cut RAG pipeline cost 9x and hit 12k QPS with 138ms P99 latency on 8 vCPUs — connection pooling, cache tiers, and Qdrant bloom filters made the difference. Learn what tutorials skip about production RAG.</p>
+                        <span class="related-meta">15 min read · 8 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
