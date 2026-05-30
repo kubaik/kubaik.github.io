@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 14:23:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 14:27:03 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune AI pay in 2026</title>
+      <link>https://kubaik.github.io/fine-tune-ai-pay-in-2026/</link>
+      <description>Fine-tuning pays 28% more than prompt engineering in 2026 — but only if you hit latency and cost targets. See the head-to-head benchmarks, real-world cost savings, and the exact moment to switch from prompts to fine-tuning.</description>
+      <pubDate>Sat, 30 May 2026 14:26:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-ai-pay-in-2026/</guid>
+    </item>
     <item>
       <title>Bust the pool size myth</title>
       <link>https://kubaik.github.io/bust-the-pool-size-myth/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, prompt tuning pays $152k while RAG pipelines pay $210k — but only if latency stays &lt;300 ms. Compare latency, cost, and tooling for prompt vs vector vs RAG in this data-backed breakdown.</description>
       <pubDate>Sat, 30 May 2026 06:18:22 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-prompt-vs-vector-vs-rag/</guid>
-    </item>
-    <item>
-      <title>Over-engineering costs $12k/year — here’s the fix</title>
-      <link>https://kubaik.github.io/over-engineering-costs-12kyear-heres-the-fix/</link>
-      <description>Cut monthly AWS bill 98% with a single-process architecture — latency dropped 86%, support tickets vanished. Real numbers from a 2025 production rebuild.</description>
-      <pubDate>Sat, 30 May 2026 05:45:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-engineering-costs-12kyear-heres-the-fix/</guid>
     </item>
   </channel>
 </rss>
