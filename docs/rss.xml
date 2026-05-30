@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 20:18:46 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 20:23:12 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: turning AI from magic into machinery</title>
+      <link>https://kubaik.github.io/mcp-servers-turning-ai-from-magic-into-machinery/</link>
+      <description>Cut AI tool latency 65% with MCP servers — connection pooling, streaming responses, and the tool registration mistake that cost teams 2 days of debugging in 2026.</description>
+      <pubDate>Sat, 30 May 2026 20:22:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-turning-ai-from-magic-into-machinery/</guid>
+    </item>
     <item>
       <title>AI skills worth 30% more salary in 2026</title>
       <link>https://kubaik.github.io/ai-skills-worth-30-more-salary-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tuning pays 28% more than prompt engineering in 2026 — but only if you hit latency and cost targets. See the head-to-head benchmarks, real-world cost savings, and the exact moment to switch from prompts to fine-tuning.</description>
       <pubDate>Sat, 30 May 2026 14:26:47 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-ai-pay-in-2026/</guid>
-    </item>
-    <item>
-      <title>Bust the pool size myth</title>
-      <link>https://kubaik.github.io/bust-the-pool-size-myth/</link>
-      <description>Cut database timeout rates 75% with the right pool size — real benchmarks and cost curves from 18 systems in 2026</description>
-      <pubDate>Sat, 30 May 2026 14:23:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/bust-the-pool-size-myth/</guid>
     </item>
   </channel>
 </rss>
