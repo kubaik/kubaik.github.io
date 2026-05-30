@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 13:43:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 13:48:31 +0000</lastBuildDate>
+    <item>
+      <title>Ask for 30% more in 2026 remote salary</title>
+      <link>https://kubaik.github.io/ask-for-30-more-in-2026-remote-salary/</link>
+      <description>Why I wrote this (the problem I kept hitting) I spent two months negotiating with a US-based fintech that had already approved my rate—only to realize…</description>
+      <pubDate>Sat, 30 May 2026 13:48:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ask-for-30-more-in-2026-remote-salary/</guid>
+    </item>
     <item>
       <title>Latency stalls at 500ms: RAG pipelines break here first</title>
       <link>https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/</link>
@@ -138,13 +145,6 @@
       <description>24% average uplift for remote devs in 2026 — how to counter offers using Levels.fyi, a Python calculator, and a three-paragraph email template that closes in 11 days on average.</description>
       <pubDate>Sat, 30 May 2026 05:38:02 +0000</pubDate>
       <guid>https://kubaik.github.io/pay-raise-script-for-remote-devs-in-2026/</guid>
-    </item>
-    <item>
-      <title>Cache Showdown: When Redis Fails and Memcached Wins</title>
-      <link>https://kubaik.github.io/cache-showdown-when-redis-fails-and-memcached-wins/</link>
-      <description>Cut API response time 70% with Memcached caching — connection pooling, eviction policies, and the failover mistake most teams make in 2026.</description>
-      <pubDate>Sat, 30 May 2026 05:17:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/cache-showdown-when-redis-fails-and-memcached-wins/</guid>
     </item>
   </channel>
 </rss>
