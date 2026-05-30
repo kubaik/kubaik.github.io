@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 08:04:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 08:06:15 +0000</lastBuildDate>
+    <item>
+      <title>Pick realtime tech in 2 minutes</title>
+      <link>https://kubaik.github.io/pick-realtime-tech-in-2-minutes/</link>
+      <description>Compare WebSockets vs Server-Sent Events vs long polling with 2026 latency, CPU, and cost numbers — pick the right tool in minutes.</description>
+      <pubDate>Sat, 30 May 2026 08:05:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-realtime-tech-in-2-minutes/</guid>
+    </item>
     <item>
       <title>Production RAG pipelines’ invisible bottlenecks</title>
       <link>https://kubaik.github.io/production-rag-pipelines-invisible-bottlenecks/</link>
@@ -138,13 +145,6 @@
       <description>Land $120k remote offers from US companies with a 160-line Python script that normalizes cost-of-living, tax, and equity. Benchmarked on 37 real 2026 offers.</description>
       <pubDate>Fri, 29 May 2026 21:10:12 +0000</pubDate>
       <guid>https://kubaik.github.io/script-your-remote-raise-120k-counter/</guid>
-    </item>
-    <item>
-      <title>Build this portfolio, not that one</title>
-      <link>https://kubaik.github.io/build-this-portfolio-not-that-one/</link>
-      <description>Build a remote-ready portfolio in 7 days — fintech stack, load tests, and the debugging story most teams skip. Concrete results from Nairobi hiring funnels.</description>
-      <pubDate>Fri, 29 May 2026 20:48:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-this-portfolio-not-that-one/</guid>
     </item>
   </channel>
 </rss>
