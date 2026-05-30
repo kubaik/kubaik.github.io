@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 19:03:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 19:16:13 +0000</lastBuildDate>
+    <item>
+      <title>7 non-traditional paths to shipping real products</title>
+      <link>https://kubaik.github.io/7-non-traditional-paths-to-shipping-real-products/</link>
+      <description>Ship a real product in 10 minutes with Vercel + Next.js — real benchmarks, costs, and the mistakes that cost teams $8k before shipping.</description>
+      <pubDate>Sat, 30 May 2026 19:15:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-non-traditional-paths-to-shipping-real-products/</guid>
+    </item>
     <item>
       <title>Land remote jobs: salary cheat sheet for 2026</title>
       <link>https://kubaik.github.io/land-remote-jobs-salary-cheat-sheet-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.</description>
       <pubDate>Sat, 30 May 2026 13:07:34 +0000</pubDate>
       <guid>https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/</guid>
-    </item>
-    <item>
-      <title>Stop sharing a database for multi-tenant SaaS</title>
-      <link>https://kubaik.github.io/stop-sharing-a-database-for-multi-tenant-saas/</link>
-      <description>Save 40% on SaaS database costs by isolating top 10 tenants first — real RDS bills, PostgreSQL 15, and Aurora Serverless v2 numbers from Jakarta and Manila systems in 2026.</description>
-      <pubDate>Sat, 30 May 2026 12:20:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-sharing-a-database-for-multi-tenant-saas/</guid>
     </item>
   </channel>
 </rss>
