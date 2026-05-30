@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 01:31:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 01:33:48 +0000</lastBuildDate>
+    <item>
+      <title>2026 salary AI skills: test vs vector search</title>
+      <link>https://kubaik.github.io/2026-salary-ai-skills-test-vs-vector-search/</link>
+      <description>Cut AI spend 77% and double accuracy with prompt engineering vs vector search — the 2026 salary data, benchmarks, and code you need to decide where to invest</description>
+      <pubDate>Sat, 30 May 2026 01:33:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salary-ai-skills-test-vs-vector-search/</guid>
+    </item>
     <item>
       <title>Stop wasting database connections</title>
       <link>https://kubaik.github.io/stop-wasting-database-connections/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 79% and GPU costs 67% with Redis caching, vector index tuning, and embedding model swap — the mistakes most tutorials don’t mention.</description>
       <pubDate>Fri, 29 May 2026 17:00:05 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-never-mention/</guid>
-    </item>
-    <item>
-      <title>Do you need a vector DB?</title>
-      <link>https://kubaik.github.io/do-you-need-a-vector-db/</link>
-      <description>Cut vector search latency 60% with PostgreSQL pgvector 0.7 — benchmark numbers, infra cost, and the one query you must run before switching to a dedicated vector store</description>
-      <pubDate>Fri, 29 May 2026 16:38:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/do-you-need-a-vector-db/</guid>
     </item>
   </channel>
 </rss>
