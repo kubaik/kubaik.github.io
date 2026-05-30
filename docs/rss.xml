@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 23:20:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 23:24:44 +0000</lastBuildDate>
+    <item>
+      <title>Drop the pool size myth</title>
+      <link>https://kubaik.github.io/drop-the-pool-size-myth/</link>
+      <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
+      <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 3 hidden production traps</title>
       <link>https://kubaik.github.io/rag-pipelines-3-hidden-production-traps/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection pool waste 40% with exact settings that work in 2026 — connection validation overhead, pod memory impact, and the async vs sync split most teams miss.</description>
       <pubDate>Sat, 30 May 2026 17:54:30 +0000</pubDate>
       <guid>https://kubaik.github.io/set-pool-size-right-or-pay-the-cost/</guid>
-    </item>
-    <item>
-      <title>Get paid 2.3x more: remote salary script</title>
-      <link>https://kubaik.github.io/get-paid-23x-more-remote-salary-script/</link>
-      <description>Get paid 2.3x more: Python script that pulls real-time Levels.fyi data, normalizes for cost-of-living, and outputs a defensible remote salary range in 500 ms. Includes FX caching, health checks, and a counter-offer template.</description>
-      <pubDate>Sat, 30 May 2026 17:41:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/get-paid-23x-more-remote-salary-script/</guid>
     </item>
   </channel>
 </rss>
