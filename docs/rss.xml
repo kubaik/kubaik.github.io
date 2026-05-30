@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 12:01:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 12:06:04 +0000</lastBuildDate>
+    <item>
+      <title>When simplicity beats the fancy stack</title>
+      <link>https://kubaik.github.io/when-simplicity-beats-the-fancy-stack/</link>
+      <description>Cut API latency 88% and AWS bill 82% by rolling back microservices, GraphQL, and Kafka — the real cost of over-engineering with 2026 data and code.</description>
+      <pubDate>Sat, 30 May 2026 12:05:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-simplicity-beats-the-fancy-stack/</guid>
+    </item>
     <item>
       <title>Misjudged DB pool size? Check these</title>
       <link>https://kubaik.github.io/misjudged-db-pool-size-check-these/</link>
@@ -138,13 +145,6 @@
       <description>Choose SSE, WebSockets, or long polling in 2026: CPU, memory, and cost numbers for 10k clients on AWS c6g.xlarge. Benchmarks for Python 3.11 and Node 20 LTS.</description>
       <pubDate>Sat, 30 May 2026 04:21:25 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</guid>
-    </item>
-    <item>
-      <title>Pick a freelance platform: Andela vs Toptal vs Arc in</title>
-      <link>https://kubaik.github.io/pick-a-freelance-platform-andela-vs-toptal-vs-arc-in/</link>
-      <description>Pick the right platform: latency, cost, and support compared for African devs in 2026 (Andela vs Toptal vs Arc). Benchmarks from Lagos, Nairobi, Cape Town.</description>
-      <pubDate>Sat, 30 May 2026 02:13:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-a-freelance-platform-andela-vs-toptal-vs-arc-in/</guid>
     </item>
   </channel>
 </rss>
