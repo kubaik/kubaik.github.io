@@ -3,5 +3,6 @@
   "RAG pipelines in production: what the tutorials skip",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
   "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "Negotiating a remote salary when you're in a lower-cost country"
+  "Negotiating a remote salary when you're in a lower-cost country",
+  "Database connection pooling: the setting everyone gets wrong"
 ]

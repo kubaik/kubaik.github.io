@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 21:50:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 21:55:04 +0000</lastBuildDate>
+    <item>
+      <title>Database pools: CPU cores are a myth</title>
+      <link>https://kubaik.github.io/database-pools-cpu-cores-are-a-myth/</link>
+      <description>Cut API latency 55% and CPU 35% by fixing connection pool size — stop using CPU cores. Formula, benchmarks, and config snippets for PostgreSQL 15, Node 20, and Python 3.11.</description>
+      <pubDate>Sat, 30 May 2026 21:54:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/database-pools-cpu-cores-are-a-myth/</guid>
+    </item>
     <item>
       <title>Remote salary playbook: $120k script</title>
       <link>https://kubaik.github.io/remote-salary-playbook-120k-script/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search latency 60% by measuring first: p95/p99 tests on 2026 hardware show hnswlib beats Pinecone/Weaviate when vectors fit in RAM. Concrete benchmarks, cost models, and the one mistake I made for two weeks.</description>
       <pubDate>Sat, 30 May 2026 15:45:51 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-vs-nearest-neighbors-3-tests-that-change/</guid>
-    </item>
-    <item>
-      <title>WebSocket, SSE, or Polling? Hard numbers decide</title>
-      <link>https://kubaik.github.io/websocket-sse-or-polling-hard-numbers-decide/</link>
-      <description>Compare WebSockets vs SSE vs long polling with 2026 benchmarks — latency, cost, and memory for 20k users. Choose the right push tech for your real-time app.</description>
-      <pubDate>Sat, 30 May 2026 15:04:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/websocket-sse-or-polling-hard-numbers-decide/</guid>
     </item>
   </channel>
 </rss>
