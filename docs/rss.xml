@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 15:56:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 16:00:23 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSockets, SSE, long polling costs</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</link>
+      <description>Reduce API costs 34% by choosing the right push tech — concrete WebSocket vs SSE vs long polling benchmarks with Node 20 LTS, Python 3.11 and Redis 7.2.</description>
+      <pubDate>Sat, 30 May 2026 16:00:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</guid>
+    </item>
     <item>
       <title>Vector DBs vs nearest neighbors: 3 tests that change</title>
       <link>https://kubaik.github.io/vector-dbs-vs-nearest-neighbors-3-tests-that-change/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 5× by ditching the threads×cores pool myth — with Node 20, PostgreSQL 16, and Prisma 5.3.1 benchmarks and fixes.</description>
       <pubDate>Sat, 30 May 2026 08:19:54 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-setting-that-kills-performance/</guid>
-    </item>
-    <item>
-      <title>Ship proof, not code</title>
-      <link>https://kubaik.github.io/ship-proof-not-code/</link>
-      <description>Cut lead time to remote hire 50% by focusing on proof, not polish — build a working system with CI logs and incident reports</description>
-      <pubDate>Sat, 30 May 2026 08:17:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-proof-not-code/</guid>
     </item>
   </channel>
 </rss>
