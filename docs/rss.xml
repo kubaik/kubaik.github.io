@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 10:20:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 10:22:15 +0000</lastBuildDate>
+    <item>
+      <title>AI coders ship real products now</title>
+      <link>https://kubaik.github.io/ai-coders-ship-real-products-now/</link>
+      <description>Cut production latency 60% with Neon Postgres and Bun — the 6 tools that turned AI side-projects into real products in 2026</description>
+      <pubDate>Sat, 30 May 2026 10:21:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coders-ship-real-products-now/</guid>
+    </item>
     <item>
       <title>Battle-tested solo dev tools that survive prod</title>
       <link>https://kubaik.github.io/battle-tested-solo-dev-tools-that-survive-prod/</link>
@@ -138,13 +145,6 @@
       <description>The latency between agent calls started at 800ms, then climbed to 3.2 seconds, then the whole thing locked up when the queue hit 2,150 messages.</description>
       <pubDate>Fri, 29 May 2026 23:07:03 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-in-prod-the-ugly-bits/</guid>
-    </item>
-    <item>
-      <title>2026: Best dev platforms for African devs</title>
-      <link>https://kubaik.github.io/2026-best-dev-platforms-for-african-devs/</link>
-      <description>Toptal’s US-based support was faster, but their developers in Accra were using shared VPS instances with 200ms latency to our API.</description>
-      <pubDate>Fri, 29 May 2026 22:55:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-best-dev-platforms-for-african-devs/</guid>
     </item>
   </channel>
 </rss>
