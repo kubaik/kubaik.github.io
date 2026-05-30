@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 17:50:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 17:54:46 +0000</lastBuildDate>
+    <item>
+      <title>Set pool size right or pay the cost</title>
+      <link>https://kubaik.github.io/set-pool-size-right-or-pay-the-cost/</link>
+      <description>Cut database connection pool waste 40% with exact settings that work in 2026 — connection validation overhead, pod memory impact, and the async vs sync split most teams miss.</description>
+      <pubDate>Sat, 30 May 2026 17:54:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/set-pool-size-right-or-pay-the-cost/</guid>
+    </item>
     <item>
       <title>Get paid 2.3x more: remote salary script</title>
       <link>https://kubaik.github.io/get-paid-23x-more-remote-salary-script/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary lag in 2026: prompt-only vs production stacks — real benchmarks, cost math, and the exact skill that raises pay 28–42 %.</description>
       <pubDate>Sat, 30 May 2026 11:15:28 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salary-leap-prompt-vs-production/</guid>
-    </item>
-    <item>
-      <title>Why your RAG pipeline fails in prod</title>
-      <link>https://kubaik.github.io/why-your-rag-pipeline-fails-in-prod/</link>
-      <description>Drop 95th percentile RAG latency from 4.2 s to 320 ms and cut AWS costs 85% by moving embeddings on-device and using Qdrant 1.8.0 with semantic filters.</description>
-      <pubDate>Sat, 30 May 2026 10:49:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-rag-pipeline-fails-in-prod/</guid>
     </item>
   </channel>
 </rss>
