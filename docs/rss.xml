@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 08:16:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 08:17:17 +0000</lastBuildDate>
+    <item>
+      <title>Ship proof, not code</title>
+      <link>https://kubaik.github.io/ship-proof-not-code/</link>
+      <description>Cut lead time to remote hire 50% by focusing on proof, not polish — build a working system with CI logs and incident reports</description>
+      <pubDate>Sat, 30 May 2026 08:17:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-proof-not-code/</guid>
+    </item>
     <item>
       <title>Non-coders shipped products in 2026</title>
       <link>https://kubaik.github.io/non-coders-shipped-products-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline costs 75% and latency 68% — the real levers most tutorials skip: chunk granularity, retrieval budget, and conditional reranking</description>
       <pubDate>Fri, 29 May 2026 21:47:54 +0000</pubDate>
       <guid>https://kubaik.github.io/why-rag-tutorials-crash-in-production/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs long-polling: which fits?</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</link>
-      <description>Benchmark WebSocket vs SSE vs long-polling in 2026 — median latency, cost, and the exact t3.small numbers you can copy into your RFC.</description>
-      <pubDate>Fri, 29 May 2026 21:31:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</guid>
     </item>
   </channel>
 </rss>
