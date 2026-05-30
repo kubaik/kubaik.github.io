@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2026 12:21:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 13:07:52 +0000</lastBuildDate>
+    <item>
+      <title>Latency stalls at 500ms: RAG pipelines break here first</title>
+      <link>https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/</link>
+      <description>Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.</description>
+      <pubDate>Sat, 30 May 2026 13:07:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/</guid>
+    </item>
     <item>
       <title>Stop sharing a database for multi-tenant SaaS</title>
       <link>https://kubaik.github.io/stop-sharing-a-database-for-multi-tenant-saas/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 70% with Memcached caching — connection pooling, eviction policies, and the failover mistake most teams make in 2026.</description>
       <pubDate>Sat, 30 May 2026 05:17:24 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-showdown-when-redis-fails-and-memcached-wins/</guid>
-    </item>
-    <item>
-      <title>Why RAG pipelines choke under real load</title>
-      <link>https://kubaik.github.io/why-rag-pipelines-choke-under-real-load/</link>
-      <description>Cut RAG latency 70% and AWS bills 61% by fixing connection pools, cache stampedes, and vector index timeouts. The boring details most tutorials skip.</description>
-      <pubDate>Sat, 30 May 2026 04:35:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rag-pipelines-choke-under-real-load/</guid>
     </item>
   </channel>
 </rss>

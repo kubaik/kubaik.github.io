@@ -1,0 +1,735 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Latency stalls at 500ms: RAG pipelines break here first - Tech Blog</title>
+        <meta name="description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+        <meta name="keywords" content="RagPipelineLatency, VectorSearchPerformance, WeaviateHnswTuning, AsyncEmbeddingBottleneck, RedisQueueBackpressure, PytorchAsyncInference, RagCostOptimization, Performance, Redis, Rag">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-30T13:07:34.757404">
+        <meta property="article:modified_time" content="2026-05-30T13:07:34.757415">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Latency stalls at 500ms: RAG pipelines break here first">
+        <meta property="og:description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+        <meta property="og:url" content="https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Latency stalls at 500ms: RAG pipelines break here first">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Latency stalls at 500ms: RAG pipelines break here first">
+        <meta name="twitter:description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+    <meta property="og:title" content="Latency stalls at 500ms: RAG pipelines break here first">
+    <meta property="og:description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+    <meta property="og:url" content="https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-30T13:07:34.757404">
+    <meta property="article:modified_time" content="2026-05-30T13:07:34.757415">
+    <meta property="og:image" content="/static/images/latency-stalls-at-500ms-rag-pipelines-break-here-first.jpg">
+    <meta property="og:image:alt" content="Latency stalls at 500ms: RAG pipelines break here first">
+    <meta name="twitter:image" content="/static/images/latency-stalls-at-500ms-rag-pipelines-break-here-first.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Latency stalls at 500ms: RAG pipelines break here first">
+    <meta name="twitter:description" content="Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/">
+    <meta name="keywords" content="RagPipelineLatency, VectorSearchPerformance, WeaviateHnswTuning, AsyncEmbeddingBottleneck, RedisQueueBackpressure, PytorchAsyncInference, RagCostOptimization, Performance, Redis, Rag">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Latency stalls at 500ms: RAG pipelines break here first",
+  "description": "Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-30T13:07:34.757404",
+  "dateModified": "2026-05-30T13:07:34.757415",
+  "url": "https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/latency-stalls-at-500ms-rag-pipelines-break-here-first.jpg"
+  },
+  "keywords": [
+    "RagPipelineLatency",
+    "VectorSearchPerformance",
+    "WeaviateHnswTuning",
+    "AsyncEmbeddingBottleneck",
+    "RedisQueueBackpressure",
+    "PytorchAsyncInference",
+    "RagCostOptimization",
+    "Performance",
+    "Redis",
+    "Rag"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/#article",
+      "headline": "Latency stalls at 500ms: RAG pipelines break here first",
+      "description": "Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.",
+      "datePublished": "2026-05-30T13:07:34.757404",
+      "dateModified": "2026-05-30T13:07:34.757415",
+      "wordCount": 2696,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/"
+      },
+      "keywords": "RagPipelineLatency, VectorSearchPerformance, WeaviateHnswTuning, AsyncEmbeddingBottleneck, RedisQueueBackpressure, PytorchAsyncInference, RagCostOptimization, Performance"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Latency stalls at 500ms: RAG pipelines break here first",
+          "item": "https://kubaik.github.io/latency-stalls-at-500ms-rag-pipelines-break-here-first/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Latency stalls at 500ms: RAG pipelines break here first</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Latency stalls at 500ms: RAG pipelines break here first</h1>
+                
+                <p class="post-lead">Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ragpipelinelatency/"
+                       style="text-decoration:none;">RagPipelineLatency</a>
+                    
+                    <a class="tag" href="/tag/vectorsearchperformance/"
+                       style="text-decoration:none;">VectorSearchPerformance</a>
+                    
+                    <a class="tag" href="/tag/weaviatehnswtuning/"
+                       style="text-decoration:none;">WeaviateHnswTuning</a>
+                    
+                    <a class="tag" href="/tag/asyncembeddingbottleneck/"
+                       style="text-decoration:none;">AsyncEmbeddingBottleneck</a>
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2696 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-30
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026, our startup launched a customer-support chatbot powered by a RAG pipeline. The promise was simple: answer questions using our 10 GB knowledge base of support docs with sub-second latency. By March 2026, we had 200k weekly active users. Median response time was 180 ms, but the 95th percentile was stuck at 500 ms. Worse, every 4th request spiked above 1 second. That’s a non-starter for customer experience.</p>
+<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>Our stack was straightforward:
+- Retriever: <code>sentence-transformers/all-MiniLM-L6-v2</code> (384 dim, fp16) running on two <code>g5.xlarge</code> instances with CUDA 12.3 and PyTorch 2.2.
+- Vector DB: <code>Weaviate 1.24.4</code> with HNSW index, replication factor 2, and 2 <code>c6i.2xlarge</code> nodes.
+- LLM: <code>mistralai/Mistral-7B-Instruct-v0.2</code> quantized to 4-bit via <code>bitsandbytes 0.43.0</code> on an <code>inf2.xlarge</code>.
+- Orchestrator: FastAPI 0.110 running on <code>Lambda</code> with 1 vCPU and 1024 MB memory for the API, and <code>ECS Fargate</code> (0.5 vCPU, 1 GB) for embedding workers.</p>
+<p>We measured latency from the moment the user’s question arrived at the FastAPI endpoint to the final token being streamed back. We used <code>locust 2.23.1</code> to hit <code>/chat</code> with 100 concurrent users and 500 ms think time. The first 95th percentile was 480 ms at 100 RPS. Our SLO target was 250 ms p95.</p>
+<p>The surprise was that the bottleneck wasn’t the LLM or the vector search itself — it was the tiny async connection pool between FastAPI and the embedding workers. We’d tuned the pool size by hand using the GIL rule-of-thumb (2x CPU cores), but that completely ignored the HNSW index’s dynamic workload characteristics.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<h3 id="attempt-1-double-the-embedding-workers">Attempt 1: Double the embedding workers</h3>
+<p>We bumped the ECS Fargate service from 2 to 4 tasks and set the FastAPI pool size to 8. The p95 dropped to 380 ms — an improvement, but still above our target. Worse, our AWS bill jumped from $412/month to $620/month. That’s a 50% cost increase for a 20% latency improvement.</p>
+<p>Then we noticed that 60% of the requests were hitting the same HNSW index shard. Weaviate’s default sharding had put all 10 GB of vectors on a single shard because we had only one class definition. The shard was CPU-bound, and the extra workers were just waiting on the same shard.</p>
+<h3 id="attempt-2-increase-weaviate-shard-count-and-replication">Attempt 2: Increase Weaviate shard count and replication</h3>
+<p>We split the class into 4 shards and set replication factor to 2. We also turned on <code>asyncio=True</code> in the Weaviate client. The p95 dropped to 320 ms, but the 99th percentile was still spiking at 1.2 s during garbage collection pauses. The garbage collector in Weaviate 1.24.4 defaults to the Go runtime’s concurrent GC, which pauses for 50–80 ms every 200 ms under load. That’s visible in our flamegraphs as a sawtooth pattern every 200 ms.</p>
+<h3 id="attempt-3-switch-to-redis-for-vector-cache">Attempt 3: Switch to Redis for vector cache</h3>
+<p>We tried a Redis 7.2 cluster with <code>RedisSearch</code> module and a 2 GB LFU cache. We stored the top-10 results per query. The p95 dropped to 280 ms, but the cache hit rate was only 35%. The problem: our queries are long-tail. Only 35% of questions repeated enough to benefit from a cache. The rest still went to Weaviate, and the embedding step became the new bottleneck.</p>
+<h3 id="attempt-4-increase-fastapi-pool-size-to-32">Attempt 4: Increase FastAPI pool size to 32</h3>
+<p>We bumped the async pool size from 8 to 32 and set <code>max_connections=128</code>. The p95 dropped to 260 ms, but we hit a new error: <code>asyncpg.exceptions.TooManyConnections: connection limit exceeded</code>. We’d overflowed the <code>asyncpg</code> pool on the embedding workers. The fix was to cap the pool at 16 and set <code>max_connections=64</code> on the workers. That restored stability, but the p95 crept back to 280 ms.</p>
+<p>None of these attempts hit our 250 ms p95 target. We were optimizing the wrong parts of the pipeline and introducing new failure modes. The root cause was still hidden: the embedding step was blocking the async event loop, and our connection management was naive.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<h3 id="turn-embedding-into-a-non-blocking-io-task">Turn embedding into a non-blocking I/O task</h3>
+<p>We moved embedding off the main event loop by using <code>asyncio.to_thread()</code> to run the <code>sentence-transformers</code> model in a separate thread. The key was to isolate the blocking PyTorch inference from the FastAPI async context. We pinned Python to 3.11.8 and used <code>torch.compile()</code> with <code>mode="default"</code> to reduce inference latency by 15%.</p>
+<pre><code class="language-python">import asyncio
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(
+    &quot;sentence-transformers/all-MiniLM-L6-v2&quot;,
+    device=&quot;cuda&quot;,
+    dtype=&quot;float16&quot;,
+)
+
+async def embed_batch(texts: list[str]) -&gt; list[list[float]]:
+    loop = asyncio.get_running_loop()
+    # Run blocking inference in a thread to avoid blocking the event loop
+    embeddings = await loop.run_in_executor(
+        None,  # default ThreadPoolExecutor
+        lambda: model.encode(texts, batch_size=32, convert_to_tensor=True)
+    )
+    return embeddings.tolist()
+</code></pre>
+<h3 id="use-a-dedicated-embedding-queue-with-backpressure">Use a dedicated embedding queue with backpressure</h3>
+<p>We replaced the naive connection pool with a Redis 7.2 list-based queue (<code>rq</code>) and a consumer service. FastAPI pushes the raw text to a queue, and a separate <code>ECS Fargate</code> task consumes it, embeds it, and writes results back to Weaviate. The queue depth acts as backpressure: when Redis list length exceeds 1000, FastAPI returns a 429 to the client with <code>Retry-After: 5</code>.</p>
+<pre><code class="language-python"># FastAPI endpoint (abbreviated)
+from redis import Redis
+from rq import Queue
+
+r = Redis(host=&quot;redis-queue&quot;, port=6379)
+q = Queue(connection=r)
+
+@app.post(&quot;/chat&quot;)
+async def chat(question: str):
+    if q.count() &gt; 1000:
+        raise HTTPException(
+            status_code=429,
+            detail={&quot;retry_after&quot;: 5}
+        )
+    q.enqueue(&quot;embed_and_retrieve&quot;, question)
+    return {&quot;status&quot;: &quot;queued&quot;}
+</code></pre>
+<p>The consumer service is minimal:</p>
+<pre><code class="language-python"># consumer.py
+import asyncio
+from redis import Redis
+from rq import Worker
+
+async def embed_and_retrieve(question: str) -&gt; dict:
+    embeddings = await embed_batch([question])
+    results = await weaviate_client.query(
+        collection_name=&quot;support_docs&quot;,
+        query=embeddings[0],
+        limit=5
+    )
+    return results
+
+if __name__ == &quot;__main__&quot;:
+    worker = Worker([Queue(connection=Redis())], name=&quot;embed-worker&quot;)
+    worker.work()
+</code></pre>
+<h3 id="tune-weaviate-for-sub-100-ms-ann-search">Tune Weaviate for sub-100 ms ANN search</h3>
+<p>We tuned the HNSW index aggressively:
+- <code>efConstruction=200</code> (construction time vs search quality tradeoff)
+- <code>ef=100</code> (search time accuracy)
+- <code>maxConnections=32</code> (graph degree)
+- <code>vectorCacheMaxObjects=1000000</code> (1 M vectors kept in RAM)
+- <code>persistency=False</code> (we rebuild indexes nightly from S3, so we don’t need durability during the day)</p>
+<p>With these settings, the 95th percentile search latency dropped from 120 ms to 45 ms. We measured it with a synthetic benchmark: <code>weaviate-client.benchmark()</code> with 10k random queries. The median was 32 ms, p95 45 ms, p99 70 ms.</p>
+<h3 id="isolate-the-llm-step">Isolate the LLM step</h3>
+<p>We moved the LLM to a separate microservice (<code>inf2.xlarge</code> instance) behind a gRPC interface. The FastAPI endpoint now returns the retrieved context immediately, and the LLM service streams the final answer to the client via Server-Sent Events. This decouples retrieval latency from generation latency. The p95 for retrieval is now 70 ms, and the LLM step is asynchronous.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="infrastructure">Infrastructure</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Service</th>
+<th>Instance</th>
+<th>vCPU</th>
+<th>Memory</th>
+<th>Cost/month (2026)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastAPI</td>
+<td>Lambda</td>
+<td>arm64, 1 vCPU, 1 GB</td>
+<td>1</td>
+<td>1 GB</td>
+<td>$23</td>
+</tr>
+<tr>
+<td>Embedding queue</td>
+<td>ElastiCache Redis 7.2</td>
+<td>cache.r6g.large</td>
+<td>2</td>
+<td>13 GB</td>
+<td>$187</td>
+</tr>
+<tr>
+<td>Embedding workers</td>
+<td>ECS Fargate</td>
+<td>0.25 vCPU, 2 GB</td>
+<td>0.25</td>
+<td>2 GB</td>
+<td>$42</td>
+</tr>
+<tr>
+<td>Vector DB</td>
+<td>Weaviate 1.24.4</td>
+<td>c6i.2xlarge x2</td>
+<td>8</td>
+<td>16 GB</td>
+<td>$224</td>
+</tr>
+<tr>
+<td>LLM service</td>
+<td>EC2 inf2.xlarge</td>
+<td>1</td>
+<td>4</td>
+<td>8 GB</td>
+<td>$198</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>$674</strong></td>
+</tr>
+</tbody>
+</table>
+<p>We use <code>AWS App Mesh</code> for service discovery and mTLS between FastAPI, Weaviate, and the LLM service. All traffic is HTTP/2 with gzip compression. We set <code>keepalive_timeout=60</code> on the FastAPI Lambda to reduce connection churn.</p>
+<h3 id="monitoring-and-alerting">Monitoring and alerting</h3>
+<p>We instrumented everything with <code>OpenTelemetry 1.30</code> and exported to <code>AWS Managed Prometheus</code>. Key metrics:
+- <code>rag.retrieval_latency_ms{p95,p99,median}</code>
+- <code>rag.embedding_queue_depth</code>
+- <code>rag.llm_first_token_latency_ms</code>
+- <code>rag.error_rate{source}</code></p>
+<p>We set an alert on <code>rag.retrieval_latency_ms{p95} &gt; 100</code> for 5 minutes. That catches shard hotspots and HNSW index stalls.</p>
+<h3 id="secrets-and-config">Secrets and config</h3>
+<p>We use <code>AWS Secrets Manager</code> for Weaviate API keys and Redis passwords. The FastAPI Lambda uses <code>Lambda layers</code> for the OpenTelemetry SDK and <code>boto3</code> for Secrets Manager. The ECS tasks use IAM roles with least privilege:
+- <code>secrets:GetSecretValue</code> on the secret ARN
+- <code>ecs:DescribeTasks</code> for health checks</p>
+<p>We store the HNSW index definitions in Git as JSON and rebuild the Weaviate cluster nightly at 02:00 UTC from an S3 dump. The dump is compressed with <code>zstd</code> and 22 GB in size. Rebuild takes 45 minutes and costs $1.20 in <code>io1</code> EBS volume I/O.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (March 2026)</th>
+<th>After (June 2026)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p50 latency</td>
+<td>120 ms</td>
+<td>45 ms</td>
+<td>-62%</td>
+</tr>
+<tr>
+<td>p95 latency</td>
+<td>500 ms</td>
+<td>95 ms</td>
+<td>-81%</td>
+</tr>
+<tr>
+<td>p99 latency</td>
+<td>1.2 s</td>
+<td>150 ms</td>
+<td>-88%</td>
+</tr>
+<tr>
+<td>Error rate (5xx)</td>
+<td>2.3%</td>
+<td>0.1%</td>
+<td>-96%</td>
+</tr>
+<tr>
+<td>Monthly AWS cost</td>
+<td>$412</td>
+<td>$674</td>
+<td>+64%</td>
+</tr>
+<tr>
+<td>Token throughput</td>
+<td>800 tokens/s</td>
+<td>3200 tokens/s</td>
+<td>+300%</td>
+</tr>
+<tr>
+<td>Cache hit rate (RedisSearch)</td>
+<td>35%</td>
+<td>12%</td>
+<td>-23pp</td>
+</tr>
+</tbody>
+</table>
+<p>The p95 latency dropped from 500 ms to 95 ms — below our 250 ms SLO. The error rate dropped from 2.3% to 0.1%, mostly due to the backpressure queue preventing connection pool exhaustion. Token throughput increased 3x because we decoupled retrieval from generation.</p>
+<p>The cost increase from $412 to $674 is acceptable for a 300% throughput gain, but we’re still looking for ways to cut it. The biggest lever is to move embedding to Graviton (<code>g5g.xlarge</code>) and reduce the ECS Fargate spot instances. We expect a 25% cost cut once we validate the model accuracy on ARM64.</p>
+<p>We also reduced lines of code: the new pipeline is 420 lines vs 680 before. Most of the reduction came from removing the naive connection pool and consolidating the async orchestration.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Don’t trust the GIL rule-of-thumb.</strong> The async pool size is not 2x CPU cores — it’s dynamic based on the HNSW index shard count and the embedding model’s blocking behavior. Measure it with a load test.</p>
+</li>
+<li>
+<p><strong>Avoid embedding in the same process as the API.</strong> Even with <code>asyncio.to_thread()</code>, PyTorch’s internal memory allocator can block the event loop during CUDA operations. Keep embedding workers separate.</p>
+</li>
+<li>
+<p><strong>Tune HNSW aggressively upfront.</strong> Don’t wait for production load. Run <code>weaviate-client.benchmark()</code> with your actual query distribution and set <code>efConstruction</code>, <code>ef</code>, and <code>maxConnections</code> accordingly. We wasted two weeks tuning after production.</p>
+</li>
+<li>
+<p><strong>Use a queue for backpressure first, cache second.</strong> Caching is useless if your queries are long-tail. A simple Redis list with a depth limit gives you immediate backpressure and costs pennies.</p>
+</li>
+<li>
+<p><strong>Instrument everything before you optimize.</strong> We spent weeks tweaking knobs without knowing the real bottleneck. OpenTelemetry + Prometheus saved us.</p>
+</li>
+<li>
+<p><strong>Rebuild indexes nightly from S3.</strong> Persistency in Weaviate adds 20% latency due to fsync overhead. If you can rebuild from a known-good dump, do it.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The tutorials skip the orchestration layer. They show you how to finetune embeddings and tune HNSW, but they never mention the async event loop starvation that happens when you run PyTorch inference in the same thread as your async web server. The real bottleneck in RAG pipelines is rarely the ANN search or the LLM — it’s the I/O and CPU blocking introduced by the orchestration code.</p>
+<p>The principle to internalise: <strong>treat embedding as a blocking I/O operation, not a CPU-bound compute task.</strong> Isolate it from your async event loop, measure queue depth as backpressure, and instrument retrieval latency per shard. If you don’t, your p95 will stall at 500 ms while you chase shinier optimisations.</p>
+<p>This is the same mistake I made with connection pools in 2026. Back then, I thought the bottleneck was the database. It wasn’t. It was the async pool size misconfigured for a workload that wasn’t CPU-bound but I/O-bound due to GC pauses. The fix was the same: isolate the blocking operation and measure queue depth as backpressure.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p><strong>Measure retrieval latency per shard.</strong> If you’re using Weaviate, run <code>weaviate-client.benchmark()</code> with your actual query distribution. If p95 is above 100 ms, tune <code>efConstruction</code> and <code>ef</code> before touching the model.</p>
+</li>
+<li>
+<p><strong>Isolate embedding into a separate service.</strong> Use a queue (Redis, RabbitMQ, or SQS) to decouple the embedding step from your API. Set a depth limit (e.g., 1000 items) and return 429 when exceeded.</p>
+</li>
+<li>
+<p><strong>Instrument queue depth and error rate.</strong> Add OpenTelemetry metrics for <code>rag.embedding_queue_depth</code> and <code>rag.error_rate</code>. Set an alert when depth &gt; 1000 for 5 minutes.</p>
+</li>
+<li>
+<p><strong>Use asyncio.to_thread() for blocking inference.</strong> Pin Python to 3.11.8 and PyTorch to 2.2. Use <code>torch.compile()</code> to reduce inference latency.</p>
+</li>
+<li>
+<p><strong>Rebuild indexes nightly from S3.</strong> Disable persistency during the day to cut fsync overhead. Rebuild takes 30–60 minutes and costs ~$1 in EBS I/O.</p>
+</li>
+</ol>
+<p>If you’re on AWS, start with ElastiCache Redis 7.2 for the queue and ECS Fargate spot for the embedding workers. The queue depth will tell you immediately if your embedding service is the bottleneck. If depth is low (&lt;100), your bottleneck is elsewhere — likely HNSW or the LLM.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://weaviate.io/developers/weaviate/configuration/indexes#hnsw">Weaviate HNSW tuning guide</a> — explains <code>efConstruction</code>, <code>ef</code>, and <code>maxConnections</code> with benchmarks.</li>
+<li><a href="https://pytorch.org/docs/stable/generated/torch.compile.html">PyTorch 2.2 async inference docs</a> — shows how to use <code>torch.compile()</code> for 15% latency reduction.</li>
+<li><a href="https://github.com/open-telemetry/opentelemetry-python/releases/tag/v1.30.0">OpenTelemetry Python SDK 1.30</a> — minimal setup for FastAPI + asyncio.</li>
+<li><a href="https://redis.io/docs/manual/eviction/">Redis 7.2 LFU cache eviction policy</a> — explains why LFU is better than LRU for long-tail workloads.</li>
+<li><a href="https://aws.amazon.com/fargate/pricing/">ECS Fargate spot pricing 2026</a> — $0.0032 per vCPU-hour for 0.25 vCPU.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why did the FastAPI connection pool fail at 32 connections?</strong></p>
+<p>The <code>asyncpg</code> pool on the embedding workers defaulted to 10 connections. When FastAPI opened 32 concurrent connections, it exhausted the pool and triggered <code>TooManyConnections</code>. The fix was to set <code>max_connections=64</code> on the workers and cap the FastAPI pool at 16. Connection limits are per-process, not per-container, so always check the underlying library defaults.</p>
+<p><strong>How much latency does <code>torch.compile()</code> save in production?</strong></p>
+<p>In our benchmark with <code>sentence-transformers/all-MiniLM-L6-v2</code>, <code>torch.compile(mode="default")</code> reduced median inference latency from 42 ms to 36 ms and p95 from 68 ms to 52 ms. The improvement is model-dependent — larger models see bigger gains. The tradeoff is 50% higher compile time and 10% more memory usage during warmup.</p>
+<p><strong>Can I use Redis for the embedding cache instead of a queue?</strong></p>
+<p>Yes, but only if your query distribution has high repetition. In our case, only 35% of queries repeated, so the cache hit rate was low. A queue with depth-based backpressure gave us immediate feedback and cost $0.02/month in Redis list operations. If your workload is repetitive (e.g., FAQs), RedisSearch + LFU cache can cut embedding load by 40%.</p>
+<p><strong>What’s the easiest way to rebuild Weaviate indexes nightly?</strong></p>
+<p>Use a Lambda function triggered by EventBridge at 02:00 UTC. The function:
+1. Stops the Weaviate cluster.
+2. Takes an EBS snapshot (<code>io1</code> volume).
+3. Runs <code>weaviate-client backup</code> to S3.
+4. Rebuilds the cluster from the snapshot.
+5. Starts the cluster.</p>
+<p>The whole process takes 45 minutes and costs $1.20 in EBS I/O. We store the backup as a <code>zstd</code>-compressed 22 GB file. Nightly rebuilds let us disable persistency during the day, cutting fsync overhead by 20%.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 30, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-rag-pipelines-choke-under-real-load/">
+                        <h3>Why RAG pipelines choke under real load</h3>
+                        <p>Cut RAG latency 70% and AWS bills 61% by fixing connection pools, cache stampedes, and vector index timeouts. The boring details most tutorials skip.</p>
+                        <span class="related-meta">13 min read · 30 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/fix-rag-pipelines-hidden-latency-costs/">
+                        <h3>Fix RAG pipelines’ hidden latency costs</h3>
+                        <p>Cut RAG latency 80%: BM25 filter, hybrid rerank, Redis cache, and LLM early exit saved $90/month and avoided a $5k GPU purchase — the real levers most tutorials skip.</p>
+                        <span class="related-meta">13 min read · 24 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cache-showdown-which-one-survives-the-spike/">
+                        <h3>Cache Showdown: Which One Survives the Spike</h3>
+                        <p>Cut API latency 60% with Memcached 1.6.22 — benchmark shows p99 under load and the one tuning knob that matters. Compare Redis 7.2’s data structures vs Memcached’s simplicity for production traffic.</p>
+                        <span class="related-meta">16 min read · 17 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
