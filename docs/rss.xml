@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 21:48:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 21:49:48 +0000</lastBuildDate>
+    <item>
+      <title>5G kills backend metrics you trust</title>
+      <link>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</link>
+      <description>Cut API response time 50% on 4G — measure cellular RTT, TCP handshakes, and connection pool waits before touching code. Includes Node.js 20, Redis 7.2, and k6 0.51 examples.</description>
+      <pubDate>Sun, 31 May 2026 21:49:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</guid>
+    </item>
     <item>
       <title>2026 AI salaries: MLOps vs prompt engineering</title>
       <link>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection pool latency 50% by ditching the 5× CPU cores myth — real benchmarks, memory math, and the timeout that breaks everything</description>
       <pubDate>Sun, 31 May 2026 15:47:22 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-wrong-your-db-spills/</guid>
-    </item>
-    <item>
-      <title>Is $100/month AI worth indie devs?</title>
-      <link>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</link>
-      <description>Cut AI coding budget waste with a $100/month cap — real token costs, guardrails, and when AI saves time vs when it burns cash in 2026.</description>
-      <pubDate>Sun, 31 May 2026 15:16:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</guid>
     </item>
   </channel>
 </rss>
