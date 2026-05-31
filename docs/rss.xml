@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 21:49:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 21:52:49 +0000</lastBuildDate>
+    <item>
+      <title>Fix RAG latency before users quit</title>
+      <link>https://kubaik.github.io/fix-rag-latency-before-users-quit/</link>
+      <description>Cut RAG pipeline latency 87% by splitting retrieval and generation — real numbers, code, and the cache mistake most teams make.</description>
+      <pubDate>Sun, 31 May 2026 21:52:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-rag-latency-before-users-quit/</guid>
+    </item>
     <item>
       <title>5G kills backend metrics you trust</title>
       <link>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</link>
@@ -138,13 +145,6 @@
       <description>How we cut RAG pipeline latency 80% in prod — vector store choice, caching, and the plumbing mistakes most tutorials skip. Costs, benchmarks, and code included.</description>
       <pubDate>Sun, 31 May 2026 15:50:19 +0000</pubDate>
       <guid>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</guid>
-    </item>
-    <item>
-      <title>Pool size wrong? Your DB spills</title>
-      <link>https://kubaik.github.io/pool-size-wrong-your-db-spills/</link>
-      <description>Cut database connection pool latency 50% by ditching the 5× CPU cores myth — real benchmarks, memory math, and the timeout that breaks everything</description>
-      <pubDate>Sun, 31 May 2026 15:47:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-wrong-your-db-spills/</guid>
     </item>
   </channel>
 </rss>
