@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:47:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:50:29 +0000</lastBuildDate>
+    <item>
+      <title>Multi-agent prod failures demystified</title>
+      <link>https://kubaik.github.io/multi-agent-prod-failures-demystified/</link>
+      <description>Cut multi-agent system costs 62% with idempotency and observability — the negotiation loops, Redis OOM risks, and latency traps most teams miss before Black Friday hits.</description>
+      <pubDate>Sun, 31 May 2026 19:50:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-prod-failures-demystified/</guid>
+    </item>
     <item>
       <title>Leak-proof Postgres pools in serverless</title>
       <link>https://kubaik.github.io/leak-proof-postgres-pools-in-serverless/</link>
@@ -138,13 +145,6 @@
       <description>Stop polishing your resume — build a $12/month system that proves you can ship production code. 3 real portfolios that landed remote jobs from Nairobi in 2026.</description>
       <pubDate>Sun, 31 May 2026 13:08:06 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-jobs-stop-polishing-start-shipping/</guid>
-    </item>
-    <item>
-      <title>Laptop LLM: waste of time or real tool?</title>
-      <link>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</link>
-      <description>Run a 7B LLM on a 16GB laptop with &lt;1s token latency — memory budget, thermal limits, and wrapper code that actually works in 2026.</description>
-      <pubDate>Sun, 31 May 2026 12:00:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</guid>
     </item>
   </channel>
 </rss>
