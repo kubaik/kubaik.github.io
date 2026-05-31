@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 17:59:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 18:02:52 +0000</lastBuildDate>
+    <item>
+      <title>Remote salary hack: 3x offers in 10 minutes</title>
+      <link>https://kubaik.github.io/remote-salary-hack-3x-offers-in-10-minutes/</link>
+      <description>Negotiate remote salaries with 3x uplift using PPP-adjusted anchors — Numbeo, Levels.fyi, and Python 3.11. Real results from 12 negotiations in 2026.</description>
+      <pubDate>Sun, 31 May 2026 18:02:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-salary-hack-3x-offers-in-10-minutes/</guid>
+    </item>
     <item>
       <title>Save 40% on AWS: Graviton + spot done right</title>
       <link>https://kubaik.github.io/save-40-on-aws-graviton-spot-done-right/</link>
@@ -138,13 +145,6 @@
       <description>It worked fine for 100 users, but when we ran the first load test with Locust—just 10k requests in 5 minutes—we saw 8-second p95 latency and 40% 5xx…</description>
       <pubDate>Sun, 31 May 2026 10:36:27 +0000</pubDate>
       <guid>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</guid>
-    </item>
-    <item>
-      <title>Reverse-engineer remote budgets in 3 emails</title>
-      <link>https://kubaik.github.io/reverse-engineer-remote-budgets-in-3-emails/</link>
-      <description>Learn the 3-email sequence that closed remote salaries 8–33% higher in 2026 — with a free Google Sheets model, fee calculator, and actual payout data from clients in the US, EU, and Latin America.</description>
-      <pubDate>Sun, 31 May 2026 10:05:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/reverse-engineer-remote-budgets-in-3-emails/</guid>
     </item>
   </channel>
 </rss>
