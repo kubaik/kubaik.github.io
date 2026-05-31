@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 05:47:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 05:50:51 +0000</lastBuildDate>
+    <item>
+      <title>2026’s 2 highest-paying AI skill stacks</title>
+      <link>https://kubaik.github.io/2026s-2-highest-paying-ai-skill-stacks/</link>
+      <description>Cut AI salary premiums 15–22%: prompt RAG vs MLOps+vector search in 2026 with concrete benchmarks, stack choices, and hiring data. Learn which skill actually moves the needle.</description>
+      <pubDate>Sun, 31 May 2026 05:50:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026s-2-highest-paying-ai-skill-stacks/</guid>
+    </item>
     <item>
       <title>Set connection pool size too high? Rollback hell awaits</title>
       <link>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</link>
@@ -138,13 +145,6 @@
       <description>Discover which AI skills deliver 30% salary bumps in 2026 — vector search vs. prompt tuning with concrete benchmarks, costs, and salary ranges from real job postings.</description>
       <pubDate>Sat, 30 May 2026 20:11:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-worth-30-more-salary-in-2026/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: hidden bottlenecks exposed</title>
-      <link>https://kubaik.github.io/rag-in-prod-hidden-bottlenecks-exposed/</link>
-      <description>Cut RAG pipeline latency 82% — connection leaks, VRAM spikes, and stale indexes exposed. Real numbers from 10k concurrent users on a $342 GPU instance.</description>
-      <pubDate>Sat, 30 May 2026 19:58:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-hidden-bottlenecks-exposed/</guid>
     </item>
   </channel>
 </rss>
