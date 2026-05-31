@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 06:48:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 06:50:17 +0000</lastBuildDate>
+    <item>
+      <title>Convince clients to pay you more (no guilt)</title>
+      <link>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</link>
+      <description>Increase remote salary 66% with a one-page package—swap location discount for risk reduction and land 3,500 USD/month from clients who initially offered 2,000 USD.</description>
+      <pubDate>Sun, 31 May 2026 06:50:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</guid>
+    </item>
     <item>
       <title>Portfolio hacks for African devs to land remote jobs</title>
       <link>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 85%: LLMs vs vector search in 2026 salary data — concrete benchmarks, cost data, and the skill that pays 25% more.</description>
       <pubDate>Sat, 30 May 2026 21:23:05 +0000</pubDate>
       <guid>https://kubaik.github.io/rank-vector-skills-for-2026-salaries/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: the load tests fail</title>
-      <link>https://kubaik.github.io/rag-pipelines-the-load-tests-fail/</link>
-      <description>The goal: cut support tickets by 30% by letting users self-serve answers on loans, fees, and account issues.</description>
-      <pubDate>Sat, 30 May 2026 20:46:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-the-load-tests-fail/</guid>
     </item>
   </channel>
 </rss>
