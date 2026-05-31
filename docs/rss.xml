@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 00:19:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 01:34:36 +0000</lastBuildDate>
     <item>
       <title>4 hidden costs of RAG in production</title>
       <link>https://kubaik.github.io/4-hidden-costs-of-rag-in-production/</link>
@@ -40,13 +40,6 @@
       <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
       <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
       <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: 3 hidden production traps</title>
-      <link>https://kubaik.github.io/rag-pipelines-3-hidden-production-traps/</link>
-      <description>Cut RAG pipeline latency 91% and cost 80% with RedisSearch, reranking, and smart routing — the mistakes most tutorials ignore, with real numbers and code.</description>
-      <pubDate>Sat, 30 May 2026 22:54:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-3-hidden-production-traps/</guid>
     </item>
     <item>
       <title>Ship a demo, not a resume</title>
@@ -145,6 +138,13 @@
       <description>Cut database pool latency 60% by sizing max connections to concurrency, not CPU cores — the mistake 80% of teams made in 2026.</description>
       <pubDate>Sat, 30 May 2026 18:20:56 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</guid>
+    </item>
+    <item>
+      <title>Build a portfolio that converts remotely</title>
+      <link>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</link>
+      <description>Build a remote portfolio that converts: use production-grade systems, not demos. Real metrics, cost control, and incident response matter more than GitHub stars. Includes FastAPI, Redis, Locust examples and 2026 hiring insights.</description>
+      <pubDate>Sat, 30 May 2026 18:03:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</guid>
     </item>
   </channel>
 </rss>
