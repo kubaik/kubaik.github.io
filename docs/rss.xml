@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:47:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 15:50:37 +0000</lastBuildDate>
+    <item>
+      <title>Production RAG pipelines: the hidden bottlenecks</title>
+      <link>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</link>
+      <description>How we cut RAG pipeline latency 80% in prod — vector store choice, caching, and the plumbing mistakes most tutorials skip. Costs, benchmarks, and code included.</description>
+      <pubDate>Sun, 31 May 2026 15:50:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</guid>
+    </item>
     <item>
       <title>Pool size wrong? Your DB spills</title>
       <link>https://kubaik.github.io/pool-size-wrong-your-db-spills/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary 66% with a one-page package—swap location discount for risk reduction and land 3,500 USD/month from clients who initially offered 2,000 USD.</description>
       <pubDate>Sun, 31 May 2026 06:50:00 +0000</pubDate>
       <guid>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</guid>
-    </item>
-    <item>
-      <title>Portfolio hacks for African devs to land remote jobs</title>
-      <link>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</link>
-      <description>Ship one project, get hired remotely — how to build a portfolio that actually works from Africa. 250-line simulator beats 2000-line monorepo every time.</description>
-      <pubDate>Sun, 31 May 2026 06:42:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
