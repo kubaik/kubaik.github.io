@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:24:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:41:54 +0000</lastBuildDate>
     <item>
       <title>Portfolio: ship small, prove impact, get hired</title>
       <link>https://kubaik.github.io/portfolio-ship-small-prove-impact-get-hired/</link>
@@ -98,13 +98,6 @@
       <guid>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</guid>
     </item>
     <item>
-      <title>Compare WebSockets, SSE &amp; polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-polling/</link>
-      <description>WebSocket vs SSE vs long polling in 2026: latency, memory, and cost numbers you can trust. Pick the right push tech for your next feature.</description>
-      <pubDate>Sun, 31 May 2026 15:13:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-polling/</guid>
-    </item>
-    <item>
       <title>AI skills that pay: prompt eng vs finetuning salaries</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</link>
       <description>Fine-tuning salaries are $165k vs $125k for prompt engineering in 2026. See the data, tools, and ROI that separate the two paths.</description>
@@ -145,6 +138,13 @@
       <description>Run a 7B LLM on a 16GB laptop with &lt;1s token latency — memory budget, thermal limits, and wrapper code that actually works in 2026.</description>
       <pubDate>Sun, 31 May 2026 12:00:00 +0000</pubDate>
       <guid>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</guid>
+    </item>
+    <item>
+      <title>Rethink DB Pool Size: Memory, Not Cores</title>
+      <link>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</link>
+      <description>Cut API latency 60% by fixing connection pool sizing — stop setting max pool size to CPU cores and follow this 2026-tested formula instead.</description>
+      <pubDate>Sun, 31 May 2026 11:56:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</guid>
     </item>
   </channel>
 </rss>
