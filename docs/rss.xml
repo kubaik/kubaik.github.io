@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 22:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 23:18:28 +0000</lastBuildDate>
     <item>
       <title>2026 AI salaries: what skills pay</title>
       <link>https://kubaik.github.io/2026-ai-salaries-what-skills-pay/</link>
@@ -119,13 +119,6 @@
       <guid>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</guid>
     </item>
     <item>
-      <title>Compare WebSockets, SSE, and long polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-and-long-polling/</link>
-      <description>My first mistake was assuming 500ms latency would translate to 500ms end-to-end.</description>
-      <pubDate>Sun, 31 May 2026 19:03:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-and-long-polling/</guid>
-    </item>
-    <item>
       <title>RAG at scale: why 6K QPS breaks your FAISS</title>
       <link>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</link>
       <description>Cut RAG pipeline costs 88% at 10K QPS — FAISS sharding, Graviton rerankers, and the cache stampede mistake most teams miss.</description>
@@ -145,6 +138,13 @@
       <description>Cut AWS bill 42% using Graviton4 ARM and 70% Spot instances — cache warming, drain loops, and the 3 mistakes most teams make in 2026</description>
       <pubDate>Sun, 31 May 2026 17:59:30 +0000</pubDate>
       <guid>https://kubaik.github.io/save-40-on-aws-graviton-spot-done-right/</guid>
+    </item>
+    <item>
+      <title>AI salary killers: fine-tuning vs prompt ops in 2026</title>
+      <link>https://kubaik.github.io/ai-salary-killers-fine-tuning-vs-prompt-ops-in-2026/</link>
+      <description>Fine-tuning vs prompt ops: compare salaries, latency, and costs in 2026. See real AWS data, LangChain vs LangGraph stacks, and the 23% salary gap.</description>
+      <pubDate>Sun, 31 May 2026 17:43:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-killers-fine-tuning-vs-prompt-ops-in-2026/</guid>
     </item>
   </channel>
 </rss>
