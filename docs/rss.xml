@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:03:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:06:45 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that pay: TensorFlow vs PyTorch in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</link>
+      <description>The 2026 Stack Overflow AI Skills Report shows that engineers who can debug GPU OOM errors, optimize data loaders, and deploy models without memory leaks…</description>
+      <pubDate>Sun, 31 May 2026 19:06:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</guid>
+    </item>
     <item>
       <title>Compare WebSockets, SSE, and long polling</title>
       <link>https://kubaik.github.io/compare-websockets-sse-and-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% by fixing connection pool sizing — stop setting max pool size to CPU cores and follow this 2026-tested formula instead.</description>
       <pubDate>Sun, 31 May 2026 11:56:41 +0000</pubDate>
       <guid>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</guid>
-    </item>
-    <item>
-      <title>Portfolio mistake most devs make</title>
-      <link>https://kubaik.github.io/portfolio-mistake-most-devs-make/</link>
-      <description>Portfolio mistake most devs make: 80 hours spent on five projects gets ignored while one system with production artifacts lands remote offers — here’s the data from 200+ interviews with Nairobi engineers in 2026</description>
-      <pubDate>Sun, 31 May 2026 11:31:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-mistake-most-devs-make/</guid>
     </item>
   </channel>
 </rss>
