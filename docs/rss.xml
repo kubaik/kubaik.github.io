@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 06:38:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 06:42:31 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio hacks for African devs to land remote jobs</title>
+      <link>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</link>
+      <description>Ship one project, get hired remotely — how to build a portfolio that actually works from Africa. 250-line simulator beats 2000-line monorepo every time.</description>
+      <pubDate>Sun, 31 May 2026 06:42:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</guid>
+    </item>
     <item>
       <title>Edge functions in 2026: where they really win</title>
       <link>https://kubaik.github.io/edge-functions-in-2026-where-they-really-win/</link>
@@ -138,13 +145,6 @@
       <description>The goal: cut support tickets by 30% by letting users self-serve answers on loans, fees, and account issues.</description>
       <pubDate>Sat, 30 May 2026 20:46:08 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-the-load-tests-fail/</guid>
-    </item>
-    <item>
-      <title>MCP servers: turning AI from magic into machinery</title>
-      <link>https://kubaik.github.io/mcp-servers-turning-ai-from-magic-into-machinery/</link>
-      <description>Cut AI tool latency 65% with MCP servers — connection pooling, streaming responses, and the tool registration mistake that cost teams 2 days of debugging in 2026.</description>
-      <pubDate>Sat, 30 May 2026 20:22:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-turning-ai-from-magic-into-machinery/</guid>
     </item>
   </channel>
 </rss>
