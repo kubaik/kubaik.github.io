@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:50:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 16:45:36 +0000</lastBuildDate>
     <item>
       <title>Production RAG pipelines: the hidden bottlenecks</title>
       <link>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</link>
@@ -133,18 +133,18 @@
       <guid>https://kubaik.github.io/mis-setting-your-pool-size-ruins-queries/</guid>
     </item>
     <item>
-      <title>RAG in prod: the hidden bottlenecks</title>
-      <link>https://kubaik.github.io/rag-in-prod-the-hidden-bottlenecks/</link>
-      <description>Cut RAG pipeline latency 93% with hybrid FAISS+pgvector, normalised cache keys, and model pre-warming — without bigger GPUs.</description>
-      <pubDate>Sun, 31 May 2026 06:56:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-the-hidden-bottlenecks/</guid>
-    </item>
-    <item>
       <title>Convince clients to pay you more (no guilt)</title>
       <link>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</link>
       <description>Increase remote salary 66% with a one-page package—swap location discount for risk reduction and land 3,500 USD/month from clients who initially offered 2,000 USD.</description>
       <pubDate>Sun, 31 May 2026 06:50:00 +0000</pubDate>
       <guid>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</guid>
+    </item>
+    <item>
+      <title>Portfolio hacks for African devs to land remote jobs</title>
+      <link>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</link>
+      <description>Ship one project, get hired remotely — how to build a portfolio that actually works from Africa. 250-line simulator beats 2000-line monorepo every time.</description>
+      <pubDate>Sun, 31 May 2026 06:42:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
