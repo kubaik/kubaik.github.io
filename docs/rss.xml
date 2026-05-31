@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:09:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 15:10:38 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that pay: prompt eng vs finetuning salaries</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</link>
+      <description>Fine-tuning salaries are $165k vs $125k for prompt engineering in 2026. See the data, tools, and ROI that separate the two paths.</description>
+      <pubDate>Sun, 31 May 2026 15:10:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</guid>
+    </item>
     <item>
       <title>Land remote job offers 30% higher with this script</title>
       <link>https://kubaik.github.io/land-remote-job-offers-30-higher-with-this-script/</link>
@@ -138,13 +145,6 @@
       <description>Cut PostgreSQL pool failures 70% by shrinking pools — Node.js 20 LTS, Kubernetes, and PostgreSQL 16 benchmarks from 2026</description>
       <pubDate>Sun, 31 May 2026 05:05:41 +0000</pubDate>
       <guid>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</guid>
-    </item>
-    <item>
-      <title>Land $65k remote from $3k-city</title>
-      <link>https://kubaik.github.io/land-65k-remote-from-3k-city/</link>
-      <description>Land fair remote pay from higher-cost countries — use Parabol async negotiation, Wise/Payoneer for payments, and a spreadsheet formula that adjusts for your cost of living and client budget.</description>
-      <pubDate>Sun, 31 May 2026 02:39:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/land-65k-remote-from-3k-city/</guid>
     </item>
   </channel>
 </rss>
