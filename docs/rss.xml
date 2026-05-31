@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 10:31:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 10:36:44 +0000</lastBuildDate>
+    <item>
+      <title>Load-testing RAG: 10k RPM lessons</title>
+      <link>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</link>
+      <description>It worked fine for 100 users, but when we ran the first load test with Locust—just 10k requests in 5 minutes—we saw 8-second p95 latency and 40% 5xx…</description>
+      <pubDate>Sun, 31 May 2026 10:36:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</guid>
+    </item>
     <item>
       <title>Reverse-engineer remote budgets in 3 emails</title>
       <link>https://kubaik.github.io/reverse-engineer-remote-budgets-in-3-emails/</link>
@@ -138,13 +145,6 @@
       <description>Ship a demo, not a resume — 93% of African devs fail because their portfolios don’t prove they can build systems that work under load. Learn how to build a high-signal remote portfolio in 2026.</description>
       <pubDate>Sat, 30 May 2026 22:51:13 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-a-demo-not-a-resume/</guid>
-    </item>
-    <item>
-      <title>Fine-tuning vs prompts: salary gap in 2026</title>
-      <link>https://kubaik.github.io/fine-tuning-vs-prompts-salary-gap-in-2026/</link>
-      <description>Fine-tune 7B models 40% cheaper than prompt-only chains — and earn 2.3x more: model selection, LoRA, vLLM, and the deployment mistakes most teams make.</description>
-      <pubDate>Sat, 30 May 2026 22:43:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tuning-vs-prompts-salary-gap-in-2026/</guid>
     </item>
   </channel>
 </rss>
