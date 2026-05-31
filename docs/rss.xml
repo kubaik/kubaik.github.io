@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 13:03:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 13:08:23 +0000</lastBuildDate>
+    <item>
+      <title>Remote jobs: stop polishing, start shipping</title>
+      <link>https://kubaik.github.io/remote-jobs-stop-polishing-start-shipping/</link>
+      <description>Stop polishing your resume — build a $12/month system that proves you can ship production code. 3 real portfolios that landed remote jobs from Nairobi in 2026.</description>
+      <pubDate>Sun, 31 May 2026 13:08:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-jobs-stop-polishing-start-shipping/</guid>
+    </item>
     <item>
       <title>Laptop LLM: waste of time or real tool?</title>
       <link>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.</description>
       <pubDate>Sun, 31 May 2026 00:19:06 +0000</pubDate>
       <guid>https://kubaik.github.io/4-hidden-costs-of-rag-in-production/</guid>
-    </item>
-    <item>
-      <title>Designing AI systems that don’t crumble</title>
-      <link>https://kubaik.github.io/designing-ai-systems-that-dont-crumble/</link>
-      <description>Cut AI inference costs 60% with prompt caching, provider fallbacks, and token budgets — the boring patterns that actually work in 2026 production systems.</description>
-      <pubDate>Sat, 30 May 2026 23:59:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/designing-ai-systems-that-dont-crumble/</guid>
     </item>
   </channel>
 </rss>
