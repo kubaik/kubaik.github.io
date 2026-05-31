@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 17:23:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 17:27:45 +0000</lastBuildDate>
+    <item>
+      <title>African devs: build a portfolio that hires you</title>
+      <link>https://kubaik.github.io/african-devs-build-a-portfolio-that-hires-you/</link>
+      <description>Build a portfolio that lands remote jobs from Africa in 2026 — stop grinding LeetCode and start shipping impact. Includes real systems, debugging artifacts, and the 3 concrete numbers you need.</description>
+      <pubDate>Sun, 31 May 2026 17:27:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-build-a-portfolio-that-hires-you/</guid>
+    </item>
     <item>
       <title>Choose the right real-time protocol</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-protocol/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-tenant SaaS database costs 50% with schema versioning — real migrations, blast radius, and infra numbers from 2026 systems.</description>
       <pubDate>Sun, 31 May 2026 09:42:11 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-multi-tenant-sql-traps-pick-the-wrong-schema/</guid>
-    </item>
-    <item>
-      <title>Mis-setting your pool size ruins queries</title>
-      <link>https://kubaik.github.io/mis-setting-your-pool-size-ruins-queries/</link>
-      <description>Cut query latency 40% by setting pool size wrong? Shave 300 ms off p99 latency with the right pool size formula for PostgreSQL 16 and Node.js 20 LTS. Learn the one metric to watch and the circuit breaker to add.</description>
-      <pubDate>Sun, 31 May 2026 09:29:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-setting-your-pool-size-ruins-queries/</guid>
     </item>
   </channel>
 </rss>
