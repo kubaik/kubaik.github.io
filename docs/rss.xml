@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 09:42:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 09:45:37 +0000</lastBuildDate>
+    <item>
+      <title>Data skills that pay 28% more in 2026</title>
+      <link>https://kubaik.github.io/data-skills-that-pay-28-more-in-2026/</link>
+      <description>TensorFlow + TFX roles pay 28% more than PyTorch-only roles in 2026, but PyTorch + TorchServe cuts inference latency in half. Signal which stack to learn first.</description>
+      <pubDate>Sun, 31 May 2026 09:45:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-skills-that-pay-28-more-in-2026/</guid>
+    </item>
     <item>
       <title>Avoid multi-tenant SQL traps: pick the wrong schema</title>
       <link>https://kubaik.github.io/avoid-multi-tenant-sql-traps-pick-the-wrong-schema/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tune 7B models 40% cheaper than prompt-only chains — and earn 2.3x more: model selection, LoRA, vLLM, and the deployment mistakes most teams make.</description>
       <pubDate>Sat, 30 May 2026 22:43:03 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-vs-prompts-salary-gap-in-2026/</guid>
-    </item>
-    <item>
-      <title>50k builds: GitHub Actions vs CircleCI cost</title>
-      <link>https://kubaik.github.io/50k-builds-github-actions-vs-circleci-cost/</link>
-      <description>Slashed CI costs 22% at 50k builds by switching to CircleCI — real numbers, runner queue wait times, and cache storage gotchas most teams miss.</description>
-      <pubDate>Sat, 30 May 2026 22:17:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/50k-builds-github-actions-vs-circleci-cost/</guid>
     </item>
   </channel>
 </rss>
