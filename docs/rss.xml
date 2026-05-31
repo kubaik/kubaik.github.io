@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 06:50:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 06:53:09 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI salaries: which skills pay 25-42% more</title>
+      <link>https://kubaik.github.io/2026-ai-salaries-which-skills-pay-25-42-more/</link>
+      <description>AI skills that move the salary needle in 2026 — data-backed breakdown of prompt engineering vs AO&amp;MLOps, real benchmarks, and the one skill that pays 18% more.</description>
+      <pubDate>Sun, 31 May 2026 06:52:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-salaries-which-skills-pay-25-42-more/</guid>
+    </item>
     <item>
       <title>Convince clients to pay you more (no guilt)</title>
       <link>https://kubaik.github.io/convince-clients-to-pay-you-more-no-guilt/</link>
@@ -138,13 +145,6 @@
       <description>Land $120k remote offers: PPP-adjusted spreadsheet counter template that raised my Colombia salary 24% in 5 days</description>
       <pubDate>Sat, 30 May 2026 21:38:57 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-salary-playbook-120k-script/</guid>
-    </item>
-    <item>
-      <title>Rank vector skills for 2026 salaries</title>
-      <link>https://kubaik.github.io/rank-vector-skills-for-2026-salaries/</link>
-      <description>Cut API response time 85%: LLMs vs vector search in 2026 salary data — concrete benchmarks, cost data, and the skill that pays 25% more.</description>
-      <pubDate>Sat, 30 May 2026 21:23:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/rank-vector-skills-for-2026-salaries/</guid>
     </item>
   </channel>
 </rss>
