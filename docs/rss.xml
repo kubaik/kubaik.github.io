@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 21:33:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 21:38:11 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI salaries: MLOps vs prompt engineering</title>
+      <link>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</link>
+      <description>ML Ops vs prompt engineering salaries in 2026 — $215k vs $155k median, failure rates, cost savings, and the real skills that move the needle.</description>
+      <pubDate>Sun, 31 May 2026 21:37:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</guid>
+    </item>
     <item>
       <title>Ship real systems: Africa’s remote hiring proof</title>
       <link>https://kubaik.github.io/ship-real-systems-africas-remote-hiring-proof/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI coding budget waste with a $100/month cap — real token costs, guardrails, and when AI saves time vs when it burns cash in 2026.</description>
       <pubDate>Sun, 31 May 2026 15:16:24 +0000</pubDate>
       <guid>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</guid>
-    </item>
-    <item>
-      <title>AI skills that pay: prompt eng vs finetuning salaries</title>
-      <link>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</link>
-      <description>Fine-tuning salaries are $165k vs $125k for prompt engineering in 2026. See the data, tools, and ROI that separate the two paths.</description>
-      <pubDate>Sun, 31 May 2026 15:10:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</guid>
     </item>
   </channel>
 </rss>
