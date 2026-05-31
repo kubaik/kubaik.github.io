@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:02:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:03:20 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSockets, SSE, and long polling</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-and-long-polling/</link>
+      <description>My first mistake was assuming 500ms latency would translate to 500ms end-to-end.</description>
+      <pubDate>Sun, 31 May 2026 19:03:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-and-long-polling/</guid>
+    </item>
     <item>
       <title>RAG at scale: why 6K QPS breaks your FAISS</title>
       <link>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio mistake most devs make: 80 hours spent on five projects gets ignored while one system with production artifacts lands remote offers — here’s the data from 200+ interviews with Nairobi engineers in 2026</description>
       <pubDate>Sun, 31 May 2026 11:31:47 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-mistake-most-devs-make/</guid>
-    </item>
-    <item>
-      <title>Choose WebSocket, SSE, or Polling Wisely</title>
-      <link>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</link>
-      <description>Compare WebSockets vs SSE vs long polling in 2026 with concrete latency, cost, and memory numbers — pick the right push tech in 30 minutes.</description>
-      <pubDate>Sun, 31 May 2026 11:28:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</guid>
     </item>
   </channel>
 </rss>
