@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:06:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:24:42 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio: ship small, prove impact, get hired</title>
+      <link>https://kubaik.github.io/portfolio-ship-small-prove-impact-get-hired/</link>
+      <description>The honest answer is that a 500-line CRUD app with a README that explains the trade-offs will beat a 5,000-line monolith with no documentation every time.</description>
+      <pubDate>Sun, 31 May 2026 19:24:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-ship-small-prove-impact-get-hired/</guid>
+    </item>
     <item>
       <title>AI skills that pay: TensorFlow vs PyTorch in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Run a 7B LLM on a 16GB laptop with &lt;1s token latency — memory budget, thermal limits, and wrapper code that actually works in 2026.</description>
       <pubDate>Sun, 31 May 2026 12:00:00 +0000</pubDate>
       <guid>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</guid>
-    </item>
-    <item>
-      <title>Rethink DB Pool Size: Memory, Not Cores</title>
-      <link>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</link>
-      <description>Cut API latency 60% by fixing connection pool sizing — stop setting max pool size to CPU cores and follow this 2026-tested formula instead.</description>
-      <pubDate>Sun, 31 May 2026 11:56:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</guid>
     </item>
   </channel>
 </rss>
