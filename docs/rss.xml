@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:10:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 15:13:36 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSockets, SSE &amp; polling</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-polling/</link>
+      <description>WebSocket vs SSE vs long polling in 2026: latency, memory, and cost numbers you can trust. Pick the right push tech for your next feature.</description>
+      <pubDate>Sun, 31 May 2026 15:13:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-polling/</guid>
+    </item>
     <item>
       <title>AI skills that pay: prompt eng vs finetuning salaries</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-prompt-eng-vs-finetuning-salaries/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary premiums 15–22%: prompt RAG vs MLOps+vector search in 2026 with concrete benchmarks, stack choices, and hiring data. Learn which skill actually moves the needle.</description>
       <pubDate>Sun, 31 May 2026 05:50:42 +0000</pubDate>
       <guid>https://kubaik.github.io/2026s-2-highest-paying-ai-skill-stacks/</guid>
-    </item>
-    <item>
-      <title>Set connection pool size too high? Rollback hell awaits</title>
-      <link>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</link>
-      <description>Cut PostgreSQL pool failures 70% by shrinking pools — Node.js 20 LTS, Kubernetes, and PostgreSQL 16 benchmarks from 2026</description>
-      <pubDate>Sun, 31 May 2026 05:05:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</guid>
     </item>
   </channel>
 </rss>
