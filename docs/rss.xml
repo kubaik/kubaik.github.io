@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 20:49:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 20:53:53 +0000</lastBuildDate>
+    <item>
+      <title>Bargain remote rate: Node 20 + salary script</title>
+      <link>https://kubaik.github.io/bargain-remote-rate-node-20-salary-script/</link>
+      <description>Convert local costs to remote salary with Node 20 + live FX rates. Shows 17 contracts 2025-2026 and how transparent quoting beat pushback by 7-24 %.</description>
+      <pubDate>Sun, 31 May 2026 20:53:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/bargain-remote-rate-node-20-salary-script/</guid>
+    </item>
     <item>
       <title>RAG in prod: why 3-week meltdowns happen</title>
       <link>https://kubaik.github.io/rag-in-prod-why-3-week-meltdowns-happen/</link>
@@ -138,13 +145,6 @@
       <description>Land remote jobs 30% higher with a simple spreadsheet and email templates — FX buffers, market uplift, and scripts that work in 2026</description>
       <pubDate>Sun, 31 May 2026 14:23:11 +0000</pubDate>
       <guid>https://kubaik.github.io/land-remote-job-offers-30-higher-with-this-script/</guid>
-    </item>
-    <item>
-      <title>Fix RAG latency before you scale</title>
-      <link>https://kubaik.github.io/fix-rag-latency-before-you-scale/</link>
-      <description>Cut RAG latency 80% and AWS bill 39% by collapsing retrieval into the API process. Learn the exact steps most tutorials skip: in-memory indexes, gRPC over Unix sockets, quantised embeddings, and bloom filters.</description>
-      <pubDate>Sun, 31 May 2026 14:15:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-rag-latency-before-you-scale/</guid>
     </item>
   </channel>
 </rss>
