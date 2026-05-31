@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 02:09:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 02:14:36 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSockets, SSE, long polling in 2026</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-long-polling-in-2026/</link>
+      <description>Pick the right real-time tool in 2026 — concrete latency, cost, and Safari support data behind WebSockets, SSE, and long polling for 1k concurrent users.</description>
+      <pubDate>Sun, 31 May 2026 02:14:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling-in-2026/</guid>
+    </item>
     <item>
       <title>Ship projects, not hype: portfolio wins remote jobs</title>
       <link>https://kubaik.github.io/ship-projects-not-hype-portfolio-wins-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Land remote jobs: salary cheat sheet for 2026 — compute a defensible ask in 5 minutes using US market data and your city’s cost-of-living index.</description>
       <pubDate>Sat, 30 May 2026 19:03:40 +0000</pubDate>
       <guid>https://kubaik.github.io/land-remote-jobs-salary-cheat-sheet-for-2026/</guid>
-    </item>
-    <item>
-      <title>Stop wasting database connections on CPU cores</title>
-      <link>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</link>
-      <description>Cut database pool latency 60% by sizing max connections to concurrency, not CPU cores — the mistake 80% of teams made in 2026.</description>
-      <pubDate>Sat, 30 May 2026 18:20:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</guid>
     </item>
   </channel>
 </rss>
