@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 11:54:44 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 11:56:57 +0000</lastBuildDate>
+    <item>
+      <title>Rethink DB Pool Size: Memory, Not Cores</title>
+      <link>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</link>
+      <description>Cut API latency 60% by fixing connection pool sizing — stop setting max pool size to CPU cores and follow this 2026-tested formula instead.</description>
+      <pubDate>Sun, 31 May 2026 11:56:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</guid>
+    </item>
     <item>
       <title>Portfolio mistake most devs make</title>
       <link>https://kubaik.github.io/portfolio-mistake-most-devs-make/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salaries from lower-cost countries with data-driven rates, currency buffers, and negotiation tactics that actually work in 2026</description>
       <pubDate>Sat, 30 May 2026 23:56:23 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-salary-figure-how-much-to-ask/</guid>
-    </item>
-    <item>
-      <title>Drop the pool size myth</title>
-      <link>https://kubaik.github.io/drop-the-pool-size-myth/</link>
-      <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
-      <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
     </item>
   </channel>
 </rss>
