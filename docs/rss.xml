@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:44:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 15:47:37 +0000</lastBuildDate>
+    <item>
+      <title>Pool size wrong? Your DB spills</title>
+      <link>https://kubaik.github.io/pool-size-wrong-your-db-spills/</link>
+      <description>Cut database connection pool latency 50% by ditching the 5× CPU cores myth — real benchmarks, memory math, and the timeout that breaks everything</description>
+      <pubDate>Sun, 31 May 2026 15:47:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-wrong-your-db-spills/</guid>
+    </item>
     <item>
       <title>Is $100/month AI worth indie devs?</title>
       <link>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</link>
@@ -138,13 +145,6 @@
       <description>Ship one project, get hired remotely — how to build a portfolio that actually works from Africa. 250-line simulator beats 2000-line monorepo every time.</description>
       <pubDate>Sun, 31 May 2026 06:42:15 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-hacks-for-african-devs-to-land-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>Edge functions in 2026: where they really win</title>
-      <link>https://kubaik.github.io/edge-functions-in-2026-where-they-really-win/</link>
-      <description>The latency to Singapore dropped from 320 ms to 65 ms, and the bill dropped to $8/month.</description>
-      <pubDate>Sun, 31 May 2026 06:09:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-functions-in-2026-where-they-really-win/</guid>
     </item>
   </channel>
 </rss>
