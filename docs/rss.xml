@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 19:45:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 19:47:18 +0000</lastBuildDate>
+    <item>
+      <title>Leak-proof Postgres pools in serverless</title>
+      <link>https://kubaik.github.io/leak-proof-postgres-pools-in-serverless/</link>
+      <description>Avoid 32 connection errors and cut P95 latency 63% by capping pool size at the minimum of system limits and saturated workload — the mistake 90% of teams still make in 2026.</description>
+      <pubDate>Sun, 31 May 2026 19:47:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/leak-proof-postgres-pools-in-serverless/</guid>
+    </item>
     <item>
       <title>Portfolio: ship small, prove impact, get hired</title>
       <link>https://kubaik.github.io/portfolio-ship-small-prove-impact-get-hired/</link>
@@ -138,13 +145,6 @@
       <description>Run a 7B LLM on a 16GB laptop with &lt;1s token latency — memory budget, thermal limits, and wrapper code that actually works in 2026.</description>
       <pubDate>Sun, 31 May 2026 12:00:00 +0000</pubDate>
       <guid>https://kubaik.github.io/laptop-llm-waste-of-time-or-real-tool/</guid>
-    </item>
-    <item>
-      <title>Rethink DB Pool Size: Memory, Not Cores</title>
-      <link>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</link>
-      <description>Cut API latency 60% by fixing connection pool sizing — stop setting max pool size to CPU cores and follow this 2026-tested formula instead.</description>
-      <pubDate>Sun, 31 May 2026 11:56:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/rethink-db-pool-size-memory-not-cores/</guid>
     </item>
   </channel>
 </rss>
