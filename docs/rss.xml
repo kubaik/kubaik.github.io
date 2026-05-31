@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 11:32:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 11:51:47 +0000</lastBuildDate>
     <item>
       <title>Portfolio mistake most devs make</title>
       <link>https://kubaik.github.io/portfolio-mistake-most-devs-make/</link>
@@ -54,13 +54,6 @@
       <description>Cut query latency 40% by setting pool size wrong? Shave 300 ms off p99 latency with the right pool size formula for PostgreSQL 16 and Node.js 20 LTS. Learn the one metric to watch and the circuit breaker to add.</description>
       <pubDate>Sun, 31 May 2026 09:29:26 +0000</pubDate>
       <guid>https://kubaik.github.io/mis-setting-your-pool-size-ruins-queries/</guid>
-    </item>
-    <item>
-      <title>Choose wisely: WebSocket, SSE, or long polling</title>
-      <link>https://kubaik.github.io/choose-wisely-websocket-sse-or-long-polling/</link>
-      <description>Cut realtime overhead 40% by choosing WebSocket, SSE, or long polling — latency benchmarks, config snippets, and the TCP gotcha most teams miss in 2026.</description>
-      <pubDate>Sun, 31 May 2026 08:32:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-wisely-websocket-sse-or-long-polling/</guid>
     </item>
     <item>
       <title>RAG in prod: the hidden bottlenecks</title>
@@ -145,6 +138,13 @@
       <description>Negotiate remote salaries from lower-cost countries with data-driven rates, currency buffers, and negotiation tactics that actually work in 2026</description>
       <pubDate>Sat, 30 May 2026 23:56:23 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-salary-figure-how-much-to-ask/</guid>
+    </item>
+    <item>
+      <title>Drop the pool size myth</title>
+      <link>https://kubaik.github.io/drop-the-pool-size-myth/</link>
+      <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
+      <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
     </item>
   </channel>
 </rss>
