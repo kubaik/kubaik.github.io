@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 18:49:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 18:53:18 +0000</lastBuildDate>
+    <item>
+      <title>RAG at scale: why 6K QPS breaks your FAISS</title>
+      <link>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</link>
+      <description>Cut RAG pipeline costs 88% at 10K QPS — FAISS sharding, Graviton rerankers, and the cache stampede mistake most teams miss.</description>
+      <pubDate>Sun, 31 May 2026 18:53:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</guid>
+    </item>
     <item>
       <title>Remote salary hack: 3x offers in 10 minutes</title>
       <link>https://kubaik.github.io/remote-salary-hack-3x-offers-in-10-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSockets vs SSE vs long polling in 2026 with concrete latency, cost, and memory numbers — pick the right push tech in 30 minutes.</description>
       <pubDate>Sun, 31 May 2026 11:28:42 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</guid>
-    </item>
-    <item>
-      <title>Load-testing RAG: 10k RPM lessons</title>
-      <link>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</link>
-      <description>It worked fine for 100 users, but when we ran the first load test with Locust—just 10k requests in 5 minutes—we saw 8-second p95 latency and 40% 5xx…</description>
-      <pubDate>Sun, 31 May 2026 10:36:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</guid>
     </item>
   </channel>
 </rss>
