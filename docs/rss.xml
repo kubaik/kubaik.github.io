@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 09:45:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 10:00:22 +0000</lastBuildDate>
     <item>
       <title>Data skills that pay 28% more in 2026</title>
       <link>https://kubaik.github.io/data-skills-that-pay-28-more-in-2026/</link>
@@ -40,13 +40,6 @@
       <description>Cut RAG pipeline latency 93% with hybrid FAISS+pgvector, normalised cache keys, and model pre-warming — without bigger GPUs.</description>
       <pubDate>Sun, 31 May 2026 06:56:00 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-the-hidden-bottlenecks/</guid>
-    </item>
-    <item>
-      <title>2026 AI salaries: which skills pay 25-42% more</title>
-      <link>https://kubaik.github.io/2026-ai-salaries-which-skills-pay-25-42-more/</link>
-      <description>AI skills that move the salary needle in 2026 — data-backed breakdown of prompt engineering vs AO&amp;MLOps, real benchmarks, and the one skill that pays 18% more.</description>
-      <pubDate>Sun, 31 May 2026 06:52:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-salaries-which-skills-pay-25-42-more/</guid>
     </item>
     <item>
       <title>Convince clients to pay you more (no guilt)</title>
@@ -145,6 +138,13 @@
       <description>Fine-tune 7B models 40% cheaper than prompt-only chains — and earn 2.3x more: model selection, LoRA, vLLM, and the deployment mistakes most teams make.</description>
       <pubDate>Sat, 30 May 2026 22:43:03 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-vs-prompts-salary-gap-in-2026/</guid>
+    </item>
+    <item>
+      <title>50k builds: GitHub Actions vs CircleCI cost</title>
+      <link>https://kubaik.github.io/50k-builds-github-actions-vs-circleci-cost/</link>
+      <description>Slashed CI costs 22% at 50k builds by switching to CircleCI — real numbers, runner queue wait times, and cache storage gotchas most teams miss.</description>
+      <pubDate>Sat, 30 May 2026 22:17:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/50k-builds-github-actions-vs-circleci-cost/</guid>
     </item>
   </channel>
 </rss>
