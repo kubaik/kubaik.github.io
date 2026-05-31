@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 05:01:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 05:05:59 +0000</lastBuildDate>
+    <item>
+      <title>Set connection pool size too high? Rollback hell awaits</title>
+      <link>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</link>
+      <description>Cut PostgreSQL pool failures 70% by shrinking pools — Node.js 20 LTS, Kubernetes, and PostgreSQL 16 benchmarks from 2026</description>
+      <pubDate>Sun, 31 May 2026 05:05:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/set-connection-pool-size-too-high-rollback-hell-awaits/</guid>
+    </item>
     <item>
       <title>Land $65k remote from $3k-city</title>
       <link>https://kubaik.github.io/land-65k-remote-from-3k-city/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 82% — connection leaks, VRAM spikes, and stale indexes exposed. Real numbers from 10k concurrent users on a $342 GPU instance.</description>
       <pubDate>Sat, 30 May 2026 19:58:05 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-hidden-bottlenecks-exposed/</guid>
-    </item>
-    <item>
-      <title>7 non-traditional paths to shipping real products</title>
-      <link>https://kubaik.github.io/7-non-traditional-paths-to-shipping-real-products/</link>
-      <description>Ship a real product in 10 minutes with Vercel + Next.js — real benchmarks, costs, and the mistakes that cost teams $8k before shipping.</description>
-      <pubDate>Sat, 30 May 2026 19:15:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-non-traditional-paths-to-shipping-real-products/</guid>
     </item>
   </channel>
 </rss>
