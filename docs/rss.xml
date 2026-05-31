@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 21:52:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 21:56:08 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio beats LeetCode: hire without Silicon Valley</title>
+      <link>https://kubaik.github.io/portfolio-beats-leetcode-hire-without-silicon-valley/</link>
+      <description>Cut interview time 70% with a production-grade portfolio — real Grafana dashboards, health endpoints, and one repo beat 200 GitHub stars. 2026 numbers, tools, and post-mortem scripts included.</description>
+      <pubDate>Sun, 31 May 2026 21:55:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-beats-leetcode-hire-without-silicon-valley/</guid>
+    </item>
     <item>
       <title>Fix RAG latency before users quit</title>
       <link>https://kubaik.github.io/fix-rag-latency-before-users-quit/</link>
@@ -138,13 +145,6 @@
       <description>Land a $110k remote salary from a lower-cost country in 2026 — exact negotiation brief, FX hedging script, and cost-to-company table used to close 14 deals since 2023.</description>
       <pubDate>Sun, 31 May 2026 16:54:36 +0000</pubDate>
       <guid>https://kubaik.github.io/land-remote-pay-with-us-rates-in-2026/</guid>
-    </item>
-    <item>
-      <title>Production RAG pipelines: the hidden bottlenecks</title>
-      <link>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</link>
-      <description>How we cut RAG pipeline latency 80% in prod — vector store choice, caching, and the plumbing mistakes most tutorials skip. Costs, benchmarks, and code included.</description>
-      <pubDate>Sun, 31 May 2026 15:50:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-rag-pipelines-the-hidden-bottlenecks/</guid>
     </item>
   </channel>
 </rss>
