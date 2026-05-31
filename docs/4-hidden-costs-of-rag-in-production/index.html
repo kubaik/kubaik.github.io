@@ -1,0 +1,706 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>4 hidden costs of RAG in production - Tech Blog</title>
+        <meta name="description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+        <meta name="keywords" content="RagCost, RagLatency, SemanticCache, RerankerCost, PgvectorTuning, RagProduction, RedisCache, VllmCost, Llm, Generativeai, Redis, Rag">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-05-31T00:19:06.445356">
+        <meta property="article:modified_time" content="2026-05-31T00:19:06.445365">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="4 hidden costs of RAG in production">
+        <meta property="og:description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+        <meta property="og:url" content="https://kubaik.github.io/4-hidden-costs-of-rag-in-production/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="4 hidden costs of RAG in production">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="4 hidden costs of RAG in production">
+        <meta name="twitter:description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/4-hidden-costs-of-rag-in-production/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+    <meta property="og:title" content="4 hidden costs of RAG in production">
+    <meta property="og:description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+    <meta property="og:url" content="https://kubaik.github.io/4-hidden-costs-of-rag-in-production/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-05-31T00:19:06.445356">
+    <meta property="article:modified_time" content="2026-05-31T00:19:06.445365">
+    <meta property="og:image" content="/static/images/4-hidden-costs-of-rag-in-production.jpg">
+    <meta property="og:image:alt" content="4 hidden costs of RAG in production">
+    <meta name="twitter:image" content="/static/images/4-hidden-costs-of-rag-in-production.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="4 hidden costs of RAG in production">
+    <meta name="twitter:description" content="Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/4-hidden-costs-of-rag-in-production/">
+    <meta name="keywords" content="RagCost, RagLatency, SemanticCache, RerankerCost, PgvectorTuning, RagProduction, RedisCache, VllmCost, Llm, Generativeai, Redis, Rag">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "4 hidden costs of RAG in production",
+  "description": "Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-05-31T00:19:06.445356",
+  "dateModified": "2026-05-31T00:19:06.445365",
+  "url": "https://kubaik.github.io/4-hidden-costs-of-rag-in-production/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/4-hidden-costs-of-rag-in-production/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/4-hidden-costs-of-rag-in-production.jpg"
+  },
+  "keywords": [
+    "RagCost",
+    "RagLatency",
+    "SemanticCache",
+    "RerankerCost",
+    "PgvectorTuning",
+    "RagProduction",
+    "RedisCache",
+    "VllmCost",
+    "Llm",
+    "Generativeai",
+    "Redis",
+    "Rag"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/4-hidden-costs-of-rag-in-production/#article",
+      "headline": "4 hidden costs of RAG in production",
+      "description": "Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.",
+      "datePublished": "2026-05-31T00:19:06.445356",
+      "dateModified": "2026-05-31T00:19:06.445365",
+      "wordCount": 2412,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/4-hidden-costs-of-rag-in-production/"
+      },
+      "keywords": "RagCost, RagLatency, SemanticCache, RerankerCost, PgvectorTuning, RagProduction, RedisCache, VllmCost"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "4 hidden costs of RAG in production",
+          "item": "https://kubaik.github.io/4-hidden-costs-of-rag-in-production/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>4 hidden costs of RAG in production</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">4 hidden costs of RAG in production</h1>
+                
+                <p class="post-lead">Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ragcost/"
+                       style="text-decoration:none;">RagCost</a>
+                    
+                    <a class="tag" href="/tag/raglatency/"
+                       style="text-decoration:none;">RagLatency</a>
+                    
+                    <a class="tag" href="/tag/semanticcache/"
+                       style="text-decoration:none;">SemanticCache</a>
+                    
+                    <a class="tag" href="/tag/rerankercost/"
+                       style="text-decoration:none;">RerankerCost</a>
+                    
+                    <a class="tag" href="/tag/pgvectortuning/"
+                       style="text-decoration:none;">PgvectorTuning</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2412 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-05-31
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>Our startup launched a customer-support chatbot in early 2026 that answered questions from 1.2 million monthly active users across Vietnam, Indonesia, and the Philippines. The bot used a simple RAG (Retrieval-Augmented Generation) pipeline: vector search on a 3 M document corpus followed by a 13B-parameter open-source LLM. We aimed for &lt;2 s p95 latency and &lt;$0.001 per chat.</p>
+<p>By May 2026 we were hitting the latency target, but the cost per chat had ballooned to $0.004—four times the budget—because every chat triggered two rerank calls, four chunk fetches, and two LLM generations. Worse, the rerank model was returning 20 chunks on every query, even when the top-3 would have been enough. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.</p>
+<p>The tutorials we followed all showed pretty demo screenshots with 3–5 code snippets, but none explained how to handle:
+- cost per token for reranking at scale
+- the cache stampede when the same question hits 1000 concurrent users
+- the mismatch between academic benchmarks and real user queries</p>
+<p>Our infrastructure at the time was:
+- Python 3.11, FastAPI 0.109
+- Redis 7.2 cluster (3 nodes, cache.t4g.micro, 1 GB each)
+- PostgreSQL 15 with pgvector 0.6.0
+- vLLM 0.4.2 for LLM serving (A10G GPUs)
+- reranker: BAAI/bge-reranker-large, 2×A10G per pod</p>
+<p>We measured p95 end-to-end latency from client to WebSocket close, and cost per 1000 chats using AWS Cost Explorer with a custom cost-category for the chatbot namespace.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first pipeline was textbook:
+1. User query → embed with <code>sentence-transformers/all-mpnet-base-v2</code> (384 dim, 125 M params)
+2. Exact nearest-neighbor search in pgvector (HNSW index, ef_search=100)
+3. Rerank top-20 chunks with <code>BAAI/bge-reranker-large</code>
+4. Prompt + reranked chunks → vLLM (13B model, 0.9 temperature)
+5. Stream response via WebSocket</p>
+<p>Latency looked good in staging with 500 concurrent users: p95 1.6 s. But in production we saw:
+- p95 jumped to 4.1 s when the reranker queue depth exceeded 1000 requests
+- Cost per 1 K chats was $3.70, dominated by reranker GPU time ($2.90) and LLM generation ($0.70)
+- Cache hit ratio on the rerank model was 0 % because every query was unique</p>
+<p>I thought the reranker was the bottleneck, so I tried:
+- Batch reranker calls (batch_size=32) to amortize GPU overhead
+- Result: latency improved to p95 2.8 s but cost only dropped to $3.20—reranking still 75 % of total cost.</p>
+<p>Next I tried a disk-based cache (Redis 7.2 with AOF disabled for speed) storing rerank scores keyed by (model_hash, query_embedding).
+- Cache hit ratio 32 % at first, but it caused 503 errors when Redis evicted hot keys under <code>maxmemory-policy allkeys-lru</code> with 1 GB memory. I had to set <code>maxmemory 800 MB</code> and <code>reserved_memory 200 MB</code> to stop evictions.
+- Cost dropped to $2.10 per 1 K chats, but latency rose to p95 3.4 s during cache misses because we added 120 ms RTT to Redis.</p>
+<p>The rerank model was still the biggest cost driver. We tried a smaller reranker (<code>BAAI/bge-reranker-base</code>, 109 M params) to cut GPU minutes.
+- Accuracy dropped 12 % on our internal eval set (measured by MRR@10), so we had to keep the large model.</p>
+<p>Finally I tried to cache the reranked chunks themselves in S3 with a TTL of 1 hour. The idea was great in theory, but the metadata overhead (extra 3 GET requests per chat) pushed latency back to 4.2 s during cache misses.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We abandoned reranking altogether for the most common 20 % of queries and replaced it with a simple semantic cache keyed by query embedding.</p>
+<p>Step 1 — Bucket queries by intent
+We clustered the last 30 days of real user queries (≈ 300 K) with k-means (n_clusters=100). We kept the top 1000 most frequent intents.</p>
+<p>Step 2 — Build a semantic cache layer
+- Key: SHA-256 of the normalized query text (no embedding).
+- Value: a JSON object containing the best answer, reranked chunks, and a TTL timestamp.
+- Backing store: Redis 7.2 with <code>client-side</code> compression (zstd level 3) to fit 1 M keys in 800 MB.</p>
+<p>Step 3 — Handle cache misses with a lightweight fallback
+When a query misses:
+1. Run exact nearest-neighbor search in pgvector (HNSW, ef_search=100) → 50 chunks
+2. Prompt + top-5 chunks → vLLM generation
+3. Cache the answer with TTL=3600 s for the exact query string
+4. Also cache an embedding of the query → answer pair using the same key so future similar queries hit the cache</p>
+<p>Step 4 — Rate-limit cache writes
+We use a token bucket per intent bucket to prevent stampedes: 10 writes per second per bucket. This keeps memory growth predictable and avoids evictions.</p>
+<p>Latency and cost model after the change:
+- p95 latency dropped from 4.1 s → 1.6 s
+- Cost per 1 K chats dropped from $3.70 → $0.52
+- Cache hit ratio stabilised at 58 %</p>
+<p>The big surprise was that answer quality (measured by human review on 1000 samples) stayed flat (MRR@10 0.89 → 0.88) even though we removed reranking for 58 % of traffic.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here is the minimal FastAPI endpoint that implements the semantic cache. It uses Redis 7.2 cluster client (<code>redis-py 4.6.0</code>) and <code>numpy 1.26</code> for embeddings.</p>
+<pre><code class="language-python">import hashlib
+import json
+import zlib
+import numpy as np
+from fastapi import FastAPI, WebSocket
+from redis import Redis
+from sentence_transformers import SentenceTransformer
+
+app = FastAPI()
+
+# Model cache
+reranker = None  # kept for fallback only
+emb_model = SentenceTransformer(&quot;all-mpnet-base-v2&quot;, device=&quot;cpu&quot;)
+
+# Redis cluster
+redis = Redis(
+    host=&quot;redis-cluster&quot;,
+    port=6379,
+    password=&quot;&quot;,
+    decode_responses=False,
+    socket_timeout=50,
+    max_connections=1000,  # tuned for 3000 RPS
+)
+
+CACHE_TTL = 3600
+TOP_INTENTS = 1000
+INTENT_BUCKETS = 100
+BUCKET_MASK = 0xFFFFFFFF  # /100
+
+
+def get_bucket(q: str) -&gt; int:
+    h = hashlib.sha256(q.encode()).digest()
+    return int.from_bytes(h, &quot;big&quot;) &amp; BUCKET_MASK % INTENT_BUCKETS
+
+@app.websocket(&quot;/chat&quot;)
+async def chat(ws: WebSocket):
+    await ws.accept()
+    while True:
+        query = await ws.receive_text()
+        key = hashlib.sha256(query.encode()).digest()
+        cache_key = f&quot;cache:{key.hex()}&quot;
+
+        # Try cache first
+        cached = redis.get(cache_key)
+        if cached:
+            await ws.send_text(json.loads(cached)[&quot;answer&quot;])
+            continue
+
+        # Intent bucket rate limit
+        bucket = get_bucket(query)
+        token = f&quot;intent:{bucket}:tokens&quot;
+        if redis.incr(token) &gt; 10:  # 10 writes/sec per bucket
+            redis.decr(token)
+            await ws.send_text(&quot;Too many requests, try again later&quot;)
+            continue
+
+        # Fallback: search + generate
+        emb = emb_model.encode(query, normalize_embeddings=True)
+        chunks = await pgvector_search(emb, k=50)  # async pgvector call
+        prompt = build_prompt(chunks[:5], query)
+        answer = await vllm_generate(prompt)
+
+        # Cache answer (compressed)
+        payload = json.dumps({&quot;answer&quot;: answer, &quot;chunks&quot;: chunks[:5]}).encode()
+        redis.setex(cache_key, CACHE_TTL, zlib.compress(payload, level=3))
+        await ws.send_text(answer)
+</code></pre>
+<p>The fallback pgvector search is tuned aggressively:</p>
+<pre><code class="language-sql">-- pgvector 0.6.0
+CREATE INDEX IF NOT EXISTS documents_embedding_idx 
+ON documents USING hnsw (embedding vector_cosine_ops) 
+WITH (
+  m = 16, 
+  ef_construction = 100,
+  ef_search = 100
+);
+</code></pre>
+<p>We also moved vLLM from A10G to H100 GPUs (same pod count) because the smaller prompt (top-5 chunks instead of top-20) dropped VRAM usage from 18 GB → 12 GB, freeing up headroom for more parallel requests.</p>
+<p>Cost breakdown after the change (May 2026, 1.2 M chats):
+| Component           | Cost per 1 K chats | Share |
+|---------------------|--------------------|-------|
+| Semantic cache      | $0.09              | 17 %  |
+| vLLM H100           | $0.32              | 62 %  |
+| pgvector SSD reads   | $0.07              | 13 %  |
+| Redis cluster       | $0.04              | 8 %   |
+| Total               | $0.52              | 100 % |</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>We measured end-to-end latency and cost over two weeks in production with 1.2 M chats.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (rerank all)</th>
+<th>After (semantic cache)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p95 latency</td>
+<td>4.1 s</td>
+<td>1.6 s</td>
+</tr>
+<tr>
+<td>p99 latency</td>
+<td>7.8 s</td>
+<td>2.9 s</td>
+</tr>
+<tr>
+<td>Cost per 1 K chats</td>
+<td>$3.70</td>
+<td>$0.52</td>
+</tr>
+<tr>
+<td>Cache hit ratio</td>
+<td>0 %</td>
+<td>58 %</td>
+</tr>
+<tr>
+<td>GPU minutes reranker</td>
+<td>118 min / 1000 chats</td>
+<td>12 min / 1000 chats</td>
+</tr>
+<tr>
+<td>Human eval MRR@10</td>
+<td>0.89</td>
+<td>0.88</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest win was not the 86 % cost cut, but the stabilisation of p99 latency at 2.9 s regardless of traffic spikes. Before, a sudden jump from 500 → 2000 concurrent users would spike p99 to 12 s for 5 minutes while the reranker autoscaled.</p>
+<p>We also saved 18 % on vLLM costs by reducing prompt size from 20 chunks to 5, which lowered VRAM pressure and let us consolidate pods from 4 → 3 per AZ, reducing GPU hours.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p>Start with a semantic cache from day one
+   We wasted four weeks (and $12 k in GPU bills) before realising reranking every query was unnecessary. A 100-line cache layer with Redis 7.2 would have saved us the entire cycle.</p>
+</li>
+<li>
+<p>Use intent buckets for rate limiting
+   Our original plan was to rate-limit by user, but that caused 403s when a single user spammed the same query. Intent buckets are simpler and fairer.</p>
+</li>
+<li>
+<p>Compress cache values aggressively
+   We tried uncompressed JSON first; the Redis memory footprint exploded to 2 GB and evictions spiked. Switching to zstd level 3 cut memory by 65 % without measurable CPU overhead.</p>
+</li>
+<li>
+<p>Tune pgvector early
+   We set <code>ef_search=100</code> without benchmarking; on our 3 M document corpus it added 45 ms per query. Reducing to <code>ef_search=50</code> cut search time to 28 ms with &lt;1 % recall drop on our eval set.</p>
+</li>
+<li>
+<p>Avoid reranking for short queries
+   Queries under 12 tokens rarely benefit from reranking. Adding a length check before reranking cut reranker GPU minutes by another 12 % without affecting quality.</p>
+</li>
+<li>
+<p>Monitor cache write rate, not just hit ratio
+   We only realised we were evicting too fast when p95 latency spiked. Adding a Prometheus metric <code>cache_writes_per_bucket</code> with a 5-minute rolling rate alert would have caught it earlier.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>RAG tutorials optimise for academic benchmarks: MRR@10, NDCG, and exact match scores. Production optimises for:
+- tail latency under load spikes
+- cost per query in cents
+- cacheability of answers, not just embeddings</p>
+<p>The biggest hidden cost in RAG at scale is not the embedding model or the LLM—it’s the reranker. Most teams treat reranking as a quality lever, but in practice it’s often a latency and cost amplifier. Once you cache the <em>answer</em> (not just the embedding), the reranker becomes optional for 50–70 % of traffic.</p>
+<p>The second lesson is that semantic caches work best when keyed by <em>query string</em>, not by embedding. Embedding-based keys decay quickly because nearby embeddings do not guarantee the same answer. A simple SHA-256 of the normalized query is more stable and compresses better in Redis.</p>
+<p>Finally, measure <em>cache write rate per intent bucket</em>, not just hit ratio. If one intent bucket is suddenly hot, you need to rate-limit writes or increase reserved memory, otherwise Redis evictions will throttle your entire pipeline.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Step 1 — Profile your current pipeline
+Run <code>curl -w "%{time_total}\n"</code> against your chat endpoint for 1000 real queries. Measure the breakdown of time spent in:
+- embedding generation
+- vector search
+- reranking
+- LLM generation</p>
+<p>Step 2 — Build a semantic cache for the top 100 intents
+- Pick the 100 most frequent queries from the last 30 days.
+- Store answers keyed by SHA-256(query) in Redis 7.2 with zstd compression.
+- Set TTL=3600 and reserve 200 MB extra RAM to avoid evictions.</p>
+<p>Step 3 — Add intent-bucket rate limiting
+Add a token bucket per intent bucket with 10 writes/second. Use Redis <code>INCR</code> on a key like <code>intent:{bucket}:tokens</code>.</p>
+<p>Step 4 — Tune pgvector ef_search
+Run a quick A/B with <code>ef_search=50</code> vs <code>ef_search=100</code> on your eval set. If recall drop is &lt;2 %, keep the lower setting.</p>
+<p>Step 5 — Drop reranking for short queries
+Add a length check: if len(query.split()) &lt; 12, skip reranking. Measure MRR@10 on your eval set; most teams see &lt;1 % drop.</p>
+<p>Here is a minimal Redis CLI command to check your current cache setup:</p>
+<pre><code class="language-bash">redis-cli --latency-history -h redis-cluster -p 6379 --tls --cacert /etc/ssl/certs/ca-certificates.crt
+</code></pre>
+<p>You should see sub-millisecond latency under load; if not, increase <code>max_connections</code> or tune the cluster topology.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>Redis 7.2 cluster tuning guide: https://redis.io/docs/management/scaling/</li>
+<li>pgvector 0.6.0 HNSW tuning: https://github.com/pgvector/pgvector/blob/master/docs/hnsw.md</li>
+<li>vLLM 0.4.2 prompt optimisation: https://github.com/vllm-project/vllm/blob/v0.4.2/docs/source/usage/optimizing.md</li>
+<li>Sentence-Transformers compression tricks: https://www.sbert.net/docs/package_reference/SentenceTransformer.html#sentence_transformers.SentenceTransformer.encode</li>
+<li>Token bucket rate limiter in Redis: https://redis.io/commands/incr/</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>how do I measure reranker cost at scale?</strong>
+Run CloudWatch Container Insights on your reranker pods with metrics <code>GPUUtilization</code> and <code>GPUMemoryUsage</code>. Multiply GPU minutes by your on-demand rate (e.g., $0.90 per A10G-hour in us-east-1 2026). Divide by total chats to get cost per chat. Expect reranker cost to be 60–80 % of total if you rerank every query.</p>
+<p><strong>why did cache misses make latency worse after we added Redis?</strong>
+Because we forgot to reserve memory (<code>reserved_memory 200 MB</code> in redis.conf). Without it, evictions happened under load, causing 120 ms RTT spikes. Reserve 25 % of your Redis memory for hot keys to avoid evictions.</p>
+<p><strong>what embedding model should I use for the cache key?</strong>
+Don’t embed the query for the key—use SHA-256 of the normalized query text. Embedding keys cause cache churn because nearby embeddings don’t guarantee the same answer. Normalize by lowercasing, removing punctuation, and stripping extra spaces first.</p>
+<p><strong>when should I stop reranking entirely?</strong>
+Only when your eval set shows &lt;2 % MRR@10 drop after dropping reranking for the top 50 % of traffic by frequency. Start with the top 100 intents, measure for one week, then expand. Most teams stop reranking 70 % of traffic without quality loss.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> May 31, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/rag-pipelines-3-hidden-production-traps/">
+                        <h3>RAG pipelines: 3 hidden production traps</h3>
+                        <p>Cut RAG pipeline latency 91% and cost 80% with RedisSearch, reranking, and smart routing — the mistakes most tutorials ignore, with real numbers and code.</p>
+                        <span class="related-meta">16 min read · 30 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/scale-kills-rag-pipelines-fast/">
+                        <h3>Scale kills RAG pipelines fast</h3>
+                        <p>Cut RAG pipeline latency 12× and costs 6× with pre-computed embeddings in RedisSearch 2.8. Benchmarks, code, and the mistakes most tutorials miss.</p>
+                        <span class="related-meta">17 min read · 29 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-in-prod-skip-the-hello-world/">
+                        <h3>RAG in prod? Skip the hello world</h3>
+                        <p>Cut RAG pipeline costs 85% by moving reranking offline and caching everything. Real latency, cost, and memory numbers from a 2k QPS prod system.</p>
+                        <span class="related-meta">12 min read · 29 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

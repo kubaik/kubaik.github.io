@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 00:15:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 00:19:23 +0000</lastBuildDate>
+    <item>
+      <title>4 hidden costs of RAG in production</title>
+      <link>https://kubaik.github.io/4-hidden-costs-of-rag-in-production/</link>
+      <description>Cut RAG cost 86% and latency 61% with a semantic cache keyed by query text. Learn the three traps tutorials never mention: reranker cost, cache stampede, and pgvector ef_search tuning.</description>
+      <pubDate>Sun, 31 May 2026 00:19:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/4-hidden-costs-of-rag-in-production/</guid>
+    </item>
     <item>
       <title>Designing AI systems that don’t crumble</title>
       <link>https://kubaik.github.io/designing-ai-systems-that-dont-crumble/</link>
@@ -138,13 +145,6 @@
       <description>Cut database pool latency 60% by sizing max connections to concurrency, not CPU cores — the mistake 80% of teams made in 2026.</description>
       <pubDate>Sat, 30 May 2026 18:20:56 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-wasting-database-connections-on-cpu-cores/</guid>
-    </item>
-    <item>
-      <title>Build a portfolio that converts remotely</title>
-      <link>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</link>
-      <description>Build a remote portfolio that converts: use production-grade systems, not demos. Real metrics, cost control, and incident response matter more than GitHub stars. Includes FastAPI, Redis, Locust examples and 2026 hiring insights.</description>
-      <pubDate>Sat, 30 May 2026 18:03:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-portfolio-that-converts-remotely/</guid>
     </item>
   </channel>
 </rss>
