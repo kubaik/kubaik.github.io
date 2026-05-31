@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 22:45:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 22:50:11 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSockets, SSE, or long polling</title>
+      <link>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</link>
+      <description>Compare WebSockets vs SSE vs long polling with real 2026 latency numbers and cost data to pick the right realtime tool for your use case.</description>
+      <pubDate>Sun, 31 May 2026 22:49:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</guid>
+    </item>
     <item>
       <title>$5k remote: How to get paid fairly from Bogotá</title>
       <link>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tuning vs prompt ops: compare salaries, latency, and costs in 2026. See real AWS data, LangChain vs LangGraph stacks, and the 23% salary gap.</description>
       <pubDate>Sun, 31 May 2026 17:43:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-killers-fine-tuning-vs-prompt-ops-in-2026/</guid>
-    </item>
-    <item>
-      <title>African devs: build a portfolio that hires you</title>
-      <link>https://kubaik.github.io/african-devs-build-a-portfolio-that-hires-you/</link>
-      <description>Build a portfolio that lands remote jobs from Africa in 2026 — stop grinding LeetCode and start shipping impact. Includes real systems, debugging artifacts, and the 3 concrete numbers you need.</description>
-      <pubDate>Sun, 31 May 2026 17:27:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-devs-build-a-portfolio-that-hires-you/</guid>
     </item>
   </channel>
 </rss>
