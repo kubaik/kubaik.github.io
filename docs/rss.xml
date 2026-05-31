@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 14:11:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 14:15:32 +0000</lastBuildDate>
+    <item>
+      <title>Fix RAG latency before you scale</title>
+      <link>https://kubaik.github.io/fix-rag-latency-before-you-scale/</link>
+      <description>Cut RAG latency 80% and AWS bill 39% by collapsing retrieval into the API process. Learn the exact steps most tutorials skip: in-memory indexes, gRPC over Unix sockets, quantised embeddings, and bloom filters.</description>
+      <pubDate>Sun, 31 May 2026 14:15:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-rag-latency-before-you-scale/</guid>
+    </item>
     <item>
       <title>7 ways to break your DB pool limit</title>
       <link>https://kubaik.github.io/7-ways-to-break-your-db-pool-limit/</link>
@@ -138,13 +145,6 @@
       <description>Pick the right real-time tool in 2026 — concrete latency, cost, and Safari support data behind WebSockets, SSE, and long polling for 1k concurrent users.</description>
       <pubDate>Sun, 31 May 2026 02:14:20 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-long-polling-in-2026/</guid>
-    </item>
-    <item>
-      <title>Ship projects, not hype: portfolio wins remote jobs</title>
-      <link>https://kubaik.github.io/ship-projects-not-hype-portfolio-wins-remote-jobs/</link>
-      <description>Build a remote-dev portfolio that actually works: 48-hour projects, $12/month costs, and READMEs that land interviews — not viral clones.</description>
-      <pubDate>Sun, 31 May 2026 01:39:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-projects-not-hype-portfolio-wins-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
