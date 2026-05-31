@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 11:24:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 11:29:00 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSocket, SSE, or Polling Wisely</title>
+      <link>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</link>
+      <description>Compare WebSockets vs SSE vs long polling in 2026 with concrete latency, cost, and memory numbers — pick the right push tech in 30 minutes.</description>
+      <pubDate>Sun, 31 May 2026 11:28:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</guid>
+    </item>
     <item>
       <title>Load-testing RAG: 10k RPM lessons</title>
       <link>https://kubaik.github.io/load-testing-rag-10k-rpm-lessons/</link>
@@ -138,13 +145,6 @@
       <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
       <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
       <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
-    </item>
-    <item>
-      <title>Ship a demo, not a resume</title>
-      <link>https://kubaik.github.io/ship-a-demo-not-a-resume/</link>
-      <description>Ship a demo, not a resume — 93% of African devs fail because their portfolios don’t prove they can build systems that work under load. Learn how to build a high-signal remote portfolio in 2026.</description>
-      <pubDate>Sat, 30 May 2026 22:51:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-demo-not-a-resume/</guid>
     </item>
   </channel>
 </rss>
