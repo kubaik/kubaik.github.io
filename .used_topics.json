@@ -1,9 +1,3 @@
 [
-  "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
-  "Building a portfolio that gets you hired remotely from Africa",
-  "Negotiating a remote salary when you're in a lower-cost country",
-  "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "RAG pipelines in production: what the tutorials skip",
-  "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Database connection pooling: the setting everyone gets wrong"
+  "How to design a multi-tenant SaaS database without painting yourself into a corner"
 ]
