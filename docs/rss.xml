@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 11:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 11:32:03 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio mistake most devs make</title>
+      <link>https://kubaik.github.io/portfolio-mistake-most-devs-make/</link>
+      <description>Portfolio mistake most devs make: 80 hours spent on five projects gets ignored while one system with production artifacts lands remote offers — here’s the data from 200+ interviews with Nairobi engineers in 2026</description>
+      <pubDate>Sun, 31 May 2026 11:31:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-mistake-most-devs-make/</guid>
+    </item>
     <item>
       <title>Choose WebSocket, SSE, or Polling Wisely</title>
       <link>https://kubaik.github.io/choose-websocket-sse-or-polling-wisely/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salaries from lower-cost countries with data-driven rates, currency buffers, and negotiation tactics that actually work in 2026</description>
       <pubDate>Sat, 30 May 2026 23:56:23 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-salary-figure-how-much-to-ask/</guid>
-    </item>
-    <item>
-      <title>Drop the pool size myth</title>
-      <link>https://kubaik.github.io/drop-the-pool-size-myth/</link>
-      <description>Set max pool size to 8, not formula — measure hold time and waiting threads to cut latency 50% and save $800/month on RDS costs with PostgreSQL 16 and Node 20 LTS.</description>
-      <pubDate>Sat, 30 May 2026 23:24:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/drop-the-pool-size-myth/</guid>
     </item>
   </channel>
 </rss>
