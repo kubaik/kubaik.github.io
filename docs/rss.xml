@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 15:13:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 15:16:41 +0000</lastBuildDate>
+    <item>
+      <title>Is $100/month AI worth indie devs?</title>
+      <link>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</link>
+      <description>Cut AI coding budget waste with a $100/month cap — real token costs, guardrails, and when AI saves time vs when it burns cash in 2026.</description>
+      <pubDate>Sun, 31 May 2026 15:16:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/is-100month-ai-worth-indie-devs/</guid>
+    </item>
     <item>
       <title>Compare WebSockets, SSE &amp; polling</title>
       <link>https://kubaik.github.io/compare-websockets-sse-polling/</link>
@@ -138,13 +145,6 @@
       <description>The latency to Singapore dropped from 320 ms to 65 ms, and the bill dropped to $8/month.</description>
       <pubDate>Sun, 31 May 2026 06:09:03 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-functions-in-2026-where-they-really-win/</guid>
-    </item>
-    <item>
-      <title>2026’s 2 highest-paying AI skill stacks</title>
-      <link>https://kubaik.github.io/2026s-2-highest-paying-ai-skill-stacks/</link>
-      <description>Cut AI salary premiums 15–22%: prompt RAG vs MLOps+vector search in 2026 with concrete benchmarks, stack choices, and hiring data. Learn which skill actually moves the needle.</description>
-      <pubDate>Sun, 31 May 2026 05:50:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026s-2-highest-paying-ai-skill-stacks/</guid>
     </item>
   </channel>
 </rss>
