@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 23:57:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 00:01:08 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio that lands remote jobs: show work, not</title>
+      <link>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</link>
+      <description>Portfolio that lands remote jobs from Africa: show one runnable project, not certificates. Benchmarks, deploy scripts, GitHub pinning tactics. 2026 hiring data included.</description>
+      <pubDate>Mon, 01 Jun 2026 00:00:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</guid>
+    </item>
     <item>
       <title>Skills That Raise AI Salaries in 2026</title>
       <link>https://kubaik.github.io/skills-that-raise-ai-salaries-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline costs 88% at 10K QPS — FAISS sharding, Graviton rerankers, and the cache stampede mistake most teams miss.</description>
       <pubDate>Sun, 31 May 2026 18:53:09 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</guid>
-    </item>
-    <item>
-      <title>Remote salary hack: 3x offers in 10 minutes</title>
-      <link>https://kubaik.github.io/remote-salary-hack-3x-offers-in-10-minutes/</link>
-      <description>Negotiate remote salaries with 3x uplift using PPP-adjusted anchors — Numbeo, Levels.fyi, and Python 3.11. Real results from 12 negotiations in 2026.</description>
-      <pubDate>Sun, 31 May 2026 18:02:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-salary-hack-3x-offers-in-10-minutes/</guid>
     </item>
   </channel>
 </rss>
