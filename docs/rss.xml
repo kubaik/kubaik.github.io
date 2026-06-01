@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 07:35:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 07:40:20 +0000</lastBuildDate>
+    <item>
+      <title>Pick the realtime tool in 2026</title>
+      <link>https://kubaik.github.io/pick-the-realtime-tool-in-2026/</link>
+      <description>Cut realtime latency 60% with the right protocol — WebSocket vs SSE vs long polling benchmarks, nginx 1.25.4, Redis 7.2, and the exact config files you need</description>
+      <pubDate>Mon, 01 Jun 2026 07:40:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-realtime-tool-in-2026/</guid>
+    </item>
     <item>
       <title>Wrong pool size? Slower app</title>
       <link>https://kubaik.github.io/wrong-pool-size-slower-app/</link>
@@ -138,13 +145,6 @@
       <description>Convert local costs to remote salary with Node 20 + live FX rates. Shows 17 contracts 2025-2026 and how transparent quoting beat pushback by 7-24 %.</description>
       <pubDate>Sun, 31 May 2026 20:53:35 +0000</pubDate>
       <guid>https://kubaik.github.io/bargain-remote-rate-node-20-salary-script/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: why 3-week meltdowns happen</title>
-      <link>https://kubaik.github.io/rag-in-prod-why-3-week-meltdowns-happen/</link>
-      <description>Cut RAG latency 87% and AWS bill 73% with hot/cold index split, GPU reranking, and Redis cache stampede fixes — real numbers and code from a production 100k RPM system.</description>
-      <pubDate>Sun, 31 May 2026 20:49:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-why-3-week-meltdowns-happen/</guid>
     </item>
   </channel>
 </rss>
