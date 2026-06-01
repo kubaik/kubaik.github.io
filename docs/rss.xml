@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 05:30:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 05:35:22 +0000</lastBuildDate>
+    <item>
+      <title>Wrong pool size? Slower app</title>
+      <link>https://kubaik.github.io/wrong-pool-size-slower-app/</link>
+      <description>The database response time was 420 ms on average.</description>
+      <pubDate>Mon, 01 Jun 2026 05:35:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/wrong-pool-size-slower-app/</guid>
+    </item>
     <item>
       <title>Skip zero-trust noise: 3 rules for small teams</title>
       <link>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 87% and AWS bill 73% with hot/cold index split, GPU reranking, and Redis cache stampede fixes — real numbers and code from a production 100k RPM system.</description>
       <pubDate>Sun, 31 May 2026 20:49:26 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-why-3-week-meltdowns-happen/</guid>
-    </item>
-    <item>
-      <title>Kill the &quot;max pool size 10&quot; lie</title>
-      <link>https://kubaik.github.io/kill-the-max-pool-size-10-lie/</link>
-      <description>Digging in, I found 90% of the pool was stuck waiting for queries that had been running for minutes — the pool was exhausted because long-running…</description>
-      <pubDate>Sun, 31 May 2026 20:17:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/kill-the-max-pool-size-10-lie/</guid>
     </item>
   </channel>
 </rss>
