@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 14:49:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 14:54:21 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: why tutorials lie</title>
+      <link>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</link>
+      <description>Cut RAG pipeline latency 74% and costs 68% with hybrid search and caching — what the tutorials skip about network jitter, cold starts, and duplicate queries.</description>
+      <pubDate>Mon, 01 Jun 2026 14:54:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</guid>
+    </item>
     <item>
       <title>Avoid 12% pay cut from FX fees</title>
       <link>https://kubaik.github.io/avoid-12-pay-cut-from-fx-fees/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSockets vs SSE vs long polling with real 2026 latency numbers and cost data to pick the right realtime tool for your use case.</description>
       <pubDate>Sun, 31 May 2026 22:49:54 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</guid>
-    </item>
-    <item>
-      <title>$5k remote: How to get paid fairly from Bogotá</title>
-      <link>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</link>
-      <description>Use 2026 data to negotiate remote salaries from lower-cost countries — avoid 30% lowballs with PPP-adjusted benchmarks and a negotiation script that works.</description>
-      <pubDate>Sun, 31 May 2026 22:24:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</guid>
     </item>
   </channel>
 </rss>
