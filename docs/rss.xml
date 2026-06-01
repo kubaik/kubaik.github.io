@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 00:01:08 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 00:04:38 +0000</lastBuildDate>
+    <item>
+      <title>Choose WebSocket, SSE or long-poll wisely</title>
+      <link>https://kubaik.github.io/choose-websocket-sse-or-long-poll-wisely/</link>
+      <description>Choose SSE over WebSocket for leaderboards in 2026 — cuts AWS bill $323/month and halves CPU at 10 k users</description>
+      <pubDate>Mon, 01 Jun 2026 00:04:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-websocket-sse-or-long-poll-wisely/</guid>
+    </item>
     <item>
       <title>Portfolio that lands remote jobs: show work, not</title>
       <link>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</link>
@@ -138,13 +145,6 @@
       <description>The 2026 Stack Overflow AI Skills Report shows that engineers who can debug GPU OOM errors, optimize data loaders, and deploy models without memory leaks…</description>
       <pubDate>Sun, 31 May 2026 19:06:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</guid>
-    </item>
-    <item>
-      <title>RAG at scale: why 6K QPS breaks your FAISS</title>
-      <link>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</link>
-      <description>Cut RAG pipeline costs 88% at 10K QPS — FAISS sharding, Graviton rerankers, and the cache stampede mistake most teams miss.</description>
-      <pubDate>Sun, 31 May 2026 18:53:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-at-scale-why-6k-qps-breaks-your-faiss/</guid>
     </item>
   </channel>
 </rss>
