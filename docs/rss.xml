@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 02:36:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 04:13:55 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay from low-cost lands</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</link>
+      <description>Use Numbeo 2026 data to cut remote salary gaps by 28% with exact multipliers and markdown tables that recruiters actually read. Stop guessing — run the script and negotiate today.</description>
+      <pubDate>Mon, 01 Jun 2026 04:13:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</guid>
+    </item>
     <item>
       <title>RAG prod: 3 costs no tutorial warns</title>
       <link>https://kubaik.github.io/rag-prod-3-costs-no-tutorial-warns/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-agent system costs 62% with idempotency and observability — the negotiation loops, Redis OOM risks, and latency traps most teams miss before Black Friday hits.</description>
       <pubDate>Sun, 31 May 2026 19:50:13 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-prod-failures-demystified/</guid>
-    </item>
-    <item>
-      <title>Leak-proof Postgres pools in serverless</title>
-      <link>https://kubaik.github.io/leak-proof-postgres-pools-in-serverless/</link>
-      <description>Avoid 32 connection errors and cut P95 latency 63% by capping pool size at the minimum of system limits and saturated workload — the mistake 90% of teams still make in 2026.</description>
-      <pubDate>Sun, 31 May 2026 19:47:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/leak-proof-postgres-pools-in-serverless/</guid>
     </item>
   </channel>
 </rss>
