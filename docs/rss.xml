@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 14:21:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 14:49:02 +0000</lastBuildDate>
     <item>
       <title>Avoid 12% pay cut from FX fees</title>
       <link>https://kubaik.github.io/avoid-12-pay-cut-from-fx-fees/</link>
@@ -119,13 +119,6 @@
       <guid>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</guid>
     </item>
     <item>
-      <title>Skills That Raise AI Salaries in 2026</title>
-      <link>https://kubaik.github.io/skills-that-raise-ai-salaries-in-2026/</link>
-      <description>Cut your path to a $192k AI salary in 2026 — prompt engineering vs MLOps with concrete benchmarks, cost data, and hiring trends across the US, UK, Germany, and Singapore.</description>
-      <pubDate>Sun, 31 May 2026 23:49:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/skills-that-raise-ai-salaries-in-2026/</guid>
-    </item>
-    <item>
       <title>Shard AI workloads, not users</title>
       <link>https://kubaik.github.io/shard-ai-workloads-not-users/</link>
       <description>Cut AI API p99 latency 60% with Redis caching and Qdrant 1.8 — embedding cache, rate limits, and the cache stampede mistake most teams miss.</description>
@@ -145,6 +138,13 @@
       <description>Compare WebSockets vs SSE vs long polling with real 2026 latency numbers and cost data to pick the right realtime tool for your use case.</description>
       <pubDate>Sun, 31 May 2026 22:49:54 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</guid>
+    </item>
+    <item>
+      <title>$5k remote: How to get paid fairly from Bogotá</title>
+      <link>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</link>
+      <description>Use 2026 data to negotiate remote salaries from lower-cost countries — avoid 30% lowballs with PPP-adjusted benchmarks and a negotiation script that works.</description>
+      <pubDate>Sun, 31 May 2026 22:24:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</guid>
     </item>
   </channel>
 </rss>
