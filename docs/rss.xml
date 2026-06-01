@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 12:11:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 12:16:09 +0000</lastBuildDate>
+    <item>
+      <title>Benchmark PostgreSQL vs MySQL in 2026</title>
+      <link>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</link>
+      <description>Cut 35 % latency and 21 % costs by choosing PostgreSQL 16.4 over MySQL 8.4 — real benchmarks, failover tests, and the one tuning knob that matters in 2026.</description>
+      <pubDate>Mon, 01 Jun 2026 12:15:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</guid>
+    </item>
     <item>
       <title>Land 50% higher remote pay without leaving home</title>
       <link>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 87% by splitting retrieval and generation — real numbers, code, and the cache mistake most teams make.</description>
       <pubDate>Sun, 31 May 2026 21:52:32 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-rag-latency-before-users-quit/</guid>
-    </item>
-    <item>
-      <title>5G kills backend metrics you trust</title>
-      <link>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</link>
-      <description>Cut API response time 50% on 4G — measure cellular RTT, TCP handshakes, and connection pool waits before touching code. Includes Node.js 20, Redis 7.2, and k6 0.51 examples.</description>
-      <pubDate>Sun, 31 May 2026 21:49:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</guid>
     </item>
   </channel>
 </rss>
