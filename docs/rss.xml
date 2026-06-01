@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 23:17:14 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 23:18:34 +0000</lastBuildDate>
+    <item>
+      <title>Salary split: prompt ops vs prompt engineers</title>
+      <link>https://kubaik.github.io/salary-split-prompt-ops-vs-prompt-engineers/</link>
+      <description>Prompt ops beats prompt engineering by €19k in 2026 — with real ROI numbers, tool versions, and the compliance trap most teams miss</description>
+      <pubDate>Mon, 01 Jun 2026 23:18:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/salary-split-prompt-ops-vs-prompt-engineers/</guid>
+    </item>
     <item>
       <title>Land $100k remote job from Mexico City</title>
       <link>https://kubaik.github.io/land-100k-remote-job-from-mexico-city/</link>
@@ -138,13 +145,6 @@
       <description>Cut 35 % latency and 21 % costs by choosing PostgreSQL 16.4 over MySQL 8.4 — real benchmarks, failover tests, and the one tuning knob that matters in 2026.</description>
       <pubDate>Mon, 01 Jun 2026 12:15:52 +0000</pubDate>
       <guid>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</guid>
-    </item>
-    <item>
-      <title>Land 50% higher remote pay without leaving home</title>
-      <link>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</link>
-      <description>Land remote jobs paying 40–50% above local rates with a data-driven packet built in 30 minutes — includes tax burdens, FX rates, and Levels.fyi 2026 ranges</description>
-      <pubDate>Mon, 01 Jun 2026 10:45:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</guid>
     </item>
   </channel>
 </rss>
