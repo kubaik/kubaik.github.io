@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 17:02:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 17:08:03 +0000</lastBuildDate>
+    <item>
+      <title>Mistake in DB pool sizing</title>
+      <link>https://kubaik.github.io/mistake-in-db-pool-sizing/</link>
+      <description>Save $1,400/month on database connections by ditching the CPU-cores rule and using latency-based sizing instead — with real benchmarks from Node.js 20, PostgreSQL 15, and Aurora 3.01.</description>
+      <pubDate>Mon, 01 Jun 2026 17:07:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/mistake-in-db-pool-sizing/</guid>
+    </item>
     <item>
       <title>Build an internal dev platform for $100/month</title>
       <link>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</link>
@@ -138,13 +145,6 @@
       <description>Choose SSE over WebSocket for leaderboards in 2026 — cuts AWS bill $323/month and halves CPU at 10 k users</description>
       <pubDate>Mon, 01 Jun 2026 00:04:21 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-websocket-sse-or-long-poll-wisely/</guid>
-    </item>
-    <item>
-      <title>Portfolio that lands remote jobs: show work, not</title>
-      <link>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</link>
-      <description>Portfolio that lands remote jobs from Africa: show one runnable project, not certificates. Benchmarks, deploy scripts, GitHub pinning tactics. 2026 hiring data included.</description>
-      <pubDate>Mon, 01 Jun 2026 00:00:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</guid>
     </item>
   </channel>
 </rss>
