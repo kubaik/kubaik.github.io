@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 05:16:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 05:21:21 +0000</lastBuildDate>
+    <item>
+      <title>Skip zero-trust noise: 3 rules for small teams</title>
+      <link>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</link>
+      <description>Cut security noise for small teams: skip service mesh and mTLS unless regulated. Focus on secrets, short-lived tokens, and network isolation to reduce real risk fast.</description>
+      <pubDate>Mon, 01 Jun 2026 05:21:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay from low-cost lands</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</link>
@@ -138,13 +145,6 @@
       <description>Digging in, I found 90% of the pool was stuck waiting for queries that had been running for minutes — the pool was exhausted because long-running…</description>
       <pubDate>Sun, 31 May 2026 20:17:04 +0000</pubDate>
       <guid>https://kubaik.github.io/kill-the-max-pool-size-10-lie/</guid>
-    </item>
-    <item>
-      <title>Multi-agent prod failures demystified</title>
-      <link>https://kubaik.github.io/multi-agent-prod-failures-demystified/</link>
-      <description>Cut multi-agent system costs 62% with idempotency and observability — the negotiation loops, Redis OOM risks, and latency traps most teams miss before Black Friday hits.</description>
-      <pubDate>Sun, 31 May 2026 19:50:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-prod-failures-demystified/</guid>
     </item>
   </channel>
 </rss>
