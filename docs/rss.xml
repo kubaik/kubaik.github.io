@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 19:52:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 19:57:03 +0000</lastBuildDate>
+    <item>
+      <title>5K QPS RAG under $120/mo</title>
+      <link>https://kubaik.github.io/5k-qps-rag-under-120mo/</link>
+      <description>Cut RAG latency 76% and AWS costs 87% with Redis caching and deduplication — the missing production guide with real numbers, code, and mistakes.</description>
+      <pubDate>Mon, 01 Jun 2026 19:56:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/5k-qps-rag-under-120mo/</guid>
+    </item>
     <item>
       <title>Show projects, not certificates</title>
       <link>https://kubaik.github.io/show-projects-not-certificates/</link>
@@ -138,13 +145,6 @@
       <description>Use Numbeo 2026 data to cut remote salary gaps by 28% with exact multipliers and markdown tables that recruiters actually read. Stop guessing — run the script and negotiate today.</description>
       <pubDate>Mon, 01 Jun 2026 04:13:37 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-lands/</guid>
-    </item>
-    <item>
-      <title>RAG prod: 3 costs no tutorial warns</title>
-      <link>https://kubaik.github.io/rag-prod-3-costs-no-tutorial-warns/</link>
-      <description>Cut RAG pipeline costs 40% and latency 22% — the real traps tutorials never mention: cache stampede, Vietnamese tokenization, and Redis vs Qdrant trade-offs</description>
-      <pubDate>Mon, 01 Jun 2026 02:36:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-prod-3-costs-no-tutorial-warns/</guid>
     </item>
   </channel>
 </rss>
