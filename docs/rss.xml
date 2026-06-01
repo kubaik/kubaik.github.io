@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 08:23:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 08:28:05 +0000</lastBuildDate>
+    <item>
+      <title>Skills that move the salary needle in 2026</title>
+      <link>https://kubaik.github.io/skills-that-move-the-salary-needle-in-2026/</link>
+      <description>Discover which AI skills actually boost your 2026 salary — prompt engineering vs RAG pipeline design with real benchmark data, cost breakdowns, and salary ranges.</description>
+      <pubDate>Mon, 01 Jun 2026 08:27:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/skills-that-move-the-salary-needle-in-2026/</guid>
+    </item>
     <item>
       <title>Pick the realtime tool in 2026</title>
       <link>https://kubaik.github.io/pick-the-realtime-tool-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>We were running 45k concurrent connections across 8 t4g.medium instances and still seeing 400ms p95 end-to-end latency when the room had &gt;200 users.</description>
       <pubDate>Sun, 31 May 2026 21:20:44 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-protocol/</guid>
-    </item>
-    <item>
-      <title>Bargain remote rate: Node 20 + salary script</title>
-      <link>https://kubaik.github.io/bargain-remote-rate-node-20-salary-script/</link>
-      <description>Convert local costs to remote salary with Node 20 + live FX rates. Shows 17 contracts 2025-2026 and how transparent quoting beat pushback by 7-24 %.</description>
-      <pubDate>Sun, 31 May 2026 20:53:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/bargain-remote-rate-node-20-salary-script/</guid>
     </item>
   </channel>
 </rss>
