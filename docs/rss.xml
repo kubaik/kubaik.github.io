@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 10:42:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 10:45:25 +0000</lastBuildDate>
+    <item>
+      <title>Land 50% higher remote pay without leaving home</title>
+      <link>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</link>
+      <description>Land remote jobs paying 40–50% above local rates with a data-driven packet built in 30 minutes — includes tax burdens, FX rates, and Levels.fyi 2026 ranges</description>
+      <pubDate>Mon, 01 Jun 2026 10:45:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</guid>
+    </item>
     <item>
       <title>Portfolio projects: ship, don&apos;t polish</title>
       <link>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 50% on 4G — measure cellular RTT, TCP handshakes, and connection pool waits before touching code. Includes Node.js 20, Redis 7.2, and k6 0.51 examples.</description>
       <pubDate>Sun, 31 May 2026 21:49:33 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-kills-backend-metrics-you-trust/</guid>
-    </item>
-    <item>
-      <title>2026 AI salaries: MLOps vs prompt engineering</title>
-      <link>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</link>
-      <description>ML Ops vs prompt engineering salaries in 2026 — $215k vs $155k median, failure rates, cost savings, and the real skills that move the needle.</description>
-      <pubDate>Sun, 31 May 2026 21:37:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</guid>
     </item>
   </channel>
 </rss>
