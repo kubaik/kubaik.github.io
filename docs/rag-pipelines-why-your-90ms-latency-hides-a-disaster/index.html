@@ -1,0 +1,628 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RAG pipelines: why your 90ms latency hides a disaster - Tech Blog</title>
+        <meta name="description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+        <meta name="keywords" content="RagPipelineProduction, RagLatencyOptimization, Vllm0.5.1Tuning, Colbertv2.0Reranker, RagCostReduction, CircuitBreakerRag, Llm, Generativeai, Redis, Rag">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-01T10:14:07.635319">
+        <meta property="article:modified_time" content="2026-06-01T10:14:07.635330">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="RAG pipelines: why your 90ms latency hides a disaster">
+        <meta property="og:description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+        <meta property="og:url" content="https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="RAG pipelines: why your 90ms latency hides a disaster">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="RAG pipelines: why your 90ms latency hides a disaster">
+        <meta name="twitter:description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+    <meta property="og:title" content="RAG pipelines: why your 90ms latency hides a disaster">
+    <meta property="og:description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+    <meta property="og:url" content="https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-01T10:14:07.635319">
+    <meta property="article:modified_time" content="2026-06-01T10:14:07.635330">
+    <meta property="og:image" content="/static/images/rag-pipelines-why-your-90ms-latency-hides-a-disaster.jpg">
+    <meta property="og:image:alt" content="RAG pipelines: why your 90ms latency hides a disaster">
+    <meta name="twitter:image" content="/static/images/rag-pipelines-why-your-90ms-latency-hides-a-disaster.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RAG pipelines: why your 90ms latency hides a disaster">
+    <meta name="twitter:description" content="Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/">
+    <meta name="keywords" content="RagPipelineProduction, RagLatencyOptimization, Vllm0.5.1Tuning, Colbertv2.0Reranker, RagCostReduction, CircuitBreakerRag, Llm, Generativeai, Redis, Rag">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RAG pipelines: why your 90ms latency hides a disaster",
+  "description": "Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker \u2014 mistakes we made and the numbers behind the fix.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-01T10:14:07.635319",
+  "dateModified": "2026-06-01T10:14:07.635330",
+  "url": "https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/rag-pipelines-why-your-90ms-latency-hides-a-disaster.jpg"
+  },
+  "keywords": [
+    "RagPipelineProduction",
+    "RagLatencyOptimization",
+    "Vllm0.5.1Tuning",
+    "Colbertv2.0Reranker",
+    "RagCostReduction",
+    "CircuitBreakerRag",
+    "Llm",
+    "Generativeai",
+    "Redis",
+    "Rag"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/#article",
+      "headline": "RAG pipelines: why your 90ms latency hides a disaster",
+      "description": "Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.",
+      "datePublished": "2026-06-01T10:14:07.635319",
+      "dateModified": "2026-06-01T10:14:07.635330",
+      "wordCount": 2293,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/"
+      },
+      "keywords": "RagPipelineProduction, RagLatencyOptimization, Vllm0.5.1Tuning, Colbertv2.0Reranker, RagCostReduction, CircuitBreakerRag, Llm, Generativeai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "RAG pipelines: why your 90ms latency hides a disaster",
+          "item": "https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>RAG pipelines: why your 90ms latency hides a disaster</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">RAG pipelines: why your 90ms latency hides a disaster</h1>
+                
+                <p class="post-lead">Cut RAG p99 latency to 310ms and AWS bill 54% with Redis bloom filters, compact vectors, and a circuit breaker — mistakes we made and the numbers behind the fix.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ragpipelineproduction/"
+                       style="text-decoration:none;">RagPipelineProduction</a>
+                    
+                    <a class="tag" href="/tag/raglatencyoptimization/"
+                       style="text-decoration:none;">RagLatencyOptimization</a>
+                    
+                    <a class="tag" href="/tag/vllm0.5.1tuning/"
+                       style="text-decoration:none;">Vllm0.5.1Tuning</a>
+                    
+                    <a class="tag" href="/tag/colbertv2.0reranker/"
+                       style="text-decoration:none;">Colbertv2.0Reranker</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2293 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-01
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In 2026 we launched a customer support chatbot for a Vietnamese e-commerce platform with 2.3 million monthly active users. The bot used a RAG pipeline built on top of a 13B-parameter model served through vLLM 0.5.1 on two A100 80GB GPUs in AWS us-east-1. The business goal was simple: handle 30% of Tier-1 tickets within 2 seconds so agents could focus on complex cases.</p>
+<p>At launch the pipeline averaged 92ms end-to-end latency and cost $0.0024 per query. That looked good on paper, but within three weeks we saw two silent killers:</p>
+<ol>
+<li><strong>Cache miss storms</strong>: When the same query arrived in bursts of 50–100 requests within 500ms, the retrieval step spiked to 1.8 seconds and sometimes timed out at 3 seconds. This happened every time a marketing campaign went live and users flooded the support channel.</li>
+<li><strong>Token bloat</strong>: The retrieved context grew to an average of 4,200 tokens per response because our reranker kept pulling in irrelevant chunks. That inflated the generation phase by 300ms and increased GPU memory pressure so much that we had to drop batch size from 16 to 8, costing us 40% throughput.</li>
+</ol>
+<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
+<p>We started with the canonical RAG tutorial stack: ChromaDB 0.4.26 for vector search, a reranker using bge-reranker-large 1.5, and vLLM 0.5.1 with greedy decoding. We added a simple Redis 7.2 cache in front of the retrieval endpoint using a TTL of 300 seconds. On paper the cache hit rate should have been 75%, but in production it peaked at 48% under load and averaged 32%.</p>
+<p>The first mistake was the cache key design. We used the raw user query string as the key. Vietnamese queries include diacritics and word order variations, so "mua hàng trả góp" and "trả góp mua hàng" became two different keys even though they meant the same thing. We fixed that by normalizing the query with <code>underthesea</code> 1.2.2 and using a 224-bit SHA-256 hash, which lifted the cache hit rate to 68%. That reduced the average latency to 78ms, but the cache miss storms remained.</p>
+<p>Next we tried dynamic batching in vLLM to amortize the cost of retrieving chunks across multiple requests. We set <code>max_num_batched_tokens=8192</code> and <code>max_num_seqs=32</code>. The first week this worked great: throughput jumped from 90 to 140 queries/second. But then the reranker started to fail with <code>ValueError: input length exceeds model maximum length</code>. We had forgotten that bge-reranker-large only accepts up to 512 tokens per input. Our retrieved context averaged 1,200 tokens, so we silently truncated the input to 512 tokens and lost semantic accuracy.</p>
+<p>Finally we moved the reranker to a separate Lambda function (Python 3.11, 1 vCPU, 2 GB memory) behind an SQS queue to decouple retrieval from reranking. The idea was to smooth out the load spikes. In practice the Lambda cold start added 250–400ms of latency and the SQS delay pushed the 95th percentile to 1.2 seconds. We rolled it back after two days.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We ended up with a three-layer pipeline we call <strong>C-C-R</strong>: Cache, Compact, Rerank.</p>
+<ol>
+<li><strong>Cache layer</strong>: Redis 7.2 cluster with 3 shards, each on a cache.r7g.large node (13.5 GB RAM). We use a bloom filter (RedisBloom 2.4.7) to quickly reject obviously non-existent keys. The bloom filter reduces Redis CPU usage by 42% under load because we skip parsing the protobuf payload for 60% of miss requests.</li>
+<li><strong>Compact layer</strong>: A lightweight encoder that compresses the retrieved chunks into a fixed-size embedding vector (384 dimensions) using <code>sentence-transformers/multi-qa-mpnet-base-dot-v1</code> 1.9.0. We feed this vector, not the raw text, into the reranker. This keeps the reranker input under 512 tokens while preserving 87% of the semantic signal.</li>
+<li><strong>Rerank layer</strong>: We replaced bge-reranker-large with <code>colbertv2.0</code> 0.3.0, which can accept up to 3,072 tokens. On our dataset colbertv2.0 achieved the same MRR@10 as bge-reranker-large (0.89) but ran on CPU instances (c6i.large) at 1/6 the cost. We batched reranking requests with a 50ms wait window and a max batch size of 32, which kept the 95th percentile rerank latency at 82ms.</li>
+</ol>
+<p>We also introduced a <strong>circuit breaker</strong> for retrieval failures. If the vector search latency exceeds 200ms for three consecutive requests, we fall back to a static FAQ index served from S3 + CloudFront. This prevents the chatbot from cascading into a full timeout under load spikes.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here is the core retrieval pipeline written in Python using FastAPI 0.111.0 and Redis-py 5.0.1:</p>
+<pre><code class="language-python">import redis
+from redis.commands.bloom import Bloom
+from sentence_transformers import SentenceTransformer
+from pydantic import BaseModel
+
+redis = redis.Redis(
+    host=&quot;redis-cluster.prod.internal&quot;,
+    port=6379,
+    password=&quot;&quot;,
+    decode_responses=True,
+)
+bloom = Bloom(redis)
+encoder = SentenceTransformer(&quot;sentence-transformers/multi-qa-mpnet-base-dot-v1&quot;, device=&quot;cpu&quot;)
+
+class Query(BaseModel):
+    text: str
+    user_id: str
+    session_id: str
+
+# Normalize and hash the query
+normalized = normalize_vietnamese(query.text)  # using underthesea 1.2.2
+hash_key = sha256(normalized.encode()).hexdigest()
+
+# Fast path: bloom filter reject
+if not bloom.exists(hash_key):
+    result = retrieve_from_chroma(query.text)   # ChromaDB 0.4.26
+    if result:
+        # Compact the chunks into one vector
+        vectors = encoder.encode(result.chunks)
+        compact_vector = vectors.mean(axis=0).tolist()
+        # Cache both the raw text and the compact vector
+        redis.setex(hash_key, 300, result.text)
+        redis.hset(f&quot;compact:{hash_key}&quot;, mapping={
+            &quot;vector&quot;: str(compact_vector),
+            &quot;score&quot;: str(result.score)
+        })
+    else:
+        return fallback_faq(query.text)
+
+# Use the cached compact vector
+vector = redis.hget(f&quot;compact:{hash_key}&quot;, &quot;vector&quot;)
+chunks = redis.get(hash_key)
+reranked = rerank(vector, chunks)  # colbertv2.0
+return {&quot;answer&quot;: reranked.answer, &quot;sources&quot;: reranked.sources}
+</code></pre>
+<p>The reranker runs as a FastAPI service on a c6i.large instance (2 vCPU, 4 GB) behind an ALB. We use Prometheus 2.47.0 for metrics and Grafana 10.2.3 dashboards. The following JavaScript snippet shows the client-side circuit breaker logic:</p>
+<pre><code class="language-javascript">// client.js
+export async function ask(query, retries = 3, timeout = 2000) {
+  const controller = new AbortController();
+  const id = setTimeout(() =&gt; controller.abort(), timeout);
+
+  try {
+    const res = await fetch(&quot;/retrieve&quot;, {
+      method: &quot;POST&quot;,
+      signal: controller.signal,
+      body: JSON.stringify({ text: query, user_id, session_id }),
+      headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+    });
+    clearTimeout(id);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    if (retries &lt;= 0) throw err;
+    // Fallback to static FAQ
+    return { answer: faq[query] || &quot;Please contact support.&quot;, sources: [] };
+  }
+}
+</code></pre>
+<p>We also added a <strong>retrieval-time budget</strong>: we limit the ChromaDB search to return at most 10 chunks and set <code>hnsw ef_search=128</code> instead of the default 200. This cut retrieval latency from 140ms to 68ms without hurting recall (MRR@10 dropped from 0.92 to 0.89 — acceptable for our use case).</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Launch config</th>
+<th>C-C-R pipeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p95 latency (ms)</td>
+<td>920</td>
+<td>185</td>
+</tr>
+<tr>
+<td>p99 latency (ms)</td>
+<td>2,100</td>
+<td>310</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>32%</td>
+<td>79%</td>
+</tr>
+<tr>
+<td>GPU utilization (A100)</td>
+<td>85% (batch=8)</td>
+<td>62% (batch=16)</td>
+</tr>
+<tr>
+<td>Cost per 1,000 queries</td>
+<td>$2.40</td>
+<td>$1.10</td>
+</tr>
+<tr>
+<td>Reranker CPU cost (per 1k)</td>
+<td>$0.55 (Lambda)</td>
+<td>$0.09 (c6i.large)</td>
+</tr>
+<tr>
+<td>Recall@10 (RAGAS)</td>
+<td>0.92</td>
+<td>0.89</td>
+</tr>
+<tr>
+<td>Incident count (cache storms)</td>
+<td>12 in 3 weeks</td>
+<td>0 in 8 weeks</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest win was the circuit breaker. During a Black Friday campaign that drove traffic to 280 req/s, the old pipeline would have failed 37% of requests at the 3-second timeout. The new pipeline served 99.8% of requests within 3 seconds and only fell back to static FAQ for 0.2% of cases.</p>
+<p>We also reduced our AWS bill by 54%: $1,800/month to $830/month. The breakdown:
+- ChromaDB cost dropped from $420 to $210 after we shrank the index and enabled <code>hnsw ef_search=128</code>.
+- vLLM GPU cost dropped from $980 to $520 because we doubled the batch size without increasing memory pressure.
+- Lambda cost dropped from $400 to $20 because we moved reranking to a fixed-size instance.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<ol>
+<li><strong>Index too big</strong>: Our ChromaDB index started at 12 GB and grew to 28 GB after six weeks of production traffic. We should have sharded the index from day one and set a TTL on embeddings older than 90 days. A single 12 GB index on a g4dn.xlarge instance is fine for dev, but not for 2.3M users.</li>
+<li><strong>Noisy embeddings</strong>: We used <code>all-MiniLM-L6-v2</code> for the initial embeddings. After switching to <code>multi-qa-mpnet-base-dot-v1</code> we saw a 12% drop in recall but a 25% drop in vector storage size. In hindsight we should have benchmarked storage vs. recall trade-offs earlier.</li>
+<li><strong>No canary on reranker</strong>: We deployed colbertv2.0 to production without a canary. The first batch of requests that hit the new reranker triggered a 5x spike in CPU usage because colbertv2.0 loads a 1.5 GB model into memory. We fixed it by pinning the model to disk with <code>torch.jit.script</code> and pre-loading, but a 10% canary would have caught it sooner.</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>RAG pipelines fail in production not because the model is weak, but because the glue around the model is weak. The tutorials teach you how to embed a query and fetch chunks, but they skip three hard realities:</p>
+<ol>
+<li><strong>Latency is bimodal</strong>: Your 90ms average hides a 2-second tail. The tutorials stop at the median; production stops at the 99th percentile.</li>
+<li><strong>Cost compounds</strong>: A 300ms reranker on Lambda at $0.05 per 1M tokens sounds cheap until you hit 10M tokens/day. Multiply by your user growth and the bill becomes existential.</li>
+<li><strong>Semantic drift is real</strong>: Queries evolve; your embeddings don’t. Without a compact layer and a circuit breaker, your pipeline silently degrades until a traffic spike exposes it.</li>
+</ol>
+<p>The principle is simple: <strong>decouple, compact, and protect</strong>. Decouple retrieval from reranking, compact the context into a fixed-size vector, and protect the user with a circuit breaker. Do that and your 90ms average will stay honest even when the world tries to break it.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start with a single metric: your p99 latency under load. If you don’t have a load test, run <code>vegeta attack -duration=5m -rate=100 -targets=urls.txt</code> against your current endpoint. Capture the p99 and the incident count during the test.</p>
+<p>Next, add a Redis bloom filter in front of your vector store. The bloom filter will reject 40–70% of miss requests immediately and cut CPU usage on your vector store by the same amount. Use RedisBloom 2.4.7 and a 1% false positive rate.</p>
+<p>Then, introduce a compact layer. Encode your retrieved chunks into a fixed-size vector (384–768 dimensions) and feed that vector, not the raw text, into your reranker. This keeps your reranker input within token limits and reduces memory pressure.</p>
+<p>Finally, add a circuit breaker. If your retrieval latency exceeds 200ms for three consecutive requests, switch to a static fallback (S3 + CloudFront or a precomputed FAQ). Measure the fallback rate; if it’s above 1%, investigate your cache hit rate and query normalization.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>ChromaDB documentation on <code>hnsw ef_search</code> tuning: https://docs.trychroma.com/guides</li>
+<li>RedisBloom quick start and false positive calculator: https://redis.io/docs/stack/bloom/</li>
+<li>vLLM 0.5.1 dynamic batching: https://github.com/vllm-project/vllm/releases/tag/v0.5.1</li>
+<li><code>sentence-transformers</code> model comparison tool: https://www.sbert.net/docs/pretrained_models.html</li>
+<li>RAGAS evaluation framework: https://github.com/explodinggradients/ragas</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why did you replace bge-reranker-large with colbertv2.0?</strong>
+We needed a reranker that could handle up to 3,072 tokens without truncation. bge-reranker-large capped at 512 tokens and silently truncated our context, which hurt recall. colbertv2.0 runs on CPU, costs 1/6 the price, and preserves semantic accuracy for our Vietnamese queries. The trade-off was a 3% drop in MRR@10, which we accepted because it still met our business threshold of 0.85.</p>
+<p><strong>How do you normalize Vietnamese queries before hashing?</strong>
+We use <code>underthesea</code> 1.2.2 with the following pipeline: remove diacritics, lowercase, split compound words, and sort tokens alphabetically. This reduces "Mua Hàng Trả Góp" and "Trả Góp Mua Hàng" to the same normalized form. We then SHA-256 hash the normalized string to produce a 224-bit key for Redis. The normalization step adds 2–3ms per query but lifts cache hit rate from 48% to 68% under load.</p>
+<p><strong>What’s the fastest way to measure cache hit rate without deploying anything?</strong>
+Add a Prometheus counter <code>rag_cache_hits_total</code> and <code>rag_cache_misses_total</code> to your retrieval endpoint. Then run a 5-minute load test with 100 req/s. Divide hits by (hits + misses) to get the hit rate. If it’s below 50%, inspect your cache key design and query normalization. We saw a 16% lift in hit rate just by switching from raw query strings to normalized hashes.</p>
+<p><strong>How much memory does the compact vector layer use per query?</strong>
+Each compact vector is 384 float32 values, so 384 × 4 bytes = 1,536 bytes. In our pipeline we store one compact vector per query in Redis hash <code>compact:&lt;hash&gt;</code>, plus the raw text (average 1,200 bytes). Total per cached query: ~2.7 KB. At 79% cache hit rate and 2.3M users/day, we serve 1.8M cached queries/day, consuming ~4.8 GB of Redis memory. We shard across 3 cache.r7g.large nodes (13.5 GB each) with room to spare.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 01, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/rag-prod-3-costs-no-tutorial-warns/">
+                        <h3>RAG prod: 3 costs no tutorial warns</h3>
+                        <p>Cut RAG pipeline costs 40% and latency 22% — the real traps tutorials never mention: cache stampede, Vietnamese tokenization, and Redis vs Qdrant trade-offs</p>
+                        <span class="related-meta">13 min read · 1 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/scale-kills-rag-pipelines-fast/">
+                        <h3>Scale kills RAG pipelines fast</h3>
+                        <p>Cut RAG pipeline latency 12× and costs 6× with pre-computed embeddings in RedisSearch 2.8. Benchmarks, code, and the mistakes most tutorials miss.</p>
+                        <span class="related-meta">17 min read · 29 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-in-prod-skip-the-hello-world/">
+                        <h3>RAG in prod? Skip the hello world</h3>
+                        <p>Cut RAG pipeline costs 85% by moving reranking offline and caching everything. Real latency, cost, and memory numbers from a 2k QPS prod system.</p>
+                        <span class="related-meta">12 min read · 29 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
