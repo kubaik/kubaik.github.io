@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 23:18:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 23:21:34 +0000</lastBuildDate>
+    <item>
+      <title>Hire remotely from Africa: show outcomes</title>
+      <link>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</link>
+      <description>Portfolio that lands remote jobs must prove impact, not code cleanliness. Add a postmortem with latency spikes, error rates, and cost savings. One 200-word write-up beats 10 polished repos for fintech and payments roles in 2026.</description>
+      <pubDate>Mon, 01 Jun 2026 23:21:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</guid>
+    </item>
     <item>
       <title>Salary split: prompt ops vs prompt engineers</title>
       <link>https://kubaik.github.io/salary-split-prompt-ops-vs-prompt-engineers/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 80% with the right real-time transport in 2026 — WebSocket, SSE, or long-poll benchmarks and cost data on Node 20 and Redis 7.2.</description>
       <pubDate>Mon, 01 Jun 2026 13:26:38 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-real-time-transport-that-wont-bite/</guid>
-    </item>
-    <item>
-      <title>Benchmark PostgreSQL vs MySQL in 2026</title>
-      <link>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</link>
-      <description>Cut 35 % latency and 21 % costs by choosing PostgreSQL 16.4 over MySQL 8.4 — real benchmarks, failover tests, and the one tuning knob that matters in 2026.</description>
-      <pubDate>Mon, 01 Jun 2026 12:15:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</guid>
     </item>
   </channel>
 </rss>
