@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 16:50:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 16:55:30 +0000</lastBuildDate>
+    <item>
+      <title>Build an internal dev platform for $100/month</title>
+      <link>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</link>
+      <description>Save $3k/month building an internal developer platform on $100/month — EKS, MemoryDB, Argo CD, and a Go 1.21 CLI that tunnels localhost to staging reliably on 3G networks</description>
+      <pubDate>Mon, 01 Jun 2026 16:55:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</guid>
+    </item>
     <item>
       <title>Ship real users, land remote jobs</title>
       <link>https://kubaik.github.io/ship-real-users-land-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio that lands remote jobs from Africa: show one runnable project, not certificates. Benchmarks, deploy scripts, GitHub pinning tactics. 2026 hiring data included.</description>
       <pubDate>Mon, 01 Jun 2026 00:00:51 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-that-lands-remote-jobs-show-work-not/</guid>
-    </item>
-    <item>
-      <title>Shard AI workloads, not users</title>
-      <link>https://kubaik.github.io/shard-ai-workloads-not-users/</link>
-      <description>Cut AI API p99 latency 60% with Redis caching and Qdrant 1.8 — embedding cache, rate limits, and the cache stampede mistake most teams miss.</description>
-      <pubDate>Sun, 31 May 2026 23:40:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/shard-ai-workloads-not-users/</guid>
     </item>
   </channel>
 </rss>
