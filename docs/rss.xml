@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 22:33:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 22:59:00 +0000</lastBuildDate>
+    <item>
+      <title>Land $100k remote job from Mexico City</title>
+      <link>https://kubaik.github.io/land-100k-remote-job-from-mexico-city/</link>
+      <description>Land $100k remote job from Mexico City — local cost breakdown, benchmark tools, and negotiation scripts that moved offers from $55k to $105k in two rounds.</description>
+      <pubDate>Mon, 01 Jun 2026 22:58:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-100k-remote-job-from-mexico-city/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs long-polling: pick the right one</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-pick-the-right-one/</link>
@@ -138,13 +145,6 @@
       <description>Land remote jobs paying 40–50% above local rates with a data-driven packet built in 30 minutes — includes tax burdens, FX rates, and Levels.fyi 2026 ranges</description>
       <pubDate>Mon, 01 Jun 2026 10:45:07 +0000</pubDate>
       <guid>https://kubaik.github.io/land-50-higher-remote-pay-without-leaving-home/</guid>
-    </item>
-    <item>
-      <title>Portfolio projects: ship, don&apos;t polish</title>
-      <link>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</link>
-      <description>Cut remote job screen time 60%: ship a live system recruiters can deploy and break in 10 minutes — Fly.io, FastAPI, Go, and chaos endpoints that prove you won’t wake them at 2 AM.</description>
-      <pubDate>Mon, 01 Jun 2026 10:42:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</guid>
     </item>
   </channel>
 </rss>
