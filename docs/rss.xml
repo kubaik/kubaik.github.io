@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 16:30:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 16:34:33 +0000</lastBuildDate>
+    <item>
+      <title>Pool size = CPU cores: why</title>
+      <link>https://kubaik.github.io/pool-size-cpu-cores-why/</link>
+      <description>Teams copy-paste this setting from a 2018 blog post, redeploy, and wonder why their API latency doubles at 9 AM while AWS bills spike by 200%.</description>
+      <pubDate>Mon, 01 Jun 2026 16:34:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-cpu-cores-why/</guid>
+    </item>
     <item>
       <title>RAG in prod: why tutorials lie</title>
       <link>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 30% by fixing one connection pool setting — the math most teams get wrong, benchmarks from PostgreSQL 15, and the exact config to start with today.</description>
       <pubDate>Sun, 31 May 2026 23:23:09 +0000</pubDate>
       <guid>https://kubaik.github.io/8-connection-pool-myths-debunked/</guid>
-    </item>
-    <item>
-      <title>Choose WebSockets, SSE, or long polling</title>
-      <link>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</link>
-      <description>Compare WebSockets vs SSE vs long polling with real 2026 latency numbers and cost data to pick the right realtime tool for your use case.</description>
-      <pubDate>Sun, 31 May 2026 22:49:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-websockets-sse-or-long-polling/</guid>
     </item>
   </channel>
 </rss>
