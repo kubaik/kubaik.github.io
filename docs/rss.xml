@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 10:40:09 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 10:42:25 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio projects: ship, don&apos;t polish</title>
+      <link>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</link>
+      <description>Cut remote job screen time 60%: ship a live system recruiters can deploy and break in 10 minutes — Fly.io, FastAPI, Go, and chaos endpoints that prove you won’t wake them at 2 AM.</description>
+      <pubDate>Mon, 01 Jun 2026 10:42:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</guid>
+    </item>
     <item>
       <title>RAG pipelines: why your 90ms latency hides a disaster</title>
       <link>https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/</link>
@@ -138,13 +145,6 @@
       <description>ML Ops vs prompt engineering salaries in 2026 — $215k vs $155k median, failure rates, cost savings, and the real skills that move the needle.</description>
       <pubDate>Sun, 31 May 2026 21:37:54 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-mlops-vs-prompt-engineering/</guid>
-    </item>
-    <item>
-      <title>Ship real systems: Africa’s remote hiring proof</title>
-      <link>https://kubaik.github.io/ship-real-systems-africas-remote-hiring-proof/</link>
-      <description>Cut remote hiring time from months to weeks with a portfolio of production incidents and cost deltas — real metrics, real repos, real stories from Nairobi fintech systems.</description>
-      <pubDate>Sun, 31 May 2026 21:23:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-real-systems-africas-remote-hiring-proof/</guid>
     </item>
   </channel>
 </rss>
