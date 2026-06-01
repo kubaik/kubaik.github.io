@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 13:26:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 14:13:02 +0000</lastBuildDate>
+    <item>
+      <title>3 AI skills that boost 2026 salaries</title>
+      <link>https://kubaik.github.io/3-ai-skills-that-boost-2026-salaries/</link>
+      <description>Salary jumps in 2026 go to engineers who master RAG with pgvector or Milvus at scale — not fine-tuning. Benchmarks, costs, and the exact skills that moved the needle.</description>
+      <pubDate>Mon, 01 Jun 2026 14:12:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-ai-skills-that-boost-2026-salaries/</guid>
+    </item>
     <item>
       <title>Pick the Real-Time Transport That Won’t Bite</title>
       <link>https://kubaik.github.io/pick-the-real-time-transport-that-wont-bite/</link>
@@ -138,13 +145,6 @@
       <description>Use 2026 data to negotiate remote salaries from lower-cost countries — avoid 30% lowballs with PPP-adjusted benchmarks and a negotiation script that works.</description>
       <pubDate>Sun, 31 May 2026 22:24:59 +0000</pubDate>
       <guid>https://kubaik.github.io/5k-remote-how-to-get-paid-fairly-from-bogotá/</guid>
-    </item>
-    <item>
-      <title>Portfolio beats LeetCode: hire without Silicon Valley</title>
-      <link>https://kubaik.github.io/portfolio-beats-leetcode-hire-without-silicon-valley/</link>
-      <description>Cut interview time 70% with a production-grade portfolio — real Grafana dashboards, health endpoints, and one repo beat 200 GitHub stars. 2026 numbers, tools, and post-mortem scripts included.</description>
-      <pubDate>Sun, 31 May 2026 21:55:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-beats-leetcode-hire-without-silicon-valley/</guid>
     </item>
   </channel>
 </rss>
