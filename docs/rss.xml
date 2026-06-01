@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 20:53:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 20:56:40 +0000</lastBuildDate>
+    <item>
+      <title>Pick real-time tech in 5 minutes</title>
+      <link>https://kubaik.github.io/pick-real-time-tech-in-5-minutes/</link>
+      <description>Pick real-time protocol in 5 minutes — SSE vs WebSocket vs long polling latency, cost, Safari bug, and exact code to test them on Node 20 LTS and Python 3.11 in 2026</description>
+      <pubDate>Mon, 01 Jun 2026 20:56:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-real-time-tech-in-5-minutes/</guid>
+    </item>
     <item>
       <title>2026 AI Salary: RAG vs Fine-tuning vs Agents</title>
       <link>https://kubaik.github.io/2026-ai-salary-rag-vs-fine-tuning-vs-agents/</link>
@@ -138,13 +145,6 @@
       <description>The database response time was 420 ms on average.</description>
       <pubDate>Mon, 01 Jun 2026 05:35:04 +0000</pubDate>
       <guid>https://kubaik.github.io/wrong-pool-size-slower-app/</guid>
-    </item>
-    <item>
-      <title>Skip zero-trust noise: 3 rules for small teams</title>
-      <link>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</link>
-      <description>Cut security noise for small teams: skip service mesh and mTLS unless regulated. Focus on secrets, short-lived tokens, and network isolation to reduce real risk fast.</description>
-      <pubDate>Mon, 01 Jun 2026 05:21:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</guid>
     </item>
   </channel>
 </rss>
