@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jun 2026 02:07:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 02:12:20 +0000</lastBuildDate>
+    <item>
+      <title>Mis-size your DB pool? You&apos;re stealing CPU</title>
+      <link>https://kubaik.github.io/mis-size-your-db-pool-youre-stealing-cpu/</link>
+      <description>Cut database costs 70% by setting connection pool size to 2× CPU cores — not users. Real benchmarks from Node.js, Go, and Python systems in 2026.</description>
+      <pubDate>Mon, 01 Jun 2026 02:12:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mis-size-your-db-pool-youre-stealing-cpu/</guid>
+    </item>
     <item>
       <title>Choose WebSocket, SSE or long-poll wisely</title>
       <link>https://kubaik.github.io/choose-websocket-sse-or-long-poll-wisely/</link>
@@ -138,13 +145,6 @@
       <description>The honest answer is that a 500-line CRUD app with a README that explains the trade-offs will beat a 5,000-line monolith with no documentation every time.</description>
       <pubDate>Sun, 31 May 2026 19:24:24 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-ship-small-prove-impact-get-hired/</guid>
-    </item>
-    <item>
-      <title>AI skills that pay: TensorFlow vs PyTorch in 2026</title>
-      <link>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</link>
-      <description>The 2026 Stack Overflow AI Skills Report shows that engineers who can debug GPU OOM errors, optimize data loaders, and deploy models without memory leaks…</description>
-      <pubDate>Sun, 31 May 2026 19:06:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-that-pay-tensorflow-vs-pytorch-in-2026/</guid>
     </item>
   </channel>
 </rss>
