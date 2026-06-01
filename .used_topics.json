@@ -1,4 +1,5 @@
 [
   "The real cost of over-engineering: when simplicity beats the fancy architecture",
-  "RAG pipelines in production: what the tutorials skip"
+  "RAG pipelines in production: what the tutorials skip",
+  "Database connection pooling: the setting everyone gets wrong"
 ]
