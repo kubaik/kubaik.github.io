@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 18:37:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 18:40:59 +0000</lastBuildDate>
+    <item>
+      <title>42% discount: remote pay when you&apos;re overseas</title>
+      <link>https://kubaik.github.io/42-discount-remote-pay-when-youre-overseas/</link>
+      <description>Increase remote salary 74% by forcing recruiters to share their multiplier — real 2026 results, exact emails, and a Google Sheet to build your anchor in 30 minutes</description>
+      <pubDate>Tue, 02 Jun 2026 18:40:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/42-discount-remote-pay-when-youre-overseas/</guid>
+    </item>
     <item>
       <title>Stop sizing DB pools by CPU cores</title>
       <link>https://kubaik.github.io/stop-sizing-db-pools-by-cpu-cores/</link>
@@ -138,13 +145,6 @@
       <description>Stop ignoring npm audit warnings — 3 concrete fixes to block supply chain attacks in Python and JavaScript dependencies before they hit production in 2026</description>
       <pubDate>Tue, 02 Jun 2026 08:21:55 +0000</pubDate>
       <guid>https://kubaik.github.io/npm-audit-stop-ignoring-these-3-dependency-attacks/</guid>
-    </item>
-    <item>
-      <title>Debug RAG in prod before your cloud bill explodes</title>
-      <link>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</link>
-      <description>How we cut RAG pipeline latency from 12.4s to 2.1s and costs 60% with FAISS, Redis bloom filters, and isolated workloads — the details tutorials skip.</description>
-      <pubDate>Tue, 02 Jun 2026 07:18:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</guid>
     </item>
   </channel>
 </rss>
