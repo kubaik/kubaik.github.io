@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 20:42:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 17:46:37 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that move salaries in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-that-move-salaries-in-2026/</link>
+      <description>Cut AI salary gap 30-60% with MLOps pipelines. 2026 data-backed comparison of skills that move your paycheck, with concrete numbers, tool versions, and a 30-minute action step.</description>
+      <pubDate>Tue, 02 Jun 2026 17:46:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-move-salaries-in-2026/</guid>
+    </item>
     <item>
       <title>Haggle remote pay from $3k to $8k/month</title>
       <link>https://kubaik.github.io/haggle-remote-pay-from-3k-to-8kmonth/</link>
@@ -138,13 +145,6 @@
       <description>How we cut RAG pipeline latency from 12.4s to 2.1s and costs 60% with FAISS, Redis bloom filters, and isolated workloads — the details tutorials skip.</description>
       <pubDate>Tue, 02 Jun 2026 07:18:36 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</guid>
-    </item>
-    <item>
-      <title>Pool size N+1? Wrong metric for DB</title>
-      <link>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</link>
-      <description>A 2026 Stack Overflow survey found that 68% of PostgreSQL users leave the pool size at the default or pick a number between 20 and 50 without…</description>
-      <pubDate>Tue, 02 Jun 2026 07:01:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</guid>
     </item>
   </channel>
 </rss>
