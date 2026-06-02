@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 18:33:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 18:37:59 +0000</lastBuildDate>
+    <item>
+      <title>Stop sizing DB pools by CPU cores</title>
+      <link>https://kubaik.github.io/stop-sizing-db-pools-by-cpu-cores/</link>
+      <description>Then traffic spiked to 2,400 QPS during a Black Friday sale.</description>
+      <pubDate>Tue, 02 Jun 2026 18:37:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-sizing-db-pools-by-cpu-cores/</guid>
+    </item>
     <item>
       <title>AI skills that move salaries in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-move-salaries-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>How we cut RAG pipeline latency from 12.4s to 2.1s and costs 60% with FAISS, Redis bloom filters, and isolated workloads — the details tutorials skip.</description>
       <pubDate>Tue, 02 Jun 2026 07:18:36 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</guid>
-    </item>
-    <item>
-      <title>Pool size N+1? Wrong metric for DB</title>
-      <link>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</link>
-      <description>A 2026 Stack Overflow survey found that 68% of PostgreSQL users leave the pool size at the default or pick a number between 20 and 50 without…</description>
-      <pubDate>Tue, 02 Jun 2026 07:01:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</guid>
     </item>
   </channel>
 </rss>
