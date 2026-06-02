@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 20:32:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 20:37:10 +0000</lastBuildDate>
+    <item>
+      <title>Hidden RAG slowdowns: cache warms, reranker fails</title>
+      <link>https://kubaik.github.io/hidden-rag-slowdowns-cache-warms-reranker-fails/</link>
+      <description>Cut RAG latency 60% and AWS costs 88% — the invisible bottlenecks pipelines ignore and how to fix them with Redis 7.2, Node 20 LTS, and progressive delivery</description>
+      <pubDate>Tue, 02 Jun 2026 20:36:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/hidden-rag-slowdowns-cache-warms-reranker-fails/</guid>
+    </item>
     <item>
       <title>Over-provisioned DB pools cost more than cores</title>
       <link>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</link>
@@ -138,13 +145,6 @@
       <description>Pick the realtime protocol that fits your latency budget and budget in 2026 — SSE beats WebSocket on cost and ops load for scoreboards, chat, and dashboards</description>
       <pubDate>Tue, 02 Jun 2026 08:40:36 +0000</pubDate>
       <guid>https://kubaik.github.io/which-realtime-protocol-wont-melt-your-stack/</guid>
-    </item>
-    <item>
-      <title>Pool size math: DB queries wait in line</title>
-      <link>https://kubaik.github.io/pool-size-math-db-queries-wait-in-line/</link>
-      <description>Cut database latency 80% by sizing pools with queueing theory — the connection pool math most tutorials get wrong and the 3 concrete numbers to guide your next setup.</description>
-      <pubDate>Tue, 02 Jun 2026 08:31:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-math-db-queries-wait-in-line/</guid>
     </item>
   </channel>
 </rss>
