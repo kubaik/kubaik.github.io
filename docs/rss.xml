@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 22:44:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 22:48:36 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time tech fast</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</link>
+      <description>Cut API response time 70% with the right real-time tool — SSE vs WebSockets vs long polling compared with 2026 benchmarks, code, and the mistake that cost 3 weeks</description>
+      <pubDate>Tue, 02 Jun 2026 22:48:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</guid>
+    </item>
     <item>
       <title>AI salary killers: LLMs vs vector search 2026</title>
       <link>https://kubaik.github.io/ai-salary-killers-llms-vs-vector-search-2026/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salary from lower-cost countries — get 27 % median raise using US bands, FX floor, and three scripts in Python 3.11</description>
       <pubDate>Tue, 02 Jun 2026 10:12:53 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines choke on real traffic</title>
-      <link>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</link>
-      <description>Cut RAG latency 78% and AWS costs 35% with semantic cache keys, Rust vector search, and hybrid SQLite/Redis caching — the real levers most tutorials skip.</description>
-      <pubDate>Tue, 02 Jun 2026 10:00:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</guid>
     </item>
   </channel>
 </rss>
