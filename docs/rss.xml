@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 15:34:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 12:38:22 +0000</lastBuildDate>
+    <item>
+      <title>DB pools: CPU cores ×2 is wrong now</title>
+      <link>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</link>
+      <description>Cut DB response time 40% by sizing connection pools for downstream capacity, not CPU cores — PostgreSQL 16, Node.js 20, and RDS tuning guide.</description>
+      <pubDate>Tue, 02 Jun 2026 12:38:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</guid>
+    </item>
     <item>
       <title>2026 AI salaries: 3 real skills that pay</title>
       <link>https://kubaik.github.io/2026-ai-salaries-3-real-skills-that-pay/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio that lands remote jobs must prove impact, not code cleanliness. Add a postmortem with latency spikes, error rates, and cost savings. One 200-word write-up beats 10 polished repos for fintech and payments roles in 2026.</description>
       <pubDate>Mon, 01 Jun 2026 23:21:16 +0000</pubDate>
       <guid>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</guid>
-    </item>
-    <item>
-      <title>Salary split: prompt ops vs prompt engineers</title>
-      <link>https://kubaik.github.io/salary-split-prompt-ops-vs-prompt-engineers/</link>
-      <description>Prompt ops beats prompt engineering by €19k in 2026 — with real ROI numbers, tool versions, and the compliance trap most teams miss</description>
-      <pubDate>Mon, 01 Jun 2026 23:18:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/salary-split-prompt-ops-vs-prompt-engineers/</guid>
     </item>
   </channel>
 </rss>
