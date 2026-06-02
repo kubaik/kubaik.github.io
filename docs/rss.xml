@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 23:30:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 23:33:12 +0000</lastBuildDate>
+    <item>
+      <title>Production RAG: the latency trap most tutorials miss</title>
+      <link>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</link>
+      <description>Cut RAG latency 86% and AWS bill 52% with article-level caching; the vector-store hop most tutorials ignore</description>
+      <pubDate>Tue, 02 Jun 2026 23:32:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</guid>
+    </item>
     <item>
       <title>Pool size too low? Blame TCP ports</title>
       <link>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</link>
@@ -138,13 +145,6 @@
       <description>Ship one demo, not ten portfolios — African devs who build a single production-grade system get hired faster than those who grind ten toy projects. Stack: FastAPI 0.109, PostgreSQL 15, Redis 7.2, Celery 5.3. Deliver 500 ms p95 latency.</description>
       <pubDate>Tue, 02 Jun 2026 10:47:22 +0000</pubDate>
       <guid>https://kubaik.github.io/one-african-dev-portfolio-trick/</guid>
-    </item>
-    <item>
-      <title>Free weekends: my 2-hour client hack</title>
-      <link>https://kubaik.github.io/free-weekends-my-2-hour-client-hack/</link>
-      <description>Cut weekend burnout 93% with Batched Delivery — GitHub Projects, IssueOps, and the 2-hour sprint rule most tutorials miss</description>
-      <pubDate>Tue, 02 Jun 2026 10:39:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/free-weekends-my-2-hour-client-hack/</guid>
     </item>
   </channel>
 </rss>
