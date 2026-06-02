@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 05:22:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 05:24:27 +0000</lastBuildDate>
+    <item>
+      <title>Ship code Africa tech hiring</title>
+      <link>https://kubaik.github.io/ship-code-africa-tech-hiring/</link>
+      <description>Build a production-grade portfolio that lands remote jobs — show working systems, not polished resumes. Includes real examples, tools, and benchmarks from Nairobi fintech systems in 2026.</description>
+      <pubDate>Tue, 02 Jun 2026 05:24:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-code-africa-tech-hiring/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs polling: pick fast</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 74% and costs 68% with hybrid search and caching — what the tutorials skip about network jitter, cold starts, and duplicate queries.</description>
       <pubDate>Mon, 01 Jun 2026 14:54:04 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</guid>
-    </item>
-    <item>
-      <title>Avoid 12% pay cut from FX fees</title>
-      <link>https://kubaik.github.io/avoid-12-pay-cut-from-fx-fees/</link>
-      <description>Cut 6–12% off remote pay loss — USD clauses, Wise spreads, and the hidden fees most developers miss in 2026</description>
-      <pubDate>Mon, 01 Jun 2026 14:21:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-12-pay-cut-from-fx-fees/</guid>
     </item>
   </channel>
 </rss>
