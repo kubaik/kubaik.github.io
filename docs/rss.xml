@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 16:39:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 13:43:17 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: why staging lied</title>
+      <link>https://kubaik.github.io/rag-pipelines-why-staging-lied/</link>
+      <description>Cut RAG latency 72% and AWS costs 36% with mmap, Redis cache, and vLLM 0.5 — the production tricks tutorials skip</description>
+      <pubDate>Tue, 02 Jun 2026 13:42:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-why-staging-lied/</guid>
+    </item>
     <item>
       <title>DB pools: CPU cores ×2 is wrong now</title>
       <link>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</link>
@@ -138,13 +145,6 @@
       <description>60% of AI-generated code fails on edge cases like 2G drops and Swahili input — GitHub Copilot vs Cursor in production benchmarks for teams in sub-Saharan Africa.</description>
       <pubDate>Tue, 02 Jun 2026 00:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-cases-that-kill-ai-code/</guid>
-    </item>
-    <item>
-      <title>Hire remotely from Africa: show outcomes</title>
-      <link>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</link>
-      <description>Portfolio that lands remote jobs must prove impact, not code cleanliness. Add a postmortem with latency spikes, error rates, and cost savings. One 200-word write-up beats 10 polished repos for fintech and payments roles in 2026.</description>
-      <pubDate>Mon, 01 Jun 2026 23:21:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</guid>
     </item>
   </channel>
 </rss>
