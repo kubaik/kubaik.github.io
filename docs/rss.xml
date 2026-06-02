@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 09:08:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 09:13:08 +0000</lastBuildDate>
+    <item>
+      <title>Build Africa-specific portfolios, not resume noise</title>
+      <link>https://kubaik.github.io/build-africa-specific-portfolios-not-resume-noise/</link>
+      <description>Not &quot;I built a blog&quot;, but &quot;I reduced API latency from 1.2s to 200ms for a payment gateway under load&quot;.</description>
+      <pubDate>Tue, 02 Jun 2026 09:12:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-africa-specific-portfolios-not-resume-noise/</guid>
+    </item>
     <item>
       <title>Which realtime protocol won’t melt your stack?</title>
       <link>https://kubaik.github.io/which-realtime-protocol-wont-melt-your-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary gap 25% by choosing prompt engineering, fine-tuning, or agents — concrete benchmarks, tool versions, and compliance costs for 2026.</description>
       <pubDate>Mon, 01 Jun 2026 20:53:00 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salary-rag-vs-fine-tuning-vs-agents/</guid>
-    </item>
-    <item>
-      <title>5K QPS RAG under $120/mo</title>
-      <link>https://kubaik.github.io/5k-qps-rag-under-120mo/</link>
-      <description>Cut RAG latency 76% and AWS costs 87% with Redis caching and deduplication — the missing production guide with real numbers, code, and mistakes.</description>
-      <pubDate>Mon, 01 Jun 2026 19:56:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/5k-qps-rag-under-120mo/</guid>
     </item>
   </channel>
 </rss>
