@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 05:24:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 05:27:46 +0000</lastBuildDate>
+    <item>
+      <title>2026’s two AI salaries that pay</title>
+      <link>https://kubaik.github.io/2026s-two-ai-salaries-that-pay/</link>
+      <description>15–18% salary premium in 2026 for either MLOps cost-optimization or production RAG prompt-engineering — concrete benchmarks, code, and the exact switch to make today</description>
+      <pubDate>Tue, 02 Jun 2026 05:27:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026s-two-ai-salaries-that-pay/</guid>
+    </item>
     <item>
       <title>Ship code Africa tech hiring</title>
       <link>https://kubaik.github.io/ship-code-africa-tech-hiring/</link>
@@ -138,13 +145,6 @@
       <description>Teams copy-paste this setting from a 2018 blog post, redeploy, and wonder why their API latency doubles at 9 AM while AWS bills spike by 200%.</description>
       <pubDate>Mon, 01 Jun 2026 16:34:15 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-cpu-cores-why/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: why tutorials lie</title>
-      <link>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</link>
-      <description>Cut RAG pipeline latency 74% and costs 68% with hybrid search and caching — what the tutorials skip about network jitter, cold starts, and duplicate queries.</description>
-      <pubDate>Mon, 01 Jun 2026 14:54:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-why-tutorials-lie/</guid>
     </item>
   </channel>
 </rss>
