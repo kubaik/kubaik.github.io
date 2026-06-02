@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 08:36:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 08:40:51 +0000</lastBuildDate>
+    <item>
+      <title>Which realtime protocol won’t melt your stack?</title>
+      <link>https://kubaik.github.io/which-realtime-protocol-wont-melt-your-stack/</link>
+      <description>Pick the realtime protocol that fits your latency budget and budget in 2026 — SSE beats WebSocket on cost and ops load for scoreboards, chat, and dashboards</description>
+      <pubDate>Tue, 02 Jun 2026 08:40:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-realtime-protocol-wont-melt-your-stack/</guid>
+    </item>
     <item>
       <title>Pool size math: DB queries wait in line</title>
       <link>https://kubaik.github.io/pool-size-math-db-queries-wait-in-line/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 76% and AWS costs 87% with Redis caching and deduplication — the missing production guide with real numbers, code, and mistakes.</description>
       <pubDate>Mon, 01 Jun 2026 19:56:45 +0000</pubDate>
       <guid>https://kubaik.github.io/5k-qps-rag-under-120mo/</guid>
-    </item>
-    <item>
-      <title>Show projects, not certificates</title>
-      <link>https://kubaik.github.io/show-projects-not-certificates/</link>
-      <description>Portfolio that lands remote jobs: show trade-offs, not polish. Reduce API latency 85% with Redis 7.2 and cut AWS costs 40% — the real metrics recruiters care about.</description>
-      <pubDate>Mon, 01 Jun 2026 19:20:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/show-projects-not-certificates/</guid>
     </item>
   </channel>
 </rss>
