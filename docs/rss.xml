@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 10:39:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 10:47:41 +0000</lastBuildDate>
+    <item>
+      <title>One African dev portfolio trick</title>
+      <link>https://kubaik.github.io/one-african-dev-portfolio-trick/</link>
+      <description>Ship one demo, not ten portfolios — African devs who build a single production-grade system get hired faster than those who grind ten toy projects. Stack: FastAPI 0.109, PostgreSQL 15, Redis 7.2, Celery 5.3. Deliver 500 ms p95 latency.</description>
+      <pubDate>Tue, 02 Jun 2026 10:47:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/one-african-dev-portfolio-trick/</guid>
+    </item>
     <item>
       <title>Free weekends: my 2-hour client hack</title>
       <link>https://kubaik.github.io/free-weekends-my-2-hour-client-hack/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time latency variance 40% by choosing WebSockets, SSE, or long-polling — connection limits, memory leaks, and AWS cost breakdown for 2026.</description>
       <pubDate>Mon, 01 Jun 2026 22:33:09 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-pick-the-right-one/</guid>
-    </item>
-    <item>
-      <title>Don&apos;t size pools for CPU, size for latency</title>
-      <link>https://kubaik.github.io/dont-size-pools-for-cpu-size-for-latency/</link>
-      <description>Cut database pool-induced latency 60% with the right max pool size — why CPU-core heuristics fail in 2026, evidence from PostgreSQL 16 and HikariCP 5.0.1, and the Little’s Law formula most teams miss.</description>
-      <pubDate>Mon, 01 Jun 2026 22:23:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/dont-size-pools-for-cpu-size-for-latency/</guid>
     </item>
   </channel>
 </rss>
