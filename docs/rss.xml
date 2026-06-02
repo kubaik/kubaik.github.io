@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 14:04:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 14:08:22 +0000</lastBuildDate>
+    <item>
+      <title>Push updates without WebSockets: cheaper ways</title>
+      <link>https://kubaik.github.io/push-updates-without-websockets-cheaper-ways/</link>
+      <description>Cut real-time feature costs 95 % with these 5 serverless stacks — benchmarked 2026 data, concrete costs, and the one I picked for a Figma-like editor</description>
+      <pubDate>Tue, 02 Jun 2026 14:08:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-updates-without-websockets-cheaper-ways/</guid>
+    </item>
     <item>
       <title>RAG pipelines: why staging lied</title>
       <link>https://kubaik.github.io/rag-pipelines-why-staging-lied/</link>
@@ -138,13 +145,6 @@
       <description>60% of AI-generated code fails on edge cases like 2G drops and Swahili input — GitHub Copilot vs Cursor in production benchmarks for teams in sub-Saharan Africa.</description>
       <pubDate>Tue, 02 Jun 2026 00:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-cases-that-kill-ai-code/</guid>
-    </item>
-    <item>
-      <title>Hire remotely from Africa: show outcomes</title>
-      <link>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</link>
-      <description>Portfolio that lands remote jobs must prove impact, not code cleanliness. Add a postmortem with latency spikes, error rates, and cost savings. One 200-word write-up beats 10 polished repos for fintech and payments roles in 2026.</description>
-      <pubDate>Mon, 01 Jun 2026 23:21:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</guid>
     </item>
   </channel>
 </rss>
