@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 10:09:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 10:13:09 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay from low-cost countries</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</link>
+      <description>Negotiate remote salary from lower-cost countries — get 27 % median raise using US bands, FX floor, and three scripts in Python 3.11</description>
+      <pubDate>Tue, 02 Jun 2026 10:12:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
+    </item>
     <item>
       <title>2026 salaries: which AI skills pay 50% more</title>
       <link>https://kubaik.github.io/2026-salaries-which-ai-skills-pay-50-more/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG p99 latency 90% with Redis cache, vLLM streaming, and a Bloom filter — real numbers from 100k QPS production pipeline that ran on $7.8k/month.</description>
       <pubDate>Mon, 01 Jun 2026 21:18:04 +0000</pubDate>
       <guid>https://kubaik.github.io/prod-rag-why-pipelines-fail-at-100k-qps/</guid>
-    </item>
-    <item>
-      <title>7 ways simplicity crushed our $28k over-engineer</title>
-      <link>https://kubaik.github.io/7-ways-simplicity-crushed-our-28k-over-engineer/</link>
-      <description>Cut API response time 85% and cloud bill 75% by killing microservices and auditing one cache layer. Learn the exact Redis 7.2 and PostgreSQL 15 tweaks that fixed a $28k mistake.</description>
-      <pubDate>Mon, 01 Jun 2026 21:14:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ways-simplicity-crushed-our-28k-over-engineer/</guid>
     </item>
   </channel>
 </rss>
