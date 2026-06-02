@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 07:15:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 07:18:52 +0000</lastBuildDate>
+    <item>
+      <title>Debug RAG in prod before your cloud bill explodes</title>
+      <link>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</link>
+      <description>How we cut RAG pipeline latency from 12.4s to 2.1s and costs 60% with FAISS, Redis bloom filters, and isolated workloads — the details tutorials skip.</description>
+      <pubDate>Tue, 02 Jun 2026 07:18:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</guid>
+    </item>
     <item>
       <title>Negotiate remote salary from low-cost countries</title>
       <link>https://kubaik.github.io/negotiate-remote-salary-from-low-cost-countries/</link>
@@ -138,13 +145,6 @@
       <description>Save $1,400/month on database connections by ditching the CPU-cores rule and using latency-based sizing instead — with real benchmarks from Node.js 20, PostgreSQL 15, and Aurora 3.01.</description>
       <pubDate>Mon, 01 Jun 2026 17:07:46 +0000</pubDate>
       <guid>https://kubaik.github.io/mistake-in-db-pool-sizing/</guid>
-    </item>
-    <item>
-      <title>Build an internal dev platform for $100/month</title>
-      <link>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</link>
-      <description>Save $3k/month building an internal developer platform on $100/month — EKS, MemoryDB, Argo CD, and a Go 1.21 CLI that tunnels localhost to staging reliably on 3G networks</description>
-      <pubDate>Mon, 01 Jun 2026 16:55:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</guid>
     </item>
   </channel>
 </rss>
