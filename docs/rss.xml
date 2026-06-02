@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 20:25:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 20:29:37 +0000</lastBuildDate>
+    <item>
+      <title>Over-provisioned DB pools cost more than cores</title>
+      <link>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</link>
+      <description>Cut database latency 50% by ditching the CPU-cores rule for connection pools — real benchmarks, Aurora PostgreSQL 2026 limits, and the concurrency formula most teams ignore.</description>
+      <pubDate>Tue, 02 Jun 2026 20:29:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</guid>
+    </item>
     <item>
       <title>42% discount: remote pay when you&apos;re overseas</title>
       <link>https://kubaik.github.io/42-discount-remote-pay-when-youre-overseas/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 80% by sizing pools with queueing theory — the connection pool math most tutorials get wrong and the 3 concrete numbers to guide your next setup.</description>
       <pubDate>Tue, 02 Jun 2026 08:31:04 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-math-db-queries-wait-in-line/</guid>
-    </item>
-    <item>
-      <title>npm audit: stop ignoring these 3 dependency attacks</title>
-      <link>https://kubaik.github.io/npm-audit-stop-ignoring-these-3-dependency-attacks/</link>
-      <description>Stop ignoring npm audit warnings — 3 concrete fixes to block supply chain attacks in Python and JavaScript dependencies before they hit production in 2026</description>
-      <pubDate>Tue, 02 Jun 2026 08:21:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/npm-audit-stop-ignoring-these-3-dependency-attacks/</guid>
     </item>
   </channel>
 </rss>
