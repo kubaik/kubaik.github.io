@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 17:46:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 18:33:12 +0000</lastBuildDate>
     <item>
       <title>AI skills that move salaries in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-move-salaries-in-2026/</link>
@@ -61,13 +61,6 @@
       <description>Cut DB response time 40% by sizing connection pools for downstream capacity, not CPU cores — PostgreSQL 16, Node.js 20, and RDS tuning guide.</description>
       <pubDate>Tue, 02 Jun 2026 12:38:03 +0000</pubDate>
       <guid>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</guid>
-    </item>
-    <item>
-      <title>2026 AI salaries: 3 real skills that pay</title>
-      <link>https://kubaik.github.io/2026-ai-salaries-3-real-skills-that-pay/</link>
-      <description>In 2026, RAG evaluation pipelines pay 15 % more than prompt engineering and 12 % more than LoRA fine-tuning—unless LoRA cuts inference cost 38 %. Which AI skill actually moves your salary this quarter?</description>
-      <pubDate>Tue, 02 Jun 2026 12:22:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-salaries-3-real-skills-that-pay/</guid>
     </item>
     <item>
       <title>Choose the right real-time protocol fast</title>
@@ -145,6 +138,13 @@
       <description>How we cut RAG pipeline latency from 12.4s to 2.1s and costs 60% with FAISS, Redis bloom filters, and isolated workloads — the details tutorials skip.</description>
       <pubDate>Tue, 02 Jun 2026 07:18:36 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-rag-in-prod-before-your-cloud-bill-explodes/</guid>
+    </item>
+    <item>
+      <title>Pool size N+1? Wrong metric for DB</title>
+      <link>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</link>
+      <description>A 2026 Stack Overflow survey found that 68% of PostgreSQL users leave the pool size at the default or pick a number between 20 and 50 without…</description>
+      <pubDate>Tue, 02 Jun 2026 07:01:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</guid>
     </item>
   </channel>
 </rss>
