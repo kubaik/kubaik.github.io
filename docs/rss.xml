@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 09:55:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 10:00:24 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines choke on real traffic</title>
+      <link>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</link>
+      <description>Cut RAG latency 78% and AWS costs 35% with semantic cache keys, Rust vector search, and hybrid SQLite/Redis caching — the real levers most tutorials skip.</description>
+      <pubDate>Tue, 02 Jun 2026 10:00:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</guid>
+    </item>
     <item>
       <title>Build Africa-specific portfolios, not resume noise</title>
       <link>https://kubaik.github.io/build-africa-specific-portfolios-not-resume-noise/</link>
@@ -138,13 +145,6 @@
       <description>Pick real-time protocol in 5 minutes — SSE vs WebSocket vs long polling latency, cost, Safari bug, and exact code to test them on Node 20 LTS and Python 3.11 in 2026</description>
       <pubDate>Mon, 01 Jun 2026 20:56:22 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-real-time-tech-in-5-minutes/</guid>
-    </item>
-    <item>
-      <title>2026 AI Salary: RAG vs Fine-tuning vs Agents</title>
-      <link>https://kubaik.github.io/2026-ai-salary-rag-vs-fine-tuning-vs-agents/</link>
-      <description>Cut AI salary gap 25% by choosing prompt engineering, fine-tuning, or agents — concrete benchmarks, tool versions, and compliance costs for 2026.</description>
-      <pubDate>Mon, 01 Jun 2026 20:53:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-salary-rag-vs-fine-tuning-vs-agents/</guid>
     </item>
   </channel>
 </rss>
