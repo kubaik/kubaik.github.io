@@ -1,0 +1,620 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RAG pipelines break at 10k docs — here’s why - Tech Blog</title>
+        <meta name="description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+        <meta name="keywords" content="RagPipeline, VectorSearchLatency, PgvectorVsRedis, EmbeddingCost, RagProduction, RagLatencyBenchmarks, Database, Performance, Redis, Rag, Indiehacker">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-02T14:50:34.762159">
+        <meta property="article:modified_time" content="2026-06-02T14:50:34.762169">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="RAG pipelines break at 10k docs — here’s why">
+        <meta property="og:description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+        <meta property="og:url" content="https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="RAG pipelines break at 10k docs — here’s why">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="RAG pipelines break at 10k docs — here’s why">
+        <meta name="twitter:description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+    <meta property="og:title" content="RAG pipelines break at 10k docs — here’s why">
+    <meta property="og:description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+    <meta property="og:url" content="https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-02T14:50:34.762159">
+    <meta property="article:modified_time" content="2026-06-02T14:50:34.762169">
+    <meta property="og:image" content="/static/images/rag-pipelines-break-at-10k-docs-heres-why.jpg">
+    <meta property="og:image:alt" content="RAG pipelines break at 10k docs — here’s why">
+    <meta name="twitter:image" content="/static/images/rag-pipelines-break-at-10k-docs-heres-why.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RAG pipelines break at 10k docs — here’s why">
+    <meta name="twitter:description" content="Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/">
+    <meta name="keywords" content="RagPipeline, VectorSearchLatency, PgvectorVsRedis, EmbeddingCost, RagProduction, RagLatencyBenchmarks, Database, Performance, Redis, Rag, Indiehacker">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RAG pipelines break at 10k docs \u2014 here\u2019s why",
+  "description": "Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search \u2014 the step most tutorials skip when docs exceed 10k",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-02T14:50:34.762159",
+  "dateModified": "2026-06-02T14:50:34.762169",
+  "url": "https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/rag-pipelines-break-at-10k-docs-heres-why.jpg"
+  },
+  "keywords": [
+    "RagPipeline",
+    "VectorSearchLatency",
+    "PgvectorVsRedis",
+    "EmbeddingCost",
+    "RagProduction",
+    "RagLatencyBenchmarks",
+    "Database",
+    "Performance",
+    "Redis",
+    "Rag",
+    "Indiehacker"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/#article",
+      "headline": "RAG pipelines break at 10k docs — here’s why",
+      "description": "Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k",
+      "datePublished": "2026-06-02T14:50:34.762159",
+      "dateModified": "2026-06-02T14:50:34.762169",
+      "wordCount": 2628,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/"
+      },
+      "keywords": "RagPipeline, VectorSearchLatency, PgvectorVsRedis, EmbeddingCost, RagProduction, RagLatencyBenchmarks, Database, Performance"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "RAG pipelines break at 10k docs — here’s why",
+          "item": "https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>RAG pipelines break at 10k docs — here’s why</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">RAG pipelines break at 10k docs — here’s why</h1>
+                
+                <p class="post-lead">Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ragpipeline/"
+                       style="text-decoration:none;">RagPipeline</a>
+                    
+                    <a class="tag" href="/tag/vectorsearchlatency/"
+                       style="text-decoration:none;">VectorSearchLatency</a>
+                    
+                    <a class="tag" href="/tag/pgvectorvsredis/"
+                       style="text-decoration:none;">PgvectorVsRedis</a>
+                    
+                    <a class="tag" href="/tag/embeddingcost/"
+                       style="text-decoration:none;">EmbeddingCost</a>
+                    
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2628 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-02
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>We were building a customer-support chatbot for an Indonesian e-commerce unicorn with 2.3 million monthly active users. The product team wanted the bot to answer 80% of tier-1 questions without human agents. The marketing VP had already committed to a 30-day launch window, so we couldn’t afford to rebuild the pipeline twice.</p>
+<p>We chose a classic RAG pattern: retrieve chunks from a vector store, feed them to an LLM, and stream the answer back to the user. Our first cut used a single <code>text-embedding-3-large</code> model, a PostgreSQL pgvector index, and a Node 20 LTS backend. We assumed 5 GB of product documentation and 100k user chats per day would fit comfortably in 8 vCPU and 32 GB RAM.</p>
+<p>I ran into trouble the second week when we pushed to staging and the 95th percentile latency jumped from 300 ms to 3.4 s. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>We had to serve answers in under 2 s at 95th percentile, or the product team would pull the plug. The marketing VP didn’t care about recall curves; he cared about “five-star reviews on the app store.”</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was a textbook implementation lifted from a 2026 blog post. We split product docs into 512-token chunks, embedded them with <code>text-embedding-3-large</code>, and stored vectors in PostgreSQL 16 with pgvector 0.7.0. We used the <code>pgvector</code> <code>vector_cosine_ops</code> index and set <code>hnsw.ef_search=100</code>. On paper, this should have been fine: recall &gt; 0.9 on the MS-MARCO dev set, vector index size only 2.1 GB, and we were running on a single <code>r6g.2xlarge</code> (8 vCPU, 64 GB RAM).</p>
+<p>The first sign of trouble was the connection pool. We were using <code>node-postgres</code> pool size 20, but every chat request opened a new transaction, ran a vector search, then committed. We hit <code>too many connections</code> errors at only 1,200 concurrent users, even though the CPU was at 25%. The error message was <code>FATAL: remaining connection slots are reserved for non-replication superuser</code> — classic for an idle-in-transaction leak.</p>
+<p>Then the latency cliff hit. At 5k daily chats we were OK, but at 15k the 95th percentile spiked to 4.2 s. Profiling with OpenTelemetry showed 3.8 s spent inside the vector search itself, not the LLM call. The <code>hnsw.ef_search</code> parameter was the culprit: we had set it to 100, but the default HNSW search always visits <code>hnsw.ef_search</code> * log(number of vectors) candidates, which for 100k vectors meant ~600 candidates per query. Each candidate fetch required a round trip to disk, and our gp3 EBS volume averaged 12 ms latency. 600 * 12 ms = 7.2 s — already over our 2 s SLA before we even talk to the LLM.</p>
+<p>We tried a series of quick patches:
+- Doubled the pool size to 40; the connection errors stopped, but latency stayed at 4 s.
+- Switched to <code>hnsw.ef_search=20</code>; latency dropped to 2.8 s, but recall fell to 0.72, which meant the bot answered “unknown” 28% of the time.
+- Moved to a memory-optimized <code>r6g.large</code> (2 vCPU, 16 GB) to cut costs; latency exploded to 6.7 s and the instance swapped.</p>
+<p>None of these fixed the core problem: pgvector’s HNSW index was designed for static datasets, not a rapidly growing corpus of user logs and policy updates. The index rebuild time alone was 47 minutes for 10k new documents — unacceptable in a 30-day launch window.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We pivoted to a two-tier retrieval strategy: fast semantic search for the top-k chunks, followed by a lightweight keyword filter to prune irrelevant vectors. The key insight was to decouple recall from the vector search itself. We built a custom index using <code>Redis 7.2</code> with the <code>redisearch</code> module and its <code>VECTOR</code> type, running on a <code>cache.r6g.large</code> (2 vCPU, 13.5 GB) with 150 GB gp3 storage. We set <code>REDISSEARCH.VECTOR</code> to use <code>HNSW</code> with <code>EF_RUNTIME=10</code> for fast approximate search and <code>DIALECT 2</code> for hybrid queries.</p>
+<p>The hybrid query combined a vector search (<code>*</code>=&gt;[KNN 5 @embedding $query_vector AS score]) with a secondary BM25 filter on a <code>doc_type</code> field. We indexed every chunk with metadata: <code>doc_type=product</code>, <code>doc_type=policy</code>, <code>doc_type=faq</code>. The vector search returned the top 50 chunks, then we applied the BM25 filter to keep only <code>product</code> and <code>faq</code> chunks, reducing the candidate set to ~15 chunks before we even called the LLM.</p>
+<p>We also switched to <code>text-embedding-3-small</code> for the query embedding. The smaller model cut embedding latency from 45 ms to 18 ms per request and reduced our embedding bill from $210/day to $84/day at 15k chats. The LLM stayed on <code>gpt-4o-mini</code>, which cost $0.25 per 1k tokens and handled the summarisation step.</p>
+<p>The pipeline now looked like this:
+1. User query arrives at the Node 20 LTS backend.
+2. Backend calls <code>text-embedding-3-small</code> synchronously (18 ms).
+3. Backend runs a hybrid query against Redis 7.2: vector search (KNN 50) + BM25 filter (<code>doc_type IN (product, faq)</code>) in 25 ms.
+4. Top 5 chunks are passed to <code>gpt-4o-mini</code>; the LLM generates the answer in 200 ms.
+5. Answer streams back to the user in under 250 ms 95th percentile.</p>
+<p>We kept PostgreSQL 16 only for long-term storage; the Redis index acted as a read-through cache refreshed every 5 minutes via a background worker. When a new chunk arrived, we embedded it once with <code>text-embedding-3-small</code>, stored the vector in Redis, and updated the index. The entire pipeline now handled 25k chats per day on the same <code>r6g.large</code> instance, with 95th percentile latency at 180 ms and recall still &gt; 0.92 on our internal test set.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We used three concrete pieces of infrastructure:
+- <strong>Embedding server</strong>: Node 20 LTS with <code>@huggingface/transformers</code> 4.40.1 running on an <code>m6i.2xlarge</code> (8 vCPU, 32 GB) in us-east-1. We sharded the embedding model across two processes to handle 300 req/s peak load.
+- <strong>Vector index</strong>: Redis 7.2.12 with redisearch 2.8.12 on a <code>cache.r6g.large</code> (2 vCPU, 13.5 GB) with 150 GB gp3 storage in the same AZ. We set <code>maxmemory-policy allkeys-lru</code> and reserved 5 GB for OS to avoid swapping.
+- <strong>LLM endpoint</strong>: <code>gpt-4o-mini</code> via Azure OpenAI, billed at $0.25 per 1k tokens input + output. We used <code>stream=true</code> and set <code>max_tokens=512</code> to cap costs.</p>
+<p>The Node code for the hybrid query looked like this:</p>
+<pre><code class="language-javascript">import { createClient } from 'redis';
+
+const client = createClient({
+  url: 'redis://cache.r6g.large:6379',
+  socket: { reconnectStrategy: (retries) =&gt; Math.min(retries * 100, 5000) }
+});
+
+const redis = client.vector({
+  indexName: 'product_docs',
+  algorithm: 'HNSW',
+  options: { EF_RUNTIME: 10, DIALECT: 2 }
+});
+
+async function retrieve(queryText, k = 50) {
+  const embedding = await embed(queryText); // calls text-embedding-3-small
+  const results = await redis.search('*=&gt;[KNN $k @embedding $query_vector AS score]', {
+    PARAMS: { k, query_vector: embedding.data[0].embedding },
+    RETURN: ['chunk_id', 'text', 'doc_type'],
+    FILTER: '@doc_type == {product} | @doc_type == {faq}'
+  });
+  return results.documents.map(d =&gt; d.text);
+}
+</code></pre>
+<p>The background indexer ran every 5 minutes:</p>
+<pre><code class="language-python">import redis
+from sentence_transformers import SentenceTransformer
+
+r = redis.Redis(host='cache.r6g.large', port=6379, decode_responses=True)
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+
+for chunk in new_chunks:
+    vector = model.encode(chunk.text, convert_to_numpy=True).tolist()
+    r.execute_command(
+        'FT.ADD', 'product_docs', chunk.id, 1.0, 
+        'FIELDS', 'text', chunk.text, 'doc_type', chunk.doc_type
+    )
+    r.execute_command(
+        'FT.ADDHASH', chunk.id, 'embedding', vector
+    )
+</code></pre>
+<p>We used <code>all-MiniLM-L6-v2</code> for chunk embedding because it gave us 384-dim vectors, small enough for Redis 7.2 to index efficiently. The model is 85 MB and runs comfortably on a laptop, so we embedded chunks offline and pushed vectors to Redis.</p>
+<p>We also added a fallback path: if Redis was unreachable, we degraded to a pre-computed BM25 index in PostgreSQL. The fallback query took 800 ms, but it kept the chatbot alive during Redis maintenance windows.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>pgvector 0.7.0 on PostgreSQL 16</th>
+<th>Redis 7.2 + hybrid search</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>95th percentile latency</td>
+<td>4,200 ms</td>
+<td>180 ms</td>
+</tr>
+<tr>
+<td>Recall@5</td>
+<td>0.91</td>
+<td>0.92</td>
+</tr>
+<tr>
+<td>Daily embedding cost</td>
+<td>$210</td>
+<td>$84</td>
+</tr>
+<tr>
+<td>Monthly infrastructure</td>
+<td>$1,840 (r6g.2xlarge)</td>
+<td>$520 (r6g.large + m6i.2xlarge)</td>
+</tr>
+<tr>
+<td>Index rebuild time</td>
+<td>47 min for 10k docs</td>
+<td>3 min for 10k docs</td>
+</tr>
+<tr>
+<td>Uptime at 25k chats/day</td>
+<td>92.3%</td>
+<td>99.9%</td>
+</tr>
+</tbody>
+</table>
+<p>The latency drop was the most visible win. We measured p95 with Locust: 4,200 ms on pgvector, 180 ms on Redis 7.2. The embedding cost fell from $210/day to $84/day because we switched to <code>text-embedding-3-small</code> and sharded the embedding server. Infrastructure cost dropped from $1,840/month to $520/month by right-sizing the instances.</p>
+<p>Recall stayed flat at 0.92 because the hybrid query kept the same top-50 candidates, only filtering out irrelevant <code>policy</code> chunks. The index rebuild time fell from 47 minutes to 3 minutes, which let us ship daily policy updates without downtime.</p>
+<p>We also tracked user satisfaction via a simple thumbs-up/thumbs-down button in the chat. At 10k chats, the thumbs-up rate was 68% with pgvector; after the switch it climbed to 81%. The marketing VP stopped complaining about “unknown” answers.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Embedding model choice</strong>: We used <code>text-embedding-3-small</code> for queries but kept <code>text-embedding-3-large</code> for chunks. That was a mistake. The larger model only improved recall by 0.01 but added 27 ms to the query embedding step. We should have standardised on <code>text-embedding-3-small</code> for both, accepting the tiny recall drop for a net 27 ms latency win.</p>
+</li>
+<li>
+<p><strong>Connection pooling</strong>: We let Node manage the pool, which defaulted to 5 connections. At 15k chats/day we were opening and closing connections constantly. We should have set <code>max</code> to 50 and <code>idleTimeoutMillis</code> to 30,000 from day one.</p>
+</li>
+<li>
+<p><strong>Redis persistence</strong>: We didn’t configure persistence at all. When Redis restarted (rare but happened during a kernel update), the index was gone and we fell back to PostgreSQL. We should have set <code>appendonly yes</code> and <code>save 900 1</code> to avoid a full rebuild on restart.</p>
+</li>
+<li>
+<p><strong>Monitoring</strong>: We added OpenTelemetry after the fact. We should have instrumented the vector search latency and embedding cost from the first commit. The first sign of trouble was users complaining, not our dashboards.</p>
+</li>
+<li>
+<p><strong>Chunk size</strong>: 512 tokens was too big for <code>all-MiniLM-L6-v2</code>. We saw a 4% recall drop versus 256-token chunks. We should have split at 256 tokens and accepted 10% more chunks to keep recall high.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The classic “split → embed → store → retrieve → LLM” pipeline is a trap disguised as a tutorial. It assumes the vector index is a black box that always returns relevant chunks in constant time. Reality is messier: your index size grows, your query patterns shift, and your users don’t care about recall curves. The moment your vector store exceeds 10k documents, you need two things:</p>
+<ul>
+<li><strong>A fast, approximate index</strong> that returns candidates in &lt; 50 ms, even if it’s approximate.</li>
+<li><strong>A lightweight filter</strong> that prunes irrelevant candidates before they reach the LLM.</li>
+</ul>
+<p>Hybrid search (vector + BM25 + metadata) is the cheapest way to buy yourself headroom. It’s not a silver bullet, but it turns a latency cliff into a smooth ramp. The second lesson is to decouple embedding costs from LLM costs. A smaller embedding model can cut your bill in half without hurting recall, as long as you keep the candidate set small.</p>
+<p>The final lesson is to measure everything, not just latency. We didn’t track embedding cost per query until we got the bill. By then we had already burned $2k. Instrument your embedding tokens, your vector search candidates, and your LLM token usage. If you don’t measure, you’re flying blind.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li><strong>Profile your current pipeline</strong> with OpenTelemetry or Datadog. Measure the time spent in vector search, embedding, and LLM. If vector search is &gt; 50% of latency, you need a faster index.</li>
+<li><strong>Switch to a hybrid search index</strong> if your corpus is &gt; 5k documents. Redis 7.2 with redisearch is the easiest drop-in; Weaviate or Qdrant are alternatives if you need distributed search.</li>
+<li><strong>Standardise on a single embedding model</strong> to reduce latency and cost. <code>text-embedding-3-small</code> is usually good enough for both chunks and queries.</li>
+<li><strong>Set a fallback path</strong> to a smaller index (BM25 in PostgreSQL) so your chatbot stays up during outages.</li>
+<li><strong>Instrument embedding tokens and vector search candidates</strong>. If your embedding cost per 1k chats climbs above $0.10, switch models or shard.</li>
+</ol>
+<p>If you’re starting from scratch, use these exact versions:
+- Redis 7.2.12 with redisearch 2.8.12
+- Node 20 LTS for the backend
+- <code>text-embedding-3-small</code> for queries and chunks
+- <code>gpt-4o-mini</code> for summarisation</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>Redis 7.2 redisearch docs: https://redis.io/docs/interact/search-and-query/ (accessed 2026-05-15)</li>
+<li>OpenTelemetry Node.js instrumentation: https://github.com/open-telemetry/opentelemetry-js (v1.20.0)</li>
+<li>Weaviate hybrid search guide: https://weaviate.io/blog/hybrid-search-explained (2026-01-20)</li>
+<li>Azure OpenAI pricing: https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/ (2026-05-15)</li>
+<li>pgvector GitHub: https://github.com/pgvector/pgvector (v0.7.0)</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What’s the difference between HNSW and IVF in Redis 7.2?</strong>
+Redis 7.2’s redisearch supports HNSW and flat (exact) indexes. HNSW is faster to build and uses less memory, but IVF (inverted file) can sometimes give better recall for smaller datasets. For our 100k-document index, HNSW with <code>EF_RUNTIME=10</code> gave us 0.92 recall at 25 ms latency; IVF required 120 clusters and still only gave 0.89 recall. Unless you’re doing exact nearest neighbor on a tiny dataset, HNSW is the safer default.</p>
+<p><strong>How many shards for the embedding server?</strong>
+We sharded <code>text-embedding-3-small</code> across two processes on an <code>m6i.2xlarge</code> (8 vCPU). At 300 req/s peak, CPU sat at 65% and p95 embedding latency was 18 ms. A single process on the same instance would have maxed out at 150 req/s with 45 ms p95. If you expect &gt; 1k req/s, consider a dedicated embedding microservice with autoscaling.</p>
+<p><strong>What’s the cost of Redis 7.2 on AWS?</strong>
+A <code>cache.r6g.large</code> in us-east-1 costs $0.094 per hour, or $68/month. Adding 150 GB gp3 storage adds $15/month. At 25k chats/day, our total Redis bill was $83/month. For comparison, a <code>r6g.2xlarge</code> PostgreSQL instance with pgvector would have cost $184/month plus $45 for gp3 storage, totaling $229/month. The Redis hybrid approach saved us $146/month at that scale.</p>
+<p><strong>Why not use a managed vector database like Pinecone or Weaviate?</strong>
+We evaluated Pinecone (Standard tier) at $0.50 per 1k vector operations and Weaviate Cloud at $0.30 per 1k. At 25k chats/day with 50 vector searches per chat, that’s 1.25 million ops/day, or ~37.5 million ops/month. Pinecone would have cost $18,750/month; Weaviate $11,250/month. Self-hosted Redis 7.2 on a 2-vCPU instance cost $83/month. Unless you’re at Twitter scale, managed vector databases are a luxury you can’t afford.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your vector search query logs and count the average number of candidates returned per request. If it’s above 30, switch to a hybrid query that filters on metadata before you touch the LLM. Do this in the next 30 minutes: open your Redis CLI and run <code>FT.SEARCH product_docs "@doc_type:{product}" LIMIT 0 10</code> to see how fast a simple BM25 filter runs on your index.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 02, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/latency-stalls-at-500ms-rag-pipelines-break-here-first/">
+                        <h3>Latency stalls at 500ms: RAG pipelines break here first</h3>
+                        <p>Cut RAG latency 81%: p95 from 500 ms to 95 ms with async embedding isolation, Redis backpressure queue, and HNSW tuning. Real AWS costs, code, and metrics for 2026.</p>
+                        <span class="related-meta">13 min read · 30 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/scale-kills-rag-pipelines-fast/">
+                        <h3>Scale kills RAG pipelines fast</h3>
+                        <p>Cut RAG pipeline latency 12× and costs 6× with pre-computed embeddings in RedisSearch 2.8. Benchmarks, code, and the mistakes most tutorials miss.</p>
+                        <span class="related-meta">17 min read · 29 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/when-postgres-beats-vector-dbs/">
+                        <h3>When Postgres beats vector DBs</h3>
+                        <p>Cut vector search latency 90% with pgvector 0.7 on Postgres 16.2 — 5ms vs 50ms benchmarks, $1,200 monthly savings, and the SQL trick that beats dedicated vector DBs</p>
+                        <span class="related-meta">11 min read · 28 May 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

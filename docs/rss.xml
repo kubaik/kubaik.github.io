@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 14:47:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 14:50:51 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines break at 10k docs — here’s why</title>
+      <link>https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/</link>
+      <description>Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k</description>
+      <pubDate>Tue, 02 Jun 2026 14:50:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/</guid>
+    </item>
     <item>
       <title>Compare 3 real-time tools in 50 words</title>
       <link>https://kubaik.github.io/compare-3-real-time-tools-in-50-words/</link>
@@ -138,13 +145,6 @@
       <description>Build a production-grade portfolio that lands remote jobs — show working systems, not polished resumes. Includes real examples, tools, and benchmarks from Nairobi fintech systems in 2026.</description>
       <pubDate>Tue, 02 Jun 2026 05:24:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-code-africa-tech-hiring/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs polling: pick fast</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
-      <description>Pick SSE over WebSockets for 30% lower CPU and 20% cheaper infra — real latency and cost numbers from 2.4 million messages in 2026</description>
-      <pubDate>Tue, 02 Jun 2026 00:14:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
     </item>
   </channel>
 </rss>
