@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 13:43:17 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 14:04:07 +0000</lastBuildDate>
     <item>
       <title>RAG pipelines: why staging lied</title>
       <link>https://kubaik.github.io/rag-pipelines-why-staging-lied/</link>
@@ -61,13 +61,6 @@
       <description>Negotiate remote salary from lower-cost countries — get 27 % median raise using US bands, FX floor, and three scripts in Python 3.11</description>
       <pubDate>Tue, 02 Jun 2026 10:12:53 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
-    </item>
-    <item>
-      <title>2026 salaries: which AI skills pay 50% more</title>
-      <link>https://kubaik.github.io/2026-salaries-which-ai-skills-pay-50-more/</link>
-      <description>2026 data: engineers who ship production LLM services earn 26% more than vector-search specialists. Concrete benchmarks, salaries, and the exact stack to raise your leverage in 30 minutes.</description>
-      <pubDate>Tue, 02 Jun 2026 10:08:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-salaries-which-ai-skills-pay-50-more/</guid>
     </item>
     <item>
       <title>RAG pipelines choke on real traffic</title>
@@ -145,6 +138,13 @@
       <description>60% of AI-generated code fails on edge cases like 2G drops and Swahili input — GitHub Copilot vs Cursor in production benchmarks for teams in sub-Saharan Africa.</description>
       <pubDate>Tue, 02 Jun 2026 00:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-cases-that-kill-ai-code/</guid>
+    </item>
+    <item>
+      <title>Hire remotely from Africa: show outcomes</title>
+      <link>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</link>
+      <description>Portfolio that lands remote jobs must prove impact, not code cleanliness. Add a postmortem with latency spikes, error rates, and cost savings. One 200-word write-up beats 10 polished repos for fintech and payments roles in 2026.</description>
+      <pubDate>Mon, 01 Jun 2026 23:21:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</guid>
     </item>
   </channel>
 </rss>
