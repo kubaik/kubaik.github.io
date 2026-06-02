@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 00:11:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 00:14:58 +0000</lastBuildDate>
+    <item>
+      <title>WebSockets vs SSE vs polling: pick fast</title>
+      <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</link>
+      <description>Pick SSE over WebSockets for 30% lower CPU and 20% cheaper infra — real latency and cost numbers from 2.4 million messages in 2026</description>
+      <pubDate>Tue, 02 Jun 2026 00:14:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
+    </item>
     <item>
       <title>Edge cases that kill AI code</title>
       <link>https://kubaik.github.io/edge-cases-that-kill-ai-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut 6–12% off remote pay loss — USD clauses, Wise spreads, and the hidden fees most developers miss in 2026</description>
       <pubDate>Mon, 01 Jun 2026 14:21:02 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-12-pay-cut-from-fx-fees/</guid>
-    </item>
-    <item>
-      <title>3 AI skills that boost 2026 salaries</title>
-      <link>https://kubaik.github.io/3-ai-skills-that-boost-2026-salaries/</link>
-      <description>Salary jumps in 2026 go to engineers who master RAG with pgvector or Milvus at scale — not fine-tuning. Benchmarks, costs, and the exact skills that moved the needle.</description>
-      <pubDate>Mon, 01 Jun 2026 14:12:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-ai-skills-that-boost-2026-salaries/</guid>
     </item>
   </channel>
 </rss>
