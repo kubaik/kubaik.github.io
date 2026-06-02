@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 22:48:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 23:09:41 +0000</lastBuildDate>
     <item>
       <title>Choose the right real-time tech fast</title>
       <link>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</link>
@@ -112,13 +112,6 @@
       <guid>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</guid>
     </item>
     <item>
-      <title>Choose the right real-time protocol fast</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</link>
-      <description>Cut realtime API latency 60% by picking the right tool — WebSocket vs SSE vs long polling benchmarks from 100 to 1,000 clients on t3.small (2026 pricing).</description>
-      <pubDate>Tue, 02 Jun 2026 11:56:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</guid>
-    </item>
-    <item>
       <title>Negotiate 6-figure remote pay from Lima</title>
       <link>https://kubaik.github.io/negotiate-6-figure-remote-pay-from-lima/</link>
       <description>Land a $120k remote job from Lima using one negotiation trick — 2026 Levels.fyi + PPP table that raises offers 26–89% in days</description>
@@ -145,6 +138,13 @@
       <description>Negotiate remote salary from lower-cost countries — get 27 % median raise using US bands, FX floor, and three scripts in Python 3.11</description>
       <pubDate>Tue, 02 Jun 2026 10:12:53 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
+    </item>
+    <item>
+      <title>RAG pipelines choke on real traffic</title>
+      <link>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</link>
+      <description>Cut RAG latency 78% and AWS costs 35% with semantic cache keys, Rust vector search, and hybrid SQLite/Redis caching — the real levers most tutorials skip.</description>
+      <pubDate>Tue, 02 Jun 2026 10:00:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-choke-on-real-traffic/</guid>
     </item>
   </channel>
 </rss>
