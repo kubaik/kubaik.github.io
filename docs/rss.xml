@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 23:25:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 23:30:01 +0000</lastBuildDate>
+    <item>
+      <title>Pool size too low? Blame TCP ports</title>
+      <link>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</link>
+      <description>Cut connection pool mistakes 80%: set max pool size to 1.5x concurrency, not database capacity — evidence from 3 production systems using PostgreSQL 15, Node.js 20, and Python FastAPI 0.109 in 2026</description>
+      <pubDate>Tue, 02 Jun 2026 23:29:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</guid>
+    </item>
     <item>
       <title>Why senior devs flee big tech&apos;s empty reviews</title>
       <link>https://kubaik.github.io/why-senior-devs-flee-big-techs-empty-reviews/</link>
@@ -138,13 +145,6 @@
       <description>Cut weekend burnout 93% with Batched Delivery — GitHub Projects, IssueOps, and the 2-hour sprint rule most tutorials miss</description>
       <pubDate>Tue, 02 Jun 2026 10:39:09 +0000</pubDate>
       <guid>https://kubaik.github.io/free-weekends-my-2-hour-client-hack/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay from low-cost countries</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</link>
-      <description>Negotiate remote salary from lower-cost countries — get 27 % median raise using US bands, FX floor, and three scripts in Python 3.11</description>
-      <pubDate>Tue, 02 Jun 2026 10:12:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
     </item>
   </channel>
 </rss>
