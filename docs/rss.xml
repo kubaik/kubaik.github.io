@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 14:42:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 14:47:22 +0000</lastBuildDate>
+    <item>
+      <title>Compare 3 real-time tools in 50 words</title>
+      <link>https://kubaik.github.io/compare-3-real-time-tools-in-50-words/</link>
+      <description>Compare WebSockets vs SSE vs long polling with 2026 benchmarks, RAM costs, and the one proxy everyone forgets: corporate firewalls. Pick the right tool in 90 seconds.</description>
+      <pubDate>Tue, 02 Jun 2026 14:47:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-3-real-time-tools-in-50-words/</guid>
+    </item>
     <item>
       <title>Push updates without WebSockets: cheaper ways</title>
       <link>https://kubaik.github.io/push-updates-without-websockets-cheaper-ways/</link>
@@ -138,13 +145,6 @@
       <description>Pick SSE over WebSockets for 30% lower CPU and 20% cheaper infra — real latency and cost numbers from 2.4 million messages in 2026</description>
       <pubDate>Tue, 02 Jun 2026 00:14:41 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-pick-fast/</guid>
-    </item>
-    <item>
-      <title>Edge cases that kill AI code</title>
-      <link>https://kubaik.github.io/edge-cases-that-kill-ai-code/</link>
-      <description>60% of AI-generated code fails on edge cases like 2G drops and Swahili input — GitHub Copilot vs Cursor in production benchmarks for teams in sub-Saharan Africa.</description>
-      <pubDate>Tue, 02 Jun 2026 00:11:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-cases-that-kill-ai-code/</guid>
     </item>
   </channel>
 </rss>

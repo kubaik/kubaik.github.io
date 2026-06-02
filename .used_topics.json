@@ -1,3 +1,4 @@
 [
-  "Building real-time features without a WebSocket server: practical alternatives"
+  "Building real-time features without a WebSocket server: practical alternatives",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
