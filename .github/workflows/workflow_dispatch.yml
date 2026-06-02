@@ -15,10 +15,15 @@ permissions:
   contents: write
   actions: write
 
+# ── KEY FIX 1: Join the same concurrency group to serialize execution ──
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -177,10 +182,7 @@ jobs:
             sleep 10
           fi
 
-      # ── DEDUPLICATION ────────────────────────────────────────────────────────
-      # Runs delete_similar_posts.py, delete_fallback_posts.py, and
-      # deduplicate_posts.py on every watchdog execution. If any finds posts
-      # to delete, commits the cleaned docs/ tree and triggers a site rebuild.
+      # ── PIPELINE PROCESSING ──────────────────────────────────────────────────
 
       - name: Install deduplication dependencies
         run: |
@@ -195,24 +197,18 @@ jobs:
 
           if echo "$OUTPUT" | grep -q "No fallback posts detected."; then
             echo "has_fallback=false" >> $GITHUB_OUTPUT
-            echo "✅ No fallback posts detected."
           else
             if echo "$OUTPUT" | grep -q "would be deleted"; then
               echo "has_fallback=true" >> $GITHUB_OUTPUT
-              echo "⚠️ Fallback posts detected — will delete in next step."
             else
               echo "has_fallback=false" >> $GITHUB_OUTPUT
-              echo "⚠️ Unexpected fallback output — defaulting to no-delete (review logs above)."
             fi
           fi
 
       - name: Run delete_fallback_posts (delete)
-        id: fallback_delete
         if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
-          echo "Deleting fallback posts..."
           echo "yes" | python delete_fallback_posts.py --delete
-          echo "Fallback deletion complete."
 
       - name: Run delete_similar_posts (dry-run detect)
         id: similar_check
@@ -223,24 +219,18 @@ jobs:
 
           if echo "$OUTPUT" | grep -q "No similar post groups found"; then
             echo "has_similar=false" >> $GITHUB_OUTPUT
-            echo "✅ No similar posts detected."
           else
             if echo "$OUTPUT" | grep -q "would be deleted"; then
               echo "has_similar=true" >> $GITHUB_OUTPUT
-              echo "⚠️ Similar posts detected — will delete in next step."
             else
               echo "has_similar=false" >> $GITHUB_OUTPUT
-              echo "⚠️ Unexpected similar-posts output — defaulting to no-delete (review logs above)."
             fi
           fi
 
       - name: Run delete_similar_posts (delete)
-        id: similar_delete
         if: steps.similar_check.outputs.has_similar == 'true'
         run: |
-          echo "Deleting similar posts..."
           echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
-          echo "Similar post deletion complete."
 
       - name: Run deduplicate_posts (dry-run detect)
         id: dedup_check
@@ -251,102 +241,18 @@ jobs:
 
           if echo "$OUTPUT" | grep -q "No duplicate posts found"; then
             echo "has_duplicates=false" >> $GITHUB_OUTPUT
-            echo "✅ No duplicate posts detected."
           else
             if echo "$OUTPUT" | grep -q "DELETE"; then
               echo "has_duplicates=true" >> $GITHUB_OUTPUT
-              echo "⚠️ Duplicate posts detected — will delete in next step."
             else
               echo "has_duplicates=false" >> $GITHUB_OUTPUT
-              echo "⚠️ Unexpected dedup output — defaulting to no-delete (review logs above)."
             fi
           fi
 
       - name: Run deduplicate_posts (delete)
-        id: dedup_delete
         if: steps.dedup_check.outputs.has_duplicates == 'true'
         run: |
-          echo "Deleting duplicate posts..."
           python deduplicate_posts.py --delete --no-rebuild
-          echo "Deduplication complete."
-
-      - name: Rebuild site after deletions
-        id: rebuild
-        if: >
-          steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true' ||
-          steps.dedup_check.outputs.has_duplicates == 'true'
-        run: |
-          echo "Deletions occurred — rebuilding site..."
-          python blog_system.py build
-          echo "Site rebuild complete."
-
-      - name: Commit and push cleaned posts + rebuilt site
-        if: >
-          steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true' ||
-          steps.dedup_check.outputs.has_duplicates == 'true'
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add docs/
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit (docs/ unchanged after dedup + rebuild)."
-          else
-            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            SUMMARY=""
-            if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
-              SUMMARY="${SUMMARY}fallback-posts "
-            fi
-            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
-              SUMMARY="${SUMMARY}similar-posts "
-            fi
-            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
-              SUMMARY="${SUMMARY}duplicate-posts "
-            fi
-            git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
-            git pull --rebase -X theirs origin main
-            if [ $? -ne 0 ]; then
-              git rebase --abort
-              git pull origin main
-              python blog_system.py build
-              git add docs/
-              git commit -m "chore: remove duplicate/fallback posts + rebuild [watchdog ${TIMESTAMP}] (${SUMMARY% })"
-            fi
-            git push
-            echo "Pushed cleaned docs/ to main."
-          fi
-
-      - name: Commit and push purged posts + rebuilt site
-        if: steps.audit.outputs.has_audit_issues == 'true'
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add docs/
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit (docs/ unchanged after purge + rebuild)."
-          else
-            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
-            git pull --rebase -X theirs origin main
-            if [ $? -ne 0 ]; then
-              git rebase --abort
-              git pull origin main
-              python blog_system.py build
-              git add docs/
-              git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
-            fi
-            git push
-            echo "Pushed purged docs/ to main."
-          fi
-
-      # ── AUDIT & PURGE ────────────────────────────────────────────────────────
-      # Runs blog_system.py audit to detect fallback/short posts, then purges
-      # them, rebuilds the site, and commits if any were removed.
 
       - name: Run blog audit
         id: audit
@@ -355,32 +261,36 @@ jobs:
           OUTPUT=$(python blog_system.py audit 2>&1)
           echo "$OUTPUT"
 
-          # Detect if audit flagged any problematic posts
           if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
             echo "has_audit_issues=true" >> $GITHUB_OUTPUT
-            echo "⚠️ Audit found issues — will purge in next step."
           else
             echo "has_audit_issues=false" >> $GITHUB_OUTPUT
-            echo "✅ Audit found no issues."
           fi
 
       - name: Run blog purge
-        id: purge
         if: steps.audit.outputs.has_audit_issues == 'true'
         run: |
-          echo "Purging flagged posts..."
           python blog_system.py purge
-          echo "Purge complete."
 
-      - name: Rebuild site after purge
-        if: steps.audit.outputs.has_audit_issues == 'true'
+      # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
+
+      - name: Rebuild site after modifications
+        id: rebuild
+        if: >
+          steps.fallback_check.outputs.has_fallback == 'true' ||
+          steps.similar_check.outputs.has_similar == 'true' ||
+          steps.dedup_check.outputs.has_duplicates == 'true' ||
+          steps.audit.outputs.has_audit_issues == 'true'
         run: |
-          echo "Rebuilding site after purge..."
+          echo "Modifications occurred — rebuilding site..."
           python blog_system.py build
-          echo "Site rebuild complete."
 
-      - name: Commit and push purged posts + rebuilt site
-        if: steps.audit.outputs.has_audit_issues == 'true'
+      - name: Master Commit and Push with Safe Engine Retry Loop
+        if: >
+          steps.fallback_check.outputs.has_fallback == 'true' ||
+          steps.similar_check.outputs.has_similar == 'true' ||
+          steps.dedup_check.outputs.has_duplicates == 'true' ||
+          steps.audit.outputs.has_audit_issues == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -388,13 +298,60 @@ jobs:
           git add docs/
 
           if git diff --cached --quiet; then
-            echo "No changes to commit (docs/ unchanged after purge + rebuild)."
+            echo "No real changes to commit."
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "chore: purge flagged posts + rebuild [watchdog ${TIMESTAMP}]"
-            git pull --rebase origin main
-            git push
-            echo "Pushed purged docs/ to main."
+            SUMMARY=""
+            if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then SUMMARY="${SUMMARY}fallback-posts "; fi
+            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then SUMMARY="${SUMMARY}similar-posts "; fi
+            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then SUMMARY="${SUMMARY}duplicate-posts "; fi
+            if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then SUMMARY="${SUMMARY}purged-posts "; fi
+            
+            git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
+
+            # Battle-tested engine retry loop
+            MAX_ATTEMPTS=3
+            ATTEMPT=1
+            SUCCESS=false
+
+            while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+              echo "Push attempt $ATTEMPT of $MAX_ATTEMPTS..."
+              if git push origin main; then
+                echo "Push successful!"
+                SUCCESS=true
+                break
+              else
+                echo "Collision detected! Remote moved ahead. Fetching latest state and re-running scripts..."
+                git fetch origin main
+                git reset --hard origin/main
+                
+                # Re-execute targeted scripts on top of pristine upstream state
+                if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
+                  echo "yes" | python delete_fallback_posts.py --delete
+                fi
+                if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
+                  echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
+                fi
+                if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+                  python deduplicate_posts.py --delete --no-rebuild
+                fi
+                if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
+                  python blog_system.py purge
+                fi
+                
+                # Recompile fresh assets on top of updated branch head
+                python blog_system.py build
+                
+                git add docs/
+                git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
+              fi
+              ATTEMPT=$((ATTEMPT + 1))
+            done
+
+            if [ "$SUCCESS" = "false" ]; then
+              echo "Failed to push cleanly after $MAX_ATTEMPTS attempts."
+              exit 1
+            fi
           fi
 
       # ── MISSING-SLOT RECOVERY ─────────────────────────────────────────────────
@@ -505,33 +462,5 @@ jobs:
               echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
             else
               echo "✅ **All cron slots running on schedule.**"
-            fi
-            if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
-              echo ""
-              echo "⚠️ **Fallback posts were detected and deleted. Site rebuilt and docs/ pushed.**"
-            else
-              echo ""
-              echo "✅ **No fallback posts found.**"
-            fi
-            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
-              echo ""
-              echo "⚠️ **Similar/duplicate posts were detected and deleted. Site rebuilt and docs/ pushed.**"
-            else
-              echo ""
-              echo "✅ **No similar posts found.**"
-            fi
-            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
-              echo ""
-              echo "⚠️ **Duplicate posts were detected and deleted. Site rebuilt and docs/ pushed.**"
-            else
-              echo ""
-              echo "✅ **No duplicate posts found.**"
-            fi
-            if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
-              echo ""
-              echo "⚠️ **Audit flagged posts were purged. Site rebuilt and docs/ pushed.**"
-            else
-              echo ""
-              echo "✅ **Audit found no issues.**"
             fi
           } >> $GITHUB_STEP_SUMMARY
