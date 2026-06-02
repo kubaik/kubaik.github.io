@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 11:52:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 11:56:49 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right real-time protocol fast</title>
+      <link>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</link>
+      <description>Cut realtime API latency 60% by picking the right tool — WebSocket vs SSE vs long polling benchmarks from 100 to 1,000 clients on t3.small (2026 pricing).</description>
+      <pubDate>Tue, 02 Jun 2026 11:56:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-real-time-protocol-fast/</guid>
+    </item>
     <item>
       <title>Negotiate 6-figure remote pay from Lima</title>
       <link>https://kubaik.github.io/negotiate-6-figure-remote-pay-from-lima/</link>
@@ -138,13 +145,6 @@
       <description>Land $100k remote job from Mexico City — local cost breakdown, benchmark tools, and negotiation scripts that moved offers from $55k to $105k in two rounds.</description>
       <pubDate>Mon, 01 Jun 2026 22:58:43 +0000</pubDate>
       <guid>https://kubaik.github.io/land-100k-remote-job-from-mexico-city/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs long-polling: pick the right one</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-pick-the-right-one/</link>
-      <description>Cut real-time latency variance 40% by choosing WebSockets, SSE, or long-polling — connection limits, memory leaks, and AWS cost breakdown for 2026.</description>
-      <pubDate>Mon, 01 Jun 2026 22:33:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-pick-the-right-one/</guid>
     </item>
   </channel>
 </rss>
