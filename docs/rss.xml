@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 00:06:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 00:11:30 +0000</lastBuildDate>
+    <item>
+      <title>Edge cases that kill AI code</title>
+      <link>https://kubaik.github.io/edge-cases-that-kill-ai-code/</link>
+      <description>60% of AI-generated code fails on edge cases like 2G drops and Swahili input — GitHub Copilot vs Cursor in production benchmarks for teams in sub-Saharan Africa.</description>
+      <pubDate>Tue, 02 Jun 2026 00:11:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-cases-that-kill-ai-code/</guid>
+    </item>
     <item>
       <title>Hire remotely from Africa: show outcomes</title>
       <link>https://kubaik.github.io/hire-remotely-from-africa-show-outcomes/</link>
@@ -138,13 +145,6 @@
       <description>Salary jumps in 2026 go to engineers who master RAG with pgvector or Milvus at scale — not fine-tuning. Benchmarks, costs, and the exact skills that moved the needle.</description>
       <pubDate>Mon, 01 Jun 2026 14:12:45 +0000</pubDate>
       <guid>https://kubaik.github.io/3-ai-skills-that-boost-2026-salaries/</guid>
-    </item>
-    <item>
-      <title>Pick the Real-Time Transport That Won’t Bite</title>
-      <link>https://kubaik.github.io/pick-the-real-time-transport-that-wont-bite/</link>
-      <description>Cut API latency 80% with the right real-time transport in 2026 — WebSocket, SSE, or long-poll benchmarks and cost data on Node 20 and Redis 7.2.</description>
-      <pubDate>Mon, 01 Jun 2026 13:26:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-real-time-transport-that-wont-bite/</guid>
     </item>
   </channel>
 </rss>
