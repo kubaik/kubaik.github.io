@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jun 2026 07:12:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jun 2026 07:15:28 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote salary from low-cost countries</title>
+      <link>https://kubaik.github.io/negotiate-remote-salary-from-low-cost-countries/</link>
+      <description>Most companies expect you to negotiate 5–15% below median because they assume you’re from a lower-cost city.</description>
+      <pubDate>Tue, 02 Jun 2026 07:15:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-salary-from-low-cost-countries/</guid>
+    </item>
     <item>
       <title>Pool size N+1? Wrong metric for DB</title>
       <link>https://kubaik.github.io/pool-size-n1-wrong-metric-for-db/</link>
@@ -138,13 +145,6 @@
       <description>Save $3k/month building an internal developer platform on $100/month — EKS, MemoryDB, Argo CD, and a Go 1.21 CLI that tunnels localhost to staging reliably on 3G networks</description>
       <pubDate>Mon, 01 Jun 2026 16:55:13 +0000</pubDate>
       <guid>https://kubaik.github.io/build-an-internal-dev-platform-for-100month/</guid>
-    </item>
-    <item>
-      <title>Ship real users, land remote jobs</title>
-      <link>https://kubaik.github.io/ship-real-users-land-remote-jobs/</link>
-      <description>Portfolio won’t land remote jobs in 2026 — proof of impact will. 3 Nairobi-built systems that got interviews: fish bot, school fee collector, fintech ledger. Case studies, metrics, and the exact stack to use.</description>
-      <pubDate>Mon, 01 Jun 2026 16:37:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-real-users-land-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
