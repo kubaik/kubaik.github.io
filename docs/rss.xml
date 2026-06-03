@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 07:27:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 07:32:05 +0000</lastBuildDate>
+    <item>
+      <title>Hidden costs of production RAG pipelines</title>
+      <link>https://kubaik.github.io/hidden-costs-of-production-rag-pipelines/</link>
+      <description>Production RAG pipelines fail on latency, cost, and memory unless you compress first, tier second, and cache last. Here’s the hidden tax most tutorials ignore — with real numbers from a Jakarta startup’s 50k-doc chatbot.</description>
+      <pubDate>Wed, 03 Jun 2026 07:31:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/hidden-costs-of-production-rag-pipelines/</guid>
+    </item>
     <item>
       <title>Senior devs flee big tech for small stakes</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-tech-for-small-stakes/</link>
@@ -138,13 +145,6 @@
       <description>Push remote pay from $3k to $8k/month using a repeatable salary benchmarking script and cost-of-living model that finance teams can’t ignore.</description>
       <pubDate>Tue, 02 Jun 2026 17:17:46 +0000</pubDate>
       <guid>https://kubaik.github.io/haggle-remote-pay-from-3k-to-8kmonth/</guid>
-    </item>
-    <item>
-      <title>Ship one project, land remote from Africa</title>
-      <link>https://kubaik.github.io/ship-one-project-land-remote-from-africa/</link>
-      <description>Land remote jobs from Africa by shipping one project that proves production ownership — cost, scale, and failure — not a portfolio of tutorials. $8.40/month system got five offers in six weeks.</description>
-      <pubDate>Tue, 02 Jun 2026 17:14:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-one-project-land-remote-from-africa/</guid>
     </item>
   </channel>
 </rss>
