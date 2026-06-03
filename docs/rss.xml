@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 22:59:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 23:03:42 +0000</lastBuildDate>
+    <item>
+      <title>M-Pesa vs Paystack vs Flutterwave: which API bites?</title>
+      <link>https://kubaik.github.io/m-pesa-vs-paystack-vs-flutterwave-which-api-bites/</link>
+      <description>Cut failed African payment integrations 70% with the right API choice — M-Pesa, Paystack, or Flutterwave benchmarks, fees, and hidden gotchas in 2026.</description>
+      <pubDate>Wed, 03 Jun 2026 23:03:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/m-pesa-vs-paystack-vs-flutterwave-which-api-bites/</guid>
+    </item>
     <item>
       <title>AI skills paying 40% more in 2026</title>
       <link>https://kubaik.github.io/ai-skills-paying-40-more-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut push-tech latency and cost: WebSocket vs SSE vs long polling benchmarks for 2026 — pick the right tool in 15 minutes</description>
       <pubDate>Wed, 03 Jun 2026 08:10:52 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</guid>
-    </item>
-    <item>
-      <title>Pool settings that waste your database money</title>
-      <link>https://kubaik.github.io/pool-settings-that-waste-your-database-money/</link>
-      <description>Cut API p99 latency 60% and cloud bill 8-18% by fixing connection pool settings — peak concurrent queries, idle timeout 600000 ms, and PostgreSQL 16 limits</description>
-      <pubDate>Wed, 03 Jun 2026 07:40:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-settings-that-waste-your-database-money/</guid>
     </item>
   </channel>
 </rss>
