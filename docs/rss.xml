@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 21:31:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 21:36:22 +0000</lastBuildDate>
+    <item>
+      <title>Why your DB pool size is probably wrong</title>
+      <link>https://kubaik.github.io/why-your-db-pool-size-is-probably-wrong/</link>
+      <description>Cut database connection pool waste 50% with real data — why the 2005 formula fails in 2026, SSL overhead cost, and the 3 settings most teams miss.</description>
+      <pubDate>Wed, 03 Jun 2026 21:36:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-db-pool-size-is-probably-wrong/</guid>
+    </item>
     <item>
       <title>Portfolio hack: ship code, not templates</title>
       <link>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</link>
@@ -138,13 +145,6 @@
       <description>Prove you can solve real problems: build a portfolio with benchmarks, trade-offs, and collaboration artifacts — not bios. 78% of remote managers prioritize practical contributions over polished profiles.</description>
       <pubDate>Wed, 03 Jun 2026 07:12:31 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-messy-systems-africa-devs-win-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>2026 freelance dev rates, unmapped</title>
-      <link>https://kubaik.github.io/2026-freelance-dev-rates-unmapped/</link>
-      <description>2026 freelance developer rates decoded: exact bands, real deliverables, and the 1.5× risk factor most devs miss. Stop leaving money on the table.</description>
-      <pubDate>Wed, 03 Jun 2026 05:37:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-freelance-dev-rates-unmapped/</guid>
     </item>
   </channel>
 </rss>
