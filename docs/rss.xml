@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 17:33:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 17:38:37 +0000</lastBuildDate>
+    <item>
+      <title>2026 remote salary parity for LATAM devs</title>
+      <link>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</link>
+      <description>Generate your 2026 remote counter in 100 lines — parity engine, Mercer index, and the negotiation script top engineers use. Avoid the $75k anchor trap.</description>
+      <pubDate>Wed, 03 Jun 2026 17:38:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</guid>
+    </item>
     <item>
       <title>Senior devs quit for more than pay</title>
       <link>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 86% and AWS bill 52% with article-level caching; the vector-store hop most tutorials ignore</description>
       <pubDate>Tue, 02 Jun 2026 23:32:54 +0000</pubDate>
       <guid>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</guid>
-    </item>
-    <item>
-      <title>Pool size too low? Blame TCP ports</title>
-      <link>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</link>
-      <description>Cut connection pool mistakes 80%: set max pool size to 1.5x concurrency, not database capacity — evidence from 3 production systems using PostgreSQL 15, Node.js 20, and Python FastAPI 0.109 in 2026</description>
-      <pubDate>Tue, 02 Jun 2026 23:29:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</guid>
     </item>
   </channel>
 </rss>
