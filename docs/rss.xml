@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 00:18:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 00:22:43 +0000</lastBuildDate>
+    <item>
+      <title>Show salary, not screenshots: Africa dev portfolios</title>
+      <link>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</link>
+      <description>Portfolio flops when it’s just screenshots — real remote jobs in 2026 demand production artifacts: load tests, alerts, runbooks, cost reports. Learn the exact artifacts that got African engineers $70k+ remote offers.</description>
+      <pubDate>Wed, 03 Jun 2026 00:22:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</guid>
+    </item>
     <item>
       <title>Production RAG: the latency trap most tutorials miss</title>
       <link>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</link>
@@ -138,13 +145,6 @@
       <description>Land a $120k remote job from Lima using one negotiation trick — 2026 Levels.fyi + PPP table that raises offers 26–89% in days</description>
       <pubDate>Tue, 02 Jun 2026 11:48:18 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-6-figure-remote-pay-from-lima/</guid>
-    </item>
-    <item>
-      <title>One African dev portfolio trick</title>
-      <link>https://kubaik.github.io/one-african-dev-portfolio-trick/</link>
-      <description>Ship one demo, not ten portfolios — African devs who build a single production-grade system get hired faster than those who grind ten toy projects. Stack: FastAPI 0.109, PostgreSQL 15, Redis 7.2, Celery 5.3. Deliver 500 ms p95 latency.</description>
-      <pubDate>Tue, 02 Jun 2026 10:47:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/one-african-dev-portfolio-trick/</guid>
     </item>
   </channel>
 </rss>
