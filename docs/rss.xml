@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 12:35:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 13:11:18 +0000</lastBuildDate>
+    <item>
+      <title>Skip CPU cores for DB pools</title>
+      <link>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</link>
+      <description>Cut database connection errors 80% by ignoring CPU cores—use max_connections and actual demand instead. Benchmarks, pitfalls, and the one setting every team configures wrong.</description>
+      <pubDate>Wed, 03 Jun 2026 13:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</guid>
+    </item>
     <item>
       <title>Show benchmarks, not GitHub stars</title>
       <link>https://kubaik.github.io/show-benchmarks-not-github-stars/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 70% with the right real-time tool — SSE vs WebSockets vs long polling compared with 2026 benchmarks, code, and the mistake that cost 3 weeks</description>
       <pubDate>Tue, 02 Jun 2026 22:48:17 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</guid>
-    </item>
-    <item>
-      <title>AI salary killers: LLMs vs vector search 2026</title>
-      <link>https://kubaik.github.io/ai-salary-killers-llms-vs-vector-search-2026/</link>
-      <description>Cut AI stack costs 96% with vector search — Qdrant, Redis, and binary embeddings deliver the salary boost most engineers miss in 2026.</description>
-      <pubDate>Tue, 02 Jun 2026 22:40:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salary-killers-llms-vs-vector-search-2026/</guid>
     </item>
   </channel>
 </rss>
