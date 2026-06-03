@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 18:05:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 18:20:28 +0000</lastBuildDate>
+    <item>
+      <title>Self-taught to senior in three years</title>
+      <link>https://kubaik.github.io/self-taught-to-senior-in-three-years/</link>
+      <description>Earn senior title without CS degree: ship real systems, break them, fix them. Learn Go, PostgreSQL, Redis and prove your worth with production scars.</description>
+      <pubDate>Wed, 03 Jun 2026 18:20:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-taught-to-senior-in-three-years/</guid>
+    </item>
     <item>
       <title>RAG in production? Skip the toy demos</title>
       <link>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</link>
@@ -138,13 +145,6 @@
       <description>Backend AI skills pay 8-15% more than prompt skills in 2026 — benchmarked against Redis 7.2 and LangChain 0.1.12. See latency, cost, and salary differences.</description>
       <pubDate>Wed, 03 Jun 2026 01:53:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-pay-backend-vs-prompt-skills-in-2026/</guid>
-    </item>
-    <item>
-      <title>Show salary, not screenshots: Africa dev portfolios</title>
-      <link>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</link>
-      <description>Portfolio flops when it’s just screenshots — real remote jobs in 2026 demand production artifacts: load tests, alerts, runbooks, cost reports. Learn the exact artifacts that got African engineers $70k+ remote offers.</description>
-      <pubDate>Wed, 03 Jun 2026 00:22:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</guid>
     </item>
   </channel>
 </rss>
