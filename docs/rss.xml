@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 12:09:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 12:14:46 +0000</lastBuildDate>
+    <item>
+      <title>Doctors coding apps at 3am: the stack they trust</title>
+      <link>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</link>
+      <description>The teams I’ve worked with that started as side projects in clinics, law firms, and labs now run systems handling thousands of requests per second with…</description>
+      <pubDate>Wed, 03 Jun 2026 12:14:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</guid>
+    </item>
     <item>
       <title>AI salary killers: PyTorch vs TensorFlow 2026</title>
       <link>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 60% and AWS costs 88% — the invisible bottlenecks pipelines ignore and how to fix them with Redis 7.2, Node 20 LTS, and progressive delivery</description>
       <pubDate>Tue, 02 Jun 2026 20:36:52 +0000</pubDate>
       <guid>https://kubaik.github.io/hidden-rag-slowdowns-cache-warms-reranker-fails/</guid>
-    </item>
-    <item>
-      <title>Over-provisioned DB pools cost more than cores</title>
-      <link>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</link>
-      <description>Cut database latency 50% by ditching the CPU-cores rule for connection pools — real benchmarks, Aurora PostgreSQL 2026 limits, and the concurrency formula most teams ignore.</description>
-      <pubDate>Tue, 02 Jun 2026 20:29:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</guid>
     </item>
   </channel>
 </rss>
