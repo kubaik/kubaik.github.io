@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 15:22:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 15:28:18 +0000</lastBuildDate>
+    <item>
+      <title>Pick real-time tech: WebSockets, SSE, or polling?</title>
+      <link>https://kubaik.github.io/pick-real-time-tech-websockets-sse-or-polling/</link>
+      <description>A 2026 Stack Overflow survey found that 37% of teams that adopted WebSockets later had to roll back at least one major feature because they underestimated…</description>
+      <pubDate>Wed, 03 Jun 2026 15:28:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-real-time-tech-websockets-sse-or-polling/</guid>
+    </item>
     <item>
       <title>Skip CPU cores for DB pools</title>
       <link>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech over code reviews, not stock — here’s the 4-step system that cut regressions 40% and saved $150k in outages</description>
       <pubDate>Tue, 02 Jun 2026 23:14:01 +0000</pubDate>
       <guid>https://kubaik.github.io/why-senior-devs-flee-big-techs-empty-reviews/</guid>
-    </item>
-    <item>
-      <title>Choose the right real-time tech fast</title>
-      <link>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</link>
-      <description>Cut API response time 70% with the right real-time tool — SSE vs WebSockets vs long polling compared with 2026 benchmarks, code, and the mistake that cost 3 weeks</description>
-      <pubDate>Tue, 02 Jun 2026 22:48:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-real-time-tech-fast/</guid>
     </item>
   </channel>
 </rss>
