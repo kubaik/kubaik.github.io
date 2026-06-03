@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 12:22:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 12:27:34 +0000</lastBuildDate>
+    <item>
+      <title>Which AI Skills Actually Raise Your Salary in 2026</title>
+      <link>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</link>
+      <description>In 2026, only 2 AI skills move your salary past $180k. RAG at scale and fine-tuning small models are the only levers with proven ROI. See the data.</description>
+      <pubDate>Wed, 03 Jun 2026 12:27:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</guid>
+    </item>
     <item>
       <title>Doctors coding apps at 3am: the stack they trust</title>
       <link>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</link>
@@ -138,13 +145,6 @@
       <description>Show recruiters you can handle production load — not just write code. Nairobi devs: build one system that proves you can own a problem end-to-end, deploy it on AWS, and include metrics recruiters care about.</description>
       <pubDate>Tue, 02 Jun 2026 21:48:43 +0000</pubDate>
       <guid>https://kubaik.github.io/nairobi-devs-your-portfolio-is-boring-recruiters/</guid>
-    </item>
-    <item>
-      <title>Hidden RAG slowdowns: cache warms, reranker fails</title>
-      <link>https://kubaik.github.io/hidden-rag-slowdowns-cache-warms-reranker-fails/</link>
-      <description>Cut RAG latency 60% and AWS costs 88% — the invisible bottlenecks pipelines ignore and how to fix them with Redis 7.2, Node 20 LTS, and progressive delivery</description>
-      <pubDate>Tue, 02 Jun 2026 20:36:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/hidden-rag-slowdowns-cache-warms-reranker-fails/</guid>
     </item>
   </channel>
 </rss>
