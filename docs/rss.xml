@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 05:32:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 05:37:29 +0000</lastBuildDate>
+    <item>
+      <title>2026 freelance dev rates, unmapped</title>
+      <link>https://kubaik.github.io/2026-freelance-dev-rates-unmapped/</link>
+      <description>2026 freelance developer rates decoded: exact bands, real deliverables, and the 1.5× risk factor most devs miss. Stop leaving money on the table.</description>
+      <pubDate>Wed, 03 Jun 2026 05:37:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-freelance-dev-rates-unmapped/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs long-polling: which fits?</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</link>
@@ -138,13 +145,6 @@
       <description>Compare WebSockets vs SSE vs long polling with 2026 benchmarks, RAM costs, and the one proxy everyone forgets: corporate firewalls. Pick the right tool in 90 seconds.</description>
       <pubDate>Tue, 02 Jun 2026 14:47:04 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-3-real-time-tools-in-50-words/</guid>
-    </item>
-    <item>
-      <title>Push updates without WebSockets: cheaper ways</title>
-      <link>https://kubaik.github.io/push-updates-without-websockets-cheaper-ways/</link>
-      <description>Cut real-time feature costs 95 % with these 5 serverless stacks — benchmarked 2026 data, concrete costs, and the one I picked for a Figma-like editor</description>
-      <pubDate>Tue, 02 Jun 2026 14:08:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-updates-without-websockets-cheaper-ways/</guid>
     </item>
   </channel>
 </rss>
