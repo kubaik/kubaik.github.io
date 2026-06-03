@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 20:39:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 20:43:54 +0000</lastBuildDate>
+    <item>
+      <title>Benchmark WebSocket vs SSE vs long polling</title>
+      <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling/</link>
+      <description>Pick the right real-time tool in 90 seconds — latency benchmarks, memory costs, and the one AWS setting that breaks WebSockets</description>
+      <pubDate>Wed, 03 Jun 2026 20:43:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling/</guid>
+    </item>
     <item>
       <title>Land $120k remotely from $3k country</title>
       <link>https://kubaik.github.io/land-120k-remotely-from-3k-country/</link>
@@ -138,13 +145,6 @@
       <description>SSE costs 45% less than WebSockets and 80% less than long polling at 1000 users/day — benchmark results from Node 20 LTS and Redis 7.2.</description>
       <pubDate>Wed, 03 Jun 2026 02:55:08 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</guid>
-    </item>
-    <item>
-      <title>5 rules for low-cost remote pay</title>
-      <link>https://kubaik.github.io/5-rules-for-low-cost-remote-pay/</link>
-      <description>Convert any remote offer to real take-home with Python 3.11 — FX rates, taxes, time-zone penalties and RSU discounts in 2026</description>
-      <pubDate>Wed, 03 Jun 2026 02:13:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-rules-for-low-cost-remote-pay/</guid>
     </item>
   </channel>
 </rss>
