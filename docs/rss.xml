@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 22:16:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 22:21:14 +0000</lastBuildDate>
+    <item>
+      <title>AI skills paying 40% more in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-paying-40-more-in-2026/</link>
+      <description>AI skills paying 40% more in 2026: the data-backed breakdown of prompt engineering vs. AI engineering roles and what actually moves salary</description>
+      <pubDate>Wed, 03 Jun 2026 22:20:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-paying-40-more-in-2026/</guid>
+    </item>
     <item>
       <title>Senior exits: Why FAANG burns out</title>
       <link>https://kubaik.github.io/senior-exits-why-faang-burns-out/</link>
@@ -138,13 +145,6 @@
       <description>Cut API p99 latency 60% and cloud bill 8-18% by fixing connection pool settings — peak concurrent queries, idle timeout 600000 ms, and PostgreSQL 16 limits</description>
       <pubDate>Wed, 03 Jun 2026 07:40:03 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-settings-that-waste-your-database-money/</guid>
-    </item>
-    <item>
-      <title>Hidden costs of production RAG pipelines</title>
-      <link>https://kubaik.github.io/hidden-costs-of-production-rag-pipelines/</link>
-      <description>Production RAG pipelines fail on latency, cost, and memory unless you compress first, tier second, and cache last. Here’s the hidden tax most tutorials ignore — with real numbers from a Jakarta startup’s 50k-doc chatbot.</description>
-      <pubDate>Wed, 03 Jun 2026 07:31:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/hidden-costs-of-production-rag-pipelines/</guid>
     </item>
   </channel>
 </rss>
