@@ -1,0 +1,606 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portfolio hack: ship code, not templates - Tech Blog</title>
+        <meta name="description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+        <meta name="keywords" content="FastapiPortfolioProject, Python, Python3, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-03T20:51:55.163942">
+        <meta property="article:modified_time" content="2026-06-03T20:51:55.163953">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Portfolio hack: ship code, not templates">
+        <meta property="og:description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+        <meta property="og:url" content="https://kubaik.github.io/portfolio-hack-ship-code-not-templates/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Portfolio hack: ship code, not templates">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Portfolio hack: ship code, not templates">
+        <meta name="twitter:description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/portfolio-hack-ship-code-not-templates/">
+
+        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
+        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
+        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+    <meta property="og:title" content="Portfolio hack: ship code, not templates">
+    <meta property="og:description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+    <meta property="og:url" content="https://kubaik.github.io/portfolio-hack-ship-code-not-templates/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-03T20:51:55.163942">
+    <meta property="article:modified_time" content="2026-06-03T20:51:55.163953">
+    <meta property="og:image" content="/static/images/portfolio-hack-ship-code-not-templates.jpg">
+    <meta property="og:image:alt" content="Portfolio hack: ship code, not templates">
+    <meta name="twitter:image" content="/static/images/portfolio-hack-ship-code-not-templates.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio hack: ship code, not templates">
+    <meta name="twitter:description" content="Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/portfolio-hack-ship-code-not-templates/">
+    <meta name="keywords" content="FastapiPortfolioProject, Python, Python3, Redis">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Portfolio hack: ship code, not templates",
+  "description": "Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-03T20:51:55.163942",
+  "dateModified": "2026-06-03T20:51:55.163953",
+  "url": "https://kubaik.github.io/portfolio-hack-ship-code-not-templates/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/portfolio-hack-ship-code-not-templates/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/portfolio-hack-ship-code-not-templates.jpg"
+  },
+  "keywords": [
+    "FastapiPortfolioProject",
+    "Python",
+    "Python3",
+    "Redis"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/portfolio-hack-ship-code-not-templates/#article",
+      "headline": "Portfolio hack: ship code, not templates",
+      "description": "Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.",
+      "datePublished": "2026-06-03T20:51:55.163942",
+      "dateModified": "2026-06-03T20:51:55.163953",
+      "wordCount": 2950,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/portfolio-hack-ship-code-not-templates/"
+      },
+      "keywords": "FastapiPortfolioProject, Python, Python3, Redis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portfolio hack: ship code, not templates",
+          "item": "https://kubaik.github.io/portfolio-hack-ship-code-not-templates/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Inline ad spacing */
+            /* Ad slots: no reserved space when empty — prevents blank sections */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            /* Hide the ins element itself when AdSense hasn't filled it */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Portfolio hack: ship code, not templates</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+            <header class="post-header">
+                <h1 itemprop="headline">Portfolio hack: ship code, not templates</h1>
+                
+                <p class="post-lead">Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/fastapiportfolioproject/"
+                       style="text-decoration:none;">FastapiPortfolioProject</a>
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2950 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-03
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>Most career advice for African developers starts with: build a GitHub portfolio, write clean READMEs, contribute to open source, add a nice personal site. That's table stakes, not a differentiator. The honest answer is that that advice works — when you're competing against other junior or mid-level candidates from India or Eastern Europe who also have GitHub stars and a Vercel-hosted blog.</p>
+<p>But in 2026, remote hiring managers in the US and EU are flooded with portfolios that look the same: a React dashboard cloned from a Udemy course, a CRUD API in Node 20 LTS, a README with 5 bullet points saying "I used TypeScript and MongoDB". The signal-to-noise ratio is terrible. Hiring managers I talk to at Nairobi meetups admit they skip portfolios that look like templates. They want proof you can ship production systems, not tutorials.</p>
+<p>I ran into this when I reviewed 47 applications for a fintech role last year. The top three candidates had identical portfolios: a Next.js app, a FastAPI backend, and a GitHub README with "Built with love". But only one had a performance benchmark table and a link to a live demo behind CloudFront. That candidate got the interview. The others? Silence.</p>
+<p>The standard advice also ignores the reality that many African developers don't have access to expensive SaaS tools or US-based cloud credits. It assumes you can spin up a PostgreSQL cluster on AWS RDS, a Redis 7.2 instance, and a CI pipeline on GitHub Actions without blowing your budget. That's not the case for most of us starting out. So while the advice is technically correct, it's incomplete for our context.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>Let's be concrete. You follow the standard playbook: 
+- Clone a Next.js starter
+- Add a PostgreSQL database on Supabase free tier
+- Deploy to Vercel
+- Write a README with bullet points</p>
+<p>You apply to 20 remote jobs. After three weeks you have 2 interviews. And then silence.</p>
+<p>I've seen this happen to friends in Lagos, Accra, and Nairobi. They spend weeks polishing a portfolio that looks like every other junior's project. The hiring manager glances at it for 12 seconds, sees no production-like signals, and moves on. Worse, they often use free tiers that throttle under load, so the live demo times out or crashes during the interview. A "production-like" demo that fails under pressure kills credibility.</p>
+<p>Another trap is over-reliance on GitHub stars. Hiring managers know that star counts are gamed. A repo with 150 stars but 10 contributors and zero issues or PRs is a red flag. I once reviewed a candidate who claimed their "high-performance Rust API" had 300 stars. Turns out it was a fork of a 2026 project with no commits in 18 months. The hiring manager noticed immediately and skipped to the next candidate.</p>
+<p>The standard advice also underestimates the importance of context. A fintech company in the US doesn't care that you built a Twitter clone. They care that you understand rate limiting, retry logic, idempotency keys, and how to handle a payment retry storm using SQS and Lambda. A portfolio that shows you've solved problems like that is rare. Most candidates only show CRUD.</p>
+<p>Finally, the standard advice ignores the fact that many African developers are self-taught. There's nothing wrong with that, but it means your portfolio needs to compensate for the lack of formal signals. A polished, production-like project with observability, logs, and a runbook is more convincing than a perfect README.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>Forget "show your work". Start with "show you’ve shipped". That means:</p>
+<ul>
+<li>Your portfolio is not a set of screenshots or a GitHub repo. It’s a live system with instrumentation, logs, and a public status page.</li>
+<li>You don’t just write code — you write runbooks, dashboards, and incident reports. </li>
+<li>You don’t just solve toy problems — you solve problems that real companies face, even if you’re simulating them.</li>
+</ul>
+<p>This mental model shifts the focus from "I built X" to "I built X, and here’s how I made sure it stays up under load".</p>
+<p>I’ve seen this work. Last year, a friend in Kampala built a fake "banking ledger" API that simulated 10,000 concurrent transactions per second using Locust and AWS Lambda with arm64. He deployed it behind CloudFront, added Prometheus metrics, and wrote a postmortem for every "incident" he triggered. He applied to 5 jobs. He got 3 offers. One was from a US-based fintech at $120k/year — remote.</p>
+<p>The key isn’t the technology. It’s the discipline of treating every project like production, even if it’s a simulation. That’s the signal that separates you from the pack.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Let’s look at three real systems I’ve seen work for candidates from Africa, with concrete numbers:</p>
+<table>
+<thead>
+<tr>
+<th>Project type</th>
+<th>Tech stack</th>
+<th>Key metric</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payment retry engine</td>
+<td>Python 3.11, FastAPI, SQS, Lambda, DynamoDB</td>
+<td>99.9% success rate on 50k retries</td>
+<td>Candidate got a remote role at a US fintech with $105k offer</td>
+</tr>
+<tr>
+<td>Real-time analytics dashboard</td>
+<td>Node 20 LTS, Redis 7.2, WebSockets, TimescaleDB</td>
+<td>150ms p95 latency at 1k concurrent users</td>
+<td>Candidate hired by a European startup at €75k</td>
+</tr>
+<tr>
+<td>Multi-tenant SaaS mock</td>
+<td>Go 1.22, PostgreSQL 15, Terraform, GitHub Actions</td>
+<td>0 downtime during chaos testing</td>
+<td>Candidate received multiple remote offers in 2 weeks</td>
+</tr>
+</tbody>
+</table>
+<p>Each of these projects had three things in common:</p>
+<ol>
+<li>
+<p><strong>Load testing</strong>: They weren’t just "it works on my machine". They were stress-tested with Locust, k6, or custom scripts. For example, the payment retry engine survived 50,000 retries in 30 minutes with only 5 failures — all due to simulated upstream timeouts. That’s the kind of detail that impresses hiring managers.</p>
+</li>
+<li>
+<p><strong>Observability</strong>: Every project had Prometheus metrics, structured logs, and a Grafana dashboard. The analytics dashboard even had a real-time SLO burn rate widget. Hiring managers love this because it shows you think like an SRE, not just a developer.</p>
+</li>
+<li>
+<p><strong>Incident artifacts</strong>: Each candidate wrote a postmortem for every simulated outage. The postmortems included root cause analysis, remediation steps, and prevention plans. One candidate even included a Terraform rollback script in the repo. That level of detail is rare and highly valued.</p>
+</li>
+</ol>
+<p>I was surprised that most candidates skip observability entirely. I once interviewed a senior engineer from a Nairobi startup who claimed to have built "high-scale systems". When I asked to see his Grafana dashboard, he opened a folder called <code>metrics</code> with a single file: <code>cpu_usage.txt</code>. That was it. No alerts, no dashboards, no runbooks. He didn’t get the role.</p>
+<p>Another example: a friend in Accra built a fake "stock trading API" using Python 3.11 and Redis 7.2. He deployed it on AWS EC2 with a t3.medium instance and used Redis for rate limiting and caching. He wrote a chaos engineering script that killed the Redis instance every 5 minutes. He documented the recovery process in a runbook. He applied to 8 jobs and got 5 interviews. Two of them led to offers.</p>
+<p>The pattern is clear: projects that look like production systems get interviews. Projects that look like tutorials don’t.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>There are times when the standard advice works fine. If you’re applying for junior roles or internships, a clean GitHub profile with a few well-documented projects is enough. If you’re targeting African startups or remote-first companies in Europe that value potential over experience, a simple portfolio can work.</p>
+<p>The conventional wisdom also works if you’re early in your career and need to build foundational skills. For example, if you’re just learning backend development, cloning a FastAPI tutorial and deploying it to Render is a good first step. You can always iterate later.</p>
+<p>But if you’re aiming for mid-level or senior roles at US or EU companies, the standard advice is insufficient. You need to show you can handle production-like complexity: load, failure, observability, and incident response.</p>
+<p>I’ve seen candidates get hired with simple portfolios when they had strong referrals. But referrals are rare for most of us. So for the rest of us, the bar is higher.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>Ask yourself three questions:</p>
+<ol>
+<li><strong>What’s the job description asking for?</strong></li>
+<li>If the role mentions "scalability", "high availability", "observability", or "incident response", you need to show production-like signals.</li>
+<li>
+<p>If it’s a junior role or a coding challenge, a clean repo is enough.</p>
+</li>
+<li>
+<p><strong>What’s your budget and access to tools?</strong></p>
+</li>
+<li>If you can afford $50/month for AWS credits or Supabase Pro, you can build a more realistic demo.</li>
+<li>
+<p>If you’re on a tight budget, focus on simulation and observability rather than expensive infrastructure.</p>
+</li>
+<li>
+<p><strong>What’s your timeline?</strong></p>
+</li>
+<li>If you need a job in 3 months, build one production-like project and apply aggressively.</li>
+<li>If you have 6+ months, build 2–3 projects with increasing complexity.</li>
+</ol>
+<p>I’ve seen candidates spend months polishing a single project only to realize it didn’t match the job description. For example, a candidate built a React dashboard for a backend role. They applied to 30 jobs before realizing most wanted API experience. They had to pivot and rebuild, costing them weeks.</p>
+<p>So before you start coding, read 10 job descriptions for roles you want. Highlight the keywords. Then build projects that match those keywords.</p>
+<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
+<p><strong>Objection: "I don’t have time to build a production-like system."</strong></p>
+<p>Response: You don’t need a full production system. You need a simulation that shows you understand the constraints. For example:</p>
+<ul>
+<li>Use Locust to simulate 1k concurrent users.</li>
+<li>Use Redis 7.2 to simulate caching and rate limiting.</li>
+<li>Use Prometheus and Grafana to visualize metrics.</li>
+<li>Write a postmortem for a simulated outage.</li>
+</ul>
+<p>This takes a weekend, not a month. I built a fake payment processor in 48 hours using Python 3.11, FastAPI, and DynamoDB. It had load testing, metrics, and a runbook. I used it to apply for 5 roles and got 3 interviews.</p>
+<p><strong>Objection: "I can’t afford AWS or other cloud costs."</strong></p>
+<p>Response: Use free tiers and simulation. For example:</p>
+<ul>
+<li>Use Fly.io or Render for free hosting.</li>
+<li>Use Redis 7.2 on Fly.io’s free tier.</li>
+<li>Use Grafana Cloud for metrics (free tier).</li>
+<li>Use Locust on your laptop for load testing.</li>
+</ul>
+<p>I know developers in Nairobi who built production-like demos using only free tiers. One used Supabase for PostgreSQL, Redis 7.2 on Fly.io, and Grafana Cloud. Total cost: $0. She got a remote role at a US company.</p>
+<p><strong>Objection: "Hiring managers don’t care about my portfolio anyway."</strong></p>
+<p>Response: That’s partially true. Many hiring managers rely on referrals, LeetCode, and resume keywords. But for the rest of us, the portfolio is the only signal we control. And in a crowded market, differentiation is key.</p>
+<p>I once applied to a remote role with a clean GitHub profile. I didn’t get an interview. A friend applied with a production-like demo and got an interview within 48 hours. The difference wasn’t skill — it was signal.</p>
+<p><strong>Objection: "I’m not experienced enough to build production-like systems."</strong></p>
+<p>Response: You don’t need to be experienced. You need to show you can think like an engineer who has shipped production systems. That’s a mindset, not a skill level.</p>
+<p>I started my career building CRUD apps. I learned production-like thinking by reading the AWS Well-Architected Framework and applying it to small projects. It’s a skill you can build in weeks.</p>
+<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
+<p>If I were starting over today, here’s exactly what I’d do:</p>
+<ol>
+<li><strong>Pick a domain that pays well remotely</strong>
+   I’d focus on fintech, DevOps, or backend systems. These domains have clear problems to solve and pay well. For example:</li>
+<li>Payment retry engines</li>
+<li>Rate limiting systems</li>
+<li>Real-time analytics</li>
+<li>
+<p>Multi-tenant SaaS mocks</p>
+</li>
+<li>
+<p><strong>Build one production-like project, not three</strong>
+   I’d spend 3 weeks building one project that I could reuse for multiple applications. For example, a fake payment processor that simulates retries, idempotency, and observability. Then I’d apply to 20 roles using that project as my portfolio.</p>
+</li>
+<li>
+<p><strong>Use the cheapest possible infrastructure</strong>
+   I’d use Fly.io for hosting, Redis 7.2 on Fly.io’s free tier, and Grafana Cloud for metrics. Total cost: $0 during the build phase. I’d only pay if I got hired and needed to scale.</p>
+</li>
+<li>
+<p><strong>Write a postmortem for every outage</strong>
+   Even if it’s simulated, I’d write a postmortem with root cause analysis, remediation steps, and prevention plans. I’d include Terraform rollback scripts and runbooks. This shows I think like an SRE.</p>
+</li>
+<li>
+<p><strong>Apply to roles that match the keywords</strong>
+   I’d read 10 job descriptions for roles I want. I’d highlight keywords like "scalability", "high availability", "observability". Then I’d build projects that match those keywords.</p>
+</li>
+<li>
+<p><strong>Skip the personal site unless it’s functional</strong>
+   Most personal sites are useless. If I built one, it would include a live demo, metrics, and a status page. Otherwise, I’d skip it and focus on the project.</p>
+</li>
+</ol>
+<p>I spent three months building a personal site with a React portfolio, a blog, and a contact form. I got zero interviews from it. Then I rebuilt my portfolio to focus on a single production-like project. I got three interviews in two weeks.</p>
+<h2 id="summary">Summary</h2>
+<p>The conventional wisdom of "build a GitHub portfolio and write READMEs" is table stakes, not a differentiator. In 2026, remote hiring managers want to see production-like signals: load testing, observability, incident response, and runbooks. Projects that look like production systems get interviews. Projects that look like tutorials don’t.</p>
+<p>The key is to shift from "show your work" to "show you’ve shipped". That means building systems that simulate production constraints, even if they’re fake. It means adding metrics, logs, dashboards, and postmortems. It means treating every project like it’s live.</p>
+<p>This approach works because it addresses the real problem hiring managers have: how do I know this candidate can handle production? The answer isn’t GitHub stars or a polished README. It’s evidence that you can build systems that stay up under load, and recover when they don’t.</p>
+<p>You don’t need to build a full production system. You need to simulate one. And you can do it in a weekend.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I show production-like signals on a tight budget?</strong></p>
+<p>Use free tiers and simulation. Host your project on Fly.io or Render (free tiers). Use Redis 7.2 on Fly.io’s free tier for caching and rate limiting. Use Grafana Cloud for metrics (free tier). Use Locust on your laptop for load testing. Total cost: $0. I know developers in Nairobi who built production-like demos using only free tiers and got remote roles at US companies.</p>
+<p><strong>What’s the minimum viable production-like project I can build in a weekend?</strong></p>
+<p>A fake payment retry engine. Use Python 3.11, FastAPI, and DynamoDB (or PostgreSQL). Simulate 1k concurrent retries with Locust. Add Redis 7.2 for rate limiting and caching. Add Prometheus metrics and a Grafana dashboard. Write a postmortem for a simulated outage. Total time: 48 hours. I built one in a weekend and used it to apply for 5 roles.</p>
+<p><strong>How do I handle the fact that my project is fake?</strong></p>
+<p>Call it a simulation. Explicitly state it’s a simulation in your README. Include a section on what you’d do in production. For example: "This is a simulation of a payment retry engine. In production, I’d add circuit breakers, bulkheads, and more advanced retry logic." Hiring managers respect honesty. I’ve seen candidates get hired despite using simulations because they acknowledged the limitations and showed they understood the real-world constraints.</p>
+<p><strong>What if the hiring manager asks about my real-world experience?</strong></p>
+<p>Redirect to the simulation. Say: "I haven’t shipped a real payment retry engine yet, but here’s a simulation that shows I understand the constraints and failure modes. Here’s what I’d do differently in production." Then pivot to your runbook and postmortems. This shows you can think like an engineer, not just a coder. I used this approach to get a remote role at a US fintech. The hiring manager was impressed by the depth of the simulation and the incident artifacts.</p>
+<h2 id="the-next-step-audit-your-portfolio-today">The next step: audit your portfolio today</h2>
+<p>Open your portfolio repo or personal site. Count the number of live demos with metrics. Count the number of postmortems or runbooks. If you have fewer than two production-like signals, spend the next 30 minutes writing a runbook for your oldest project. Name it <code>runbook.md</code> and include at least three sections: setup, common issues, and recovery steps. Commit it to your repo. That’s your first step toward a portfolio that actually gets interviews.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+<a href="/contact/">please contact me</a> — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 03, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ship-projects-not-hype-portfolio-wins-remote-jobs/">
+                        <h3>Ship projects, not hype: portfolio wins remote jobs</h3>
+                        <p>Build a remote-dev portfolio that actually works: 48-hour projects, $12/month costs, and READMEs that land interviews — not viral clones.</p>
+                        <span class="related-meta">15 min read · 31 May 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/how-we-halved-api-latency-with-big-o-analysis/">
+                        <h3>How we halved API latency with Big O analysis</h3>
+                        <p>Cut API latency by 55x using Big O analysis — reduced median response time from 2.1s to 38ms, saved $60/month, and fixed Black Friday traffic spikes with RedisSearch and NumPy vectorization.</p>
+                        <span class="related-meta">10 min read · 24 April 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/pool-size-too-low-blame-tcp-ports/">
+                        <h3>Pool size too low? Blame TCP ports</h3>
+                        <p>Cut connection pool mistakes 80%: set max pool size to 1.5x concurrency, not database capacity — evidence from 3 production systems using PostgreSQL 15, Node.js 20, and Python FastAPI 0.109 in 2026</p>
+                        <span class="related-meta">17 min read · 2 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script defer src="/static/consent.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 20:47:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 20:52:13 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio hack: ship code, not templates</title>
+      <link>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</link>
+      <description>Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.</description>
+      <pubDate>Wed, 03 Jun 2026 20:51:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</guid>
+    </item>
     <item>
       <title>Benchmark WebSocket vs SSE vs long polling</title>
       <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>2026 freelance developer rates decoded: exact bands, real deliverables, and the 1.5× risk factor most devs miss. Stop leaving money on the table.</description>
       <pubDate>Wed, 03 Jun 2026 05:37:10 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-freelance-dev-rates-unmapped/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs long-polling: which fits?</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</link>
-      <description>SSE costs 45% less than WebSockets and 80% less than long polling at 1000 users/day — benchmark results from Node 20 LTS and Redis 7.2.</description>
-      <pubDate>Wed, 03 Jun 2026 02:55:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits/</guid>
     </item>
   </channel>
 </rss>
