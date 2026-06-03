@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 10:27:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 10:31:34 +0000</lastBuildDate>
+    <item>
+      <title>AI salary killers: PyTorch vs TensorFlow 2026</title>
+      <link>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</link>
+      <description>PyTorch inductor vs TensorFlow tf.function 2026 benchmark: who actually gets paid more? Real numbers on training speed, CPU latency, and salary premiums.</description>
+      <pubDate>Wed, 03 Jun 2026 10:31:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</guid>
+    </item>
     <item>
       <title>Close the geography pay gap in 5 steps</title>
       <link>https://kubaik.github.io/close-the-geography-pay-gap-in-5-steps/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 50% by ditching the CPU-cores rule for connection pools — real benchmarks, Aurora PostgreSQL 2026 limits, and the concurrency formula most teams ignore.</description>
       <pubDate>Tue, 02 Jun 2026 20:29:20 +0000</pubDate>
       <guid>https://kubaik.github.io/over-provisioned-db-pools-cost-more-than-cores/</guid>
-    </item>
-    <item>
-      <title>42% discount: remote pay when you&apos;re overseas</title>
-      <link>https://kubaik.github.io/42-discount-remote-pay-when-youre-overseas/</link>
-      <description>Increase remote salary 74% by forcing recruiters to share their multiplier — real 2026 results, exact emails, and a Google Sheet to build your anchor in 30 minutes</description>
-      <pubDate>Tue, 02 Jun 2026 18:40:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/42-discount-remote-pay-when-youre-overseas/</guid>
     </item>
   </channel>
 </rss>
