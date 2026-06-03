@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 12:31:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 12:35:54 +0000</lastBuildDate>
+    <item>
+      <title>Show benchmarks, not GitHub stars</title>
+      <link>https://kubaik.github.io/show-benchmarks-not-github-stars/</link>
+      <description>In my experience, this advice is only half right — and for 70% of African developers I’ve mentored, it’s actively harmful.</description>
+      <pubDate>Wed, 03 Jun 2026 12:35:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-benchmarks-not-github-stars/</guid>
+    </item>
     <item>
       <title>Which AI Skills Actually Raise Your Salary in 2026</title>
       <link>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI stack costs 96% with vector search — Qdrant, Redis, and binary embeddings deliver the salary boost most engineers miss in 2026.</description>
       <pubDate>Tue, 02 Jun 2026 22:40:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-killers-llms-vs-vector-search-2026/</guid>
-    </item>
-    <item>
-      <title>Nairobi devs: your portfolio is boring recruiters</title>
-      <link>https://kubaik.github.io/nairobi-devs-your-portfolio-is-boring-recruiters/</link>
-      <description>Show recruiters you can handle production load — not just write code. Nairobi devs: build one system that proves you can own a problem end-to-end, deploy it on AWS, and include metrics recruiters care about.</description>
-      <pubDate>Tue, 02 Jun 2026 21:48:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/nairobi-devs-your-portfolio-is-boring-recruiters/</guid>
     </item>
   </channel>
 </rss>
