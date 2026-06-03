@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 07:35:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 07:40:22 +0000</lastBuildDate>
+    <item>
+      <title>Pool settings that waste your database money</title>
+      <link>https://kubaik.github.io/pool-settings-that-waste-your-database-money/</link>
+      <description>Cut API p99 latency 60% and cloud bill 8-18% by fixing connection pool settings — peak concurrent queries, idle timeout 600000 ms, and PostgreSQL 16 limits</description>
+      <pubDate>Wed, 03 Jun 2026 07:40:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-settings-that-waste-your-database-money/</guid>
+    </item>
     <item>
       <title>Hidden costs of production RAG pipelines</title>
       <link>https://kubaik.github.io/hidden-costs-of-production-rag-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary gap 30-60% with MLOps pipelines. 2026 data-backed comparison of skills that move your paycheck, with concrete numbers, tool versions, and a 30-minute action step.</description>
       <pubDate>Tue, 02 Jun 2026 17:46:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-that-move-salaries-in-2026/</guid>
-    </item>
-    <item>
-      <title>Haggle remote pay from $3k to $8k/month</title>
-      <link>https://kubaik.github.io/haggle-remote-pay-from-3k-to-8kmonth/</link>
-      <description>Push remote pay from $3k to $8k/month using a repeatable salary benchmarking script and cost-of-living model that finance teams can’t ignore.</description>
-      <pubDate>Tue, 02 Jun 2026 17:17:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/haggle-remote-pay-from-3k-to-8kmonth/</guid>
     </item>
   </channel>
 </rss>
