@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 02:09:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 02:14:12 +0000</lastBuildDate>
+    <item>
+      <title>5 rules for low-cost remote pay</title>
+      <link>https://kubaik.github.io/5-rules-for-low-cost-remote-pay/</link>
+      <description>Convert any remote offer to real take-home with Python 3.11 — FX rates, taxes, time-zone penalties and RSU discounts in 2026</description>
+      <pubDate>Wed, 03 Jun 2026 02:13:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-rules-for-low-cost-remote-pay/</guid>
+    </item>
     <item>
       <title>AI skills that pay: backend vs prompt skills in 2026</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-backend-vs-prompt-skills-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 72% and AWS costs 36% with mmap, Redis cache, and vLLM 0.5 — the production tricks tutorials skip</description>
       <pubDate>Tue, 02 Jun 2026 13:42:57 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-why-staging-lied/</guid>
-    </item>
-    <item>
-      <title>DB pools: CPU cores ×2 is wrong now</title>
-      <link>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</link>
-      <description>Cut DB response time 40% by sizing connection pools for downstream capacity, not CPU cores — PostgreSQL 16, Node.js 20, and RDS tuning guide.</description>
-      <pubDate>Tue, 02 Jun 2026 12:38:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</guid>
     </item>
   </channel>
 </rss>
