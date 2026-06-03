@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 23:28:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 23:32:40 +0000</lastBuildDate>
+    <item>
+      <title>AI salary boosters: skills that paid in 2026</title>
+      <link>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</link>
+      <description>In 2026 only two AI skills pay reliably: prompt engineering for production systems and vector-database tuning. See the exact salary deltas, benchmarks, and tool stacks that move the needle.</description>
+      <pubDate>Wed, 03 Jun 2026 23:32:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech—here’s why</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-techheres-why/</link>
@@ -138,13 +145,6 @@
       <description>PyTorch inductor vs TensorFlow tf.function 2026 benchmark: who actually gets paid more? Real numbers on training speed, CPU latency, and salary premiums.</description>
       <pubDate>Wed, 03 Jun 2026 10:31:16 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</guid>
-    </item>
-    <item>
-      <title>Close the geography pay gap in 5 steps</title>
-      <link>https://kubaik.github.io/close-the-geography-pay-gap-in-5-steps/</link>
-      <description>Close the remote salary gap in 30 minutes using Wise fees, Numbeo data, and a 3-tab spreadsheet — real 2026 results from engineers in Colombia, Mexico, and Brazil</description>
-      <pubDate>Wed, 03 Jun 2026 09:06:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/close-the-geography-pay-gap-in-5-steps/</guid>
     </item>
   </channel>
 </rss>
