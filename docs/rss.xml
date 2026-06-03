@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 18:00:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 18:05:20 +0000</lastBuildDate>
+    <item>
+      <title>RAG in production? Skip the toy demos</title>
+      <link>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</link>
+      <description>RAG in production fails when tutorials ignore metadata filters, IVFFlat indexing, and reranking — we cut latency 88% and costs 87% with Postgres + pgvector, FastAPI, and vLLM on T4 GPUs.</description>
+      <pubDate>Wed, 03 Jun 2026 18:05:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</guid>
+    </item>
     <item>
       <title>2026 remote salary parity for LATAM devs</title>
       <link>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio flops when it’s just screenshots — real remote jobs in 2026 demand production artifacts: load tests, alerts, runbooks, cost reports. Learn the exact artifacts that got African engineers $70k+ remote offers.</description>
       <pubDate>Wed, 03 Jun 2026 00:22:25 +0000</pubDate>
       <guid>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</guid>
-    </item>
-    <item>
-      <title>Production RAG: the latency trap most tutorials miss</title>
-      <link>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</link>
-      <description>Cut RAG latency 86% and AWS bill 52% with article-level caching; the vector-store hop most tutorials ignore</description>
-      <pubDate>Tue, 02 Jun 2026 23:32:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-rag-the-latency-trap-most-tutorials-miss/</guid>
     </item>
   </channel>
 </rss>
