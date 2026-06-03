@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 17:23:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 17:30:06 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit for more than pay</title>
+      <link>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</link>
+      <description>Cut on-call pages 90%: data from 2026 shows senior devs flee big tech for autonomy, observability, and blameless culture — not just salary.</description>
+      <pubDate>Wed, 03 Jun 2026 17:29:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</guid>
+    </item>
     <item>
       <title>Pick real-time tech: WebSockets, SSE, or polling?</title>
       <link>https://kubaik.github.io/pick-real-time-tech-websockets-sse-or-polling/</link>
@@ -138,13 +145,6 @@
       <description>Cut connection pool mistakes 80%: set max pool size to 1.5x concurrency, not database capacity — evidence from 3 production systems using PostgreSQL 15, Node.js 20, and Python FastAPI 0.109 in 2026</description>
       <pubDate>Tue, 02 Jun 2026 23:29:45 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-too-low-blame-tcp-ports/</guid>
-    </item>
-    <item>
-      <title>Why senior devs flee big tech&apos;s empty reviews</title>
-      <link>https://kubaik.github.io/why-senior-devs-flee-big-techs-empty-reviews/</link>
-      <description>Senior engineers quit big tech over code reviews, not stock — here’s the 4-step system that cut regressions 40% and saved $150k in outages</description>
-      <pubDate>Tue, 02 Jun 2026 23:14:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-senior-devs-flee-big-techs-empty-reviews/</guid>
     </item>
   </channel>
 </rss>
