@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 01:48:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 01:53:25 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that pay: backend vs prompt skills in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-backend-vs-prompt-skills-in-2026/</link>
+      <description>Backend AI skills pay 8-15% more than prompt skills in 2026 — benchmarked against Redis 7.2 and LangChain 0.1.12. See latency, cost, and salary differences.</description>
+      <pubDate>Wed, 03 Jun 2026 01:53:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-backend-vs-prompt-skills-in-2026/</guid>
+    </item>
     <item>
       <title>Show salary, not screenshots: Africa dev portfolios</title>
       <link>https://kubaik.github.io/show-salary-not-screenshots-africa-dev-portfolios/</link>
@@ -138,13 +145,6 @@
       <description>Cut DB response time 40% by sizing connection pools for downstream capacity, not CPU cores — PostgreSQL 16, Node.js 20, and RDS tuning guide.</description>
       <pubDate>Tue, 02 Jun 2026 12:38:03 +0000</pubDate>
       <guid>https://kubaik.github.io/db-pools-cpu-cores-2-is-wrong-now/</guid>
-    </item>
-    <item>
-      <title>Negotiate 6-figure remote pay from Lima</title>
-      <link>https://kubaik.github.io/negotiate-6-figure-remote-pay-from-lima/</link>
-      <description>Land a $120k remote job from Lima using one negotiation trick — 2026 Levels.fyi + PPP table that raises offers 26–89% in days</description>
-      <pubDate>Tue, 02 Jun 2026 11:48:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-6-figure-remote-pay-from-lima/</guid>
     </item>
   </channel>
 </rss>
