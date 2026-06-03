@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 23:19:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 23:24:37 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit big tech—here’s why</title>
+      <link>https://kubaik.github.io/senior-devs-quit-big-techheres-why/</link>
+      <description>Cut local iteration time from minutes to seconds — the hidden reasons senior engineers leave big tech and how to fix them with concrete metrics and code.</description>
+      <pubDate>Wed, 03 Jun 2026 23:24:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-big-techheres-why/</guid>
+    </item>
     <item>
       <title>M-Pesa vs Paystack vs Flutterwave: which API bites?</title>
       <link>https://kubaik.github.io/m-pesa-vs-paystack-vs-flutterwave-which-api-bites/</link>
@@ -138,13 +145,6 @@
       <description>Close the remote salary gap in 30 minutes using Wise fees, Numbeo data, and a 3-tab spreadsheet — real 2026 results from engineers in Colombia, Mexico, and Brazil</description>
       <pubDate>Wed, 03 Jun 2026 09:06:28 +0000</pubDate>
       <guid>https://kubaik.github.io/close-the-geography-pay-gap-in-5-steps/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, long polling costs</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</link>
-      <description>Cut push-tech latency and cost: WebSocket vs SSE vs long polling benchmarks for 2026 — pick the right tool in 15 minutes</description>
-      <pubDate>Wed, 03 Jun 2026 08:10:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling-costs/</guid>
     </item>
   </channel>
 </rss>
