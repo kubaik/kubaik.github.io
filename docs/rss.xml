@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2026 07:19:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jun 2026 07:23:45 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee big tech for small stakes</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-tech-for-small-stakes/</link>
+      <description>When the only way to get a 1% performance gain is to file three Jira tickets, wait for code review from someone who hasn’t touched the code in 18 months…</description>
+      <pubDate>Wed, 03 Jun 2026 07:23:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-for-small-stakes/</guid>
+    </item>
     <item>
       <title>Ship messy systems: Africa devs win remote jobs</title>
       <link>https://kubaik.github.io/ship-messy-systems-africa-devs-win-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Land remote jobs from Africa by shipping one project that proves production ownership — cost, scale, and failure — not a portfolio of tutorials. $8.40/month system got five offers in six weeks.</description>
       <pubDate>Tue, 02 Jun 2026 17:14:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-one-project-land-remote-from-africa/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines break at 10k docs — here’s why</title>
-      <link>https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/</link>
-      <description>Cut RAG latency 96% and halve embedding costs with Redis 7.2 hybrid search — the step most tutorials skip when docs exceed 10k</description>
-      <pubDate>Tue, 02 Jun 2026 14:50:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-break-at-10k-docs-heres-why/</guid>
     </item>
   </channel>
 </rss>
