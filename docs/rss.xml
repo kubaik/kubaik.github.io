@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 12:35:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 12:40:06 +0000</lastBuildDate>
+    <item>
+      <title>Pick clean-grid hours: carbon-aware vs cron scheduling</title>
+      <link>https://kubaik.github.io/pick-clean-grid-hours-carbon-aware-vs-cron-scheduling/</link>
+      <description>Cut operational carbon 26–53% by shifting batch jobs to clean-grid hours — real numbers from a Nairobi fintech cluster using AWS Carbon-Aware API and KubeGreen v0.6.3</description>
+      <pubDate>Thu, 04 Jun 2026 12:39:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-clean-grid-hours-carbon-aware-vs-cron-scheduling/</guid>
+    </item>
     <item>
       <title>Mis-size DB pools? Check CPU first</title>
       <link>https://kubaik.github.io/mis-size-db-pools-check-cpu-first/</link>
@@ -138,13 +145,6 @@
       <description>In 2026 only two AI skills pay reliably: prompt engineering for production systems and vector-database tuning. See the exact salary deltas, benchmarks, and tool stacks that move the needle.</description>
       <pubDate>Wed, 03 Jun 2026 23:32:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</guid>
-    </item>
-    <item>
-      <title>M-Pesa vs Paystack vs Flutterwave: which API bites?</title>
-      <link>https://kubaik.github.io/m-pesa-vs-paystack-vs-flutterwave-which-api-bites/</link>
-      <description>Cut failed African payment integrations 70% with the right API choice — M-Pesa, Paystack, or Flutterwave benchmarks, fees, and hidden gotchas in 2026.</description>
-      <pubDate>Wed, 03 Jun 2026 23:03:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/m-pesa-vs-paystack-vs-flutterwave-which-api-bites/</guid>
     </item>
   </channel>
 </rss>
