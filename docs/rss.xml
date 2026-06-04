@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 14:26:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 14:31:13 +0000</lastBuildDate>
+    <item>
+      <title>Convince them: remote salary in 3 emails</title>
+      <link>https://kubaik.github.io/convince-them-remote-salary-in-3-emails/</link>
+      <description>Increase remote salary offers 32% in 2026 using PPP rates table, email templates, and cost-parity proof. Build the exact scripts used in Colombia, Brazil, and Mexico.</description>
+      <pubDate>Thu, 04 Jun 2026 14:30:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/convince-them-remote-salary-in-3-emails/</guid>
+    </item>
     <item>
       <title>2026 AI roles: which skills pay most</title>
       <link>https://kubaik.github.io/2026-ai-roles-which-skills-pay-most/</link>
@@ -138,13 +145,6 @@
       <description>A production scar is any incident you’ve lived through and documented: a database melt-up at 03:17, a payment retry storm that cost $1,800 in duplicate…</description>
       <pubDate>Thu, 04 Jun 2026 02:20:30 +0000</pubDate>
       <guid>https://kubaik.github.io/show-africa-not-certs-to-land-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>Compare real-time: WebSockets, SSE, long polling</title>
-      <link>https://kubaik.github.io/compare-real-time-websockets-sse-long-polling/</link>
-      <description>Choose WebSocket, SSE, or long polling in 2026 with hard latency, memory, and cost numbers from real load tests on Node 20 LTS, FastAPI 0.111, and Redis 7.2.</description>
-      <pubDate>Thu, 04 Jun 2026 02:12:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-real-time-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
