@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 14:16:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 14:20:57 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI roles: which skills pay most</title>
+      <link>https://kubaik.github.io/2026-ai-roles-which-skills-pay-most/</link>
+      <description>2026 salary data: prompt engineers with production metrics earn 28% more than peers. See the real skills that move the needle—benchmarks, tools, and the mistake most teams still make.</description>
+      <pubDate>Thu, 04 Jun 2026 14:20:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-roles-which-skills-pay-most/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech over broken systems</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-tech-over-broken-systems/</link>
@@ -138,13 +145,6 @@
       <description>Choose WebSocket, SSE, or long polling in 2026 with hard latency, memory, and cost numbers from real load tests on Node 20 LTS, FastAPI 0.111, and Redis 7.2.</description>
       <pubDate>Thu, 04 Jun 2026 02:12:31 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-real-time-websockets-sse-long-polling/</guid>
-    </item>
-    <item>
-      <title>AI salary boosters: skills that paid in 2026</title>
-      <link>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</link>
-      <description>In 2026 only two AI skills pay reliably: prompt engineering for production systems and vector-database tuning. See the exact salary deltas, benchmarks, and tool stacks that move the needle.</description>
-      <pubDate>Wed, 03 Jun 2026 23:32:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</guid>
     </item>
   </channel>
 </rss>
