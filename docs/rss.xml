@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 21:55:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 21:59:43 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee Big Tech’s hidden friction</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-friction/</link>
+      <description>Cut API latency 57% and MTTR 82% with Redis cache wrapper — connection pools, stampede locks, Prometheus metrics and the real reasons senior devs leave big tech</description>
+      <pubDate>Thu, 04 Jun 2026 21:59:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-friction/</guid>
+    </item>
     <item>
       <title>2026 AI salary bumps: embeddings &amp; search skills</title>
       <link>https://kubaik.github.io/2026-ai-salary-bumps-embeddings-search-skills/</link>
@@ -138,13 +145,6 @@
       <description>Cut operational carbon 26–53% by shifting batch jobs to clean-grid hours — real numbers from a Nairobi fintech cluster using AWS Carbon-Aware API and KubeGreen v0.6.3</description>
       <pubDate>Thu, 04 Jun 2026 12:39:49 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-clean-grid-hours-carbon-aware-vs-cron-scheduling/</guid>
-    </item>
-    <item>
-      <title>Mis-size DB pools? Check CPU first</title>
-      <link>https://kubaik.github.io/mis-size-db-pools-check-cpu-first/</link>
-      <description>Under load, we saw 120-150ms average query times during traffic spikes, even though the database CPU stayed below 30%.</description>
-      <pubDate>Thu, 04 Jun 2026 12:31:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-size-db-pools-check-cpu-first/</guid>
     </item>
   </channel>
 </rss>
