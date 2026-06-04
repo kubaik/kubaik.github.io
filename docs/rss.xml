@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 07:13:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 07:18:20 +0000</lastBuildDate>
+    <item>
+      <title>Big Tech exodus: what breaks first after year five</title>
+      <link>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</link>
+      <description>Cut attrition 41% after year five by fixing guardrails, thresholds, and runbooks — not salary. 2026 numbers, real exit interviews, and the playbook senior engineers wish they had found.</description>
+      <pubDate>Thu, 04 Jun 2026 07:18:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</guid>
+    </item>
     <item>
       <title>AI salaries hinge on 3 skills in 2026</title>
       <link>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Earn senior title without CS degree: ship real systems, break them, fix them. Learn Go, PostgreSQL, Redis and prove your worth with production scars.</description>
       <pubDate>Wed, 03 Jun 2026 18:20:09 +0000</pubDate>
       <guid>https://kubaik.github.io/self-taught-to-senior-in-three-years/</guid>
-    </item>
-    <item>
-      <title>RAG in production? Skip the toy demos</title>
-      <link>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</link>
-      <description>RAG in production fails when tutorials ignore metadata filters, IVFFlat indexing, and reranking — we cut latency 88% and costs 87% with Postgres + pgvector, FastAPI, and vLLM on T4 GPUs.</description>
-      <pubDate>Wed, 03 Jun 2026 18:05:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</guid>
     </item>
   </channel>
 </rss>
