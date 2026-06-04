@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 05:05:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 05:10:24 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay without leaving home</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</link>
+      <description>Land $120k remote jobs from $5k markets — staging stack, latency proof, and salary negotiation scripts that turn geographic arbitrage into real paychecks.</description>
+      <pubDate>Thu, 04 Jun 2026 05:10:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</guid>
+    </item>
     <item>
       <title>Stop tuning max pool size</title>
       <link>https://kubaik.github.io/stop-tuning-max-pool-size/</link>
@@ -138,13 +145,6 @@
       <description>In my experience, this advice is only half right — and for 70% of African developers I’ve mentored, it’s actively harmful.</description>
       <pubDate>Wed, 03 Jun 2026 12:35:36 +0000</pubDate>
       <guid>https://kubaik.github.io/show-benchmarks-not-github-stars/</guid>
-    </item>
-    <item>
-      <title>Which AI Skills Actually Raise Your Salary in 2026</title>
-      <link>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</link>
-      <description>In 2026, only 2 AI skills move your salary past $180k. RAG at scale and fine-tuning small models are the only levers with proven ROI. See the data.</description>
-      <pubDate>Wed, 03 Jun 2026 12:27:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</guid>
     </item>
   </channel>
 </rss>
