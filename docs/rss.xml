@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 02:16:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 02:20:48 +0000</lastBuildDate>
+    <item>
+      <title>Show Africa not certs to land remote jobs</title>
+      <link>https://kubaik.github.io/show-africa-not-certs-to-land-remote-jobs/</link>
+      <description>A production scar is any incident you’ve lived through and documented: a database melt-up at 03:17, a payment retry storm that cost $1,800 in duplicate…</description>
+      <pubDate>Thu, 04 Jun 2026 02:20:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-africa-not-certs-to-land-remote-jobs/</guid>
+    </item>
     <item>
       <title>Compare real-time: WebSockets, SSE, long polling</title>
       <link>https://kubaik.github.io/compare-real-time-websockets-sse-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, only 2 AI skills move your salary past $180k. RAG at scale and fine-tuning small models are the only levers with proven ROI. See the data.</description>
       <pubDate>Wed, 03 Jun 2026 12:27:15 +0000</pubDate>
       <guid>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</guid>
-    </item>
-    <item>
-      <title>Doctors coding apps at 3am: the stack they trust</title>
-      <link>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</link>
-      <description>The teams I’ve worked with that started as side projects in clinics, law firms, and labs now run systems handling thousands of requests per second with…</description>
-      <pubDate>Wed, 03 Jun 2026 12:14:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</guid>
     </item>
   </channel>
 </rss>
