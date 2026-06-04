@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 00:06:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 00:11:15 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: the dirty secrets docs ignore</title>
+      <link>https://kubaik.github.io/rag-pipelines-the-dirty-secrets-docs-ignore/</link>
+      <description>Cut RAG latency 94% and cost 60% with RedisSearch 2.6.1 and pre-computed embeddings — the dirty secrets docs ignore about pipelines, caching, and cost control.</description>
+      <pubDate>Thu, 04 Jun 2026 00:10:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-the-dirty-secrets-docs-ignore/</guid>
+    </item>
     <item>
       <title>AI salary boosters: skills that paid in 2026</title>
       <link>https://kubaik.github.io/ai-salary-boosters-skills-that-paid-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>The teams I’ve worked with that started as side projects in clinics, law firms, and labs now run systems handling thousands of requests per second with…</description>
       <pubDate>Wed, 03 Jun 2026 12:14:26 +0000</pubDate>
       <guid>https://kubaik.github.io/doctors-coding-apps-at-3am-the-stack-they-trust/</guid>
-    </item>
-    <item>
-      <title>AI salary killers: PyTorch vs TensorFlow 2026</title>
-      <link>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</link>
-      <description>PyTorch inductor vs TensorFlow tf.function 2026 benchmark: who actually gets paid more? Real numbers on training speed, CPU latency, and salary premiums.</description>
-      <pubDate>Wed, 03 Jun 2026 10:31:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salary-killers-pytorch-vs-tensorflow-2026/</guid>
     </item>
   </channel>
 </rss>
