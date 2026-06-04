@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 16:18:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 16:23:02 +0000</lastBuildDate>
+    <item>
+      <title>Pool size is not CPU cores</title>
+      <link>https://kubaik.github.io/pool-size-is-not-cpu-cores/</link>
+      <description>Cut database latency 50% by sizing connection pools correctly — the CPU-cores rule is wrong in 2026. Learn how to measure, tune, and monitor pools for PostgreSQL, MySQL, and serverless.</description>
+      <pubDate>Thu, 04 Jun 2026 16:22:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-is-not-cpu-cores/</guid>
+    </item>
     <item>
       <title>Choose the right realtime tech</title>
       <link>https://kubaik.github.io/choose-the-right-realtime-tech/</link>
@@ -138,13 +145,6 @@
       <description>Land $120k remote jobs from $5k markets — staging stack, latency proof, and salary negotiation scripts that turn geographic arbitrage into real paychecks.</description>
       <pubDate>Thu, 04 Jun 2026 05:10:06 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</guid>
-    </item>
-    <item>
-      <title>Stop tuning max pool size</title>
-      <link>https://kubaik.github.io/stop-tuning-max-pool-size/</link>
-      <description>Set max pool size wrong and waste 40 % cloud spend — connection wait times jump 2× while databases sit idle. 2026 numbers and fixes for Node, Python, Go.</description>
-      <pubDate>Thu, 04 Jun 2026 02:49:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-tuning-max-pool-size/</guid>
     </item>
   </channel>
 </rss>
