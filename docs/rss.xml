@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 07:18:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 07:21:54 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 5 prod lessons</title>
+      <link>https://kubaik.github.io/rag-pipelines-5-prod-lessons/</link>
+      <description>Cut RAG latency 80% and AWS bill 72% by moving off Chroma to pgvector on Aurora, adding hybrid search, and caching aggressively — the operational details tutorials skip.</description>
+      <pubDate>Thu, 04 Jun 2026 07:21:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-5-prod-lessons/</guid>
+    </item>
     <item>
       <title>Big Tech exodus: what breaks first after year five</title>
       <link>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</link>
@@ -138,13 +145,6 @@
       <description>Land $120k remote roles from $3k monthly cost — the exact emails, contracts, and numbers that worked in 2026</description>
       <pubDate>Wed, 03 Jun 2026 19:18:18 +0000</pubDate>
       <guid>https://kubaik.github.io/land-120k-remotely-from-3k-country/</guid>
-    </item>
-    <item>
-      <title>Self-taught to senior in three years</title>
-      <link>https://kubaik.github.io/self-taught-to-senior-in-three-years/</link>
-      <description>Earn senior title without CS degree: ship real systems, break them, fix them. Learn Go, PostgreSQL, Redis and prove your worth with production scars.</description>
-      <pubDate>Wed, 03 Jun 2026 18:20:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-taught-to-senior-in-three-years/</guid>
     </item>
   </channel>
 </rss>
