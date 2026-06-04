@@ -1,5 +1,6 @@
 [
   "How to review AI-generated code without spending more time than writing it yourself",
   "Why senior developers leave big tech (it's not always the money)",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "RAG pipelines in production: what the tutorials skip"
 ]
