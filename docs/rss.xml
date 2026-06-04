@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 16:36:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 16:41:31 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: the traps docs won’t warn you about</title>
+      <link>https://kubaik.github.io/rag-in-prod-the-traps-docs-wont-warn-you-about/</link>
+      <description>Cut RAG latency 4.3× and infra bill $180/mo: the two-stage model trick and pgvector 0.7.0 the docs won’t mention.</description>
+      <pubDate>Thu, 04 Jun 2026 16:41:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-the-traps-docs-wont-warn-you-about/</guid>
+    </item>
     <item>
       <title>Pool size is not CPU cores</title>
       <link>https://kubaik.github.io/pool-size-is-not-cpu-cores/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% by fixing one connection pool mistake — most teams still use 2010-era rules. Includes the formula, benchmarks, and AWS cost impact from 2026 systems.</description>
       <pubDate>Thu, 04 Jun 2026 05:19:26 +0000</pubDate>
       <guid>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay without leaving home</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</link>
-      <description>Land $120k remote jobs from $5k markets — staging stack, latency proof, and salary negotiation scripts that turn geographic arbitrage into real paychecks.</description>
-      <pubDate>Thu, 04 Jun 2026 05:10:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</guid>
     </item>
   </channel>
 </rss>
