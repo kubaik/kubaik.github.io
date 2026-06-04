@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 05:28:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 05:33:08 +0000</lastBuildDate>
+    <item>
+      <title>Turn local pay into remote dollars</title>
+      <link>https://kubaik.github.io/turn-local-pay-into-remote-dollars/</link>
+      <description>Negotiate remote pay 28% higher with 3 email templates. 2026 USD quotes, local cost worksheets, and FX fee breakdowns that close deals faster.</description>
+      <pubDate>Thu, 04 Jun 2026 05:32:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/turn-local-pay-into-remote-dollars/</guid>
+    </item>
     <item>
       <title>Miscount your DB pool? Expect slow queries</title>
       <link>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 90%: data from 2026 shows senior devs flee big tech for autonomy, observability, and blameless culture — not just salary.</description>
       <pubDate>Wed, 03 Jun 2026 17:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</guid>
-    </item>
-    <item>
-      <title>Skip CPU cores for DB pools</title>
-      <link>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</link>
-      <description>Cut database connection errors 80% by ignoring CPU cores—use max_connections and actual demand instead. Benchmarks, pitfalls, and the one setting every team configures wrong.</description>
-      <pubDate>Wed, 03 Jun 2026 13:11:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</guid>
     </item>
   </channel>
 </rss>
