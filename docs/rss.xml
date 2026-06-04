@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 19:33:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 19:38:54 +0000</lastBuildDate>
+    <item>
+      <title>Recruiters ignore your GitHub repo—here’s what they watch instead</title>
+      <link>https://kubaik.github.io/recruiters-ignore-your-github-repoheres-what-they-watch-inst/</link>
+      <description>Show production-grade code, not polished projects — war stories beat READMEs for remote hiring. Benchmarks, PR links, and postmortems land interviews faster than cloned boilerplates.</description>
+      <pubDate>Thu, 04 Jun 2026 19:38:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/recruiters-ignore-your-github-repoheres-what-they-watch-inst/</guid>
+    </item>
     <item>
       <title>AI skills that pay 2026: data breakdown</title>
       <link>https://kubaik.github.io/ai-skills-that-pay-2026-data-breakdown/</link>
@@ -138,13 +145,6 @@
       <description>Pick WebSocket vs SSE vs long polling for real-time apps — measured latency, max users, and AWS cost per 1 M messages on Node 20 LTS and Redis 7.2 in 2026.</description>
       <pubDate>Thu, 04 Jun 2026 09:42:18 +0000</pubDate>
       <guid>https://kubaik.github.io/stream-vs-socket-vs-poll-which-fits/</guid>
-    </item>
-    <item>
-      <title>Ace remote interviews without LeetCode</title>
-      <link>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</link>
-      <description>When I was interviewing in 2025, I ran into this exact trap — I memorized every binary search variant and could recite CAP theorem definitions, but I…</description>
-      <pubDate>Thu, 04 Jun 2026 09:14:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</guid>
     </item>
   </channel>
 </rss>
