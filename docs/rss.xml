@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 16:45:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 16:48:44 +0000</lastBuildDate>
+    <item>
+      <title>Review AI PRs in under 15 mins</title>
+      <link>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</link>
+      <description>Cut code review time 73% with AI diffs using risk tiers, property tests, and golden masters. 2026 benchmarks and a 12-minute workflow that catches more bugs than full line-by-line audits.</description>
+      <pubDate>Thu, 04 Jun 2026 16:48:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</guid>
+    </item>
     <item>
       <title>Portfolio kills your hire chances</title>
       <link>https://kubaik.github.io/portfolio-kills-your-hire-chances/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary gap 2026: prompt engineering vs fine-tuning ROI with 78% cost data and latency benchmarks. Which skill pays and why.</description>
       <pubDate>Thu, 04 Jun 2026 07:09:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs long-polling: which fits your app?</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</link>
-      <description>Choose between WebSockets, Server-Sent Events and long-polling in 2026 with concrete benchmarks and Redis 7.2 tuning — cut latency and cost by picking the right push tech first time.</description>
-      <pubDate>Thu, 04 Jun 2026 05:55:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</guid>
     </item>
   </channel>
 </rss>
