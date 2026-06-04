@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 02:49:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 05:05:34 +0000</lastBuildDate>
     <item>
       <title>Stop tuning max pool size</title>
       <link>https://kubaik.github.io/stop-tuning-max-pool-size/</link>
@@ -126,13 +126,6 @@
       <guid>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</guid>
     </item>
     <item>
-      <title>Pick real-time tech: WebSockets, SSE, or polling?</title>
-      <link>https://kubaik.github.io/pick-real-time-tech-websockets-sse-or-polling/</link>
-      <description>A 2026 Stack Overflow survey found that 37% of teams that adopted WebSockets later had to roll back at least one major feature because they underestimated…</description>
-      <pubDate>Wed, 03 Jun 2026 15:28:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-real-time-tech-websockets-sse-or-polling/</guid>
-    </item>
-    <item>
       <title>Skip CPU cores for DB pools</title>
       <link>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</link>
       <description>Cut database connection errors 80% by ignoring CPU cores—use max_connections and actual demand instead. Benchmarks, pitfalls, and the one setting every team configures wrong.</description>
@@ -145,6 +138,13 @@
       <description>In my experience, this advice is only half right — and for 70% of African developers I’ve mentored, it’s actively harmful.</description>
       <pubDate>Wed, 03 Jun 2026 12:35:36 +0000</pubDate>
       <guid>https://kubaik.github.io/show-benchmarks-not-github-stars/</guid>
+    </item>
+    <item>
+      <title>Which AI Skills Actually Raise Your Salary in 2026</title>
+      <link>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</link>
+      <description>In 2026, only 2 AI skills move your salary past $180k. RAG at scale and fine-tuning small models are the only levers with proven ROI. See the data.</description>
+      <pubDate>Wed, 03 Jun 2026 12:27:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-ai-skills-actually-raise-your-salary-in-2026/</guid>
     </item>
   </channel>
 </rss>
