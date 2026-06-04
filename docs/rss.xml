@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 09:09:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 09:14:39 +0000</lastBuildDate>
+    <item>
+      <title>Ace remote interviews without LeetCode</title>
+      <link>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</link>
+      <description>When I was interviewing in 2025, I ran into this exact trap — I memorized every binary search variant and could recite CAP theorem definitions, but I…</description>
+      <pubDate>Thu, 04 Jun 2026 09:14:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</guid>
+    </item>
     <item>
       <title>Show your stack, not your stars</title>
       <link>https://kubaik.github.io/show-your-stack-not-your-stars/</link>
@@ -138,13 +145,6 @@
       <description>Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.</description>
       <pubDate>Wed, 03 Jun 2026 20:51:55 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</guid>
-    </item>
-    <item>
-      <title>Benchmark WebSocket vs SSE vs long polling</title>
-      <link>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling/</link>
-      <description>Pick the right real-time tool in 90 seconds — latency benchmarks, memory costs, and the one AWS setting that breaks WebSockets</description>
-      <pubDate>Wed, 03 Jun 2026 20:43:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/benchmark-websocket-vs-sse-vs-long-polling/</guid>
     </item>
   </channel>
 </rss>
