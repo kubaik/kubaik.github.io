@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 19:13:51 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 19:18:30 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that pay 2026: data breakdown</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-2026-data-breakdown/</link>
+      <description>Cut AI cloud spend 77% with cost engineering — prompt vs cost skills, salary benchmarks, and the pipeline mistakes most teams miss in 2026.</description>
+      <pubDate>Thu, 04 Jun 2026 19:18:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-2026-data-breakdown/</guid>
+    </item>
     <item>
       <title>3 RAG pitfalls prod teams hit first</title>
       <link>https://kubaik.github.io/3-rag-pitfalls-prod-teams-hit-first/</link>
@@ -138,13 +145,6 @@
       <description>When I was interviewing in 2025, I ran into this exact trap — I memorized every binary search variant and could recite CAP theorem definitions, but I…</description>
       <pubDate>Thu, 04 Jun 2026 09:14:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</guid>
-    </item>
-    <item>
-      <title>Show your stack, not your stars</title>
-      <link>https://kubaik.github.io/show-your-stack-not-your-stars/</link>
-      <description>Land remote jobs from Africa with systems that actually work — deploy, load test, and document real metrics instead of chasing GitHub stars. 2026 hiring data included.</description>
-      <pubDate>Thu, 04 Jun 2026 09:05:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/show-your-stack-not-your-stars/</guid>
     </item>
   </channel>
 </rss>
