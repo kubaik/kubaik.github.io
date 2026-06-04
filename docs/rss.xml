@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 05:50:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 05:55:54 +0000</lastBuildDate>
+    <item>
+      <title>WebSockets vs SSE vs long-polling: which fits your app?</title>
+      <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</link>
+      <description>Choose between WebSockets, Server-Sent Events and long-polling in 2026 with concrete benchmarks and Redis 7.2 tuning — cut latency and cost by picking the right push tech first time.</description>
+      <pubDate>Thu, 04 Jun 2026 05:55:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</guid>
+    </item>
     <item>
       <title>Turn local pay into remote dollars</title>
       <link>https://kubaik.github.io/turn-local-pay-into-remote-dollars/</link>
@@ -138,13 +145,6 @@
       <description>Generate your 2026 remote counter in 100 lines — parity engine, Mercer index, and the negotiation script top engineers use. Avoid the $75k anchor trap.</description>
       <pubDate>Wed, 03 Jun 2026 17:38:19 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit for more than pay</title>
-      <link>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</link>
-      <description>Cut on-call pages 90%: data from 2026 shows senior devs flee big tech for autonomy, observability, and blameless culture — not just salary.</description>
-      <pubDate>Wed, 03 Jun 2026 17:29:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-for-more-than-pay/</guid>
     </item>
   </channel>
 </rss>
