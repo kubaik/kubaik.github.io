@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 21:27:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 21:30:38 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI salary bumps: embeddings &amp; search skills</title>
+      <link>https://kubaik.github.io/2026-ai-salary-bumps-embeddings-search-skills/</link>
+      <description>2026 data: engineers skilled in vector search earn 28% more, but embedding optimization pays off earlier—benchmark results, salary ranges, and the exact latency/cost trade-offs most teams ignore.</description>
+      <pubDate>Thu, 04 Jun 2026 21:30:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-salary-bumps-embeddings-search-skills/</guid>
+    </item>
     <item>
       <title>Compare WebSocket, SSE, polling head-to-head</title>
       <link>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</link>
@@ -138,13 +145,6 @@
       <description>Under load, we saw 120-150ms average query times during traffic spikes, even though the database CPU stayed below 30%.</description>
       <pubDate>Thu, 04 Jun 2026 12:31:22 +0000</pubDate>
       <guid>https://kubaik.github.io/mis-size-db-pools-check-cpu-first/</guid>
-    </item>
-    <item>
-      <title>African dev portfolios: stop showing work, start</title>
-      <link>https://kubaik.github.io/african-dev-portfolios-stop-showing-work-start/</link>
-      <description>Cut remote interview callbacks 3x by flipping your portfolio from code showcase to outcome-led trust product. See real examples from Nairobi, Lagos, and Accra that led to offers in 2026.</description>
-      <pubDate>Thu, 04 Jun 2026 12:22:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-dev-portfolios-stop-showing-work-start/</guid>
     </item>
   </channel>
 </rss>
