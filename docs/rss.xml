@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 23:51:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 23:55:18 +0000</lastBuildDate>
+    <item>
+      <title>AI salaries 2026: prompt vs vector data</title>
+      <link>https://kubaik.github.io/ai-salaries-2026-prompt-vs-vector-data/</link>
+      <description>Prompt engineering vs vector search salaries in 2026: $205k vs $185k bands, compliance impact, and the one mistake that costs $420 in Lambda waste.</description>
+      <pubDate>Thu, 04 Jun 2026 23:55:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salaries-2026-prompt-vs-vector-data/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech—and it’s not about pay</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-techand-its-not-about-pay/</link>
@@ -138,13 +145,6 @@
       <description>Prove you can run production systems with one service, not dozens of polished repos. 800 lines of code beats a GitHub graveyard for remote jobs from Africa in 2026.</description>
       <pubDate>Thu, 04 Jun 2026 16:44:49 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-kills-your-hire-chances/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: the traps docs won’t warn you about</title>
-      <link>https://kubaik.github.io/rag-in-prod-the-traps-docs-wont-warn-you-about/</link>
-      <description>Cut RAG latency 4.3× and infra bill $180/mo: the two-stage model trick and pgvector 0.7.0 the docs won’t mention.</description>
-      <pubDate>Thu, 04 Jun 2026 16:41:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-the-traps-docs-wont-warn-you-about/</guid>
     </item>
   </channel>
 </rss>
