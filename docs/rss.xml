@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 09:37:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 09:42:36 +0000</lastBuildDate>
+    <item>
+      <title>Stream vs Socket vs Poll: Which Fits</title>
+      <link>https://kubaik.github.io/stream-vs-socket-vs-poll-which-fits/</link>
+      <description>Pick WebSocket vs SSE vs long polling for real-time apps — measured latency, max users, and AWS cost per 1 M messages on Node 20 LTS and Redis 7.2 in 2026.</description>
+      <pubDate>Thu, 04 Jun 2026 09:42:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/stream-vs-socket-vs-poll-which-fits/</guid>
+    </item>
     <item>
       <title>Ace remote interviews without LeetCode</title>
       <link>https://kubaik.github.io/ace-remote-interviews-without-leetcode/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection pool waste 50% with real data — why the 2005 formula fails in 2026, SSL overhead cost, and the 3 settings most teams miss.</description>
       <pubDate>Wed, 03 Jun 2026 21:36:03 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-db-pool-size-is-probably-wrong/</guid>
-    </item>
-    <item>
-      <title>Portfolio hack: ship code, not templates</title>
-      <link>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</link>
-      <description>Portfolios that get remote jobs from Africa show production-like signals, not screenshots. Learn how to build a project that proves you can ship under load using Python 3.11, FastAPI, and Redis 7.2, with a $0 budget and 48-hour build time.</description>
-      <pubDate>Wed, 03 Jun 2026 20:51:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-hack-ship-code-not-templates/</guid>
     </item>
   </channel>
 </rss>
