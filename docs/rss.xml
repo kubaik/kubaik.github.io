@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 23:24:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 23:29:16 +0000</lastBuildDate>
+    <item>
+      <title>Review AI code in minutes, not hours</title>
+      <link>https://kubaik.github.io/review-ai-code-in-minutes-not-hours/</link>
+      <description>Cut AI review time 60%: find broken imports, bad tests, and security holes in 3 minutes with a strict checklist and grep. 2026 numbers inside.</description>
+      <pubDate>Thu, 04 Jun 2026 23:28:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/review-ai-code-in-minutes-not-hours/</guid>
+    </item>
     <item>
       <title>Make your African dev portfolio show, not just tell</title>
       <link>https://kubaik.github.io/make-your-african-dev-portfolio-show-not-just-tell/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 50% by sizing connection pools correctly — the CPU-cores rule is wrong in 2026. Learn how to measure, tune, and monitor pools for PostgreSQL, MySQL, and serverless.</description>
       <pubDate>Thu, 04 Jun 2026 16:22:43 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-is-not-cpu-cores/</guid>
-    </item>
-    <item>
-      <title>Choose the right realtime tech</title>
-      <link>https://kubaik.github.io/choose-the-right-realtime-tech/</link>
-      <description>Cut real-time update latency 40% by choosing the right push tech — WebSockets vs SSE vs long polling benchmarks with Node 20 LTS and Redis 7.2</description>
-      <pubDate>Thu, 04 Jun 2026 16:10:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-realtime-tech/</guid>
     </item>
   </channel>
 </rss>
