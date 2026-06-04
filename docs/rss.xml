@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 07:05:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 07:10:17 +0000</lastBuildDate>
+    <item>
+      <title>AI salaries hinge on 3 skills in 2026</title>
+      <link>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</link>
+      <description>Cut AI salary gap 2026: prompt engineering vs fine-tuning ROI with 78% cost data and latency benchmarks. Which skill pays and why.</description>
+      <pubDate>Thu, 04 Jun 2026 07:09:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs long-polling: which fits your app?</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</link>
@@ -138,13 +145,6 @@
       <description>RAG in production fails when tutorials ignore metadata filters, IVFFlat indexing, and reranking — we cut latency 88% and costs 87% with Postgres + pgvector, FastAPI, and vLLM on T4 GPUs.</description>
       <pubDate>Wed, 03 Jun 2026 18:05:04 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-production-skip-the-toy-demos/</guid>
-    </item>
-    <item>
-      <title>2026 remote salary parity for LATAM devs</title>
-      <link>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</link>
-      <description>Generate your 2026 remote counter in 100 lines — parity engine, Mercer index, and the negotiation script top engineers use. Avoid the $75k anchor trap.</description>
-      <pubDate>Wed, 03 Jun 2026 17:38:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-remote-salary-parity-for-latam-devs/</guid>
     </item>
   </channel>
 </rss>
