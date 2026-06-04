@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 17:39:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 17:44:07 +0000</lastBuildDate>
+    <item>
+      <title>Idle pools starve threads: DB tuning’s fatal flaw</title>
+      <link>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</link>
+      <description>Cut API response time 60% with database connection pooling — the max pool size mistake 80% of teams make in 2026 and how to fix it with PostgreSQL 15, pgbouncer 1.21, and Node.js 20 metrics.</description>
+      <pubDate>Thu, 04 Jun 2026 17:43:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</guid>
+    </item>
     <item>
       <title>Senior devs flee big tech: not pay, but prod pain</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 80% and AWS bill 72% by moving off Chroma to pgvector on Aurora, adding hybrid search, and caching aggressively — the operational details tutorials skip.</description>
       <pubDate>Thu, 04 Jun 2026 07:21:33 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-5-prod-lessons/</guid>
-    </item>
-    <item>
-      <title>Big Tech exodus: what breaks first after year five</title>
-      <link>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</link>
-      <description>Cut attrition 41% after year five by fixing guardrails, thresholds, and runbooks — not salary. 2026 numbers, real exit interviews, and the playbook senior engineers wish they had found.</description>
-      <pubDate>Thu, 04 Jun 2026 07:18:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</guid>
     </item>
   </channel>
 </rss>
