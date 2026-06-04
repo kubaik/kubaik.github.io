@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 22:59:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 23:04:25 +0000</lastBuildDate>
+    <item>
+      <title>Raise remote pay without leaving home</title>
+      <link>https://kubaik.github.io/raise-remote-pay-without-leaving-home/</link>
+      <description>Convert local cost of living to a USD remote salary in 10 minutes – a Node 20 script that scrapes FX rates, applies COL index, and outputs a defensible rate range clients accept.</description>
+      <pubDate>Thu, 04 Jun 2026 23:04:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/raise-remote-pay-without-leaving-home/</guid>
+    </item>
     <item>
       <title>RAG at scale: 3 costs tutorials hide</title>
       <link>https://kubaik.github.io/rag-at-scale-3-costs-tutorials-hide/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary offers 32% in 2026 using PPP rates table, email templates, and cost-parity proof. Build the exact scripts used in Colombia, Brazil, and Mexico.</description>
       <pubDate>Thu, 04 Jun 2026 14:30:52 +0000</pubDate>
       <guid>https://kubaik.github.io/convince-them-remote-salary-in-3-emails/</guid>
-    </item>
-    <item>
-      <title>2026 AI roles: which skills pay most</title>
-      <link>https://kubaik.github.io/2026-ai-roles-which-skills-pay-most/</link>
-      <description>2026 salary data: prompt engineers with production metrics earn 28% more than peers. See the real skills that move the needle—benchmarks, tools, and the mistake most teams still make.</description>
-      <pubDate>Thu, 04 Jun 2026 14:20:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-roles-which-skills-pay-most/</guid>
     </item>
   </channel>
 </rss>
