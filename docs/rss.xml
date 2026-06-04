@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 17:30:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 17:35:51 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee big tech: not pay, but prod pain</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</link>
+      <description>The latency target of 50 ms isn’t arbitrary — it’s the point where users start to notice.</description>
+      <pubDate>Thu, 04 Jun 2026 17:35:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</guid>
+    </item>
     <item>
       <title>Review AI PRs in under 15 mins</title>
       <link>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</link>
@@ -138,13 +145,6 @@
       <description>Cut attrition 41% after year five by fixing guardrails, thresholds, and runbooks — not salary. 2026 numbers, real exit interviews, and the playbook senior engineers wish they had found.</description>
       <pubDate>Thu, 04 Jun 2026 07:18:00 +0000</pubDate>
       <guid>https://kubaik.github.io/big-tech-exodus-what-breaks-first-after-year-five/</guid>
-    </item>
-    <item>
-      <title>AI salaries hinge on 3 skills in 2026</title>
-      <link>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</link>
-      <description>Cut AI salary gap 2026: prompt engineering vs fine-tuning ROI with 78% cost data and latency benchmarks. Which skill pays and why.</description>
-      <pubDate>Thu, 04 Jun 2026 07:09:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salaries-hinge-on-3-skills-in-2026/</guid>
     </item>
   </channel>
 </rss>
