@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 21:22:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 21:27:17 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSocket, SSE, polling head-to-head</title>
+      <link>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</link>
+      <description>Choose realtime tech in 2026 with hard latency and cost numbers — WebSocket vs SSE vs long polling benchmarked on Node 20, Redis 7.2, and 1000 mobile clients.</description>
+      <pubDate>Thu, 04 Jun 2026 21:26:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</guid>
+    </item>
     <item>
       <title>Swapped $84 AI tools for free</title>
       <link>https://kubaik.github.io/swapped-84-ai-tools-for-free/</link>
@@ -138,13 +145,6 @@
       <description>Cut remote interview callbacks 3x by flipping your portfolio from code showcase to outcome-led trust product. See real examples from Nairobi, Lagos, and Accra that led to offers in 2026.</description>
       <pubDate>Thu, 04 Jun 2026 12:22:49 +0000</pubDate>
       <guid>https://kubaik.github.io/african-dev-portfolios-stop-showing-work-start/</guid>
-    </item>
-    <item>
-      <title>Turn local pay into global dollars</title>
-      <link>https://kubaik.github.io/turn-local-pay-into-global-dollars/</link>
-      <description>Negotiate remote pay $10k higher: Colombian PPP model in 2026 — use Levels.fyi data, Wise fees, and a 30-line Python script to calculate your fair USD ask without leaving money on the table.</description>
-      <pubDate>Thu, 04 Jun 2026 11:28:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/turn-local-pay-into-global-dollars/</guid>
     </item>
   </channel>
 </rss>
