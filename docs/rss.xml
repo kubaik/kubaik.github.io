@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 16:41:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 16:45:05 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio kills your hire chances</title>
+      <link>https://kubaik.github.io/portfolio-kills-your-hire-chances/</link>
+      <description>Prove you can run production systems with one service, not dozens of polished repos. 800 lines of code beats a GitHub graveyard for remote jobs from Africa in 2026.</description>
+      <pubDate>Thu, 04 Jun 2026 16:44:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-kills-your-hire-chances/</guid>
+    </item>
     <item>
       <title>RAG in prod: the traps docs won’t warn you about</title>
       <link>https://kubaik.github.io/rag-in-prod-the-traps-docs-wont-warn-you-about/</link>
@@ -138,13 +145,6 @@
       <description>Choose between WebSockets, Server-Sent Events and long-polling in 2026 with concrete benchmarks and Redis 7.2 tuning — cut latency and cost by picking the right push tech first time.</description>
       <pubDate>Thu, 04 Jun 2026 05:55:34 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-sse-vs-long-polling-which-fits-your-app/</guid>
-    </item>
-    <item>
-      <title>Miscount your DB pool? Expect slow queries</title>
-      <link>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</link>
-      <description>Cut API response time 60% by fixing one connection pool mistake — most teams still use 2010-era rules. Includes the formula, benchmarks, and AWS cost impact from 2026 systems.</description>
-      <pubDate>Thu, 04 Jun 2026 05:19:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</guid>
     </item>
   </channel>
 </rss>
