@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jun 2026 05:14:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 05:19:44 +0000</lastBuildDate>
+    <item>
+      <title>Miscount your DB pool? Expect slow queries</title>
+      <link>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</link>
+      <description>Cut API response time 60% by fixing one connection pool mistake — most teams still use 2010-era rules. Includes the formula, benchmarks, and AWS cost impact from 2026 systems.</description>
+      <pubDate>Thu, 04 Jun 2026 05:19:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/miscount-your-db-pool-expect-slow-queries/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay without leaving home</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-without-leaving-home/</link>
@@ -138,13 +145,6 @@
       <description>Cut database connection errors 80% by ignoring CPU cores—use max_connections and actual demand instead. Benchmarks, pitfalls, and the one setting every team configures wrong.</description>
       <pubDate>Wed, 03 Jun 2026 13:11:00 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-cpu-cores-for-db-pools/</guid>
-    </item>
-    <item>
-      <title>Show benchmarks, not GitHub stars</title>
-      <link>https://kubaik.github.io/show-benchmarks-not-github-stars/</link>
-      <description>In my experience, this advice is only half right — and for 70% of African developers I’ve mentored, it’s actively harmful.</description>
-      <pubDate>Wed, 03 Jun 2026 12:35:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/show-benchmarks-not-github-stars/</guid>
     </item>
   </channel>
 </rss>
