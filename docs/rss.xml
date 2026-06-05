@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 19:24:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 19:29:32 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee Big Tech’s invisible drag</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</link>
+      <description>Cut engineering toil 70% with cache fixes — connection pooling, TTLs, and the cache stampede mistake most teams miss. Learn the real reasons senior developers quit Big Tech.</description>
+      <pubDate>Fri, 05 Jun 2026 19:29:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</guid>
+    </item>
     <item>
       <title>Break rate limits clients won&apos;t hate</title>
       <link>https://kubaik.github.io/break-rate-limits-clients-wont-hate/</link>
@@ -138,13 +145,6 @@
       <description>AI fine-tuning vs prompt engineering in 2026: 14 % accuracy uplift, 28 ms latency, and $1 200 compute cost — the data-backed salary split every engineer should know</description>
       <pubDate>Fri, 05 Jun 2026 08:59:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</guid>
-    </item>
-    <item>
-      <title>Ship a system, not a profile</title>
-      <link>https://kubaik.github.io/ship-a-system-not-a-profile/</link>
-      <description>Ship systems, not projects, to land remote jobs from Africa — benchmarks, cost data, and post-mortems that actually move the needle. 2026 hiring reality.</description>
-      <pubDate>Fri, 05 Jun 2026 07:05:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-system-not-a-profile/</guid>
     </item>
   </channel>
 </rss>
