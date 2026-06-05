@@ -5,5 +5,6 @@
   "Building a portfolio that gets you hired remotely from Africa",
   "Database connection pooling: the setting everyone gets wrong",
   "RAG pipelines in production: what the tutorials skip",
-  "Why senior developers leave big tech (it's not always the money)"
+  "Why senior developers leave big tech (it's not always the money)",
+  "WebSockets vs Server-Sent Events vs long polling: which one for your use case"
 ]
