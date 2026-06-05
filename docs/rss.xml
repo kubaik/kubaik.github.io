@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 02:02:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 02:37:51 +0000</lastBuildDate>
+    <item>
+      <title>Leaky RAG: 3 prod traps tutorials ignore</title>
+      <link>https://kubaik.github.io/leaky-rag-3-prod-traps-tutorials-ignore/</link>
+      <description>Cut RAG pipeline latency 77% and cloud bill 64% with Qdrant, Redis, and a reranker layer — the operating details most tutorials skip and the exact configs that worked in production.</description>
+      <pubDate>Fri, 05 Jun 2026 02:37:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/leaky-rag-3-prod-traps-tutorials-ignore/</guid>
+    </item>
     <item>
       <title>Mis-size your pool? Your app chokes</title>
       <link>https://kubaik.github.io/mis-size-your-pool-your-app-chokes/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with database connection pooling — the max pool size mistake 80% of teams make in 2026 and how to fix it with PostgreSQL 15, pgbouncer 1.21, and Node.js 20 metrics.</description>
       <pubDate>Thu, 04 Jun 2026 17:43:47 +0000</pubDate>
       <guid>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech: not pay, but prod pain</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</link>
-      <description>The latency target of 50 ms isn’t arbitrary — it’s the point where users start to notice.</description>
-      <pubDate>Thu, 04 Jun 2026 17:35:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</guid>
     </item>
   </channel>
 </rss>
