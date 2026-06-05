@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 21:13:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 21:17:49 +0000</lastBuildDate>
+    <item>
+      <title>2026 Salary Split: Fine-Tuning vs Prompt Engineering</title>
+      <link>https://kubaik.github.io/2026-salary-split-fine-tuning-vs-prompt-engineering/</link>
+      <description>Fine-tuning pays 40% more than prompt engineering in 2026 — real salary data, benchmarked costs, and the exact metric to check before you train.</description>
+      <pubDate>Fri, 05 Jun 2026 21:17:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salary-split-fine-tuning-vs-prompt-engineering/</guid>
+    </item>
     <item>
       <title>RAG in prod: prompt assembly kills latency</title>
       <link>https://kubaik.github.io/rag-in-prod-prompt-assembly-kills-latency/</link>
@@ -138,13 +145,6 @@
       <description>Cut 30 % of realtime costs with the right transport — p95 latency, CPU, and memory at 2 k concurrent users on Node 20 + Redis 7.2 in 2026</description>
       <pubDate>Fri, 05 Jun 2026 12:34:48 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
-    </item>
-    <item>
-      <title>Ship real projects, land remote dev jobs</title>
-      <link>https://kubaik.github.io/ship-real-projects-land-remote-dev-jobs/</link>
-      <description>Land remote jobs from Africa with one signal: production-grade GitHub repos. See real examples, benchmarks, and trade-offs that moved the needle in 2026.</description>
-      <pubDate>Fri, 05 Jun 2026 12:25:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-real-projects-land-remote-dev-jobs/</guid>
     </item>
   </channel>
 </rss>
