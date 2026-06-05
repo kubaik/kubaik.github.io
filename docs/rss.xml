@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 15:36:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 15:41:04 +0000</lastBuildDate>
+    <item>
+      <title>Anchor remote pay to global rates</title>
+      <link>https://kubaik.github.io/anchor-remote-pay-to-global-rates/</link>
+      <description>Close remote salary gaps 21% with Levels.fyi data — Python 3.11 scripts, ObservableHQ dashboard, and email templates that shift the negotiation from cost to market rate.</description>
+      <pubDate>Fri, 05 Jun 2026 15:40:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/anchor-remote-pay-to-global-rates/</guid>
+    </item>
     <item>
       <title>Database pools are too small by default</title>
       <link>https://kubaik.github.io/database-pools-are-too-small-by-default/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 88% without raises — connection pools, cache stampedes, and the memory bloat surprise most teams miss.</description>
       <pubDate>Thu, 04 Jun 2026 23:46:16 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-big-techand-its-not-about-pay/</guid>
-    </item>
-    <item>
-      <title>Review AI code in minutes, not hours</title>
-      <link>https://kubaik.github.io/review-ai-code-in-minutes-not-hours/</link>
-      <description>Cut AI review time 60%: find broken imports, bad tests, and security holes in 3 minutes with a strict checklist and grep. 2026 numbers inside.</description>
-      <pubDate>Thu, 04 Jun 2026 23:28:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/review-ai-code-in-minutes-not-hours/</guid>
     </item>
   </channel>
 </rss>
