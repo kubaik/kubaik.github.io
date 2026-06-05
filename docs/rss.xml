@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 04:47:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 04:52:36 +0000</lastBuildDate>
+    <item>
+      <title>Choose the right push tech fast</title>
+      <link>https://kubaik.github.io/choose-the-right-push-tech-fast/</link>
+      <description>Pick the right push tech fast — benchmark WebSockets vs SSE vs polling on latency, CPU, and bytes sent for 8,000 updates/sec in 2026</description>
+      <pubDate>Fri, 05 Jun 2026 04:52:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/choose-the-right-push-tech-fast/</guid>
+    </item>
     <item>
       <title>Leaky RAG: 3 prod traps tutorials ignore</title>
       <link>https://kubaik.github.io/leaky-rag-3-prod-traps-tutorials-ignore/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with database connection pooling — the max pool size mistake 80% of teams make in 2026 and how to fix it with PostgreSQL 15, pgbouncer 1.21, and Node.js 20 metrics.</description>
       <pubDate>Thu, 04 Jun 2026 17:43:47 +0000</pubDate>
       <guid>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech: not pay, but prod pain</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</link>
-      <description>The latency target of 50 ms isn’t arbitrary — it’s the point where users start to notice.</description>
-      <pubDate>Thu, 04 Jun 2026 17:35:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</guid>
     </item>
   </channel>
 </rss>
