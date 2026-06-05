@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 16:20:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 16:29:12 +0000</lastBuildDate>
+    <item>
+      <title>AI salary boosters: prompt vs fine-tuning in 2026</title>
+      <link>https://kubaik.github.io/ai-salary-boosters-prompt-vs-fine-tuning-in-2026/</link>
+      <description>Fine-tuning beats prompt engineering 15 to 7 for accuracy and cuts API bills 75% — here’s the data and the stack you need to prove it.</description>
+      <pubDate>Fri, 05 Jun 2026 16:28:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-boosters-prompt-vs-fine-tuning-in-2026/</guid>
+    </item>
     <item>
       <title>AI code hides 5 deadly permissions</title>
       <link>https://kubaik.github.io/ai-code-hides-5-deadly-permissions/</link>
@@ -138,13 +145,6 @@
       <description>Cut database pool size mistakes 70% with these 2026 rules — set pool too high? Your CPU just screamed.</description>
       <pubDate>Fri, 05 Jun 2026 02:02:02 +0000</pubDate>
       <guid>https://kubaik.github.io/mis-size-your-pool-your-app-chokes/</guid>
-    </item>
-    <item>
-      <title>Pay raise in 7 days: remote salary script</title>
-      <link>https://kubaik.github.io/pay-raise-in-7-days-remote-salary-script/</link>
-      <description>Use this script to negotiate a remote salary that matches US rates from a lower-cost country — includes data sources, SQLite store, and a FastAPI endpoint to back up your ask. 2026 update.</description>
-      <pubDate>Fri, 05 Jun 2026 00:15:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-raise-in-7-days-remote-salary-script/</guid>
     </item>
   </channel>
 </rss>
