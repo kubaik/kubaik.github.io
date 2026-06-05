@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 05:17:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 06:57:08 +0000</lastBuildDate>
     <item>
       <title>Senior devs flee big tech: hidden reasons</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-reasons/</link>
@@ -98,13 +98,6 @@
       <guid>https://kubaik.github.io/rag-at-scale-3-costs-tutorials-hide/</guid>
     </item>
     <item>
-      <title>Senior devs flee Big Tech’s hidden friction</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-friction/</link>
-      <description>Cut API latency 57% and MTTR 82% with Redis cache wrapper — connection pools, stampede locks, Prometheus metrics and the real reasons senior devs leave big tech</description>
-      <pubDate>Thu, 04 Jun 2026 21:59:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-friction/</guid>
-    </item>
-    <item>
       <title>2026 AI salary bumps: embeddings &amp; search skills</title>
       <link>https://kubaik.github.io/2026-ai-salary-bumps-embeddings-search-skills/</link>
       <description>2026 data: engineers skilled in vector search earn 28% more, but embedding optimization pays off earlier—benchmark results, salary ranges, and the exact latency/cost trade-offs most teams ignore.</description>
@@ -145,6 +138,13 @@
       <description>Show production-grade code, not polished projects — war stories beat READMEs for remote hiring. Benchmarks, PR links, and postmortems land interviews faster than cloned boilerplates.</description>
       <pubDate>Thu, 04 Jun 2026 19:38:35 +0000</pubDate>
       <guid>https://kubaik.github.io/recruiters-ignore-your-github-repoheres-what-they-watch-inst/</guid>
+    </item>
+    <item>
+      <title>AI skills that pay 2026: data breakdown</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-2026-data-breakdown/</link>
+      <description>Cut AI cloud spend 77% with cost engineering — prompt vs cost skills, salary benchmarks, and the pipeline mistakes most teams miss in 2026.</description>
+      <pubDate>Thu, 04 Jun 2026 19:18:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-2026-data-breakdown/</guid>
     </item>
   </channel>
 </rss>
