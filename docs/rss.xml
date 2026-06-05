@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 08:54:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 08:59:19 +0000</lastBuildDate>
+    <item>
+      <title>AI pay split: fine-tune vs prompt in 2026</title>
+      <link>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</link>
+      <description>AI fine-tuning vs prompt engineering in 2026: 14 % accuracy uplift, 28 ms latency, and $1 200 compute cost — the data-backed salary split every engineer should know</description>
+      <pubDate>Fri, 05 Jun 2026 08:59:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</guid>
+    </item>
     <item>
       <title>Ship a system, not a profile</title>
       <link>https://kubaik.github.io/ship-a-system-not-a-profile/</link>
@@ -138,13 +145,6 @@
       <description>How to negotiate remote salary from a lower-cost country in 2026 — anchor to US/EU benchmarks, justify discounts with Numbeo data, and close deals with a repeatable process.</description>
       <pubDate>Thu, 04 Jun 2026 19:57:02 +0000</pubDate>
       <guid>https://kubaik.github.io/get-paid-fair-remote-salary-from-low-cost-country/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, long polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
-      <description>Cut real-time latency 60% — compare WebSockets, SSE, and polling with Node 20, Redis 7.2, and uWebSockets.js 20.49.0 benchmarks in 2026</description>
-      <pubDate>Thu, 04 Jun 2026 19:47:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
