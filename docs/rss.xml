@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 21:21:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 21:26:20 +0000</lastBuildDate>
+    <item>
+      <title>Compare 3 ways to push real-time data</title>
+      <link>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</link>
+      <description>Choose SSE for dashboards, WebSockets for chat, long polling as fallback — benchmarked on Node 20 LTS and Redis 7.2 with real cost and latency numbers.</description>
+      <pubDate>Fri, 05 Jun 2026 21:26:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</guid>
+    </item>
     <item>
       <title>2026 Salary Split: Fine-Tuning vs Prompt Engineering</title>
       <link>https://kubaik.github.io/2026-salary-split-fine-tuning-vs-prompt-engineering/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary stagnation in 2026: prompt observability vs fine-tuning salaries compared with real data, benchmarks, and cost figures.</description>
       <pubDate>Fri, 05 Jun 2026 13:50:54 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-which-skills-pay/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, long polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
-      <description>Cut 30 % of realtime costs with the right transport — p95 latency, CPU, and memory at 2 k concurrent users on Node 20 + Redis 7.2 in 2026</description>
-      <pubDate>Fri, 05 Jun 2026 12:34:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
