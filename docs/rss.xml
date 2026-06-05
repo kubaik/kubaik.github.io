@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 21:26:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 21:51:12 +0000</lastBuildDate>
     <item>
       <title>Compare 3 ways to push real-time data</title>
       <link>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</link>
@@ -105,13 +105,6 @@
       <guid>https://kubaik.github.io/why-senior-devs-quit-faang-in-2026/</guid>
     </item>
     <item>
-      <title>AI salary boosters: prompt vs fine-tuning in 2026</title>
-      <link>https://kubaik.github.io/ai-salary-boosters-prompt-vs-fine-tuning-in-2026/</link>
-      <description>Fine-tuning beats prompt engineering 15 to 7 for accuracy and cuts API bills 75% — here’s the data and the stack you need to prove it.</description>
-      <pubDate>Fri, 05 Jun 2026 16:28:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salary-boosters-prompt-vs-fine-tuning-in-2026/</guid>
-    </item>
-    <item>
       <title>AI code hides 5 deadly permissions</title>
       <link>https://kubaik.github.io/ai-code-hides-5-deadly-permissions/</link>
       <description>Catch AI-generated security flaws in 15 minutes — 5 traps teams miss, real PR examples, and the exact Semgrep rules to block them before merge</description>
@@ -145,6 +138,13 @@
       <description>Cut AI salary stagnation in 2026: prompt observability vs fine-tuning salaries compared with real data, benchmarks, and cost figures.</description>
       <pubDate>Fri, 05 Jun 2026 13:50:54 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-which-skills-pay/</guid>
+    </item>
+    <item>
+      <title>Compare WebSockets, SSE, long polling</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
+      <description>Cut 30 % of realtime costs with the right transport — p95 latency, CPU, and memory at 2 k concurrent users on Node 20 + Redis 7.2 in 2026</description>
+      <pubDate>Fri, 05 Jun 2026 12:34:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
