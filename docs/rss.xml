@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 20:26:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 20:30:53 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio: one project, remote hire</title>
+      <link>https://kubaik.github.io/portfolio-one-project-remote-hire/</link>
+      <description>Ship one project, get hired remotely — stop grinding LeetCode and open-sourcing forks. Focus on one system that proves you can own a pain point and move a metric. Real examples from Nairobi, Lagos, and Dar es Salaam.</description>
+      <pubDate>Fri, 05 Jun 2026 20:30:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-one-project-remote-hire/</guid>
+    </item>
     <item>
       <title>Ask for 25% more: salary negotiation script</title>
       <link>https://kubaik.github.io/ask-for-25-more-salary-negotiation-script/</link>
@@ -138,13 +145,6 @@
       <description>RAG pipelines fail under load — here’s what breaks first: FAISS isn’t thread-safe, batch_size lies under concurrency, and Redis cache isn’t enough. Learn how we cut latency 63% and errors from 8% to 0.2% with Weaviate 1.28 and isolated workers.</description>
       <pubDate>Fri, 05 Jun 2026 10:52:50 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-3-silent-failures/</guid>
-    </item>
-    <item>
-      <title>Your pool size is killing throughput</title>
-      <link>https://kubaik.github.io/your-pool-size-is-killing-throughput/</link>
-      <description>Cut API response time 40% by fixing connection pool size — the outdated CPU-core rule wastes RAM and adds latency. Learn how to size pools based on concurrency demand and max connections.</description>
-      <pubDate>Fri, 05 Jun 2026 09:32:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-pool-size-is-killing-throughput/</guid>
     </item>
   </channel>
 </rss>
