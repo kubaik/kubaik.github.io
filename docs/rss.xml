@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 19:33:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 19:37:56 +0000</lastBuildDate>
+    <item>
+      <title>Break the max pool size myth</title>
+      <link>https://kubaik.github.io/break-the-max-pool-size-myth/</link>
+      <description>The conventional wisdom (and why it&apos;s incomplete) For years, the standard advice on database connection pooling has been simple: set to the number of…</description>
+      <pubDate>Fri, 05 Jun 2026 19:37:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/break-the-max-pool-size-myth/</guid>
+    </item>
     <item>
       <title>Senior devs flee Big Tech’s invisible drag</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</link>
@@ -138,13 +145,6 @@
       <description>Pick the realtime transport that won’t collapse under load — 2026 benchmarks for WebSockets, SSE, and long polling with concrete latency, memory, and cost numbers.</description>
       <pubDate>Fri, 05 Jun 2026 09:07:28 +0000</pubDate>
       <guid>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</guid>
-    </item>
-    <item>
-      <title>AI pay split: fine-tune vs prompt in 2026</title>
-      <link>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</link>
-      <description>AI fine-tuning vs prompt engineering in 2026: 14 % accuracy uplift, 28 ms latency, and $1 200 compute cost — the data-backed salary split every engineer should know</description>
-      <pubDate>Fri, 05 Jun 2026 08:59:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</guid>
     </item>
   </channel>
 </rss>
