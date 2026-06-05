@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 07:01:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 07:05:48 +0000</lastBuildDate>
+    <item>
+      <title>Ship a system, not a profile</title>
+      <link>https://kubaik.github.io/ship-a-system-not-a-profile/</link>
+      <description>Ship systems, not projects, to land remote jobs from Africa — benchmarks, cost data, and post-mortems that actually move the needle. 2026 hiring reality.</description>
+      <pubDate>Fri, 05 Jun 2026 07:05:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-a-system-not-a-profile/</guid>
+    </item>
     <item>
       <title>Win remote pay talks with Payscale data</title>
       <link>https://kubaik.github.io/win-remote-pay-talks-with-payscale-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time latency 60% — compare WebSockets, SSE, and polling with Node 20, Redis 7.2, and uWebSockets.js 20.49.0 benchmarks in 2026</description>
       <pubDate>Thu, 04 Jun 2026 19:47:38 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
-    </item>
-    <item>
-      <title>Recruiters ignore your GitHub repo—here’s what they watch instead</title>
-      <link>https://kubaik.github.io/recruiters-ignore-your-github-repoheres-what-they-watch-inst/</link>
-      <description>Show production-grade code, not polished projects — war stories beat READMEs for remote hiring. Benchmarks, PR links, and postmortems land interviews faster than cloned boilerplates.</description>
-      <pubDate>Thu, 04 Jun 2026 19:38:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/recruiters-ignore-your-github-repoheres-what-they-watch-inst/</guid>
     </item>
   </channel>
 </rss>
