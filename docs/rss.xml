@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 22:47:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 22:52:30 +0000</lastBuildDate>
+    <item>
+      <title>Miscount your DB pool? Your app pays</title>
+      <link>https://kubaik.github.io/miscount-your-db-pool-your-app-pays/</link>
+      <description>Cut database costs 40% by right-sizing connection pools — the metric that predicts failure and 3 concrete steps to fix it today.</description>
+      <pubDate>Fri, 05 Jun 2026 22:52:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/miscount-your-db-pool-your-app-pays/</guid>
+    </item>
     <item>
       <title>Portfolio projects that prove you&apos;re hireable</title>
       <link>https://kubaik.github.io/portfolio-projects-that-prove-youre-hireable/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 70% with connection pooling and timeouts — the real reasons seniors leave big tech and how to fix them</description>
       <pubDate>Fri, 05 Jun 2026 15:53:55 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-why-scale-kills-joy/</guid>
-    </item>
-    <item>
-      <title>Anchor remote pay to global rates</title>
-      <link>https://kubaik.github.io/anchor-remote-pay-to-global-rates/</link>
-      <description>Close remote salary gaps 21% with Levels.fyi data — Python 3.11 scripts, ObservableHQ dashboard, and email templates that shift the negotiation from cost to market rate.</description>
-      <pubDate>Fri, 05 Jun 2026 15:40:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/anchor-remote-pay-to-global-rates/</guid>
     </item>
   </channel>
 </rss>
