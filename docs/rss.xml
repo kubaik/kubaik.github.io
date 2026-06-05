@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 18:19:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 18:24:57 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right realtime tech for 2026</title>
+      <link>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</link>
+      <description>Cut real-time comms latency 60%: compare WebSockets, SSE, and long polling with Node 20 LTS, Python 3.12, and Redis 7.2 benchmarks</description>
+      <pubDate>Fri, 05 Jun 2026 18:24:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</guid>
+    </item>
     <item>
       <title>Scale kills RAG pipelines—here’s why</title>
       <link>https://kubaik.github.io/scale-kills-rag-pipelinesheres-why/</link>
@@ -138,13 +145,6 @@
       <description>18–22% annual attrition among senior engineers at top tech giants in 2026 despite $210k–$280k salaries. The hidden causes are autonomy loss, approval overload, and on-call burnout — not money.</description>
       <pubDate>Fri, 05 Jun 2026 05:16:49 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-reasons/</guid>
-    </item>
-    <item>
-      <title>FastAPI vs Django REST costs revealed</title>
-      <link>https://kubaik.github.io/fastapi-vs-django-rest-costs-revealed/</link>
-      <description>FastAPI vs Django REST latency, cost, and hiring trade-offs in 2026 — measured on C6i.large with Redis 7.2 and Python 3.11. Pick the wrong stack and you’ll burn $216/month or debug async leaks at 3 a.m.</description>
-      <pubDate>Fri, 05 Jun 2026 05:08:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/fastapi-vs-django-rest-costs-revealed/</guid>
     </item>
   </channel>
 </rss>
