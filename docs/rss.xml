@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 09:03:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 09:07:46 +0000</lastBuildDate>
+    <item>
+      <title>Real-time showdown: WebSocket vs SSE vs long polling</title>
+      <link>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</link>
+      <description>Pick the realtime transport that won’t collapse under load — 2026 benchmarks for WebSockets, SSE, and long polling with concrete latency, memory, and cost numbers.</description>
+      <pubDate>Fri, 05 Jun 2026 09:07:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</guid>
+    </item>
     <item>
       <title>AI pay split: fine-tune vs prompt in 2026</title>
       <link>https://kubaik.github.io/ai-pay-split-fine-tune-vs-prompt-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut $1,008/year by swapping five paid AI tools for self-hosted LLMs — concrete configs, benchmarks, and the mistakes I made first</description>
       <pubDate>Thu, 04 Jun 2026 20:44:48 +0000</pubDate>
       <guid>https://kubaik.github.io/swapped-84-ai-tools-for-free/</guid>
-    </item>
-    <item>
-      <title>Get paid fair remote salary from low-cost country</title>
-      <link>https://kubaik.github.io/get-paid-fair-remote-salary-from-low-cost-country/</link>
-      <description>How to negotiate remote salary from a lower-cost country in 2026 — anchor to US/EU benchmarks, justify discounts with Numbeo data, and close deals with a repeatable process.</description>
-      <pubDate>Thu, 04 Jun 2026 19:57:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/get-paid-fair-remote-salary-from-low-cost-country/</guid>
     </item>
   </channel>
 </rss>
