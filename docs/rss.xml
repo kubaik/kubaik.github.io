@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 15:49:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 15:54:13 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: why scale kills joy</title>
+      <link>https://kubaik.github.io/senior-exodus-why-scale-kills-joy/</link>
+      <description>Cut on-call pages 70% with connection pooling and timeouts — the real reasons seniors leave big tech and how to fix them</description>
+      <pubDate>Fri, 05 Jun 2026 15:53:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-why-scale-kills-joy/</guid>
+    </item>
     <item>
       <title>Anchor remote pay to global rates</title>
       <link>https://kubaik.github.io/anchor-remote-pay-to-global-rates/</link>
@@ -138,13 +145,6 @@
       <description>Prompt engineering vs vector search salaries in 2026: $205k vs $185k bands, compliance impact, and the one mistake that costs $420 in Lambda waste.</description>
       <pubDate>Thu, 04 Jun 2026 23:55:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salaries-2026-prompt-vs-vector-data/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit big tech—and it’s not about pay</title>
-      <link>https://kubaik.github.io/senior-devs-quit-big-techand-its-not-about-pay/</link>
-      <description>Cut on-call pages 88% without raises — connection pools, cache stampedes, and the memory bloat surprise most teams miss.</description>
-      <pubDate>Thu, 04 Jun 2026 23:46:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-big-techand-its-not-about-pay/</guid>
     </item>
   </channel>
 </rss>
