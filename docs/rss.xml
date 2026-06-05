@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 01:57:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 02:02:21 +0000</lastBuildDate>
+    <item>
+      <title>Mis-size your pool? Your app chokes</title>
+      <link>https://kubaik.github.io/mis-size-your-pool-your-app-chokes/</link>
+      <description>Cut database pool size mistakes 70% with these 2026 rules — set pool too high? Your CPU just screamed.</description>
+      <pubDate>Fri, 05 Jun 2026 02:02:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/mis-size-your-pool-your-app-chokes/</guid>
+    </item>
     <item>
       <title>Pay raise in 7 days: remote salary script</title>
       <link>https://kubaik.github.io/pay-raise-in-7-days-remote-salary-script/</link>
@@ -138,13 +145,6 @@
       <description>The latency target of 50 ms isn’t arbitrary — it’s the point where users start to notice.</description>
       <pubDate>Thu, 04 Jun 2026 17:35:33 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</guid>
-    </item>
-    <item>
-      <title>Review AI PRs in under 15 mins</title>
-      <link>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</link>
-      <description>Cut code review time 73% with AI diffs using risk tiers, property tests, and golden masters. 2026 benchmarks and a 12-minute workflow that catches more bugs than full line-by-line audits.</description>
-      <pubDate>Thu, 04 Jun 2026 16:48:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</guid>
     </item>
   </channel>
 </rss>
