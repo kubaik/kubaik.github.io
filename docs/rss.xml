@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 12:30:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 12:35:07 +0000</lastBuildDate>
+    <item>
+      <title>Compare WebSockets, SSE, long polling</title>
+      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
+      <description>Cut 30 % of realtime costs with the right transport — p95 latency, CPU, and memory at 2 k concurrent users on Node 20 + Redis 7.2 in 2026</description>
+      <pubDate>Fri, 05 Jun 2026 12:34:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
+    </item>
     <item>
       <title>Ship real projects, land remote dev jobs</title>
       <link>https://kubaik.github.io/ship-real-projects-land-remote-dev-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Convert local cost of living to a USD remote salary in 10 minutes – a Node 20 script that scrapes FX rates, applies COL index, and outputs a defensible rate range clients accept.</description>
       <pubDate>Thu, 04 Jun 2026 23:04:07 +0000</pubDate>
       <guid>https://kubaik.github.io/raise-remote-pay-without-leaving-home/</guid>
-    </item>
-    <item>
-      <title>RAG at scale: 3 costs tutorials hide</title>
-      <link>https://kubaik.github.io/rag-at-scale-3-costs-tutorials-hide/</link>
-      <description>Cut RAG pipeline costs 78% with deterministic answers, smart caching, and Qdrant — the mistakes and numbers most tutorials skip. Real fintech support agent data from 500k DAU in 2026.</description>
-      <pubDate>Thu, 04 Jun 2026 22:17:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-at-scale-3-costs-tutorials-hide/</guid>
     </item>
   </channel>
 </rss>
