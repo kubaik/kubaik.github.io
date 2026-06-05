@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 17:48:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 17:52:33 +0000</lastBuildDate>
+    <item>
+      <title>Show problems, land remote jobs</title>
+      <link>https://kubaik.github.io/show-problems-land-remote-jobs/</link>
+      <description>Portfolio that hires you remotely in 2026: show fixes, not features. Includes 3 real incidents, code snippets, and a 30-minute action step.</description>
+      <pubDate>Fri, 05 Jun 2026 17:52:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-problems-land-remote-jobs/</guid>
+    </item>
     <item>
       <title>Beat the $120k US offer when you&apos;re paid in pesos</title>
       <link>https://kubaik.github.io/beat-the-120k-us-offer-when-youre-paid-in-pesos/</link>
@@ -138,13 +145,6 @@
       <description>Build a portfolio that proves you can ship production code under constraints — not just write code. Includes real examples, benchmarks, and cost breakdowns from African devs who got hired remotely in 2026.</description>
       <pubDate>Fri, 05 Jun 2026 05:00:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-production-grade-portfolios-from-africa/</guid>
-    </item>
-    <item>
-      <title>Choose the right push tech fast</title>
-      <link>https://kubaik.github.io/choose-the-right-push-tech-fast/</link>
-      <description>Pick the right push tech fast — benchmark WebSockets vs SSE vs polling on latency, CPU, and bytes sent for 8,000 updates/sec in 2026</description>
-      <pubDate>Fri, 05 Jun 2026 04:52:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/choose-the-right-push-tech-fast/</guid>
     </item>
   </channel>
 </rss>
