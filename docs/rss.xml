@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 00:11:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 00:16:10 +0000</lastBuildDate>
+    <item>
+      <title>Pay raise in 7 days: remote salary script</title>
+      <link>https://kubaik.github.io/pay-raise-in-7-days-remote-salary-script/</link>
+      <description>Use this script to negotiate a remote salary that matches US rates from a lower-cost country — includes data sources, SQLite store, and a FastAPI endpoint to back up your ask. 2026 update.</description>
+      <pubDate>Fri, 05 Jun 2026 00:15:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/pay-raise-in-7-days-remote-salary-script/</guid>
+    </item>
     <item>
       <title>AI salaries 2026: prompt vs vector data</title>
       <link>https://kubaik.github.io/ai-salaries-2026-prompt-vs-vector-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut code review time 73% with AI diffs using risk tiers, property tests, and golden masters. 2026 benchmarks and a 12-minute workflow that catches more bugs than full line-by-line audits.</description>
       <pubDate>Thu, 04 Jun 2026 16:48:25 +0000</pubDate>
       <guid>https://kubaik.github.io/review-ai-prs-in-under-15-mins/</guid>
-    </item>
-    <item>
-      <title>Portfolio kills your hire chances</title>
-      <link>https://kubaik.github.io/portfolio-kills-your-hire-chances/</link>
-      <description>Prove you can run production systems with one service, not dozens of polished repos. 800 lines of code beats a GitHub graveyard for remote jobs from Africa in 2026.</description>
-      <pubDate>Thu, 04 Jun 2026 16:44:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-kills-your-hire-chances/</guid>
     </item>
   </channel>
 </rss>
