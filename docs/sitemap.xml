@@ -125,7 +125,6 @@
 <url><loc>https://kubaik.github.io/dont-size-pools-for-cpu-size-for-latency/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/prod-rag-why-pipelines-fail-at-100k-qps/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/7-ways-simplicity-crushed-our-28k-over-engineer/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/pick-real-time-tech-in-5-minutes/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/2026-ai-salary-rag-vs-fine-tuning-vs-agents/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/5k-qps-rag-under-120mo/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/show-projects-not-certificates/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -137,7 +136,6 @@
 <url><loc>https://kubaik.github.io/benchmark-postgresql-vs-mysql-in-2026/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/portfolio-projects-ship-dont-polish/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/rag-pipelines-why-your-90ms-latency-hides-a-disaster/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/pick-the-realtime-tool-in-2026/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/skip-zero-trust-noise-3-rules-for-small-teams/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/rag-prod-3-costs-no-tutorial-warns/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/mis-size-your-db-pool-youre-stealing-cpu/</loc><lastmod>2026-06-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -476,7 +474,6 @@
 <url><loc>https://kubaik.github.io/edge-functions-in-2026-when-they-actually-help/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/queues-work-until-they-dont/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/big-tech-exodus-what-they-wont-tell-you/</loc><lastmod>2026-05-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/pick-the-right-live-update-tech-in-2026/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/60k-pay-gap-prompt-ops-vs-vector-tuning/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/local-llms-on-a-laptop-the-real-stack/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/trace-llm-pipelines-end-to-end-with-opentelemetry/</loc><lastmod>2026-05-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
