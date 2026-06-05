@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 20:15:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 20:19:48 +0000</lastBuildDate>
+    <item>
+      <title>Ask for 25% more: salary negotiation script</title>
+      <link>https://kubaik.github.io/ask-for-25-more-salary-negotiation-script/</link>
+      <description>Increase remote salary 25% with a PPP table and FX-indexed retainer — real 2026 figures and email template you can use today.</description>
+      <pubDate>Fri, 05 Jun 2026 20:19:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/ask-for-25-more-salary-negotiation-script/</guid>
+    </item>
     <item>
       <title>Break the max pool size myth</title>
       <link>https://kubaik.github.io/break-the-max-pool-size-myth/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 40% by fixing connection pool size — the outdated CPU-core rule wastes RAM and adds latency. Learn how to size pools based on concurrency demand and max connections.</description>
       <pubDate>Fri, 05 Jun 2026 09:32:24 +0000</pubDate>
       <guid>https://kubaik.github.io/your-pool-size-is-killing-throughput/</guid>
-    </item>
-    <item>
-      <title>Real-time showdown: WebSocket vs SSE vs long polling</title>
-      <link>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</link>
-      <description>Pick the realtime transport that won’t collapse under load — 2026 benchmarks for WebSockets, SSE, and long polling with concrete latency, memory, and cost numbers.</description>
-      <pubDate>Fri, 05 Jun 2026 09:07:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</guid>
     </item>
   </channel>
 </rss>
