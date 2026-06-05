@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 21:59:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 22:04:32 +0000</lastBuildDate>
+    <item>
+      <title>40% off remote pay? Flip the script</title>
+      <link>https://kubaik.github.io/40-off-remote-pay-flip-the-script/</link>
+      <description>Land remote gigs with $75k contracts: use purchasing-power multipliers, Levels.fyi 2026, and Numbeo 2026 data to justify your ask.</description>
+      <pubDate>Fri, 05 Jun 2026 22:04:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/40-off-remote-pay-flip-the-script/</guid>
+    </item>
     <item>
       <title>Compare 3 ways to push real-time data</title>
       <link>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary stagnation in 2026: prompt observability vs fine-tuning salaries compared with real data, benchmarks, and cost figures.</description>
       <pubDate>Fri, 05 Jun 2026 13:50:54 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-which-skills-pay/</guid>
-    </item>
-    <item>
-      <title>Compare WebSockets, SSE, long polling</title>
-      <link>https://kubaik.github.io/compare-websockets-sse-long-polling/</link>
-      <description>Cut 30 % of realtime costs with the right transport — p95 latency, CPU, and memory at 2 k concurrent users on Node 20 + Redis 7.2 in 2026</description>
-      <pubDate>Fri, 05 Jun 2026 12:34:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websockets-sse-long-polling/</guid>
     </item>
   </channel>
 </rss>
