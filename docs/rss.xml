@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 02:37:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 04:47:34 +0000</lastBuildDate>
     <item>
       <title>Leaky RAG: 3 prod traps tutorials ignore</title>
       <link>https://kubaik.github.io/leaky-rag-3-prod-traps-tutorials-ignore/</link>
@@ -68,13 +68,6 @@
       <description>Cut RAG pipeline costs 78% with deterministic answers, smart caching, and Qdrant — the mistakes and numbers most tutorials skip. Real fintech support agent data from 500k DAU in 2026.</description>
       <pubDate>Thu, 04 Jun 2026 22:17:13 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-at-scale-3-costs-tutorials-hide/</guid>
-    </item>
-    <item>
-      <title>Mis-size your DB pool</title>
-      <link>https://kubaik.github.io/mis-size-your-db-pool/</link>
-      <description>Stop wasting cloud budget on wrong connection pool sizes. Cut API latency 60% and reduce database costs 15% using a 3-factor model most teams ignore in 2026.</description>
-      <pubDate>Thu, 04 Jun 2026 22:07:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-size-your-db-pool/</guid>
     </item>
     <item>
       <title>Senior devs flee Big Tech’s hidden friction</title>
@@ -145,6 +138,13 @@
       <description>Cut API response time 60% with database connection pooling — the max pool size mistake 80% of teams make in 2026 and how to fix it with PostgreSQL 15, pgbouncer 1.21, and Node.js 20 metrics.</description>
       <pubDate>Thu, 04 Jun 2026 17:43:47 +0000</pubDate>
       <guid>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</guid>
+    </item>
+    <item>
+      <title>Senior devs flee big tech: not pay, but prod pain</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</link>
+      <description>The latency target of 50 ms isn’t arbitrary — it’s the point where users start to notice.</description>
+      <pubDate>Thu, 04 Jun 2026 17:35:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-pay-but-prod-pain/</guid>
     </item>
   </channel>
 </rss>
