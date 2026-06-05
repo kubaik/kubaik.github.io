@@ -5,5 +5,6 @@
   "Building a portfolio that gets you hired remotely from Africa",
   "AI skills that actually affect your salary in 2026: a data-backed breakdown",
   "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
-  "Database connection pooling: the setting everyone gets wrong"
+  "Database connection pooling: the setting everyone gets wrong",
+  "RAG pipelines in production: what the tutorials skip"
 ]

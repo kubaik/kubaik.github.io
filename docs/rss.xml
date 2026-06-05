@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 09:32:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 10:53:10 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: 3 silent failures</title>
+      <link>https://kubaik.github.io/rag-in-prod-3-silent-failures/</link>
+      <description>RAG pipelines fail under load — here’s what breaks first: FAISS isn’t thread-safe, batch_size lies under concurrency, and Redis cache isn’t enough. Learn how we cut latency 63% and errors from 8% to 0.2% with Weaviate 1.28 and isolated workers.</description>
+      <pubDate>Fri, 05 Jun 2026 10:52:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-3-silent-failures/</guid>
+    </item>
     <item>
       <title>Your pool size is killing throughput</title>
       <link>https://kubaik.github.io/your-pool-size-is-killing-throughput/</link>
@@ -138,13 +145,6 @@
       <description>2026 data: engineers skilled in vector search earn 28% more, but embedding optimization pays off earlier—benchmark results, salary ranges, and the exact latency/cost trade-offs most teams ignore.</description>
       <pubDate>Thu, 04 Jun 2026 21:30:19 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salary-bumps-embeddings-search-skills/</guid>
-    </item>
-    <item>
-      <title>Compare WebSocket, SSE, polling head-to-head</title>
-      <link>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</link>
-      <description>Choose realtime tech in 2026 with hard latency and cost numbers — WebSocket vs SSE vs long polling benchmarked on Node 20, Redis 7.2, and 1000 mobile clients.</description>
-      <pubDate>Thu, 04 Jun 2026 21:26:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</guid>
     </item>
   </channel>
 </rss>
