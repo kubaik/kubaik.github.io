@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 04:56:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 05:01:16 +0000</lastBuildDate>
+    <item>
+      <title>Ship production-grade portfolios from Africa</title>
+      <link>https://kubaik.github.io/ship-production-grade-portfolios-from-africa/</link>
+      <description>Build a portfolio that proves you can ship production code under constraints — not just write code. Includes real examples, benchmarks, and cost breakdowns from African devs who got hired remotely in 2026.</description>
+      <pubDate>Fri, 05 Jun 2026 05:00:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-production-grade-portfolios-from-africa/</guid>
+    </item>
     <item>
       <title>Choose the right push tech fast</title>
       <link>https://kubaik.github.io/choose-the-right-push-tech-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 60% and AWS bill $71/month — the three production traps tutorials skip: prompt size, cache locality, and reranking overhead. Includes exact code, numbers, and the mistake I spent three days debugging.</description>
       <pubDate>Thu, 04 Jun 2026 18:44:10 +0000</pubDate>
       <guid>https://kubaik.github.io/3-rag-pitfalls-prod-teams-hit-first/</guid>
-    </item>
-    <item>
-      <title>Idle pools starve threads: DB tuning’s fatal flaw</title>
-      <link>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</link>
-      <description>Cut API response time 60% with database connection pooling — the max pool size mistake 80% of teams make in 2026 and how to fix it with PostgreSQL 15, pgbouncer 1.21, and Node.js 20 metrics.</description>
-      <pubDate>Thu, 04 Jun 2026 17:43:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/idle-pools-starve-threads-db-tunings-fatal-flaw/</guid>
     </item>
   </channel>
 </rss>
