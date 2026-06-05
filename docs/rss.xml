@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 09:28:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 09:32:43 +0000</lastBuildDate>
+    <item>
+      <title>Your pool size is killing throughput</title>
+      <link>https://kubaik.github.io/your-pool-size-is-killing-throughput/</link>
+      <description>Cut API response time 40% by fixing connection pool size — the outdated CPU-core rule wastes RAM and adds latency. Learn how to size pools based on concurrency demand and max connections.</description>
+      <pubDate>Fri, 05 Jun 2026 09:32:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-pool-size-is-killing-throughput/</guid>
+    </item>
     <item>
       <title>Real-time showdown: WebSocket vs SSE vs long polling</title>
       <link>https://kubaik.github.io/real-time-showdown-websocket-vs-sse-vs-long-polling/</link>
@@ -138,13 +145,6 @@
       <description>Choose realtime tech in 2026 with hard latency and cost numbers — WebSocket vs SSE vs long polling benchmarked on Node 20, Redis 7.2, and 1000 mobile clients.</description>
       <pubDate>Thu, 04 Jun 2026 21:26:58 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-websocket-sse-polling-head-to-head/</guid>
-    </item>
-    <item>
-      <title>Swapped $84 AI tools for free</title>
-      <link>https://kubaik.github.io/swapped-84-ai-tools-for-free/</link>
-      <description>Cut $1,008/year by swapping five paid AI tools for self-hosted LLMs — concrete configs, benchmarks, and the mistakes I made first</description>
-      <pubDate>Thu, 04 Jun 2026 20:44:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/swapped-84-ai-tools-for-free/</guid>
     </item>
   </channel>
 </rss>
