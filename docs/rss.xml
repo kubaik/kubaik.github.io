@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 18:28:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 18:33:53 +0000</lastBuildDate>
+    <item>
+      <title>Lock contention kills bigger pools</title>
+      <link>https://kubaik.github.io/lock-contention-kills-bigger-pools/</link>
+      <description>Cut database latency 70% with the right connection pool size — the formula most teams copy from 2018 benchmarks is wrong. Learn the three real rules to stop limping or crashing.</description>
+      <pubDate>Fri, 05 Jun 2026 18:33:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-contention-kills-bigger-pools/</guid>
+    </item>
     <item>
       <title>Pick the right realtime tech for 2026</title>
       <link>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>Their offer was $65,000; my market research said $95,000 for the same role and level in New York.</description>
       <pubDate>Fri, 05 Jun 2026 07:01:35 +0000</pubDate>
       <guid>https://kubaik.github.io/win-remote-pay-talks-with-payscale-data/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech: hidden reasons</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-reasons/</link>
-      <description>18–22% annual attrition among senior engineers at top tech giants in 2026 despite $210k–$280k salaries. The hidden causes are autonomy loss, approval overload, and on-call burnout — not money.</description>
-      <pubDate>Fri, 05 Jun 2026 05:16:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-hidden-reasons/</guid>
     </item>
   </channel>
 </rss>
