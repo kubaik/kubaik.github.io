@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2026 23:42:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 23:48:00 +0000</lastBuildDate>
+    <item>
+      <title>Big tech attrition: the invisible toll</title>
+      <link>https://kubaik.github.io/big-tech-attrition-the-invisible-toll/</link>
+      <description>Cut on-call pages 91% with Redis TTL and circuit breakers — how senior engineers quietly burn out and what concrete metrics to track in 2026.</description>
+      <pubDate>Fri, 05 Jun 2026 23:47:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-tech-attrition-the-invisible-toll/</guid>
+    </item>
     <item>
       <title>Production RAG pipelines: hidden costs</title>
       <link>https://kubaik.github.io/production-rag-pipelines-hidden-costs/</link>
@@ -138,13 +145,6 @@
       <description>By the end of 2025, a 2024 Stack Overflow survey found that 38% of developers with 3–5 years of experience had left a company within two years — not for…</description>
       <pubDate>Fri, 05 Jun 2026 17:11:47 +0000</pubDate>
       <guid>https://kubaik.github.io/why-senior-devs-quit-faang-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI code hides 5 deadly permissions</title>
-      <link>https://kubaik.github.io/ai-code-hides-5-deadly-permissions/</link>
-      <description>Catch AI-generated security flaws in 15 minutes — 5 traps teams miss, real PR examples, and the exact Semgrep rules to block them before merge</description>
-      <pubDate>Fri, 05 Jun 2026 16:20:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-hides-5-deadly-permissions/</guid>
     </item>
   </channel>
 </rss>
