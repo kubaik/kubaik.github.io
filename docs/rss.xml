@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 22:17:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 22:22:18 +0000</lastBuildDate>
+    <item>
+      <title>30% pay bump: AI pipeline skills vs prompts</title>
+      <link>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</link>
+      <description>AI skills that pay 30% more in 2026 — prompt engineering vs MLOps/tooling benchmarked with 2026 salary data, latency figures, and cost savings.</description>
+      <pubDate>Sat, 06 Jun 2026 22:21:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</guid>
+    </item>
     <item>
       <title>Portfolio mistakes cost remote jobs</title>
       <link>https://kubaik.github.io/portfolio-mistakes-cost-remote-jobs/</link>
@@ -138,13 +145,6 @@
       <description>Cut senior engineer attrition 40% by fixing 4 hidden frictions — connection pools, retries, observability, and ownership tax. Concrete numbers and tooling from 2026.</description>
       <pubDate>Sat, 06 Jun 2026 16:26:10 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</guid>
-    </item>
-    <item>
-      <title>Production RAG: what tutorials never mention</title>
-      <link>https://kubaik.github.io/production-rag-what-tutorials-never-mention/</link>
-      <description>Cut RAG latency 92% and AWS bill 71% with semantic chunking, Qdrant 1.8.0, and Redis caching — the production lessons tutorials never mention.</description>
-      <pubDate>Sat, 06 Jun 2026 16:04:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-rag-what-tutorials-never-mention/</guid>
     </item>
   </channel>
 </rss>
