@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 03:03:07 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 03:54:02 +0000</lastBuildDate>
+    <item>
+      <title>Production RAG pipelines: the missing pieces</title>
+      <link>https://kubaik.github.io/production-rag-pipelines-the-missing-pieces/</link>
+      <description>Cut RAG latency 73% and AWS costs 61% by splitting the pipeline, pinning models, and adding deduplication — the production tricks most tutorials skip.</description>
+      <pubDate>Sat, 06 Jun 2026 03:53:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/production-rag-pipelines-the-missing-pieces/</guid>
+    </item>
     <item>
       <title>Ship African dev portfolio that hires remotely</title>
       <link>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 70% with the right connection pool size — the formula most teams copy from 2018 benchmarks is wrong. Learn the three real rules to stop limping or crashing.</description>
       <pubDate>Fri, 05 Jun 2026 18:33:36 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-contention-kills-bigger-pools/</guid>
-    </item>
-    <item>
-      <title>Pick the right realtime tech for 2026</title>
-      <link>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</link>
-      <description>Cut real-time comms latency 60%: compare WebSockets, SSE, and long polling with Node 20 LTS, Python 3.12, and Redis 7.2 benchmarks</description>
-      <pubDate>Fri, 05 Jun 2026 18:24:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</guid>
     </item>
   </channel>
 </rss>
