@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 23:04:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:37:05 +0000</lastBuildDate>
     <item>
       <title>Pool size isn&apos;t CPU cores</title>
       <link>https://kubaik.github.io/pool-size-isnt-cpu-cores/</link>
@@ -77,13 +77,6 @@
       <guid>https://kubaik.github.io/build-systems-not-just-code/</guid>
     </item>
     <item>
-      <title>3 reasons senior devs flee big tech</title>
-      <link>https://kubaik.github.io/3-reasons-senior-devs-flee-big-tech/</link>
-      <description>Senior engineers quit big tech for $0 salary bumps. Learn the three non-money reasons and how to measure them in your team with free scripts and Grafana dashboards.</description>
-      <pubDate>Sat, 06 Jun 2026 20:28:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-reasons-senior-devs-flee-big-tech/</guid>
-    </item>
-    <item>
       <title>Stop trusting CPU cores for connection pools</title>
       <link>https://kubaik.github.io/stop-trusting-cpu-cores-for-connection-pools/</link>
       <description>Over 78% of PostgreSQL bottlenecks in 2025 were I/O waits — yet most teams still set database pool size to CPU cores. Here’s the real formula.</description>
@@ -145,6 +138,13 @@
       <description>Senior engineers quit big tech not because of pay but because of scaling friction — connection leaks, unobserved errors, and flaky staging cost teams 40% of their velocity. Measure your own stack with pgBouncer 1.21, Prometheus 2.47, and Node.js 20 LTS.</description>
       <pubDate>Sat, 06 Jun 2026 17:48:00 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-meetings-vs-code/</guid>
+    </item>
+    <item>
+      <title>Close the remote pay gap now</title>
+      <link>https://kubaik.github.io/close-the-remote-pay-gap-now/</link>
+      <description>Increase remote salary 15–25% from a low-cost country in 2026 — Wise, Revolut, and the exact email template to anchor your ask and split FX risk.</description>
+      <pubDate>Sat, 06 Jun 2026 17:07:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/close-the-remote-pay-gap-now/</guid>
     </item>
   </channel>
 </rss>
