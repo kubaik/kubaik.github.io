@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 06:28:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 06:49:40 +0000</lastBuildDate>
+    <item>
+      <title>Your max pool size is probably too small</title>
+      <link>https://kubaik.github.io/your-max-pool-size-is-probably-too-small/</link>
+      <description>Cut connection pool errors 90% by setting max_pool_size to (RPS × query_time) instead of vCPU × 2. Benchmarks from 47 Node 20 LTS services show p99 latency drops from 2100 ms to 88 ms with the right pool size.</description>
+      <pubDate>Sat, 06 Jun 2026 06:49:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-max-pool-size-is-probably-too-small/</guid>
+    </item>
     <item>
       <title>2026 AI pay gap: Python beats SQL by $66k</title>
       <link>https://kubaik.github.io/2026-ai-pay-gap-python-beats-sql-by-66k/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 80% by moving prompt assembly to Rust and caching by prompt hash — the real bottlenecks tutorials never mention.</description>
       <pubDate>Fri, 05 Jun 2026 20:48:22 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-prompt-assembly-kills-latency/</guid>
-    </item>
-    <item>
-      <title>Portfolio: one project, remote hire</title>
-      <link>https://kubaik.github.io/portfolio-one-project-remote-hire/</link>
-      <description>Ship one project, get hired remotely — stop grinding LeetCode and open-sourcing forks. Focus on one system that proves you can own a pain point and move a metric. Real examples from Nairobi, Lagos, and Dar es Salaam.</description>
-      <pubDate>Fri, 05 Jun 2026 20:30:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-one-project-remote-hire/</guid>
     </item>
   </channel>
 </rss>
