@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 12:48:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 12:53:38 +0000</lastBuildDate>
+    <item>
+      <title>AI pairs: how seniors win, juniors get filtered</title>
+      <link>https://kubaik.github.io/ai-pairs-how-seniors-win-juniors-get-filtered/</link>
+      <description>Reduce API latency 38% and cut cloud costs 42% using AI pair programming — with real PostgreSQL 16 benchmarks and the connection-pool mistake most teams miss</description>
+      <pubDate>Sat, 06 Jun 2026 12:53:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pairs-how-seniors-win-juniors-get-filtered/</guid>
+    </item>
     <item>
       <title>40% of seniors quit Big Tech (not for cash)</title>
       <link>https://kubaik.github.io/40-of-seniors-quit-big-tech-not-for-cash/</link>
@@ -138,13 +145,6 @@
       <description>Cut remote job rejections in half by shipping a portfolio that looks like production code — not just clean code. Real examples, cost breakdowns, and the 2-minute demo that got devs hired from Nairobi, Lagos, and Kampala in 2026.</description>
       <pubDate>Sat, 06 Jun 2026 03:02:48 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</guid>
-    </item>
-    <item>
-      <title>$81k AI skills in 2026: who really gets paid</title>
-      <link>https://kubaik.github.io/81k-ai-skills-in-2026-who-really-gets-paid/</link>
-      <description>2026 salary gap revealed: Prompt Reliability Engineers earn $30k+ more than ML engineers. Data-backed breakdown of skills, tools, and ROI.</description>
-      <pubDate>Sat, 06 Jun 2026 01:37:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/81k-ai-skills-in-2026-who-really-gets-paid/</guid>
     </item>
   </channel>
 </rss>
