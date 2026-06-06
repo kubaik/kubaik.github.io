@@ -2924,10 +2924,6 @@ if __name__ == "__main__":
 
             blog_system.save_post(blog_post)
 
-            # ── ADSENSE FIX A (continued): Record successful publish ──────────
-            vc.record_publish()
-            # ─────────────────────────────────────────────────────────────────
-
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
 
