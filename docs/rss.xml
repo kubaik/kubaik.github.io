@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 13:12:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 13:15:21 +0000</lastBuildDate>
+    <item>
+      <title>Senior engineers flee Big Tech—layers kill morale</title>
+      <link>https://kubaik.github.io/senior-engineers-flee-big-techlayers-kill-morale/</link>
+      <description>Cut deployment friction 75% by fixing three connection mistakes every senior engineer hates — pgBouncer timeouts, Redis pipeline timeouts, SQLAlchemy stale connections.</description>
+      <pubDate>Sat, 06 Jun 2026 13:15:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-engineers-flee-big-techlayers-kill-morale/</guid>
+    </item>
     <item>
       <title>2026 salary: LLMs vs embeddings ROI</title>
       <link>https://kubaik.github.io/2026-salary-llms-vs-embeddings-roi/</link>
@@ -138,13 +145,6 @@
       <description>Cut database latency 60% by fixing pool size — new formula beats the 2002 heuristic. PostgreSQL 16, Aurora, Node 20 LTS, Go 1.21, Python 3.11 asyncio.</description>
       <pubDate>Sat, 06 Jun 2026 04:45:12 +0000</pubDate>
       <guid>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</guid>
-    </item>
-    <item>
-      <title>Convert local pay to remote USD like a pro</title>
-      <link>https://kubaik.github.io/convert-local-pay-to-remote-usd-like-a-pro/</link>
-      <description>Increase remote salary 16% with a data-driven Google Sheet that converts local costs to USD and anchors high. Includes live FX, Levels.fyi 2026 bands, and negotiation scripts.</description>
-      <pubDate>Sat, 06 Jun 2026 04:37:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/convert-local-pay-to-remote-usd-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
