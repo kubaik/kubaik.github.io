@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 08:12:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 08:17:00 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit big tech? Hidden costs matter</title>
+      <link>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</link>
+      <description>Senior engineers quit big tech for reasons beyond salary — 2026 data on latency spikes, pool exhaustion, and silent failures that drain velocity.</description>
+      <pubDate>Sat, 06 Jun 2026 08:16:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</guid>
+    </item>
     <item>
       <title>Raise remote salary: Turkey to USD in 7 days</title>
       <link>https://kubaik.github.io/raise-remote-salary-turkey-to-usd-in-7-days/</link>
@@ -138,13 +145,6 @@
       <description>Land remote gigs with $75k contracts: use purchasing-power multipliers, Levels.fyi 2026, and Numbeo 2026 data to justify your ask.</description>
       <pubDate>Fri, 05 Jun 2026 22:04:16 +0000</pubDate>
       <guid>https://kubaik.github.io/40-off-remote-pay-flip-the-script/</guid>
-    </item>
-    <item>
-      <title>Compare 3 ways to push real-time data</title>
-      <link>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</link>
-      <description>Choose SSE for dashboards, WebSockets for chat, long polling as fallback — benchmarked on Node 20 LTS and Redis 7.2 with real cost and latency numbers.</description>
-      <pubDate>Fri, 05 Jun 2026 21:26:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-3-ways-to-push-real-time-data/</guid>
     </item>
   </channel>
 </rss>
