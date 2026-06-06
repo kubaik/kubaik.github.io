@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 04:41:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 04:45:31 +0000</lastBuildDate>
+    <item>
+      <title>Async pool size: why your DB chokes</title>
+      <link>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</link>
+      <description>Cut database latency 60% by fixing pool size — new formula beats the 2002 heuristic. PostgreSQL 16, Aurora, Node 20 LTS, Go 1.21, Python 3.11 asyncio.</description>
+      <pubDate>Sat, 06 Jun 2026 04:45:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</guid>
+    </item>
     <item>
       <title>Convert local pay to remote USD like a pro</title>
       <link>https://kubaik.github.io/convert-local-pay-to-remote-usd-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>Cut engineering toil 70% with cache fixes — connection pooling, TTLs, and the cache stampede mistake most teams miss. Learn the real reasons senior developers quit Big Tech.</description>
       <pubDate>Fri, 05 Jun 2026 19:29:14 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</guid>
-    </item>
-    <item>
-      <title>Break rate limits clients won&apos;t hate</title>
-      <link>https://kubaik.github.io/break-rate-limits-clients-wont-hate/</link>
-      <description>Sliding-window rate limiting cut 429 errors 97% with 2 ms Redis latency — Lua script, Envoy sidecar, and the metric you should alert on today.</description>
-      <pubDate>Fri, 05 Jun 2026 18:57:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/break-rate-limits-clients-wont-hate/</guid>
     </item>
   </channel>
 </rss>
