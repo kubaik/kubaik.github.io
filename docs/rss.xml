@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 17:43:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 17:48:20 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: meetings vs code</title>
+      <link>https://kubaik.github.io/senior-exodus-meetings-vs-code/</link>
+      <description>Senior engineers quit big tech not because of pay but because of scaling friction — connection leaks, unobserved errors, and flaky staging cost teams 40% of their velocity. Measure your own stack with pgBouncer 1.21, Prometheus 2.47, and Node.js 20 LTS.</description>
+      <pubDate>Sat, 06 Jun 2026 17:48:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-meetings-vs-code/</guid>
+    </item>
     <item>
       <title>Close the remote pay gap now</title>
       <link>https://kubaik.github.io/close-the-remote-pay-gap-now/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate remote salary: tools to calculate your cost-of-living baseline and comparison tables that shut down discount arguments — proven results from 3 deals in 2026.</description>
       <pubDate>Sat, 06 Jun 2026 10:34:18 +0000</pubDate>
       <guid>https://kubaik.github.io/get-paid-what-youre-worth-remotely/</guid>
-    </item>
-    <item>
-      <title>Pool size isn&apos;t a fixed number</title>
-      <link>https://kubaik.github.io/pool-size-isnt-a-fixed-number/</link>
-      <description>Learn why setting database pool size to 10 or 20 breaks in 2026. Use real data, benchmarks, and cost figures to set pool size correctly for Kubernetes, serverless, and monoliths.</description>
-      <pubDate>Sat, 06 Jun 2026 10:25:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-isnt-a-fixed-number/</guid>
     </item>
   </channel>
 </rss>
