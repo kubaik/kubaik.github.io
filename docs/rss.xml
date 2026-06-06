@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 05:06:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 05:11:36 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: what really breaks engineers</title>
+      <link>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</link>
+      <description>Yet attrition among engineers with 5–10 years of experience remains stubbornly high — around 12% annually at Google and Meta in 2025, according to…</description>
+      <pubDate>Sat, 06 Jun 2026 05:11:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</guid>
+    </item>
     <item>
       <title>Async pool size: why your DB chokes</title>
       <link>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</link>
@@ -138,13 +145,6 @@
       <description>The conventional wisdom (and why it&apos;s incomplete) For years, the standard advice on database connection pooling has been simple: set to the number of…</description>
       <pubDate>Fri, 05 Jun 2026 19:37:37 +0000</pubDate>
       <guid>https://kubaik.github.io/break-the-max-pool-size-myth/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee Big Tech’s invisible drag</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</link>
-      <description>Cut engineering toil 70% with cache fixes — connection pooling, TTLs, and the cache stampede mistake most teams miss. Learn the real reasons senior developers quit Big Tech.</description>
-      <pubDate>Fri, 05 Jun 2026 19:29:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-invisible-drag/</guid>
     </item>
   </channel>
 </rss>
