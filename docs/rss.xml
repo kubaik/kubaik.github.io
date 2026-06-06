@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 21:38:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 21:43:33 +0000</lastBuildDate>
+    <item>
+      <title>5 RAG pipeline mistakes production teams ignore</title>
+      <link>https://kubaik.github.io/5-rag-pipeline-mistakes-production-teams-ignore/</link>
+      <description>Cut RAG pipeline latency 75% and AWS costs 67% with pgvector + Redis caching — the connection leaks, cache stampedes, and model drift most tutorials skip. 2026 production guide with code and numbers.</description>
+      <pubDate>Sat, 06 Jun 2026 21:43:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-rag-pipeline-mistakes-production-teams-ignore/</guid>
+    </item>
     <item>
       <title>Rewrite backend stacks for African latency</title>
       <link>https://kubaik.github.io/rewrite-backend-stacks-for-african-latency/</link>
@@ -138,13 +145,6 @@
       <description>Cut API costs 70% by switching from prompt engineering to fine-tuning at 10k prompts/day — latency drops from 380ms to 45ms, and accuracy often improves — plus when to stick with prompts</description>
       <pubDate>Sat, 06 Jun 2026 15:09:29 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-the-right-tool/</guid>
-    </item>
-    <item>
-      <title>Pool size wrong? Your DB is bleeding</title>
-      <link>https://kubaik.github.io/pool-size-wrong-your-db-is-bleeding/</link>
-      <description>The conventional wisdom (and why it&apos;s incomplete) The most common advice about database connection pooling boils down to this: set the maximum pool size…</description>
-      <pubDate>Sat, 06 Jun 2026 15:00:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-wrong-your-db-is-bleeding/</guid>
     </item>
   </channel>
 </rss>
