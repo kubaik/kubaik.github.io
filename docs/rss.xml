@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 02:58:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 03:03:07 +0000</lastBuildDate>
+    <item>
+      <title>Ship African dev portfolio that hires remotely</title>
+      <link>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</link>
+      <description>Cut remote job rejections in half by shipping a portfolio that looks like production code — not just clean code. Real examples, cost breakdowns, and the 2-minute demo that got devs hired from Nairobi, Lagos, and Kampala in 2026.</description>
+      <pubDate>Sat, 06 Jun 2026 03:02:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</guid>
+    </item>
     <item>
       <title>$81k AI skills in 2026: who really gets paid</title>
       <link>https://kubaik.github.io/81k-ai-skills-in-2026-who-really-gets-paid/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time comms latency 60%: compare WebSockets, SSE, and long polling with Node 20 LTS, Python 3.12, and Redis 7.2 benchmarks</description>
       <pubDate>Fri, 05 Jun 2026 18:24:39 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-realtime-tech-for-2026/</guid>
-    </item>
-    <item>
-      <title>Scale kills RAG pipelines—here’s why</title>
-      <link>https://kubaik.github.io/scale-kills-rag-pipelinesheres-why/</link>
-      <description>Cut RAG latency 89% and costs 77% with RedisSearch + FAISS + Elasticsearch — the exact stack, configs, and mistakes a Vietnam SaaS team made in 2026</description>
-      <pubDate>Fri, 05 Jun 2026 18:15:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-kills-rag-pipelinesheres-why/</guid>
     </item>
   </channel>
 </rss>
