@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 16:21:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 16:26:29 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: hidden costs of scale</title>
+      <link>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</link>
+      <description>Cut senior engineer attrition 40% by fixing 4 hidden frictions — connection pools, retries, observability, and ownership tax. Concrete numbers and tooling from 2026.</description>
+      <pubDate>Sat, 06 Jun 2026 16:26:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</guid>
+    </item>
     <item>
       <title>Production RAG: what tutorials never mention</title>
       <link>https://kubaik.github.io/production-rag-what-tutorials-never-mention/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech for reasons beyond salary — 2026 data on latency spikes, pool exhaustion, and silent failures that drain velocity.</description>
       <pubDate>Sat, 06 Jun 2026 08:16:45 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</guid>
-    </item>
-    <item>
-      <title>Raise remote salary: Turkey to USD in 7 days</title>
-      <link>https://kubaik.github.io/raise-remote-salary-turkey-to-usd-in-7-days/</link>
-      <description>Raise remote salary 42% in 7 days using 2026 PPP math, Notion template, and email scripts that anchor to client benchmarks, not your cost of living.</description>
-      <pubDate>Sat, 06 Jun 2026 08:08:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/raise-remote-salary-turkey-to-usd-in-7-days/</guid>
     </item>
   </channel>
 </rss>
