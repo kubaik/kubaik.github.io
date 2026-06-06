@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 09:18:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 09:23:35 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: why PostgreSQL breaks</title>
+      <link>https://kubaik.github.io/rag-pipelines-why-postgresql-breaks/</link>
+      <description>Cut RAG pipeline costs 58% while raising recall 13% — the retrieval tier that breaks first, FAISS vs pgvector benchmarks, and the one config that saved $820/day for 80k users in 2026.</description>
+      <pubDate>Sat, 06 Jun 2026 09:23:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-why-postgresql-breaks/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech? Hidden costs matter</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI salary growth 20% by focusing on RAG pipelines or prompt engineering — benchmark data from 18k records shows which skills actually pay in 2026.</description>
       <pubDate>Fri, 05 Jun 2026 22:12:13 +0000</pubDate>
       <guid>https://kubaik.github.io/4-ai-skills-that-push-2026-salaries-past-200k/</guid>
-    </item>
-    <item>
-      <title>40% off remote pay? Flip the script</title>
-      <link>https://kubaik.github.io/40-off-remote-pay-flip-the-script/</link>
-      <description>Land remote gigs with $75k contracts: use purchasing-power multipliers, Levels.fyi 2026, and Numbeo 2026 data to justify your ask.</description>
-      <pubDate>Fri, 05 Jun 2026 22:04:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/40-off-remote-pay-flip-the-script/</guid>
     </item>
   </channel>
 </rss>
