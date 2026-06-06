@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 15:52:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 15:56:37 +0000</lastBuildDate>
+    <item>
+      <title>Idle pools kill DB performance</title>
+      <link>https://kubaik.github.io/idle-pools-kill-db-performance/</link>
+      <description>Cut 95th percentile latency 60% by fixing connection pool settings — measure peak bursts, set idle timeout to 10s, and autoscale pools in 2026</description>
+      <pubDate>Sat, 06 Jun 2026 15:56:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/idle-pools-kill-db-performance/</guid>
+    </item>
     <item>
       <title>Fine-tune or prompt: pick the right tool</title>
       <link>https://kubaik.github.io/fine-tune-or-prompt-pick-the-right-tool/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio projects that land remote jobs from Africa in 2026 use real infra, not clones. Learn why 80% of recruiters skip GitHub stars and what to build instead.</description>
       <pubDate>Sat, 06 Jun 2026 07:45:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-real-work-not-side-hacks/</guid>
-    </item>
-    <item>
-      <title>Your max pool size is probably too small</title>
-      <link>https://kubaik.github.io/your-max-pool-size-is-probably-too-small/</link>
-      <description>Cut connection pool errors 90% by setting max_pool_size to (RPS × query_time) instead of vCPU × 2. Benchmarks from 47 Node 20 LTS services show p99 latency drops from 2100 ms to 88 ms with the right pool size.</description>
-      <pubDate>Sat, 06 Jun 2026 06:49:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-max-pool-size-is-probably-too-small/</guid>
     </item>
   </channel>
 </rss>
