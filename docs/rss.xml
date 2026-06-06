@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 00:00:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 00:04:52 +0000</lastBuildDate>
+    <item>
+      <title>Time-savers that bite solo devs</title>
+      <link>https://kubaik.github.io/time-savers-that-bite-solo-devs/</link>
+      <description>A 2025 Stack Overflow survey found 68% of solo devs underestimate how much time they spend on infrastructure plumbing — and 42% of those outages were…</description>
+      <pubDate>Sat, 06 Jun 2026 00:04:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/time-savers-that-bite-solo-devs/</guid>
+    </item>
     <item>
       <title>WebSockets vs SSE vs Polling: Which to Use</title>
       <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-which-to-use/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio that hires you remotely in 2026: show fixes, not features. Includes 3 real incidents, code snippets, and a 30-minute action step.</description>
       <pubDate>Fri, 05 Jun 2026 17:52:14 +0000</pubDate>
       <guid>https://kubaik.github.io/show-problems-land-remote-jobs/</guid>
-    </item>
-    <item>
-      <title>Beat the $120k US offer when you&apos;re paid in pesos</title>
-      <link>https://kubaik.github.io/beat-the-120k-us-offer-when-youre-paid-in-pesos/</link>
-      <description>Land remote jobs: negotiate salary like a pro — use a local cost-of-living index, FX hedging, and employer risk models to secure 2.2x–3.8x local rates from US/EU companies</description>
-      <pubDate>Fri, 05 Jun 2026 17:37:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/beat-the-120k-us-offer-when-youre-paid-in-pesos/</guid>
     </item>
   </channel>
 </rss>
