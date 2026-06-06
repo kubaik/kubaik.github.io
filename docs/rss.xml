@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 16:38:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 16:42:58 +0000</lastBuildDate>
+    <item>
+      <title>Skills that move the 2026 AI salary needle</title>
+      <link>https://kubaik.github.io/skills-that-move-the-2026-ai-salary-needle/</link>
+      <description>PyTorch vs TensorFlow salaries 2026: $210k vs $180k gap — which skill actually moves your paycheck? Real benchmarks, hidden costs, and the framework that wins in production.</description>
+      <pubDate>Sat, 06 Jun 2026 16:42:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/skills-that-move-the-2026-ai-salary-needle/</guid>
+    </item>
     <item>
       <title>Senior exodus: hidden costs of scale</title>
       <link>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline costs 58% while raising recall 13% — the retrieval tier that breaks first, FAISS vs pgvector benchmarks, and the one config that saved $820/day for 80k users in 2026.</description>
       <pubDate>Sat, 06 Jun 2026 09:23:16 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-why-postgresql-breaks/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit big tech? Hidden costs matter</title>
-      <link>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</link>
-      <description>Senior engineers quit big tech for reasons beyond salary — 2026 data on latency spikes, pool exhaustion, and silent failures that drain velocity.</description>
-      <pubDate>Sat, 06 Jun 2026 08:16:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-hidden-costs-matter/</guid>
     </item>
   </channel>
 </rss>
