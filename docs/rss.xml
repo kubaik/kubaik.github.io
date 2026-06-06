@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 22:55:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:00:17 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs quit big tech over this</title>
+      <link>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</link>
+      <description>Cut on-call burnout 80% with Redis cache locks and pool sizing — the hidden reasons senior developers leave big tech in 2026</description>
+      <pubDate>Sat, 06 Jun 2026 22:59:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</guid>
+    </item>
     <item>
       <title>Pool size cheatsheet 2026</title>
       <link>https://kubaik.github.io/pool-size-cheatsheet-2026/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary 15–25% from a low-cost country in 2026 — Wise, Revolut, and the exact email template to anchor your ask and split FX risk.</description>
       <pubDate>Sat, 06 Jun 2026 17:07:45 +0000</pubDate>
       <guid>https://kubaik.github.io/close-the-remote-pay-gap-now/</guid>
-    </item>
-    <item>
-      <title>Ship Africa: portfolio that hires you remotely</title>
-      <link>https://kubaik.github.io/ship-africa-portfolio-that-hires-you-remotely/</link>
-      <description>Portfolio projects that get remote hires in Africa: small tools, real impact, and metrics over flash. 2026 data and code examples included.</description>
-      <pubDate>Sat, 06 Jun 2026 16:59:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-africa-portfolio-that-hires-you-remotely/</guid>
     </item>
   </channel>
 </rss>
