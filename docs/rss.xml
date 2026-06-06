@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 12:59:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 13:03:52 +0000</lastBuildDate>
+    <item>
+      <title>When RAG pipelines hit the wall</title>
+      <link>https://kubaik.github.io/when-rag-pipelines-hit-the-wall/</link>
+      <description>Cut RAG p99 latency to 780ms and halve AWS costs by moving from Postgres pgvector to Qdrant 1.8.0, adding a two-layer cache, and tuning asyncpg and connection pools under 10K RPM load.</description>
+      <pubDate>Sat, 06 Jun 2026 13:03:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-rag-pipelines-hit-the-wall/</guid>
+    </item>
     <item>
       <title>AI pairs: how seniors win, juniors get filtered</title>
       <link>https://kubaik.github.io/ai-pairs-how-seniors-win-juniors-get-filtered/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 73% and AWS costs 61% by splitting the pipeline, pinning models, and adding deduplication — the production tricks most tutorials skip.</description>
       <pubDate>Sat, 06 Jun 2026 03:53:46 +0000</pubDate>
       <guid>https://kubaik.github.io/production-rag-pipelines-the-missing-pieces/</guid>
-    </item>
-    <item>
-      <title>Ship African dev portfolio that hires remotely</title>
-      <link>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</link>
-      <description>Cut remote job rejections in half by shipping a portfolio that looks like production code — not just clean code. Real examples, cost breakdowns, and the 2-minute demo that got devs hired from Nairobi, Lagos, and Kampala in 2026.</description>
-      <pubDate>Sat, 06 Jun 2026 03:02:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-african-dev-portfolio-that-hires-remotely/</guid>
     </item>
   </channel>
 </rss>
