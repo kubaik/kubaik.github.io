@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 11:59:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 12:04:18 +0000</lastBuildDate>
+    <item>
+      <title>Show your work, not your bio</title>
+      <link>https://kubaik.github.io/show-your-work-not-your-bio/</link>
+      <description>Show code, not life: the portfolio that got me 3 remote offers from Africa in 2026 — load tests, cost breakdowns, and the one repo that mattered.</description>
+      <pubDate>Sat, 06 Jun 2026 12:03:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-your-work-not-your-bio/</guid>
+    </item>
     <item>
       <title>Production RAG pitfalls: missed in tutorials</title>
       <link>https://kubaik.github.io/production-rag-pitfalls-missed-in-tutorials/</link>
@@ -138,13 +145,6 @@
       <description>A 2025 Stack Overflow survey found 68% of solo devs underestimate how much time they spend on infrastructure plumbing — and 42% of those outages were…</description>
       <pubDate>Sat, 06 Jun 2026 00:04:33 +0000</pubDate>
       <guid>https://kubaik.github.io/time-savers-that-bite-solo-devs/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs SSE vs Polling: Which to Use</title>
-      <link>https://kubaik.github.io/websockets-vs-sse-vs-polling-which-to-use/</link>
-      <description>Choose WebSocket vs SSE vs long polling in 2026 with real latency numbers, Safari bugs, and a 30-minute decision checklist.</description>
-      <pubDate>Fri, 05 Jun 2026 23:55:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-sse-vs-polling-which-to-use/</guid>
     </item>
   </channel>
 </rss>
