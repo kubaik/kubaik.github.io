@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 17:03:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 17:08:05 +0000</lastBuildDate>
+    <item>
+      <title>Close the remote pay gap now</title>
+      <link>https://kubaik.github.io/close-the-remote-pay-gap-now/</link>
+      <description>Increase remote salary 15–25% from a low-cost country in 2026 — Wise, Revolut, and the exact email template to anchor your ask and split FX risk.</description>
+      <pubDate>Sat, 06 Jun 2026 17:07:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/close-the-remote-pay-gap-now/</guid>
+    </item>
     <item>
       <title>Ship Africa: portfolio that hires you remotely</title>
       <link>https://kubaik.github.io/ship-africa-portfolio-that-hires-you-remotely/</link>
@@ -138,13 +145,6 @@
       <description>Learn why setting database pool size to 10 or 20 breaks in 2026. Use real data, benchmarks, and cost figures to set pool size correctly for Kubernetes, serverless, and monoliths.</description>
       <pubDate>Sat, 06 Jun 2026 10:25:57 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-isnt-a-fixed-number/</guid>
-    </item>
-    <item>
-      <title>Shrink cloud carbon without slowing code</title>
-      <link>https://kubaik.github.io/shrink-cloud-carbon-without-slowing-code/</link>
-      <description>Cut AWS bill 47% and cloud carbon 35% by swapping ALB for NLB, adding Redis 7.2 cache, and compressing PostgreSQL WAL. Real numbers from a 200k-user Latin American fintech stack.</description>
-      <pubDate>Sat, 06 Jun 2026 09:55:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/shrink-cloud-carbon-without-slowing-code/</guid>
     </item>
   </channel>
 </rss>
