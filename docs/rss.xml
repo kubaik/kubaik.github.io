@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 23:37:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:41:45 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI Salaries: What Actually Pays</title>
+      <link>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</link>
+      <description>AI skills that move your salary in 2026: prompt engineering vs observability — benchmarked with real salary data, concrete numbers, and production stacks.</description>
+      <pubDate>Sat, 06 Jun 2026 23:41:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</guid>
+    </item>
     <item>
       <title>Pool size isn&apos;t CPU cores</title>
       <link>https://kubaik.github.io/pool-size-isnt-cpu-cores/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech not because of pay but because of scaling friction — connection leaks, unobserved errors, and flaky staging cost teams 40% of their velocity. Measure your own stack with pgBouncer 1.21, Prometheus 2.47, and Node.js 20 LTS.</description>
       <pubDate>Sat, 06 Jun 2026 17:48:00 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-meetings-vs-code/</guid>
-    </item>
-    <item>
-      <title>Close the remote pay gap now</title>
-      <link>https://kubaik.github.io/close-the-remote-pay-gap-now/</link>
-      <description>Increase remote salary 15–25% from a low-cost country in 2026 — Wise, Revolut, and the exact email template to anchor your ask and split FX risk.</description>
-      <pubDate>Sat, 06 Jun 2026 17:07:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/close-the-remote-pay-gap-now/</guid>
     </item>
   </channel>
 </rss>
