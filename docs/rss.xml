@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 13:07:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 13:12:03 +0000</lastBuildDate>
+    <item>
+      <title>2026 salary: LLMs vs embeddings ROI</title>
+      <link>https://kubaik.github.io/2026-salary-llms-vs-embeddings-roi/</link>
+      <description>Cut inference costs 7.7x: LLMs vs embeddings salary ROI in 2026 — concrete benchmarks, cost data, and the exact stack that moved the needle at Plaid, Stripe, and Oscar Health.</description>
+      <pubDate>Sat, 06 Jun 2026 13:11:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-salary-llms-vs-embeddings-roi/</guid>
+    </item>
     <item>
       <title>When RAG pipelines hit the wall</title>
       <link>https://kubaik.github.io/when-rag-pipelines-hit-the-wall/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary 16% with a data-driven Google Sheet that converts local costs to USD and anchors high. Includes live FX, Levels.fyi 2026 bands, and negotiation scripts.</description>
       <pubDate>Sat, 06 Jun 2026 04:37:33 +0000</pubDate>
       <guid>https://kubaik.github.io/convert-local-pay-to-remote-usd-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Production RAG pipelines: the missing pieces</title>
-      <link>https://kubaik.github.io/production-rag-pipelines-the-missing-pieces/</link>
-      <description>Cut RAG latency 73% and AWS costs 61% by splitting the pipeline, pinning models, and adding deduplication — the production tricks most tutorials skip.</description>
-      <pubDate>Sat, 06 Jun 2026 03:53:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/production-rag-pipelines-the-missing-pieces/</guid>
     </item>
   </channel>
 </rss>
