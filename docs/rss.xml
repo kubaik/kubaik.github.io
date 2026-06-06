@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 22:33:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 22:38:39 +0000</lastBuildDate>
+    <item>
+      <title>Pool size cheatsheet 2026</title>
+      <link>https://kubaik.github.io/pool-size-cheatsheet-2026/</link>
+      <description>Stop guessing connection pool sizes — lock contention, SSL overhead, and idle timeouts break systems before CPU does. Learn the 2026 rules that replace CPU × 2 formulas.</description>
+      <pubDate>Sat, 06 Jun 2026 22:38:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-cheatsheet-2026/</guid>
+    </item>
     <item>
       <title>30% pay bump: AI pipeline skills vs prompts</title>
       <link>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio projects that get remote hires in Africa: small tools, real impact, and metrics over flash. 2026 data and code examples included.</description>
       <pubDate>Sat, 06 Jun 2026 16:59:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-africa-portfolio-that-hires-you-remotely/</guid>
-    </item>
-    <item>
-      <title>Senior exodus: hidden costs of scale</title>
-      <link>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</link>
-      <description>Cut senior engineer attrition 40% by fixing 4 hidden frictions — connection pools, retries, observability, and ownership tax. Concrete numbers and tooling from 2026.</description>
-      <pubDate>Sat, 06 Jun 2026 16:26:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-exodus-hidden-costs-of-scale/</guid>
     </item>
   </channel>
 </rss>
