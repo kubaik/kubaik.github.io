@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 12:18:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 12:23:01 +0000</lastBuildDate>
+    <item>
+      <title>40% of seniors quit Big Tech (not for cash)</title>
+      <link>https://kubaik.github.io/40-of-seniors-quit-big-tech-not-for-cash/</link>
+      <description>Big Tech engineers leave for reasons beyond salary — on-call load, review cycles, promotion delays. Audit your team’s friction with data and tools like Datadog and GitHub Insights.</description>
+      <pubDate>Sat, 06 Jun 2026 12:22:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/40-of-seniors-quit-big-tech-not-for-cash/</guid>
+    </item>
     <item>
       <title>Show your work, not your bio</title>
       <link>https://kubaik.github.io/show-your-work-not-your-bio/</link>
@@ -138,13 +145,6 @@
       <description>2026 salary gap revealed: Prompt Reliability Engineers earn $30k+ more than ML engineers. Data-backed breakdown of skills, tools, and ROI.</description>
       <pubDate>Sat, 06 Jun 2026 01:37:54 +0000</pubDate>
       <guid>https://kubaik.github.io/81k-ai-skills-in-2026-who-really-gets-paid/</guid>
-    </item>
-    <item>
-      <title>Time-savers that bite solo devs</title>
-      <link>https://kubaik.github.io/time-savers-that-bite-solo-devs/</link>
-      <description>A 2025 Stack Overflow survey found 68% of solo devs underestimate how much time they spend on infrastructure plumbing — and 42% of those outages were…</description>
-      <pubDate>Sat, 06 Jun 2026 00:04:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/time-savers-that-bite-solo-devs/</guid>
     </item>
   </channel>
 </rss>
