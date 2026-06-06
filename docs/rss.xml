@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 20:50:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 20:54:58 +0000</lastBuildDate>
+    <item>
+      <title>AI salaries 2026: which skills move the needle</title>
+      <link>https://kubaik.github.io/ai-salaries-2026-which-skills-move-the-needle/</link>
+      <description>Cut API error rates 90% with structured-output prompt engineering or cut costs 35% with vector search optimization — the 2026 salary breakdown for AI skills that actually move the needle.</description>
+      <pubDate>Sat, 06 Jun 2026 20:54:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salaries-2026-which-skills-move-the-needle/</guid>
+    </item>
     <item>
       <title>Build systems, not just code</title>
       <link>https://kubaik.github.io/build-systems-not-just-code/</link>
@@ -138,13 +145,6 @@
       <description>The conventional wisdom (and why it&apos;s incomplete) The most common advice about database connection pooling boils down to this: set the maximum pool size…</description>
       <pubDate>Sat, 06 Jun 2026 15:00:23 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-wrong-your-db-is-bleeding/</guid>
-    </item>
-    <item>
-      <title>Pay them in US dollars, not pesos</title>
-      <link>https://kubaik.github.io/pay-them-in-us-dollars-not-pesos/</link>
-      <description>Convert local salary to USD remotes with 3 concrete numbers — FX spreads, delays, and effective hourly rates. Includes a payment calculator, USD invoice generator, and negotiation scripts for LATAM developers.</description>
-      <pubDate>Sat, 06 Jun 2026 14:49:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-them-in-us-dollars-not-pesos/</guid>
     </item>
   </channel>
 </rss>
